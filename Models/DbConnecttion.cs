@@ -23,7 +23,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<LePhiXetTuyen> LePhiXetTuyens { get; set; }
         public virtual DbSet<MonHoc> MonHocs { get; set; }
         public virtual DbSet<NamHoc> NamHocs { get; set; }
-        public virtual DbSet<Nganh> Ngành { get; set; }
+        public virtual DbSet<Nganh> Nganh { get; set; }
         public virtual DbSet<PhuongThucXetTuyen> PhuongThucXetTuyens { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThiSinhDangKy> ThiSinhDangKies { get; set; }
