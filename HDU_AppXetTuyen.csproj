@@ -367,11 +367,6 @@
     <Content Include="Areas\Admin\Views\NamHocs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
