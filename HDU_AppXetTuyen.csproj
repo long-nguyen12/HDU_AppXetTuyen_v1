@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,10 +46,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -121,9 +130,31 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminAccount.cs" />
+    <Compile Include="Models\DangKyXetTuyen.cs" />
+    <Compile Include="Models\DangKyXetTuyen_DiemTS.cs" />
+    <Compile Include="Models\DbConnecttion.cs" />
+    <Compile Include="Models\DoiTuong.cs" />
+    <Compile Include="Models\DotXetTuyen.cs" />
+    <Compile Include="Models\Huyen.cs" />
+    <Compile Include="Models\KhoiNganh.cs" />
+    <Compile Include="Models\KhuVuc.cs" />
+    <Compile Include="Models\LePhiXetTuyen.cs" />
+    <Compile Include="Models\MonHoc.cs" />
+    <Compile Include="Models\NamHoc.cs" />
+    <Compile Include="Models\Ngành.cs" />
+    <Compile Include="Models\PhuongThucXetTuyen.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\ThiSinhDangKy.cs" />
+    <Compile Include="Models\Tinh.cs" />
+    <Compile Include="Models\ToHopMon.cs" />
+    <Compile Include="Models\TruongCapBa.cs" />
+    <Compile Include="Models\Xa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -329,6 +360,18 @@
     <Content Include="SbAdminPro\js\.DS_Store" />
     <Content Include="SbAdminPro\js\datatables\.DS_Store" />
     <Content Include="SbAdminPro\README.md" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\NamHocs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\NamHocs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\NamHocs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\NamHocs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NamHocs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -370,15 +413,13 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Layout_auth.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ContentOLD\bootstrap-grid.css.map" />
@@ -466,7 +507,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
