@@ -6,10 +6,10 @@ namespace HDU_AppXetTuyen.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Ngành
+    public partial class Nganh
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ngành()
+        public Nganh()
         {
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
         }

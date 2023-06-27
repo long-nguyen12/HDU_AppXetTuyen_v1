@@ -12,7 +12,7 @@ namespace HDU_AppXetTuyen.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KhoiNganh()
         {
-            Ngành = new HashSet<Ngành>();
+            Ngành = new HashSet<Nganh>();
         }
 
         [Key]
@@ -27,6 +27,6 @@ namespace HDU_AppXetTuyen.Models
         public int? KhoiNganh_TrangThai { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ngành> Ngành { get; set; }
+        public virtual ICollection<Nganh> Ngành { get; set; }
     }
 }
