@@ -1,4 +1,4 @@
-namespace HDU_AppXetTuyen.Models
+﻿namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -18,40 +18,67 @@ namespace HDU_AppXetTuyen.Models
 
         [Key]
         public long ThiSinh_ID { get; set; }
-
+      
         [StringLength(50)]
+        [Required(ErrorMessage = "Vui lòng nhập CMND/CCCD")]
+        [Display(Name = "CMND/CCCD")]
         public string ThiSinh_CCCD { get; set; }
 
-        [StringLength(300)]
+        [StringLength(500, ErrorMessage = "Mật khẩu phải có ít nhất {2} kí tự", MinimumLength = 6)]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Mật khẩu")]
+
         public string ThiSinh_MatKhau { get; set; }
 
-        [StringLength(300)]
-        public string ThiSinh_HoLot { get; set; }
+        [NotMapped]
+        [StringLength(500)]
+        [Required(ErrorMessage = "Vui lòng nhập lại mật khẩu")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Mật khẩu")]
+        public string ThiSinh_Re_MatKhau { get; set; }
 
-        [StringLength(300)]
-        public string ThiSinh_Ten { get; set; }
-
-        [StringLength(300)]
+        [StringLength(500)]
+        [Display(Name = "Điện thoại")]
+        [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
         public string ThiSinh_DienThoai { get; set; }
 
-        [StringLength(300)]
+        [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
+        [StringLength(500)]
+        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Vui lòng nhập email")]
         public string ThiSinh_Email { get; set; }
 
-        [StringLength(300)]
+        [StringLength(500)]
+        [Display(Name = "Họ, tên đệm")]
+        [Required(ErrorMessage = "Vui lòng nhập họ, tên đệm")]
+        public string ThiSinh_HoLot { get; set; }
+
+        [StringLength(500)]
+        [Display(Name = "Tên")]
+        [Required(ErrorMessage = "Vui lòng nhập tên")]
+        public string ThiSinh_Ten { get; set; }
+
+        [StringLength(500)]
+        [Display(Name = "Ngày sinh")]
+        [Required(ErrorMessage = "Vui lòng chọn ngày sinh")]
         public string ThiSinh_NgaySinh { get; set; }
 
+        [StringLength(4)]
+        [Display(Name = "Năm tốt nghiệp")]
+        [Required(ErrorMessage = "Vui lòng nhập năm tốt nghiệp")]
+        public string ThiSinh_NamTotNghiep { get; set; }
+
+        [StringLength(500)]
+        public string ThiSinh_ResetCode { get; set; }
+      
         [StringLength(300)]
         public string ThiSinh_NgayDangKy { get; set; }
 
         [StringLength(50)]
         public string ThiSinh_DanToc { get; set; }
 
-        public int? ThiSinh_GioiTinh { get; set; }
-
-        public int? ThiSinh_NamTotNghiep { get; set; }
-
-        [StringLength(300)]
-        public string ThiSinh_ResetCode { get; set; }
+        public int? ThiSinh_GioiTinh { get; set; }    
 
         [StringLength(300)]
         public string ThiSinh_DCNhanGiayBao { get; set; }
