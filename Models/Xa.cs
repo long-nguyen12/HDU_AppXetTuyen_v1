@@ -1,4 +1,4 @@
-namespace HDU_AppXetTuyen.Models
+﻿namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -12,15 +12,19 @@ namespace HDU_AppXetTuyen.Models
         [Key]
         public int Xa_ID { get; set; }
 
+        [Display(Name = "Mã xã")]
         [StringLength(50)]
         public string Xa_Ma { get; set; }
 
+        [Display(Name = "Tên xã")]
         [StringLength(200)]
         public string Xa_Ten { get; set; }
 
+        [Display(Name = "Ghi chú")]
         [StringLength(200)]
         public string Xa_GhiChu { get; set; }
 
+        [Display(Name = "Huyện")]
         public int? Huyen_ID { get; set; }
 
         public virtual Huyen Huyen { get; set; }

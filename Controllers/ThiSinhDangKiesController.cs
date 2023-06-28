@@ -10,15 +10,44 @@ using HDU_AppXetTuyen.Models;
 
 namespace HDU_AppXetTuyen.Controllers
 {
+    public class Update_ThiSinh
+    {
+        public string ThiSinh_CCCD  { get; set; }
+        public string ThiSinh_HoLot { get; set; }
+        public string ThiSinh_Ten { get; set; }
+        public string ThiSinh_DienThoai { get; set; }
+        public string ThiSinh_Email { get; set; }
+        public string ThiSinh_NgaySinh { get; set; }
+        public string ThiSinh_DanToc { get; set; }
+        public string ThiSinh_GioiTinh { get; set; }
+        public string ThiSinh_DCNhanGiayBao { get; set; }
+        public string ThiSinh_HoKhauThuongTru { get; set; }
+        public string KhuVuc_ID { get; set; }
+        public string DoiTuong_ID { get; set; }
+        public string ThiSinh_TruongCapBa_Ma { get; set; }
+        public string ThiSinh_TruongCapBa { get; set; }
+    }
+    public class ThiSinhSessionCheckAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Session == null || filterContext.HttpContext.Session["login_session"] == null)
+            {
+                filterContext.Result = new RedirectResult("~/Auth/Index");
+            }
+        }
+    }
     public class ThiSinhDangKiesController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
 
         // GET: ThiSinhDangKies
+        [ThiSinhSessionCheck]
         public ActionResult Index()
         {
-            var thiSinhDangKies = db.ThiSinhDangKies.Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc);
-            return View(thiSinhDangKies.ToList());
+            var session = Session["login_session"].ToString();
+            var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+            return View(thiSinh);
         }
 
         // GET: ThiSinhDangKies/Details/5
@@ -66,6 +95,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
 
         // GET: ThiSinhDangKies/Edit/5
+        [ThiSinhSessionCheck]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -126,6 +156,83 @@ namespace HDU_AppXetTuyen.Controllers
             db.ThiSinhDangKies.Remove(thiSinhDangKy);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult GetThiSinhInfo(string id)
+        {
+            int idThiSinh = int.Parse(id);
+            var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ID == idThiSinh).Select(n => new
+            {
+                ThiSinh_ID = n.ThiSinh_ID,
+                ThiSinh_CCCD = n.ThiSinh_CCCD,
+                ThiSinh_MatKhau = n.ThiSinh_MatKhau,
+                ThiSinh_HoLot = n.ThiSinh_HoLot,
+                ThiSinh_Ten = n.ThiSinh_Ten,
+                ThiSinh_DienThoai = n.ThiSinh_DienThoai,
+                ThiSinh_Email = n.ThiSinh_Email,
+                ThiSinh_NgaySinh = n.ThiSinh_NgaySinh,
+                ThiSinh_DanToc = n.ThiSinh_DanToc,
+                ThiSinh_GioiTinh = n.ThiSinh_GioiTinh,
+                ThiSinh_DCNhanGiayBao = n.ThiSinh_DCNhanGiayBao,
+                ThiSinh_HoKhauThuongTru = n.ThiSinh_HoKhauThuongTru,
+                KhuVuc_ID = n.KhuVuc_ID,
+                DoiTuong_ID = n.DoiTuong_ID,
+                ThiSinh_TruongCapBa_Ma = n.ThiSinh_TruongCapBa_Ma,
+                ThiSinh_TruongCapBa = n.ThiSinh_TruongCapBa,
+                ThiSinh_TruongCapBa_Tinh_ID = n.ThiSinh_TruongCapBa_Tinh_ID,
+                ThiSinh_TrangThai = n.ThiSinh_TrangThai,
+                ThiSinh_GhiChu = n.ThiSinh_GhiChu,
+
+            }).FirstOrDefault();
+            var tinhs = db.Tinhs.Select(n => new
+            {
+                Tinh_ID = n.Tinh_ID,
+                Tinh_Ma = n.Tinh_Ma,
+                Tinh_Ten = n.Tinh_Ten,
+                Tinh_MaTen = n.Tinh_MaTen,
+                Tinh_GhiChu = n.Tinh_GhiChu
+            }).ToList();
+            var khuvucs = db.KhuVucs.Select(n => new
+            {
+                KhuVuc_ID = n.KhuVuc_ID,
+                KhuVuc_Ten = n.KhuVuc_Ten,
+                KhuVuc_DiemUuTien = n.KhuVuc_DiemUuTien,
+                KhuVuc_GhiChu = n.KhuVuc_GhiChu
+            }).ToList();
+            var doituongs = db.DoiTuongs.Select(n => new
+            {
+                DoiTuong_ID = n.DoiTuong_ID,
+                DoiTuong_Ten = n.DoiTuong_Ten,
+                DoiTuong_DiemUuTien = n.DoiTuong_DiemUuTien,
+                DoiTuong_GhiChu = n.DoiTuong_GhiChu
+            }).ToList();
+            return Json(new { success = true, data = thiSinh, tinhs = tinhs, khuvucs = khuvucs, doituongs = doituongs }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateInfo(Update_ThiSinh thiSinh_Update)
+        {
+            var session = Session["login_session"].ToString();
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+
+            ts.ThiSinh_CCCD = thiSinh_Update.ThiSinh_CCCD;
+            ts.ThiSinh_HoLot = thiSinh_Update.ThiSinh_HoLot;
+            ts.ThiSinh_Ten = thiSinh_Update.ThiSinh_Ten;
+            ts.ThiSinh_DienThoai = thiSinh_Update.ThiSinh_DienThoai;
+            ts.ThiSinh_Email = thiSinh_Update.ThiSinh_Email;
+            ts.ThiSinh_NgaySinh = thiSinh_Update.ThiSinh_NgaySinh;
+            ts.ThiSinh_DanToc = thiSinh_Update.ThiSinh_DanToc;
+            ts.ThiSinh_GioiTinh = int.Parse(thiSinh_Update.ThiSinh_GioiTinh);
+            ts.ThiSinh_DCNhanGiayBao = thiSinh_Update.ThiSinh_DCNhanGiayBao;
+            ts.ThiSinh_HoKhauThuongTru = thiSinh_Update.ThiSinh_HoKhauThuongTru;
+            ts.KhuVuc_ID = int.Parse(thiSinh_Update.KhuVuc_ID);
+            ts.DoiTuong_ID = int.Parse(thiSinh_Update.DoiTuong_ID);
+            ts.ThiSinh_TruongCapBa_Ma = thiSinh_Update.ThiSinh_TruongCapBa_Ma;
+            ts.ThiSinh_TruongCapBa = thiSinh_Update.ThiSinh_TruongCapBa;
+            db.SaveChanges();
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

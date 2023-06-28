@@ -12,12 +12,11 @@ namespace HDU_AppXetTuyen.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Khoa()
         {
-
             Nganhs = new HashSet<Nganh>();
         }
 
         [Key]
-
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Khoa_ID { get; set; }
 
         [StringLength(500)]
@@ -32,8 +31,7 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(500)]
         public string Khoa_GhiChu { get; set; }
 
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Nganh> Nganhs { get; set; }     
+        public virtual ICollection<Nganh> Nganhs { get; set; }
     }
 }
