@@ -249,7 +249,7 @@ namespace HDU_AppXetTuyen.Controllers
                     thisinh_info.ThiSinh_MatKhau = computeHashPassword;
                     thisinh_info.ThiSinh_ResetCode = "";
                     db.SaveChanges();
-                    return RedirectToAction("Login", "Auth");
+                    return RedirectToAction("Index", "Auth");
                 }
                 else
                 {
