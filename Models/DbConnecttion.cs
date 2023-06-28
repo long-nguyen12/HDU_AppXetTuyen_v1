@@ -18,6 +18,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<DoiTuong> DoiTuongs { get; set; }
         public virtual DbSet<DotXetTuyen> DotXetTuyens { get; set; }
         public virtual DbSet<Huyen> Huyens { get; set; }
+        public virtual DbSet<Khoa> Khoas { get; set; }
         public virtual DbSet<KhoiNganh> KhoiNganhs { get; set; }
         public virtual DbSet<KhuVuc> KhuVucs { get; set; }
         public virtual DbSet<LePhiXetTuyen> LePhiXetTuyens { get; set; }
@@ -44,20 +45,11 @@ namespace HDU_AppXetTuyen.Models
                 .WithOptional(e => e.DotXetTuyen)
                 .HasForeignKey(e => e.DotXT_ID);
 
-            modelBuilder.Entity<MonHoc>()
-                .HasMany(e => e.ToHopMons)
-                .WithOptional(e => e.MonHoc)
-                .HasForeignKey(e => e.Thm_mon1_ID);
+            modelBuilder.Entity<Khoa>()
+             .HasMany(e => e.Nganhs)
+             .WithRequired(e => e.Khoa)
+             .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<MonHoc>()
-                .HasMany(e => e.ToHopMons1)
-                .WithOptional(e => e.MonHoc1)
-                .HasForeignKey(e => e.Thm_mon2_ID);
-
-            modelBuilder.Entity<MonHoc>()
-                .HasMany(e => e.ToHopMons2)
-                .WithOptional(e => e.MonHoc2)
-                .HasForeignKey(e => e.Thm_mon3_ID);
             modelBuilder.Entity<Nganh>()
               .HasMany(e => e.ToHopMonNganhs)
               .WithRequired(e => e.Nganh)
