@@ -1,0 +1,43 @@
+﻿@model HDU_AppXetTuyen.Models.DoiTuong
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DoiTuong</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DoiTuong_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoiTuong_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DoiTuong_DiemUuTien)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoiTuong_DiemUuTien)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DoiTuong_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoiTuong_GhiChu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DoiTuong_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

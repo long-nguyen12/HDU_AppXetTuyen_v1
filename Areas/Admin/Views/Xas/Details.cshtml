@@ -1,0 +1,51 @@
+﻿@model HDU_AppXetTuyen.Models.Xa
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Xa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Huyen.Huyen_MaHuyen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huyen.Huyen_MaHuyen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Xa_Ma)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Xa_Ma)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Xa_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Xa_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Xa_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Xa_GhiChu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Xa_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -55,7 +55,26 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -74,6 +93,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -152,11 +172,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DoiTuongsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
-    <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\ThiSinhDangKiesController.cs" />
-    <Compile Include="Controllers\DangKyXetTuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NganhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TinhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\XasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -167,19 +191,18 @@
     <Compile Include="Models\DoiTuong.cs" />
     <Compile Include="Models\DotXetTuyen.cs" />
     <Compile Include="Models\Huyen.cs" />
+    <Compile Include="Models\Khoa.cs" />
     <Compile Include="Models\KhoiNganh.cs" />
     <Compile Include="Models\KhuVuc.cs" />
     <Compile Include="Models\LePhiXetTuyen.cs" />
-    <Compile Include="Models\MonHoc.cs" />
     <Compile Include="Models\NamHoc.cs" />
-    <Compile Include="Models\Khoa.cs" />
-    <Compile Include="Models\ToHopMonNganh.cs" />
     <Compile Include="Models\Nganh.cs" />
     <Compile Include="Models\PhuongThucXetTuyen.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\ThiSinhDangKy.cs" />
     <Compile Include="Models\Tinh.cs" />
     <Compile Include="Models\ToHopMon.cs" />
+    <Compile Include="Models\ToHopMonNganh.cs" />
     <Compile Include="Models\TruongCapBa.cs" />
     <Compile Include="Models\Xa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -394,6 +417,41 @@
     <Content Include="Areas\Admin\Views\NamHocs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
