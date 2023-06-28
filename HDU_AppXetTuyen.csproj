@@ -132,6 +132,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
+    <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -147,6 +148,7 @@
     <Compile Include="Models\LePhiXetTuyen.cs" />
     <Compile Include="Models\MonHoc.cs" />
     <Compile Include="Models\NamHoc.cs" />
+    <Compile Include="Models\Khoa.cs" />
     <Compile Include="Models\ToHopMonNganh.cs" />
     <Compile Include="Models\Nganh.cs" />
     <Compile Include="Models\PhuongThucXetTuyen.cs" />
@@ -411,11 +413,11 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout_auth.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ContentOLD\bootstrap-grid.css.map" />

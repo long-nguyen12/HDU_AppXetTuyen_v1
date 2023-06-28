@@ -34,6 +34,8 @@ namespace HDU_AppXetTuyen.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
 
+        public virtual Khoa Khoa { get; set; }
+
         public virtual KhoiNganh KhoiNganh { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
