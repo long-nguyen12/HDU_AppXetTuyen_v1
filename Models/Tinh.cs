@@ -1,4 +1,4 @@
-namespace HDU_AppXetTuyen.Models
+﻿namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -19,15 +19,19 @@ namespace HDU_AppXetTuyen.Models
         [Key]
         public int Tinh_ID { get; set; }
 
+        [Display(Name = "Mã tỉnh")]
         [StringLength(250)]
         public string Tinh_Ma { get; set; }
 
+        [Display(Name = "Tên tỉnh")]
         [StringLength(250)]
         public string Tinh_Ten { get; set; }
 
+        [Display(Name = "Mã tỉnh - Tên tỉnh")]
         [StringLength(250)]
         public string Tinh_MaTen { get; set; }
 
+        [Display(Name = "Ghi chú")]
         [StringLength(250)]
         public string Tinh_GhiChu { get; set; }
 
