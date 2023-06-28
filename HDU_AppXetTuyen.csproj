@@ -147,7 +147,7 @@
     <Compile Include="Models\LePhiXetTuyen.cs" />
     <Compile Include="Models\MonHoc.cs" />
     <Compile Include="Models\NamHoc.cs" />
-    <Compile Include="Models\Ngành.cs" />
+    <Compile Include="Models\Nganh.cs" />
     <Compile Include="Models\PhuongThucXetTuyen.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\ThiSinhDangKy.cs" />
