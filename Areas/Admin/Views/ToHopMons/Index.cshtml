@@ -1,7 +1,5 @@
-﻿<!-- Thêm thư viện -->
-@model PagedList.IPagedList<HDU_AppXetTuyen.Models.Nganh>
+﻿@model PagedList.IPagedList<HDU_AppXetTuyen.Models.ToHopMon>
 @using PagedList.Mvc;
-<!-- Kết thúc-->
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -14,7 +12,7 @@
                 <div class="col-auto mb-1">
                     <h1 class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        Ngành
+                        Tổ hợp môn
                     </h1>
                 </div>
                 <div class="col-12 col-xl-auto mb-3">
@@ -22,7 +20,7 @@
                             <i class="me-1" data-feather="users"></i>
                             Manage Groups
                         </a>*@
-                    <a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","Nganhs")">
+                    <a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","ToHopMons")">
                         <i class="me-1" data-feather="user-plus"></i>
                         Thêm mới
                     </a>
@@ -34,22 +32,25 @@
 <div class="container-fluid px-4">
     <div class="card">
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table">
                 <tr>
                     <th>
-                        Khối ngành
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_MaToHop)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Nganh_MaNganh)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_TenToHop)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().NganhTenNganh)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon1)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Khoa_ID)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon2)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Nganh_GhiChu)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon3)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_MaTen)
                     </th>
                     <th></th>
                 </tr>
@@ -58,24 +59,27 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.KhoiNganh.KhoiNganh_Ten)
+                            @Html.DisplayFor(modelItem => item.Thm_MaToHop)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Nganh_MaNganh)
+                            @Html.DisplayFor(modelItem => item.Thm_TenToHop)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.NganhTenNganh)
+                            @Html.DisplayFor(modelItem => item.Thm_Mon1)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Khoa.Khoa_TenKhoa)
+                            @Html.DisplayFor(modelItem => item.Thm_Mon2)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Nganh_GhiChu)
+                            @Html.DisplayFor(modelItem => item.Thm_Mon3)
                         </td>
                         <td>
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.Nganh_ID }) |
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.Nganh_ID }) |
-                            @Html.ActionLink("Xoá", "Delete", new { id = item.Nganh_ID })
+                            @Html.DisplayFor(modelItem => item.Thm_MaTen)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Thm_ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Thm_ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Thm_ID })
                         </td>
                     </tr>
                 }
