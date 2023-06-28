@@ -12,6 +12,7 @@ namespace HDU_AppXetTuyen.Models
         public Nganh()
         {
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
+            ToHopMonNganhs = new HashSet<ToHopMonNganh>();
         }
 
         [Key]
@@ -34,5 +35,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
 
         public virtual KhoiNganh KhoiNganh { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
     }
 }

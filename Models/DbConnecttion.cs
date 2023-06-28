@@ -31,7 +31,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<ToHopMon> ToHopMons { get; set; }
         public virtual DbSet<TruongCapBa> TruongCapBas { get; set; }
         public virtual DbSet<Xa> Xas { get; set; }
-
+        public virtual DbSet<ToHopMonNganh> ToHopMonNganhs { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DotXetTuyen>()
@@ -58,6 +58,15 @@ namespace HDU_AppXetTuyen.Models
                 .HasMany(e => e.ToHopMons2)
                 .WithOptional(e => e.MonHoc2)
                 .HasForeignKey(e => e.Thm_mon3_ID);
+            modelBuilder.Entity<Nganh>()
+              .HasMany(e => e.ToHopMonNganhs)
+              .WithRequired(e => e.Nganh)
+              .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ToHopMon>()
+                .HasMany(e => e.ToHopMonNganhs)
+                .WithRequired(e => e.ToHopMon)
+                .WillCascadeOnDelete(false);
         }
     }
 }
