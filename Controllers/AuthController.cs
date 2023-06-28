@@ -125,7 +125,15 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult GetHuyen(string tinhID)
         {
-            return Json(new { success = true });
+            int id = int.Parse(tinhID);
+            var huyenList = db.Huyens.Where(n => n.Tinh_ID == id).Select(s => new
+            {
+                Huyen_ID = s.Huyen_ID,
+                Huyen_MaHuyen = s.Huyen_MaHuyen,
+                Huyen_TenHuyen = s.Huyen_TenHuyen,
+                Tinh_ID = s.Tinh_ID
+            });
+            return Json(new { success = true, data = huyenList.ToList() });
         }
 
         [HttpPost]
@@ -181,7 +189,7 @@ namespace HDU_AppXetTuyen.Controllers
                 SendEmail(thiSinh_register.ThiSinh_Email, body, subject);
                 #endregion
 
-                return Json(new { sucess = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
         }
 
