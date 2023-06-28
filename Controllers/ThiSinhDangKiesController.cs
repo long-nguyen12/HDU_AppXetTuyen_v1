@@ -10,15 +10,27 @@ using HDU_AppXetTuyen.Models;
 
 namespace HDU_AppXetTuyen.Controllers
 {
+    public class ThiSinhSessionCheckAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Session == null || filterContext.HttpContext.Session["login_session"] == null)
+            {
+                filterContext.Result = new RedirectResult("~/Auth/Index");
+            }
+        }
+    }
     public class ThiSinhDangKiesController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
 
         // GET: ThiSinhDangKies
+        [ThiSinhSessionCheck]
         public ActionResult Index()
         {
-            var thiSinhDangKies = db.ThiSinhDangKies.Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc);
-            return View(thiSinhDangKies.ToList());
+            var session = Session["login_session"].ToString();
+            var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+            return View(thiSinh);
         }
 
         // GET: ThiSinhDangKies/Details/5
@@ -66,6 +78,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
 
         // GET: ThiSinhDangKies/Edit/5
+        [ThiSinhSessionCheck]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -126,6 +139,58 @@ namespace HDU_AppXetTuyen.Controllers
             db.ThiSinhDangKies.Remove(thiSinhDangKy);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult GetThiSinhInfo(string id)
+        {
+            int idThiSinh = int.Parse(id);
+            var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ID == idThiSinh).Select(n => new
+            {
+                ThiSinh_ID = n.ThiSinh_ID,
+                ThiSinh_CCCD = n.ThiSinh_CCCD,
+                ThiSinh_MatKhau = n.ThiSinh_MatKhau,
+                ThiSinh_HoLot = n.ThiSinh_HoLot,
+                ThiSinh_Ten = n.ThiSinh_Ten,
+                ThiSinh_DienThoai = n.ThiSinh_DienThoai,
+                ThiSinh_Email = n.ThiSinh_Email,
+                ThiSinh_NgaySinh = n.ThiSinh_NgaySinh,
+                ThiSinh_DanToc = n.ThiSinh_DanToc,
+                ThiSinh_GioiTinh = n.ThiSinh_GioiTinh,
+                ThiSinh_DCNhanGiayBao = n.ThiSinh_DCNhanGiayBao,
+                ThiSinh_HoKhauThuongTru = n.ThiSinh_HoKhauThuongTru,
+                KhuVuc_ID = n.KhuVuc_ID,
+                DoiTuong_ID = n.DoiTuong_ID,
+                ThiSinh_TruongCapBa_Ma = n.ThiSinh_TruongCapBa_Ma,
+                ThiSinh_TruongCapBa = n.ThiSinh_TruongCapBa,
+                ThiSinh_TruongCapBa_Tinh_ID = n.ThiSinh_TruongCapBa_Tinh_ID,
+                ThiSinh_TrangThai = n.ThiSinh_TrangThai,
+                ThiSinh_GhiChu = n.ThiSinh_GhiChu,
+
+            }).FirstOrDefault();
+            var tinhs = db.Tinhs.Select(n => new
+            {
+                Tinh_ID = n.Tinh_ID,
+                Tinh_Ma = n.Tinh_Ma,
+                Tinh_Ten = n.Tinh_Ten,
+                Tinh_MaTen = n.Tinh_MaTen,
+                Tinh_GhiChu = n.Tinh_GhiChu
+            }).ToList();
+            var khuvucs = db.KhuVucs.Select(n => new
+            {
+                KhuVuc_ID = n.KhuVuc_ID,
+                KhuVuc_Ten = n.KhuVuc_Ten,
+                KhuVuc_DiemUuTien = n.KhuVuc_DiemUuTien,
+                KhuVuc_GhiChu = n.KhuVuc_GhiChu
+            }).ToList();
+            var doituongs = db.DoiTuongs.Select(n => new
+            {
+                DoiTuong_ID = n.DoiTuong_ID,
+                DoiTuong_Ten = n.DoiTuong_Ten,
+                DoiTuong_DiemUuTien = n.DoiTuong_DiemUuTien,
+                DoiTuong_GhiChu = n.DoiTuong_GhiChu
+            }).ToList();
+            return Json(new { success = true, data = thiSinh, tinhs = tinhs, khuvucs = khuvucs, doituongs = doituongs }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

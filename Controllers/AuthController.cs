@@ -42,7 +42,7 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Response.Cache.SetNoStore();
-                return RedirectToAction("tsdkttts", "ThiSinhDangKys");
+                return RedirectToAction("Index", "ThiSinhDangKies");
             }
             var doituongList = db.DoiTuongs.ToList();
             var khuvucList = db.KhuVucs.ToList();
@@ -58,11 +58,10 @@ namespace HDU_AppXetTuyen.Controllers
             ViewBag.KhuVuc_ID = new SelectList(khuvucList, "KhuVuc_ID", "KhuVuc_Ten");
             ViewBag.Tinh_ID = new SelectList(tinhList, "Tinh_ID", "Tinh_MaTen");
             ViewBag.Huyen_ID = new SelectList(huyenList, "Huyen_ID", "Huyen_TenHuyen");
-
             return View();
         }
 
-        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        /*[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Login()
         {
             if (Session["login_session"] != null)
@@ -70,7 +69,7 @@ namespace HDU_AppXetTuyen.Controllers
                 return RedirectToAction("tsdkttts", "ThiSinhDangKys");
             }
             return View();
-        }
+        }*/
 
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
@@ -116,11 +115,11 @@ namespace HDU_AppXetTuyen.Controllers
             return RedirectToAction("Index", "Auth");
         }
 
-        public ActionResult Register()
+        /*public ActionResult Register()
         {
             ViewBag.Tinh_ID = new SelectList(db.Tinhs, "Tinh_Ma", "Tinh_Ten");
             return View();
-        }
+        }*/
 
         [HttpPost]
         public JsonResult GetHuyen(string tinhID)
