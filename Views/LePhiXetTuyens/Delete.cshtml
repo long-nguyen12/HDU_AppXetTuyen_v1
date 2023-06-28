@@ -1,0 +1,65 @@
+﻿@model HDU_AppXetTuyen.Models.LePhiXetTuyen
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>LePhiXetTuyen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_SoTienDong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_SoTienDong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_MinhChung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_MinhChung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_GhiChu)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
