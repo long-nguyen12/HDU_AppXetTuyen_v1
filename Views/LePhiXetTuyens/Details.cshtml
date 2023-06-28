@@ -1,0 +1,59 @@
+﻿@model HDU_AppXetTuyen.Models.LePhiXetTuyen
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LePhiXetTuyen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_SoTienDong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_SoTienDong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_MinhChung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_MinhChung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lpxt_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lpxt_GhiChu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Lpxt_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
