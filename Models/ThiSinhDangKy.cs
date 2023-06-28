@@ -31,13 +31,6 @@
 
         public string ThiSinh_MatKhau { get; set; }
 
-        [NotMapped]
-        [StringLength(500)]
-        [Required(ErrorMessage = "Vui lòng nhập lại mật khẩu")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Mật khẩu")]
-        public string ThiSinh_Re_MatKhau { get; set; }
-
         [StringLength(500)]
         [Display(Name = "Điện thoại")]
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
@@ -65,8 +58,6 @@
         public string ThiSinh_NgaySinh { get; set; }
 
         [StringLength(4)]
-        [Display(Name = "Năm tốt nghiệp")]
-        [Required(ErrorMessage = "Vui lòng nhập năm tốt nghiệp")]
         public string ThiSinh_NamTotNghiep { get; set; }
 
         [StringLength(500)]
@@ -103,7 +94,8 @@
 
         public int? ThiSinh_TrangThai { get; set; }
 
-        [Required]
+        public int? ThiSinh_TruongCapBa_Tinh_ID { get; set; }
+
         [StringLength(200)]
         public string ThiSinh_GhiChu { get; set; }
 

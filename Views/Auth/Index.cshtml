@@ -1,0 +1,483 @@
+﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_auth.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('#showSignup').click(function (e) {
+            e.preventDefault();
+            $('#loginForm').hide();
+            $('#signupForm').show();
+            $("#leftPanel").removeClass("col-lg-7").addClass("col-lg-5");
+            $("#rightPanel").removeClass("col-lg-5").addClass("col-lg-7");
+        });
+
+        $('#showLogin').click(function (e) {
+            e.preventDefault();
+            $('#signupForm').hide();
+            $('#loginForm').show();
+            $("#rightPanel").removeClass("col-lg-7").addClass("col-lg-5");
+            $("#leftPanel").removeClass("col-lg-5").addClass("col-lg-7");
+        });
+
+        $('input').on('input', function () {
+            hideErrorMessage($(this));
+        });
+
+        $('select').on('input', function () {
+            hideErrorMessage($(this));
+        })
+
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+    })
+    function submitForm() {
+        $(".text-danger").text("");
+        let cccd = $("#login_CCCD").val();
+        let password = $("#login_password").val();
+        if (!cccd) {
+            var errorMessage = "Vui lòng nhập căn cước công dân";
+            $('#ThiSinh_CCCD_Error').text(errorMessage);
+        }
+        if (!password) {
+            var errorMessage = "Vui lòng nhập mật khẩu";
+            $('#ThiSinh_MatKhau_Error').text(errorMessage);
+        }
+        if (!cccd || !password) return;
+        let formData = {
+            cccd: cccd,
+            password: password
+        }
+        $.ajax({
+            url: "/Auth/Login",
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                console.log(response)
+                if (response.success) {
+
+                } else {
+                    $('#errorMessage').text(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors
+                console.error(error);
+            }
+        });
+    }
+    function submitRegisterForm() {
+        $(".text-danger").text("");
+        let flag = true;
+        let register_CCCD = $("#register_CCCD").val();
+        let register_email = $("#register_email").val();
+        let register_password = $("#register_password").val();
+        let register_re_password = $("#register_re_password").val();
+        let register_holot = $("#register_holot").val();
+        let register_ten = $("#register_ten").val();
+        let register_sdt = $("#register_sdt").val();
+        let ngaysinh = $("#datepicker").val();
+        let register_gt = $("#register_gt").val();
+        let register_dantoc = $("#register_dantoc").val();
+        let register_kv = $("#register_kv").val();
+        let register_doituong = $("#register_doituong").val();
+        let register_truong = $("#register_truong").val();
+        let register_ma_truong = $("#register_ma_truong").val();
+        let register_truongtinh = $("#register_truongtinh").val();
+        let register_phuongtt = $("#register_phuongtt").val();
+        let register_huyentt = $("#register_huyentt").val();
+        let register_tinhtt = $("#register_tinhtt").val();
+        let register_diachi = $("#register_diachi").val();
+        if (!register_CCCD) {
+            var errorMessage = "Vui lòng nhập căn cước công dân";
+            $('#register_CCCD_Error').text(errorMessage);
+        }
+        if (!register_email) {
+            var errorMessage = "Vui lòng nhập email";
+            $('#register_email_Error').text(errorMessage);
+            flag = false;
+        } else if (!validateEmail(register_email)) {
+            var errorMessage = "Vui lòng nhập email đúng định dạng";
+            $('#register_email_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_password) {
+            var errorMessage = "Vui lòng nhập mật khẩu";
+            $('#register_password_Error').text(errorMessage);
+            flag = false;
+        } else if (register_password.length < 6) {
+            var errorMessage = "Mật khẩu phải có ít nhất 6 kí tự";
+            $('#register_password_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_re_password) {
+            var errorMessage = "Vui lòng nhập lại mật khẩu";
+            $('#register_re_password_Error').text(errorMessage);
+            flag = false;
+        } else if (register_password.trim() != register_re_password.trim()) {
+            var errorMessage = "Mật khẩu không khớp";
+            $('#register_re_password_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_holot) {
+            var errorMessage = "Vui lòng nhập họ lót";
+            $('#register_holot_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_ten) {
+            var errorMessage = "Vui lòng nhập tên";
+            $('#register_ten_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_sdt) {
+            var errorMessage = "Vui lòng nhập số điện thoại";
+            $('#register_sdt_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ngaysinh) {
+            var errorMessage = "Vui lòng chọn ngày sinh";
+            $('#datepicker_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_gt || register_gt == "3") {
+            var errorMessage = "Vui lòng chọn giới tính";
+            $('#register_gt_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_dantoc) {
+            var errorMessage = "Vui lòng nhập dân tộc";
+            $('#register_dantoc_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_kv) {
+            var errorMessage = "Vui lòng chọn khu vực";
+            $('#register_kv_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_truong) {
+            var errorMessage = "Vui lòng nhập tên trường";
+            $('#register_truong_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_ma_truong) {
+            var errorMessage = "Vui lòng nhập mã trường";
+            $('#register_ma_truong_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_truongtinh || register_truongtinh == 0) {
+            var errorMessage = "Vui lòng chọn tỉnh/thành phố";
+            $('#register_truongtinh_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_phuongtt) {
+            var errorMessage = "Vui lòng nhập phường/xã";
+            $('#register_phuongtt_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_huyentt || register_huyentt == 0) {
+            var errorMessage = "Vui lòng chọn quận/huyện";
+            $('#register_huyentt_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_tinhtt || register_tinhtt == 0) {
+            var errorMessage = "Vui lòng chọn tỉnh/thành phố";
+            $('#register_tinhtt_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_diachi) {
+            var errorMessage = "Vui lòng nhập địa chỉ liên hệ";
+            $('#register_diachi_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!flag) return;
+
+        $('#loadingModal').modal('show');
+        let hokhautt = register_phuongtt + ", " + $('#register_huyentt option:selected').text() + ", " + $('#register_tinhtt option:selected').text();
+        let formData = {
+            ThiSinh_CCCD: register_CCCD,
+            ThiSinh_MatKhau: register_password,
+            ThiSinh_HoLot: register_holot,
+            ThiSinh_Ten: register_ten,
+            ThiSinh_DienThoai: register_sdt,
+            ThiSinh_Email: register_email,
+            ThiSinh_NgaySinh: ngaysinh,
+            ThiSinh_DanToc: register_dantoc,
+            ThiSinh_GioiTinh: register_gt,
+            ThiSinh_DCNhanGiayBao: register_diachi,
+            ThiSinh_HoKhauThuongTru: hokhautt,
+            KhuVuc_ID: register_kv,
+            DoiTuong_ID: register_doituong,
+            ThiSinh_TruongCapBa_Ma: register_ma_truong,
+            ThiSinh_TruongCapBa: register_truong,
+            ThiSinh_TruongCapBa_Tinh_ID: register_truongtinh,
+        }
+        $.ajax({
+            url: "/Auth/Register",
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                console.log(response)
+                if (response.success) {
+                    showToast("Thành công", "Đăng kí tài khoản thành công! Vui lòng kích hoạt tài khoản theo đường link gửi qua email!", "bg-success");
+                    $('#signupForm').hide();
+                    $('#loginForm').show();
+                    $("#rightPanel").removeClass("col-lg-7").addClass("col-lg-5");
+                    $("#leftPanel").removeClass("col-lg-5").addClass("col-lg-7");
+                } else {
+                    $('#errorMessage').text(response.message);
+                    showToast("Thất bại", "Đăng kí tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+                }
+            },
+            error: function (xhr, status, error) {
+                showToast("Thất bại", "Đăng kí tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+            },
+            complete: function () {
+                // Hide the loading modal
+                $('#loadingModal').modal('hide');
+            }
+        });
+    }
+    function hideErrorMessage(input) {
+        var errorContainer = input.next('.text-danger');
+        errorContainer.text('');
+    }
+    function validateEmail(email) {
+        var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        var isValid = emailRegex.test(email);
+        return isValid;
+    }
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+</script>
+<div style="height: 100vh; display: flex;">
+    <div id="leftPanel" class="col-lg-7 align-items-center text-center  d-none d-lg-block" style="background-color: #fa9627;">
+        <img src="~/Content/images/logo-hdu.png" style="width: 500px;" />
+    </div>
+
+    <div id="rightPanel" class="col-lg-5 col-12 p-4 card-body align-items-center overflow-auto">
+        <div id="loginForm">
+            <div class="text-center text-uppercase">
+                <h4 style="color: #001D85; font-weight: bold">Đăng nhập hệ thống</h4>
+            </div>
+            <div>
+                <label class="small mb-1" for="ThiSinh_CCCD">Căn cước công dân</label>
+                @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập CMND/CCCD", @id = "login_CCCD" } })
+                <span id="ThiSinh_CCCD_Error" class="small mb-1 text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="small mb-1" for="inputPassword">Mật khẩu</label>
+                @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu", @id = "login_password" } })
+                <span id="ThiSinh_MatKhau_Error" class="small mb-1 text-danger"></span>
+            </div>
+            <div>
+                <span id="errorMessage" class="small mb-1 text-danger"></span>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+                <input class="btn btn-primary" type="submit" onclick="submitForm()" value="Đăng nhập" />
+            </div>
+            <div class="text-center mt-4">
+                <div class="small"><a id="showSignup" style="text-decoration: none; color: #001D85;" href="#">Bạn chưa đăng kí thông tin? <b>Đăng kí tại đây</b></a></div>
+                <div class="small"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("ForgotPassword", "Auth")">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+            </div>
+        </div>
+
+        <div id="signupForm" style="display: none;">
+            <div class="text-center text-uppercase">
+                <h4 style="color: #001D85; font-weight: bold">Đăng kí tài khoản</h4>
+            </div>
+            <div>
+                <span id="errorMessage" class="small mb-1 text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_CCCD">Căn cước công dân*</label>
+                        @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập căn cước công dân", @id = "register_CCCD" } })
+                        <span id="register_CCCD_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_Email">Email*</label>
+                        @Html.EditorFor(model => model.ThiSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập email", @id = "register_email" } })
+                        <span id="register_email_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_MatKhau">Mật khẩu*</label>
+                        @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu", @id = "register_password" } })
+                        <span id="register_password_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_Re_MatKhau">Nhập lại mật khẩu*</label>
+                        <input id="register_re_password" class="form-control text-box single-line password" name="register_re_password" placeholder="Nhập lại mật khẩu" type="password" />
+                        <span id="register_re_password_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_HoLot">Họ lót*</label>
+                        @Html.EditorFor(model => model.ThiSinh_HoLot, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập họ lót", @id = "register_holot" } })
+                        <span id="register_holot_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_Ten">Tên*</label>
+                        @Html.EditorFor(model => model.ThiSinh_Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên", @id = "register_ten" } })
+                        <span id="register_ten_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_DienThoai">Điện thoại*</label>
+                        @Html.EditorFor(model => model.ThiSinh_DienThoai, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập số điện thoại", @id = "register_sdt" } })
+                        <span id="register_sdt_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_NgaySinh">Ngày sinh*</label>
+                        @Html.EditorFor(model => model.ThiSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", @id = "datepicker", @placeholder = "Chọn ngày sinh" } })
+                        <span id="datepicker_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_GioiTinh">Giới tính*</label>
+                        @Html.DropDownListFor(m => m.ThiSinh_GioiTinh, new List<SelectListItem>
+                           {
+                               new SelectListItem { Text = "Chọn giới tính", Value = "3" },
+                               new SelectListItem { Text = "Nam", Value = "0" },
+                               new SelectListItem { Text = "Nữ", Value = "1" },
+                           }, htmlAttributes: new { @class = "form-select", @id = "register_gt" })
+                        <span id="register_gt_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_DanToc">Dân tộc*</label>
+                        @Html.EditorFor(model => model.ThiSinh_DanToc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập dân tộc", @id = "register_dantoc" } })
+                        <span id="register_dantoc_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="KhuVuc_ID">Khu vực*</label>
+                        @Html.DropDownList("KhuVuc_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_kv" })
+                        <span id="register_kv_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="DoiTuong_ID">Đối tượng</label>
+                        @Html.DropDownList("DoiTuong_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_doituong" })
+                        <span id="register_doituong_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_TruongCapBa">Trường*</label>
+                        @Html.EditorFor(model => model.ThiSinh_TruongCapBa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập trường THPT", @id = "register_truong" } })
+                        <span id="register_truong_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường*</label>
+                        @Html.EditorFor(model => model.ThiSinh_TruongCapBa_Ma, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mã trường", @id = "register_ma_truong" } })
+                        <span id="register_ma_truong_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố*</label>
+                        @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_truongtinh" })
+                        <span id="register_truongtinh_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="ThiSinh_HoKhauThuongTru">Hộ khẩu thường trú*</label>
+                        @Html.EditorFor(model => model.ThiSinh_HoKhauThuongTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên phường/xã", @id = "register_phuongtt" } })
+                        <span id="register_phuongtt_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="Huyen_ID">Quận/huyện*</label>
+                        @Html.DropDownList("Huyen_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_huyentt" })
+                        <span id="register_huyentt_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố*</label>
+                        @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_tinhtt" })
+                        <span id="register_tinhtt_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label class="small mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ liên hệ*</label>
+                    @Html.EditorFor(model => model.ThiSinh_DCNhanGiayBao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập địa chỉ liên hệ", @id = "register_diachi" } })
+                    <span id="register_diachi_Error" class="small mb-1 text-danger"></span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+                <input class="btn btn-primary" type="submit" onclick="submitRegisterForm()" value="Đăng kí" />
+            </div>
+            <div class="text-center mt-4">
+                <div class="small"><a id="showLogin" style="text-decoration: none; color: #001D85;" href="#">Đã có tài khoản? <b>Đăng nhập ngay</b></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Toast Title</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+            </div>
+        </div>
+    </div>
+    <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
