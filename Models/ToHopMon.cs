@@ -25,20 +25,21 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(200)]
         public string Thm_TenToHop { get; set; }
 
-        public int? Thm_mon1_ID { get; set; }
+        [StringLength(200)]
+        public string Thm_Mon1 { get; set; }
 
-        public int? Thm_mon2_ID { get; set; }
+        [StringLength(200)]
+        public string Thm_Mon2 { get; set; }
 
-        public int? Thm_mon3_ID { get; set; }
+        [StringLength(200)]
+        public string Thm_Mon3 { get; set; }
+
+        [StringLength(250)]
+        public string Thm_MaTen { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
 
-        public virtual MonHoc MonHoc { get; set; }
-
-        public virtual MonHoc MonHoc1 { get; set; }
-
-        public virtual MonHoc MonHoc2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
     }

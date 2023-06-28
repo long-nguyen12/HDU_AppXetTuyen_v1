@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
@@ -22,9 +22,8 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<KhoiNganh> KhoiNganhs { get; set; }
         public virtual DbSet<KhuVuc> KhuVucs { get; set; }
         public virtual DbSet<LePhiXetTuyen> LePhiXetTuyens { get; set; }
-        public virtual DbSet<MonHoc> MonHocs { get; set; }
         public virtual DbSet<NamHoc> NamHocs { get; set; }
-        public virtual DbSet<Nganh> Nganh { get; set; }
+        public virtual DbSet<Nganh> Nganhs { get; set; }
         public virtual DbSet<PhuongThucXetTuyen> PhuongThucXetTuyens { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThiSinhDangKy> ThiSinhDangKies { get; set; }
@@ -33,6 +32,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<TruongCapBa> TruongCapBas { get; set; }
         public virtual DbSet<Xa> Xas { get; set; }
         public virtual DbSet<ToHopMonNganh> ToHopMonNganhs { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DotXetTuyen>()
@@ -46,14 +46,14 @@ namespace HDU_AppXetTuyen.Models
                 .HasForeignKey(e => e.DotXT_ID);
 
             modelBuilder.Entity<Khoa>()
-             .HasMany(e => e.Nganhs)
-             .WithRequired(e => e.Khoa)
-             .WillCascadeOnDelete(false);
+                .HasMany(e => e.Nganhs)
+                .WithRequired(e => e.Khoa)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Nganh>()
-              .HasMany(e => e.ToHopMonNganhs)
-              .WithRequired(e => e.Nganh)
-              .WillCascadeOnDelete(false);
+                .HasMany(e => e.ToHopMonNganhs)
+                .WithRequired(e => e.Nganh)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ToHopMon>()
                 .HasMany(e => e.ToHopMonNganhs)

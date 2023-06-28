@@ -24,7 +24,7 @@ namespace HDU_AppXetTuyen.Models
 
         public double? DoiTuong_DiemUuTien { get; set; }
 
-        [StringLength(250)]
+        [StringLength(2000)]
         public string DoiTuong_GhiChu { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

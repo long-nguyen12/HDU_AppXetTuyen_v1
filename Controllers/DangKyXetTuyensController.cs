@@ -45,7 +45,35 @@ namespace HDU_AppXetTuyen.Controllers
                 var dangKyXetTuyens = db_dkxt.DangKyXetTuyens.Include(d => d.DoiTuong).
                                        Include(d => d.DotXetTuyen).
                                        Include(d => d.KhuVuc).
-                                       Include(d => d.Ngành).
+                                       Include(d => d.Nganh).
+                                       Include(d => d.PhuongThucXetTuyen).
+                                       Include(d => d.ThiSinhDangKy).
+                                       Include(d => d.ToHopMon);
+
+                //var model_dkxt_ts = db_dkxt.DangKyXetTuyens.Include().Where(x => x.ThiSinh_ID.Equals(_thisinh_id)).ToList();
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult KhoiNganhListAll()
+        {
+
+            Session["login_session"] = "11111111"; // => vào chương trình k cần dòng code này
+
+            if (Session["login_session"] != null)
+            {
+                string str_login_session = Session["login_session"].ToString();
+                //ViewBag.str_login_session = str_login_session;
+
+                var tsdk_Detail = db_tsdk.ThiSinhDangKies.FirstOrDefault(ts => ts.ThiSinh_MatKhau.Equals(str_login_session));
+
+                long _thisinh_id = tsdk_Detail.ThiSinh_ID;
+
+                var dangKyXetTuyens = db_dkxt.DangKyXetTuyens.Include(d => d.DoiTuong).
+                                       Include(d => d.DotXetTuyen).
+                                       Include(d => d.KhuVuc).
+                                       Include(d => d.Nganh).
                                        Include(d => d.PhuongThucXetTuyen).
                                        Include(d => d.ThiSinhDangKy).
                                        Include(d => d.ToHopMon);

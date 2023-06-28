@@ -39,6 +39,21 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(500)]
         public string Dkxt_GhiChu { get; set; }
 
+        [StringLength(1000)]
+        public string Dkxt_Diem_M1 { get; set; }
+
+        [StringLength(1000)]
+        public string Dkxt_Diem_M2 { get; set; }
+
+        [StringLength(1000)]
+        public string Dkxt_Diem_M3 { get; set; }
+
+        [StringLength(1000)]
+        public string Dkxt_Diem_Tong { get; set; }
+
+        [StringLength(1000)]
+        public string Dkxt_Diem_Tong_Full { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen_DiemTS> DangKyXetTuyen_DiemTS { get; set; }
 
@@ -48,7 +63,7 @@ namespace HDU_AppXetTuyen.Models
 
         public virtual KhuVuc KhuVuc { get; set; }
 
-        public virtual Nganh Ngành { get; set; }
+        public virtual Nganh Nganh { get; set; }
 
         public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
 

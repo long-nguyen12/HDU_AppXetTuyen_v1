@@ -6,7 +6,6 @@ namespace HDU_AppXetTuyen.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-
     [Table("ToHopMonNganh")]
     public partial class ToHopMonNganh
     {
