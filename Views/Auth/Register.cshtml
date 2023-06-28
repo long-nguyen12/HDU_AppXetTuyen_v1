@@ -1,0 +1,165 @@
+﻿@model AppXetTuyen.Models.ThiSinhDangKy
+
+@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_Layout_auth.cshtml";
+}
+
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container-xl px-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card shadow-lg border-0 rounded-lg mt-4 mb-4">
+                            <div class="card-header justify-content-center text-center">
+                                <div class="col-lg-5">
+                                    <img src="~/Content/images/logo-hdu.png" style="width: 100%;" />
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @using (Html.BeginForm("Register", "Auth", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    @Html.ValidationSummary(true, "", new { @class = "small mb-1 text-danger" })
+                                    <div>
+                                        @{
+                                            if (ViewBag.RegisterErrorMessager != null)
+                                            {
+                                                <label class="small mb-1 text-danger" name="error_login" id="error_login">@ViewBag.RegisterErrorMessager</label>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_HoLot">Họ lót*</label>
+                                                @Html.EditorFor(model => model.ThiSinh_HoLot, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập họ lót" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_HoLot, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_Ten">Tên*</label>
+                                                @Html.EditorFor(model => model.ThiSinh_Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_Ten, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_DienThoai">Điện thoại*</label>
+                                                @Html.EditorFor(model => model.ThiSinh_DienThoai, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập số điện thoại" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_DienThoai, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_Email">Email*</label>
+                                                @Html.EditorFor(model => model.ThiSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập email" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_Email, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_CCCD">Căn cước công dân*</label>
+                                                @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập căn cước công dân" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_CCCD, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_NgaySinh">Ngày sinh*</label>
+                                                @Html.EditorFor(model => model.ThiSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", @id = "datepicker", @placeholder = "Chọn ngày sinh" } })
+
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_NgaySinh, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_GioiTinh">Giới tính</label>
+                                                @Html.DropDownListFor(m => m.ThiSinh_GioiTinh, new List<SelectListItem>
+                                                   {
+                                                       new SelectListItem { Text = "Nam", Value = "0" },
+                                                       new SelectListItem { Text = "Nữ", Value = "1" },
+                                                   }, "Chọn giới tính", htmlAttributes: new { @class = "form-select" })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_GioiTinh, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_DanToc">Dân tộc</label>
+                                                @Html.EditorFor(model => model.ThiSinh_DanToc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập dân tộc" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_DanToc, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_MatKhau">Mật khẩu</label>
+                                                @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_MatKhau, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_Re_MatKhau">Nhập lại mật khẩu</label>
+                                                @Html.EditorFor(model => model.ThiSinh_Re_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập lại mật khẩu" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_Re_MatKhau, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ liên hệ</label>
+                                                @Html.EditorFor(model => model.ThiSinh_DCNhanGiayBao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập địa chỉ liên hệ" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_DCNhanGiayBao, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label class="small mb-1" for="ThiSinh_NamTotNghiep">Năm tốt nghiệp</label>
+                                                @Html.EditorFor(model => model.ThiSinh_NamTotNghiep, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập năm tốt nghiệp" } })
+                                                @Html.ValidationMessageFor(model => model.ThiSinh_NamTotNghiep, "", new { @class = "small mb-1 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+                                        <input class="btn btn-primary" type="submit" value="Đăng kí" />
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="card-footer text-center">
+                                <div class="small">@Html.ActionLink("Quay lại trang chủ", "Login", null, new { style = "text-decoration: none; color: #001D85;" })</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/scripts.js"></script>
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    $(document).ready(function () {
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+    });
+</script>
