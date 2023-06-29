@@ -1,0 +1,118 @@
+﻿@model IEnumerable<HDU_AppXetTuyen.Models.DangKyXetTuyen>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DoiTuong.DoiTuong_Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KhuVuc.KhuVuc_Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nganh.Nganh_MaNganh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ToHopMon.Thm_MaToHop)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_TrangThai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_NguyenVong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_GhiChu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_M1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_M2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_M3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_Tong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_Tong_Full)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoiTuong.DoiTuong_Ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KhuVuc.KhuVuc_Ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nganh.Nganh_MaNganh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ToHopMon.Thm_MaToHop)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_TrangThai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_GhiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_Diem_M1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_Diem_M2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_Diem_M3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong_Full)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Dkxt_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Dkxt_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Dkxt_ID })
+        </td>
+    </tr>
+}
+
+</table>
