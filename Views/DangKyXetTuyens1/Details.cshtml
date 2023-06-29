@@ -1,0 +1,139 @@
+﻿@model HDU_AppXetTuyen.Models.DangKyXetTuyen
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DangKyXetTuyen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DoiTuong.DoiTuong_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoiTuong.DoiTuong_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DotXetTuyen.Dxt_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KhuVuc.KhuVuc_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhuVuc.KhuVuc_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nganh.Nganh_MaNganh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nganh.Nganh_MaNganh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToHopMon.Thm_MaToHop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToHopMon.Thm_MaToHop)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_NguyenVong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_NguyenVong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_GhiChu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_M1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_Diem_M1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_M2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_Diem_M2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_M3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_Diem_M3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_Tong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_Diem_Tong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dkxt_Diem_Tong_Full)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dkxt_Diem_Tong_Full)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Dkxt_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
