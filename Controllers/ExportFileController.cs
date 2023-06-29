@@ -18,19 +18,21 @@ namespace HDU_AppXetTuyen.Controllers
         {
             return View();
         }
-        public ActionResult DownloadFile(string idThiSinh)
+        public ActionResult DownloadFile_XetTuyenHB(string idThiSinh)
         {
-            var idThiSinhInt = int.Parse(idThiSinh);
+            // HARCODE 
+            //var idThiSinhInt = int.Parse(idThiSinh);
+            var idThiSinhInt = 1;
             string templateFilePath = Server.MapPath("~/Content/static/Mau_HB.docx");
             // Từ idDkxt lấy ra thông tin thí sinh
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
             // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
             var listDkxt = db.DangKyXetTuyens.Where(x => x.ThiSinh_ID == idThiSinhInt).ToArray();
             // Map các list đăng ký xét tuyển lấy ra thông tin chi tiết  của mỗi bản ghi
-            foreach(var item in listDkxt)
-            {
-                // thông tin chi tiết
-            }
+            //foreach(var item in listDkxt)
+            //{
+            //    thông tin chi tiết
+            //}
             using (DocX document = DocX.Load(templateFilePath))
             {
                 // Replace placeholders with actual data
