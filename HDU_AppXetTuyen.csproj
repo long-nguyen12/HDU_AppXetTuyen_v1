@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -183,10 +183,12 @@
     <Compile Include="Areas\Admin\Controllers\XasController.cs" />
     <Compile Include="Controllers\DangKyXetTuyens1Controller.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
+    <Compile Include="Controllers\ExportFileController.cs" />
     <Compile Include="Controllers\KhoiNganhs2Controller.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\LePhiXetTuyensController.cs" />
+    <Compile Include="Controllers\NCDangKyXetTuyensController.cs" />
     <Compile Include="Controllers\ThiSinhDangKiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -529,10 +531,16 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Create.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Delete.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Details.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Edit.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Views\ExportFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ContentOLD\bootstrap-grid.css.map" />
