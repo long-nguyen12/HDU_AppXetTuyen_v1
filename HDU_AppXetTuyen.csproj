@@ -172,6 +172,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\DoiTuongsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
@@ -179,13 +180,17 @@
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NganhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhuongThucXetTuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThiSinhDangKysController.cs" />
     <Compile Include="Areas\Admin\Controllers\TinhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ToHopMonsController.cs" />
     <Compile Include="Areas\Admin\Controllers\XasController.cs" />
     <Compile Include="Controllers\DangKyXetTuyens1Controller.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
+    <Compile Include="Controllers\ExportFileController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\LePhiXetTuyensController.cs" />
-    <Compile Include="Controllers\ThiSinhDangKies1Controller.cs" />
+    <Compile Include="Controllers\NCDangKyXetTuyensController.cs" />
     <Compile Include="Controllers\ThiSinhDangKiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -458,6 +463,31 @@
     <Content Include="Areas\Admin\Views\KhuVucs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\KhuVucs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\KhuVucs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ToHopMons\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ToHopMons\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ToHopMons\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\ToHopMons\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ToHopMons\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhuongThucXetTuyens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PhuongThucXetTuyens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\PhuongThucXetTuyens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PhuongThucXetTuyens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhuongThucXetTuyens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -534,10 +564,16 @@
     <Content Include="Views\ThiSinhDangKies1\Edit.cshtml" />
     <Content Include="Views\ThiSinhDangKies1\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyens\iddkxthocba.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Create.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Delete.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Details.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Edit.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Views\ExportFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\ContentOLD\bootstrap-grid.css.map" />
