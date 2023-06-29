@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -46,18 +46,54 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -119,6 +155,12 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Document.NET, Version=2.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\DocX.2.4.0\lib\net40\Xceed.Document.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Words.NET, Version=2.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\DocX.2.4.0\lib\net40\Xceed.Words.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -130,8 +172,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DoiTuongsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NganhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TinhsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\XasController.cs" />
     <Compile Include="Controllers\DangKyXetTuyens1Controller.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\KhoiNganhs2Controller.cs" />
@@ -371,6 +420,41 @@
     <Content Include="Areas\Admin\Views\NamHocs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tinhs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Huyens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KhoiNganhs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Nganhs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DoiTuongs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuVucs\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -414,6 +498,17 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout_auth.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Auth\ActivationAccount.cshtml" />
+    <Content Include="Views\Auth\ForgotPassword.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Register.cshtml" />
+    <Content Include="Views\Auth\ResetPassword.cshtml" />
+    <Content Include="Views\Auth\Index.cshtml" />
+    <Content Include="Views\ThiSinhDangKies\Create.cshtml" />
+    <Content Include="Views\ThiSinhDangKies\Delete.cshtml" />
+    <Content Include="Views\ThiSinhDangKies\Details.cshtml" />
+    <Content Include="Views\ThiSinhDangKies\Edit.cshtml" />
+    <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
     <Content Include="Views\KhoiNganhs2\Create.cshtml" />
     <Content Include="Views\KhoiNganhs2\Delete.cshtml" />

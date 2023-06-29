@@ -1,0 +1,94 @@
+﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
+
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout_auth.cshtml";
+}
+<script>
+    /*$(document).ready(function () {
+        $('#formLogin').submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var formData = $(this).serialize(); // Serialize the form data
+            var listInfo = formData.split("&");
+            var data = {
+                cccd: listInfo[0],
+                password: listInfo[1]
+            }
+            console.log(data)
+            *//*$.ajax({
+                url: '/your-endpoint', // Replace with your server-side endpoint
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle the success response here
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response here
+                }
+            });*//*
+        });
+    });*/
+    function submitForm() {
+        var name = $("#ThiSinh_CCCD").val();
+        var email = $("#ThiSinh_MatKhau").val();
+        
+    var formData = {
+        name: name,
+        email: email
+        };
+        console.log(formData)
+}
+</script>
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container-xl px-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header justify-content-center">
+                                <img src="~/Content/images/logo-hdu.png" style="width: 100%;" />
+                            </div>
+                            <div class="card-body">
+                                <!-- Login form-->
+                                @using (Ajax.BeginForm("Login", "Auth", null, new { id = "formLogin" }))
+                                {
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="ThiSinh_CCCD">CMND/CCCD</label>
+                                        @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập CMND/CCCD" } })
+                                        @Html.ValidationMessageFor(model => model.ThiSinh_CCCD, "", new { @class = "small mb-1 text-danger" })
+                                    </div>
+                                    <div class="mb-3" style="margin-top:5px">
+                                        <label class="small mb-1" for="inputPassword">Mật khẩu</label>
+                                        @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu" } })
+                                        @Html.ValidationMessageFor(model => model.ThiSinh_MatKhau, "", new { @class = "small mb-1 text-danger" })
+                                    </div>
+                                    <div>
+                                        @{
+                                            if (ViewBag.LoginErrorMessager != null)
+                                            {
+                                                <label class="small mb-1 text-danger" name="error_login" id="error_login">@ViewBag.LoginErrorMessager</label>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+                                        <input class="btn btn-primary" type="submit" onclick="submitForm()" value="Đăng nhập" />
+                                    </div>
+                                }
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="small"><a style="text-decoration: none; color: #001D85;" href="@Url.Action("Register", "Auth")">Bạn chưa đăng kí thông tin? <b>Đăng kí tại đây</b></a></div>
+                                <div class="small"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("ForgotPassword", "Auth")">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="~/Scripts/scripts.js"></script>
+@Scripts.Render("~/bundles/jqueryval")
