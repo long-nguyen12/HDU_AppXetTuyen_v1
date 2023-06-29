@@ -15,10 +15,30 @@ namespace HDU_AppXetTuyen.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: LePhiXetTuyens
+        [ThiSinhSessionCheck]
         public ActionResult Index()
         {
             var lePhiXetTuyens = db.LePhiXetTuyens.Include(l => l.ThiSinhDangKy);
             return View(lePhiXetTuyens.ToList());
+        }
+
+        [HttpGet]
+        [ThiSinhSessionCheck]
+        public JsonResult GetAllLePhi()
+        {
+            var session = Session["login_session"].ToString();
+            var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+            var nguyenvongs = db.DangKyXetTuyens.Include(l => l.Nganh).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).ToList();
+            var dataList = nguyenvongs.Select(s => new
+            {
+                Dkxt_NguyenVong = s.Dkxt_NguyenVong,
+                Nganh_ID = s.Nganh_ID,
+                Dkxt_Nganh = new
+                {
+                    Nganh_TenNganh = s.Nganh.NganhTenNganh
+                }
+            });
+            return Json(new { success = true, data = dataList }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: LePhiXetTuyens/Details/5

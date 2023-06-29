@@ -4,55 +4,88 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    $('document').ready(function () {
+        loadData();
+    })
+    function loadData() {
+        $.ajax({
+            url: "/LePhiXetTuyens/GetAllLePhi",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                console.log(response)
+                /*if (response.success) {
+                    let data = response.data;
+                    let huyentt = $('#Huyen_ID');
+                    huyentt.empty();
+                    $.each(data, function (index, item) {
+                        huyentt.append($('<option></option>').val(item.Huyen_ID).text(item.Huyen_TenHuyen));
+                    });
+                    huyentt.prop('disabled', false);
+                } else {
+                }*/
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors
+                console.error(error);
+            }
+        });
+    }
+</script>
 
-<h2>Index</h2>
+<div class="container-fluid px-12">
+    <div id="fadeInUp">
+        <div class="card card-header-actions mt-3 mb-1 ">
+            <div class="card-header">Thông tin đóng phí <a href="#" class="btn btn-light" style="color:blue!important">Tải lên minh chứng</a></div>
+            <div class="card-body">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_SoTienDong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_TrangThai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_MinhChung)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_GhiChu)
-        </th>
-        <th></th>
-    </tr>
+                <table class="table">
+                    <tr>
+                        <th width="15%">
+                            @Html.DisplayName("Nguyện vọng")
+                        </th>
+                        <th width="40%">
+                            @Html.DisplayName("Ngành")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Minh chứng")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Trạng thái")
+                        </th>
+                        <th></th>
+                    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_SoTienDong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_TrangThai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_MinhChung)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_GhiChu)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Lpxt_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Lpxt_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Lpxt_ID })
-        </td>
-    </tr>
-}
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lpxt_SoTienDong)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lpxt_TrangThai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lpxt_MinhChung)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lpxt_GhiChu)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Lpxt_ID }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Lpxt_ID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Lpxt_ID })
+                            </td>
+                        </tr>
+                    }
 
-</table>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
