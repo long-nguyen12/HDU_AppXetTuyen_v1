@@ -1,0 +1,203 @@
+﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ThiSinhDangKy</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DoiTuong.DoiTuong_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DoiTuong.DoiTuong_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DotXetTuyen.Dxt_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KhuVuc.KhuVuc_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KhuVuc.KhuVuc_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_CCCD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_CCCD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_MatKhau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_MatKhau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_DienThoai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_DienThoai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_HoLot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_HoLot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_NgaySinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_NgaySinh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_NamTotNghiep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_NamTotNghiep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_ResetCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_ResetCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_NgayDangKy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_NgayDangKy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_DanToc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_DanToc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_GioiTinh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_GioiTinh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_DCNhanGiayBao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_DCNhanGiayBao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_HoKhauThuongTru)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru_Check)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_HoKhauThuongTru_Check)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa_Ma)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_TruongCapBa_Ma)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_TruongCapBa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa_Tinh_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_TruongCapBa_Tinh_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThiSinh_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThiSinh_GhiChu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ThiSinh_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
