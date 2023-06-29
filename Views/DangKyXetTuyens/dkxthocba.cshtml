@@ -394,7 +394,7 @@
                 //return
 
                 let _ttmh_1 = new _thongtin_monhoc(res.thm_Mon1.TenMon1, res.thm_Mon1.HK1, res.thm_Mon1.HK2, res.thm_Mon1.HK3, res.thm_Mon1.DiemTrungBinh);
-                let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon3, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
+                let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon2, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
                 let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
                 console.log("--------thông tin môn 1----------");
                 console.log(_ttmh_1);
@@ -403,8 +403,9 @@
                 console.log("--------thông tin môn 3----------");
                 console.log(_ttmh_3);
                 set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);
-
-
+                $('#lb_tenmon_1').html(_ttmh_1.ten_Mon);
+                $('#lb_tenmon_2').html(_ttmh_2.ten_Mon);
+                $('#lb_tenmon_3').html(_ttmh_3.ten_Mon);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
