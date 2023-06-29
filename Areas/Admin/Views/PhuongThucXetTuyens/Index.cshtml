@@ -1,0 +1,62 @@
+﻿@model IEnumerable<HDU_AppXetTuyen.Models.PhuongThucXetTuyen>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <h1 class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Phương thức xét tuyển
+                    </h1>
+                </div>
+                <div class="col-12 col-xl-auto mb-3">
+                    <a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","PhuongThucXetTuyens")">
+                        <i class="me-1" data-feather="user-plus"></i>
+                        Thêm mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ptxt_TenPhuongThuc)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ptxt_GhiChu)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ptxt_TenPhuongThuc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ptxt_GhiChu)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Ptxt_ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Ptxt_ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Ptxt_ID })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
