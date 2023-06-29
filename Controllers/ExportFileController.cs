@@ -25,9 +25,23 @@ namespace HDU_AppXetTuyen.Controllers
         }
         public ActionResult DownloadFile_XetTuyenHB(string idThiSinh)
         {
-            // HARCODE 
-            //var idThiSinhInt = int.Parse(idThiSinh);
-            var idThiSinhInt = 2;
+            // Không cần sử dụng string idThiSinh vì lấy id Thí sinh từ session
+
+            var idThiSinhInt = 0;
+            // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
+            if (Session["login_session"] == null)
+            {
+                idThiSinhInt = 2;
+                System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
+            }
+            else
+            {
+                string str_thisinh_session = Session["login_session"].ToString();
+                var thisinh_session = db.ThiSinhDangKies.Where(x => x.ThiSinh_MatKhau == str_thisinh_session).FirstOrDefault();
+                idThiSinhInt = (int)thisinh_session.ThiSinh_ID;
+                System.Diagnostics.Debug.WriteLine("idThiSinhInt: " + idThiSinhInt);
+            }
+
             string templateFilePath = Server.MapPath("~/Content/static/Mau_HB.docx");
             // Từ idDkxt lấy ra thông tin thí sinh
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
@@ -41,12 +55,8 @@ namespace HDU_AppXetTuyen.Controllers
             int idDoiTuongTS = (int) thiSinhInfo.DoiTuong_ID;
             // Từ đối tượng id lấy ra tên đối tượng
             var tenDoiTuong = db.DoiTuongs.Find(idDoiTuongTS).DoiTuong_Ten;
+            if (tenDoiTuong == null) tenDoiTuong = " ";
 
-            // Map các list đăng ký xét tuyển lấy ra thông tin chi tiết  của mỗi bản ghi
-            //foreach(var item in listDkxt)
-            //{
-            //    thông tin chi tiết
-            //}
             using (DocX document = DocX.Load(templateFilePath))
             {
                 // Replace placeholders with actual data
@@ -63,7 +73,9 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
-                document.ReplaceText("<<ThiSinh_Doituong>>", tenDoiTuong);
+                document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);                
+                document.ReplaceText("<<ThiSinh_HocLuc12>>", listDkxt[0].Dkxt_XepLoaiHocLuc_12);
+                document.ReplaceText("<<ThiSinh_HanhKiem12>>", listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
 
                 // Lấy ra table đầu tiên trong file word
                 var table = document.Tables[0];
@@ -111,28 +123,27 @@ namespace HDU_AppXetTuyen.Controllers
                     table.InsertRow();
                     table.InsertRow();
                     table.InsertRow();
-
                     // Thêm dữ liệu vào table
-                    table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_NguyenVong.ToString()).Font("Times New Roman");
+                    table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_NguyenVong.ToString()).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[1].Paragraphs[0].Append(tenNganh).Font("Times New Roman");
-                    table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman");
+                    table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[3].Paragraphs[0].Append("Môn 1:" + mon1_tenmon).Font("Times New Roman");
-                    table.Rows[index].Cells[4].Paragraphs[0].Append(mon1_hk1).Font("Times New Roman");
-                    table.Rows[index].Cells[5].Paragraphs[0].Append(mon1_hk2).Font("Times New Roman");
-                    table.Rows[index].Cells[6].Paragraphs[0].Append(mon1_hk3).Font("Times New Roman");
-                    table.Rows[index].Cells[7].Paragraphs[0].Append(mon1_diemtb).Font("Times New Roman");
+                    table.Rows[index].Cells[4].Paragraphs[0].Append(mon1_hk1).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[5].Paragraphs[0].Append(mon1_hk2).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[6].Paragraphs[0].Append(mon1_hk3).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[7].Paragraphs[0].Append(mon1_diemtb).Font("Times New Roman").Alignment = Alignment.center;
 
                     table.Rows[index + 1].Cells[3].Paragraphs[0].Append("Môn 2: " + mon2_tenmon).Font("Times New Roman");
-                    table.Rows[index + 1].Cells[4].Paragraphs[0].Append(mon2_hk1).Font("Times New Roman");
-                    table.Rows[index + 1].Cells[5].Paragraphs[0].Append(mon2_hk2).Font("Times New Roman");
-                    table.Rows[index + 1].Cells[6].Paragraphs[0].Append(mon2_hk3).Font("Times New Roman");
-                    table.Rows[index + 1].Cells[7].Paragraphs[0].Append(mon2_diemtb).Font("Times New Roman");
+                    table.Rows[index + 1].Cells[4].Paragraphs[0].Append(mon2_hk1).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index + 1].Cells[5].Paragraphs[0].Append(mon2_hk2).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index + 1].Cells[6].Paragraphs[0].Append(mon2_hk3).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index + 1].Cells[7].Paragraphs[0].Append(mon2_diemtb).Font("Times New Roman").Alignment = Alignment.center;
 
-                    table.Rows[index + 2].Cells[3].Paragraphs[0].Append("Môn 1: " + mon3_tenmon).Font("Times New Roman");
-                    table.Rows[index + 2].Cells[4].Paragraphs[0].Append(mon3_hk1).Font("Times New Roman");
-                    table.Rows[index + 2].Cells[5].Paragraphs[0].Append(mon3_hk2).Font("Times New Roman");
-                    table.Rows[index + 2].Cells[6].Paragraphs[0].Append(mon3_hk3).Font("Times New Roman");
-                    table.Rows[index + 2].Cells[7].Paragraphs[0].Append(mon3_diemtb).Font("Times New Roman");
+                    table.Rows[index + 2].Cells[3].Paragraphs[0].Append("Môn 3: " + mon3_tenmon).Font("Times New Roman");
+                    table.Rows[index + 2].Cells[4].Paragraphs[0].Append(mon3_hk1).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index + 2].Cells[5].Paragraphs[0].Append(mon3_hk2).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index + 2].Cells[6].Paragraphs[0].Append(mon3_hk3).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index + 2].Cells[7].Paragraphs[0].Append(mon3_diemtb).Font("Times New Roman").Alignment = Alignment.center;
 
                     // Merge đúng định dạng
                     table.MergeCellsInColumn(0, index, index + 2);
