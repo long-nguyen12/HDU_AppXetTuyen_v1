@@ -54,6 +54,12 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(1000)]
         public string Dkxt_Diem_Tong_Full { get; set; }
 
+        [StringLength(500)]
+        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
+
+        [StringLength(500)]
+        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen_DiemTS> DangKyXetTuyen_DiemTS { get; set; }
 
