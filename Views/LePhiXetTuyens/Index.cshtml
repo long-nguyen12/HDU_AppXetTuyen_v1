@@ -1,58 +1,173 @@
 ﻿@model IEnumerable<HDU_AppXetTuyen.Models.LePhiXetTuyen>
-
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index"; Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script>
+    $("document").ready(function () {
+      loadData();
+      $('#selectFile').hide();
+      $('#uploadFile').hide();
+      $("#uploadFile").click(function () {
+        var files = $("#selectFile")[0].files;
 
-<h2>Index</h2>
+        if (files.length > 0) {
+          var formData = new FormData();
+          for (var i = 0; i < files.length; i++) {
+            formData.append("filesMinhChung", files[i]);
+          }
+          $.ajax({
+            url: "/LePhiXetTuyens/UploadLePhiMinhChung",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              if(response.success){
+                   showToast(
+                    "Thông báo",
+                    "Tải lên minh chứng thành công!",
+                    "bg-error"
+                  );
+              }else{
+                  showToast(
+                    "Cảnh báo",
+                    "Tải lên minh chứng thất bại! Vui lòng thử lại",
+                    "bg-error"
+                  );
+              }
+              $('#lephiForm')[0].reset();
+            },
+            error: function (xhr, status, error) {
+              // Handle the upload error
+              showToast(
+                "Cảnh báo",
+                "Tải lên minh chứng thất bại! Vui lòng thử lại",
+                "bg-error"
+              );
+              $('#lephiForm')[0].reset();
+            },
+          });
+        } else {
+          showToast(
+            "Cảnh báo",
+            "Vui lòng chọn file minh chứng!",
+            "bg-error"
+          );
+        }
+      });
+    });
+    function loadData() {
+      $.ajax({
+        url: "/LePhiXetTuyens/GetAllLePhi",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        success: function (response) {
+            console.log(response);
+          if (response.success) {
+            let data = response.data;
+            if (data.length > 0) {
+              $("#selectFile").show();
+              $("#uploadFile").show();
+              let html = "";
+              $.each(result, function (key, item) {
+                html += "<tr>";
+                // html += '<td>' + item.Khoa_MaKhoa + '</td>';
+                // html += '<td>' + item.Khoa_TenKhoa + '</td>';
+                // html += '<td>' + item.Khoa_DiaChi + '</td>';
+                // html += '<td>' + dienThoai + '</td>';
+                // html += '<td>' + email + '</td>';
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_SoTienDong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_TrangThai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_MinhChung)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lpxt_GhiChu)
-        </th>
-        <th></th>
-    </tr>
+                // html += `<td class="text-center align-middle"><a class="btn btn-primary mx-2" href="${url}">Sửa</a>`;
+                // html += `<a class="btn btn-danger delete-button" data-id="${item.Khoa_ID}" data-bs-toggle="modal" data-bs-target="#deleteModal">Xoá</a></td>`;
+                html += "</tr>";
+              });
+            }
+          } else {
+          }
+        },
+        error: function (xhr, status, error) {
+          // Handle any errors
+          console.error(error);
+        },
+      });
+    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_SoTienDong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_TrangThai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_MinhChung)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lpxt_GhiChu)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Lpxt_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Lpxt_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Lpxt_ID })
-        </td>
-    </tr>
-}
+    function showToast(title, message, bgColor) {
+      $("#myToast .toast-header .me-auto").text(title);
+      $("#myToast .toast-body").text(message);
+      $("#myToast .toast")
+        .removeClass("bg-success bg-danger")
+        .addClass(bgColor);
+      $("#myToast").toast("show");
+    }
+</script>
 
-</table>
+<div class="container-fluid px-12">
+    <div id="fadeInUp">
+        <div class="card card-header-actions mt-3 mb-1">
+            <div class="card-header">Lưu ý</div>
+            <div class="card-body">
+                <div class="col-xxl-12">
+                    <p style="color: red; font-style: italic" class="mb-1">
+                        - Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp
+                        giao dịch chuyển tiền).
+                    </p>
+                    <p style="color: red; font-style: italic" class="mb-1">
+                        - Nếu thí sinh không đóng đủ lệ phí xét tuyển, nhà trường sẽ chỉ
+                        xét đến một số nguyện vọng nhất định.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-header-actions mt-3 mb-1">
+            <div class="card-header">
+                Thông tin đóng phí
+                <form id="lephiForm" method="post" enctype="multipart/form-data">
+                    <div style="display: flex">
+                        <input id="selectFile"
+                               name="filesMinhChung"
+                               class="form-control"
+                               type="file"
+                               style="color: blue !important; margin-right: 2px"
+                               multiple />
+                        <input id="uploadFile"
+                               class="btn btn-primary"
+                               type="button"
+                               value="Lưu" />
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="15%">@Html.DisplayName("Nguyện vọng")</th>
+                            <th width="40%">@Html.DisplayName("Ngành")</th>
+                            <th>@Html.DisplayName("Minh chứng")</th>
+                            <th>@Html.DisplayName("Trạng thái")</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="myToast"
+             class="toast"
+             role="alert"
+             aria-live="assertive"
+             aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Toast Title</strong>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+</div>
