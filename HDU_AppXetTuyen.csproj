@@ -132,7 +132,9 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
+    <Compile Include="Controllers\DangKyXetTuyens1Controller.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
+    <Compile Include="Controllers\KhoiNganhs2Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -413,6 +415,16 @@
     <Content Include="Views\Shared\_Layout_auth.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
+    <Content Include="Views\KhoiNganhs2\Create.cshtml" />
+    <Content Include="Views\KhoiNganhs2\Delete.cshtml" />
+    <Content Include="Views\KhoiNganhs2\Details.cshtml" />
+    <Content Include="Views\KhoiNganhs2\Edit.cshtml" />
+    <Content Include="Views\KhoiNganhs2\Index.cshtml" />
+    <Content Include="Views\DangKyXetTuyens1\Create.cshtml" />
+    <Content Include="Views\DangKyXetTuyens1\Delete.cshtml" />
+    <Content Include="Views\DangKyXetTuyens1\Details.cshtml" />
+    <Content Include="Views\DangKyXetTuyens1\Edit.cshtml" />
+    <Content Include="Views\DangKyXetTuyens1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
