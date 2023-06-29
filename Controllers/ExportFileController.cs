@@ -28,6 +28,15 @@ namespace HDU_AppXetTuyen.Controllers
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
             // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
             var listDkxt = db.DangKyXetTuyens.Where(x => x.ThiSinh_ID == idThiSinhInt).ToArray();
+
+            int idKhuVucTS = (int) thiSinhInfo.KhuVuc_ID;
+            // Từ khu vực id lấy ra tên khu vực
+            var tenKhuVuc = db.KhuVucs.Find(idKhuVucTS).KhuVuc_Ten;
+
+            int idDoiTuongTS = (int) thiSinhInfo.DoiTuong_ID;
+            // Từ đối tượng id lấy ra tên đối tượng
+            var tenDoiTuong = db.DoiTuongs.Find(idDoiTuongTS).DoiTuong_Ten;
+
             // Map các list đăng ký xét tuyển lấy ra thông tin chi tiết  của mỗi bản ghi
             //foreach(var item in listDkxt)
             //{
@@ -44,7 +53,13 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_NgaySinh>>", thiSinhInfo.ThiSinh_NgaySinh);
                 document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
                 document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
+                document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
+                document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
+                document.ReplaceText("<<ThiSinh_Doituong>>", tenDoiTuong);
+
                 // Add more ReplaceText statements for each placeholder you want to fill
 
                 // Generate a unique file name
