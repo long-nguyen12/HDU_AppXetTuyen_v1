@@ -185,7 +185,6 @@
     <Compile Include="Areas\Admin\Controllers\TinhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ToHopMonsController.cs" />
     <Compile Include="Areas\Admin\Controllers\XasController.cs" />
-    <Compile Include="Controllers\DangKyXetTuyens1Controller.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\ExportFileController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
