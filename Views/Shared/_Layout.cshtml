@@ -41,7 +41,7 @@
                     <img class="img-fluid" src="~/Content/images/profile-1.png" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownUserImage">
-                    <h6 class="dropdown-header d-flex align-items-center">
+                    @*<h6 class="dropdown-header d-flex align-items-center">
                         <img class="dropdown-user-img" src="~/Content/images/profile-1.png" />
                         <div class="dropdown-user-details">
                             <div class="dropdown-user-details-name">Hoàng Việt Anh</div>
@@ -52,7 +52,7 @@
                     <a class="dropdown-item" href="#!">
                         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                         Tài khoản
-                    </a>
+                    </a>*@
                     <a class="dropdown-item" href="@Url.Action("Logout", "Auth")">
                         <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                         Đăng xuất
@@ -71,7 +71,7 @@
                         <div class="sidenav-menu-heading">MENU</div>
 
                         <!-- Sidenav Accordion (Dashboard)-->
-                        <a class="nav-link" href="@Url.Action("tsdkttts", "ThiSinhDangKys")">
+                        <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKies")">
                             <div class="nav-link-icon"><i data-feather="activity"></i></div>
                             Thông tin thí sinh
                         </a>
@@ -87,7 +87,7 @@
                             <div class="nav-link-icon"><i data-feather="filter"></i></div>
                             Kết quả xét tuyển
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="@Url.Action("Index", "LePhiXetTuyens")">
                             <div class="nav-link-icon"><i data-feather="package"></i></div>
                             Thông tin đóng phí
                         </a>

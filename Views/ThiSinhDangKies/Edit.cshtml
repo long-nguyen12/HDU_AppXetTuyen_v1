@@ -4,206 +4,428 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    $('document').ready(function () {
+        loadData();
+        $('#Tinh_ID').change(function () {
+            let selectedTinh = $(this).val();
+            $.ajax({
+                url: "/Auth/GetHuyen",
+                type: "POST",
+                data: JSON.stringify({
+                    tinhID: selectedTinh
+                }),
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {
+                    if (response.success) {
+                        let data = response.data;
+                        let huyentt = $('#Huyen_ID');
+                        huyentt.empty();
+                        $.each(data, function (index, item) {
+                            huyentt.append($('<option></option>').val(item.Huyen_ID).text(item.Huyen_TenHuyen));
+                        });
+                        huyentt.prop('disabled', false);
+                    } else {
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors
+                    console.error(error);
+                }
+            });
+        });
+        
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+    })
+    function loadData() {
+        $.ajax({
+            url: "/ThiSinhDangKies/GetThiSinhInfo",
+            type: "POST",
+            data: JSON.stringify({
+                id: @Model.ThiSinh_ID
+            }),
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                console.log(response)
+                if (response.success) {
+                    let data = response.data;
+                    let tinhs = response.tinhs;
+                    let khuvucs = response.khuvucs;
+                    let doituongs = response.doituongs;
+                    let phuongxa = data.ThiSinh_HoKhauThuongTru.split(",");
+                    $('#ThiSinh_CCCD').val(data.ThiSinh_CCCD);
+                    $('#ThiSinh_HoLot').val(data.ThiSinh_HoLot);
+                    $('#ThiSinh_Ten').val(data.ThiSinh_Ten);
+                    $('#datepicker').val(data.ThiSinh_NgaySinh);
+                    $('#ThiSinh_DienThoai').val(data.ThiSinh_DienThoai);
+                    $('#ThiSinh_Email').val(data.ThiSinh_Email);
+                    $('#ThiSinh_DanToc').val(data.ThiSinh_DanToc);
+                    $('#ThiSinh_TruongCapBa').val(data.ThiSinh_TruongCapBa);
+                    $('#ThiSinh_TruongCapBa_Ma').val(data.ThiSinh_TruongCapBa_Ma);
+                    $('#ThiSinh_DCNhanGiayBao').val(data.ThiSinh_DCNhanGiayBao);
+                    $('#ThiSinh_HoKhauThuongTru').val(phuongxa[0]);
 
-<h2>Edit</h2>
+                    /* Chọn giới tính */
+                    let gioitinhs = [
+                        { value: '0', text: 'Nam' },
+                        { value: '1', text: 'Nữ' }
+                    ];
 
+                    let gioiTinhOptions = $('#ThiSinh_GioiTinh');
+                    $.each(gioitinhs, function (index, option) {
+                        gioiTinhOptions.append($('<option>', {
+                            value: option.value,
+                            text: option.text
+                        }));
+                    });
+                    gioiTinhOptions.val(data.ThiSinh_GioiTinh);
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ThiSinhDangKy</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ThiSinh_ID)
+                    /* Chọn khu vực */
+                    let khuvucOptions = $('#KhuVuc_ID');
+                    $.each(khuvucs, function (index, option) {
+                        khuvucOptions.append($('<option>', {
+                            value: option.KhuVuc_ID,
+                            text: option.KhuVuc_Ten
+                        }));
+                    });
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_CCCD, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_CCCD, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    let khuVucDefaultIndex = khuvucs.filter((value, index) => {
+                        return value.KhuVuc_ID == data.KhuVuc_ID
+                    })
+                    khuvucOptions.val(khuVucDefaultIndex[0].KhuVuc_ID);
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_MatKhau, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_MatKhau, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    /* Chọn đối tượng */
+                    let doituongOptions = $('#DoiTuong_ID');
+                    $.each(doituongs, function (index, option) {
+                        doituongOptions.append($('<option>', {
+                            value: option.DoiTuong_ID,
+                            text: option.DoiTuong_Ten
+                        }));
+                    });
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_DienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_DienThoai, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_DienThoai, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    let dtDefaultIndex = doituongs.filter((value, index) => {
+                        return value.DoiTuong_ID == data.DoiTuong_ID
+                    })
+                    doituongOptions.val(dtDefaultIndex[0].DoiTuong_ID);
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    /* Chọn tỉnh */
+                    let tinhOptions = $('#Tinh_ID');
+                    $.each(tinhs, function (index, option) {
+                        tinhOptions.append($('<option>', {
+                            value: option.Tinh_ID,
+                            text: option.Tinh_MaTen
+                        }));
+                    });
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_HoLot, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_HoLot, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_HoLot, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    let tinhDefaultIndex = tinhs.filter((value, index) => {
+                        return value.Tinh_MaTen.trim() == phuongxa[2].trim()
+                    })
+                    tinhOptions.val(tinhDefaultIndex[0].Tinh_ID);
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_Ten, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_Ten, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_Ten, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    /* Chọn huyện */
+                    $.ajax({
+                        url: "/Auth/GetHuyen",
+                        type: "POST",
+                        data: JSON.stringify({
+                            tinhID: tinhDefaultIndex[0].Tinh_ID
+                        }),
+                        contentType: "application/json;charset=utf-8",
+                        success: function (response) {
+                            if (response.success) {
+                                let data = response.data;
+                                let huyentt = $('#Huyen_ID');
+                                huyentt.empty();
+                                $.each(data, function (index, item) {
+                                    huyentt.append($('<option></option>').val(item.Huyen_ID).text(item.Huyen_TenHuyen));
+                                });
+                                huyentt.prop('disabled', false);
+                                let huyenDefaultIndex = data.filter((value, index) => {
+                                    return value.Huyen_TenHuyen.trim() == phuongxa[1].trim()
+                                })
+                                huyentt.val(huyenDefaultIndex[0].Huyen_ID);
+                            } else {
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle any errors
+                            console.error(error);
+                        }
+                    });
+                } else {
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors
+                console.error(error);
+            }
+        });
+    }
+    function onUpdateInfo() {
+        $(".text-danger").text("");
+        let flag = true;
+        let ThiSinh_CCCD = $("#ThiSinh_CCCD").val();
+        let ThiSinh_Email = $("#ThiSinh_Email").val();
+        let ThiSinh_HoLot = $("#ThiSinh_HoLot").val();
+        let ThiSinh_Ten = $("#ThiSinh_Ten").val();
+        let ThiSinh_DienThoai = $("#ThiSinh_DienThoai").val();
+        let ThiSinh_NgaySinh = $("#datepicker").val();
+        let ThiSinh_GioiTinh = $("#ThiSinh_GioiTinh").val();
+        let ThiSinh_DanToc = $("#ThiSinh_DanToc").val();
+        let KhuVuc_ID = $("#KhuVuc_ID").val();
+        let DoiTuong_ID = $("#DoiTuong_ID").val();
+        let ThiSinh_TruongCapBa = $("#ThiSinh_TruongCapBa").val();
+        let ThiSinh_TruongCapBa_Ma = $("#ThiSinh_TruongCapBa_Ma").val();
+        let ThiSinh_HoKhauThuongTru = $("#ThiSinh_HoKhauThuongTru").val();
+        let Huyen_ID = $("#Huyen_ID").val();
+        let Tinh_ID = $("#Tinh_ID").val();
+        let ThiSinh_DCNhanGiayBao = $("#ThiSinh_DCNhanGiayBao").val();
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_NgaySinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        if (!ThiSinh_CCCD) {
+            var errorMessage = "Vui lòng nhập căn cước công dân";
+            $('#ThiSinh_CCCD_Error').text(errorMessage);
+        }
+        if (!ThiSinh_Email) {
+            var errorMessage = "Vui lòng nhập email";
+            $('#ThiSinh_Email_Error').text(errorMessage);
+            flag = false;
+        } else if (!validateEmail(ThiSinh_Email)) {
+            var errorMessage = "Vui lòng nhập email đúng định dạng";
+            $('#ThiSinh_Email_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_HoLot) {
+            var errorMessage = "Vui lòng nhập họ lót";
+            $('#ThiSinh_HoLot_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_Ten) {
+            var errorMessage = "Vui lòng nhập tên";
+            $('#ThiSinh_Ten_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_DienThoai) {
+            var errorMessage = "Vui lòng nhập số điện thoại";
+            $('#ThiSinh_DienThoai_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_NgaySinh) {
+            var errorMessage = "Vui lòng chọn ngày sinh";
+            $('#datepicker_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_GioiTinh) {
+            var errorMessage = "Vui lòng chọn giới tính";
+            $('#ThiSinh_GioiTinh_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_DanToc) {
+            var errorMessage = "Vui lòng nhập dân tộc";
+            $('#ThiSinh_DanToc_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!KhuVuc_ID) {
+            var errorMessage = "Vui lòng chọn khu vực";
+            $('#KhuVuc_ID_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_TruongCapBa) {
+            var errorMessage = "Vui lòng nhập tên trường";
+            $('#ThiSinh_TruongCapBa_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_TruongCapBa_Ma) {
+            var errorMessage = "Vui lòng nhập mã trường";
+            $('#ThiSinh_TruongCapBa_Ma_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Tinh_ID || Tinh_ID == 0) {
+            var errorMessage = "Vui lòng chọn tỉnh/thành phố";
+            $('#Tinh_ID_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_HoKhauThuongTru) {
+            var errorMessage = "Vui lòng nhập phường/xã";
+            $('#ThiSinh_HoKhauThuongTru_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Huyen_ID || Huyen_ID == 0) {
+            var errorMessage = "Vui lòng chọn quận/huyện";
+            $('#Huyen_ID_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_DCNhanGiayBao) {
+            var errorMessage = "Vui lòng nhập địa chỉ liên hệ";
+            $('#ThiSinh_DCNhanGiayBao_Error').text(errorMessage);
+            flag = false;
+        }
+        console.log(flag)
+        /*if (!flag) return;*/
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_NamTotNghiep, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_NamTotNghiep, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_NamTotNghiep, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        let hokhautt = ThiSinh_HoKhauThuongTru + ", " + $('#Huyen_ID option:selected').text() + ", " + $('#Tinh_ID option:selected').text();
+        let formData = {
+            ThiSinh_CCCD: ThiSinh_CCCD,
+            ThiSinh_HoLot: ThiSinh_HoLot,
+            ThiSinh_Ten: ThiSinh_Ten,
+            ThiSinh_DienThoai: ThiSinh_DienThoai,
+            ThiSinh_Email: ThiSinh_Email,
+            ThiSinh_NgaySinh: ThiSinh_NgaySinh,
+            ThiSinh_DanToc: ThiSinh_DanToc,
+            ThiSinh_GioiTinh: ThiSinh_GioiTinh,
+            ThiSinh_DCNhanGiayBao: ThiSinh_DCNhanGiayBao,
+            ThiSinh_HoKhauThuongTru: hokhautt,
+            KhuVuc_ID: KhuVuc_ID,
+            DoiTuong_ID: DoiTuong_ID,
+            ThiSinh_TruongCapBa_Ma: ThiSinh_TruongCapBa_Ma,
+            ThiSinh_TruongCapBa: ThiSinh_TruongCapBa,
+        }
+        console.log(formData)
+        $.ajax({
+            url: "/ThiSinhDangKies/UpdateInfo",
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                console.log(response)
+                if (response.success) {
+                    showToast("Thành công", "Cập nhật thông tin thành công!", "bg-success");
+                } else {
+                    $('#errorMessage').text(response.message);
+                    showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+                }
+            },
+            error: function (xhr, status, error) {
+                showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+            },
+            complete: function () {
+            }
+        });
+    }
+    function validateEmail(email) {
+        var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        var isValid = emailRegex.test(email);
+        return isValid;
+    }
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+</script>
+<div class="container-fluid px-12">
+    <div id="fadeInUp">
+        <div class="card card-header-actions mt-3 mb-1 ">
+            <div class="card-header">Cập nhật thông tin<a onclick="onUpdateInfo()" class="btn btn-light" style="color:blue!important">Lưu thông tin</a></div>
+            <div class="card-body">
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_CCCD">Căn cước công dân <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_CCCD" name="input_cccd_ts" type="text" placeholder="Số căn cước công dân" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_HoLot">Họ lót <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_HoLot" type="text" placeholder="Họ lót" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_Ten">Tên <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_Ten" type="text" placeholder="Tên thí sinh" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="datepicker" type="text" placeholder="Ngày sinh" value="" />
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <select class="form-select" id="ThiSinh_GioiTinh" type="text" placeholder="Giới tính"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_DienThoai">Điện thoại <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_DienThoai" type="text" placeholder="Điện thoại" value="" />
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_ResetCode, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_ResetCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_ResetCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_Email">Emai <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_Email" type="text" placeholder="Email" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_DanToc">Dân tộc <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_DanToc" type="text" placeholder="Dân tộc" value="" />
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="KhuVuc_ID">Khu vực <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <select class="form-select" id="KhuVuc_ID" type="text" placeholder="Giới tính"></select>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_NgayDangKy, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_NgayDangKy, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_NgayDangKy, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_DanToc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_DanToc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_DanToc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_GioiTinh, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_GioiTinh, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_GioiTinh, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_DCNhanGiayBao, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_DCNhanGiayBao, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_DCNhanGiayBao, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_HoKhauThuongTru, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_HoKhauThuongTru, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_HoKhauThuongTru, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_HoKhauThuongTru_Check, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_HoKhauThuongTru_Check, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_HoKhauThuongTru_Check, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.KhuVuc_ID, "KhuVuc_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("KhuVuc_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.KhuVuc_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DoiTuong_ID, "DoiTuong_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("DoiTuong_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DoiTuong_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_TruongCapBa_Ma, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_TruongCapBa_Ma, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_TruongCapBa_Ma, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_TruongCapBa, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_TruongCapBa, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_TruongCapBa, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DotXT_ID, "DotXT_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("DotXT_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DotXT_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_TrangThai, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_TrangThai, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThiSinh_GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ThiSinh_GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThiSinh_GhiChu, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="DoiTuong_ID">Đối tượng <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <select class="form-select" id="DoiTuong_ID" type="text" placeholder="Giới tính"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_TruongCapBa">Trường<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_TruongCapBa" type="text" placeholder="Trường THPT" value="" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_TruongCapBa_Ma" type="text" placeholder="Mã trường" value="" />
+                    </div>
+                </div>
+                <div class="row gx-xl-3">
+                    <div class="col-md-12">
+                        <label class="form-label mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ nhận giấy báo <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="ThiSinh_DCNhanGiayBao" type="text" placeholder="Địa chỉ nhận giấy báo" value="" />
+                    </div>
+                </div>
+                <div class="row gx-xl-3 mb-1">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label class="mb-1" for="ThiSinh_HoKhauThuongTru">Hộ khẩu thường trú <a style="color:red; text-decoration:none">(*)</a>  </label>
+                            <input id="ThiSinh_HoKhauThuongTru" class="form-control" type="text" placeholder="Nhập tên phường/xã" value="" />
+                            <span id="register_phuongtt_Error" class="small mb-1 text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label class="mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
+                            <select class="form-select" id="Tinh_ID" type="text" placeholder="Tỉnh/thành phố"></select>
+                            @*@Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_tinhtt" })*@
+                            <span id="register_tinhtt_Error" class="small mb-1 text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <div class="form-group">
+                            <label class="mb-1" for="Huyen_ID">Quận/huyện <a style="color:red; text-decoration:none">(*)</a>  </label>
+                            @* @Html.DropDownList("Huyen_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_huyentt" })*@
+                            <select id="Huyen_ID" class="form-select" disabled>
+                                <option value="0">Chọn huyện</option>
+                            </select>
+                            <span id="Huyen_ID" class="small mb-1 text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <a class="btn btn-warning mt-2" href="@Url.Action("Index", "ThiSinhDangKies")">Quay lại</a>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Toast Title</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
