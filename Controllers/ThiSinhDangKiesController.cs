@@ -26,6 +26,7 @@ namespace HDU_AppXetTuyen.Controllers
         public string DoiTuong_ID { get; set; }
         public string ThiSinh_TruongCapBa_Ma { get; set; }
         public string ThiSinh_TruongCapBa { get; set; }
+        public string ThiSinh_HoKhauThuongTru_Check { get; set; }
     }
     public class ThiSinhSessionCheckAttribute : ActionFilterAttribute
     {
@@ -183,6 +184,7 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_TruongCapBa_Tinh_ID = n.ThiSinh_TruongCapBa_Tinh_ID,
                 ThiSinh_TrangThai = n.ThiSinh_TrangThai,
                 ThiSinh_GhiChu = n.ThiSinh_GhiChu,
+                ThiSinh_HoKhauThuongTru_Check = n.ThiSinh_HoKhauThuongTru_Check
 
             }).FirstOrDefault();
             var tinhs = db.Tinhs.Select(n => new
@@ -226,6 +228,7 @@ namespace HDU_AppXetTuyen.Controllers
             ts.ThiSinh_GioiTinh = int.Parse(thiSinh_Update.ThiSinh_GioiTinh);
             ts.ThiSinh_DCNhanGiayBao = thiSinh_Update.ThiSinh_DCNhanGiayBao;
             ts.ThiSinh_HoKhauThuongTru = thiSinh_Update.ThiSinh_HoKhauThuongTru;
+            ts.ThiSinh_HoKhauThuongTru_Check = thiSinh_Update.ThiSinh_HoKhauThuongTru_Check;
             ts.KhuVuc_ID = int.Parse(thiSinh_Update.KhuVuc_ID);
             ts.DoiTuong_ID = int.Parse(thiSinh_Update.DoiTuong_ID);
             ts.ThiSinh_TruongCapBa_Ma = thiSinh_Update.ThiSinh_TruongCapBa_Ma;
