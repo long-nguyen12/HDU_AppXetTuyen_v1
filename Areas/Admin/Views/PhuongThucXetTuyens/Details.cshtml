@@ -1,0 +1,35 @@
+﻿@model HDU_AppXetTuyen.Models.PhuongThucXetTuyen
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PhuongThucXetTuyen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ptxt_TenPhuongThuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ptxt_TenPhuongThuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ptxt_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ptxt_GhiChu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Ptxt_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

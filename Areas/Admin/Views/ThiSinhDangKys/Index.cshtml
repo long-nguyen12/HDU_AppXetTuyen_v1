@@ -1,0 +1,197 @@
+﻿<!-- Thêm thư viện -->
+@model PagedList.IPagedList<HDU_AppXetTuyen.Models.ThiSinhDangKy>
+@using PagedList.Mvc;
+<!-- Kết thúc-->
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <h1 class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Thí sinh
+                    </h1>
+                </div>
+                <div class="col-12 col-xl-auto mb-3">
+                    @*<a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","Huyens")">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Thêm mới
+                        </a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().DoiTuong.DoiTuong_Ten)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().DotXetTuyen.Dxt_Ten)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().KhuVuc.KhuVuc_Ten)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_CCCD)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_MatKhau)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_DienThoai)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoLot)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_Ten)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_NgaySinh)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_NamTotNghiep)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_ResetCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_NgayDangKy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_DanToc)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_GioiTinh)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_DCNhanGiayBao)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoKhauThuongTru)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoKhauThuongTru_Check)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TruongCapBa_Ma)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TruongCapBa)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TrangThai)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TruongCapBa_Tinh_ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_GhiChu)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoiTuong.DoiTuong_Ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KhuVuc.KhuVuc_Ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_CCCD)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_MatKhau)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_DienThoai)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_HoLot)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_Ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_NgaySinh)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_NamTotNghiep)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_ResetCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_NgayDangKy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_DanToc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_GioiTinh)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_DCNhanGiayBao)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_HoKhauThuongTru)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_HoKhauThuongTru_Check)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa_Ma)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_TrangThai)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa_Tinh_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinh_GhiChu)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ThiSinh_ID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ThiSinh_ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ThiSinh_ID })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <!-- Thêm mã phân trang -->
+            <br />
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page }))
+            <!-- Kết thúc -->
+        </div>
+    </div>
+</div>

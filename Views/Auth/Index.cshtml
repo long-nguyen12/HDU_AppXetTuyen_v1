@@ -229,6 +229,11 @@
 
         $('#loadingModal').modal('show');
         let hokhautt = register_phuongtt + ", " + $('#register_huyentt option:selected').text() + ", " + $('#register_tinhtt option:selected').text();
+        let hokhautt_check = {
+            Phuongxa: register_phuongtt,
+            Huyen_ID: register_huyentt,
+            Tinh_ID: register_tinhtt
+        }
         let formData = {
             ThiSinh_CCCD: register_CCCD,
             ThiSinh_MatKhau: register_password,
@@ -246,6 +251,7 @@
             ThiSinh_TruongCapBa_Ma: register_ma_truong,
             ThiSinh_TruongCapBa: register_truong,
             ThiSinh_TruongCapBa_Tinh_ID: register_truongtinh,
+            ThiSinh_HoKhauThuongTru_Check: JSON.stringify(hokhautt_check)
         }
         $.ajax({
             url: "/Auth/Register",

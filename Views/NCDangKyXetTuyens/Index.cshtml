@@ -1,0 +1,340 @@
+﻿
+@{
+    ViewBag.Title = "dkxthocba";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    label {
+        white-space: nowrap !important;
+    }
+
+    .span_with_for {
+        width: 65px !important
+    }
+</style>
+
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <h1 class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Xét tuyển sử dụng kết quả học tập ở THPT
+
+                    </h1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-12">
+    <div id="fadeInUp">
+        <div class="card card-collapsable mt-1 mb-1">
+            <a class="card-header" href="#collapse_div_nvdadangky" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_div_nvdadangky">
+                Các nguyện vọng đã đăng ký
+                <div class="card-collapsable-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </a>
+            <div class="collapse show" id="collapse_div_nvdadangky">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xxl-12">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align:middle;">Khối ngành</th>
+                                        <th style="vertical-align:middle;">Mã ngành - Ngành</th>
+                                        <th style="vertical-align:middle;">Tổ hợp môn xét tuyển</th>
+                                        <th style="vertical-align:middle;">Tổng điểm</th>
+                                        <th style="vertical-align:middle;">Nguyện vọng</th>
+                                        <th style="vertical-align:middle;">Trạng thái</th>
+                                        <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_list_nguyenvong">
+                                    @*<tr><td colspan="5">Chưa chọn dữ liệu ngành và tổ hợp môn</td></tr>*@
+                                    <tr>
+                                        <td>Khối ngành kinh tế kỹ thuật</td>
+                                        <td> 7340101 - Quản trị kinh doanh </td>
+                                        <td>(A00): Toán-Lý-Hóa</td>
+                                        <td>21.5</td>
+                                        <td>NV 1 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
+                                        <td>
+                                            <a href="#" class="btn btn-light"> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle !important ">
+                                            Sửa | Xóa
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Khối ngành kinh tế kỹ thuật</td>
+                                        <td>7340201 - Tài chính-Ngân hàng</td>
+                                        <td>(A00): Toán-Lý-Hóa</td>
+                                        <td>22.5</td>
+                                        <td>NV 2 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
+                                        <td>
+                                            <a href="#" class="btn btn-light"> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle !important ">
+                                            Sửa | Xóa
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Khối ngành sư phạm</td>
+                                        <td>7140231 - Sư phạm Tiếng Anh</td>
+                                        <td>(D00): Toán-Văn-Anh</td>
+                                        <td>28.5</td>
+                                        <td>NV 3 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
+                                        <td>
+                                            <a href="#" class="btn btn-light" style="color:red"> <input type="checkbox" disabled /> Chưa xác nhận đăng ký</a>
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle !important ">
+                                            <a href="#">Sửa</a> | <a href="#">Xóa</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xxl-12" style="text-align:center">
+                            <a href="#" class="btn btn-sm btn-primary mb-2">Thêm mới nguyện vọng</a>
+                            <a href="#" class="btn btn-sm btn-primary  mb-2">Gửi minh chứng nộp lệ phí</a>
+                           <button id="downButton" class="btn btn-sm btn-primary  mb-2"> In phiếu tổng hợp xét tuyển </button> 
+                            <div class="row">
+                                <div class="col-12">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-12">
+                            <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
+                            <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần bấm xác nhận để hoàn thành việc đăng ký sau khi thêm nguyện vọng mới hoặc hoặc sửa các nguyện vọng.</p>
+                            <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
+                            <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, ký xác nhận và gửi về trường theo đường bưu điện.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fadeInUp" style="display: none">
+        <div class="card card-collapsable mt-1 mb-1">
+            <a class="card-header" href="#collapse_div_dangkynvmoi" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_div_dangkynvmoi">
+                Đăng ký nguyện vọng mới
+                <div class="card-collapsable-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </a>
+            <div class="collapse show" id="collapse_div_dangkynvmoi">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xxl-4">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Chọn ngành và tổ hợp môn</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="width:130px">Khối ngành <font color="red">(*)</font></td>
+                                        <td>
+                                            <select id="select_khoinganh" class="form-select"></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ngành <font color="red">(*)</font></td>
+                                        <td>
+                                            <select id="select_nganh" class="form-select"></select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tổ hợp môn <font color="red">(*)</font></td>
+                                        <td>
+                                            <select id="select_tohopmon" class="form-select"></select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td colspan="2" style="text-align:center">
+                                            <a class="btn">Đối tượng:  01, ưu tiên: 1 đ; KV2-NT, ưu tiên: 0.75 đ</a>
+                                        </td>
+                                    </tr>
+
+                            </table>
+                        </div>
+                        <div class="col-xxl-8">
+                            <div class="row">
+                                <div class="col-xxl-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="vertical-align:middle; width:9%">Môn</th>
+                                                <th style="text-align: center; width: 23%">Kỳ 1/ lớp 11</th>
+                                                <th style="text-align: center; width: 23%">Kỳ 2/ lớp 11</th>
+                                                <th style="text-align: center; width: 23%">Kỳ 1/ lớp 12</th>
+                                                <th style="text-align: center; width: 22%">Trung bình cộng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_list_diemmonhoc">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="div_thongtinphu_upload" style="display: none">
+                                <div class="row mb-3">
+                                    <div class="col-xxl-4">
+                                        <div class="form-group mb-2">
+                                            <label for="formFileMultiple" class="form-label">Chọn tệp học bạ <font color="red">(*)</font> </label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="files" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
+                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-4">
+                                        <div class="form-group mb-2">
+                                            <label for="formFileMultiple" class="form-label">Căn cước công dân</label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="files" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
+                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xxl-4">
+                                        <div class="form-group mb-2">
+                                            <label for="formFileMultiple" class="form-label">Bằng Tốt nghiệp</label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="files" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
+                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xxl-12" style="text-align:center">
+                                        <input class="btn btn-primary" type="button" value="Đồng ý" />
+                                        <input class="btn btn-secondary" type="button" value="Hủy bỏ" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*
+
+        <tbody id="tbody_list_nguyenvong">
+                                          <tr><td colspan="5">Chưa chọn dữ liệu ngành và tổ hợp môn</td></tr>
+    <tr>
+        <td>Khối ngành kinh tế kỹ thuật</td>
+        <td> 7340101 - Quản trị kinh doanh </td>
+        <td>(A00): Toán-Lý-Hóa</td>
+        <td>21.5</td>
+        <td>NV 1 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
+        <td>
+            <a href="#" class="btn btn-light"> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>
+        </td>
+        <td style="text-align: center; vertical-align: middle !important ">
+            Sửa | Xóa
+        </td>
+    </tr>
+    <tr>
+        <td>Khối ngành kinh tế kỹ thuật</td>
+        <td>7340201 - Tài chính-Ngân hàng</td>
+        <td>(A00): Toán-Lý-Hóa</td>
+        <td>22.5</td>
+        <td>NV 2 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
+        <td>
+            <a href="#" class="btn btn-light"> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>
+        </td>
+        <td style="text-align: center; vertical-align: middle !important ">
+            Sửa | Xóa
+        </td>
+    </tr>
+    <tr>
+        <td>Khối ngành sư phạm</td>
+        <td>7140231 - Sư phạm Tiếng Anh</td>
+        <td>(D00): Toán-Văn-Anh</td>
+        <td>28.5</td>
+        <td>NV 3 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
+        <td>
+            <a href="#" class="btn btn-light" style="color:red"> <input type="checkbox" disabled /> Chưa xác nhận đăng ký</a>
+        </td>
+        <td style="text-align: center; vertical-align: middle !important ">
+            <a href="#">Sửa</a> | <a href="#">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+*@
+@*
+
+        <tbody id="tbody_list_diemmonhoc">
+     <tr><td colspan="5">Chưa chọn dữ liệu ngành và tổ hợp môn</td></tr>
+    <tr>
+        <td>Toán</td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><label type="number" class="form-control">0</label> </td>
+    </tr>
+    <tr>
+        <td>Lý</td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><label type="number" class="form-control">0</label> </td>
+    </tr>
+    <tr>
+        <td>Hóa</td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><input type="number" class="form-control" value="0" /></td>
+        <td><label type="number" class="form-control">0</label> </td>
+    </tr>
+
+    </tbody>
+*@
+
+<script>
+
+        $(document).ready(function () {
+        $('#downButton').click(function () {
+            window.location.href = '/ExportFile/DownloadFile_XetTuyenHB/1';
+        });
+    });
+
+    @*function DownloadFile_XetTuyenHB(value) {
+        var obj = { idThiSinh: value };
+        $.ajax({
+            url: '@Url.Action("DownloadFile_XetTuyenHB", "ExportFile")',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(obj),
+            contentType: 'application/json; charset=utf-8'
+        }).done(function (response) {
+            if (response.status == true) {
+                alert(response.msg);
+            }
+            else {
+                alert(response.msg);
+            }
+        }).fail(function (error) {
+            alert(error.StatusText);
+        });
+    }*@
+</script>

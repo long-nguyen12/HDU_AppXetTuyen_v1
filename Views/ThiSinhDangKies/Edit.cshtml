@@ -37,7 +37,7 @@
                 }
             });
         });
-        
+
         $('#datepicker').datepicker({
             format: 'dd/mm/yyyy', // Specify the desired date format
             autoclose: true // Close the datepicker when a date is selected
@@ -48,7 +48,7 @@
             url: "/ThiSinhDangKies/GetThiSinhInfo",
             type: "POST",
             data: JSON.stringify({
-                id: @Model.ThiSinh_ID
+                id: @Model.ThiSinh_ID,
             }),
             contentType: "application/json;charset=utf-8",
             success: function (response) {
@@ -58,7 +58,7 @@
                     let tinhs = response.tinhs;
                     let khuvucs = response.khuvucs;
                     let doituongs = response.doituongs;
-                    let phuongxa = data.ThiSinh_HoKhauThuongTru.split(",");
+                    let hktt = JSON.parse(data.ThiSinh_HoKhauThuongTru_Check);
                     $('#ThiSinh_CCCD').val(data.ThiSinh_CCCD);
                     $('#ThiSinh_HoLot').val(data.ThiSinh_HoLot);
                     $('#ThiSinh_Ten').val(data.ThiSinh_Ten);
@@ -69,7 +69,7 @@
                     $('#ThiSinh_TruongCapBa').val(data.ThiSinh_TruongCapBa);
                     $('#ThiSinh_TruongCapBa_Ma').val(data.ThiSinh_TruongCapBa_Ma);
                     $('#ThiSinh_DCNhanGiayBao').val(data.ThiSinh_DCNhanGiayBao);
-                    $('#ThiSinh_HoKhauThuongTru').val(phuongxa[0]);
+                    $('#ThiSinh_HoKhauThuongTru').val(hktt.Phuongxa);
 
                     /* Chọn giới tính */
                     let gioitinhs = [
@@ -119,12 +119,12 @@
                     $.each(tinhs, function (index, option) {
                         tinhOptions.append($('<option>', {
                             value: option.Tinh_ID,
-                            text: option.Tinh_MaTen
+                            text: option.Tinh_Ten
                         }));
                     });
 
                     let tinhDefaultIndex = tinhs.filter((value, index) => {
-                        return value.Tinh_MaTen.trim() == phuongxa[2].trim()
+                        return value.Tinh_ID == hktt.Tinh_ID.trim()
                     })
                     tinhOptions.val(tinhDefaultIndex[0].Tinh_ID);
 
@@ -133,7 +133,7 @@
                         url: "/Auth/GetHuyen",
                         type: "POST",
                         data: JSON.stringify({
-                            tinhID: tinhDefaultIndex[0].Tinh_ID
+                            tinhID: hktt.Tinh_ID
                         }),
                         contentType: "application/json;charset=utf-8",
                         success: function (response) {
@@ -146,7 +146,7 @@
                                 });
                                 huyentt.prop('disabled', false);
                                 let huyenDefaultIndex = data.filter((value, index) => {
-                                    return value.Huyen_TenHuyen.trim() == phuongxa[1].trim()
+                                    return value.Huyen_ID == hktt.Huyen_ID.trim()
                                 })
                                 huyentt.val(huyenDefaultIndex[0].Huyen_ID);
                             } else {
@@ -268,6 +268,11 @@
         /*if (!flag) return;*/
 
         let hokhautt = ThiSinh_HoKhauThuongTru + ", " + $('#Huyen_ID option:selected').text() + ", " + $('#Tinh_ID option:selected').text();
+        let hokhautt_check = {
+            Phuongxa: ThiSinh_HoKhauThuongTru,
+            Huyen_ID: Huyen_ID,
+            Tinh_ID: Tinh_ID
+        }
         let formData = {
             ThiSinh_CCCD: ThiSinh_CCCD,
             ThiSinh_HoLot: ThiSinh_HoLot,
@@ -283,6 +288,7 @@
             DoiTuong_ID: DoiTuong_ID,
             ThiSinh_TruongCapBa_Ma: ThiSinh_TruongCapBa_Ma,
             ThiSinh_TruongCapBa: ThiSinh_TruongCapBa,
+            ThiSinh_HoKhauThuongTru_Check: JSON.stringify(hokhautt_check)
         }
         console.log(formData)
         $.ajax({
