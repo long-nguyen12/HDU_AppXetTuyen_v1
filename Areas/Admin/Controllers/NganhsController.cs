@@ -17,7 +17,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // GET: Admin/Nganhs
         public ActionResult Index()
         {
-            var nganh = db.Nganh.Include(n => n.KhoiNganh);
+            var nganh = db.Nganhs.Include(n => n.KhoiNganh);
             return View(nganh.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Nganh nganh = db.Nganh.Find(id);
+            Nganh nganh = db.Nganhs.Find(id);
             if (nganh == null)
             {
                 return HttpNotFound();
@@ -52,7 +52,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Nganh.Add(nganh);
+                db.Nganhs.Add(nganh);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -68,7 +68,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Nganh nganh = db.Nganh.Find(id);
+            Nganh nganh = db.Nganhs.Find(id);
             if (nganh == null)
             {
                 return HttpNotFound();
@@ -101,7 +101,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Nganh nganh = db.Nganh.Find(id);
+            Nganh nganh = db.Nganhs.Find(id);
             if (nganh == null)
             {
                 return HttpNotFound();
@@ -114,8 +114,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Nganh nganh = db.Nganh.Find(id);
-            db.Nganh.Remove(nganh);
+            Nganh nganh = db.Nganhs.Find(id);
+            db.Nganhs.Remove(nganh);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
