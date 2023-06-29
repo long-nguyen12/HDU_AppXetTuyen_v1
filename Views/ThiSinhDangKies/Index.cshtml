@@ -1,160 +1,84 @@
-﻿@model IEnumerable<HDU_AppXetTuyen.Models.ThiSinhDangKy>
+﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@ViewBag.session
+<div class="container-fluid px-12">
+    <div id="fadeInUp">
+        <div class="card card-header-actions mt-3 mb-1 ">
+            <div class="card-header">Thông tin chung <a href="@Url.Action("Edit", "ThiSinhDangKies", new {id = Model.ThiSinh_ID})" class="btn btn-light" style="color:blue!important">Cập nhật</a></div>
+            <div class="card-body">
+                <div class="row gx-xxl-3 mb-3">
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="inputFirstName">Căn cước công dân <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_cccd_ts" name="input_cccd_ts" type="text" placeholder="Số căn cước công dân" value="@Model.ThiSinh_CCCD" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_hovaten">Họ và tên <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_hovaten" type="text" placeholder="Hoàng Việt Anh" value="@Model.ThiSinh_HoLot @Model.ThiSinh_Ten" disabled />
+                    </div>
 
-<h2>Index</h2>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_ngaysinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_ngaysinh" type="text" placeholder="20/12/2005" value="@Model.ThiSinh_NgaySinh" disabled />
+                    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DoiTuong.DoiTuong_Ten)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.KhuVuc.KhuVuc_Ten)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_MatKhau)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_DienThoai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_HoLot)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_Ten)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_NgaySinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_NamTotNghiep)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_ResetCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_NgayDangKy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_DanToc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_GioiTinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_DCNhanGiayBao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru_Check)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa_Ma)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_TrangThai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinh_GhiChu)
-        </th>
-        <th></th>
-    </tr>
+                    <div class="col-md-1">
+                        <label class="form-label mb-1" for="input_gioitinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label>
+                        @{
+                            var gt = Model.ThiSinh_GioiTinh == 0 ? "Nam" : "Nữ";
+                        }
+                        <input class="form-control" id="input_gioitinh" type="text" placeholder="Nam" value="@gt" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_dienthoai_ts">Điện thoại <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_dienthoai_ts" type="text" placeholder="0912.345.678" value="@Model.ThiSinh_DienThoai" disabled />
+                    </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DoiTuong.DoiTuong_Ten)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KhuVuc.KhuVuc_Ten)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_CCCD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_MatKhau)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_DienThoai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_HoLot)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_Ten)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_NgaySinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_NamTotNghiep)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_ResetCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_NgayDangKy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_DanToc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_GioiTinh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_DCNhanGiayBao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_HoKhauThuongTru)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_HoKhauThuongTru_Check)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa_Ma)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_TrangThai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinh_GhiChu)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ThiSinh_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ThiSinh_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ThiSinh_ID })
-        </td>
-    </tr>
-}
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="input_email_ts">Emai<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_email_ts" type="text" placeholder="Enter your last name" value="@Model.ThiSinh_Email" disabled />
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_khuvuc">Khu vực <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_khuvuc" type="text" placeholder="KV_2NT" value="@Model.KhuVuc.KhuVuc_Ten" disabled />
+                    </div>
 
-</table>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_doituong">Đối tượng <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_doituong" type="text" placeholder="ĐT 01" value="@Model.DoiTuong.DoiTuong_Ten" disabled />
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_dantoc">Dân tộc <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_dantoc" type="text" placeholder="Kinh" value="@Model.ThiSinh_DanToc" disabled />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="input_diachinhangiaybao">Trường<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_TruongCapBa" disabled />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_diachinhangiaybao">Mã trường<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_TruongCapBa_Ma" disabled />
+                    </div>
+                </div>
+                <div class="row gx-xl-3">
+                    <div class="col-md-12">
+                        <label class="form-label mb-1" for="input_diachinhangiaybao">Địa chỉ nhận giấy báo <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_DCNhanGiayBao" disabled />
+                    </div>
+                </div>
+                <div class="row gx-xl-3 mb-1">
+                    <div class="col-md-12">
+                        <label class="form-label mb-1" for="input_hokhauthuongtru">Hộ khẩu thường trú</label>
+                        <input class="form-control" id="input_hokhauthuongtru" type="text" placeholder="nhập hộ khẩu thường trú" value="@Model.ThiSinh_HoKhauThuongTru" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

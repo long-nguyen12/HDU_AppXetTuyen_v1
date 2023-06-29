@@ -1,0 +1,67 @@
+﻿@model HDU_AppXetTuyen.Models.ToHopMon
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ToHopMon</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Thm_MaToHop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thm_MaToHop)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thm_TenToHop)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thm_TenToHop)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thm_Mon1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thm_Mon1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thm_Mon2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thm_Mon2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thm_Mon3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thm_Mon3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thm_MaTen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thm_MaTen)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Thm_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

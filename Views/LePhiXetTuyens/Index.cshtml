@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HDU_AppXetTuyen.Models.LePhiXetTuyen>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lpxt_SoTienDong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lpxt_TrangThai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lpxt_MinhChung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lpxt_GhiChu)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lpxt_SoTienDong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lpxt_TrangThai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lpxt_MinhChung)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lpxt_GhiChu)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Lpxt_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Lpxt_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Lpxt_ID })
+        </td>
+    </tr>
+}
+
+</table>
