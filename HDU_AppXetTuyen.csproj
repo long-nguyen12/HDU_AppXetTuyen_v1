@@ -184,9 +184,7 @@
     <Compile Include="Controllers\DangKyXetTuyens1Controller.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\ExportFileController.cs" />
-    <Compile Include="Controllers\KhoiNganhs2Controller.cs" />
     <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\LePhiXetTuyensController.cs" />
     <Compile Include="Controllers\NCDangKyXetTuyensController.cs" />
     <Compile Include="Controllers\ThiSinhDangKiesController.cs" />
@@ -531,11 +529,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\NCDangKyXetTuyens\Create.cshtml" />
-    <Content Include="Views\NCDangKyXetTuyens\Delete.cshtml" />
-    <Content Include="Views\NCDangKyXetTuyens\Details.cshtml" />
-    <Content Include="Views\NCDangKyXetTuyens\Edit.cshtml" />
-    <Content Include="Views\NCDangKyXetTuyens\Index.cshtml" />
+    <Content Include="Views\ThiSinhDangKies1\Create.cshtml" />
+    <Content Include="Views\ThiSinhDangKies1\Delete.cshtml" />
+    <Content Include="Views\ThiSinhDangKies1\Details.cshtml" />
+    <Content Include="Views\ThiSinhDangKies1\Edit.cshtml" />
+    <Content Include="Views\ThiSinhDangKies1\Index.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\iddkxthocba.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
