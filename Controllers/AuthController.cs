@@ -30,6 +30,7 @@ namespace HDU_AppXetTuyen.Controllers
         public string ThiSinh_TruongCapBa_Ma { get; set; }
         public string ThiSinh_TruongCapBa { get; set; }
         public string ThiSinh_TruongCapBa_Tinh_ID { get; set; }
+        public string ThiSinh_HoKhauThuongTru_Check { get; set; }
     }
     public class AuthController : Controller
     {
@@ -56,7 +57,7 @@ namespace HDU_AppXetTuyen.Controllers
 
             ViewBag.DoiTuong_ID = new SelectList(doituongList, "DoiTuong_ID", "DoiTuong_Ten");
             ViewBag.KhuVuc_ID = new SelectList(khuvucList, "KhuVuc_ID", "KhuVuc_Ten");
-            ViewBag.Tinh_ID = new SelectList(tinhList, "Tinh_ID", "Tinh_MaTen");
+            ViewBag.Tinh_ID = new SelectList(tinhList, "Tinh_ID", "Tinh_Ten");
             ViewBag.Huyen_ID = new SelectList(huyenList, "Huyen_ID", "Huyen_TenHuyen");
             return View();
         }
@@ -169,7 +170,8 @@ namespace HDU_AppXetTuyen.Controllers
                 ts.ThiSinh_TruongCapBa_Ma = thiSinh_register.ThiSinh_TruongCapBa_Ma;
                 ts.ThiSinh_TruongCapBa = thiSinh_register.ThiSinh_TruongCapBa;
                 ts.ThiSinh_TruongCapBa_Tinh_ID = int.Parse(thiSinh_register.ThiSinh_TruongCapBa_Tinh_ID);
-
+                ts.ThiSinh_HoKhauThuongTru_Check = thiSinh_register.ThiSinh_HoKhauThuongTru_Check;
+                ts.ThiSinh_NgayDangKy = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
                 ts.ThiSinh_MatKhau = hash_password;
                 ts.ThiSinh_TrangThai = 0;
                 ts.ThiSinh_ResetCode = activationToken;
