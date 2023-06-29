@@ -14,51 +14,8 @@
 </style>
 
 <script>
-    $(document).ready(function () {
-        dkxt_get_data_da_dkxt_all();
-    });
-    function dkxt_get_data_da_dkxt_all() {
-        let _output = "";
-        $.ajax({
-            url: "/DangKyXetTuyens/dkxthocbaListAll/",
-            type: 'GET',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (result_all) {
-                // console.log(result_all)
-                if (result_all.length == 0) {
-                    _output += '<tr><td colspan="5">Chưa chọn dữ liệu ngành và tổ hợp môn</td></tr>';
-                }
-                else {
-                    $.each(result_all, function (i, result) {
 
-                        _output += '<tr>' +
 
-                            '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
-                            '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
-                            '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
-                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
-                            '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
-                            '<td style="text-align: center; vertical-align: middle !important ">' +
-                            'Sửa | Xóa' +
-                            '</td>' +
-                            '</tr>'
-                    });
-                }
-                document.getElementById('tbody_list_nguyenvong').innerHTML = _output;
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-    function dkxt_add_data_show_div_add() {
-        document.getElementById('fadeinup_update_dkxt').style.display = "inline";
-        get_data_khoinganh_all(0, 0, 0);
-        //$('#fadeinup_update_dkxt').st
-    }
-
-    
 
 </script>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
@@ -77,223 +34,186 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div id="fadeInUp">
-        <div class="card card-collapsable mt-1 mb-1">
-            <a class="card-header" href="#collapse_div_nvdadangky" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_div_nvdadangky">
+    <div id="div_list_nguyenvong">
+        <div class="card card-header-actions">
+            <div class="card-header">
                 Các nguyện vọng đã đăng ký
-                <div class="card-collapsable-arrow">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </a>
-            <div class="collapse show" id="collapse_div_nvdadangky">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xxl-12">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style="vertical-align:middle;">Mã ngành - Ngành</th>
-                                        <th style="vertical-align:middle;">Tổ hợp môn xét tuyển</th>
-                                        <th style="vertical-align:middle;">Tổng điểm</th>
-                                        <th style="vertical-align:middle;">Nguyện vọng</th>
-                                        <th style="vertical-align:middle;">Trạng thái</th>
-                                        <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody_list_nguyenvong">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-xxl-12" style="text-align:center">
-                            <a href="#" class="btn btn-sm btn-primary mb-2" onclick="dkxt_add_data_show_div_add()">Thêm mới nguyện vọng</a>
-                            <a href="#" class="btn btn-sm btn-primary  mb-2">Gửi minh chứng nộp lệ phí</a>
-                            <a href="#" class="btn btn-sm btn-primary  mb-2">In phiếu tổng hợp nguyện vọng</a>
-
-                        </div>
-                        <div class="col-xxl-12">
-                            <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
-                            <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần bấm xác nhận để hoàn thành việc đăng ký sau khi thêm nguyện vọng mới hoặc hoặc sửa các nguyện vọng.</p>
-                            <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
-                            <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, ký xác nhận và gửi về trường theo đường bưu điện.</p>
-                        </div>
-
+                <a class="btn btn-primary" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng mới</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align:middle;">Mã ngành - Ngành</th>
+                                    <th style="vertical-align:middle;">Tổ hợp môn xét tuyển</th>
+                                    <th style="vertical-align:middle;">Tổng điểm</th>
+                                    <th style="vertical-align:middle;">Nguyện vọng</th>
+                                    <th style="vertical-align:middle;">Trạng thái</th>
+                                    <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody_list_nguyenvong">
+                            </tbody>
+                        </table>
                     </div>
+
+                    <div class="col-xxl-12">
+                        <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
+                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần bấm xác nhận để hoàn thành việc đăng ký sau khi thêm nguyện vọng mới hoặc hoặc sửa các nguyện vọng.</p>
+                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
+                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, ký xác nhận và gửi về trường theo đường bưu điện.</p>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-   
-    <script>
-        function get_data_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key) {
-            $('#select_khoinganh').empty()
-            $.ajax({
-                url: "/ThiSinhDangKys/tsdkttts_get_tinh_all",
-                type: "GET",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result_all) {
-                    $.each(result_all, function (i, result) {
-                        $('#qtht_select_tinh_lop_all').append('<option value="' + result.Tinh_ID + '">' + result.Tinh_MaTen + '</option>');
-                    });
-                    $('#qtht_select_tinh_lop_all').val(key_tinh);
-                    get_data_truong_all(key_tinh, key_truong);
-
-                },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
-                }
-            });
-        }
-        function get_data_truong_all(id, key_truong) {
-            $("#qtht_select_truong_lop_all").empty();
-            $.ajax({
-                url: "/ThiSinhDangKys/tsdkttts_get_truong_all/" + id,
-                type: 'GET',
-                contentType: 'application/json;charset=utf-8',
-                dataType: 'json',
-                success: function (result_all) {
-                    /*    console.log(result_all)*/
-                    $.each(result_all, function (i, result) {
-                        $('#qtht_select_truong_lop_all').append('<option value="' + result.Truong_ID + '">' + result.Truong_MaTen + '</option>');
-                    });
-                    $('#qtht_select_truong_lop_all').val(key_truong);
-                },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
-                }
-            });
-        }
-    </script>
-    <div id="fadeinup_update_dkxt" style="display: none">
-        <div class="card card-collapsable mt-1 mb-1">
-            <a class="card-header" href="#collapse_div_dangkynvmoi" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapse_div_dangkynvmoi">
+    <div id="div_update_dk_nguyenvong" style="display: none">
+        <div class="card card-header-actions">
+            <div class="card-header">
                 Đăng ký nguyện vọng mới
-                <div class="card-collapsable-arrow">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </a>
-            <div class="collapse show" id="collapse_div_dangkynvmoi">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xxl-4">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">Chọn ngành và tổ hợp môn</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="width:130px">Khối ngành <font color="red">(*)</font></td>
-                                        <td>
-                                            <select id="select_khoinganh" class="form-select"></select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ngành <font color="red">(*)</font></td>
-                                        <td>
-                                            <select id="select_nganh" class="form-select"></select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tổ hợp môn <font color="red">(*)</font></td>
-                                        <td>
-                                            <select id="select_tohopmon" class="form-select"></select>
-                                        </td>
-                                    </tr>
+                <button class="btn-close" type="button" aria-label="Close" onclick="onclick_bt_huybo_dangky_nvmoi(0,0,0)"></button>
 
-                                    <tr>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xxl-4">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Chọn ngành và tổ hợp môn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="width:130px">Khối ngành <font color="red">(*)</font></td>
+                                    <td>
+                                        <select id="select_khoinganh" class="form-select"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ngành <font color="red">(*)</font></td>
+                                    <td>
+                                        <select id="select_nganh" class="form-select"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tổ hợp môn <font color="red">(*)</font></td>
+                                    <td>
+                                        <select id="select_tohopmon" class="form-select"></select>
+                                    </td>
+                                </tr>
 
-                                        <td colspan="2" style="text-align:center">
-                                            <a class="btn">Đối tượng:  01, ưu tiên: 1 đ; KV2-NT, ưu tiên: 0.75 đ</a>
-                                        </td>
-                                    </tr>
+                                <tr>
 
-                            </table>
+                                    <td colspan="2">
+                                        <div class="row">
+                                            <div class="col-6 ">
+                                                Điểm ƯTĐT: 1 đ (ĐT:01)
+                                                <hr />
+                                            </div>
+                                            <div class="col-6  ">
+                                                Điểm ƯTKV: 0.75 đ (KV2-NT)
+                                                <hr />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Học lực lớp 12
+                                                <input type="text" class="form-control" id="txt_hocluc_12" />
+                                            </div>
+                                            <div class="col-6">
+                                                Xếp loại hạnh kiểm lớp 12
+                                                <input type="text" class="form-control" id="txt_hanhkiem_12" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                        </table>
+                    </div>
+                    <div class="col-xxl-8">
+                        <div class="row">
+                            <div class="col-xxl-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="vertical-align:middle; width:9%">Môn</th>
+                                            <th style="vertical-align: middle; text-align: center; width: 23%">Kỳ 1/ lớp 11</th>
+                                            <th style="vertical-align: middle; text-align: center; width: 23%">Kỳ 2/ lớp 11</th>
+                                            <th style="vertical-align: middle; text-align: center; width: 23%">Kỳ 1/ lớp 12</th>
+                                            <th style="vertical-align: middle; text-align: center; width: 22%">Trung bình cộng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_list_diemmonhoc">
+                                        <tr style="vertical-align:middle;">
+                                            <td><label id="lb_tenmon_1" class="form-label"></label></td>
+                                            <td><input id="txt_m1_k1" type="number" class="form-control" value="" /></td>
+                                            <td><input id="txt_m1_k2" type="number" class="form-control" value="" /></td>
+                                            <td><input id="txt_m1_k3" type="number" class="form-control" value="" /></td>
+                                            <td><label id="lb_tb_m1" type="number" class="form-control">0</label> </td>
+                                        </tr>
+                                        <tr style="vertical-align:middle;">
+                                            <td><label id="lb_tenmon_2" class="form-label"></label></td>
+                                            <td><input id="txt_m2_k1" type="number" class="form-control" value="" /></td>
+                                            <td><input id="txt_m2_k2" type="number" class="form-control" value="" /></td>
+                                            <td><input id="txt_m2_k3" type="number" class="form-control" value="" /></td>
+                                            <td><label id="lb_tb_m2" type="number" class="form-control">0</label> </td>
+                                        </tr>
+                                        <tr style="vertical-align:middle;">
+                                            <td><label id="lb_tenmon_3" class="form-label"></label></td>
+                                            <td><input id="txt_m3_k1" type="number" class="form-control" value="" /></td>
+                                            <td><input id="txt_m3_k2" type="number" class="form-control" value="" /></td>
+                                            <td><input id="txt_m3_k3" type="number" class="form-control" value="" /></td>
+                                            <td><label id="lb_tb_m3" type="number" class="form-control">0</label> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
-                        <div class="col-xxl-8">
-                            <div class="row">
-                                <div class="col-xxl-12">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th style="vertical-align:middle; width:9%">Môn</th>
-                                                <th style="text-align: center; width: 23%">Kỳ 1/ lớp 11</th>
-                                                <th style="text-align: center; width: 23%">Kỳ 2/ lớp 11</th>
-                                                <th style="text-align: center; width: 23%">Kỳ 1/ lớp 12</th>
-                                                <th style="text-align: center; width: 22%">Trung bình cộng</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tbody_list_diemmonhoc">
-                                            <tr>
-                                                <td>Toán</td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><label type="number" class="form-control">0</label> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Lý</td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><label type="number" class="form-control">0</label> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Hóa</td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><input type="number" class="form-control" value="0" /></td>
-                                                <td><label type="number" class="form-control">0</label> </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <div id="div_thongtinphu_upload">
+
+                            <div class="row mb-3">
+                                <div class="col-xxl-4">
+                                    <div class="form-group mb-2">
+                                        <label for="formFileMultiple" class="form-label">Chọn tệp học bạ <font color="red">(*)</font> </label>
+                                        <div class="col-md-12">
+                                            <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
+                                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-4">
+                                    <div class="form-group mb-2">
+                                        <label for="formFileMultiple" class="form-label">Căn cước công dân</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control" id="files_cancuoc_cd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
+                                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-xxl-4">
+                                    <div class="form-group mb-2">
+                                        <label for="formFileMultiple" class="form-label">Bằng Tốt nghiệp</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
+                                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="div_thongtinphu_upload">
-                                <div class="row mb-3">
-                                    <div class="col-xxl-4">
-
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-xxl-4">
-                                        <div class="form-group mb-2">
-                                            <label for="formFileMultiple" class="form-label">Chọn tệp học bạ <font color="red">(*)</font> </label>
-                                            <div class="col-md-12">
-                                                <input class="form-control" id="files" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
-                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-4">
-                                        <div class="form-group mb-2">
-                                            <label for="formFileMultiple" class="form-label">Căn cước công dân</label>
-                                            <div class="col-md-12">
-                                                <input class="form-control" id="files" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
-                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-xxl-4">
-                                        <div class="form-group mb-2">
-                                            <label for="formFileMultiple" class="form-label">Bằng Tốt nghiệp</label>
-                                            <div class="col-md-12">
-                                                <input class="form-control" id="files" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xxl-12" style="text-align:center">
-                                        <input class="btn btn-primary" type="button" value="Đồng ý" onclick="" />
-                                        <input class="btn btn-secondary" type="button" value="Hủy bỏ" />
-                                    </div>
+                            <div class="row">
+                                <div class="col-xxl-12" style="text-align:center">
+                                    <input class="btn btn-primary" type="button" value="Đồng ý" onclick="" />
+                                    <input class="btn btn-secondary" type="button" value="Hủy bỏ" id="bt_huybo_dangky_nvmoi" onclick="onclick_bt_huybo_dangky_nvmoi(0,0,0)" />
                                 </div>
                             </div>
                         </div>
@@ -303,7 +223,215 @@
         </div>
     </div>
 </div>
+<script>
 
+    let key_dkxt_id_port = -1;
+
+    class _thongtin_monhoc {
+        constructor(ten_Mon, H_K1, H_K2, H_K3, DiemTrung_Binh) {
+            this.ten_Mon = ten_Mon;
+            this.H_K1 = H_K1;
+            this.H_K2 = H_K2;
+            this.H_K3 = H_K3;
+            this.DiemTrung_Binh = DiemTrung_Binh;
+        }
+    }
+
+    class _thongtin_bosung_uutien {
+        constructor(ut_doituong_ten, ut_doituong_diem_ut, _xlhocluc_12, xl_hankiem_12) {
+            this.ut_doituong_ten = ut_doituong_ten;
+            this.ut_doituong_diem_ut = ut_doituong_diem_ut;
+
+            this.ut_khuvuc_ten = ut_khuvuc_ten;
+            this.ut_khuvuc_diem_ut = ut_khuvuc_diem_ut;
+
+            this._xlhocluc_12 = _xlhocluc_12;
+            this.xl_hankiem_12 = xl_hankiem_12;
+        }
+    }
+    //{"TenMon1":"Toán","HK1":"8.00","HK2":"8.00","HK3":"8.00","DiemTrungBinh":"8.00"}
+    $(document).ready(function () {
+
+        dkxt_get_data_da_dkxt_all();
+        // get_data_forselect_khoinganh_all(0, 0, 0);
+
+        $("#select_khoinganh").change(function () {
+            get_data_forselect_nganh_all($("#select_khoinganh").val(), 0, 0);
+        })
+        $("#select_nganh").change(function () {
+            get_data_forselect_tohopmon_all($("#select_nganh").val(), 0)
+        })
+        // lấy danh sách 3 môn cần nhập điểm
+        $("#select_tohopmon").change(function () {
+            // get_data_fortable_nhapdiem($("#select_tohopmon").val());
+            get_data_fortable_nhapdiem();
+        })
+    });
+
+    function dkxt_get_data_da_dkxt_all() {
+        let _output = "";
+        $.ajax({
+            url: "/DangKyXetTuyens/dkxthocbaListAll/",
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (result_all) {
+                // console.log(result_all)
+                if (result_all.length == 0) {
+                    _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
+                }
+                else {
+                    $.each(result_all, function (i, result) {
+
+                        _output += '<tr>' +
+                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
+                            '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
+                            '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
+                            '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
+                            '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
+                            '<td style="text-align: center; vertical-align: middle !important ">' +
+                            'Sửa | Xóa' +
+                            '</td>' +
+                            '</tr>'
+                    });
+                }
+                document.getElementById('tbody_list_nguyenvong').innerHTML = _output;
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function dkxt_add_data_show_div_add(khoinganh_key, nganh_key, tohopmon_key) {
+        document.getElementById('div_list_nguyenvong').style.display = "none";
+        document.getElementById('div_update_dk_nguyenvong').style.display = "inline";
+        get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key);
+        key_dkxt_id_port = -1;
+    }
+    function onclick_bt_huybo_dangky_nvmoi(khoinganh_key, nganh_key, tohopmon_key) {
+
+        document.getElementById('div_list_nguyenvong').style.display = "inline";
+        document.getElementById('div_update_dk_nguyenvong').style.display = "none";
+        get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key);
+        key_dkxt_id_port = -2;
+    }
+
+    function get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key) {
+
+        $('#select_khoinganh').empty()
+        $.ajax({
+            url: "/DangKyXetTuyens/KhoiNganhListAll",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result_all) {
+                $.each(result_all, function (i, result) {
+                    $('#select_khoinganh').append('<option value="' + result.khoiNganh_ID + '">' + result.khoiNganh_Ten + '</option>');
+                });
+                $('#select_khoinganh').val(khoinganh_key);
+                get_data_forselect_nganh_all(khoinganh_key, nganh_key, tohopmon_key);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function get_data_forselect_nganh_all(id, nganh_key, tohopmon_key) { // id = KhoiNganh_ID
+        $("#select_nganh").empty();
+        $.ajax({
+            url: "/DangKyXetTuyens/NganhListAll/" + id,
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (result_all) {
+
+                $.each(result_all, function (i, result) {
+                    $('#select_nganh').append('<option value="' + result.nganh_ID + '">' + result.nganh_GhiChu + '</option>');
+                });
+
+                $('#select_nganh').val(nganh_key);
+                get_data_forselect_tohopmon_all(nganh_key, tohopmon_key);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+    function get_data_forselect_tohopmon_all(id, tohopmon_key) { // id = Nganh_ID
+        console.log(id + "-" + tohopmon_key)
+        /* return;*/
+        $("#select_tohopmon").empty();
+        $.ajax({
+            url: "/DangKyXetTuyens/ToHopMonNganhListAll/" + id,
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (result_all) {
+                $.each(result_all, function (i, result) {
+                    $('#select_tohopmon').append('<option value="' + result.thm_ID + '">' + result.thm_MaTen + '</option>');
+                });
+                $('#select_tohopmon').val(tohopmon_key);
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function get_data_fortable_nhapdiem() {
+        let data = {
+            int_input_a: $("#select_tohopmon").val(),
+            int_input_b: key_dkxt_id_port,
+        };
+        $.ajax({
+            url: "/DangKyXetTuyens/ToHopMonGeByID",
+            data: JSON.stringify(data),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (res) {
+                //console.log(result_all);
+                //return
+
+                let _ttmh_1 = new _thongtin_monhoc(res.thm_Mon1.TenMon1, res.thm_Mon1.HK1, res.thm_Mon1.HK2, res.thm_Mon1.HK3, res.thm_Mon1.DiemTrungBinh);
+                let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon3, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
+                let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
+                console.log("--------thông tin môn 1----------");
+                console.log(_ttmh_1);
+                console.log("--------thông tin môn 2----------");
+                console.log(_ttmh_2);
+                console.log("--------thông tin môn 3----------");
+                console.log(_ttmh_3);
+                set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);
+
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function set_tenmonhoc_diem_thisinh(all_m1, all_m2, all_m3) {
+        console.log(all_m2)
+        return
+        //   constructor(ten_Mon1, H_K1, H_K2, H_K3, DiemTrung_Binh)
+        let tenmon_1 = $('#lb_tenmon_1'); let _txt_m1_k1 = $('#txt_m1_k1'); let _txt_m1_k2 = $('#txt_m1_k2'); let _txt_m1_k3 = $('#txt_m1_k3'); let _lb_tb_m1 = $('#lb_tb_m1');
+        tenmon_1.text(all_m1.ten_Mon); _txt_m1_k1.val(all_m1.H_K1); _txt_m1_k2.val(all_m1.H_K2); _txt_m1_k3.val(all_m1.H_K3); _lb_tb_m1.text(all_m1.DiemTrung_Binh);
+
+
+        let tenmon_2 = $('#lb_tenmon_2'); let _txt_m2_k1 = $('#txt_m2_k1'); let _txt_m2_k2 = $('#txt_m2_k2'); let _txt_m2_k3 = $('#txt_m2_k3'); let _lb_tb_m2 = $('#lb_tb_m2');
+        tenmon_2.text(all_m2.ten_Mon); _txt_m2_k1.val(all_m2.H_K1); _txt_m2_k2.val(all_m2.H_K2); _txt_m2_k3.val(all_m2.H_K3); _lb_tb_m2.text(all_m2.DiemTrung_Binh);
+
+
+        let tenmon_3 = $('#lb_tenmon_3'); let _txt_m3_k1 = $('#txt_m3_k1'); let _txt_m3_k2 = $('#txt_m3_k2'); let _txt_m3_k3 = $('#txt_m3_k3'); let _lb_tb_m3 = $('#lb_tb_m3');
+        tenmon_3.text(all_m3.ten_Mon); _txt_m3_k1.val(all_m3.H_K1); _txt_m3_k2.val(all_m3.H_K2); _txt_m3_k3.val(all_m3.H_K3); _lb_tb_m3.text(all_m3.DiemTrung_Binh);
+        if (id_dangky == -1) { // thêm mới
+        }
+        if (id_dangky > 0) { // sửa đăng ký
+        }
+    }
+</script>
 @*
 
         <tbody id="tbody_list_nguyenvong">
