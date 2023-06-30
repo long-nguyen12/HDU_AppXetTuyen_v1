@@ -57,6 +57,7 @@
         [Required(ErrorMessage = "Vui lòng chọn ngày sinh")]
         public string ThiSinh_NgaySinh { get; set; }
 
+        [Display(Name = "Năm tốt nghiệp")]
         [StringLength(4)]
         public string ThiSinh_NamTotNghiep { get; set; }
 
@@ -66,22 +67,28 @@
         [StringLength(300)]
         public string ThiSinh_NgayDangKy { get; set; }
 
+        [Display(Name = "Dân tộc")]
         [StringLength(50)]
         public string ThiSinh_DanToc { get; set; }
 
-        public int? ThiSinh_GioiTinh { get; set; }    
+        [Display(Name = "Giới tính")]
+        public int? ThiSinh_GioiTinh { get; set; }
 
+        [Display(Name = "Địa chỉ nhận giấy báo")]
         [StringLength(300)]
         public string ThiSinh_DCNhanGiayBao { get; set; }
 
+        [Display(Name = "Hộ khẩu")]
         [StringLength(300)]
         public string ThiSinh_HoKhauThuongTru { get; set; }
 
         [StringLength(300)]
         public string ThiSinh_HoKhauThuongTru_Check { get; set; }
 
+        [Display(Name = "Khu vực")]
         public int? KhuVuc_ID { get; set; }
 
+        [Display(Name = "Đối tượng")]
         public int? DoiTuong_ID { get; set; }
 
         [StringLength(300)]
