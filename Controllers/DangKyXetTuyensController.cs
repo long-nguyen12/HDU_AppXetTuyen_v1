@@ -224,6 +224,12 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxt.Ptxt_ID = 3;
                 dkxt.Dkxt_NguyenVong = nvs.Count + 1;
                 db.DangKyXetTuyens.Add(dkxt);
+
+                // add LePhiXetTuyen
+                LePhiXetTuyen lpxt = new LePhiXetTuyen();
+                lpxt.ThiSinh_ID = ts.ThiSinh_ID;
+                db.LePhiXetTuyens.Add(lpxt);
+
                 db.SaveChanges();
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
