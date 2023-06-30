@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using HDU_AppXetTuyen.Models;
@@ -13,7 +14,7 @@ namespace HDU_AppXetTuyen.Controllers
 {
     public class Update_ThiSinh
     {
-        public string ThiSinh_CCCD  { get; set; }
+        public string ThiSinh_CCCD { get; set; }
         public string ThiSinh_HoLot { get; set; }
         public string ThiSinh_Ten { get; set; }
         public string ThiSinh_DienThoai { get; set; }
@@ -227,7 +228,6 @@ namespace HDU_AppXetTuyen.Controllers
             ts.ThiSinh_HoLot = thiSinh_Update.ThiSinh_HoLot;
             ts.ThiSinh_Ten = thiSinh_Update.ThiSinh_Ten;
             ts.ThiSinh_DienThoai = thiSinh_Update.ThiSinh_DienThoai;
-            ts.ThiSinh_Email = thiSinh_Update.ThiSinh_Email;
             ts.ThiSinh_NgaySinh = thiSinh_Update.ThiSinh_NgaySinh;
             ts.ThiSinh_DanToc = thiSinh_Update.ThiSinh_DanToc;
             ts.ThiSinh_GioiTinh = int.Parse(thiSinh_Update.ThiSinh_GioiTinh);
@@ -240,6 +240,21 @@ namespace HDU_AppXetTuyen.Controllers
             ts.ThiSinh_TruongCapBa = thiSinh_Update.ThiSinh_TruongCapBa;
             ts.ThiSinh_HocLucLop12 = int.Parse(thiSinh_Update.ThiSinh_HocLucLop12);
             ts.ThiSinh_HanhKiemLop12 = int.Parse(thiSinh_Update.ThiSinh_HanhKiemLop12);
+            if (!ts.ThiSinh_Email.Equals(thiSinh_Update.ThiSinh_Email))
+            {
+                ts.ThiSinh_Email = thiSinh_Update.ThiSinh_Email;
+            }
+            else
+            {
+                ts.ThiSinh_Email_Temp = thiSinh_Update.ThiSinh_Email;
+                /*var subject = "Đặt lại email";
+                var body = "Xin chào " + ts.ThiSinh_Ten + ", <br/> Bạn vừa yêu cầu đổi email. Vui lòng xác thực email. " +
+
+                     " <br/><b>" + randomPassword + "</b><br/>";
+
+                SendEmail(thiSinh_Update.ThiSinh_Email, body, subject);*/
+
+            }
             db.SaveChanges();
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
@@ -252,6 +267,25 @@ namespace HDU_AppXetTuyen.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        private void SendEmail(string email, string body, string subject)
+        {
+            using (MailMessage mm = new MailMessage("cict@hdu.edu.vn", email))
+            {
+                mm.Subject = subject;
+                mm.Body = body;
+
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+
+                NetworkCredential NetworkCred = new NetworkCredential("cict@hdu.edu.vn", "hongduc1");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
+            }
         }
     }
 }

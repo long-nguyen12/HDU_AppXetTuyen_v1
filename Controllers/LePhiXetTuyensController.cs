@@ -67,7 +67,7 @@ namespace HDU_AppXetTuyen.Controllers
                         var fileName = Path.GetFileName(file.FileName);
                         fileName = thiSinh.ThiSinh_CCCD + "_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "_" + fileName;
                         var filePath = Path.Combine(Server.MapPath("~/Uploads/UploadMinhChungs"), fileName);
-                        var savePath = "~/Uploads/UploadMinhChungs/" + fileName;
+                        var savePath = "Uploads/UploadMinhChungs/" + fileName;
                         if (i != Request.Files.Count - 1)
                         {
                             minhchungs = minhchungs + savePath + "#";
