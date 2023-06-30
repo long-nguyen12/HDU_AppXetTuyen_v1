@@ -227,7 +227,6 @@
         }
         if (!flag) return;
 
-        $('#loadingModal').modal('show');
         let hokhautt = register_phuongtt + ", " + $('#register_huyentt option:selected').text() + ", " + $('#register_tinhtt option:selected').text();
         let hokhautt_check = {
             Phuongxa: register_phuongtt,
@@ -259,20 +258,22 @@
             data: JSON.stringify(formData),
             contentType: "application/json;charset=utf-8",
             success: function (response) {
-                console.log(response)
                 if (response.success) {
                     showToast("Thành công", "Đăng kí tài khoản thành công! Vui lòng kích hoạt tài khoản theo đường link gửi qua email!", "bg-success");
                     $('#signupForm').hide();
                     $('#loginForm').show();
                     $("#rightPanel").removeClass("col-lg-7").addClass("col-lg-5");
                     $("#leftPanel").removeClass("col-lg-5").addClass("col-lg-7");
+                    $('#loadingModal').modal('hide');
                 } else {
-                    $('#errorMessage').text(response.message);
+                    $('#signupErrorMessage').text(response.message);
                     showToast("Thất bại", "Đăng kí tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+                    $('#loadingModal').modal('hide');
                 }
             },
             error: function (xhr, status, error) {
                 showToast("Thất bại", "Đăng kí tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+                $('#loadingModal').modal('hide');
             },
             complete: function () {
                 // Hide the loading modal
@@ -491,6 +492,9 @@
                     @Html.EditorFor(model => model.ThiSinh_DCNhanGiayBao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập địa chỉ liên hệ", @id = "register_diachi" } })
                     <span id="register_diachi_Error" class="small mb-1 text-danger"></span>
                 </div>
+            </div>
+            <div>
+                <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
             </div>
             <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
                 <input class="btn btn-primary" type="submit" onclick="submitRegisterForm()" value="Đăng kí" />
