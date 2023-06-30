@@ -72,23 +72,25 @@
                         $("#uploadFile").show();
                         let html = "";
                         $.each(data, function (key, item) {
+                            console.log(key)
                             html += "<tr>";
                             html += '<td class="text-center">' + item.Dkxt_NguyenVong + '</td>';
                             html += '<td>' + item.Dkxt_Nganh.Nganh_TenNganh + '</td>';
-                            // html += '<td>' + item.Khoa_DiaChi + '</td>';
-                            if (!lePhi || lePhi.Lpxt_TrangThai == 0) {
-                                html += `<td class="text-center"><span class="badge bg-danger">Chưa đóng phí</span></td>`;
-                            } else if (lePhi.Lpxt_TrangThai == 1) {
-                                html += `<td class="text-center"><span class="badge bg-info">Chờ xác nhận</span></td>`;
-                            } else if (lePhi.Lpxt_TrangThai == 2) {
-                                html += `<td class="text-center"><span class="badge bg-warning">Thiếu</span></td>`;
-                            } else if (lePhi.Lpxt_TrangThai == 3) {
-                                html += `<td class="text-center"><span class="badge bg-success">Đã đủ</span></td>`;
+                            if (key == 0) {
+                                if (!lePhi || lePhi.Lpxt_TrangThai == 0) {
+                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-danger">Chưa đóng phí</span></td>`;
+                                } else if (lePhi.Lpxt_TrangThai == 1) {
+                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-info">Chờ xác nhận</span></td>`;
+                                } else if (lePhi.Lpxt_TrangThai == 2) {
+                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-warning">Thiếu</span></td>`;
+                                } else if (lePhi.Lpxt_TrangThai == 3) {
+                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-success">Đã đủ</span></td>`;
+                                }
+                                html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">ádsadadsa</td>`;
+                                html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${lePhi.Lpxt_GhiChu == null ? "" : lePhi.Lpxt_GhiChu}</td>`;
                             }
-                            html += '<td></td>';
+                            html += "</tr>";
                         });
-                        html += `<td rowspan=${data.length}></td>`;
-                        html += "</tr>";
                         $('.tbody').html(html);
                     }
                 } else {
@@ -110,7 +112,6 @@
         $("#myToast").toast("show");
     }
 </script>
-
 <div class="container-fluid px-12">
     <div id="fadeInUp">
         <div class="card card-header-actions mt-3 mb-1">
@@ -153,8 +154,8 @@
                             <th width="10%" class="text-center">@Html.DisplayName("Nguyện vọng")</th>
                             <th width="30%" class="text-center">@Html.DisplayName("Ngành")</th>
                             <th class="text-center">@Html.DisplayName("Trạng thái")</th>
-                            <th class="text-center">@Html.DisplayName("Ghi chú")</th>
                             <th class="text-center">@Html.DisplayName("Minh chứng")</th>
+                            <th class="text-center">@Html.DisplayName("Ghi chú")</th>
                             <th></th>
                         </tr>
                     </thead>
