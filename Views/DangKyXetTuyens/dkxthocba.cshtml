@@ -233,7 +233,7 @@
         <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" ></button>
             </div>
             <div class="toast-body">
             </div>
@@ -280,7 +280,7 @@
         });
         // lấy danh sách 3 môn cần nhập điểm
         $("#select_tohopmon").change(function () {
-            get_data_fortable_nhapdiem(key_check_update);
+            get_data_fortable_nhapdiem();
             if ($("#select_tohopmon").val() > 0) {
                 $('#txt_m1_k1').prop('disabled', false);
                 $('#txt_m1_k2').prop('disabled', false);
@@ -373,11 +373,11 @@
                 else {
                     $.each(result_all, function (i, result) {
                         _output += '<tr>' +
-                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
+                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-outline-primary btn-sm">&#8743;</a>  <a class="btn btn-outline-primary btn-sm">&#8744;</a> </td>' +
                             '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
-                            '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
+                            '<td>' + '<a href="#" class="btn btn-outline-primary" style="vertical-align: middle !important " title="Bấm chuột để xác nhận đăng ký nguyện vọng này"> <input type="checkbox" disabled /> Chưa xác nhận</a>' + '</td>' +
                             '<td style="text-align: center; vertical-align: middle !important ">' + 'Sửa | Xóa' + '</td>' +
                             '</tr>'
                     });
@@ -482,7 +482,7 @@
                 let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon2, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
                 let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
                 let _dkxt_id_update = res.dkxt_id_update;
-                set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3, _dkxt_id_update);
+                set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -490,7 +490,7 @@
         });
     }
 
-    function set_tenmonhoc_diem_thisinh(all_m1, all_m2, all_m3, dkxt_id_update) {
+    function set_tenmonhoc_diem_thisinh(all_m1, all_m2, all_m3) {
 
         let tenmon_1 = $('#lb_tenmon_1'); let _txt_m1_k1 = $('#txt_m1_k1'); let _txt_m1_k2 = $('#txt_m1_k2'); let _txt_m1_k3 = $('#txt_m1_k3'); let _txt_tb_m1 = $('#txt_tb_m1');
         tenmon_1.text(all_m1.ten_Mon); _txt_m1_k1.val(all_m1.H_K1); _txt_m1_k2.val(all_m1.H_K2); _txt_m1_k3.val(all_m1.H_K3); _txt_tb_m1.text(all_m1.DiemTrung_Binh);
@@ -540,7 +540,7 @@
         }
         console.log(formData)
         $.ajax({
-            url: "/DangKyXetTuyens/AddNguyenVong",
+            url: "/DangKyXetTuyens/DangKyXetTuyen_Add",
             data: JSON.stringify(formData),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
