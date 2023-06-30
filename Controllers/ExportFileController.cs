@@ -74,8 +74,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
                 document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);                
-                document.ReplaceText("<<ThiSinh_HocLuc12>>", listDkxt[0].Dkxt_XepLoaiHocLuc_12);
-                document.ReplaceText("<<ThiSinh_HanhKiem12>>", listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                document.ReplaceText("<<ThiSinh_HocLuc12>>", listDkxt[0].Dkxt_XepLoaiHocLuc_12.ToString());
+                document.ReplaceText("<<ThiSinh_HanhKiem12>>", listDkxt[0].Dkxt_XepLoaiHanhKiem_12.ToString());
 
                 // Lấy ra table đầu tiên trong file word
                 var table = document.Tables[0];

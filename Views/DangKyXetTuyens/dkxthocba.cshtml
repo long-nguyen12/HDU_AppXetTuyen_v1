@@ -368,19 +368,8 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (result_all) {
-                if (result_all.length == 0) {
-                    _output += '<tr>' +
-                        '<td style="vertical-align: middle !important "> NV 1 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
-                        '<td style="vertical-align: middle !important "> 000 -  chưa có ngành </td>' +
-                        '<td style="vertical-align: middle !important "> 000 - chưa có tổ hợp</td>' +
-                        '<td style="vertical-align: middle !important "> 0.000 </td>' +
-
-                        '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
-                        '<td style="text-align: center; vertical-align: middle !important ">' +
-                        'Sửa | Xóa' +
-                        '</td>' +
-                        '</tr>'
-                  /*  _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';*/
+                if (result_all.length == 0) {                   
+                    _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
                 else {
                    
@@ -534,21 +523,21 @@
         let Nganh_ID = $('#select_nganh').val();
         let Thm_ID = $('#select_tohopmon').val();
         let Dkxt_Diem_M1 = {
-            TenMon1: $('#lb_tenmon_1').val(),
+            TenMon1: $('#lb_tenmon_1').text(),
             HK1: $('#txt_m1_k1').val(),
             HK2: $('#txt_m1_k2').val(),
             HK3: $('#txt_m1_k3').val(),
             DiemTrungBinh: $('#lb_tb_m1').val(),
         };
         let Dkxt_Diem_M2 = {
-            TenMon2: $('#lb_tenmon_2').val(),
+            TenMon2: $('#lb_tenmon_2').text(),
             HK1: $('#txt_m2_k1').val(),
             HK2: $('#txt_m2_k2').val(),
             HK3: $('#txt_m2_k3').val(),
             DiemTrungBinh: $('#lb_tb_m2').val(),
         };
         let Dkxt_Diem_M3 = {
-            TenMon3: $('#lb_tenmon_3').val(),
+            TenMon3: $('#lb_tenmon_3').text(),
             HK1: $('#txt_m3_k1').val(),
             HK2: $('#txt_m3_k2').val(),
             HK3: $('#txt_m3_k3').val(),
@@ -567,32 +556,20 @@
             var errorMessage = "Chưa chọn tổ hợp môn";
             $('#Thm_ID_Error').text(errorMessage);
             flag = false;
-        }
-        if (!Dkxt_XepLoaiHocLuc_12 || Dkxt_XepLoaiHocLuc_12 == "0") {
-            var errorMessage = "Không được bỏ trống học lực";
-            $('#Dkxt_XepLoaiHocLuc_12_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!Dkxt_XepLoaiHanhKiem_12 || Dkxt_XepLoaiHanhKiem_12 == "0") {
-            var errorMessage = "Không được bỏ trống hạnh kiểm";
-            $('#Dkxt_XepLoaiHanhKiem_12_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!DiemTBMon1 || !DiemTBMon2 || !DiemTBMon3) {
-            var errorMessage = "Không được bỏ trống điểm";
-            $('#Diem_Chi_Tiet_Error').text(errorMessage);
-            flag = false;
-        }
-        console.log(flag)
+        }        
+        //if (!DiemTBMon1 || !DiemTBMon2 || !DiemTBMon3) {
+        //    var errorMessage = "Không được bỏ trống điểm";
+        //    $('#Diem_Chi_Tiet_Error').text(errorMessage);
+        //    flag = false;
+        //}
+   
         if (!flag) return;
 
         let Dkxt_Diem_Tong = parseFloat(DiemTBMon1) + parseFloat(DiemTBMon2) + parseFloat(DiemTBMon3);
 
         let formData = {
             Nganh_ID: Nganh_ID,
-            Thm_ID: Thm_ID,
-            Dkxt_XepLoaiHocLuc_12: Dkxt_XepLoaiHocLuc_12,
-            Dkxt_XepLoaiHanhKiem_12: Dkxt_XepLoaiHanhKiem_12,
+            Thm_ID: Thm_ID,            
             Dkxt_Diem_M1: JSON.stringify(Dkxt_Diem_M1),
             Dkxt_Diem_M2: JSON.stringify(Dkxt_Diem_M2),
             Dkxt_Diem_M3: JSON.stringify(Dkxt_Diem_M3),
