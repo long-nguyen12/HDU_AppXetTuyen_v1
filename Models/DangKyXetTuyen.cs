@@ -53,12 +53,10 @@ namespace HDU_AppXetTuyen.Models
 
         [StringLength(1000)]
         public string Dkxt_Diem_Tong_Full { get; set; }
-
-        [StringLength(500)]
-        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
-
-        [StringLength(500)]
-        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
+      
+        public int? Dkxt_XepLoaiHocLuc_12 { get; set; }
+      
+        public int? Dkxt_XepLoaiHanhKiem_12 { get; set; }
 
         [StringLength(4000)]
         public string Dkxt_MinhChung_HB { get; set; }

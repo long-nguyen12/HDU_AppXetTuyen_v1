@@ -197,8 +197,8 @@ namespace HDU_AppXetTuyen.Controllers
                 DangKyXetTuyen dkxt = new DangKyXetTuyen();
                 dkxt.Nganh_ID = int.Parse(nguyenvong.Nganh_ID);
                 dkxt.Thm_ID = int.Parse(nguyenvong.Thm_ID);
-                dkxt.Dkxt_XepLoaiHocLuc_12 = nguyenvong.Dkxt_XepLoaiHocLuc_12;
-                dkxt.Dkxt_XepLoaiHanhKiem_12 = nguyenvong.Dkxt_XepLoaiHanhKiem_12;
+                dkxt.Dkxt_XepLoaiHocLuc_12 = ts.ThiSinh_HocLucLop12;
+                dkxt.Dkxt_XepLoaiHanhKiem_12 = ts.ThiSinh_HanhKiemLop12;
                 dkxt.Dkxt_Diem_M1 = nguyenvong.Dkxt_Diem_M1;
                 dkxt.Dkxt_Diem_M2 = nguyenvong.Dkxt_Diem_M2;
                 dkxt.Dkxt_Diem_M3 = nguyenvong.Dkxt_Diem_M3;
@@ -243,9 +243,7 @@ namespace HDU_AppXetTuyen.Controllers
         public string Dkxt_Diem_M2 { get; set; }
         public string Dkxt_Diem_M3 { get; set; }
         public string Dkxt_Diem_Tong { get; set; }
-        public string Dkxt_Diem_Tong_Full { get; set; }
-        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
-        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
+        public string Dkxt_Diem_Tong_Full { get; set; }      
     }
 
     public class str_infor
