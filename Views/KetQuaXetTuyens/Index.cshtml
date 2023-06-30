@@ -16,117 +16,70 @@
                 <table class="table">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.DoiTuong.DoiTuong_Ten)
+                            @Html.DisplayName("Đợt xét tuyển")
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
+                            @Html.DisplayName("Mã ngành")
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.KhuVuc.KhuVuc_Ten)
+                            @Html.DisplayName("Tên ngành")
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Nganh.Nganh_MaNganh)
+                            @Html.DisplayName("Tên phương thức")
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+                            @Html.DisplayName("Mã tổ hợp")
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+                            @Html.DisplayName("Thứ tự nguyện vọng")
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.ToHopMon.Thm_MaToHop)
+                            @Html.DisplayName("Tổng điểm")
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_TrangThai)
+                        <th width="15%">
+                            @Html.DisplayName("Trạng thái")
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_NguyenVong)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_GhiChu)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_Diem_M1)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_Diem_M2)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_Diem_M3)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_Diem_Tong)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_Diem_Tong_Full)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHocLuc_12)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHanhKiem_12)
-                        </th>
-                        <th></th>
                     </tr>
 
                     @foreach (var item in Model)
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DoiTuong.DoiTuong_Ten)
-                            </td>
-                            <td>
                                 @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.KhuVuc.KhuVuc_Ten)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Nganh.Nganh_MaNganh)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+                                @Html.DisplayFor(modelItem => item.Nganh.NganhTenNganh)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
+                                @Html.DisplayFor(modelItem => item.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ToHopMon.Thm_MaToHop)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_TrangThai)
-                            </td>
-                            <td>
                                 @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_GhiChu)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_Diem_M1)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_Diem_M2)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_Diem_M3)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong_Full)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHocLuc_12)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHanhKiem_12)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Dkxt_ID }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.Dkxt_ID }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Dkxt_ID })
+                                @{
+                                    if (item.Dkxt_TrangThai_KetQua == 0)
+                                    {
+                                        <span class="badge bg-info">Chờ xét duyệt</span>
+                                    }
+                                    else if (item.Dkxt_TrangThai_KetQua == 1)
+                                    {
+                                        <span class="badge bg-danger">Trượt</span>
+                                    }
+                                    else if (item.Dkxt_TrangThai_KetQua == 2)
+                                    {
+                                        <span class="badge bg-success">Trúng tuyển</span>
+                                    }
+                                }
                             </td>
                         </tr>
                     }
