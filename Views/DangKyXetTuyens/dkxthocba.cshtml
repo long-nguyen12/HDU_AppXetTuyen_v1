@@ -39,6 +39,7 @@
             <div class="card-header">
                 Các nguyện vọng đã đăng ký
                 <a class="btn btn-primary" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng mới</a>
+
             </div>
             <div class="card-body">
                 <div class="row">
@@ -64,6 +65,8 @@
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần bấm xác nhận để hoàn thành việc đăng ký sau khi thêm nguyện vọng mới hoặc hoặc sửa các nguyện vọng.</p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, ký xác nhận và gửi về trường theo đường bưu điện.</p>
+                        <br />
+                        <center><button id="downButton" class="btn btn-success"> In phiếu tổng hợp xét tuyển </button> </center>
                     </div>
 
                 </div>
@@ -75,7 +78,6 @@
             <div class="card-header">
                 Đăng ký nguyện vọng mới
                 <button class="btn-close" type="button" aria-label="Close" onclick="onclick_bt_huybo_dangky_nvmoi(0,0,0)"></button>
-
             </div>
             <div class="card-body">
                 <div class="row">
@@ -535,14 +537,14 @@
             DiemTrungBinh: $('#lb_tb_m1').val(),
         };
         let Dkxt_Diem_M2 = {
-            TenMon1: $('#lb_tenmon_2').val(),
+            TenMon2: $('#lb_tenmon_2').val(),
             HK1: $('#txt_m2_k1').val(),
             HK2: $('#txt_m2_k2').val(),
             HK3: $('#txt_m2_k3').val(),
             DiemTrungBinh: $('#lb_tb_m2').val(),
         };
         let Dkxt_Diem_M3 = {
-            TenMon1: $('#lb_tenmon_3').val(),
+            TenMon2: $('#lb_tenmon_3').val(),
             HK1: $('#txt_m3_k1').val(),
             HK2: $('#txt_m3_k2').val(),
             HK3: $('#txt_m3_k3').val(),
@@ -617,4 +619,10 @@
         var errorContainer = input.next('.text-danger');
         errorContainer.text('');
     }
+
+    $(document).ready(function () {
+        $('#downButton').click(function () {
+            window.location.href = '/ExportFile/DownloadFile_XetTuyenHB';
+        });
+    });
 </script>
