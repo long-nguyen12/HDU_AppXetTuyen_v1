@@ -36,11 +36,11 @@
 <div class="container-fluid px-12">
     <div id="div_list_nguyenvong">
         <div class="card card-header-actions">
-            <div class="card-header">             
+            <div class="card-header">
                 Các nguyện vọng đã đăng ký
                 <span>
-                    <button id="downButton" class="btn btn-light"> In phiếu tổng hợp</button>
-                    <a class="btn btn-light" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng</a>
+                    <button id="downButton" class="btn btn-outline-success"> In phiếu tổng hợp</button>
+                    <a class="btn btn-outline-primary" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng</a>
                 </span>
             </div>
             <div class="card-body">
@@ -68,7 +68,7 @@
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, ký xác nhận và gửi về trường theo đường bưu điện.</p>
                         @*<br />
-                        <center> </center>*@
+                            <center> </center>*@
                     </div>
 
                 </div>
@@ -117,11 +117,11 @@
                                     <td colspan="2">
                                         <div class="row">
                                             <div class="col-6 ">
-                                                Điểm ƯTĐT: 1 đ (ĐT:01)
+                                                ƯTĐT: 1 đ (ĐT:01)
                                                 <hr />
                                             </div>
                                             <div class="col-6  ">
-                                                Điểm ƯTKV: 0.75 đ (KV2-NT)
+                                                ƯTKV: 0.75 đ (KV2-NT)
                                                 <hr />
                                             </div>
                                         </div>
@@ -162,21 +162,21 @@
                                             <td><input id="txt_m1_k1" type="number" class="form-control input-mon1" value="" disabled /></td>
                                             <td><input id="txt_m1_k2" type="number" class="form-control input-mon1" value="" disabled /></td>
                                             <td><input id="txt_m1_k3" type="number" class="form-control input-mon1" value="" disabled /></td>
-                                            <td><input id="lb_tb_m1" type="number" class="form-control" value="" disabled /></td>
+                                            <td><input id="txt_tb_m1" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_2" class="form-label">Chưa chọn</label></td>
                                             <td><input id="txt_m2_k1" type="number" class="form-control input-mon2" value="" disabled /></td>
                                             <td><input id="txt_m2_k2" type="number" class="form-control input-mon2" value="" disabled /></td>
                                             <td><input id="txt_m2_k3" type="number" class="form-control input-mon2" value="" disabled /></td>
-                                            <td><input id="lb_tb_m2" type="number" class="form-control" value="" disabled /></td>
+                                            <td><input id="txt_tb_m2" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_3" class="form-label">Chưa chọn</label></td>
                                             <td><input id="txt_m3_k1" type="number" class="form-control input-mon3" value="" disabled /></td>
                                             <td><input id="txt_m3_k2" type="number" class="form-control input-mon3" value="" disabled /></td>
                                             <td><input id="txt_m3_k3" type="number" class="form-control input-mon3" value="" disabled /></td>
-                                            <td><input id="lb_tb_m3" type="number" class="form-control" value="" disabled /></td>
+                                            <td><input id="txt_tb_m3" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -233,7 +233,7 @@
         <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" ></button>
             </div>
             <div class="toast-body">
             </div>
@@ -242,7 +242,7 @@
 </div>
 <script>
 
-    let key_dkxt_id_port = -1;
+    let key_dkxt_id_post = -1;
 
     class _thongtin_monhoc {
         constructor(ten_Mon, H_K1, H_K2, H_K3, DiemTrung_Binh) {
@@ -280,7 +280,6 @@
         });
         // lấy danh sách 3 môn cần nhập điểm
         $("#select_tohopmon").change(function () {
-            // get_data_fortable_nhapdiem($("#select_tohopmon").val());
             get_data_fortable_nhapdiem();
             if ($("#select_tohopmon").val() > 0) {
                 $('#txt_m1_k1').prop('disabled', false);
@@ -306,9 +305,9 @@
             }
         });
 
-        onListenFields(".input-mon1", '#lb_tb_m1');
-        onListenFields(".input-mon2", '#lb_tb_m2');
-        onListenFields(".input-mon3", '#lb_tb_m3');
+        onListenFields(".input-mon1", '#txt_tb_m1');
+        onListenFields(".input-mon2", '#txt_tb_m2');
+        onListenFields(".input-mon3", '#txt_tb_m3');
 
         $('input').on('input', function () {
             hideErrorMessage($(this));
@@ -355,9 +354,9 @@
         $('#lb_tenmon_1').text("");
         $('#lb_tenmon_2').text("");
         $('#lb_tenmon_3').text("");
-        $('#lb_tb_m1').val("");
-        $('#lb_tb_m2').val("");
-        $('#lb_tb_m3').val("");
+        $('#txt_tb_m1').val("");
+        $('#txt_tb_m2').val("");
+        $('#txt_tb_m3').val("");
     }
 
     function dkxt_get_data_da_dkxt_all() {
@@ -368,23 +367,18 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (result_all) {
-                if (result_all.length == 0) {                   
+                if (result_all.length == 0) {
                     _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
                 else {
-                   
                     $.each(result_all, function (i, result) {
-
                         _output += '<tr>' +
-                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
+                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-outline-primary btn-sm">&#8743;</a>  <a class="btn btn-outline-primary btn-sm">&#8744;</a> </td>' +
                             '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
-                           
-                            '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
-                            '<td style="text-align: center; vertical-align: middle !important ">' +
-                            'Sửa | Xóa' +
-                            '</td>' +
+                            '<td>' + '<a href="#" class="btn btn-outline-primary" style="vertical-align: middle !important " title="Bấm chuột để xác nhận đăng ký nguyện vọng này"> <input type="checkbox" disabled /> Chưa xác nhận</a>' + '</td>' +
+                            '<td style="text-align: center; vertical-align: middle !important ">' + 'Sửa | Xóa' + '</td>' +
                             '</tr>'
                     });
                 }
@@ -399,14 +393,14 @@
         document.getElementById('div_list_nguyenvong').style.display = "none";
         document.getElementById('div_update_dk_nguyenvong').style.display = "inline";
         get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key);
-        key_dkxt_id_port = -1;
+        key_dkxt_id_post = -1;
     }
     function onclick_bt_huybo_dangky_nvmoi(khoinganh_key, nganh_key, tohopmon_key) {
 
         document.getElementById('div_list_nguyenvong').style.display = "inline";
         document.getElementById('div_update_dk_nguyenvong').style.display = "none";
         get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key);
-        key_dkxt_id_port = -2;
+        key_dkxt_id_post = -2;
     }
 
     function get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key) {
@@ -475,22 +469,20 @@
     function get_data_fortable_nhapdiem() {
         let data = {
             int_input_a: $("#select_tohopmon").val(),
-            int_input_b: key_dkxt_id_port,
+            int_input_b: key_dkxt_id_post,
         };
         $.ajax({
-            url: "/DangKyXetTuyens/ToHopMonGeByID",
+            url: "/DangKyXetTuyens/DangKyXetTuyen_Get_ByID",
             data: JSON.stringify(data),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (res) {
-
                 let _ttmh_1 = new _thongtin_monhoc(res.thm_Mon1.TenMon1, res.thm_Mon1.HK1, res.thm_Mon1.HK2, res.thm_Mon1.HK3, res.thm_Mon1.DiemTrungBinh);
                 let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon2, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
-                let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);             
-              
-                set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);               
-              
+                let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
+                let _dkxt_id_update = res.dkxt_id_update;
+                set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -500,76 +492,47 @@
 
     function set_tenmonhoc_diem_thisinh(all_m1, all_m2, all_m3) {
 
-        let tenmon_1 = $('#lb_tenmon_1'); let _txt_m1_k1 = $('#txt_m1_k1'); let _txt_m1_k2 = $('#txt_m1_k2'); let _txt_m1_k3 = $('#txt_m1_k3'); let _lb_tb_m1 = $('#lb_tb_m1');
-        tenmon_1.text(all_m1.ten_Mon); _txt_m1_k1.val(all_m1.H_K1); _txt_m1_k2.val(all_m1.H_K2); _txt_m1_k3.val(all_m1.H_K3); _lb_tb_m1.text(all_m1.DiemTrung_Binh);
+        let tenmon_1 = $('#lb_tenmon_1'); let _txt_m1_k1 = $('#txt_m1_k1'); let _txt_m1_k2 = $('#txt_m1_k2'); let _txt_m1_k3 = $('#txt_m1_k3'); let _txt_tb_m1 = $('#txt_tb_m1');
+        tenmon_1.text(all_m1.ten_Mon); _txt_m1_k1.val(all_m1.H_K1); _txt_m1_k2.val(all_m1.H_K2); _txt_m1_k3.val(all_m1.H_K3); _txt_tb_m1.text(all_m1.DiemTrung_Binh);
 
 
-        let tenmon_2 = $('#lb_tenmon_2'); let _txt_m2_k1 = $('#txt_m2_k1'); let _txt_m2_k2 = $('#txt_m2_k2'); let _txt_m2_k3 = $('#txt_m2_k3'); let _lb_tb_m2 = $('#lb_tb_m2');
-        tenmon_2.text(all_m2.ten_Mon); _txt_m2_k1.val(all_m2.H_K1); _txt_m2_k2.val(all_m2.H_K2); _txt_m2_k3.val(all_m2.H_K3); _lb_tb_m2.text(all_m2.DiemTrung_Binh);
+        let tenmon_2 = $('#lb_tenmon_2'); let _txt_m2_k1 = $('#txt_m2_k1'); let _txt_m2_k2 = $('#txt_m2_k2'); let _txt_m2_k3 = $('#txt_m2_k3'); let _txt_tb_m2 = $('#txt_tb_m2');
+        tenmon_2.text(all_m2.ten_Mon); _txt_m2_k1.val(all_m2.H_K1); _txt_m2_k2.val(all_m2.H_K2); _txt_m2_k3.val(all_m2.H_K3); _txt_tb_m2.text(all_m2.DiemTrung_Binh);
 
 
-        let tenmon_3 = $('#lb_tenmon_3'); let _txt_m3_k1 = $('#txt_m3_k1'); let _txt_m3_k2 = $('#txt_m3_k2'); let _txt_m3_k3 = $('#txt_m3_k3'); let _lb_tb_m3 = $('#lb_tb_m3');
-        tenmon_3.text(all_m3.ten_Mon); _txt_m3_k1.val(all_m3.H_K1); _txt_m3_k2.val(all_m3.H_K2); _txt_m3_k3.val(all_m3.H_K3); _lb_tb_m3.text(all_m3.DiemTrung_Binh);
-
-       
-        if (id_dangky == -1) { // thêm mới
-        }
-        if (id_dangky > 0) { // sửa đăng ký
-        }
+        let tenmon_3 = $('#lb_tenmon_3'); let _txt_m3_k1 = $('#txt_m3_k1'); let _txt_m3_k2 = $('#txt_m3_k2'); let _txt_m3_k3 = $('#txt_m3_k3'); let _txt_tb_m3 = $('#txt_tb_m3');
+        tenmon_3.text(all_m3.ten_Mon); _txt_m3_k1.val(all_m3.H_K1); _txt_m3_k2.val(all_m3.H_K2); _txt_m3_k3.val(all_m3.H_K3); _txt_tb_m3.text(all_m3.DiemTrung_Binh);
+        
     }
 
     function addNguyenVong() {
         let flag = true;
+
         let Nganh_ID = $('#select_nganh').val();
         let Thm_ID = $('#select_tohopmon').val();
-        let Dkxt_Diem_M1 = {
-            TenMon1: $('#lb_tenmon_1').text(),
-            HK1: $('#txt_m1_k1').val(),
-            HK2: $('#txt_m1_k2').val(),
-            HK3: $('#txt_m1_k3').val(),
-            DiemTrungBinh: $('#lb_tb_m1').val(),
-        };
-        let Dkxt_Diem_M2 = {
-            TenMon2: $('#lb_tenmon_2').text(),
-            HK1: $('#txt_m2_k1').val(),
-            HK2: $('#txt_m2_k2').val(),
-            HK3: $('#txt_m2_k3').val(),
-            DiemTrungBinh: $('#lb_tb_m2').val(),
-        };
-        let Dkxt_Diem_M3 = {
-            TenMon3: $('#lb_tenmon_3').text(),
-            HK1: $('#txt_m3_k1').val(),
-            HK2: $('#txt_m3_k2').val(),
-            HK3: $('#txt_m3_k3').val(),
-            DiemTrungBinh: $('#lb_tb_m3').val(),
-        };
-        let DiemTBMon1 = $('#lb_tb_m1').val();
-        let DiemTBMon2 = $('#lb_tb_m2').val();
-        let DiemTBMon3 = $('#lb_tb_m3').val();
 
-        if (Nganh_ID == 0) {
-            var errorMessage = "Chưa chọn ngành";
-            $('#Nganh_ID_Error').text(errorMessage);
-            flag = false;
-        }
-        if (Thm_ID == 0) {
-            var errorMessage = "Chưa chọn tổ hợp môn";
-            $('#Thm_ID_Error').text(errorMessage);
-            flag = false;
-        }        
+        let Dkxt_Diem_M1 = { TenMon1: $('#lb_tenmon_1').text(), HK1: $('#txt_m1_k1').val(), HK2: $('#txt_m1_k2').val(), HK3: $('#txt_m1_k3').val(), DiemTrungBinh: $('#txt_tb_m1').val(), };
+        let Dkxt_Diem_M2 = { TenMon2: $('#lb_tenmon_2').text(), HK1: $('#txt_m2_k1').val(), HK2: $('#txt_m2_k2').val(), HK3: $('#txt_m2_k3').val(), DiemTrungBinh: $('#txt_tb_m2').val(), };
+        let Dkxt_Diem_M3 = { TenMon3: $('#lb_tenmon_3').text(), HK1: $('#txt_m3_k1').val(), HK2: $('#txt_m3_k2').val(), HK3: $('#txt_m3_k3').val(), DiemTrungBinh: $('#txt_tb_m3').val(), };
+
+        let DiemTBMon1 = $('#txt_tb_m1').val();
+        let DiemTBMon2 = $('#txt_tb_m2').val();
+        let DiemTBMon3 = $('#txt_tb_m3').val();
+
+        if (Nganh_ID == 0) { var errorMessage = "Chưa chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
+        if (Thm_ID == 0) { var errorMessage = "Chưa chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
         //if (!DiemTBMon1 || !DiemTBMon2 || !DiemTBMon3) {
         //    var errorMessage = "Không được bỏ trống điểm";
         //    $('#Diem_Chi_Tiet_Error').text(errorMessage);
         //    flag = false;
         //}
-   
         if (!flag) return;
 
         let Dkxt_Diem_Tong = parseFloat(DiemTBMon1) + parseFloat(DiemTBMon2) + parseFloat(DiemTBMon3);
 
         let formData = {
             Nganh_ID: Nganh_ID,
-            Thm_ID: Thm_ID,            
+            Thm_ID: Thm_ID,
             Dkxt_Diem_M1: JSON.stringify(Dkxt_Diem_M1),
             Dkxt_Diem_M2: JSON.stringify(Dkxt_Diem_M2),
             Dkxt_Diem_M3: JSON.stringify(Dkxt_Diem_M3),
@@ -577,7 +540,7 @@
         }
         console.log(formData)
         $.ajax({
-            url: "/DangKyXetTuyens/AddNguyenVong",
+            url: "/DangKyXetTuyens/DangKyXetTuyen_Add",
             data: JSON.stringify(formData),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
