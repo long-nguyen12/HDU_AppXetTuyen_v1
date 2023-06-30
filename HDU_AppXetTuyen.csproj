@@ -572,6 +572,7 @@
     <Content Include="Views\NCDangKyXetTuyens\Details.cshtml" />
     <Content Include="Views\NCDangKyXetTuyens\Edit.cshtml" />
     <Content Include="Views\NCDangKyXetTuyens\Index.cshtml" />
+    <Content Include="Views\NCDangKyXetTuyens\dkxthocba.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
