@@ -56,7 +56,6 @@ namespace HDU_AppXetTuyen.Controllers
             // Từ đối tượng id lấy ra tên đối tượng
             var tenDoiTuong = db.DoiTuongs.Find(idDoiTuongTS).DoiTuong_Ten;
             if (tenDoiTuong == null) tenDoiTuong = " ";
-
             using (DocX document = DocX.Load(templateFilePath))
             {
                 // Replace placeholders with actual data
@@ -73,9 +72,13 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
-                document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);                
-                document.ReplaceText("<<ThiSinh_HocLuc12>>", listDkxt[0].Dkxt_XepLoaiHocLuc_12.ToString());
-                document.ReplaceText("<<ThiSinh_HanhKiem12>>", listDkxt[0].Dkxt_XepLoaiHanhKiem_12.ToString());
+                document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
+
+                 // Xử lý học lực và hạnh kiểm
+                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
+                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
+                document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
 
                 // Lấy ra table đầu tiên trong file word
                 var table = document.Tables[0];
@@ -164,6 +167,41 @@ namespace HDU_AppXetTuyen.Controllers
                 // Return the file for download
                 byte[] fileBytes = System.IO.File.ReadAllBytes(tempFilePath);
                 return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
+            }
+
+           
+        }
+        public string getHocLucById(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "Trung bình";
+                case 2:
+                    return "Khá";
+                case 3:
+                    return "Giỏi";
+                case 4:
+                    return "Xuất sắc";
+                default:
+                    return " ";
+            }
+        }
+
+        public string getHanhKiemById(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "Yếu";
+                case 2:
+                    return "Trung bình";
+                case 3:
+                    return "Khá";
+                case 4:
+                    return "Tốt";
+                default:
+                    return " ";
             }
         }
     }

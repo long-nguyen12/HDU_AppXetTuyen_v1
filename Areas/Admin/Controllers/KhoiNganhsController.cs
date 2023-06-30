@@ -15,12 +15,14 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/KhoiNganhs
+        [AdminSessionCheck]
         public ActionResult Index()
         {
             return View(db.KhoiNganhs.ToList());
         }
 
         // GET: Admin/KhoiNganhs/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/KhoiNganhs/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +47,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/KhoiNganhs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "KhoiNganh_ID,KhoiNganh_Ten,KhoiNganh_GhiChu,KhoiNganh_TrangThai")] KhoiNganh khoiNganh)
@@ -59,6 +63,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/KhoiNganhs/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +81,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/KhoiNganhs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "KhoiNganh_ID,KhoiNganh_Ten,KhoiNganh_GhiChu,KhoiNganh_TrangThai")] KhoiNganh khoiNganh)
@@ -90,6 +96,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/KhoiNganhs/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +112,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // POST: Admin/KhoiNganhs/Delete/5
+        [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

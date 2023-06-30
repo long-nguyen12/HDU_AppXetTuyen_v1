@@ -116,7 +116,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 var password = ComputeHash(admin_user, admin_pass);
                 adminAccount.Admin_Pass = password;
-                adminAccount.Admin_Username = admin_pass;
+                adminAccount.Admin_Username = admin_user;
                 adminAccount.Admin_Quyen = "1";
                 adminAccount.Admin_Ho = "";
                 adminAccount.Admin_Ten = "admin";

@@ -21,6 +21,7 @@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
 
 </head>
+
 <body class="nav-fixed">
     <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
         <!-- Sidenav Toggle Button-->
@@ -32,7 +33,7 @@
 
         <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">ĐẠI HỌC HỒNG ĐỨC</a>
         <form class="form-inline me-auto d-none d-lg-block me-3">
-            <div class="dropdown-user-details-name">Thí sinh: Hoàng Việt Anh</div>
+            <div class="dropdown-user-details-name">Xin chào: Admin</div>
         </form>
         <!-- Navbar Items-->
         <ul class="navbar-nav align-items-center ms-auto">
@@ -45,8 +46,8 @@
                     <h6 class="dropdown-header d-flex align-items-center">
                         <img class="dropdown-user-img" src="~/Content/images/profile-1.png" />
                         <div class="dropdown-user-details">
-                            <div class="dropdown-user-details-name">Hoàng Việt Anh</div>
-                            <div class="dropdown-user-details-email">0912.345.678</div>
+                            <div class="dropdown-user-details-name">Admin</div>
+                            <div class="dropdown-user-details-email"> </div>
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
@@ -54,7 +55,7 @@
                         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                         Tài khoản
                     </a>
-                    <a class="dropdown-item" href="@Url.Action("Logout", "Auth")">
+                    <a class="dropdown-item" href="@Url.Action("Logout", "AdminAuth")">
                         <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                         Đăng xuất
                     </a>
@@ -122,7 +123,7 @@
                 <div class="sidenav-footer">
                     <div class="sidenav-footer-content">
                         <div class="sidenav-footer-subtitle">Logged in as:</div>
-                        <div class="sidenav-footer-title">0984.414.997</div>
+                        <div class="sidenav-footer-title">HDU</div>
                     </div>
                 </div>
             </nav>
