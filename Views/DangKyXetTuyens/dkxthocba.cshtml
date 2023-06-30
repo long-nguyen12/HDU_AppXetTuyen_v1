@@ -12,12 +12,6 @@
         width: 65px !important
     }
 </style>
-
-<script>
-
-
-
-</script>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
         <div class="page-header-content">
@@ -25,7 +19,7 @@
                 <div class="col-auto mb-1">
                     <h1 class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        Xét tuyển sử dụng kết quả học tập ở THPT
+                        Sử dụng kết quả học tập THPT
                     </h1>
                 </div>
 
@@ -38,10 +32,9 @@
         <div class="card card-header-actions">
             <div class="card-header">
                 Các nguyện vọng đã đăng ký
-                <span>
-                    <button id="downButton" class="btn btn-outline-success"> In phiếu tổng hợp</button>
-                    <a class="btn btn-outline-primary" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng</a>
-                </span>
+                @*<span>
+
+                    </span>*@
             </div>
             <div class="card-body">
                 <div class="row">
@@ -61,16 +54,24 @@
                             </tbody>
                         </table>
                     </div>
-
+                </div>
+                <div class="row">
                     <div class="col-xxl-12">
+                        <center>
+                            <button id="downButton" class="btn btn-outline-success"> In phiếu tổng hợp</button>
+                            <a class="btn btn-outline-primary" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng</a>
+                        </center>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12">
+
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần bấm xác nhận để hoàn thành việc đăng ký sau khi thêm nguyện vọng mới hoặc hoặc sửa các nguyện vọng.</p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, ký xác nhận và gửi về trường theo đường bưu điện.</p>
-                        @*<br />
-                            <center> </center>*@
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,15 +114,14 @@
                                 </tr>
 
                                 <tr>
-
                                     <td colspan="2">
                                         <div class="row">
                                             <div class="col-6 ">
-                                                ƯTĐT: 1 đ (ĐT:01)
+                                                ƯTĐT: 1 đ
                                                 <hr />
                                             </div>
                                             <div class="col-6  ">
-                                                ƯTKV: 0.75 đ (KV2-NT)
+                                                ƯTKV: 0.75 đ
                                                 <hr />
                                             </div>
                                         </div>
@@ -133,7 +133,7 @@
                                                 <span id="Dkxt_XepLoaiHocLuc_12_Error" class="small mb-1 text-danger"></span>
                                             </div>
                                             <div class="col-6">
-                                                <span>Xếp loại hạnh kiểm lớp 12</span>
+                                                <span>Hạnh kiểm lớp 12</span>
                                                 <input id="txt_hanhkiem_12" type="text" class="form-control" value="Khá" disabled />
                                                 <span id="Dkxt_XepLoaiHanhKiem_12_Error" class="small mb-1 text-danger"></span>
                                             </div>
@@ -233,7 +233,7 @@
         <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" ></button>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
             </div>
@@ -502,7 +502,7 @@
 
         let tenmon_3 = $('#lb_tenmon_3'); let _txt_m3_k1 = $('#txt_m3_k1'); let _txt_m3_k2 = $('#txt_m3_k2'); let _txt_m3_k3 = $('#txt_m3_k3'); let _txt_tb_m3 = $('#txt_tb_m3');
         tenmon_3.text(all_m3.ten_Mon); _txt_m3_k1.val(all_m3.H_K1); _txt_m3_k2.val(all_m3.H_K2); _txt_m3_k3.val(all_m3.H_K3); _txt_tb_m3.text(all_m3.DiemTrung_Binh);
-        
+
     }
 
     function addNguyenVong() {

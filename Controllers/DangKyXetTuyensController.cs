@@ -112,7 +112,7 @@ namespace HDU_AppXetTuyen.Controllers
             var selectResult_Nganh = nganh_db.Nganhs.Where(x => x.KhoiNganh_ID == id || x.Nganh_ID == 0).OrderBy(x => x.Nganh_ID).Select(s => new
             {
                 nganh_ID = s.Nganh_ID,
-                nganh_GhiChu = s.Nganh_GhiChu,
+                nganh_GhiChu = s.NganhTenNganh,
                 khoiNganh_ID = s.KhoiNganh_ID
             });
             return Json(selectResult_Nganh.ToList(), JsonRequestBehavior.AllowGet);
@@ -123,7 +123,7 @@ namespace HDU_AppXetTuyen.Controllers
             var selectResult_tohopmon_nganh = thm_nganh_db.ToHopMonNganhs.Include(n => n.ToHopMon).Where(x => x.Nganh_ID == id || x.ToHopMon.Thm_ID == 0).OrderBy(x => x.ToHopMon.Thm_ID).Select(s => new
             {
                 thm_ID = s.Thm_ID,
-                thm_MaTen = s.ToHopMon.Thm_MaTen,
+                thm_MaTen = s.ToHopMon.Thm_TenToHop,
                 thm_TenToHop = s.ToHopMon.Thm_TenToHop
             });
             return Json(selectResult_tohopmon_nganh.ToList(), JsonRequestBehavior.AllowGet);
