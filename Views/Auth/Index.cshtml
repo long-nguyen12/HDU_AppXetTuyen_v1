@@ -124,6 +124,8 @@
         let register_huyentt = $("#register_huyentt").val();
         let register_tinhtt = $("#register_tinhtt").val();
         let register_diachi = $("#register_diachi").val();
+        let register_HocLucLop12 = $("#register_HocLucLop12").val();
+        let register_HanhKiemLop12 = $("#register_HanhKiemLop12").val();
         if (!register_CCCD) {
             var errorMessage = "Vui lòng nhập căn cước công dân";
             $('#register_CCCD_Error').text(errorMessage);
@@ -225,6 +227,16 @@
             $('#register_diachi_Error').text(errorMessage);
             flag = false;
         }
+        if (!register_HocLucLop12 || register_HocLucLop12 == "0") {
+            var errorMessage = "Vui lòng chọn loại học lực";
+            $('#register_HocLucLop12_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!register_HanhKiemLop12 || register_HanhKiemLop12 == "0") {
+            var errorMessage = "Vui lòng chọn loại hạnh kiểm";
+            $('#register_HanhKiemLop12_Error').text(errorMessage);
+            flag = false;
+        }
         if (!flag) return;
 
         let hokhautt = register_phuongtt + ", " + $('#register_huyentt option:selected').text() + ", " + $('#register_tinhtt option:selected').text();
@@ -250,7 +262,9 @@
             ThiSinh_TruongCapBa_Ma: register_ma_truong,
             ThiSinh_TruongCapBa: register_truong,
             ThiSinh_TruongCapBa_Tinh_ID: register_truongtinh,
-            ThiSinh_HoKhauThuongTru_Check: JSON.stringify(hokhautt_check)
+            ThiSinh_HoKhauThuongTru_Check: JSON.stringify(hokhautt_check),
+            ThiSinh_HocLucLop12: register_HocLucLop12,
+            ThiSinh_HanhKiemLop12: register_HanhKiemLop12
         }
         $.ajax({
             url: "/Auth/Register",
@@ -486,9 +500,33 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    Học lực lớp 12 <a style="color:red; text-decoration:none">(*)</a>
+                    <select id="register_HocLucLop12" class="form-select">
+                        <option value="0">Chọn học lực</option>
+                        <option value="4">Xuất sắc</option>
+                        <option value="3">Giỏi</option>
+                        <option value="2">Khá</option>
+                        <option value="1">Trung bình</option>
+                    </select>
+                    <span id="register_HocLucLop12_Error" class="small mb-1 text-danger"></span>
+                </div>
+                <div class="col-md-6 col-12">
+                    Xếp loại hạnh kiểm lớp 12 <a style="color:red; text-decoration:none">(*)</a>
+                    <select id="register_HanhKiemLop12" class="form-select">
+                        <option value="0">Chọn hạnh kiểm</option>
+                        <option value="4">Tốt</option>
+                        <option value="3">Khá</option>
+                        <option value="2">Trung bình</option>
+                        <option value="1">Yếu</option>
+                    </select>
+                    <span id="register_HanhKiemLop12_Error" class="small mb-1 text-danger"></span>
+                </div>
+            </div>
             <div class="col-12">
                 <div class="form-group">
-                    <label class="small mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ liên hệ  <a style="color:red; text-decoration:none">(*)</a>   </label>
+                    <label class="small mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ liên hệ  <a style="color:red; text-decoration:none">(*)</a></label>
                     @Html.EditorFor(model => model.ThiSinh_DCNhanGiayBao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập địa chỉ liên hệ", @id = "register_diachi" } })
                     <span id="register_diachi_Error" class="small mb-1 text-danger"></span>
                 </div>

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HDU_AppXetTuyen.Models;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 
 namespace HDU_AppXetTuyen.Controllers
 {
@@ -27,6 +28,8 @@ namespace HDU_AppXetTuyen.Controllers
         public string ThiSinh_TruongCapBa_Ma { get; set; }
         public string ThiSinh_TruongCapBa { get; set; }
         public string ThiSinh_HoKhauThuongTru_Check { get; set; }
+        public string ThiSinh_HocLucLop12 { get; set; }
+        public string ThiSinh_HanhKiemLop12 { get; set; }
     }
     public class ThiSinhSessionCheckAttribute : ActionFilterAttribute
     {
@@ -184,7 +187,9 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_TruongCapBa_Tinh_ID = n.ThiSinh_TruongCapBa_Tinh_ID,
                 ThiSinh_TrangThai = n.ThiSinh_TrangThai,
                 ThiSinh_GhiChu = n.ThiSinh_GhiChu,
-                ThiSinh_HoKhauThuongTru_Check = n.ThiSinh_HoKhauThuongTru_Check
+                ThiSinh_HoKhauThuongTru_Check = n.ThiSinh_HoKhauThuongTru_Check,
+                ThiSinh_HocLucLop12 = n.ThiSinh_HocLucLop12,
+                ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12
 
             }).FirstOrDefault();
             var tinhs = db.Tinhs.Select(n => new
@@ -233,6 +238,8 @@ namespace HDU_AppXetTuyen.Controllers
             ts.DoiTuong_ID = int.Parse(thiSinh_Update.DoiTuong_ID);
             ts.ThiSinh_TruongCapBa_Ma = thiSinh_Update.ThiSinh_TruongCapBa_Ma;
             ts.ThiSinh_TruongCapBa = thiSinh_Update.ThiSinh_TruongCapBa;
+            ts.ThiSinh_HocLucLop12 = int.Parse(thiSinh_Update.ThiSinh_HocLucLop12);
+            ts.ThiSinh_HanhKiemLop12 = int.Parse(thiSinh_Update.ThiSinh_HanhKiemLop12);
             db.SaveChanges();
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
