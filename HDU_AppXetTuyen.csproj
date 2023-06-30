@@ -172,9 +172,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminAuthController.cs" />
     <Compile Include="Areas\Admin\Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\DoiTuongsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
@@ -490,6 +493,10 @@
     <Content Include="Areas\Admin\Views\DotXetTuyens\Details.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAuth\Register.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
