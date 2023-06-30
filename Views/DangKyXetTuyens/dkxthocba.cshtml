@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewBag.Title = "dkxthocba";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -500,10 +500,8 @@
         });
     }
 
-    function set_tenmonhoc_diem_thisinh(all_m1, all_m2, all_m3) {
-        console.log(all_m2)
-        return
-        //   constructor(ten_Mon1, H_K1, H_K2, H_K3, DiemTrung_Binh)
+    function set_tenmonhoc_diem_thisinh(all_m1, all_m2, all_m3) {     
+       
         let tenmon_1 = $('#lb_tenmon_1'); let _txt_m1_k1 = $('#txt_m1_k1'); let _txt_m1_k2 = $('#txt_m1_k2'); let _txt_m1_k3 = $('#txt_m1_k3'); let _lb_tb_m1 = $('#lb_tb_m1');
         tenmon_1.text(all_m1.ten_Mon); _txt_m1_k1.val(all_m1.H_K1); _txt_m1_k2.val(all_m1.H_K2); _txt_m1_k3.val(all_m1.H_K3); _lb_tb_m1.text(all_m1.DiemTrung_Binh);
 
@@ -514,6 +512,7 @@
 
         let tenmon_3 = $('#lb_tenmon_3'); let _txt_m3_k1 = $('#txt_m3_k1'); let _txt_m3_k2 = $('#txt_m3_k2'); let _txt_m3_k3 = $('#txt_m3_k3'); let _lb_tb_m3 = $('#lb_tb_m3');
         tenmon_3.text(all_m3.ten_Mon); _txt_m3_k1.val(all_m3.H_K1); _txt_m3_k2.val(all_m3.H_K2); _txt_m3_k3.val(all_m3.H_K3); _lb_tb_m3.text(all_m3.DiemTrung_Binh);
+
         if (id_dangky == -1) { // thêm mới
         }
         if (id_dangky > 0) { // sửa đăng ký
