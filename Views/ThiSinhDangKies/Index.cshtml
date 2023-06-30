@@ -4,27 +4,53 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script>
+    $('document').ready(function () {
+        let hocLucList = [
+            { value: 4, text: "Xuất sắc" },
+            { value: 3, text: "Giỏi" },
+            { value: 2, text: "Khá" },
+            { value: 1, text: "Trung bình" },
+        ]
+        let hanhKiemList = [
+            { value: 4, text: "Tốt" },
+            { value: 3, text: "Khá" },
+            { value: 2, text: "Trung bình" },
+            { value: 1, text: "Yếu" },
+        ]
+        for (let i = 0; i < hocLucList.length; i++) {
+            if (hocLucList[i].value == @Model.ThiSinh_HocLucLop12) {
+                $('#input_hocluc').val(hocLucList[i].text);
+                break;
+            }
+        }
+        for (let i = 0; i < hanhKiemList.length; i++) {
+            if (hanhKiemList[i].value == @Model.ThiSinh_HanhKiemLop12) {
+                $('#input_hanhkiem').val(hanhKiemList[i].text);
+                break;
+            }
+        }
+    })
+</script>
 <div class="container-fluid px-12">
     <div id="fadeInUp">
         <div class="card card-header-actions mt-3 mb-1 ">
             <div class="card-header">Thông tin chung <a href="@Url.Action("Edit", "ThiSinhDangKies", new {id = Model.ThiSinh_ID})" class="btn btn-light" style="color:blue!important">Cập nhật</a></div>
             <div class="card-body">
-                <div class="row gx-xxl-3 mb-3">
-                    <div class="col-md-2">
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-3">
                         <label class="form-label mb-1" for="inputFirstName">Căn cước công dân <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_cccd_ts" name="input_cccd_ts" type="text" placeholder="Số căn cước công dân" value="@Model.ThiSinh_CCCD" disabled />
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label class="form-label mb-1" for="input_hovaten">Họ và tên <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_hovaten" type="text" placeholder="Hoàng Việt Anh" value="@Model.ThiSinh_HoLot @Model.ThiSinh_Ten" disabled />
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label class="form-label mb-1" for="input_ngaysinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_ngaysinh" type="text" placeholder="20/12/2005" value="@Model.ThiSinh_NgaySinh" disabled />
                     </div>
-
                     <div class="col-md-1">
                         <label class="form-label mb-1" for="input_gioitinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label>
                         @{
@@ -33,30 +59,30 @@
                         <input class="form-control" id="input_gioitinh" type="text" placeholder="Nam" value="@gt" disabled />
                     </div>
                     <div class="col-md-2">
+                        <label class="form-label mb-1" for="input_dantoc">Dân tộc <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_dantoc" type="text" placeholder="Kinh" value="@Model.ThiSinh_DanToc" disabled />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
                         <label class="form-label mb-1" for="input_dienthoai_ts">Điện thoại <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_dienthoai_ts" type="text" placeholder="0912.345.678" value="@Model.ThiSinh_DienThoai" disabled />
                     </div>
-
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="input_email_ts">Emai<a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_email_ts" type="text" placeholder="Enter your last name" value="@Model.ThiSinh_Email" disabled />
                     </div>
-                </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label class="form-label mb-1" for="input_khuvuc">Khu vực <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_khuvuc" type="text" placeholder="KV_2NT" value="@Model.KhuVuc.KhuVuc_Ten" disabled />
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label class="form-label mb-1" for="input_doituong">Đối tượng <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_doituong" type="text" placeholder="ĐT 01" value="@Model.DoiTuong.DoiTuong_Ten" disabled />
                     </div>
-
-                    <div class="col-md-2">
-                        <label class="form-label mb-1" for="input_dantoc">Dân tộc <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="input_dantoc" type="text" placeholder="Kinh" value="@Model.ThiSinh_DanToc" disabled />
-                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
                     <div class="col-md-4">
                         <label class="form-label mb-1" for="input_diachinhangiaybao">Trường<a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_TruongCapBa" disabled />
@@ -64,6 +90,14 @@
                     <div class="col-md-2">
                         <label class="form-label mb-1" for="input_diachinhangiaybao">Mã trường<a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_TruongCapBa_Ma" disabled />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="input_diachinhangiaybao">Học lực<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_hocluc" type="text" placeholder="Chưa có dữ liệu" value="" disabled />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="input_diachinhangiaybao">Hạnh kiểm<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="input_hanhkiem" type="text" placeholder="Chưa có dữ liệu" value="" disabled />
                     </div>
                 </div>
                 <div class="row gx-xl-3">
