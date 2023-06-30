@@ -62,17 +62,21 @@
             type: "GET",
             contentType: "application/json;charset=utf-8",
             success: function (response) {
-                console.log(response);
                 if (response.success) {
                     let data = response.data;
                     let lePhi = response.lePhi;
-                    console.log(data)
                     if (data.length > 0) {
                         $("#selectFile").show();
                         $("#uploadFile").show();
                         let html = "";
+                        let minhchungs = lePhi.Lpxt_MinhChung;
+                        let minhChungArray = minhchungs.split("#");
+                        let minhChungLinks = "";
+                        for (let i = 0; i < minhChungArray.length; i++) {
+                            minhChungLinks += `<a target="_blank" class="btn btn-info small" href="https://localhost:44308/${minhChungArray[i]}">Tệp ${i + 1}</a>`
+                        }
+                        $('#TongLePhi').text(data.length * 30000)
                         $.each(data, function (key, item) {
-                            console.log(key)
                             html += "<tr>";
                             html += '<td class="text-center">' + item.Dkxt_NguyenVong + '</td>';
                             html += '<td>' + item.Dkxt_Nganh.Nganh_TenNganh + '</td>';
@@ -86,7 +90,7 @@
                                 } else if (lePhi.Lpxt_TrangThai == 3) {
                                     html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-success">Đã đủ</span></td>`;
                                 }
-                                html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">ádsadadsa</td>`;
+                                html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${minhChungLinks}</td>`;
                                 html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${lePhi.Lpxt_GhiChu == null ? "" : lePhi.Lpxt_GhiChu}</td>`;
                             }
                             html += "</tr>";
@@ -120,11 +124,17 @@
                 <div class="col-xxl-12">
                     <p style="color: red; font-style: italic" class="mb-1">
                         - Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp
-                        giao dịch chuyển tiền).
+                        giao dịch chuyển tiền)
                     </p>
                     <p style="color: red; font-style: italic" class="mb-1">
                         - Nếu thí sinh không đóng đủ lệ phí xét tuyển, nhà trường sẽ chỉ
-                        xét đến một số nguyện vọng nhất định.
+                        xét đến một số nguyện vọng nhất định
+                    </p>
+                    <p style="color: red; font-style: italic" class="mb-1">
+                        - Lệ phí xét tuyển: 30000 VNĐ/nguyện vọng
+                    </p>
+                    <p style="color: red; font-style: italic" class="mb-1">
+                        - Tổng lệ phí xét tuyển của bạn: <span id="TongLePhi"></span> VNĐ
                     </p>
                 </div>
             </div>
@@ -152,7 +162,7 @@
                     <thead>
                         <tr>
                             <th width="10%" class="text-center">@Html.DisplayName("Nguyện vọng")</th>
-                            <th width="30%" class="text-center">@Html.DisplayName("Ngành")</th>
+                            <th width="30%">@Html.DisplayName("Ngành")</th>
                             <th class="text-center">@Html.DisplayName("Trạng thái")</th>
                             <th class="text-center">@Html.DisplayName("Minh chứng")</th>
                             <th class="text-center">@Html.DisplayName("Ghi chú")</th>
