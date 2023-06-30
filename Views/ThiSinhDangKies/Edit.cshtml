@@ -42,6 +42,14 @@
             format: 'dd/mm/yyyy', // Specify the desired date format
             autoclose: true // Close the datepicker when a date is selected
         });
+
+        $('input').on('input', function () {
+            hideErrorMessage($(this));
+        });
+
+        $('select').on('input', function () {
+            hideErrorMessage($(this));
+        })
     })
     function loadData() {
         $.ajax({
@@ -189,6 +197,7 @@
         if (!ThiSinh_CCCD) {
             var errorMessage = "Vui lòng nhập căn cước công dân";
             $('#ThiSinh_CCCD_Error').text(errorMessage);
+            flag = false;
         }
         if (!ThiSinh_Email) {
             var errorMessage = "Vui lòng nhập email";
@@ -264,8 +273,7 @@
             $('#ThiSinh_DCNhanGiayBao_Error').text(errorMessage);
             flag = false;
         }
-        console.log(flag)
-        /*if (!flag) return;*/
+        if (!flag) return;
 
         let hokhautt = ThiSinh_HoKhauThuongTru + ", " + $('#Huyen_ID option:selected').text() + ", " + $('#Tinh_ID option:selected').text();
         let hokhautt_check = {
@@ -312,6 +320,10 @@
             }
         });
     }
+    function hideErrorMessage(input) {
+        var errorContainer = input.next('.text-danger');
+        errorContainer.text('');
+    }
     function validateEmail(email) {
         var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
         var isValid = emailRegex.test(email);
@@ -333,62 +345,75 @@
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_CCCD">Căn cước công dân <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_CCCD" name="input_cccd_ts" type="text" placeholder="Số căn cước công dân" value="" />
+                        <span id="ThiSinh_CCCD_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_HoLot">Họ lót <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_HoLot" type="text" placeholder="Họ lót" value="" />
+                        <span id="ThiSinh_HoLot_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_Ten">Tên <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_Ten" type="text" placeholder="Tên thí sinh" value="" />
+                        <span id="ThiSinh_Ten_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="datepicker" type="text" placeholder="Ngày sinh" value="" />
+                        <span id="ThiSinh_NgaySinh_Error" class="small mb-1 text-danger"></span>
                     </div>
                 </div>
                 <div class="row gx-xxl-3 mb-1">
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label>
                         <select class="form-select" id="ThiSinh_GioiTinh" type="text" placeholder="Giới tính"></select>
+                        <span id="ThiSinh_GioiTinh_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_DienThoai">Điện thoại <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_DienThoai" type="text" placeholder="Điện thoại" value="" />
+                        <span id="ThiSinh_DienThoai_Error" class="small mb-1 text-danger"></span>
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_Email">Emai <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_Email" type="text" placeholder="Email" value="" />
+                        <span id="ThiSinh_Email_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_DanToc">Dân tộc <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_DanToc" type="text" placeholder="Dân tộc" value="" />
+                        <span id="ThiSinh_DanToc_Error" class="small mb-1 text-danger"></span>
                     </div>
                 </div>
                 <div class="row gx-xxl-3 mb-1">
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="KhuVuc_ID">Khu vực <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <select class="form-select" id="KhuVuc_ID" type="text" placeholder="Giới tính"></select>
+                        <select class="form-select" id="KhuVuc_ID" type="text" placeholder="Khu vực"></select>
+                        <span id="KhuVuc_ID_Error" class="small mb-1 text-danger"></span>
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="DoiTuong_ID">Đối tượng <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <select class="form-select" id="DoiTuong_ID" type="text" placeholder="Giới tính"></select>
+                        <select class="form-select" id="DoiTuong_ID" type="text" placeholder="Đối tượng"></select>
+                        <span id="DoiTuong_ID_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_TruongCapBa">Trường<a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_TruongCapBa" type="text" placeholder="Trường THPT" value="" />
+                        <span id="ThiSinh_TruongCapBa_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường<a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_TruongCapBa_Ma" type="text" placeholder="Mã trường" value="" />
+                        <span id="ThiSinh_TruongCapBa_Ma_Error" class="small mb-1 text-danger"></span>
                     </div>
                 </div>
                 <div class="row gx-xl-3">
                     <div class="col-md-12">
                         <label class="form-label mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ nhận giấy báo <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_DCNhanGiayBao" type="text" placeholder="Địa chỉ nhận giấy báo" value="" />
+                        <span id="ThiSinh_DCNhanGiayBao_Error" class="small mb-1 text-danger"></span>
                     </div>
                 </div>
                 <div class="row gx-xl-3 mb-1">
@@ -396,7 +421,7 @@
                         <div class="form-group">
                             <label class="mb-1" for="ThiSinh_HoKhauThuongTru">Hộ khẩu thường trú <a style="color:red; text-decoration:none">(*)</a>  </label>
                             <input id="ThiSinh_HoKhauThuongTru" class="form-control" type="text" placeholder="Nhập tên phường/xã" value="" />
-                            <span id="register_phuongtt_Error" class="small mb-1 text-danger"></span>
+                            <span id="ThiSinh_HoKhauThuongTru_Error" class="small mb-1 text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
@@ -404,7 +429,7 @@
                             <label class="mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
                             <select class="form-select" id="Tinh_ID" type="text" placeholder="Tỉnh/thành phố"></select>
                             @*@Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_tinhtt" })*@
-                            <span id="register_tinhtt_Error" class="small mb-1 text-danger"></span>
+                            <span id="Tinh_ID_Error" class="small mb-1 text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-3 col-12">
@@ -414,7 +439,7 @@
                             <select id="Huyen_ID" class="form-select" disabled>
                                 <option value="0">Chọn huyện</option>
                             </select>
-                            <span id="Huyen_ID" class="small mb-1 text-danger"></span>
+                            <span id="Huyen_ID_Error" class="small mb-1 text-danger"></span>
                         </div>
                     </div>
                 </div>
