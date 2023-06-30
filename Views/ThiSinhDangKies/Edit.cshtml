@@ -79,6 +79,38 @@
                     $('#ThiSinh_DCNhanGiayBao').val(data.ThiSinh_DCNhanGiayBao);
                     $('#ThiSinh_HoKhauThuongTru').val(hktt.Phuongxa);
 
+                    /* Chọn học lực */
+                    let hocLucList = [
+                        { value: 1, text: "Trung bình" },
+                        { value: 2, text: "Khá" },
+                        { value: 3, text: "Giỏi" },
+                        { value: 4, text: "Xuất sắc" },
+                    ]
+                    let hocLucOptions = $('#ThiSinh_HocLucLop12');
+                    $.each(hocLucList, function (index, option) {
+                        hocLucOptions.append($('<option>', {
+                            value: option.value,
+                            text: option.text
+                        }));
+                    });
+                    hocLucOptions.val(data.ThiSinh_HocLucLop12);
+
+                    /* Chọn hạnh kiểm */
+                    let hanhKiemList = [
+                        { value: 1, text: "Yếu" },
+                        { value: 2, text: "Trung bình" },
+                        { value: 3, text: "Khá" },
+                        { value: 4, text: "Tốt" },
+                    ]
+                    let hanhKiemOptions = $('#ThiSinh_HanhKiemLop12');
+                    $.each(hanhKiemList, function (index, option) {
+                        hanhKiemOptions.append($('<option>', {
+                            value: option.value,
+                            text: option.text
+                        }));
+                    });
+                    hanhKiemOptions.val(data.ThiSinh_HanhKiemLop12);
+
                     /* Chọn giới tính */
                     let gioitinhs = [
                         { value: '0', text: 'Nam' },
@@ -193,6 +225,8 @@
         let Huyen_ID = $("#Huyen_ID").val();
         let Tinh_ID = $("#Tinh_ID").val();
         let ThiSinh_DCNhanGiayBao = $("#ThiSinh_DCNhanGiayBao").val();
+        let ThiSinh_HocLucLop12 = $("#ThiSinh_HocLucLop12").val();
+        let ThiSinh_HanhKiemLop12 = $("#ThiSinh_HanhKiemLop12").val();
 
         if (!ThiSinh_CCCD) {
             var errorMessage = "Vui lòng nhập căn cước công dân";
@@ -273,6 +307,16 @@
             $('#ThiSinh_DCNhanGiayBao_Error').text(errorMessage);
             flag = false;
         }
+        if (!ThiSinh_HocLucLop12 || ThiSinh_HocLucLop12 == "0") {
+            var errorMessage = "Vui lòng chọn loại học lực";
+            $('#ThiSinh_HocLucLop12_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!ThiSinh_HanhKiemLop12 || ThiSinh_HanhKiemLop12 == "0") {
+            var errorMessage = "Vui lòng chọn loại hạnh kiểm";
+            $('#ThiSinh_HanhKiemLop12_Error').text(errorMessage);
+            flag = false;
+        }
         if (!flag) return;
 
         let hokhautt = ThiSinh_HoKhauThuongTru + ", " + $('#Huyen_ID option:selected').text() + ", " + $('#Tinh_ID option:selected').text();
@@ -296,7 +340,9 @@
             DoiTuong_ID: DoiTuong_ID,
             ThiSinh_TruongCapBa_Ma: ThiSinh_TruongCapBa_Ma,
             ThiSinh_TruongCapBa: ThiSinh_TruongCapBa,
-            ThiSinh_HoKhauThuongTru_Check: JSON.stringify(hokhautt_check)
+            ThiSinh_HoKhauThuongTru_Check: JSON.stringify(hokhautt_check),
+            ThiSinh_HocLucLop12: ThiSinh_HocLucLop12,
+            ThiSinh_HanhKiemLop12: ThiSinh_HanhKiemLop12
         }
         console.log(formData)
         $.ajax({
@@ -399,18 +445,28 @@
                         <span id="DoiTuong_ID_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label mb-1" for="ThiSinh_TruongCapBa">Trường<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <label class="form-label mb-1" for="ThiSinh_TruongCapBa">Trường <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_TruongCapBa" type="text" placeholder="Trường THPT" value="" />
                         <span id="ThiSinh_TruongCapBa_Error" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường<a style="color:red; text-decoration:none">(*)</a> </label>
+                        <label class="form-label mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_TruongCapBa_Ma" type="text" placeholder="Mã trường" value="" />
                         <span id="ThiSinh_TruongCapBa_Ma_Error" class="small mb-1 text-danger"></span>
                     </div>
                 </div>
                 <div class="row gx-xl-3">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_HocLucLop12">Học lực <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <select class="form-select" id="ThiSinh_HocLucLop12" type="text" placeholder="Học lực" value="" ></select>
+                        <span id="ThiSinh_HocLucLop12_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="ThiSinh_HanhKiemLop12">Hạnh kiểm <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <select class="form-select" id="ThiSinh_HanhKiemLop12" type="text" placeholder="Hạnh kiểm" value="" ></select>
+                        <span id="ThiSinh_HanhKiemLop12_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
                         <label class="form-label mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ nhận giấy báo <a style="color:red; text-decoration:none">(*)</a> </label>
                         <input class="form-control" id="ThiSinh_DCNhanGiayBao" type="text" placeholder="Địa chỉ nhận giấy báo" value="" />
                         <span id="ThiSinh_DCNhanGiayBao_Error" class="small mb-1 text-danger"></span>

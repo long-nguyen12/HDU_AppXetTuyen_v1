@@ -31,6 +31,8 @@ namespace HDU_AppXetTuyen.Controllers
         public string ThiSinh_TruongCapBa { get; set; }
         public string ThiSinh_TruongCapBa_Tinh_ID { get; set; }
         public string ThiSinh_HoKhauThuongTru_Check { get; set; }
+        public string ThiSinh_HocLucLop12 { get; set; }
+        public string ThiSinh_HanhKiemLop12 { get; set; }
     }
     public class AuthController : Controller
     {
@@ -50,9 +52,8 @@ namespace HDU_AppXetTuyen.Controllers
             var tinhList = db.Tinhs.ToList();
             var huyenList = db.Huyens.ToList();
 
-            doituongList.Insert(0, new DoiTuong { DoiTuong_ID = 0, DoiTuong_Ten = "Chọn đối tượng" });
             khuvucList.Insert(0, new KhuVuc { KhuVuc_ID = 0, KhuVuc_Ten = "Chọn khu vực" });
-            tinhList.Insert(0, new Tinh { Tinh_ID = 0, Tinh_MaTen = "Chọn tỉnh" });
+            tinhList.Insert(0, new Tinh { Tinh_ID = 0, Tinh_Ten = "Chọn tỉnh" });
             huyenList.Insert(0, new Huyen { Huyen_ID = 0, Huyen_TenHuyen = "Chọn huyện" });
 
             ViewBag.DoiTuong_ID = new SelectList(doituongList, "DoiTuong_ID", "DoiTuong_Ten");
@@ -175,6 +176,8 @@ namespace HDU_AppXetTuyen.Controllers
                 ts.ThiSinh_MatKhau = hash_password;
                 ts.ThiSinh_TrangThai = 0;
                 ts.ThiSinh_ResetCode = activationToken;
+                ts.ThiSinh_HocLucLop12 = int.Parse(thiSinh_register.ThiSinh_HocLucLop12);
+                ts.ThiSinh_HanhKiemLop12 = int.Parse(thiSinh_register.ThiSinh_HanhKiemLop12);
                 db.ThiSinhDangKies.Add(ts);
                 db.SaveChanges();
 
@@ -183,7 +186,7 @@ namespace HDU_AppXetTuyen.Controllers
                 var subject = "Xác nhận tài khoản";
                 var body = "Xin chào " + thiSinh_register.ThiSinh_Ten + ", <br/> Bạn vừa đăng kí tài khoản tại hệ thống xét tuyển trực tuyến của trường Đại học Hồng Đức. " +
 
-                     " <br/>Để kích học tài khoản, vui lòng ấn vào đường link sau: <br/>" +
+                     " <br/>Để kích hoạt tài khoản, vui lòng ấn vào đường link sau: <br/>" +
 
                      " <br/>" + activationUrl + " <br/>";
 
