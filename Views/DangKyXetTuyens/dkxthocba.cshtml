@@ -39,8 +39,8 @@
             <div class="card-header">             
                 Các nguyện vọng đã đăng ký
                 <span>
-                    <button id="downButton" class="btn btn-light"> In phiếu tổng hợp</button>
-                    <a class="btn btn-light" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng</a>
+                    <button id="downButton" class="btn btn-outline-success"> In phiếu tổng hợp</button>
+                    <a class="btn btn-outline-primary" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng</a>
                 </span>
             </div>
             <div class="card-body">
@@ -371,20 +371,15 @@
                 if (result_all.length == 0) {                   
                     _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
-                else {
-                   
+                else {                   
                     $.each(result_all, function (i, result) {
-
                         _output += '<tr>' +
                             '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
                             '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
-                            '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
-                           
+                            '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +                           
                             '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
-                            '<td style="text-align: center; vertical-align: middle !important ">' +
-                            'Sửa | Xóa' +
-                            '</td>' +
+                            '<td style="text-align: center; vertical-align: middle !important ">' + 'Sửa | Xóa' + '</td>' +
                             '</tr>'
                     });
                 }
