@@ -36,10 +36,12 @@
 <div class="container-fluid px-12">
     <div id="div_list_nguyenvong">
         <div class="card card-header-actions">
-            <div class="card-header">
+            <div class="card-header">             
                 Các nguyện vọng đã đăng ký
-                <a class="btn btn-primary" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng mới</a>
-
+                <span>
+                    <button id="downButton" class="btn btn-light"> In phiếu tổng hợp</button>
+                    <a class="btn btn-light" id="bt_add_nguyenvong" onclick="dkxt_add_data_show_div_add(0,0,0)">Thêm nguyện vọng</a>
+                </span>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -47,10 +49,10 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
+                                    <th style="vertical-align:middle;">Nguyện vọng</th>
                                     <th style="vertical-align:middle;">Mã ngành - Ngành</th>
                                     <th style="vertical-align:middle;">Tổ hợp môn xét tuyển</th>
                                     <th style="vertical-align:middle;">Tổng điểm</th>
-                                    <th style="vertical-align:middle;">Nguyện vọng</th>
                                     <th style="vertical-align:middle;">Trạng thái</th>
                                     <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
                                 </tr>
@@ -65,8 +67,8 @@
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần bấm xác nhận để hoàn thành việc đăng ký sau khi thêm nguyện vọng mới hoặc hoặc sửa các nguyện vọng.</p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, ký xác nhận và gửi về trường theo đường bưu điện.</p>
-                        <br />
-                        <center><button id="downButton" class="btn btn-success"> In phiếu tổng hợp xét tuyển </button> </center>
+                        @*<br />
+                        <center> </center>*@
                     </div>
 
                 </div>
@@ -126,25 +128,13 @@
 
                                         <div class="row">
                                             <div class="col-6">
-                                                Học lực lớp 12
-                                                <select id="txt_hocluc_12" class="form-select">
-                                                    <option value="0">Chọn học lực</option>
-                                                    <option value="4">Xuất sắc</option>
-                                                    <option value="3">Giỏi</option>
-                                                    <option value="2">Khá</option>
-                                                    <option value="1">Trung bình</option>
-                                                </select>
+                                                <span> Học lực lớp 12</span>
+                                                <input id="txt_hocluc_12" type="text" class="form-control" value="Giỏi" disabled />
                                                 <span id="Dkxt_XepLoaiHocLuc_12_Error" class="small mb-1 text-danger"></span>
                                             </div>
                                             <div class="col-6">
-                                                Xếp loại hạnh kiểm lớp 12
-                                                <select id="txt_hanhkiem_12" class="form-select">
-                                                    <option value="0">Chọn hạnh kiểm</option>
-                                                    <option value="4">Xuất sắc</option>
-                                                    <option value="3">Giỏi</option>
-                                                    <option value="2">Khá</option>
-                                                    <option value="1">Trung bình</option>
-                                                </select>
+                                                <span>Xếp loại hạnh kiểm lớp 12</span>
+                                                <input id="txt_hanhkiem_12" type="text" class="form-control" value="Khá" disabled />
                                                 <span id="Dkxt_XepLoaiHanhKiem_12_Error" class="small mb-1 text-danger"></span>
                                             </div>
                                         </div>
@@ -168,21 +158,21 @@
                                     </thead>
                                     <tbody id="tbody_list_diemmonhoc">
                                         <tr style="vertical-align:middle;">
-                                            <td><label id="lb_tenmon_1" class="form-label"></label></td>
+                                            <td><label id="lb_tenmon_1" class="form-label">Chưa chọn</label></td>
                                             <td><input id="txt_m1_k1" type="number" class="form-control input-mon1" value="" disabled /></td>
                                             <td><input id="txt_m1_k2" type="number" class="form-control input-mon1" value="" disabled /></td>
                                             <td><input id="txt_m1_k3" type="number" class="form-control input-mon1" value="" disabled /></td>
                                             <td><input id="lb_tb_m1" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
-                                            <td><label id="lb_tenmon_2" class="form-label"></label></td>
+                                            <td><label id="lb_tenmon_2" class="form-label">Chưa chọn</label></td>
                                             <td><input id="txt_m2_k1" type="number" class="form-control input-mon2" value="" disabled /></td>
                                             <td><input id="txt_m2_k2" type="number" class="form-control input-mon2" value="" disabled /></td>
                                             <td><input id="txt_m2_k3" type="number" class="form-control input-mon2" value="" disabled /></td>
                                             <td><input id="lb_tb_m2" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
-                                            <td><label id="lb_tenmon_3" class="form-label"></label></td>
+                                            <td><label id="lb_tenmon_3" class="form-label">Chưa chọn</label></td>
                                             <td><input id="txt_m3_k1" type="number" class="form-control input-mon3" value="" disabled /></td>
                                             <td><input id="txt_m3_k2" type="number" class="form-control input-mon3" value="" disabled /></td>
                                             <td><input id="txt_m3_k3" type="number" class="form-control input-mon3" value="" disabled /></td>
@@ -292,6 +282,28 @@
         $("#select_tohopmon").change(function () {
             // get_data_fortable_nhapdiem($("#select_tohopmon").val());
             get_data_fortable_nhapdiem();
+            if ($("#select_tohopmon").val() > 0) {
+                $('#txt_m1_k1').prop('disabled', false);
+                $('#txt_m1_k2').prop('disabled', false);
+                $('#txt_m1_k3').prop('disabled', false);
+                $('#txt_m2_k1').prop('disabled', false);
+                $('#txt_m2_k2').prop('disabled', false);
+                $('#txt_m2_k3').prop('disabled', false);
+                $('#txt_m3_k1').prop('disabled', false);
+                $('#txt_m3_k2').prop('disabled', false);
+                $('#txt_m3_k3').prop('disabled', false);
+            }
+            else {
+                $('#txt_m1_k1').prop('disabled', true);
+                $('#txt_m1_k2').prop('disabled', true);
+                $('#txt_m1_k3').prop('disabled', true);
+                $('#txt_m2_k1').prop('disabled', true);
+                $('#txt_m2_k2').prop('disabled', true);
+                $('#txt_m2_k3').prop('disabled', true);
+                $('#txt_m3_k1').prop('disabled', true);
+                $('#txt_m3_k2').prop('disabled', true);
+                $('#txt_m3_k3').prop('disabled', true);
+            }
         });
 
         onListenFields(".input-mon1", '#lb_tb_m1');
@@ -357,16 +369,29 @@
             dataType: 'json',
             success: function (result_all) {
                 if (result_all.length == 0) {
-                    _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
+                    _output += '<tr>' +
+                        '<td style="vertical-align: middle !important "> NV 1 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
+                        '<td style="vertical-align: middle !important "> 000 -  chưa có ngành </td>' +
+                        '<td style="vertical-align: middle !important "> 000 - chưa có tổ hợp</td>' +
+                        '<td style="vertical-align: middle !important "> 0.000 </td>' +
+
+                        '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
+                        '<td style="text-align: center; vertical-align: middle !important ">' +
+                        'Sửa | Xóa' +
+                        '</td>' +
+                        '</tr>'
+                  /*  _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';*/
                 }
                 else {
+                   
                     $.each(result_all, function (i, result) {
 
                         _output += '<tr>' +
+                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
                             '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
-                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
+                           
                             '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
                             '<td style="text-align: center; vertical-align: middle !important ">' +
                             'Sửa | Xóa' +
@@ -437,7 +462,7 @@
         });
     }
     function get_data_forselect_tohopmon_all(id, tohopmon_key) { // id = Nganh_ID
-        console.log(id + "-" + tohopmon_key)
+        /* console.log(id + "-" + tohopmon_key)*/
         /* return;*/
         $("#select_tohopmon").empty();
         $.ajax({
@@ -450,6 +475,7 @@
                     $('#select_tohopmon').append('<option value="' + result.thm_ID + '">' + result.thm_MaTen + '</option>');
                 });
                 $('#select_tohopmon').val(tohopmon_key);
+
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -469,32 +495,13 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (res) {
-                //console.log(result_all);
-                //return
 
                 let _ttmh_1 = new _thongtin_monhoc(res.thm_Mon1.TenMon1, res.thm_Mon1.HK1, res.thm_Mon1.HK2, res.thm_Mon1.HK3, res.thm_Mon1.DiemTrungBinh);
                 let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon2, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
-                let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
-                console.log("--------thông tin môn 1----------");
-                console.log(_ttmh_1);
-                console.log("--------thông tin môn 2----------");
-                console.log(_ttmh_2);
-                console.log("--------thông tin môn 3----------");
-                console.log(_ttmh_3);
-                set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);
-                $('#lb_tenmon_1').html(_ttmh_1.ten_Mon);
-                $('#lb_tenmon_2').html(_ttmh_2.ten_Mon);
-                $('#lb_tenmon_3').html(_ttmh_3.ten_Mon);
-
-                $('#txt_m1_k1').prop('disabled', false);
-                $('#txt_m1_k2').prop('disabled', false);
-                $('#txt_m1_k3').prop('disabled', false);
-                $('#txt_m2_k1').prop('disabled', false);
-                $('#txt_m2_k2').prop('disabled', false);
-                $('#txt_m2_k3').prop('disabled', false);
-                $('#txt_m3_k1').prop('disabled', false);
-                $('#txt_m3_k2').prop('disabled', false);
-                $('#txt_m3_k3').prop('disabled', false);
+                let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);             
+              
+                set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);               
+              
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -503,9 +510,7 @@
     }
 
     function set_tenmonhoc_diem_thisinh(all_m1, all_m2, all_m3) {
-        console.log(all_m2)
-        return
-        //   constructor(ten_Mon1, H_K1, H_K2, H_K3, DiemTrung_Binh)
+
         let tenmon_1 = $('#lb_tenmon_1'); let _txt_m1_k1 = $('#txt_m1_k1'); let _txt_m1_k2 = $('#txt_m1_k2'); let _txt_m1_k3 = $('#txt_m1_k3'); let _lb_tb_m1 = $('#lb_tb_m1');
         tenmon_1.text(all_m1.ten_Mon); _txt_m1_k1.val(all_m1.H_K1); _txt_m1_k2.val(all_m1.H_K2); _txt_m1_k3.val(all_m1.H_K3); _lb_tb_m1.text(all_m1.DiemTrung_Binh);
 
@@ -516,6 +521,8 @@
 
         let tenmon_3 = $('#lb_tenmon_3'); let _txt_m3_k1 = $('#txt_m3_k1'); let _txt_m3_k2 = $('#txt_m3_k2'); let _txt_m3_k3 = $('#txt_m3_k3'); let _lb_tb_m3 = $('#lb_tb_m3');
         tenmon_3.text(all_m3.ten_Mon); _txt_m3_k1.val(all_m3.H_K1); _txt_m3_k2.val(all_m3.H_K2); _txt_m3_k3.val(all_m3.H_K3); _lb_tb_m3.text(all_m3.DiemTrung_Binh);
+
+       
         if (id_dangky == -1) { // thêm mới
         }
         if (id_dangky > 0) { // sửa đăng ký
@@ -524,11 +531,8 @@
 
     function addNguyenVong() {
         let flag = true;
-        //{"TenMon1":"Toán","HK1":"8.00","HK2":"8.00","HK3":"8.00","DiemTrungBinh":"8.00"}
         let Nganh_ID = $('#select_nganh').val();
         let Thm_ID = $('#select_tohopmon').val();
-        let Dkxt_XepLoaiHocLuc_12 = $('#txt_hocluc_12').val();
-        let Dkxt_XepLoaiHanhKiem_12 = $('#txt_hanhkiem_12').val();
         let Dkxt_Diem_M1 = {
             TenMon1: $('#lb_tenmon_1').val(),
             HK1: $('#txt_m1_k1').val(),
@@ -544,7 +548,7 @@
             DiemTrungBinh: $('#lb_tb_m2').val(),
         };
         let Dkxt_Diem_M3 = {
-            TenMon2: $('#lb_tenmon_3').val(),
+            TenMon3: $('#lb_tenmon_3').val(),
             HK1: $('#txt_m3_k1').val(),
             HK2: $('#txt_m3_k2').val(),
             HK3: $('#txt_m3_k3').val(),
@@ -554,13 +558,13 @@
         let DiemTBMon2 = $('#lb_tb_m2').val();
         let DiemTBMon3 = $('#lb_tb_m3').val();
 
-        if (!Nganh_ID) {
-            var errorMessage = "Không được bỏ trống ngành";
+        if (Nganh_ID == 0) {
+            var errorMessage = "Chưa chọn ngành";
             $('#Nganh_ID_Error').text(errorMessage);
             flag = false;
         }
-        if (!Thm_ID) {
-            var errorMessage = "Không được bỏ trống tổ hợp môn";
+        if (Thm_ID == 0) {
+            var errorMessage = "Chưa chọn tổ hợp môn";
             $('#Thm_ID_Error').text(errorMessage);
             flag = false;
         }
@@ -579,9 +583,11 @@
             $('#Diem_Chi_Tiet_Error').text(errorMessage);
             flag = false;
         }
+        console.log(flag)
         if (!flag) return;
 
         let Dkxt_Diem_Tong = parseFloat(DiemTBMon1) + parseFloat(DiemTBMon2) + parseFloat(DiemTBMon3);
+
         let formData = {
             Nganh_ID: Nganh_ID,
             Thm_ID: Thm_ID,
