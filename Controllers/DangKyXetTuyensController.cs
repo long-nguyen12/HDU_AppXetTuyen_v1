@@ -88,7 +88,7 @@ namespace HDU_AppXetTuyen.Controllers
                     Dkxt_Diem_M1 = s.Dkxt_Diem_M1,
                     Dkxt_Diem_M2 = s.Dkxt_Diem_M2,
                     Dkxt_Diem_M3 = s.Dkxt_Diem_M3,
-                    Dkxt_Diem_Tong = s.Dkxt_Diem_Tong.toFixed(2),
+                    Dkxt_Diem_Tong = s.Dkxt_Diem_Tong,
                     Dkxt_Diem_Tong_Full = s.Dkxt_Diem_Tong_Full,
                 });
                 return Json(select_list_dkxt_model.ToList(), JsonRequestBehavior.AllowGet);
