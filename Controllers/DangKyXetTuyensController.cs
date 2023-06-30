@@ -216,6 +216,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxt.KhuVuc_ID = ts.KhuVuc_ID;
                 dkxt.DotXT_ID = dotxettuyen.Dxt_ID;
                 dkxt.Dkxt_TrangThai = 0;
+                dkxt.Dkxt_TrangThai_KetQua = 0;
                 var diemTong = float.Parse(nguyenvong.Dkxt_Diem_Tong);
                 var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;
                 var khuVucDoiTuong = ts.KhuVuc.KhuVuc_DiemUuTien;
@@ -226,9 +227,14 @@ namespace HDU_AppXetTuyen.Controllers
                 db.DangKyXetTuyens.Add(dkxt);
 
                 // add LePhiXetTuyen
-                LePhiXetTuyen lpxt = new LePhiXetTuyen();
-                lpxt.ThiSinh_ID = ts.ThiSinh_ID;
-                db.LePhiXetTuyens.Add(lpxt);
+                var lePhiRecord = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
+                if( lePhiRecord == null)
+                {
+                    LePhiXetTuyen lpxt = new LePhiXetTuyen();
+                    lpxt.ThiSinh_ID = ts.ThiSinh_ID;
+                    lpxt.Lpxt_TrangThai = 0;
+                    db.LePhiXetTuyens.Add(lpxt);
+                }
 
                 db.SaveChanges();
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
