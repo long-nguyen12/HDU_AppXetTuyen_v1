@@ -128,7 +128,7 @@ namespace HDU_AppXetTuyen.Controllers
             });
             return Json(selectResult_tohopmon_nganh.ToList(), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult ToHopMonGeByID(str_infor data)
+        public JsonResult DangKyXetTuyen_Get_ByID(str_infor data)
         {
             DbConnecttion thm_db = new DbConnecttion();
             DbConnecttion dkxt_db = new DbConnecttion();
@@ -142,18 +142,18 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 var information_to_client = new
                 {
+                    dkxt_id_update = data.int_input_b,
                     thm_Mon1 = new { TenMon1 = get_tohopmon_byid.Thm_Mon1, HK1 = 0, HK2 = 0, HK3 = 0, DiemTrungBinh = 0 },
                     thm_Mon2 = new { TenMon2 = get_tohopmon_byid.Thm_Mon2, HK1 = 0, HK2 = 0, HK3 = 0, DiemTrungBinh = 0 },
                     thm_Mon3 = new { TenMon3 = get_tohopmon_byid.Thm_Mon3, HK1 = 0, HK2 = 0, HK3 = 0, DiemTrungBinh = 0 },
-                    _ttbs_ut = new
+                    ttBosung_Ut = new
                     {
                         ut_doituong_ten = get_tsdk_byid.DoiTuong.DoiTuong_Ten,
                         ut_doituong_diem_ut = get_tsdk_byid.DoiTuong.DoiTuong_DiemUuTien,
                         ut_khuvuc_ten = get_tsdk_byid.KhuVuc.KhuVuc_Ten,
                         ut_khuvuc_diem_ut = get_tsdk_byid.KhuVuc.KhuVuc_DiemUuTien,
-                        _xlhocluc_12 = "",
-                        xl_hankiem_12 = "",
-
+                        xeploai_hocluc_12 = get_tsdk_byid.ThiSinh_HocLucLop12,
+                        xeploai_hanhkiem_12 = get_tsdk_byid.ThiSinh_HanhKiemLop12,
                     },
                 };
                 return Json(information_to_client, JsonRequestBehavior.AllowGet);
@@ -164,17 +164,18 @@ namespace HDU_AppXetTuyen.Controllers
 
                 var information_to_client = new
                 {
+                    dkxt_id_update = data.int_input_b,
                     thm_Mon1 = new { dkxt_detail_getby_id.Dkxt_Diem_M1 },
                     thm_Mon2 = new { dkxt_detail_getby_id.Dkxt_Diem_M2 },
                     thm_Mon3 = new { dkxt_detail_getby_id.Dkxt_Diem_M3 },
-                    _ttbs_ut = new
+                    ttBosung_Ut = new
                     {
                         ut_doituong_ten = dkxt_detail_getby_id.DoiTuong.DoiTuong_Ten,
                         ut_doituong_diem_ut = dkxt_detail_getby_id.DoiTuong.DoiTuong_DiemUuTien,
                         ut_khuvuc_ten = dkxt_detail_getby_id.KhuVuc.KhuVuc_Ten,
                         ut_khuvuc_diem_ut = dkxt_detail_getby_id.KhuVuc.KhuVuc_DiemUuTien,
-                        _xlhocluc_12 = dkxt_detail_getby_id.Dkxt_XepLoaiHocLuc_12,
-                        xl_hankiem_12 = dkxt_detail_getby_id.Dkxt_XepLoaiHanhKiem_12,
+                        xeploai_hocluc_12 = get_tsdk_byid.ThiSinh_HocLucLop12,
+                        xeploai_hanhkiem_12 = get_tsdk_byid.ThiSinh_HanhKiemLop12,
                     },
                 };
                 return Json(information_to_client, JsonRequestBehavior.AllowGet);
@@ -183,7 +184,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddNguyenVong(ThongTinNguyenVong nguyenvong)
+        public JsonResult DangKyXetTuyen_Add(ThongTinNguyenVong nguyenvong)
         {
             DbConnecttion db = new DbConnecttion();
             var session = Session["login_session"].ToString();
