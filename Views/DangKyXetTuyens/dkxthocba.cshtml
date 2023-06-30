@@ -97,12 +97,14 @@
                                     <td>Ngành <font color="red">(*)</font></td>
                                     <td>
                                         <select id="select_nganh" class="form-select"></select>
+                                        <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Tổ hợp môn <font color="red">(*)</font></td>
                                     <td>
                                         <select id="select_tohopmon" class="form-select"></select>
+                                        <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
 
@@ -123,11 +125,25 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 Học lực lớp 12
-                                                <input type="text" class="form-control" id="txt_hocluc_12" />
+                                                <select id="txt_hocluc_12" class="form-select">
+                                                    <option value="0">Chọn học lực</option>
+                                                    <option value="4">Xuất sắc</option>
+                                                    <option value="3">Giỏi</option>
+                                                    <option value="2">Khá</option>
+                                                    <option value="1">Trung bình</option>
+                                                </select>
+                                                <span id="Dkxt_XepLoaiHocLuc_12_Error" class="small mb-1 text-danger"></span>
                                             </div>
                                             <div class="col-6">
                                                 Xếp loại hạnh kiểm lớp 12
-                                                <input type="text" class="form-control" id="txt_hanhkiem_12" />
+                                                <select id="txt_hanhkiem_12" class="form-select">
+                                                    <option value="0">Chọn hạnh kiểm</option>
+                                                    <option value="4">Xuất sắc</option>
+                                                    <option value="3">Giỏi</option>
+                                                    <option value="2">Khá</option>
+                                                    <option value="1">Trung bình</option>
+                                                </select>
+                                                <span id="Dkxt_XepLoaiHanhKiem_12_Error" class="small mb-1 text-danger"></span>
                                             </div>
                                         </div>
                                     </td>
@@ -151,28 +167,27 @@
                                     <tbody id="tbody_list_diemmonhoc">
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_1" class="form-label"></label></td>
-                                            <td><input id="txt_m1_k1" type="number" class="form-control" value="" /></td>
-                                            <td><input id="txt_m1_k2" type="number" class="form-control" value="" /></td>
-                                            <td><input id="txt_m1_k3" type="number" class="form-control" value="" /></td>
-                                            <td><label id="lb_tb_m1" type="number" class="form-control">0</label> </td>
+                                            <td><input id="txt_m1_k1" type="number" class="form-control input-mon1" value="" disabled /></td>
+                                            <td><input id="txt_m1_k2" type="number" class="form-control input-mon1" value="" disabled /></td>
+                                            <td><input id="txt_m1_k3" type="number" class="form-control input-mon1" value="" disabled /></td>
+                                            <td><input id="lb_tb_m1" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_2" class="form-label"></label></td>
-                                            <td><input id="txt_m2_k1" type="number" class="form-control" value="" /></td>
-                                            <td><input id="txt_m2_k2" type="number" class="form-control" value="" /></td>
-                                            <td><input id="txt_m2_k3" type="number" class="form-control" value="" /></td>
-                                            <td><label id="lb_tb_m2" type="number" class="form-control">0</label> </td>
+                                            <td><input id="txt_m2_k1" type="number" class="form-control input-mon2" value="" disabled /></td>
+                                            <td><input id="txt_m2_k2" type="number" class="form-control input-mon2" value="" disabled /></td>
+                                            <td><input id="txt_m2_k3" type="number" class="form-control input-mon2" value="" disabled /></td>
+                                            <td><input id="lb_tb_m2" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_3" class="form-label"></label></td>
-                                            <td><input id="txt_m3_k1" type="number" class="form-control" value="" /></td>
-                                            <td><input id="txt_m3_k2" type="number" class="form-control" value="" /></td>
-                                            <td><input id="txt_m3_k3" type="number" class="form-control" value="" /></td>
-                                            <td><label id="lb_tb_m3" type="number" class="form-control">0</label> </td>
+                                            <td><input id="txt_m3_k1" type="number" class="form-control input-mon3" value="" disabled /></td>
+                                            <td><input id="txt_m3_k2" type="number" class="form-control input-mon3" value="" disabled /></td>
+                                            <td><input id="txt_m3_k3" type="number" class="form-control input-mon3" value="" disabled /></td>
+                                            <td><input id="lb_tb_m3" type="number" class="form-control" value="" disabled /></td>
                                         </tr>
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                         <div id="div_thongtinphu_upload">
@@ -212,13 +227,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-xxl-12" style="text-align:center">
-                                    <input class="btn btn-primary" type="button" value="Đồng ý" onclick="" />
+                                    <input class="btn btn-primary" type="button" value="Đồng ý" onclick="addNguyenVong()" />
                                     <input class="btn btn-secondary" type="button" value="Hủy bỏ" id="bt_huybo_dangky_nvmoi" onclick="onclick_bt_huybo_dangky_nvmoi(0,0,0)" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Toast Title</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
             </div>
         </div>
     </div>
@@ -257,16 +282,69 @@
 
         $("#select_khoinganh").change(function () {
             get_data_forselect_nganh_all($("#select_khoinganh").val(), 0, 0);
-        })
+        });
         $("#select_nganh").change(function () {
             get_data_forselect_tohopmon_all($("#select_nganh").val(), 0)
-        })
+        });
         // lấy danh sách 3 môn cần nhập điểm
         $("#select_tohopmon").change(function () {
             // get_data_fortable_nhapdiem($("#select_tohopmon").val());
             get_data_fortable_nhapdiem();
+        });
+
+        onListenFields(".input-mon1", '#lb_tb_m1');
+        onListenFields(".input-mon2", '#lb_tb_m2');
+        onListenFields(".input-mon3", '#lb_tb_m3');
+
+        $('input').on('input', function () {
+            hideErrorMessage($(this));
+        });
+
+        $('select').on('input', function () {
+            hideErrorMessage($(this));
         })
     });
+
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+
+    function onListenFields(inputClass, outputClass) {
+        var inputFields = $(inputClass);
+        inputFields.on('input', function () {
+            var allFilled = true;
+            inputFields.each(function () {
+                if ($(this).val() === '') {
+                    allFilled = false;
+                    return false;
+                }
+            });
+
+            if (allFilled) {
+                let total = 0;
+                inputFields.each(function () {
+                    total += parseFloat($(this).val());
+                });
+                console.log(total / 3)
+                $(outputClass).val((total / 3).toFixed(2));
+            }
+        });
+    }
+
+    function onResetFields() {
+        $('.input-mon1').val("");
+        $('.input-mon2').val("");
+        $('.input-mon3').val("");
+        $('#lb_tenmon_1').text("");
+        $('#lb_tenmon_2').text("");
+        $('#lb_tenmon_3').text("");
+        $('#lb_tb_m1').val("");
+        $('#lb_tb_m2').val("");
+        $('#lb_tb_m3').val("");
+    }
 
     function dkxt_get_data_da_dkxt_all() {
         let _output = "";
@@ -276,7 +354,6 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (result_all) {
-                // console.log(result_all)
                 if (result_all.length == 0) {
                     _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
@@ -284,10 +361,10 @@
                     $.each(result_all, function (i, result) {
 
                         _output += '<tr>' +
-                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
                             '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
+                            '<td style="vertical-align: middle !important "> NV ' + result.Dkxt_NguyenVong + ' <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>' +
                             '<td>' + '<a href="#" class="btn btn-light" style="vertical-align: middle !important "> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>' + '</td>' +
                             '<td style="text-align: center; vertical-align: middle !important ">' +
                             'Sửa | Xóa' +
@@ -394,7 +471,7 @@
                 //return
 
                 let _ttmh_1 = new _thongtin_monhoc(res.thm_Mon1.TenMon1, res.thm_Mon1.HK1, res.thm_Mon1.HK2, res.thm_Mon1.HK3, res.thm_Mon1.DiemTrungBinh);
-                let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon3, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
+                let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon2, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
                 let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
                 console.log("--------thông tin môn 1----------");
                 console.log(_ttmh_1);
@@ -403,8 +480,19 @@
                 console.log("--------thông tin môn 3----------");
                 console.log(_ttmh_3);
                 set_tenmonhoc_diem_thisinh(_ttmh_1, _ttmh_2, _ttmh_3);
+                $('#lb_tenmon_1').html(_ttmh_1.ten_Mon);
+                $('#lb_tenmon_2').html(_ttmh_2.ten_Mon);
+                $('#lb_tenmon_3').html(_ttmh_3.ten_Mon);
 
-
+                $('#txt_m1_k1').prop('disabled', false);
+                $('#txt_m1_k2').prop('disabled', false);
+                $('#txt_m1_k3').prop('disabled', false);
+                $('#txt_m2_k1').prop('disabled', false);
+                $('#txt_m2_k2').prop('disabled', false);
+                $('#txt_m2_k3').prop('disabled', false);
+                $('#txt_m3_k1').prop('disabled', false);
+                $('#txt_m3_k2').prop('disabled', false);
+                $('#txt_m3_k3').prop('disabled', false);
             },
             error: function (errormessage) {
                 alert(errormessage.responseText);
@@ -431,77 +519,102 @@
         if (id_dangky > 0) { // sửa đăng ký
         }
     }
+
+    function addNguyenVong() {
+        let flag = true;
+        //{"TenMon1":"Toán","HK1":"8.00","HK2":"8.00","HK3":"8.00","DiemTrungBinh":"8.00"}
+        let Nganh_ID = $('#select_nganh').val();
+        let Thm_ID = $('#select_tohopmon').val();
+        let Dkxt_XepLoaiHocLuc_12 = $('#txt_hocluc_12').val();
+        let Dkxt_XepLoaiHanhKiem_12 = $('#txt_hanhkiem_12').val();
+        let Dkxt_Diem_M1 = {
+            TenMon1: $('#lb_tenmon_1').val(),
+            HK1: $('#txt_m1_k1').val(),
+            HK2: $('#txt_m1_k2').val(),
+            HK3: $('#txt_m1_k3').val(),
+            DiemTrungBinh: $('#lb_tb_m1').val(),
+        };
+        let Dkxt_Diem_M2 = {
+            TenMon1: $('#lb_tenmon_2').val(),
+            HK1: $('#txt_m2_k1').val(),
+            HK2: $('#txt_m2_k2').val(),
+            HK3: $('#txt_m2_k3').val(),
+            DiemTrungBinh: $('#lb_tb_m2').val(),
+        };
+        let Dkxt_Diem_M3 = {
+            TenMon1: $('#lb_tenmon_3').val(),
+            HK1: $('#txt_m3_k1').val(),
+            HK2: $('#txt_m3_k2').val(),
+            HK3: $('#txt_m3_k3').val(),
+            DiemTrungBinh: $('#lb_tb_m3').val(),
+        };
+        let DiemTBMon1 = $('#lb_tb_m1').val();
+        let DiemTBMon2 = $('#lb_tb_m2').val();
+        let DiemTBMon3 = $('#lb_tb_m3').val();
+
+        if (!Nganh_ID) {
+            var errorMessage = "Không được bỏ trống ngành";
+            $('#Nganh_ID_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Thm_ID) {
+            var errorMessage = "Không được bỏ trống tổ hợp môn";
+            $('#Thm_ID_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Dkxt_XepLoaiHocLuc_12 || Dkxt_XepLoaiHocLuc_12 == "0") {
+            var errorMessage = "Không được bỏ trống học lực";
+            $('#Dkxt_XepLoaiHocLuc_12_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Dkxt_XepLoaiHanhKiem_12 || Dkxt_XepLoaiHanhKiem_12 == "0") {
+            var errorMessage = "Không được bỏ trống hạnh kiểm";
+            $('#Dkxt_XepLoaiHanhKiem_12_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!DiemTBMon1 || !DiemTBMon2 || !DiemTBMon3) {
+            var errorMessage = "Không được bỏ trống điểm";
+            $('#Diem_Chi_Tiet_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!flag) return;
+
+        let Dkxt_Diem_Tong = parseFloat(DiemTBMon1) + parseFloat(DiemTBMon2) + parseFloat(DiemTBMon3);
+        let formData = {
+            Nganh_ID: Nganh_ID,
+            Thm_ID: Thm_ID,
+            Dkxt_XepLoaiHocLuc_12: Dkxt_XepLoaiHocLuc_12,
+            Dkxt_XepLoaiHanhKiem_12: Dkxt_XepLoaiHanhKiem_12,
+            Dkxt_Diem_M1: JSON.stringify(Dkxt_Diem_M1),
+            Dkxt_Diem_M2: JSON.stringify(Dkxt_Diem_M2),
+            Dkxt_Diem_M3: JSON.stringify(Dkxt_Diem_M3),
+            Dkxt_Diem_Tong: Dkxt_Diem_Tong.toString()
+        }
+        console.log(formData)
+        $.ajax({
+            url: "/DangKyXetTuyens/AddNguyenVong",
+            data: JSON.stringify(formData),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (res) {
+                if (res.success) {
+                    showToast("Thành công", "Thêm mới nguyện vọng thành công!", "bg-success");
+                    dkxt_get_data_da_dkxt_all();
+                    document.getElementById('div_list_nguyenvong').style.display = "inline";
+                    document.getElementById('div_update_dk_nguyenvong').style.display = "none";
+                    onResetFields();
+                } else {
+                    showToast("Thất bại", "Thêm mới nguyện vọng thất bại!", "bg-error");
+                }
+            },
+            error: function (errormessage) {
+                showToast("Thất bại", "Thêm mới nguyện vọng thất bại!", "bg-error");
+            }
+        });
+    }
+    function hideErrorMessage(input) {
+        var errorContainer = input.next('.text-danger');
+        errorContainer.text('');
+    }
 </script>
-@*
-
-        <tbody id="tbody_list_nguyenvong">
-                                          <tr><td colspan="5">Chưa chọn dữ liệu ngành và tổ hợp môn</td></tr>
-    <tr>
-        <td>Khối ngành kinh tế kỹ thuật</td>
-        <td> 7340101 - Quản trị kinh doanh </td>
-        <td>(A00): Toán-Lý-Hóa</td>
-        <td>21.5</td>
-        <td>NV 1 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
-        <td>
-            <a href="#" class="btn btn-light"> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>
-        </td>
-        <td style="text-align: center; vertical-align: middle !important ">
-            Sửa | Xóa
-        </td>
-    </tr>
-    <tr>
-        <td>Khối ngành kinh tế kỹ thuật</td>
-        <td>7340201 - Tài chính-Ngân hàng</td>
-        <td>(A00): Toán-Lý-Hóa</td>
-        <td>22.5</td>
-        <td>NV 2 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
-        <td>
-            <a href="#" class="btn btn-light"> <input type="checkbox" checked disabled /> Đã xác thực đăng ký</a>
-        </td>
-        <td style="text-align: center; vertical-align: middle !important ">
-            Sửa | Xóa
-        </td>
-    </tr>
-    <tr>
-        <td>Khối ngành sư phạm</td>
-        <td>7140231 - Sư phạm Tiếng Anh</td>
-        <td>(D00): Toán-Văn-Anh</td>
-        <td>28.5</td>
-        <td>NV 3 <a class="btn btn-light btn-sm">&#8743;</a>  <a class="btn btn-light btn-sm">&#8744;</a> </td>
-        <td>
-            <a href="#" class="btn btn-light" style="color:red"> <input type="checkbox" disabled /> Chưa xác nhận đăng ký</a>
-        </td>
-        <td style="text-align: center; vertical-align: middle !important ">
-            <a href="#">Sửa</a> | <a href="#">Xóa</a>
-        </td>
-    </tr>
-    </tbody>
-*@
-@*
-
-        <tbody id="tbody_list_diemmonhoc">
-     <tr><td colspan="5">Chưa chọn dữ liệu ngành và tổ hợp môn</td></tr>
-    <tr>
-        <td>Toán</td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><label type="number" class="form-control">0</label> </td>
-    </tr>
-    <tr>
-        <td>Lý</td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><label type="number" class="form-control">0</label> </td>
-    </tr>
-    <tr>
-        <td>Hóa</td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><input type="number" class="form-control" value="0" /></td>
-        <td><label type="number" class="form-control">0</label> </td>
-    </tr>
-
-    </tbody>
-*@

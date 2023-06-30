@@ -8,8 +8,22 @@ using System.Data.Entity;
 
 namespace HDU_AppXetTuyen.Controllers
 {
+    public class NguyenVong
+    {
+        public string Nganh_ID { get; set; }
+        public string Thm_ID { get; set; }
+        public string Dkxt_Diem_M1 { get; set; }
+        public string Dkxt_Diem_M2 { get; set; }
+        public string Dkxt_Diem_M3 { get; set; }
+        public string Dkxt_Diem_Tong { get; set; }
+        public string Dkxt_Diem_Tong_Full { get; set; }
+        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
+        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
+    }
+
     public class DangKyXetTuyensController : Controller
     {
+        [ThiSinhSessionCheck]
         public ActionResult iddkxthocba()
         {
             DbConnecttion db_tsdk = new DbConnecttion();
@@ -34,19 +48,11 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return View();
         }
+
+        [ThiSinhSessionCheck]
         public ActionResult dkxthocba()
         {
             return View();
-            /*
-            if (Session["login_session"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("login", "Login");
-            }*/
-
         }
         public JsonResult dkxthocbaListAll()
         {
@@ -55,7 +61,6 @@ namespace HDU_AppXetTuyen.Controllers
 
             DbConnecttion db_tsdk = new DbConnecttion();
             DbConnecttion db_dkxt = new DbConnecttion();
-            Session["login_session"] = "11111111"; // => vào chương trình k cần dòng code này
             if (Session["login_session"] != null)
             {
                 string str_login_session = Session["login_session"].ToString();
@@ -139,7 +144,6 @@ namespace HDU_AppXetTuyen.Controllers
             DbConnecttion dkxt_db = new DbConnecttion();
             DbConnecttion tsdk_db = new DbConnecttion();
 
-            Session["login_session"] = "11111111"; // => vào chương trình k cần dòng code này
             string str_login_session = Session["login_session"].ToString();
             var get_tsdk_byid = tsdk_db.ThiSinhDangKies.Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault(ts => ts.ThiSinh_MatKhau.Equals(str_login_session));
 
@@ -159,7 +163,7 @@ namespace HDU_AppXetTuyen.Controllers
                         ut_khuvuc_diem_ut = get_tsdk_byid.KhuVuc.KhuVuc_DiemUuTien,
                         _xlhocluc_12 = "",
                         xl_hankiem_12 = "",
-                        
+
                     },
                 };
                 return Json(information_to_client, JsonRequestBehavior.AllowGet);
@@ -187,11 +191,67 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult AddNguyenVong(ThongTinNguyenVong nguyenvong)
+        {
+            DbConnecttion db = new DbConnecttion();
+            var session = Session["login_session"].ToString();
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
+            if(ts != null)
+            {
+                var nvs = db.DangKyXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).ToList();
+                DangKyXetTuyen dkxt = new DangKyXetTuyen();
+                dkxt.Nganh_ID = int.Parse(nguyenvong.Nganh_ID);
+                dkxt.Thm_ID = int.Parse(nguyenvong.Thm_ID);
+                dkxt.Dkxt_XepLoaiHocLuc_12 = nguyenvong.Dkxt_XepLoaiHocLuc_12;
+                dkxt.Dkxt_XepLoaiHanhKiem_12 = nguyenvong.Dkxt_XepLoaiHanhKiem_12;
+                dkxt.Dkxt_Diem_M1 = nguyenvong.Dkxt_Diem_M1;
+                dkxt.Dkxt_Diem_M2 = nguyenvong.Dkxt_Diem_M2;
+                dkxt.Dkxt_Diem_M3 = nguyenvong.Dkxt_Diem_M3;
+                dkxt.Dkxt_Diem_Tong = nguyenvong.Dkxt_Diem_Tong;
+                dkxt.ThiSinh_ID = ts.ThiSinh_ID;
+                dkxt.DoiTuong_ID = ts.DoiTuong_ID;
+                dkxt.KhuVuc_ID = ts.KhuVuc_ID;
+                dkxt.DotXT_ID = dotxettuyen.Dxt_ID;
+                dkxt.Dkxt_TrangThai = 0;
+                var diemTong = float.Parse(nguyenvong.Dkxt_Diem_Tong);
+                var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;
+                var khuVucDoiTuong = ts.KhuVuc.KhuVuc_DiemUuTien;
+                var diemTongFull = diemTong + diemDoiTuong + khuVucDoiTuong;
+                dkxt.Dkxt_Diem_Tong_Full = diemTongFull.ToString();
+                dkxt.Ptxt_ID = 3;
+                dkxt.Dkxt_NguyenVong = nvs.Count + 1;
+                db.DangKyXetTuyens.Add(dkxt);
+
+                // add LePhiXetTuyen
+                LePhiXetTuyen lpxt = new LePhiXetTuyen();
+                lpxt.ThiSinh_ID = ts.ThiSinh_ID;
+                db.LePhiXetTuyens.Add(lpxt);
+
+                db.SaveChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
     }
 
     public class str_infor
     {
         public int int_input_a { get; set; }
         public int int_input_b { get; set; }
+    }
+
+    public class ThongTinNguyenVong
+    {
+        public string Nganh_ID { get; set; }
+        public string Thm_ID { get; set; }
+        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
+        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
+        public string Dkxt_Diem_M1 { get; set; }
+        public string Dkxt_Diem_M2 { get; set; }
+        public string Dkxt_Diem_M3 { get; set; }
+        public string Dkxt_Diem_Tong { get; set; }
     }
 }
