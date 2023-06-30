@@ -31,7 +31,13 @@ namespace HDU_AppXetTuyen.Controllers
             var session = Session["login_session"].ToString();
             var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
             var nguyenvongs = db.DangKyXetTuyens.Include(l => l.Nganh).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).ToList();
-            var lePhi = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).FirstOrDefault();
+            var lePhi = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(s => new
+            {
+                Lpxt_SoTienDong = s.Lpxt_SoTienDong,
+                Lpxt_TrangThai = s.Lpxt_TrangThai,
+                Lpxt_MinhChung = s.Lpxt_MinhChung,
+                Lpxt_GhiChu = s.Lpxt_GhiChu
+            }).FirstOrDefault();
             var dataList = nguyenvongs.Select(s => new
             {
                 Dkxt_NguyenVong = s.Dkxt_NguyenVong,

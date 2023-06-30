@@ -73,18 +73,22 @@
                         let html = "";
                         $.each(data, function (key, item) {
                             html += "<tr>";
-                            html += '<td>' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_NguyenVong + '</td>';
                             html += '<td>' + item.Dkxt_Nganh.Nganh_TenNganh + '</td>';
                             // html += '<td>' + item.Khoa_DiaChi + '</td>';
-                            html += '<td></td>';
                             if (!lePhi || lePhi.Lpxt_TrangThai == 0) {
-                                html += `<td><span class="badge bg-danger">Chưa đóng phí</span></td>`;
+                                html += `<td class="text-center"><span class="badge bg-danger">Chưa đóng phí</span></td>`;
+                            } else if (lePhi.Lpxt_TrangThai == 1) {
+                                html += `<td class="text-center"><span class="badge bg-info">Chờ xác nhận</span></td>`;
+                            } else if (lePhi.Lpxt_TrangThai == 2) {
+                                html += `<td class="text-center"><span class="badge bg-warning">Thiếu</span></td>`;
+                            } else if (lePhi.Lpxt_TrangThai == 3) {
+                                html += `<td class="text-center"><span class="badge bg-success">Đã đủ</span></td>`;
                             }
-
-                            // html += `<td class="text-center align-middle"><a class="btn btn-primary mx-2" href="${url}">Sửa</a>`;
-                            // html += `<a class="btn btn-danger delete-button" data-id="${item.Khoa_ID}" data-bs-toggle="modal" data-bs-target="#deleteModal">Xoá</a></td>`;
-                            html += "</tr>";
+                            html += '<td></td>';
                         });
+                        html += `<td rowspan=${data.length}></td>`;
+                        html += "</tr>";
                         $('.tbody').html(html);
                     }
                 } else {
@@ -146,10 +150,11 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th width="15%">@Html.DisplayName("Nguyện vọng")</th>
-                            <th width="40%">@Html.DisplayName("Ngành")</th>
-                            <th>@Html.DisplayName("Minh chứng")</th>
-                            <th>@Html.DisplayName("Trạng thái")</th>
+                            <th width="10%" class="text-center">@Html.DisplayName("Nguyện vọng")</th>
+                            <th width="30%" class="text-center">@Html.DisplayName("Ngành")</th>
+                            <th class="text-center">@Html.DisplayName("Trạng thái")</th>
+                            <th class="text-center">@Html.DisplayName("Ghi chú")</th>
+                            <th class="text-center">@Html.DisplayName("Minh chứng")</th>
                             <th></th>
                         </tr>
                     </thead>
