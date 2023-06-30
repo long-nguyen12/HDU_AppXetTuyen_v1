@@ -96,8 +96,15 @@
 
         public int? ThiSinh_TruongCapBa_Tinh_ID { get; set; }
 
+        public int? ThiSinh_HocLucLop12 { get; set; }
+
+        public int? ThiSinh_HanhKiemLop12 { get; set; }
+
         [StringLength(200)]
         public string ThiSinh_GhiChu { get; set; }
+
+        [StringLength(200)]
+        public string ThiSinh_Email_Temp { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
