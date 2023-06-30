@@ -32,49 +32,40 @@
             <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().DoiTuong.DoiTuong_Ten)
+                        Đợt xét tuyển
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().DotXetTuyen.Dxt_Ten)
+                        Họ  tên
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().KhuVuc.KhuVuc_Ten)
+                        Đối tượng
+                    </th>
+
+                    <th>
+                        Khu vực
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Nganh.Nganh_MaNganh)
+                        Mã ngành
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+                        Phương thức xét tuyển
+                    </th>
+
+                    <th>
+                        Tổ hợp môn
+                    </th>
+
+                    <th>
+                        Nguyện vọng
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinhDangKy.ThiSinh_CCCD)
+                        Tổng điểm 3 môn xét tuyển
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ToHopMon.Thm_MaToHop)
+                        Tổng điểm + điểm ưu tiên
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_TrangThai)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_NguyenVong)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_GhiChu)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_Diem_M1)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_Diem_M2)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_Diem_M3)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_Diem_Tong)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Dkxt_Diem_Tong_Full)
+                       Trạng thái
                     </th>
                     <th></th>
                 </tr>
@@ -83,11 +74,15 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DoiTuong.DoiTuong_Ten)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot) @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoiTuong.DoiTuong_Ten)
+                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.KhuVuc.KhuVuc_Ten)
                         </td>
@@ -97,29 +92,13 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
-                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.ToHopMon.Thm_MaToHop)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dkxt_TrangThai)
-                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dkxt_GhiChu)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dkxt_Diem_M1)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dkxt_Diem_M2)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Dkxt_Diem_M3)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong)
@@ -128,9 +107,12 @@
                             @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong_Full)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Dkxt_ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Dkxt_ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Dkxt_ID })
+                            @Html.DisplayFor(modelItem => item.Dkxt_TrangThai)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.Dkxt_ID }) |
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.Dkxt_ID }) |
+                            @Html.ActionLink("Xoá", "Delete", new { id = item.Dkxt_ID })
                         </td>
                     </tr>
                 }

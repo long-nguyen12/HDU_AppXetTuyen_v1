@@ -27,7 +27,7 @@
                                     </div>
                                     <div class="mb-3" style="margin-top:5px">
                                         <label class="small mb-1" for="Admin_Pass">Mật khẩu</label>
-                                        @Html.EditorFor(model => model.Admin_Pass, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu" } })
+                                        @Html.EditorFor(model => model.Admin_Pass, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu", type = "password" } })
                                         @Html.ValidationMessageFor(model => model.Admin_Pass, "", new { @class = "small mb-1 text-danger" })
                                     </div>
                                     <div>

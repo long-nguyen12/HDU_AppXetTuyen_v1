@@ -33,19 +33,10 @@
             <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().DoiTuong.DoiTuong_Ten)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoLot)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().DotXetTuyen.Dxt_Ten)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().KhuVuc.KhuVuc_Ten)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_CCCD)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_MatKhau)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_Ten)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_DienThoai)
@@ -53,54 +44,17 @@
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_Email)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoLot)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_Ten)
-                    </th>
+
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_NgaySinh)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_NamTotNghiep)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_ResetCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_NgayDangKy)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_DanToc)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_GioiTinh)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_DCNhanGiayBao)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoKhauThuongTru)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoKhauThuongTru_Check)
+                        Ngày đăng ký
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TruongCapBa_Ma)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TruongCapBa)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TrangThai)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_TruongCapBa_Tinh_ID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_GhiChu)
-                    </th>
+
                     <th></th>
                 </tr>
 
@@ -108,19 +62,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DoiTuong.DoiTuong_Ten)
+                            @Html.DisplayFor(modelItem => item.ThiSinh_HoLot)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.KhuVuc.KhuVuc_Ten)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_CCCD)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_MatKhau)
+                            @Html.DisplayFor(modelItem => item.ThiSinh_Ten)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ThiSinh_DienThoai)
@@ -128,58 +73,21 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ThiSinh_Email)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_HoLot)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_Ten)
-                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.ThiSinh_NgaySinh)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_NamTotNghiep)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_ResetCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_NgayDangKy)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_DanToc)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_GioiTinh)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_DCNhanGiayBao)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ThiSinh_HoKhauThuongTru)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_HoKhauThuongTru_Check)
+                            @Html.DisplayFor(modelItem => item.ThiSinh_NgayDangKy)
                         </td>
+
                         <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa_Ma)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_TrangThai)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_TruongCapBa_Tinh_ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ThiSinh_GhiChu)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ThiSinh_ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.ThiSinh_ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ThiSinh_ID })
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.ThiSinh_ID }) |
+                            @Html.ActionLink("Chi tiết", "Details", new { id = item.ThiSinh_ID }) |
+                            @Html.ActionLink("Xoá", "Delete", new { id = item.ThiSinh_ID })
                         </td>
                     </tr>
                 }
