@@ -15,6 +15,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/DotXetTuyens
+        [AdminSessionCheck]
         public ActionResult Index()
         {
             var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc);
@@ -22,6 +23,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DotXetTuyens/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DotXetTuyens/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten");
@@ -46,6 +49,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/DotXetTuyens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Dxt_ID,Dxt_Ten,Dxt_TrangThai,Dxt_GhiChu,NamHoc_ID")] DotXetTuyen dotXetTuyen)
@@ -62,6 +66,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DotXetTuyens/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,6 +85,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/DotXetTuyens/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Dxt_ID,Dxt_Ten,Dxt_TrangThai,Dxt_GhiChu,NamHoc_ID")] DotXetTuyen dotXetTuyen)
@@ -95,6 +101,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DotXetTuyens/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,6 +117,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // POST: Admin/DotXetTuyens/Delete/5
+        [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

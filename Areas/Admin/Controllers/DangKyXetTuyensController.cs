@@ -17,6 +17,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/DangKyXetTuyens
+        [AdminSessionCheck]
         public ActionResult Index(int? page)
         {
             if (page == null) page = 1;
@@ -28,6 +29,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DangKyXetTuyens/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -43,6 +45,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DangKyXetTuyens/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten");
@@ -58,6 +61,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/DangKyXetTuyens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Dkxt_ID,ThiSinh_ID,Ptxt_ID,Nganh_ID,Thm_ID,DoiTuong_ID,KhuVuc_ID,Dkxt_TrangThai,Dkxt_NguyenVong,DotXT_ID,Dkxt_GhiChu,Dkxt_Diem_M1,Dkxt_Diem_M2,Dkxt_Diem_M3,Dkxt_Diem_Tong,Dkxt_Diem_Tong_Full")] DangKyXetTuyen dangKyXetTuyen)
@@ -80,6 +84,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DangKyXetTuyens/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -104,6 +109,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/DangKyXetTuyens/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Dkxt_ID,ThiSinh_ID,Ptxt_ID,Nganh_ID,Thm_ID,DoiTuong_ID,KhuVuc_ID,Dkxt_TrangThai,Dkxt_NguyenVong,DotXT_ID,Dkxt_GhiChu,Dkxt_Diem_M1,Dkxt_Diem_M2,Dkxt_Diem_M3,Dkxt_Diem_Tong,Dkxt_Diem_Tong_Full")] DangKyXetTuyen dangKyXetTuyen)
@@ -125,6 +131,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/DangKyXetTuyens/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -140,6 +147,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // POST: Admin/DangKyXetTuyens/Delete/5
+        [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)

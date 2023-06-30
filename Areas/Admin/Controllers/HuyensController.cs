@@ -17,6 +17,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/Huyens
+        [AdminSessionCheck]
         public ActionResult Index(int? page)
         {
             if (page == null) page = 1;
@@ -28,6 +29,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         //[HttpPost, ActionName("Index")]
+        [AdminSessionCheck]
         public ActionResult ShowDataExcelFile()
         {
             var huyenList = new List<Huyen>();
@@ -76,6 +78,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
 
         // GET: Admin/Huyens/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -91,6 +94,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Huyens/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             ViewBag.Tinh_ID = new SelectList(db.Tinhs, "Tinh_ID", "Tinh_Ten");
@@ -100,6 +104,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/Huyens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Huyen_ID,Huyen_MaHuyen,Huyen_TenHuyen,Huyen_GhiChu,Tinh_ID")] Huyen huyen)
@@ -116,6 +121,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Huyens/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -134,6 +140,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/Huyens/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Huyen_ID,Huyen_MaHuyen,Huyen_TenHuyen,Huyen_GhiChu,Tinh_ID")] Huyen huyen)
@@ -149,6 +156,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Huyens/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -164,6 +172,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // POST: Admin/Huyens/Delete/5
+        [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

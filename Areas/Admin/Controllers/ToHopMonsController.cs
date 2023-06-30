@@ -16,6 +16,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/ToHopMons
+        [AdminSessionCheck]
         public ActionResult Index(int? page)
         {
             var thms = (from h in db.ToHopMons
@@ -26,6 +27,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/ToHopMons/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,6 +43,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/ToHopMons/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +52,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/ToHopMons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Thm_ID,Thm_MaToHop,Thm_TenToHop,Thm_Mon1,Thm_Mon2,Thm_Mon3,Thm_MaTen")] ToHopMon toHopMon)
@@ -64,6 +68,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/ToHopMons/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,6 +86,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/ToHopMons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Thm_ID,Thm_MaToHop,Thm_TenToHop,Thm_Mon1,Thm_Mon2,Thm_Mon3,Thm_MaTen")] ToHopMon toHopMon)
@@ -95,6 +101,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/ToHopMons/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,6 +117,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // POST: Admin/ToHopMons/Delete/5
+        [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

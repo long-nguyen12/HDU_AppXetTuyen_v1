@@ -18,6 +18,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/Tinhs
+        [AdminSessionCheck]
         public ActionResult Index(int? page)
         {
             if (page == null) page = 1;
@@ -29,6 +30,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         //[HttpPost, ActionName("Index")]
+        [AdminSessionCheck]
         public ActionResult ShowDataExcelFile()
         {
             var tinhList = new List<Tinh>();
@@ -76,6 +78,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tinhs/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -91,6 +94,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tinhs/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             return View();
@@ -99,6 +103,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/Tinhs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Tinh_ID,Tinh_Ma,Tinh_Ten,Tinh_MaTen,Tinh_GhiChu")] Tinh tinh)
@@ -114,6 +119,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tinhs/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -131,6 +137,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/Tinhs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Tinh_ID,Tinh_Ma,Tinh_Ten,Tinh_MaTen,Tinh_GhiChu")] Tinh tinh)
@@ -145,6 +152,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tinhs/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -160,6 +168,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // POST: Admin/Tinhs/Delete/5
+        [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

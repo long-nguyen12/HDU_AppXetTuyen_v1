@@ -18,6 +18,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/Xas
+        [AdminSessionCheck]
         public ActionResult Index(int? page)
         {
             if (page == null) page = 1;
@@ -29,6 +30,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         //[HttpPost, ActionName("Index")]
+        [AdminSessionCheck]
         public ActionResult ShowDataExcelFile()
         {
             var xaList = new List<Xa>();
@@ -76,6 +78,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Xas/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -91,6 +94,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Xas/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             ViewBag.Huyen_ID = new SelectList(db.Huyens, "Huyen_ID", "Huyen_TenHuyen");
@@ -100,6 +104,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/Xas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Xa_ID,Xa_Ma,Xa_Ten,Xa_GhiChu,Huyen_ID")] Xa xa)
@@ -116,6 +121,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Xas/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -134,6 +140,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/Xas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Xa_ID,Xa_Ma,Xa_Ten,Xa_GhiChu,Huyen_ID")] Xa xa)
@@ -149,6 +156,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/Xas/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -164,6 +172,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // POST: Admin/Xas/Delete/5
+        [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
