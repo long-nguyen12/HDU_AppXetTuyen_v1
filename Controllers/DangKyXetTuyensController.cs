@@ -8,23 +8,13 @@ using System.Data.Entity;
 
 namespace HDU_AppXetTuyen.Controllers
 {
-    public class NguyenVong
-    {
-        public string Nganh_ID { get; set; }
-        public string Thm_ID { get; set; }
-        public string Dkxt_Diem_M1 { get; set; }
-        public string Dkxt_Diem_M2 { get; set; }
-        public string Dkxt_Diem_M3 { get; set; }
-        public string Dkxt_Diem_Tong { get; set; }
-        public string Dkxt_Diem_Tong_Full { get; set; }
-        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
-        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
-    }
+
 
     public class DangKyXetTuyensController : Controller
     {
+        #region test
         [ThiSinhSessionCheck]
-        public ActionResult iddkxthocba()
+        public ActionResult index()
         {
             DbConnecttion db_tsdk = new DbConnecttion();
             DbConnecttion db_dkxt = new DbConnecttion();
@@ -48,7 +38,7 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return View();
         }
-
+        #endregion 
         [ThiSinhSessionCheck]
         public ActionResult dkxthocba()
         {
@@ -197,9 +187,11 @@ namespace HDU_AppXetTuyen.Controllers
         {
             DbConnecttion db = new DbConnecttion();
             var session = Session["login_session"].ToString();
-            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
+                Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+
             var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
-            if(ts != null)
+            if (ts != null)
             {
                 var nvs = db.DangKyXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).ToList();
                 DangKyXetTuyen dkxt = new DangKyXetTuyen();
@@ -228,7 +220,7 @@ namespace HDU_AppXetTuyen.Controllers
 
                 // add LePhiXetTuyen
                 var lePhiRecord = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
-                if( lePhiRecord == null)
+                if (lePhiRecord == null)
                 {
                     LePhiXetTuyen lpxt = new LePhiXetTuyen();
                     lpxt.ThiSinh_ID = ts.ThiSinh_ID;
@@ -241,6 +233,19 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
+    }
+
+    public class NguyenVong
+    {
+        public string Nganh_ID { get; set; }
+        public string Thm_ID { get; set; }
+        public string Dkxt_Diem_M1 { get; set; }
+        public string Dkxt_Diem_M2 { get; set; }
+        public string Dkxt_Diem_M3 { get; set; }
+        public string Dkxt_Diem_Tong { get; set; }
+        public string Dkxt_Diem_Tong_Full { get; set; }
+        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
+        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
     }
 
     public class str_infor
