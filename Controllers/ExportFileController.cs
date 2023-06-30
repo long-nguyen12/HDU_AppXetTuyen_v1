@@ -94,30 +94,30 @@ namespace HDU_AppXetTuyen.Controllers
                     var jsonStringMon2 = JsonConvert.SerializeObject(item.Dkxt_Diem_M2);
                     var jsonStringMon3 = JsonConvert.SerializeObject(item.Dkxt_Diem_M3);
 
-                    DiemMon1 diemon1 = JsonConvert.DeserializeObject<DiemMon1>(item.Dkxt_Diem_M1);
-                    DiemMon2 diemon2 = JsonConvert.DeserializeObject<DiemMon2>(item.Dkxt_Diem_M2);
-                    DiemMon3 diemon3 = JsonConvert.DeserializeObject<DiemMon3>(item.Dkxt_Diem_M3);
+                    DiemMon1 diemmon1 = JsonConvert.DeserializeObject<DiemMon1>(item.Dkxt_Diem_M1);
+                    DiemMon2 diemmon2 = JsonConvert.DeserializeObject<DiemMon2>(item.Dkxt_Diem_M2);
+                    DiemMon3 diemmon3 = JsonConvert.DeserializeObject<DiemMon3>(item.Dkxt_Diem_M3);
 
                     // Lấy ra thông tin chi tiết của từng môn1
-                    var mon1_tenmon = diemon1.TenMon1.ToString();
-                    var mon1_hk1 = diemon1.HK1.ToString();
-                    var mon1_hk2 = diemon1.HK2.ToString();
-                    var mon1_hk3 = diemon1.HK3.ToString();
-                    var mon1_diemtb = diemon1.DiemTrungBinh.ToString();
+                    var mon1_tenmon = diemmon1.TenMon1.ToString();
+                    var mon1_hk1 = diemmon1.HK1.ToString();
+                    var mon1_hk2 = diemmon1.HK2.ToString();
+                    var mon1_hk3 = diemmon1.HK3.ToString();
+                    var mon1_diemtb = diemmon1.DiemTrungBinh != null ? diemmon1.DiemTrungBinh.ToString() : " ";
 
                     // Lấy ra thông tin chi tiết của từng môn2
-                    var mon2_tenmon = diemon2.TenMon2.ToString();
-                    var mon2_hk1 = diemon2.HK1.ToString();
-                    var mon2_hk2 = diemon2.HK2.ToString();
-                    var mon2_hk3 = diemon2.HK3.ToString();
-                    var mon2_diemtb = diemon2.DiemTrungBinh.ToString();
+                    var mon2_tenmon = diemmon2.TenMon2.ToString();
+                    var mon2_hk1 = diemmon2.HK1.ToString();
+                    var mon2_hk2 = diemmon2.HK2.ToString();
+                    var mon2_hk3 = diemmon2.HK3.ToString();
+                    var mon2_diemtb = diemmon2.DiemTrungBinh != null ? diemmon2.DiemTrungBinh.ToString() : " ";
 
                     // Lấy ra thông tin chi tiết của từng môn3
-                    var mon3_tenmon = diemon3.TenMon3.ToString();
-                    var mon3_hk1 = diemon3.HK1.ToString();
-                    var mon3_hk2 = diemon3.HK2.ToString();
-                    var mon3_hk3 = diemon3.HK3.ToString();
-                    var mon3_diemtb = diemon3.DiemTrungBinh.ToString();
+                    var mon3_tenmon = diemmon3.TenMon3.ToString();
+                    var mon3_hk1 = diemmon3.HK1.ToString();
+                    var mon3_hk2 = diemmon3.HK2.ToString();
+                    var mon3_hk3 = diemmon3.HK3.ToString();
+                    var mon3_diemtb = diemmon3.DiemTrungBinh != null ? diemmon3.DiemTrungBinh.ToString() : " ";
 
                     // 1 nguyện vọng chèn 3 row
                     table.InsertRow();
