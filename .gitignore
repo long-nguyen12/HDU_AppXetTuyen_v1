@@ -8,3 +8,5 @@ bin/
 Web.config
 
 Uploads/
+
+Properties/PublishProfiles/
