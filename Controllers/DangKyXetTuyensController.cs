@@ -199,7 +199,7 @@ namespace HDU_AppXetTuyen.Controllers
                 db.DangKyXetTuyens.Remove(dangKyXetTuyen);
                 foreach (var item in db.DangKyXetTuyens.Where(nv => nv.Dkxt_NguyenVong > nv_current && nv.ThiSinh_ID == idThisinh))
                 {
-                    DangKyXetTuyen dangKyXetTuyen_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong);
+                    DangKyXetTuyen dangKyXetTuyen_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong && i.ThiSinh_ID == idThisinh);
                     dangKyXetTuyen_change.Dkxt_NguyenVong = item.Dkxt_NguyenVong - 1;
                 }
                 db.SaveChanges();
