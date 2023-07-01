@@ -195,8 +195,9 @@ namespace HDU_AppXetTuyen.Controllers
                 System.Diagnostics.Debug.WriteLine(id);
                 DangKyXetTuyen dangKyXetTuyen = db.DangKyXetTuyens.Find(id);
                 int nv_current = (int) dangKyXetTuyen.Dkxt_NguyenVong;
+                int idThisinh = (int) dangKyXetTuyen.ThiSinh_ID;
                 db.DangKyXetTuyens.Remove(dangKyXetTuyen);
-                foreach (var item in db.DangKyXetTuyens.Where(nv => nv.Dkxt_NguyenVong > nv_current))
+                foreach (var item in db.DangKyXetTuyens.Where(nv => nv.Dkxt_NguyenVong > nv_current && nv.ThiSinh_ID == idThisinh))
                 {
                     DangKyXetTuyen dangKyXetTuyen_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong);
                     dangKyXetTuyen_change.Dkxt_NguyenVong = item.Dkxt_NguyenVong - 1;
@@ -277,8 +278,9 @@ namespace HDU_AppXetTuyen.Controllers
                 System.Diagnostics.Debug.WriteLine(id);
                 DangKyXetTuyen dangKyXetTuyen_current = db.DangKyXetTuyens.Find(id);
                 int nv_current = (int) dangKyXetTuyen_current.Dkxt_NguyenVong;
+                int idThisinh = (int)dangKyXetTuyen_current.ThiSinh_ID;
                 dangKyXetTuyen_current.Dkxt_NguyenVong = nv_current - 1;
-                DangKyXetTuyen dangKyXetTuyen_up = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current - 1);
+                DangKyXetTuyen dangKyXetTuyen_up = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current - 1 && i.ThiSinh_ID == idThisinh);
                 dangKyXetTuyen_up.Dkxt_NguyenVong = nv_current;
                 if (ModelState.IsValid)
                 {
@@ -309,8 +311,9 @@ namespace HDU_AppXetTuyen.Controllers
                 System.Diagnostics.Debug.WriteLine(id);
                 DangKyXetTuyen dangKyXetTuyen_current = db.DangKyXetTuyens.Find(id);
                 int nv_current = (int) dangKyXetTuyen_current.Dkxt_NguyenVong;
+                int idThisinh = (int)dangKyXetTuyen_current.ThiSinh_ID;
                 dangKyXetTuyen_current.Dkxt_NguyenVong = nv_current + 1;
-                DangKyXetTuyen dangKyXetTuyen_down = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current + 1);
+                DangKyXetTuyen dangKyXetTuyen_down = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current + 1 && i.ThiSinh_ID == idThisinh);
                 dangKyXetTuyen_down.Dkxt_NguyenVong = nv_current;
                 if (ModelState.IsValid)
                 {
