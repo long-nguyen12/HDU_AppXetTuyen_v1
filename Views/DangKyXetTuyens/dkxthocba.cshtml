@@ -512,6 +512,16 @@
         document.getElementById('div_list_nguyenvong').style.display = "none";
         document.getElementById('div_update_dk_nguyenvong').style.display = "inline";
         get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key);
+
+        //$('#txt_m1_k1').prop('disabled', true);
+        //$('#txt_m1_k2').prop('disabled', true);
+        //$('#txt_m1_k3').prop('disabled', true);
+        //$('#txt_m2_k1').prop('disabled', true);
+        //$('#txt_m2_k2').prop('disabled', true);
+        //$('#txt_m2_k3').prop('disabled', true);
+        //$('#txt_m3_k1').prop('disabled', true);
+        //$('#txt_m3_k2').prop('disabled', true);
+        //$('#txt_m3_k3').prop('disabled', true);
         key_dkxt_id_post = -1;
     }
    
@@ -588,9 +598,7 @@
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
-            success: function (res) {             
-              
-                
+            success: function (res) { 
                 let _ttmh_1 = new _thongtin_monhoc(res.thm_Mon1.TenMon1, res.thm_Mon1.HK1, res.thm_Mon1.HK2, res.thm_Mon1.HK3, res.thm_Mon1.DiemTrungBinh);
                 let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon2, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
                 let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
@@ -676,8 +684,8 @@
     function _bt_HuyBo_Dkxt_NVM_OnClick(khoinganh_key, nganh_key, tohopmon_key) {
         document.getElementById('div_list_nguyenvong').style.display = "inline";
         document.getElementById('div_update_dk_nguyenvong').style.display = "none";
-        get_data_forselect_khoinganh_all(khoinganh_key, nganh_key, tohopmon_key);
-        key_dkxt_id_post = -2;
+        get_data_forselect_khoinganh_all(0, 0, 0);
+        key_dkxt_id_post = -1;
     }
 
 

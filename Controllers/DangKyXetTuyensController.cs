@@ -428,7 +428,7 @@ namespace HDU_AppXetTuyen.Controllers
         #region Delete by @cường
         [HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
-        public JsonResult Delete(string idDkxt)
+        public JsonResult Delete2(string idDkxt)
         {
             DbConnecttion db = new DbConnecttion();
 
