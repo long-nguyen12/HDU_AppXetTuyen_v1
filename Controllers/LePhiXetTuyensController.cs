@@ -59,6 +59,10 @@ namespace HDU_AppXetTuyen.Controllers
                 var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
                 var lePhi = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).FirstOrDefault();
                 string minhchungs = "";
+                if(lePhi != null && lePhi.Lpxt_MinhChung != null)
+                {
+                    minhchungs = lePhi.Lpxt_MinhChung + "#";
+                }
                 if (Request.Files.Count > 0)
                 {
                     for (int i = 0; i < Request.Files.Count; i++)

@@ -75,7 +75,7 @@
                         if (minhchungs) {
                             let minhChungArray = minhchungs.split("#");
                             for (let i = 0; i < minhChungArray.length; i++) {
-                                minhChungLinks += `<a target="_blank" class="btn btn-info small" href="https://localhost:44308/${minhChungArray[i]}">Tệp ${i + 1}</a>`
+                                minhChungLinks += `<a target="_blank" class="btn btn-info small" style="margin-left: 2px;" href="https://localhost:44308/${minhChungArray[i]}">Tệp ${i + 1}</a>`
                             }
                         }
                         $('#TongLePhi').text(data.length * 30000)
