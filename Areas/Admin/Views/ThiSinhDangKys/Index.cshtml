@@ -30,7 +30,7 @@
 <div class="container-fluid px-4">
     <div class="card">
         <div class="card-body">
-            <table class="table">
+            <table class="table table-bordered table-responsive">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoLot)
@@ -55,7 +55,9 @@
                         Ngày đăng ký
                     </th>
 
-                    <th></th>
+                    <th style="text-align:center">
+                        Hành động
+                    </th>
                 </tr>
 
                 @foreach (var item in Model)
@@ -84,10 +86,13 @@
                             @Html.DisplayFor(modelItem => item.ThiSinh_NgayDangKy)
                         </td>
 
-                        <td>
-                            @Html.ActionLink("Sửa", "Edit", new { id = item.ThiSinh_ID }) |
-                            @Html.ActionLink("Chi tiết", "Details", new { id = item.ThiSinh_ID }) |
-                            @Html.ActionLink("Xoá", "Delete", new { id = item.ThiSinh_ID })
+                        <td style="text-align:center; width:180px"> 
+                            <a class="btn btn-outline-success btn-sm" href="@Url.Action("Details","ThiSinhDangKys" , new { id = item.ThiSinh_ID })">  Xem </a>&nbsp;
+                            <a class="btn btn-outline-primary btn-sm m-1" href="@Url.Action("Edit","ThiSinhDangKys", new { id = item.ThiSinh_ID } )">  Sửa </a>&nbsp;
+                            <a class="btn btn-outline-danger btn-sm" href="@Url.Action("Delete","ThiSinhDangKys" , new { id = item.ThiSinh_ID })">  Xoá </a>&nbsp;
+                            @*<a class="btn btn-datatable" href="@Url.Action("Edit","ThiSinhDangKys")"><i data-feather="edit" class="text-primary"> </i> </a>
+        <a class="btn btn-datatable" href="@Url.Action("Details","ThiSinhDangKys")"><i data-feather="eye" class="text-success"></i></a>
+        <a class="btn btn-datatable" href="@Url.Action("Delete","ThiSinhDangKys")"><i data-feather="trash-2" class="text-danger"></i></a>*@
                         </td>
                     </tr>
                 }
