@@ -34,6 +34,8 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
         public virtual DbSet<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
         public virtual DbSet<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
+        public virtual DbSet<LienCapTHC> LienCapTHCS { get; set; }
+        public virtual DbSet<LienCapTieuHoc> LienCapTieuHocs { get; set; }
         public virtual DbSet<ToHopMonNganh> ToHopMonNganhs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

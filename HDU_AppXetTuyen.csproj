@@ -213,6 +213,8 @@
     <Compile Include="Models\KhoiNganh.cs" />
     <Compile Include="Models\KhuVuc.cs" />
     <Compile Include="Models\LePhiXetTuyen.cs" />
+    <Compile Include="Models\LienCapTHC.cs" />
+    <Compile Include="Models\LienCapTieuHoc.cs" />
     <Compile Include="Models\NamHoc.cs" />
     <Compile Include="Models\Nganh.cs" />
     <Compile Include="Models\PhuongThucXetTuyen.cs" />
@@ -394,6 +396,7 @@
     <Content Include="SbAdminPro\step.html" />
     <Content Include="SbAdminPro\tables.html" />
     <Content Include="SbAdminPro\timeline.html" />
+    <Content Include="SbAdminPro\tmTestUploadFile.html" />
     <Content Include="SbAdminPro\toasts.html" />
     <Content Include="SbAdminPro\tooltips.html" />
     <Content Include="SbAdminPro\typography.html" />
