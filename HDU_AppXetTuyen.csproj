@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -201,6 +201,9 @@
     </Compile>
     <Compile Include="Models\AdminAccount.cs" />
     <Compile Include="Models\DangKyXetTuyen.cs" />
+    <Compile Include="Models\DangKyXetTuyenKhac.cs" />
+    <Compile Include="Models\DangKyXetTuyenKQTQG.cs" />
+    <Compile Include="Models\DangKyXetTuyenThang.cs" />
     <Compile Include="Models\DangKyXetTuyen_DiemTS.cs" />
     <Compile Include="Models\DbConnecttion.cs" />
     <Compile Include="Models\DoiTuong.cs" />
@@ -553,7 +556,6 @@
     <Content Include="Views\LePhiXetTuyens\Details.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\iddkxthocba.cshtml" />
     <Content Include="Views\KetQuaXetTuyens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
