@@ -36,6 +36,7 @@
                             );
                         }
                         $('#lephiForm')[0].reset();
+                        loadData();
                     },
                     error: function (xhr, status, error) {
                         // Handle the upload error
@@ -69,11 +70,13 @@
                         $("#selectFile").show();
                         $("#uploadFile").show();
                         let html = "";
-                        let minhchungs = lePhi.Lpxt_MinhChung;
-                        let minhChungArray = minhchungs.split("#");
+                        let minhchungs = lePhi.Lpxt_MinhChung ? lePhi.Lpxt_MinhChung : "";
                         let minhChungLinks = "";
-                        for (let i = 0; i < minhChungArray.length; i++) {
-                            minhChungLinks += `<a target="_blank" class="btn btn-info small" href="https://localhost:44308/${minhChungArray[i]}">Tệp ${i + 1}</a>`
+                        if (minhchungs) {
+                            let minhChungArray = minhchungs.split("#");
+                            for (let i = 0; i < minhChungArray.length; i++) {
+                                minhChungLinks += `<a target="_blank" class="btn btn-info small" href="https://localhost:44308/${minhChungArray[i]}">Tệp ${i + 1}</a>`
+                            }
                         }
                         $('#TongLePhi').text(data.length * 30000)
                         $.each(data, function (key, item) {

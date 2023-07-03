@@ -46,7 +46,7 @@ namespace HDU_AppXetTuyen.Controllers
             // Từ idDkxt lấy ra thông tin thí sinh
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
             // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
-            var listDkxt = db.DangKyXetTuyens.Where(x => x.ThiSinh_ID == idThiSinhInt).ToArray();
+            var listDkxt = db.DangKyXetTuyens.Where(x => x.ThiSinh_ID == idThiSinhInt).OrderBy(x => x.Dkxt_NguyenVong).ToArray();
 
             int idKhuVucTS = (int) thiSinhInfo.KhuVuc_ID;
             // Từ khu vực id lấy ra tên khu vực
