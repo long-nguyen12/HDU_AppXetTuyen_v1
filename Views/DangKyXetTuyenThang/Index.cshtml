@@ -107,8 +107,8 @@
                                 <tr>
                                     <td>Tổ hợp môn <font color="red">(*)</font></td>
                                     <td>
-                                        <input id="Thm_ID" type="text" class="form-control" value="HDP4" disabled />
-                                        <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
+                                        <input id="ToHopXet" type="text" class="form-control" value="HDP4" disabled />
+                                        <span id="ToHopXet_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
 
@@ -194,7 +194,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-xxl-12" style="text-align:center">
-                                <input class="btn btn-primary" type="button" value="Đồng ý" onclick="bt_DongY_Dkxt_NVM_OnClick()" />
+                                <input class="btn btn-primary" type="button" value="Đồng ý" onclick="SubmitData()" />
                                 <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="_bt_HuyBo_Dkxt_NVM_OnClick(0,0,0)" />
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="bt_HuyBo_Delete_onModal_Click()">Hủy</button>
-                    <button class="btn btn-primary" type="button" onclick="SubmitData()">Đồng ý</button>
+                    <button class="btn btn-primary" type="button" onclick="bt_HuyBo_Delete_onModal_Click()">Đồng ý</button>
                 </div>
             </div>
         </div>
@@ -437,6 +437,24 @@
                 alert(errormessage.responseText);
             }
         });
+    }
+
+    function SubmitData() {
+        let Nganh_ID = $('#Nganh_ID').val();
+        let ToHopXet = $('#ToHopXet').val();
+        let Dkxt_MonDatGiai = $('#Dkxt_MonDatGiai').find(":selected").text();
+        let Dkxt_LoaiGiai = $('#Dkxt_LoaiGiai').find(":selected").text();
+        let Dkxt_NamDatGiai = $('#Dkxt_NamDatGiai').val();
+
+        let formData = {
+            Nganh_ID: Nganh_ID,
+            ToHopXet: ToHopXet,
+            Dkxt_MonDatGiai: Dkxt_MonDatGiai,
+            Dkxt_LoaiGiai: Dkxt_LoaiGiai,
+            Dkxt_NamDatGiai
+        }
+
+        console.log(formData)
     }
 
     function bt_Delete_on_table_Click(_dkxt_id) {

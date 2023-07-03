@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ExportFileController.cs" />
     <Compile Include="Controllers\KetQuaXetTuyensController.cs" />
     <Compile Include="Controllers\LePhiXetTuyensController.cs" />
+    <Compile Include="Controllers\LienCapTHCSController.cs" />
     <Compile Include="Controllers\NCDangKyXetTuyensController.cs" />
     <Compile Include="Controllers\ThiSinhDangKiesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,7 +215,7 @@
     <Compile Include="Models\KhoiNganh.cs" />
     <Compile Include="Models\KhuVuc.cs" />
     <Compile Include="Models\LePhiXetTuyen.cs" />
-    <Compile Include="Models\LienCapTHC.cs" />
+    <Compile Include="Models\LienCapTHCS.cs" />
     <Compile Include="Models\LienCapTieuHoc.cs" />
     <Compile Include="Models\NamHoc.cs" />
     <Compile Include="Models\Nganh.cs" />
@@ -562,6 +563,12 @@
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
     <Content Include="Views\KetQuaXetTuyens\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutLienCap.cshtml" />
+    <Content Include="Views\LienCapTHCS\Create.cshtml" />
+    <Content Include="Views\LienCapTHCS\Delete.cshtml" />
+    <Content Include="Views\LienCapTHCS\Details.cshtml" />
+    <Content Include="Views\LienCapTHCS\Edit.cshtml" />
+    <Content Include="Views\LienCapTHCS\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

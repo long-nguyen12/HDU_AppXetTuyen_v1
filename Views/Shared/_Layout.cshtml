@@ -77,14 +77,37 @@
                             <div class="nav-link-icon"><i data-feather="activity"></i></div>
                             Thông tin thí sinh
                         </a>
-                        <a class="nav-link" href="@Url.Action("dkxthocba", "DangKyXetTuyens")">
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#menuPhuongThuc" aria-expanded="false" aria-controls="menuPhuongThuc">
                             <div class="nav-link-icon"><i data-feather="grid"></i></div>
                             Đăng ký xét tuyển
+                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+                        <div class="collapse" id="menuPhuongThuc" data-bs-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                                    Phương thức 1
+                                </a>
+                                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                                    Phương thức 2
+                                </a>
+                                <a class="nav-link" href="@Url.Action("dkxthocba", "DangKyXetTuyens")">
+                                    Phương thức 3
+                                </a>
+                                <a class="nav-link" href="@Url.Action("Index", "DangKyXetTuyenThang")">
+                                    Phương thức 4
+                                </a>
+                                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                                    Phương thức 5
+                                </a>
+                                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                                    Phương thức 6
+                                </a>
+                            </nav>
+                        </div>
                         @*<a class="nav-link" href="charts.html">
-                            <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
-                            Hồ sơ minh chứng
-                        </a>*@
+            <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
+            Hồ sơ minh chứng
+        </a>*@
                         <a class="nav-link" href="@Url.Action("Index", "KetQuaXetTuyens")">
                             <div class="nav-link-icon"><i data-feather="filter"></i></div>
                             Kết quả xét tuyển
@@ -93,10 +116,10 @@
                             <div class="nav-link-icon"><i data-feather="package"></i></div>
                             Thông tin đóng phí
                         </a>
-                       @* <a class="nav-link " href="#">
-                            <div class="nav-link-icon"><i data-feather="globe"></i></div>
-                            Hướng dẫn sử dụng
-                        </a>*@
+                        @* <a class="nav-link " href="#">
+            <div class="nav-link-icon"><i data-feather="globe"></i></div>
+            Hướng dẫn sử dụng
+        </a>*@
 
                     </div>
                 </div>

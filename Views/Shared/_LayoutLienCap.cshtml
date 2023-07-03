@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Đăng ký xét tuyển - HDU</title>
+    <link href="~/Content/styles.css" rel="stylesheet" />
+    <!-- bootstrap 5.3-->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/libs_font-awesome_6.1.1_js_all.min.js" data-search-pseudo-elements defer crossorigin="anonymous"></script>
+    <script src="~/Scripts/feather.min.js" crossorigin="anonymous"></script>
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+</head>
+<body class="nav-fixed">
+    <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
+        <!-- Sidenav Toggle Button-->
+
+        <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle" style="border-radius:50%!important;">
+            <i class="navbar-toggler-icon" data-feather="menu"></i>
+        </button>
+        <!-- Navbar Brand-->
+
+        <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="index.html">TRƯỜNG TH, THCS, THPT HỒNG ĐỨC</a>
+       
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sidenav shadow-right sidenav-light">
+                <div class="sidenav-menu">
+                    <div class="nav accordion" id="accordionSidenav">
+
+                        <!-- Sidenav Menu Heading (Core)-->
+                        <div class="sidenav-menu-heading">MENU</div>
+
+                        <!-- Sidenav Accordion (Dashboard)-->
+                        <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKies")">
+                            <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                            Trang chủ
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKies")">
+                            <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                            Đăng ký lớp 1
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKies")">
+                            <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                            Đăng ký lớp 6
+                        </a>
+                        @* <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#menuPhuongThuc" aria-expanded="false" aria-controls="menuPhuongThuc">
+            <div class="nav-link-icon"><i data-feather="grid"></i></div>
+            Đăng ký xét tuyển
+            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+        </a>
+        <div class="collapse" id="menuPhuongThuc" data-bs-parent="#accordionSidenav">
+            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                    Phương thức 1
+                </a>
+                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                    Phương thức 2
+                </a>
+                <a class="nav-link" href="@Url.Action("dkxthocba", "DangKyXetTuyens")">
+                    Phương thức 3
+                </a>
+                <a class="nav-link" href="@Url.Action("Index", "DangKyXetTuyenThang")">
+                    Phương thức 4
+                </a>
+                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                    Phương thức 5
+                </a>
+                <a class="nav-link" href="@Url.Action("Index", "Khoas")">
+                    Phương thức 6
+                </a>
+            </nav>
+        </div>
+        <a class="nav-link" href="@Url.Action("Index", "KetQuaXetTuyens")">
+            <div class="nav-link-icon"><i data-feather="filter"></i></div>
+            Kết quả xét tuyển
+        </a>
+        <a class="nav-link" href="@Url.Action("Index", "LePhiXetTuyens")">
+            <div class="nav-link-icon"><i data-feather="package"></i></div>
+            Thông tin đóng phí
+        </a>*@
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                @RenderBody()
+            </main>
+            <footer class="footer-admin mt-auto footer-light">
+                <div class="container-fluid px-12">
+                    <div class="row">
+                        <div class="col-md-6 small">Copyright &copy; 208-FICT-HDU  2023</div>
+                      @*  <div class="col-md-6 text-md-end small">
+                            <a href="#!" style="color:blue!important; text-decoration:none">Thông tin về trường ĐH Hồng Đức </a> <a href="#!" style="color:blue!important; text-decoration:none">và các ngành</a>
+                        </div>*@
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/Scripts/bundle.min.js"></script>
+    <!-- bootstrap@5.1.3 -->
+    <script src="~/Scripts/scripts.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
