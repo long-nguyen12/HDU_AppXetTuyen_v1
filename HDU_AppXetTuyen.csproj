@@ -194,6 +194,7 @@
     <Compile Include="Controllers\ExportFileController.cs" />
     <Compile Include="Controllers\KetQuaXetTuyensController.cs" />
     <Compile Include="Controllers\LePhiXetTuyensController.cs" />
+    <Compile Include="Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Controllers\NCDangKyXetTuyensController.cs" />
     <Compile Include="Controllers\ThiSinhDangKiesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -560,6 +561,12 @@
     <Content Include="Views\LePhiXetTuyens\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
     <Content Include="Views\KetQuaXetTuyens\Index.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\Create.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\Delete.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\Details.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_empty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

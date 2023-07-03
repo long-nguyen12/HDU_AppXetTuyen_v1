@@ -1,0 +1,160 @@
+﻿@model IEnumerable<HDU_AppXetTuyen.Models.LienCapTieuHoc>
+
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Gửi đăng ký", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_DinhDanh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_HoTen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_GioiTinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_NgaySinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_NoiSinh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_NoiCuTru)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_TruongMN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_UuTien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_ThongTinCha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_NgheNghiepCha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_DienThoaiCha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_ThongTinMe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_NgheNghiepMe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_DienThoaiMe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_MinhChungMN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_MinhChungGiayKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_MinhChungMaDinhDanh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_GiayUuTien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_XacNhanLePhi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_TrangThai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocSinh_GhiChu)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_DinhDanh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_HoTen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_GioiTinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_NgaySinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_NoiSinh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_NoiCuTru)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_TruongMN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_UuTien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_ThongTinCha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_NgheNghiepCha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_DienThoaiCha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_ThongTinMe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_NgheNghiepMe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_DienThoaiMe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_MinhChungMN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_MinhChungGiayKS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_MinhChungMaDinhDanh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_GiayUuTien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_XacNhanLePhi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_TrangThai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocSinh_GhiChu)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.HocSinh_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.HocSinh_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.HocSinh_ID })
+        </td>
+    </tr>
+}
+
+</table>
