@@ -202,6 +202,9 @@
     </Compile>
     <Compile Include="Models\AdminAccount.cs" />
     <Compile Include="Models\DangKyXetTuyen.cs" />
+    <Compile Include="Models\DangKyXetTuyenKhac.cs" />
+    <Compile Include="Models\DangKyXetTuyenKQTQG.cs" />
+    <Compile Include="Models\DangKyXetTuyenThang.cs" />
     <Compile Include="Models\DangKyXetTuyen_DiemTS.cs" />
     <Compile Include="Models\DbConnecttion.cs" />
     <Compile Include="Models\DoiTuong.cs" />
@@ -554,7 +557,6 @@
     <Content Include="Views\LePhiXetTuyens\Details.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\iddkxthocba.cshtml" />
     <Content Include="Views\KetQuaXetTuyens\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
   </ItemGroup>

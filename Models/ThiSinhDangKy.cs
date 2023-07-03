@@ -14,6 +14,10 @@
         {
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             LePhiXetTuyens = new HashSet<LePhiXetTuyen>();
+
+            DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
+            DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
+            DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
         }
 
         [Key]
@@ -124,5 +128,14 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LePhiXetTuyen> LePhiXetTuyens { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
     }
 }
