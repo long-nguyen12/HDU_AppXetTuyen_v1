@@ -7,7 +7,7 @@ namespace HDU_AppXetTuyen.Models
     using System.Data.Entity.Spatial;
 
     [Table("LienCapTHCS")]
-    public partial class LienCapTHC
+    public partial class LienCapTHCS
     {
         [Key]
         public long HocSinh_ID { get; set; }
