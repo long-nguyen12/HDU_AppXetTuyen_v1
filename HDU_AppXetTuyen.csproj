@@ -569,11 +569,17 @@
     <Content Include="Views\LienCapTHCS\Details.cshtml" />
     <Content Include="Views\LienCapTHCS\Edit.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Uploads\LienCap\DinhDanh\" />
+    <Folder Include="Uploads\LienCap\GiayKhaiSinh\" />
+    <Folder Include="Uploads\LienCap\GiayUuTien\" />
+    <Folder Include="Uploads\LienCap\HocBa\" />
+    <Folder Include="Uploads\LienCap\LePhi\" />
     <Folder Include="Uploads\UploadMinhChungs\" />
     <Folder Include="Views\ExportFile\" />
   </ItemGroup>

@@ -65,7 +65,11 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(4000)]
         public string HocSinh_GiayUuTien { get; set; }
 
-        public int? HocSinh_XacNhanLePhi { get; set; }
+        [StringLength(4000)]
+        public string HocSinh_XacNhanLePhi { get; set; }
+
+        [StringLength(4000)]
+        public string HocSinh_Activation { get; set; }
 
         public int? HocSinh_TrangThai { get; set; }
 
