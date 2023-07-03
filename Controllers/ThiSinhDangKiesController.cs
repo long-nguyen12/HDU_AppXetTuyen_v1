@@ -51,8 +51,13 @@ namespace HDU_AppXetTuyen.Controllers
         public ActionResult Index()
         {
             var session = Session["login_session"].ToString();
-            var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
-            return View(thiSinh);
+            if(session != null)
+            {
+                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+                return View(thiSinh);
+            }
+            ThiSinhDangKy ts = new ThiSinhDangKy();
+            return View(ts);
         }
 
         // GET: ThiSinhDangKies/Details/5
@@ -191,7 +196,6 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_HoKhauThuongTru_Check = n.ThiSinh_HoKhauThuongTru_Check,
                 ThiSinh_HocLucLop12 = n.ThiSinh_HocLucLop12,
                 ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12
-
             }).FirstOrDefault();
             var tinhs = db.Tinhs.Select(n => new
             {
