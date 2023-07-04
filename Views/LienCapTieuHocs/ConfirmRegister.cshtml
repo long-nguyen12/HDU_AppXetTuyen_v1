@@ -9,8 +9,6 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Xác nhận thông tin</title>
-    <link href="~/Content/styles.css" rel="stylesheet" />
-    <!-- bootstrap 5.3-->
     <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
@@ -29,24 +27,28 @@
             var token = urlParams.get('token');
 
             $.ajax({
-                url: `/LienCapTieuHocs/ConfirmInfomation/`,
+                url: `/LienCapTieuHocs/ConfirmRegister/`,
                 type: "POST",
                 contentType: "application/json;charset=utf-8",
                 dataType: "JSON",
                 data: JSON.stringify({ token: token }),
                 success: function (response) {
                     if (response.success) {
-                        $('#resultMessageDone').text("Bạn đã xác nhận thông tin thành công !");
+                        $('#resultMessage1').text("Đăng ký xét tuyển vào lớp 1")
+                        $('#resultMessage2').text("Xin vui lòng xác thực lại thông tin đăng ký đã gửi đến email")
                         $('#resultButton').prop('disabled', false);
                     } else {
-                        $('#resultMessageFail').text("Bạn đã xác nhận thông tin không thành công!");
+                        $('#resultMessage3').text("Trang không tồn tại! Vui lòng quay lại trang chủ");
                     }
                 },
                 error: function (xhr, status, error) {
-                    $('#resultMessageFail').text("Bạn đã xác nhận thông tin không thành công");
+                    $('#resultMessage').text("Có lỗi xảy ra");
                 }
             })
         })
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
     </script>
 </head>
 <body>
@@ -55,14 +57,16 @@
             <main>
                 <div class="container-xl px-4">
                     <div class="row justify-content-center">
-                        <div class="col-lg-5">
+                        <div class="col-lg-6">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header justify-content-center">
                                     <img src="~/Content/images/liencaphdu.png" style="width: 100%;" />
                                 </div>
                                 <div class="card-body text-center">
-                                    <h4 class="text-success" id="resultMessageDone"></h4>
-                                    <h4 class="text-danger" id="resultMessageFail"></h4>
+                                    <h4 id="resultMessage1"></h4>
+                                    <br />
+                                    <h5 class="text-info fst-italic" id="resultMessage2"></h5>
+                                    <h5 class="text-danger" id="resultMessage3"></h5>
                                 </div>
                             </div>
                         </div>
