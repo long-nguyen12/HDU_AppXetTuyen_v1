@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -188,6 +188,7 @@
     <Compile Include="Areas\Admin\Controllers\TinhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ToHopMonsController.cs" />
     <Compile Include="Areas\Admin\Controllers\XasController.cs" />
+    <Compile Include="Controllers\DangKyXetTuyenKhacController.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\DangKyXetTuyenThangController.cs" />
     <Compile Include="Controllers\ExportFileController.cs" />
@@ -582,11 +583,14 @@
     <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayUuTien\" />
     <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
@@ -597,7 +601,6 @@
     <Folder Include="Uploads\LienCap\GiayUuTien\" />
     <Folder Include="Uploads\LienCap\HocBa\" />
     <Folder Include="Uploads\LienCap\LePhi\" />
-    <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\UploadMinhChungs\" />
     <Folder Include="Views\ExportFile\" />
   </ItemGroup>
