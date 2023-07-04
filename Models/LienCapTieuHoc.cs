@@ -38,6 +38,9 @@
 
         [Required(ErrorMessage = "Email bắt buộc nhập")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail sai định dạng")]
+        [EmailAddress(ErrorMessage = "E-mail sai định dạng")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail sai định dạng")]
+
         [Display(Name = "Email")]
         [StringLength(100)]
         public string HocSinh_Email { get; set; }
@@ -64,6 +67,8 @@
 
         public string HocSinh_NgheNghiepCha { get; set; }
 
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
+                   ErrorMessage = "Số điện thoại sai đinh dạng")]
         [Display(Name = "Điện thoại cha")]
         [Required(ErrorMessage = "Điện thoại cha bắt buộc nhập")]
 
@@ -79,6 +84,8 @@
         [StringLength(4000)]
         public string HocSinh_NgheNghiepMe { get; set; }
 
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
+           ErrorMessage = "Số điện thoại sai đinh dạng.")]
         [Required(ErrorMessage = "Điện thoại mẹ bắt buộc nhập")]
         [Display(Name = "Điện thoại mẹ")]
         [StringLength(20)]
