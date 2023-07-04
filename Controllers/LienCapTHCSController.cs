@@ -51,6 +51,12 @@ namespace HDU_AppXetTuyen.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: LienCapTHCS/Create
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Create()
         {
             return View();
