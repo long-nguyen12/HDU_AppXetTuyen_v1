@@ -582,6 +582,7 @@
     <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\ConfirmRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
