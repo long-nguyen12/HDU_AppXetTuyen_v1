@@ -5,18 +5,18 @@
     Layout = "~/Views/Shared/_LayoutLienCap.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create","LienCapTieuHocs", FormMethod.Post, new { id = "dangkyForm", enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
 
-    <div class="container-fluid px-12">
+                <div class="container-fluid px-12">
         <div id="fadeInUp">
             <div class="card card-header-actions mt-3 mb-1 ">
-                <div class="card-header"> <h5>Đăng ký xét tuyển vào lớp 1</h5> <a onclick="#" class="btn btn-primary">Đăng ký</a></div>
+                <div class="card-header"> <h5>Đăng ký xét tuyển vào lớp 1</h5> <input type="button" onclick="createData()" value="Đăng ký" class="btn btn-primary" /></div>
                 <div class="card-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-3">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_DinhDanh">Mã định danh cá nhân <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-3">
                             <div class="form-group">
                                 <label class="control-label" for="HocSinh_HoTen">Họ và tên <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -34,16 +34,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-3">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.DropDownListFor(m => m.HocSinh_GioiTinh, new List<SelectListItem>
-                                                    {
-                                                        new SelectListItem { Text = "Nam", Value = "0" },
-                                                        new SelectListItem { Text = "Nữ", Value = "1" },
-                                                    }, "Chọn giới tính", htmlAttributes: new { @class = "form-select" })
+                                    <div class="col-md-12 col-md-3">
+                                        <input type="radio" id="radioNam" name="HocSinh_GioiTinh" checked value="0">
+                                        <label for="HocSinh_GioiTinh">Nam</label>
+                                        <input type="radio" id="radioNữ" name="HocSinh_GioiTinh" value="1">
+                                        <label for="HocSinh_GioiTinh">Nữ</label>
+                                    </div>
                                     @Html.ValidationMessageFor(model => model.HocSinh_GioiTinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ngày sinh" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_NgaySinh, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -51,16 +61,7 @@
 
 
                     <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label class="control-label col-md-12" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a></label>
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", @id = "datepicker", @placeholder = "Ngày sinh" } })
-                                    @Html.ValidationMessageFor(model => model.HocSinh_NgaySinh, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_NoiSinh">Nơi sinh <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -69,20 +70,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label class="control-label col-md-12" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a></label>
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_Email, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.HocSinh_Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_NoiCuTru">Nơi cư trú <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -91,11 +79,38 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+
+                    </div>
+
+                    <div class="row">
+                        <div class=" col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_UuTien">Thuộc diện ưu tiên </label>
+                                <div class="col-md-12">
+                                    @*@Html.DropDownListFor(m => m.HocSinh_UuTien, new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Text = "Không", Value = "0" },
+                                            new SelectListItem { Text = "Con của cán bộ viên chức đang công tác tại Trường Đại học Hồng Đức", Value = "1" },
+                                            new SelectListItem { Text = "Học sinh Trường Mầm Non Thực Hành, Trường Đại học Hồng Đức", Value = "1" },
+                                        }, "Chọn diện ưu tiên", htmlAttributes: new { @class = "form-select" })*@
+                                    @Html.EditorFor(model => model.HocSinh_UuTien, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_UuTien, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_TruongMN">
-                                    Đã hoàn thành chương trình mẫu giáo tại trường
-                                    <a style="color:red; text-decoration:none">(*)</a>
+                                    Đã hoàn thành chương trình mẫu giáo tại:
                                 </label>
                                 <div class="col-md-12">
                                     @Html.EditorFor(model => model.HocSinh_TruongMN, new { htmlAttributes = new { @class = "form-control" } })
@@ -103,35 +118,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label class="control-label col-md-12" for="HocSinh_UuTien">Thuộc diện ưu tiên <a style="color:red; text-decoration:none">(*)</a></label>
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_UuTien, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.HocSinh_UuTien, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-
-                            </div>
-                        </div>
                     </div>
 
 
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_ThongTinCha">Họ tên cha <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -140,16 +131,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-group">
-                                <label class="control-label col-md-12" for="HocSinh_NgheNghiepCha">Nghề nghiệp cha <a style="color:red; text-decoration:none">(*)</a></label>
+                                <label class="control-label col-md-12" for="HocSinh_NgheNghiepCha">Nghề nghiệp cha </label>
                                 <div class="col-md-12">
                                     @Html.EditorFor(model => model.HocSinh_NgheNghiepCha, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepCha, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_DienThoaiCha">Điện thoại cha <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -162,7 +153,7 @@
 
 
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_ThongTinMe">Họ tên mẹ <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -172,16 +163,16 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-group">
-                                <label class="control-label col-md-12" for="HocSinh_NgheNghiepMe">Nghề nghiệp mẹ <a style="color:red; text-decoration:none">(*)</a></label>
+                                <label class="control-label col-md-12" for="HocSinh_NgheNghiepMe">Nghề nghiệp mẹ </label>
                                 <div class="col-md-12">
                                     @Html.EditorFor(model => model.HocSinh_NgheNghiepMe, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepMe, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_DienThoaiMe">Điện thoại mẹ <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
@@ -193,141 +184,320 @@
                     </div>
                     <br />
                     <div class="row">
-                        <h5 class="text-primary"> Tải lên hình ảnh/file hồ sơ minh chứng</h5>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Chứng nhận hoàn thành GDMN </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungMN" name="HocSinh_MinhChungMN" placeholder="Chọn giấy chứng nhận" value="Chọn giấy chứng nhận" multiple="multiple" type="file" data-val="false" data-val-required="Vui lòng chọn file hoàn thành GDMN"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungMN">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Giấy khai sinh </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungGiayKS" name="HocSinh_MinhChungGiayKS" multiple="multiple"  type="file" data-val="false" data-val-required="Vui lòng chọn file giấy khai sinh"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungGiayKS">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Định danh cá nhân </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungMaDinhDanh" multiple="multiple" name="HocSinh_MinhChungMaDinhDanh" type="file" data-val="false" data-val-required="Vui lòng chọn file định danh cá nhân"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungMaDinhDanh">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Giấy chứng nhận ưu tiên </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_GiayUuTien" multiple="multiple" name="HocSinh_GiayUuTien" type="file" data-val="false" data-val-required="Vui lòng chọn file chứng nhận ưu tiên"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_GiayUuTien">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Xác nhận đóng lệ phí </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungLePhi" multiple="multiple" name="HocSinh_MinhChungLePhi" type="file" data-val="false" data-val-required="Vui lòng chọn file xác nhận đóng lệ phí"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungLePhi">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <hr />
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="formFileMultiple" class="form-label">Giấy chứng nhận hoàn thành chương trình GDMN<a style="color:red; text-decoration:none">(*)</a> </label>
-                                <div class="col-md-12">
-                                    <input class="form-control" id="HocSinh_MinhChungGiayKS" placeholder="Chọn giấy chứng nhận" value="Chọn giấy chứng nhận" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                           accept="application/pdf,.png, .jpeg, .jpg" />
-                                    <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                </div>
-                                @*<label class="control-label col-md-12" for="HocSinh_MinhChungMN">
-                    Giấy chứng nhận hoàn thành chương trình giáo dục mầm non
-                    <a style="color:red; text-decoration:none">(*)</a>
-                </label>
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.HocSinh_MinhChungMN, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.HocSinh_MinhChungMN, "", new { @class = "text-danger" })
-                </div>*@
-                            </div>
+                    <br />
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Đăng ký" class="btn btn-primary" />
                         </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="formFileMultiple" class="form-label">Giấy khai sinh <a style="color:red; text-decoration:none">(*)</a> </label>
-                                <div class="col-md-12">
-                                    <input class="form-control" id="HocSinh_MinhChungGiayKS" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                           accept="application/pdf,.png, .jpeg, .jpg" />
-                                    <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                </div>
-                                @*<label class="control-label col-md-12" for="HocSinh_MinhChungGiayKS">Giấy khai sinh <a style="color:red; text-decoration:none">(*)</a></label>
-                <div class="col-md-12">
-
-                    @Html.EditorFor(model => model.HocSinh_MinhChungGiayKS, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.HocSinh_MinhChungGiayKS, "", new { @class = "text-danger" })
-                </div>*@
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="formFileMultiple" class="form-label">Định danh cá nhân <a style="color:red; text-decoration:none">(*)</a> </label>
-                                <div class="col-md-12">
-                                    <input class="form-control" id="HocSinh_MinhChungMaDinhDanh" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                           accept="application/pdf,.png, .jpeg, .jpg" />
-                                    <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                </div>
-                                @*<label class="control-label col-md-12" for="HocSinh_MinhChungGiayKS">Mã định danh cá nhân <a style="color:red; text-decoration:none">(*)</a></label>
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.HocSinh_MinhChungMaDinhDanh, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.HocSinh_MinhChungMaDinhDanh, "", new { @class = "text-danger" })
-                </div>*@
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="formFileMultiple" class="form-label">Giấy chứng nhận ưu tiên (Nếu có) </label>
-                                <div class="col-md-12">
-                                    <input class="form-control" id="HocSinh_MinhChungGiayKS" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                           accept="application/pdf,.png, .jpeg, .jpg" />
-                                    <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                </div>
-                                @*<label class="control-label col-md-12" for="HocSinh_MinhChungGiayKS">Giấy chứng nhận ưu tiên </label>
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.HocSinh_GiayUuTien, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.HocSinh_GiayUuTien, "", new { @class = "text-danger" })
-                </div>*@
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="formFileMultiple" class="form-label">Xác nhận đóng lệ phí <a style="color:red; text-decoration:none">(*)</a> </label>
-                                <div class="col-md-12">
-                                    <input class="form-control" id="HocSinh_MinhChungGiayKS" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                           accept="application/pdf,.png, .jpeg, .jpg" />
-                                    <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                </div>
-                                @*<label class="control-label col-md-12" for="HocSinh_MinhChungGiayKS">Giấy chứng nhận ưu tiên </label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.HocSinh_GiayUuTien, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HocSinh_GiayUuTien, "", new { @class = "text-danger" })
-            </div>*@
-                            </div>
-                        </div>
-                        </div>
-
-
-
-                        @*<div class="form-group">
-            @Html.LabelFor(model => model.HocSinh_XacNhanLePhi, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HocSinh_XacNhanLePhi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HocSinh_XacNhanLePhi, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HocSinh_TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HocSinh_TrangThai, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HocSinh_TrangThai, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HocSinh_GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HocSinh_GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.HocSinh_GhiChu, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-                        <br />
-
-                        @*<div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Gửi đăng ký" class="btn btn-primary" />
-                            </div>
-                        </div>*@
                     </div>
-
                 </div>
+
             </div>
         </div>
+    </div>
 
+}
+
+<script>
+    //$(document).ready(function () {
+    //    $('#datepicker').datepicker({
+    //        format: 'dd/mm/yyyy', // Specify the desired date format
+    //        autoclose: true // Close the datepicker when a date is selected
+    //    });
+    //});
+
+    var formdataHocSinh_MinhChungMN = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungMaDinhDanh = new FormData(); //FormData object
+    var formdataHocSinh_GiayUuTien = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungMN = new FormData(); //FormData object
+
+
+    // custom data submit dangkyForm
+    function createData() {
+        var files = formdataHocSinh_MinhChungMN.getAll("file");
+        console.log(files, 'files');
+        var HocSinh_MinhChungMN = document.getElementById("HocSinh_MinhChungMN");
+        // Clear any existing files from the file input
+        HocSinh_MinhChungMN.value = null;
+
+        for (var i = 0; i < files.length; i++) {
+            HocSinh_MinhChungMN.files[i] = files[i];
         }
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-        <script>
-            $(document).ready(function () {
-                $('#datepicker').datepicker({
-                    format: 'dd/mm/yyyy', // Specify the desired date format
-                    autoclose: true // Close the datepicker when a date is selected
-                });
+
+        $("#dangkyForm").submit();
+    }
+
+
+
+    $(document).ready(function () {
+        $("#HocSinh_MinhChungMN").on("change", function () {
+            var fileInput = document.getElementById('HocSinh_MinhChungMN');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td>" + sfilename + " </td> <td> <button onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")' > Xoá </button> </td> </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungMN tbody").append(markup)
+
+            }
+            console.log(formdataHocSinh_MinhChungMN,'formdataHocSinh_MinhChungMN')
+            chkatchtbl();
+            $('#HocSinh_MinhChungMN').val('');
+        });
+
+        $("#HocSinh_MinhChungGiayKS").on("change", function () {
+            var fileInput = document.getElementById('HocSinh_MinhChungGiayKS');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungGiayKS.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td>" + sfilename + " </td> <td> <button onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")' > Xoá </button> </td> </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungGiayKS tbody").append(markup)
+
+            }
+            chkatchtbl();
+            $('#HocSinh_MinhChungGiayKS').val('');
+        });
+
+        $("#HocSinh_MinhChungMaDinhDanh").on("change", function () {
+            var fileInput = document.getElementById('HocSinh_MinhChungMaDinhDanh');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungMaDinhDanh.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td>" + sfilename + " </td> <td> <button onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")' > Xoá </button> </td> </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungMaDinhDanh tbody").append(markup)
+
+            }
+            chkatchtbl();
+            $('#FilesList_HocSinh_MinhChungMaDinhDanh').val('');
+        });
+
+        $("#HocSinh_GiayUuTien").on("change", function () {
+            var fileInput = document.getElementById('HocSinh_GiayUuTien');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_GiayUuTien.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td>" + sfilename + " </td> <td> <button onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")' > Xoá </button> </td> </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_GiayUuTien tbody").append(markup)
+
+            }
+            chkatchtbl();
+            $('#HocSinh_GiayUuTien').val('');
+        });
+
+        $("#HocSinh_MinhChungLePhi").on("change", function () {
+            var fileInput = document.getElementById('HocSinh_MinhChungLePhi');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td>" + sfilename + " </td> <td> <button class='btn btn-danger' onclick='DeleteFile(\"" + srandomid + "\",\"" + sfilename +
+                    "\")' > Xoá </button> </td> </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungLePhi tbody").append(markup)
+
+            }
+            chkatchtbl();
+            $('#HocSinh_XacNhanLePhi').val('');
+        });
+        $("#btnupload").click(function () {
+            formdata.append('uploadername', $('#txtuploader').val());
+            $.ajax({
+                url: '/Home/UploadFiles',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: formdata,
+                async: false,
+                success: function (result) {
+                    if (result != "") {
+                        alert(result);
+                    }
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
             });
-        </script>
+        });
+    });
+    function DeleteFile(Fileid, FileName) {
+        formdataHocSinh_MinhChungMN.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl();
+    }
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
+
+    function chkatchtbl() {
+        if ($('#FilesList_HocSinh_MinhChungMN tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungMN").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungMN").css("visibility", "hidden");
         }
+        if ($('#FilesList_HocSinh_MinhChungGiayKS tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungMaDinhDanh tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_GiayUuTien tr').length > 1) {
+            $("#FilesList_HocSinh_GiayUuTien").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_GiayUuTien").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungLePhi tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "hidden");
+        }
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
