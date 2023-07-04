@@ -1,6 +1,8 @@
 ﻿using HDU_AppXetTuyen.Models;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -60,6 +62,41 @@ namespace HDU_AppXetTuyen.Controllers
                 thisinh = ts,
                 data = "",
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UploadFiles()
+        {
+            var session = Session["login_session"];
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
+            var formName = Request.Form["formName"];
+            var recordId = Request.Form["recordId"];
+            string savePath = "Uploads/UploadMinhChungs/";
+            string fileNameStored = "";
+            if (Request.Files.Count > 0)
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    var fileName = Path.GetFileName(file.FileName);
+                    fileName = ts.ThiSinh_CCCD + "_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "_" + fileName;
+                    var filePath = Path.Combine(Server.MapPath("~/" + savePath), fileName);
+                    var savedPath = savePath + fileName;
+                    if (i != Request.Files.Count - 1)
+                    {
+                        fileNameStored = fileNameStored + savedPath + "#";
+                    }
+                    else
+                    {
+                        fileNameStored += savedPath;
+                    }
+                    file.SaveAs(filePath);
+                }
+
+                return Json(new { success = true, message = fileNameStored });
+            }
+
+            return Json(new { success = false, message = "No files were uploaded." });
         }
     }
 }

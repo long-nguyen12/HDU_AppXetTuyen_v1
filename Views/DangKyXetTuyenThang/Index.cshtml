@@ -83,7 +83,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-xxl-6">
+                    <div class="col-xxl-4">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -131,7 +131,7 @@
 
                         </table>
                     </div>
-                    <div class="col-xxl-6">
+                    <div class="col-xxl-8">
                         <div class="row md-0">
                             <div class="col-xxl-12">
                                 <table class="table table-hover">
@@ -160,34 +160,64 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-xxl-4">
+                            <div class="col-xxl-6">
                                 <div class="form-group mb-2">
-                                    <label for="formFileMultiple" class="form-label">Chọn tệp học bạ <font color="red">(*)</font> </label>
+                                    <label for="formFileMultiple" class="form-label">Học bạ </label>
                                     <div class="col-md-12">
                                         <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
                                                accept="application/pdf,.png, .jpeg, .jpg" />
                                         <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
+                                            <tr style="display:none">
+                                                <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-4">
+                            <div class="col-xxl-6">
                                 <div class="form-group mb-2">
                                     <label for="formFileMultiple" class="form-label">Căn cước công dân</label>
                                     <div class="col-md-12">
-                                        <input class="form-control" id="files_cancuoc_cd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
+                                        <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
                                                accept="application/pdf,.png, .jpeg, .jpg" />
                                         <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        <table class="table" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
+                                            <tr style="display:none">
+                                                <th colspan="3"><input type="hidden" id="CCCD_Files" /></th>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="col-xxl-4">
+                            <div class="col-xxl-6">
                                 <div class="form-group mb-2">
                                     <label for="formFileMultiple" class="form-label">Bằng Tốt nghiệp</label>
                                     <div class="col-md-12">
                                         <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
                                                accept="application/pdf,.png, .jpeg, .jpg" />
                                         <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        <table class="table" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
+                                            <tr style="display:none">
+                                                <th colspan="3"><input type="hidden" id="BangTN_Files" /></th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6">
+                                <div class="form-group mb-2">
+                                    <label for="formFileMultiple" class="form-label">Chứng nhận</label>
+                                    <div class="col-md-12">
+                                        <input class="form-control" id="files_chungnhan" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
+                                               accept="application/pdf,.png, .jpeg, .jpg" />
+                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        <table class="table" id="FilesList_ChungNhan_View" style="visibility:hidden; width: 100%">
+                                            <tr style="display:none">
+                                                <th colspan="3"><input type="hidden" id="ChungNhan_Files" /></th>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -236,8 +266,16 @@
 </div>
 
 <script>
-
-    let key_dkxt_id_post = -1;
+    var HocBaFormData = new FormData();
+    var CCCDFormData = new FormData();
+    var BangTNFormData = new FormData();
+    var ChungNhanFormData = new FormData();
+    let fileData = [
+        { data: HocBaFormData, name: "HOCBA", savePath: "" },
+        { data: CCCDFormData, name: "CCCD", savePath: "" },
+        { data: BangTNFormData, name: "BANGTN", savePath: "" },
+        { data: ChungNhanFormData, name: "CHUNGNHAN", savePath: "" },
+    ];
 
     $(document).ready(function () {
         InitData(null, null);
@@ -251,7 +289,6 @@
 
         $("#Nganh_ID").change(function () {
         });
-        // lấy danh sách 3 môn cần nhập điểm
 
         $('input').on('input', function () {
             hideErrorMessage($(this));
@@ -260,38 +297,127 @@
         $('select').on('input', function () {
             hideErrorMessage($(this));
         })
+
+        $("#files_hocba").on("change", function () {
+            var files_hocba = document.getElementById('files_hocba');
+            let j = 0;
+            for (i = 0; i < files_hocba.files.length; i++) {
+                j++;
+                var uploadFileName = files_hocba.files[i].name;
+                let uploadFileId = Math.random().toString(36).substring(7);
+                HocBaFormData.append(uploadFileName, files_hocba.files[i]);
+                var markup = `<tr id='${uploadFileId}'><td  style='color:blue'>Tệp ${j}: </td><td>${uploadFileName}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("HOCBA", "#FilesList_HocBa_View", "${uploadFileId}", "${uploadFileName}")'>Xóa</a></td></tr>`;
+                $("#FilesList_HocBa_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_HocBa_View");
+            $('#files_hocba').val('');
+        });
+        $("#files_cccd").on("change", function () {
+            var files_cccd = document.getElementById('files_cccd');
+            let j = 0;
+            for (i = 0; i < files_cccd.files.length; i++) {
+                j++;
+                var uploadFileName = files_cccd.files[i].name;
+                let uploadFileId = Math.random().toString(36).substring(7);
+                CCCDFormData.append(uploadFileName, files_cccd.files[i]);
+                var markup = `<tr id='${uploadFileId}'><td  style='color:blue'>Tệp ${j}: </td><td>${uploadFileName}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("CCCD", "#FilesList_CCCD_View", "${uploadFileId}", "${uploadFileName}")'>Xóa</a></td></tr>`;
+                $("#FilesList_CCCD_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_CCCD_View");
+            $('#files_cccd').val('');
+        });
+        $("#files_bangtn").on("change", function () {
+            var files_bangtn = document.getElementById('files_bangtn');
+            let j = 0;
+            for (i = 0; i < files_bangtn.files.length; i++) {
+                j++;
+                var uploadFileName = files_bangtn.files[i].name;
+                let uploadFileId = Math.random().toString(36).substring(7);
+                BangTNFormData.append(uploadFileName, files_bangtn.files[i]);
+                var markup = `<tr id='${uploadFileId}'><td  style='color:blue'>Tệp ${j}: </td><td>${uploadFileName}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("BANGTN", "#FilesList_BangTN_View", "${uploadFileId}", "${uploadFileName}")'>Xóa</a></td></tr>`;
+                $("#FilesList_BangTN_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_BangTN_View");
+            $('#files_bangtn').val('');
+        });
+        $("#files_chungnhan").on("change", function () {
+            var files_chungnhan = document.getElementById('files_chungnhan');
+            let j = 0;
+            for (i = 0; i < files_chungnhan.files.length; i++) {
+                j++;
+                var uploadFileName = files_chungnhan.files[i].name;
+                let uploadFileId = Math.random().toString(36).substring(7);
+                ChungNhanFormData.append(uploadFileName, files_chungnhan.files[i]);
+                var markup = `<tr id='${uploadFileId}'><td  style='color:blue'>Tệp ${j}: </td><td>${uploadFileName}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("CHUNGNHAN", "#FilesList_ChungNhan_View", "${uploadFileId}", "${uploadFileName}")'>Xóa</a></td></tr>`;
+                $("#FilesList_ChungNhan_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_ChungNhan_View");
+            $('#files_chungnhan').val('');
+        });
     });
+    function DeleteUploadedFile(FormDataName, ListId, Fileid, FileName) {
+        let formData = null;
+        if (FormDataName == "HOCBA") formData = HocBaFormData;
+        if (FormDataName == "CCCD") formData = GiayKSFormData;
+        if (FormDataName == "BANGTN") formData = BangTNFormData;
+        if (FormDataName == "CHUNGNHAN") formData = ChungNhanFormData;
+        formData.delete(FileName)
+        $("#" + Fileid).remove();
+        CheckAttachTable(ListId);
+    }
+    function CheckAttachTable(list) {
+        if ($(`${list} tr`).length > 1) {
+            $(list).css("visibility", "visible");
+        } else {
+            $(list).css("visibility", "hidden");
+        }
+    }
+
+    function uploadFiles() {
+        var url = '/LienCapTHCS/UploadFiles';
+        fileData.forEach(function (item, index) {
+            var formName = item.name;
+            var fileCount = 0;
+            for (var pair of item.data.entries()) {
+                if (pair[1] instanceof File) {
+                    fileCount++;
+                }
+            }
+            if (fileCount > 0) {
+                var savedPath;
+                var formData = item.data;
+                formData.append("formName", item.name);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function (response) {
+                        console.log(response)
+                        if (response.success) {
+                            savedPath = response.message;
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error uploading ' + formName + ' files:', error);
+                    }
+                });
+                item.savePath = savedPath;
+            }
+        });
+    }
 
     function showToast(title, message, bgColor) {
         $("#myToast .toast-header .me-auto").text(title);
         $("#myToast .toast-body").text(message);
         $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
         $("#myToast").toast("show");
-    }
-
-    function onListenFields(inputClass, outputClass) {
-        var inputFields = $(inputClass);
-        inputFields.on('input', function () {
-            var allFilled = true;
-            inputFields.each(function () {
-                if ($(this).val() === ''|| $(this).val() < 0 || $(this).val() > 10) {
-                    allFilled = false;
-                    var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!"; $('#Diem_All_Error').text(errorMessage);
-                    $(outputClass).val('');
-                    return false;
-                }
-            });
-
-            if (allFilled) {
-                $('#Diem_All_Error').text('');
-                let total = 0;
-                inputFields.each(function () {
-                    total += parseFloat($(this).val());
-                });
-               /* console.log(total / 3)*/
-                $(outputClass).val((total / 3).toFixed(2));
-            }
-        });
     }
 
     function onResetFields() {
