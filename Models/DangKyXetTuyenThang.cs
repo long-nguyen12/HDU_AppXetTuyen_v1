@@ -62,5 +62,7 @@ namespace HDU_AppXetTuyen.Models
         public string Dkxt_MinhChung_Giai { get; set; }
 
         public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }
+
+        public virtual Nganh Nganh { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,20 @@ using System.Web.Mvc;
 
 namespace HDU_AppXetTuyen.Controllers
 {
+    public class Student
+    {
+        public string Nganh_ID { get; set; }
+        public string Dkxt_MonDatGiai { get; set; }
+        public string Dkxt_LoaiGiai { get; set; }
+        public string Dkxt_NamDatGiai { get; set; }
+        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
+        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
+        public string Dkxt_ToHopXT { get; set; }
+        public string Dkxt_MinhChung_HB { get; set; }
+        public string Dkxt_MinhChung_CCCD { get; set; }
+        public string Dkxt_MinhChung_Bang { get; set; }
+        public string Dkxt_MinhChung_Giai { get; set; }
+    }
     public class DangKyXetTuyenThangController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
@@ -55,12 +70,39 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_HocLucLop12 = n.ThiSinh_HocLucLop12,
                 ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12
             }).FirstOrDefault();
-
+            var nguyenvongs = db.DangKyXetTuyenThangs.Include(d => d.Nganh).Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).Select(n => new
+            {
+                Dkxt_ID = n.Dkxt_ID,
+                ThiSinh_ID = n.ThiSinh_ID,
+                Ptxt_ID = n.Ptxt_ID,
+                Nganh_All = new
+                {
+                    KhoiNganh_Ten = n.Nganh.KhoiNganh.KhoiNganh_Ten,
+                    Nganh_GhiChu = n.Nganh.Nganh_GhiChu,
+                },
+                DoiTuong_ID = n.DoiTuong_ID,
+                KhuVuc_ID = n.KhuVuc_ID,
+                Dkxt_TrangThai = n.Dkxt_TrangThai,
+                Dkxt_NguyenVong = n.Dkxt_NguyenVong,
+                DotXT_ID = n.DotXT_ID,
+                Dkxt_GhiChu = n.Dkxt_GhiChu,
+                Dkxt_ToHopXT = n.Dkxt_ToHopXT,
+                Dkxt_MonDatGiai = n.Dkxt_MonDatGiai,
+                Dkxt_NamDatGiai = n.Dkxt_NamDatGiai,
+                Dkxt_LoaiGiai = n.Dkxt_LoaiGiai,
+                Dkxt_XepLoaiHocLuc_12 = n.Dkxt_XepLoaiHocLuc_12,
+                Dkxt_XepLoaiHanhKiem_12 = n.Dkxt_XepLoaiHanhKiem_12,
+                Dkxt_MinhChung_HB = n.Dkxt_MinhChung_HB,
+                Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
+                Dkxt_MinhChung_CCCD = n.Dkxt_MinhChung_CCCD,
+                Dkxt_MinhChung_Bang = n.Dkxt_MinhChung_Bang,
+                Dkxt_MinhChung_Giai = n.Dkxt_MinhChung_Giai,
+            }).ToList();
             return Json(new
             {
                 success = true,
                 thisinh = ts,
-                data = "",
+                data = nguyenvongs,
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -69,8 +111,6 @@ namespace HDU_AppXetTuyen.Controllers
         {
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
-            var formName = Request.Form["formName"];
-            var recordId = Request.Form["recordId"];
             string savePath = "Uploads/UploadMinhChungs/";
             string fileNameStored = "";
             if (Request.Files.Count > 0)
@@ -97,6 +137,131 @@ namespace HDU_AppXetTuyen.Controllers
             }
 
             return Json(new { success = false, message = "No files were uploaded." });
+        }
+
+        public JsonResult Create(Student student)
+        {
+            var session = Session["login_session"];
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
+            var nvs = db.DangKyXetTuyenThangs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).ToList();
+            var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
+            if (ts != null)
+            {
+                DangKyXetTuyenThang dkxtt = new DangKyXetTuyenThang();
+                dkxtt.ThiSinh_ID = ts.ThiSinh_ID;
+                dkxtt.Nganh_ID = int.Parse(student.Nganh_ID);
+                dkxtt.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
+                dkxtt.Dkxt_MonDatGiai = student.Dkxt_MonDatGiai;
+                dkxtt.Dkxt_LoaiGiai = student.Dkxt_LoaiGiai;
+                dkxtt.Dkxt_NamDatGiai = student.Dkxt_NamDatGiai;
+                dkxtt.Dkxt_XepLoaiHocLuc_12 = ts.ThiSinh_HocLucLop12;
+                dkxtt.Dkxt_XepLoaiHanhKiem_12 = ts.ThiSinh_HanhKiemLop12;
+                dkxtt.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
+                dkxtt.Dkxt_MinhChung_HB = student.Dkxt_MinhChung_HB;
+                dkxtt.Dkxt_MinhChung_CCCD = student.Dkxt_MinhChung_CCCD;
+                dkxtt.Dkxt_MinhChung_Bang = student.Dkxt_MinhChung_Bang;
+                dkxtt.Dkxt_MinhChung_Giai = student.Dkxt_MinhChung_Giai;
+                dkxtt.Ptxt_ID = 4;
+                dkxtt.DoiTuong_ID = ts.DoiTuong_ID;
+                dkxtt.KhuVuc_ID = ts.KhuVuc_ID;
+                dkxtt.Dkxt_TrangThai = 0;
+                dkxtt.Dkxt_TrangThai_KetQua = 0;
+                dkxtt.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
+                dkxtt.DotXT_ID = dotXT.Dxt_ID;
+                db.DangKyXetTuyenThangs.Add(dkxtt);
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+        public JsonResult Delete(string idDkxt)
+        {
+            if (!string.IsNullOrWhiteSpace(idDkxt))
+            {
+                int id = int.Parse(idDkxt);
+                DangKyXetTuyenThang dangKyXetTuyen = db.DangKyXetTuyenThangs.Find(id);
+                int nv_current = (int)dangKyXetTuyen.Dkxt_NguyenVong;
+                int idThisinh = (int)dangKyXetTuyen.ThiSinh_ID;
+                db.DangKyXetTuyenThangs.Remove(dangKyXetTuyen);
+                foreach (var item in db.DangKyXetTuyenThangs.Where(nv => nv.Dkxt_NguyenVong > nv_current && nv.ThiSinh_ID == idThisinh))
+                {
+                    DangKyXetTuyenThang dangKyXetTuyen_change = db.DangKyXetTuyenThangs.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong && i.ThiSinh_ID == idThisinh);
+                    dangKyXetTuyen_change.Dkxt_NguyenVong = item.Dkxt_NguyenVong - 1;
+                }
+                db.SaveChanges();
+                return Json(new
+                {
+                    status = true,
+                    msg = "Xoá dữ liệu thành công"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false,
+                msg = "Có lỗi xảy ra."
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult upData(string idDkxt)
+        {
+            if (!string.IsNullOrWhiteSpace(idDkxt))
+            {
+                int id = int.Parse(idDkxt);
+                DangKyXetTuyenThang dangKyXetTuyen_current = db.DangKyXetTuyenThangs.Find(id);
+                int nv_current = (int)dangKyXetTuyen_current.Dkxt_NguyenVong;
+                int idThisinh = (int)dangKyXetTuyen_current.ThiSinh_ID;
+                dangKyXetTuyen_current.Dkxt_NguyenVong = nv_current - 1;
+                DangKyXetTuyenThang dangKyXetTuyen_up = db.DangKyXetTuyenThangs.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current - 1 && i.ThiSinh_ID == idThisinh);
+                dangKyXetTuyen_up.Dkxt_NguyenVong = nv_current;
+                if (ModelState.IsValid)
+                {
+                    db.Entry(dangKyXetTuyen_current).State = EntityState.Modified;
+                    db.Entry(dangKyXetTuyen_up).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(new
+                    {
+                        status = true,
+                        msg = "Thay đổi dữ liệu thành công"
+                    }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new
+            {
+                status = false,
+                msg = "Có lỗi xảy ra."
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult downData(string idDkxt)
+        {
+            if (!string.IsNullOrWhiteSpace(idDkxt))
+            {
+                int id = int.Parse(idDkxt);
+                DangKyXetTuyenThang dangKyXetTuyen_current = db.DangKyXetTuyenThangs.Find(id);
+                int nv_current = (int)dangKyXetTuyen_current.Dkxt_NguyenVong;
+                int idThisinh = (int)dangKyXetTuyen_current.ThiSinh_ID;
+                dangKyXetTuyen_current.Dkxt_NguyenVong = nv_current + 1;
+                DangKyXetTuyenThang dangKyXetTuyen_down = db.DangKyXetTuyenThangs.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current + 1 && i.ThiSinh_ID == idThisinh);
+                dangKyXetTuyen_down.Dkxt_NguyenVong = nv_current;
+                if (ModelState.IsValid)
+                {
+                    db.Entry(dangKyXetTuyen_current).State = EntityState.Modified;
+                    db.Entry(dangKyXetTuyen_down).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(new
+                    {
+                        status = true,
+                        msg = "Thay đổi dữ liệu thành công"
+                    }, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            return Json(new
+            {
+                status = false,
+                msg = "Có lỗi xảy ra."
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }
