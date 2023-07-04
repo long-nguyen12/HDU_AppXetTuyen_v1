@@ -1,0 +1,675 @@
+﻿@model HDU_AppXetTuyen.Models.LienCapTHCS
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutLienCap.cshtml";
+}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    var HocBaFormData = new FormData();
+    var GiayKSFormData = new FormData();
+    var LePhiFormData = new FormData();
+    var MaDinhDanhFormData = new FormData();
+    var UuTienFormData = new FormData();
+    let fileData = [
+        { data: HocBaFormData, name: "HOCBA", savePath: "" },
+        { data: GiayKSFormData, name: "GIAYKS", savePath: "" },
+        { data: LePhiFormData, name: "LEPHI", savePath: "" },
+        { data: MaDinhDanhFormData, name: "DINHDANH", savePath: "" },
+        { data: UuTienFormData, name: "UUTIEN", savePath: "" },
+    ];
+    $('document').ready(function () {
+        loadData();
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+
+        $("#files_hocba").on("change", function () {
+            var files_hocba = document.getElementById('files_hocba');
+            let j = 0;
+            for (i = 0; i < files_hocba.files.length; i++) {
+                j++;
+                var sfilename_hocba = files_hocba.files[i].name;
+                let srandomid_hocba = Math.random().toString(36).substring(7);
+                HocBaFormData.append(sfilename_hocba, files_hocba.files[i]);
+                var markup = `<tr id='${srandomid_hocba}'><td  style='color:blue'>Tệp ${j}: </td><td>${sfilename_hocba}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("HOCBA", "#FilesList_HocBa_View", "${srandomid_hocba}", "${sfilename_hocba}")'>Xóa</a></td></tr>`;
+                $("#FilesList_HocBa_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_HocBa_View");
+            $('#files_hocba').val('');
+        });
+        $("#files_giayks").on("change", function () {
+            var files_hocba = document.getElementById('files_giayks');
+            let j = 0;
+            for (i = 0; i < files_hocba.files.length; i++) {
+                j++;
+                var sfilename_hocba = files_hocba.files[i].name;
+                let srandomid_hocba = Math.random().toString(36).substring(7);
+                GiayKSFormData.append(sfilename_hocba, files_hocba.files[i]);
+                var markup = `<tr id='${srandomid_hocba}'><td  style='color:blue'>Tệp ${j}: </td><td>${sfilename_hocba}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("GIAYKS", "#FilesList_GiayKS_View", "${srandomid_hocba}", "${sfilename_hocba}")'>Xóa</a></td></tr>`;
+                $("#FilesList_GiayKS_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_GiayKS_View");
+            $('#files_giayks').val('');
+        });
+        $("#files_lephi").on("change", function () {
+            var files_hocba = document.getElementById('files_lephi');
+            let j = 0;
+            for (i = 0; i < files_hocba.files.length; i++) {
+                j++;
+                var sfilename_hocba = files_hocba.files[i].name;
+                let srandomid_hocba = Math.random().toString(36).substring(7);
+                LePhiFormData.append(sfilename_hocba, files_hocba.files[i]);
+                var markup = `<tr id='${srandomid_hocba}'><td  style='color:blue'>Tệp ${j}: </td><td>${sfilename_hocba}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("LEPHI", "#FilesList_LePhi_View", "${srandomid_hocba}", "${sfilename_hocba}")'>Xóa</a></td></tr>`;
+                $("#FilesList_LePhi_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_LePhi_View");
+            $('#files_lephi').val('');
+        });
+        $("#files_madinhdanh").on("change", function () {
+            var files_hocba = document.getElementById('files_madinhdanh');
+            let j = 0;
+            for (i = 0; i < files_hocba.files.length; i++) {
+                j++;
+                var sfilename_hocba = files_hocba.files[i].name;
+                let srandomid_hocba = Math.random().toString(36).substring(7);
+                MaDinhDanhFormData.append(sfilename_hocba, files_hocba.files[i]);
+                var markup = `<tr id='${srandomid_hocba}'><td  style='color:blue'>Tệp ${j}: </td><td>${sfilename_hocba}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("DINHDANH", "#FilesList_MaDinhDanh_View", "${srandomid_hocba}", "${sfilename_hocba}")'>Xóa</a></td></tr>`;
+                $("#FilesList_MaDinhDanh_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_MaDinhDanh_View");
+            $('#files_madinhdanh').val('');
+        });
+        $("#files_uutien").on("change", function () {
+            var files_hocba = document.getElementById('files_uutien');
+            let j = 0;
+            for (i = 0; i < files_hocba.files.length; i++) {
+                j++;
+                var sfilename_hocba = files_hocba.files[i].name;
+                let srandomid_hocba = Math.random().toString(36).substring(7);
+                UuTienFormData.append(sfilename_hocba, files_hocba.files[i]);
+                var markup = `<tr id='${srandomid_hocba}'><td  style='color:blue'>Tệp ${j}: </td><td>${sfilename_hocba}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("UUTIEN", "#FilesList_UuTien_View", "${srandomid_hocba}", "${sfilename_hocba}")'>Xóa</a></td></tr>`;
+                $("#FilesList_UuTien_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_UuTien_View");
+            $('#files_uutien').val('');
+        });
+    })
+    function loadData() {
+        /* Chọn giới tính */
+        let gioitinhs = [
+            { value: '3', text: 'Chọn giới tính' },
+            { value: '0', text: 'Nam' },
+            { value: '1', text: 'Nữ' }
+        ];
+
+        let gioiTinhOptions = $('#HocSinh_GioiTinh');
+        $.each(gioitinhs, function (index, option) {
+            gioiTinhOptions.append($('<option>', {
+                value: option.value,
+                text: option.text
+            }));
+        });
+
+    }
+    function onCreate() {
+        $(".text-danger").text("");
+        let flag = true;
+        let HocSinh_DinhDanh = $('#HocSinh_DinhDanh').val();
+        let HocSinh_HoTen = $('#HocSinh_HoTen').val();
+        let HocSinh_GioiTinh = $('#HocSinh_GioiTinh').val();
+        let HocSinh_NgaySinh = $('#datepicker').val();
+        let HocSinh_NoiSinh = $('#HocSinh_NoiSinh').val();
+        let HocSinh_Email = $('#HocSinh_Email').val();
+        let HocSinh_NoiCuTru = $('#HocSinh_NoiCuTru').val();
+        let HocSinh_TruongTH = $('#HocSinh_TruongTH').val();
+        let HocSinh_UuTien = $('#HocSinh_UuTien').val();
+        let HocSinh_HoTenCha = $('#HocSinh_HoTenCha').val();
+        let HocSinh_SDTCha = $('#HocSinh_SDTCha').val();
+        let HocSinh_NNCha = $('#HocSinh_NNCha').val();
+        let HocSinh_HoTenMe = $('#HocSinh_HoTenMe').val();
+        let HocSinh_SDTMe = $('#HocSinh_SDTMe').val();
+        let HocSinh_NNMe = $('#HocSinh_NNMe').val();
+        let HocSinh_DiemToan = $('#HocSinh_DiemToan').val();
+        let HocSinh_DiemTiengViet = $('#HocSinh_DiemTiengViet').val();
+        let HocSinh_DiemTN = $('#HocSinh_DiemTN').val();
+        let HocSinh_DiemLSDL = $('#HocSinh_DiemLSDL').val();
+        let HocSinh_DiemTA = $('#HocSinh_DiemTA').val();
+        let HocSinh_MucDoNangLuc = $('#HocSinh_MucDoNangLuc').val();
+        let HocSinh_MucDoPhamChat = $('#HocSinh_MucDoPhamChat').val();
+
+        if (!HocSinh_DinhDanh) {
+            var errorMessage = "Vui lòng nhập mã định danh";
+            $('#HocSinh_DinhDanh_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_HoTen) {
+            var errorMessage = "Vui lòng nhập họ và tên";
+            $('#HocSinh_HoTen_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_GioiTinh || HocSinh_GioiTinh == "3") {
+            var errorMessage = "Vui lòng chọn giới tính";
+            $('#HocSinh_GioiTinh_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_NgaySinh) {
+            var errorMessage = "Vui lòng nhập ngày sinh";
+            $('#HocSinh_NgaySinh_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_NoiSinh) {
+            var errorMessage = "Vui lòng nhập nơi sinh";
+            $('#HocSinh_NoiSinh_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_Email) {
+            var errorMessage = "Vui lòng nhập email";
+            $('#HocSinh_Email_Error').text(errorMessage);
+            flag = false;
+        } else if (!validateEmail(HocSinh_Email)) {
+            var errorMessage = "Vui lòng nhập đúng định dạng email";
+            $('#HocSinh_Email_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_NoiCuTru) {
+            var errorMessage = "Vui lòng nhập nơi cư trú";
+            $('#HocSinh_NoiCuTru_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_HoTenCha) {
+            var errorMessage = "Vui lòng nhập họ tên cha";
+            $('#HocSinh_HoTenCha_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_SDTCha) {
+            var errorMessage = "Vui lòng nhập số điện thoại";
+            $('#HocSinh_SDTCha_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_HoTenMe) {
+            var errorMessage = "Vui lòng nhập họ tên mẹ";
+            $('#HocSinh_HoTenMe_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_SDTMe) {
+            var errorMessage = "Vui lòng nhập số điện thoại";
+            $('#HocSinh_SDTMe_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_DiemToan) {
+            var errorMessage = "Vui lòng nhập điểm toán";
+            $('#HocSinh_DiemToan_Error').text(errorMessage);
+            flag = false;
+        } else if (parseFloat(HocSinh_DiemToan.trim()) < 0 || parseFloat(HocSinh_DiemToan.trim()) > 10) {
+            var errorMessage = "Vui lòng nhập điểm đúng định dạng";
+            $('#HocSinh_DiemToan_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_DiemTiengViet) {
+            var errorMessage = "Vui lòng nhập điểm tiếng Việt";
+            $('#HocSinh_DiemTiengViet_Error').text(errorMessage);
+            flag = false;
+        } else if (parseFloat(HocSinh_DiemTiengViet.trim()) < 0 || parseFloat(HocSinh_DiemTiengViet.trim()) > 10) {
+            var errorMessage = "Vui lòng nhập điểm đúng định dạng";
+            $('#HocSinh_DiemTiengViet_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_DiemTN) {
+            var errorMessage = "Vui lòng nhập điểm Tự nhiên và KH/XH";
+            $('#HocSinh_DiemTN_Error').text(errorMessage);
+            flag = false;
+        } else if (parseFloat(HocSinh_DiemTN.trim()) < 0 || parseFloat(HocSinh_DiemTN.trim()) > 10) {
+            var errorMessage = "Vui lòng nhập điểm đúng định dạng";
+            $('#HocSinh_DiemTN_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_DiemLSDL) {
+            var errorMessage = "Vui lòng nhập điểm lịch sử và địa lý";
+            $('#HocSinh_DiemLSDL_Error').text(errorMessage);
+            flag = false;
+        } else if (parseFloat(HocSinh_DiemLSDL.trim()) < 0 || parseFloat(HocSinh_DiemLSDL.trim()) > 10) {
+            var errorMessage = "Vui lòng nhập điểm đúng định dạng";
+            $('#HocSinh_DiemLSDL_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!HocSinh_DiemTA) {
+            var errorMessage = "Vui lòng nhập điểm tiếng Anh";
+            $('#HocSinh_DiemTA_Error').text(errorMessage);
+            flag = false;
+        } else if (parseFloat(HocSinh_DiemTA.trim()) < 0 || parseFloat(HocSinh_DiemTA.trim()) > 10) {
+            var errorMessage = "Vui lòng nhập điểm đúng định dạng";
+            $('#HocSinh_DiemTA_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!flag) return;
+        $("#loadingModal").modal("show");
+        uploadFiles(HocSinh_DinhDanh);
+
+        let HocSinh_ThongTinCha = {
+            HoTen: HocSinh_HoTenCha,
+            SoDienThoai: HocSinh_SDTCha,
+            NgheNghiep: HocSinh_NNCha
+        }
+
+        let HocSinh_ThongTinMe = {
+            HoTen: HocSinh_HoTenMe,
+            SoDienThoai: HocSinh_SDTMe,
+            NgheNghiep: HocSinh_NNMe
+        }
+
+        let HocSinh_DiemHocTap = {
+            Toan: HocSinh_DiemToan,
+            TiengViet: HocSinh_DiemTiengViet,
+            TuNhien: HocSinh_DiemTN,
+            LichSuDiaLy: HocSinh_DiemLSDL,
+            TiengAnh: HocSinh_DiemTA
+        }
+
+        let formData = {
+            HocSinh_DinhDanh: HocSinh_DinhDanh,
+            HocSinh_HoTen: HocSinh_HoTen,
+            HocSinh_GioiTinh: HocSinh_GioiTinh,
+            HocSinh_NgaySinh: HocSinh_NgaySinh,
+            HocSinh_NoiSinh: HocSinh_NoiSinh,
+            HocSinh_Email: HocSinh_Email,
+            HocSinh_NoiCuTru: HocSinh_NoiCuTru,
+            HocSinh_TruongTH: HocSinh_TruongTH,
+            HocSinh_UuTien: HocSinh_UuTien,
+            HocSinh_ThongTinCha: JSON.stringify(HocSinh_ThongTinCha),
+            HocSinh_ThongTinMe: JSON.stringify(HocSinh_ThongTinMe),
+            HocSinh_DiemHocTap: JSON.stringify(HocSinh_DiemHocTap),
+            HocSinh_MucDoNangLuc: HocSinh_MucDoNangLuc,
+            HocSinh_MucDoPhamChat: HocSinh_MucDoPhamChat,
+            HocSinh_MinhChungHB: fileData[0].savePath,
+            HocSinh_MinhChungGiayKS: fileData[1].savePath,
+            HocSinh_MinhChungMaDinhDanh: fileData[3].savePath,
+            HocSinh_GiayUuTien: fileData[4].savePath,
+            HocSinh_XacNhanLePhi: fileData[2].savePath,
+            HocSinh_HoTenCha: HocSinh_HoTenCha,
+            HocSinh_SDTCha: HocSinh_SDTCha,
+            HocSinh_NNCha: HocSinh_NNCha,
+            HocSinh_HoTenMe: HocSinh_HoTenMe,
+            HocSinh_SDTMe: HocSinh_SDTMe,
+            HocSinh_NNMe: HocSinh_NNMe,
+            HocSinh_DiemToan: HocSinh_DiemToan,
+            HocSinh_DiemTiengViet: HocSinh_DiemTiengViet,
+            HocSinh_DiemTN: HocSinh_DiemTN,
+            HocSinh_DiemLSDL: HocSinh_DiemLSDL,
+            HocSinh_DiemTA: HocSinh_DiemTA,
+        }
+        $.ajax({
+            url: '/LienCapTHCS/RegisterStudent',
+            type: 'POST',
+            data: JSON.stringify(formData),
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
+                $("#loadingModal").modal("hide");
+                resetFields();
+            },
+            error: function (error) {
+                showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+                $("#loadingModal").modal("hide");
+            }
+        });
+    }
+
+    function validateEmail(email) {
+        var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        var isValid = emailRegex.test(email);
+        return isValid;
+    }
+
+    function DeleteUploadedFile(FormDataName, ListId, Fileid, FileName) {
+        let formData = null;
+        if (FormDataName == "HOCBA") formData = HocBaFormData;
+        if (FormDataName == "GIAYKS") formData = GiayKSFormData;
+        if (FormDataName == "LEPHI") formData = LePhiFormData;
+        if (FormDataName == "DINHDANH") formData = MaDinhDanhFormData;
+        if (FormDataName == "UUTIEN") formData = UuTienFormData;
+        formData.delete(FileName)
+        $("#" + Fileid).remove();
+        CheckAttachTable(ListId);
+    }
+    function CheckAttachTable(list) {
+        if ($(`${list} tr`).length > 1) {
+            $(list).css("visibility", "visible");
+        } else {
+            $(list).css("visibility", "hidden");
+        }
+    }
+    function uploadFiles(HocSinh_DinhDanh) {
+        var url = '/LienCapTHCS/UploadFiles';
+        fileData.forEach(function (item, index) {
+            var formName = item.name;
+            var fileCount = 0;
+            for (var pair of item.data.entries()) {
+                if (pair[1] instanceof File) {
+                    fileCount++;
+                }
+            }
+            if (fileCount > 0) {
+                var savedPath;
+                var formData = item.data;
+                formData.append("formName", item.name);
+                formData.append("HocSinh_DinhDanh", HocSinh_DinhDanh);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function (response) {
+                        console.log(response)
+                        if (response.success) {
+                            savedPath = response.message;
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error uploading ' + formName + ' files:', error);
+                    }
+                });
+                item.savePath = savedPath;
+            }
+        });
+    }
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+    function resetFields() {
+        $('#HocSinh_DinhDanh').val("");
+        $('#HocSinh_HoTen').val("");
+        $('#HocSinh_GioiTinh').val("3");
+        $('#datepicker').val("");
+        $('#HocSinh_NoiSinh').val("");
+        $('#HocSinh_Email').val("");
+        $('#HocSinh_NoiCuTru').val("");
+        $('#HocSinh_TruongTH').val("");
+        $('#HocSinh_UuTien').val("");
+        $('#HocSinh_HoTenCha').val("");
+        $('#HocSinh_SDTCha').val("");
+        $('#HocSinh_NNCha').val("");
+        $('#HocSinh_HoTenMe').val("");
+        $('#HocSinh_SDTMe').val("");
+        $('#HocSinh_NNMe').val("");
+        $('#HocSinh_DiemToan').val("");
+        $('#HocSinh_DiemTiengViet').val("");
+        $('#HocSinh_DiemTN').val("");
+        $('#HocSinh_DiemLSDL').val("");
+        $('#HocSinh_DiemTA').val("");
+        $('#HocSinh_MucDoNangLuc').val("");
+        $('#HocSinh_MucDoPhamChat').val("");
+        $('#files_uutien').val(null);
+        $('#files_madinhdanh').val(null);
+        $('#files_giayks').val(null);
+        $('#files_hocba').val(null);
+        $('#files_lephi').val(null);
+
+        $('#FilesList_UuTien_View tbody').empty();
+        $('#FilesList_MaDinhDanh_View tbody').empty();
+        $('#FilesList_LePhi_View tbody').empty();
+        $('#FilesList_GiayKS_View tbody').empty();
+        $('#FilesList_HocBa_View tbody').empty();
+    }
+</script>
+<style>
+    #loadingModal {
+        background-color: rgba(0, 0, 0, 0.5);
+        background-color: transparent;
+    }
+</style>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid px-12">
+    <div id="fadeInUp">
+        <div class="card card-header-actions mt-3 mb-1">
+            <div class="card-header">Lưu ý</div>
+            <div class="card-body">
+                <div class="col-xxl-12">
+                    <p style="color: red; font-style: italic" class="mb-1">
+                        - Những trường có dấu sao là trường bắt buộc nhập
+                    </p>
+                    <p style="color: red; font-style: italic" class="mb-1">
+                        - Sau khi đăng ký, vui lòng xác nhận lại các thông tin đã được gửi về email
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card card-header-actions mt-3 mb-1 ">
+            <div class="card-header">Đăng ký xét tuyển vào lớp 6</div>
+            <div class="card-body">
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="HocSinh_DinhDanh">Mã định danh cá nhân <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_DinhDanh" name="HocSinh_DinhDanh" type="text" placeholder="Mã định danh cá nhân" value="" />
+                        <span id="HocSinh_DinhDanh_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="HocSinh_HoTen">Họ và tên <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_HoTen" name="HocSinh_HoTen" type="text" placeholder="Họ và tên" value="" />
+                        <span id="HocSinh_HoTen_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="datepicker" name="HocSinh_NgaySinh" type="text" placeholder="Ngày sinh" value="" />
+                        <span id="HocSinh_NgaySinh_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="HocSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <select class="form-select" id="HocSinh_GioiTinh" name="HocSinh_GioiTinh" placeholder="Giới tính" value=""></select>
+                        <span id="HocSinh_GioiTinh_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-6">
+                        <label class="form-label mb-1" for="HocSinh_NoiSinh">Nơi sinh <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_NoiSinh" name="HocSinh_NoiSinh" type="text" placeholder="Nơi sinh" value="" />
+                        <span id="HocSinh_NoiSinh_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Nơi cứ trú <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_NoiCuTru" name="HocSinh_NoiSinh" type="text" placeholder="Nơi cư trú" value="" />
+                        <span id="HocSinh_NoiCuTru_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_Email" name="HocSinh_NoiSinh" type="text" placeholder="Email" value="" />
+                        <span id="HocSinh_Email_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_UuTien">Thuộc diện ưu tiên </label>
+                        <input class="form-control" id="HocSinh_UuTien" name="HocSinh_UuTien" type="text" placeholder="Diện ưu tiên" value="" />
+                        <span id="HocSinh_UuTien_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_TruongTH">Trường tiểu học </label>
+                        <input class="form-control" id="HocSinh_TruongTH" name="HocSinh_TruongTH" type="text" placeholder="Diện ưu tiên" value="" />
+                        <span id="HocSinh_TruongTH_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_HoTenCha">Họ và tên cha <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_HoTenCha" name="HocSinh_HoTenCha" type="text" placeholder="Họ và tên cha" value="" />
+                        <span id="HocSinh_HoTenCha_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_SDTCha">Số điện thoại  <a style="color:red; text-decoration:none">(*)</a></label>
+                        <input class="form-control" id="HocSinh_SDTCha" name="HocSinh_SDTCha" type="text" placeholder="Số điện thoại cha" value="" />
+                        <span id="HocSinh_SDTCha_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_NNCha">Nghề nghiệp cha </label>
+                        <input class="form-control" id="HocSinh_NNCha" name="HocSinh_NNCha" type="text" placeholder="Nghề nghiệp cha" value="" />
+                        <span id="HocSinh_NNCha_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_HoTenMe">Họ và tên mẹ <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_HoTenMe" name="HocSinh_HoTenMe" type="text" placeholder="Họ và tên mẹ" value="" />
+                        <span id="HocSinh_HoTenMe_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_SDTMe">Số điện thoại <a style="color:red; text-decoration:none">(*)</a></label>
+                        <input class="form-control" id="HocSinh_SDTMe" name="HocSinh_SDTMe" type="text" placeholder="Số điện thoại mẹ" value="" />
+                        <span id="HocSinh_SDTMe_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_NNMe">Nghề nghiệp mẹ  </label>
+                        <input class="form-control" id="HocSinh_NNMe" name="HocSinh_NNMe" type="text" placeholder="Nghề nghiệp mẹ" value="" />
+                        <span id="HocSinh_NNMe_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="HocSinh_DiemToan">Điểm Toán <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_DiemToan" name="HocSinh_DiemToan" type="number" placeholder="Điểm Toán" value="" />
+                        <span id="HocSinh_DiemToan_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="HocSinh_DiemTiengViet">Điểm Tiếng Việt <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_DiemTiengViet" name="HocSinh_DiemTiengViet" type="number" placeholder="Điểm Tiếng Việt" value="" />
+                        <span id="HocSinh_DiemTiengViet_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="HocSinh_DiemTN">Điểm Tự nhiên và KH/XH <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_DiemTN" name="HocSinh_DiemTN" type="number" placeholder="Điểm Tự nhiên và KH/XH" value="" />
+                        <span id="HocSinh_DiemTN_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label mb-1" for="HocSinh_DiemLSDL">Điểm Lịch sử và Địa lý <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_DiemLSDL" name="HocSinh_DiemLSDL" type="number" placeholder="Điểm Lịch sử và Địa lý" value="" />
+                        <span id="HocSinh_DiemLSDL_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label mb-1" for="HocSinh_DiemTA">Điểm Tiếng Anh <a style="color:red; text-decoration:none">(*)</a> </label>
+                        <input class="form-control" id="HocSinh_DiemTA" name="HocSinh_DiemTA" type="number" placeholder="Điểm Tiếng Anh" value="" />
+                        <span id="HocSinh_DiemTA_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-6">
+                        <label class="form-label mb-1" for="HocSinh_MucDoNangLuc">Mức độ năng lực </label>
+                        <input class="form-control" id="HocSinh_MucDoNangLuc" name="HocSinh_MucDoNangLuc" placeholder="Mức độ năng lực" value="" />
+                        <span id="HocSinh_MucDoNangLuc_Error" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label mb-1" for="HocSinh_MucDoPhamChat">Mức độ phẩm chất </label>
+                        <input class="form-control" id="HocSinh_MucDoPhamChat" name="HocSinh_MucDoPhamChat" placeholder="Mức độ phẩm chất" value="" />
+                        <span id="HocSinh_MucDoPhamChat" class="small mb-1 text-danger"></span>
+                    </div>
+                </div>
+                @*
+                    <div class="card-header mt-4">Minh chứng</div>*@
+                <div class="row gx-xxl-3 mb-1">
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Học bạ </label>
+                        <div class="col-md-12">
+                            <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file"
+                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                            <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
+                                <tr style="display:none">
+                                    <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Giấy khai sinh </label>
+                        <div class="col-md-12">
+                            <input class="form-control" id="files_giayks" multiple="multiple" name="files" type="file"
+                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                            <table class="table" id="FilesList_GiayKS_View" style="visibility:hidden">
+                                <tr style="display:none">
+                                    <th colspan="3"><input type="hidden" id="GiayKS_Files" /></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Lệ phí </label>
+                        <div class="col-md-12">
+                            <input class="form-control" id="files_lephi" multiple="multiple" name="files" type="file"
+                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                            <table class="table" id="FilesList_LePhi_View" style="visibility:hidden">
+                                <tr style="display:none">
+                                    <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Mã định danh </label>
+                        <div class="col-md-12">
+                            <input class="form-control" id="files_madinhdanh" multiple="multiple" name="files" type="file"
+                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                            <table class="table" id="FilesList_MaDinhDanh_View" style="visibility:hidden">
+                                <tr style="display:none">
+                                    <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Chứng nhận ưu tiên</label>
+                        <div class="col-md-12">
+                            <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file"
+                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                            <table class="table" id="FilesList_UuTien_View" style="visibility:hidden">
+                                <tr style="display:none">
+                                    <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-1">
+                    <div class="col-auto">
+                        <button type="button" onclick="onCreate()" class="btn btn-primary btm-sm">Đăng ký</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Toast Title</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+            </div>
+        </div>
+    </div>
+</div>
