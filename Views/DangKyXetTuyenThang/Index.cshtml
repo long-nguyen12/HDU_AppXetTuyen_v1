@@ -500,9 +500,8 @@
                     _output += '<tr><td colspan="7"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
                 else {
-                    console.log(result_all)
                     $.each(result_all, function (i, result) {
-
+                        console.log(result)
                         _output += '<tr>' +
                             '<td style="vertical-align: middle !important "> NV' + result.Dkxt_NguyenVong + "&nbsp;"+`<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID})" ${i == 0 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID})" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
                             '<td style="vertical-align: middle !important "> ' + result.Nganh_All.Nganh_GhiChu + ' </td>' +
@@ -712,7 +711,7 @@
     function upData(value) {
         var obj = { idDkxt: value };
         $.ajax({
-            url: '@Url.Action("upData", "DangKyXetTuyenThang")',
+            url: '/DangKyXetTuyenThang/upData',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(obj),
@@ -728,10 +727,11 @@
             alert(error.StatusText);
         });
     }
+
     function downData(value) {
         var obj = { idDkxt: value };
         $.ajax({
-            url: '@Url.Action("downData", "DangKyXetTuyenThang")',
+            url: '/DangKyXetTuyenThang/downData',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(obj),
@@ -739,7 +739,6 @@
         }).done(function (response) {
             if (response.status == true) {
                 ListAllNguyenVong();
-                window.location.reload();
             }
             else {
                 alert(response.msg);

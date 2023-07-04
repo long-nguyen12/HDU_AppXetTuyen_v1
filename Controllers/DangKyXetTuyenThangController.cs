@@ -70,7 +70,7 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_HocLucLop12 = n.ThiSinh_HocLucLop12,
                 ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12
             }).FirstOrDefault();
-            var nguyenvongs = db.DangKyXetTuyenThangs.Include(d => d.Nganh).Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).Select(n => new
+            var nguyenvongs = db.DangKyXetTuyenThangs.Include(d => d.Nganh).Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).Select(n => new
             {
                 Dkxt_ID = n.Dkxt_ID,
                 ThiSinh_ID = n.ThiSinh_ID,
