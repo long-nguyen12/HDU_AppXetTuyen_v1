@@ -577,10 +577,6 @@
     <Content Include="Views\LienCapTHCS\Create.cshtml" />
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmInfomation.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Delete.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Details.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmRegister.cshtml" />
   </ItemGroup>
