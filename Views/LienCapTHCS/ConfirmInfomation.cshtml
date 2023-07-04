@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xác nhận thông tin</title>
+    <link href="~/Content/styles.css" rel="stylesheet" />
+    <!-- bootstrap 5.3-->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/libs_font-awesome_6.1.1_js_all.min.js" data-search-pseudo-elements defer crossorigin="anonymous"></script>
+    <script src="~/Scripts/feather.min.js" crossorigin="anonymous"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="~/Scripts/scripts.js"></script>
+    <script>
+        $(document).ready(function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var token = urlParams.get('token');
+
+            $.ajax({
+                url: `/LienCapTHCS/ConfirmInfomation/`,
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "JSON",
+                data: JSON.stringify({ token: token }),
+                success: function (response) {
+                    if (response.success) {
+                        $('#resultMessage').text("Bạn đã xác nhận thông tin thành công");
+                        $('#resultButton').prop('disabled', false);
+                    } else {
+                        $('#resultMessage').text("Bạn đã xác nhận thông tin không thành công");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $('#resultMessage').text("Bạn đã xác nhận thông tin không thành công");
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container-xl px-4">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-header justify-content-center">
+                                    <img src="~/Content/images/liencaphdu.png" style="width: 100%;" />
+                                </div>
+                                <div class="card-body text-center">
+                                    <p id="resultMessage"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
