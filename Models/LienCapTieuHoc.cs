@@ -109,6 +109,10 @@
         [Display(Name = "Ghi chú")]
         [StringLength(4000)]
         public string HocSinh_GhiChu { get; set; }
+        
+        [NotMapped]
+        [StringLength(4000)]
+        public string HocSinh_GhiChu2 { get; set; }
 
         [Display(Name = "Minh chứng lệ phí")]
         [StringLength(4000)]

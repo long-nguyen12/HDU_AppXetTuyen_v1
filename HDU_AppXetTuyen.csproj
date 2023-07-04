@@ -579,6 +579,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
+    <Folder Include="Uploads\LienCapTieuHoc\GiayUuTien\" />
+    <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
+    <Folder Include="Uploads\LienCapTieuHoc\MinhChungLePhi\" />
+    <Folder Include="Uploads\LienCapTieuHoc\MinhChungMN\" />
     <Folder Include="Uploads\LienCap\DinhDanh\" />
     <Folder Include="Uploads\LienCap\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCap\GiayUuTien\" />

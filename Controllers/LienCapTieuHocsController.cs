@@ -47,7 +47,7 @@ namespace HDU_AppXetTuyen.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "HocSinh_ID,HocSinh_DinhDanh,HocSinh_HoTen,HocSinh_GioiTinh,HocSinh_NgaySinh,HocSinh_NoiSinh,HocSinh_Email,HocSinh_NoiCuTru,HocSinh_TruongMN,HocSinh_UuTien,HocSinh_ThongTinCha,HocSinh_NgheNghiepCha,HocSinh_DienThoaiCha,HocSinh_ThongTinMe,HocSinh_NgheNghiepMe,HocSinh_DienThoaiMe,HocSinh_MinhChungMN,HocSinh_MinhChungGiayKS,HocSinh_MinhChungMaDinhDanh,HocSinh_GiayUuTien,HocSinh_XacNhanLePhi,HocSinh_TrangThai,HocSinh_GhiChu")] LienCapTieuHoc lienCapTieuHoc,
+        public ActionResult Create( LienCapTieuHoc lienCapTieuHoc,
            IEnumerable<HttpPostedFileBase> HocSinh_MinhChungMN, 
            IEnumerable<HttpPostedFileBase> HocSinh_MinhChungGiayKS,
            IEnumerable<HttpPostedFileBase>HocSinh_MinhChungMaDinhDanh,
@@ -55,135 +55,146 @@ namespace HDU_AppXetTuyen.Controllers
            IEnumerable<HttpPostedFileBase> HocSinh_MinhChungLePhi)
 
         {
-            if (ModelState.IsValid)
+            try
             {
-                foreach (var file in HocSinh_MinhChungMN)
+                if (ModelState.IsValid) { 
+
+                int indexMN = 0;
+                foreach (HttpPostedFileBase file in HocSinh_MinhChungMN)
                 {
                     //Kiểm tra tập tin có sẵn để lưu.  
                     if (file != null)
                     {
-                        System.Diagnostics.Debug.WriteLine("Da vao day files");
+                        indexMN += 1;
                         var InputFileName = Path.GetFileName(file.FileName);
-                        System.Diagnostics.Debug.WriteLine("InputFileName");
                         InputFileName = lienCapTieuHoc.HocSinh_DinhDanh + "_" + DateTime.Now.ToFileTime() + "_" + InputFileName;
-                        var urlFile = Server.MapPath("~/UploadLienCapTieuHoc/MinhChungMN/") + InputFileName;
+                        var urlFile = Path.Combine(Server.MapPath("~/Uploads/LienCapTieuHoc/MinhChungMN/") + InputFileName);
+                        // Lưu file vào thư mục trên server  
+                        file.SaveAs(urlFile);
+                        string fileUrl = "Uploads/LienCapTieuHoc/MinhChungMN/" + InputFileName;
+                        lienCapTieuHoc.HocSinh_MinhChungMN += fileUrl.ToString(); 
+                        // lấy đường dẫn các file
+                        if (indexMN < HocSinh_MinhChungMN.Count() - 1)
+                        {
+                            lienCapTieuHoc.HocSinh_MinhChungMN += "#";
+                        }
+                    }
+                }
+                
+                int indexKS = 0;
+                foreach (HttpPostedFileBase file in HocSinh_MinhChungGiayKS)
+                {
+                    //Kiểm tra tập tin có sẵn để lưu.  
+                    if (file != null)
+                    {
+                        indexKS += 1;
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        InputFileName = lienCapTieuHoc.HocSinh_DinhDanh + "_" + DateTime.Now.ToFileTime() + "_" + InputFileName;
+                        var urlFile = Server.MapPath("~/Uploads/LienCapTieuHoc/GiayKhaiSinh/") + InputFileName;
                         // Lưu file vào thư mục trên server  
                         file.SaveAs(urlFile);
                         // lấy đường dẫn các file
-                        lienCapTieuHoc.HocSinh_MinhChungMN += "UploadLienCapTieuHoc/MinhChungMN/" + InputFileName + "#";
-                        // Hiển thị thông báo tổng số tệp đã lưu trên server.  
-                        //ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully";
-                        TempData["Result"] = "THANHCONG";
+                        string fileUrl = "Uploads/LienCapTieuHoc/GiayKhaiSinh/" + InputFileName;
+                        lienCapTieuHoc.HocSinh_MinhChungGiayKS += fileUrl.ToString();
+                        // lấy đường dẫn các file
+                        if (indexKS < HocSinh_MinhChungGiayKS.Count() - 1)
+                        {
+                            lienCapTieuHoc.HocSinh_MinhChungGiayKS += "#";
+                        }
                     }
-                    else
+                }
+
+                int indexDD = 0;
+                foreach (HttpPostedFileBase file in HocSinh_MinhChungMaDinhDanh)
+                {
+                    //Kiểm tra tập tin có sẵn để lưu.  
+                    if (file != null)
                     {
-                        TempData["Result"] = "THATBAI";
+                        indexDD += 1;
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        InputFileName = lienCapTieuHoc.HocSinh_DinhDanh + "_" + DateTime.Now.ToFileTime() + "_" + InputFileName;
+                        var urlFile = Server.MapPath("~/Uploads/LienCapTieuHoc/MaDinhDanh/") + InputFileName;
+                        // Lưu file vào thư mục trên server  
+                        file.SaveAs(urlFile);
+                        // lấy đường dẫn các file
+                        lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh += "Uploads/LienCapTieuHoc/MaDinhDanh/" + InputFileName + "#";
+                        file.SaveAs(urlFile);
+                        // lấy đường dẫn các file
+                        string fileUrl = "Uploads/LienCapTieuHoc/MaDinhDanh/" + InputFileName;
+                        lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh += fileUrl.ToString();
+                        // lấy đường dẫn các file
+                        if (indexDD < HocSinh_MinhChungMaDinhDanh.Count() - 1)
+                        {
+                            lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh += "#";
+                        }
                     }
 
                 }
-                foreach (var file in HocSinh_MinhChungGiayKS)
+
+                int indexUT = 0;
+                foreach (HttpPostedFileBase file in HocSinh_GiayUuTien)
                 {
                     //Kiểm tra tập tin có sẵn để lưu.  
                     if (file != null)
                     {
+                        indexUT += 1;
                         System.Diagnostics.Debug.WriteLine("Da vao day files");
                         var InputFileName = Path.GetFileName(file.FileName);
                         System.Diagnostics.Debug.WriteLine("InputFileName");
                         InputFileName = lienCapTieuHoc.HocSinh_DinhDanh + "_" + DateTime.Now.ToFileTime() + "_" + InputFileName;
-                        var urlFile = Server.MapPath("~/UploadLienCapTieuHoc/GiayKhaiSinh/") + InputFileName;
+                        var urlFile = Server.MapPath("~/Uploads/LienCapTieuHoc/GiayUuTien/") + InputFileName;
                         // Lưu file vào thư mục trên server  
                         file.SaveAs(urlFile);
                         // lấy đường dẫn các file
-                        lienCapTieuHoc.HocSinh_MinhChungGiayKS += "UploadLienCapTieuHoc/GiayKhaiSinh/" + InputFileName + "#";
-                        // Hiển thị thông báo tổng số tệp đã lưu trên server.  
-                        //ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully";
-                        TempData["Result"] = "THANHCONG";
+                        string fileUrl = "Uploads/LienCapTieuHoc/GiayUuTien/" + InputFileName;
+                        lienCapTieuHoc.HocSinh_GiayUuTien += fileUrl.ToString();
+                        // lấy đường dẫn các file
+                        if (indexUT < HocSinh_GiayUuTien.Count() - 1)
+                        {
+                            lienCapTieuHoc.HocSinh_GiayUuTien += "#";
+                        }
                     }
-                    else
-                    {
-                        TempData["Result"] = "THATBAI";
-                    }
-
                 }
-                foreach (var file in HocSinh_MinhChungMaDinhDanh)
+
+                int indexLP = 0;
+
+                foreach (HttpPostedFileBase  file in HocSinh_MinhChungLePhi)
                 {
                     //Kiểm tra tập tin có sẵn để lưu.  
                     if (file != null)
                     {
-                        System.Diagnostics.Debug.WriteLine("Da vao day files");
+                        indexLP += 1;
                         var InputFileName = Path.GetFileName(file.FileName);
-                        System.Diagnostics.Debug.WriteLine("InputFileName");
                         InputFileName = lienCapTieuHoc.HocSinh_DinhDanh + "_" + DateTime.Now.ToFileTime() + "_" + InputFileName;
-                        var urlFile = Server.MapPath("~/UploadLienCapTieuHoc/MaDinhDanh/") + InputFileName;
+                        var urlFile = Server.MapPath("~/Uploads/LienCapTieuHoc/MinhChungLePhi/") + InputFileName;
                         // Lưu file vào thư mục trên server  
                         file.SaveAs(urlFile);
                         // lấy đường dẫn các file
-                        lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh += "UploadLienCapTieuHoc/MaDinhDanh/" + InputFileName + "#";
-                        // Hiển thị thông báo tổng số tệp đã lưu trên server.  
-                        //ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully";
-                        TempData["Result"] = "THANHCONG";
+                        string fileUrl = "Uploads/LienCapTieuHoc/MinhChungLePhi/" + InputFileName;
+                        lienCapTieuHoc.HocSinh_MinhChungLePhi += fileUrl.ToString();
+                        // lấy đường dẫn các file
+                        if (indexLP < HocSinh_MinhChungLePhi.Count() - 1)
+                        {
+                            lienCapTieuHoc.HocSinh_MinhChungLePhi += "#";
+                        }
                     }
-                    else
-                    {
-                        TempData["Result"] = "THATBAI";
-                    }
-
                 }
-                foreach (var file in HocSinh_GiayUuTien)
-                {
-                    //Kiểm tra tập tin có sẵn để lưu.  
-                    if (file != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Da vao day files");
-                        var InputFileName = Path.GetFileName(file.FileName);
-                        System.Diagnostics.Debug.WriteLine("InputFileName");
-                        InputFileName = lienCapTieuHoc.HocSinh_DinhDanh + "_" + DateTime.Now.ToFileTime() + "_" + InputFileName;
-                        var urlFile = Server.MapPath("~/UploadLienCapTieuHoc/GiayUuTien/") + InputFileName;
-                        // Lưu file vào thư mục trên server  
-                        file.SaveAs(urlFile);
-                        // lấy đường dẫn các file
-                        lienCapTieuHoc.HocSinh_GiayUuTien += "UploadLienCapTieuHoc/GiayUuTien/" + InputFileName + "#";
-                        // Hiển thị thông báo tổng số tệp đã lưu trên server.  
-                        //ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully";
-                        TempData["Result"] = "THANHCONG";
-                    }
-                    else
-                    {
-                        TempData["Result"] = "THATBAI";
-                    }
-
-                }
-                foreach (var file in HocSinh_MinhChungLePhi)
-                {
-                    //Kiểm tra tập tin có sẵn để lưu.  
-                    if (file != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Da vao day files");
-                        var InputFileName = Path.GetFileName(file.FileName);
-                        System.Diagnostics.Debug.WriteLine("InputFileName");
-                        InputFileName = lienCapTieuHoc.HocSinh_DinhDanh + "_" + DateTime.Now.ToFileTime() + "_" + InputFileName;
-                        var urlFile = Server.MapPath("~/UploadLienCapTieuHoc/MinhChungLePhi/") + InputFileName;
-                        // Lưu file vào thư mục trên server  
-                        file.SaveAs(urlFile);
-                        // lấy đường dẫn các file
-                        lienCapTieuHoc.HocSinh_MinhChungLePhi += "UploadLienCapTieuHoc/MinhChungLePhi/" + InputFileName + "#";
-                        // Hiển thị thông báo tổng số tệp đã lưu trên server.  
-                        //ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully";
-                        TempData["Result"] = "THANHCONG";
-                    }
-                    else
-                    {
-                        TempData["Result"] = "THATBAI";
-                    }
-
                 }
                 lienCapTieuHoc.HocSinh_GhiChu = "";
+                lienCapTieuHoc.HocSinh_MinhChungMN = lienCapTieuHoc.HocSinh_MinhChungMN != null ? lienCapTieuHoc.HocSinh_MinhChungMN.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
+                lienCapTieuHoc.HocSinh_MinhChungGiayKS = lienCapTieuHoc.HocSinh_MinhChungGiayKS != null ? lienCapTieuHoc.HocSinh_MinhChungGiayKS.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
+                lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh = lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh != null ? lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
+                lienCapTieuHoc.HocSinh_GiayUuTien = lienCapTieuHoc.HocSinh_GiayUuTien!= null ? lienCapTieuHoc.HocSinh_GiayUuTien.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
+                lienCapTieuHoc.HocSinh_MinhChungLePhi = lienCapTieuHoc.HocSinh_MinhChungLePhi!=null? lienCapTieuHoc.HocSinh_MinhChungLePhi.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
+
 
                 db.LienCapTieuHocs.Add(lienCapTieuHoc);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }catch  (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
             }
-
             return View(lienCapTieuHoc);
         }
 
