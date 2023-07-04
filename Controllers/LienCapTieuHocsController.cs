@@ -59,6 +59,7 @@ namespace HDU_AppXetTuyen.Controllers
             string activationToken = Guid.NewGuid().ToString();
             try
             {
+                TempData["Result"] = "";
                 if (ModelState.IsValid) { 
 
                 int indexMN = 0;
@@ -192,7 +193,9 @@ namespace HDU_AppXetTuyen.Controllers
 
                 db.LienCapTieuHocs.Add(lienCapTieuHoc);
                 db.SaveChanges();
-                string activationUrl = Url.Action("ConfirmInfomation", "LienCapTieuHoc", new { token = activationToken }, Request.Url.Scheme);
+                TempData["Result"] = "THANHCONG";
+                ViewBag.status = "Thành công, Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email";
+                string activationUrl = Url.Action("ConfirmInfomation", "LienCapTieuHocs", new { token = activationToken }, Request.Url.Scheme);
                 var subject = "Xác nhận thông tin đăng ký";
                 var body = "Xin chào " + lienCapTieuHoc.HocSinh_HoTen + ", <br/> Bạn vừa đăng ký dự tuyển vào lớp 1 trường TH, THCS & THPT Hồng Đức. Vui lòng xác nhận lại các thông tin sau: " +
 
@@ -211,9 +214,10 @@ namespace HDU_AppXetTuyen.Controllers
             }
             catch  (Exception e)
             {
+                TempData["Result"] = "THAIBAI";
                 System.Diagnostics.Debug.WriteLine(e);
             }
-            return View(lienCapTieuHoc);
+            return View();
         }
 
         // GET: LienCapTieuHocs/Edit/5
@@ -281,7 +285,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult ConfirmInfomation(string token)
         {
-            var hocSinh = db.LienCapTHCSs.Where(n => n.HocSinh_Activation == token).FirstOrDefault();
+            var hocSinh = db.LienCapTieuHocs.Where(n => n.HocSinh_Activation == token).FirstOrDefault();
             if (hocSinh != null)
             {
                 hocSinh.HocSinh_Activation = "";

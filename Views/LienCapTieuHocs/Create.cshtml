@@ -1,5 +1,4 @@
 ﻿@model HDU_AppXetTuyen.Models.LienCapTieuHoc
-
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_LayoutLienCap.cshtml";
@@ -21,6 +20,9 @@
     </div>
     <div class="container-fluid px-12">
         <div id="fadeInUp">
+            <br />
+            @*<center><label class="text-bg-danger" id="checkSTT">@ViewBag.status</label> </center>*@
+
             <div class="card card-header-actions mt-3 mb-1">
                 <div class="card-header">Lưu ý</div>
                 <div class="card-body">
@@ -329,9 +331,10 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Đăng ký" class="btn btn-primary" />
+                            <button onclick="createData()" value="Đăng ký" class="btn btn-primary"> Đăng ký </button>
                         </div>
                     </div>
+                    <br />
                 </div>
 
             </div>
@@ -351,9 +354,16 @@
 }
 
 <script>
+    $(document).ready(function () {
+
+        console.log('@TempData["Result"]')
+        if ('@TempData["Result"]' == "THANHCONG") {
+            toastr.success('Thành công, Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email');
+        }
+    });
 
 
-    resetForm();
+
 
     var formdataHocSinh_MinhChungMN = new FormData(); //FormData object
     var formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
@@ -405,18 +415,23 @@
         $("#myToast").toast("show");
     }
     // custom data submit dangkyForm
-    //function createData() {
+    function createData() {
+        console.log("submit form");
+        $("#dangkyForm").submit();
+        @TempData["Result"]="";
+        resetForm();
+    }
+    //$("#dangkyForm").submit(function (event) {
+    //    event.preventDefault(); // Prevents the form from submitting normally
+    //    console.log("submit form");
     //    $("#dangkyForm").submit();
-    //    resetForm();
-    //    alert("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
-
-    //}
-    $("#dangkyForm").submit(function (event) {
-        event.preventDefault(); // Prevents the form from submitting normally
-        showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
-        $("#loadingModal").modal("hide");
-        resetForm(); // Reset the form after submission
-    });
+    //    let sttCheckSumit = $("#checkSTT").text();
+    //    if (sttCheckSumit == "DONE") {
+    //        $("#loadingModal").modal("hide");
+    //        showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
+    //        resetForm(); // Reset the form after submission
+    //    }
+    //});
 
     function convertFormDataToDataTransfer(formData) {
         var dataTransfer = new DataTransfer();
@@ -646,7 +661,13 @@
             $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "hidden");
         }
     }
+
+
 </script>
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 @section Scripts {
