@@ -359,6 +359,7 @@
         console.log('@TempData["Result"]')
         if ('@TempData["Result"]' == "THANHCONG") {
             toastr.success('Thành công, Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email');
+            resetForm();
         }
     });
 
@@ -418,8 +419,6 @@
     function createData() {
         console.log("submit form");
         $("#dangkyForm").submit();
-        @TempData["Result"]="";
-        resetForm();
     }
     //$("#dangkyForm").submit(function (event) {
     //    event.preventDefault(); // Prevents the form from submitting normally
