@@ -12,32 +12,35 @@
         [Key]
         public long HocSinh_ID { get; set; }
 
-        //[Required(ErrorMessage = "Mã định danh bắt buộc nhập")]
+        [Required(ErrorMessage = "Mã định danh bắt buộc nhập")]
         [Display(Name = "Mã định danh cá nhân")]
         [StringLength(100)]
         public string HocSinh_DinhDanh { get; set; }
 
-        //[Required(ErrorMessage = "Họ và tên bắt buộc nhập")]    
+        [Required(ErrorMessage = "Họ và tên bắt buộc nhập")]    
         [Display(Name = "Họ và tên")]
         [StringLength(100)]
         public string HocSinh_HoTen { get; set; }
 
-        //[Required(ErrorMessage = "Giới tính bắt buộc chọn")]
+        [Required(ErrorMessage = "Giới tính bắt buộc chọn")]
         [Display(Name = "Giới tính")]
         public int? HocSinh_GioiTinh { get; set; }
 
-        //[Required(ErrorMessage = "Ngày sinh bắt buộc nhập")]
+        [Required(ErrorMessage = "Ngày sinh bắt buộc nhập")]
         [Display(Name = "Ngày sinh")]
         [StringLength(20)]
         public string HocSinh_NgaySinh { get; set; }
 
-        //[Required(ErrorMessage = "Nơi sinh bắt buộc nhập")]
+        [Required(ErrorMessage = "Nơi sinh bắt buộc nhập")]
         [Display(Name = "Nơi sinh")]
         [StringLength(500)]
         public string HocSinh_NoiSinh { get; set; }
 
-        //[Required(ErrorMessage = "Email bắt buộc nhập")]
+        [Required(ErrorMessage = "Email bắt buộc nhập")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail sai định dạng")]
+        [EmailAddress(ErrorMessage = "E-mail sai định dạng")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail sai định dạng")]
+
         [Display(Name = "Email")]
         [StringLength(100)]
         public string HocSinh_Email { get; set; }
@@ -54,7 +57,7 @@
         [StringLength(100)]
         public string HocSinh_UuTien { get; set; }
 
-        //[Required(ErrorMessage = "Họ tên cha bắt buộc nhập")]
+        [Required(ErrorMessage = "Họ tên cha bắt buộc nhập")]
         [Display(Name = "Họ tên cha")]
         [StringLength(4000)]
         public string HocSinh_ThongTinCha { get; set; }
@@ -64,13 +67,15 @@
 
         public string HocSinh_NgheNghiepCha { get; set; }
 
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
+                   ErrorMessage = "Số điện thoại sai đinh dạng")]
         [Display(Name = "Điện thoại cha")]
-        //[Required(ErrorMessage = "Điện thoại cha bắt buộc nhập")]
+        [Required(ErrorMessage = "Điện thoại cha bắt buộc nhập")]
 
         [StringLength(20)]
         public string HocSinh_DienThoaiCha { get; set; }
 
-        //[Required(ErrorMessage = "Họ tên mẹ bắt buộc nhập")]
+        [Required(ErrorMessage = "Họ tên mẹ bắt buộc nhập")]
         [Display(Name = "Họ tên mẹ")]
         [StringLength(4000)]
         public string HocSinh_ThongTinMe { get; set; }
@@ -79,7 +84,9 @@
         [StringLength(4000)]
         public string HocSinh_NgheNghiepMe { get; set; }
 
-        //[Required(ErrorMessage = "Điện thoại mẹ bắt buộc nhập")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
+           ErrorMessage = "Số điện thoại sai đinh dạng.")]
+        [Required(ErrorMessage = "Điện thoại mẹ bắt buộc nhập")]
         [Display(Name = "Điện thoại mẹ")]
         [StringLength(20)]
         public string HocSinh_DienThoaiMe { get; set; }
@@ -109,9 +116,17 @@
         [Display(Name = "Ghi chú")]
         [StringLength(4000)]
         public string HocSinh_GhiChu { get; set; }
+        
+        [NotMapped]
+        [StringLength(4000)]
+        public string HocSinh_GhiChu2 { get; set; }
 
         [Display(Name = "Minh chứng lệ phí")]
         [StringLength(4000)]
+
         public string HocSinh_MinhChungLePhi { get; set; }
+
+        [StringLength(4000)]
+        public string HocSinh_Activation { get; set; }
     }
 }

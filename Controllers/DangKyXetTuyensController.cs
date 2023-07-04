@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Newtonsoft.Json;
 using HDU_AppXetTuyen.Ultils;
+using System.IO;
 
 namespace HDU_AppXetTuyen.Controllers
 {
@@ -215,6 +216,76 @@ namespace HDU_AppXetTuyen.Controllers
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult DangKyXetTuyen_UploadFile_Multi()
+        {
+            DbConnecttion db = new DbConnecttion();
+
+            var session = Session["login_session"].ToString();
+            var ts = db.ThiSinhDangKies.FirstOrDefault(n => n.ThiSinh_MatKhau.Equals(session));
+            string cccd = ts.ThiSinh_CCCD;
+
+            int so_file_hb = int.Parse(Request["so_file_hb"].ToString());
+            int so_file_cccd = int.Parse(Request["so_file_cccd"].ToString());
+            int so_file_btn = int.Parse(Request["so_file_btn"].ToString());
+            int so_file_gtut = int.Parse(Request["so_file_gtut"].ToString());
+
+
+            HttpFileCollectionBase files = Request.Files;
+            int j = 0;
+            string MinhChung_HB = "";
+            string MinhChung_CCCD = "";
+            string MinhChung_Bang = "";
+            string MinhChung_UuTien = "";
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                HttpPostedFileBase file = files[i];
+                string fname;
+                // Checking for Internet Explorer      
+                if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                {
+                    string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                    fname = cccd+ DateTime.Now.ToFileTime() + "_" +  testfiles[testfiles.Length - 1];
+                }
+                else
+                {
+                    fname = cccd+ DateTime.Now.ToFileTime() + "_" + file.FileName;
+                }
+                // lấy chuỗi lưu vào csdl
+                if (i < so_file_hb)
+                {
+                    MinhChung_HB += "#/Uploads/DKXTHocBaFile/" + fname;
+                }
+                if (i >= so_file_hb && i < so_file_hb + so_file_cccd)
+                {
+                    MinhChung_CCCD += "#/Uploads/DKXTHocBaFile/" + fname;
+                }
+
+                if (i > so_file_hb + so_file_cccd && i < so_file_btn + so_file_hb + so_file_cccd)
+                {
+                    MinhChung_Bang += "#/Uploads/DKXTHocBaFile/" + fname;
+                }
+                if (i > so_file_btn + so_file_hb + so_file_cccd && i < so_file_gtut + so_file_btn + so_file_hb + so_file_cccd)
+                {
+                    MinhChung_UuTien += "#/Uploads/DKXTHocBaFile/" + fname;
+                }
+
+                // Get the complete folder path and store the file inside it.      
+                fname = Path.Combine(Server.MapPath("~/Uploads/DKXTHocBaFile/"), fname);
+                file.SaveAs(fname);
+
+            }
+            return Json(new
+            {
+                MinhChung_HB,
+                MinhChung_CCCD,
+                MinhChung_Bang,
+                MinhChung_UuTien,
+
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
         [HttpPost]
         public JsonResult DangKyXetTuyen_Insert(ThongTinNguyenVong nguyenvong)
         {
@@ -233,12 +304,18 @@ namespace HDU_AppXetTuyen.Controllers
 
                 dkxt.Nganh_ID = int.Parse(nguyenvong.Nganh_ID);
                 dkxt.Thm_ID = int.Parse(nguyenvong.Thm_ID);
-                dkxt.Dkxt_XepLoaiHocLuc_12 = ts.ThiSinh_HocLucLop12;
-                dkxt.Dkxt_XepLoaiHanhKiem_12 = ts.ThiSinh_HanhKiemLop12;
+                var diemTong = double.Parse(nguyenvong.Dkxt_Diem_Tong);
+
                 dkxt.Dkxt_Diem_M1 = nguyenvong.Dkxt_Diem_M1;
                 dkxt.Dkxt_Diem_M2 = nguyenvong.Dkxt_Diem_M2;
                 dkxt.Dkxt_Diem_M3 = nguyenvong.Dkxt_Diem_M3;
                 dkxt.Dkxt_Diem_Tong = nguyenvong.Dkxt_Diem_Tong;
+
+                dkxt.Dkxt_MinhChung_HB = nguyenvong.Dkxt_MinhChung_HB;
+                dkxt.Dkxt_MinhChung_CCCD = nguyenvong.Dkxt_MinhChung_CCCD;
+                dkxt.Dkxt_MinhChung_Bang = nguyenvong.Dkxt_MinhChung_HB;
+                dkxt.Dkxt_MinhChung_UuTien = nguyenvong.Dkxt_MinhChung_UuTien;
+
                 dkxt.ThiSinh_ID = ts.ThiSinh_ID;
                 dkxt.DoiTuong_ID = ts.DoiTuong_ID;
                 dkxt.KhuVuc_ID = ts.KhuVuc_ID;
@@ -246,7 +323,11 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxt.Dkxt_TrangThai = 0;
                 dkxt.Dkxt_TrangThai_KetQua = 0;
 
-                var diemTong = double.Parse(nguyenvong.Dkxt_Diem_Tong);
+                dkxt.Dkxt_XepLoaiHocLuc_12 = ts.ThiSinh_HocLucLop12;
+                dkxt.Dkxt_XepLoaiHanhKiem_12 = ts.ThiSinh_HanhKiemLop12;
+
+
+              
                 var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;
                 var khuVucDoiTuong = ts.KhuVuc.KhuVuc_DiemUuTien;
                 var diemTongFull = diemTong + diemDoiTuong + khuVucDoiTuong;
@@ -279,13 +360,15 @@ namespace HDU_AppXetTuyen.Controllers
             if (!string.IsNullOrWhiteSpace(data.Dkxt_ID_UpDate_post.ToString()))
             {
                 int id = int.Parse(data.Dkxt_ID_UpDate_post.ToString());
-                System.Diagnostics.Debug.WriteLine(id);
+           
                 DangKyXetTuyen dangKyXetTuyen = db.DangKyXetTuyens.Find(id);
                 int nv_current = (int)dangKyXetTuyen.Dkxt_NguyenVong;
+                int idThisinh = (int)dangKyXetTuyen.ThiSinh_ID;
+
                 db.DangKyXetTuyens.Remove(dangKyXetTuyen);
                 foreach (var item in db.DangKyXetTuyens.Where(nv => nv.Dkxt_NguyenVong > nv_current))
                 {
-                    DangKyXetTuyen dangKyXetTuyen_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong);
+                    DangKyXetTuyen dangKyXetTuyen_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong && i.ThiSinh_ID == idThisinh);
                     dangKyXetTuyen_change.Dkxt_NguyenVong = item.Dkxt_NguyenVong - 1;
                 }
 
@@ -405,40 +488,7 @@ namespace HDU_AppXetTuyen.Controllers
                 msg = "Có lỗi xảy ra."
             }, JsonRequestBehavior.AllowGet);
         }
-
         #region Delete by @cường
-        [HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        public JsonResult Delete2(string idDkxt)
-        {
-            DbConnecttion db = new DbConnecttion();
-
-            if (!string.IsNullOrWhiteSpace(idDkxt))
-            {
-                int id = int.Parse(idDkxt);
-                System.Diagnostics.Debug.WriteLine(id);
-                DangKyXetTuyen dangKyXetTuyen = db.DangKyXetTuyens.Find(id);
-                int nv_current = (int)dangKyXetTuyen.Dkxt_NguyenVong;
-                db.DangKyXetTuyens.Remove(dangKyXetTuyen);
-                foreach (var item in db.DangKyXetTuyens.Where(nv => nv.Dkxt_NguyenVong > nv_current))
-                {
-                    DangKyXetTuyen dangKyXetTuyen_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong);
-                    dangKyXetTuyen_change.Dkxt_NguyenVong = item.Dkxt_NguyenVong - 1;
-                }
-                db.SaveChanges();
-                return Json(new
-                {
-                    status = true,
-                    msg = "Xoá dữ liệu thành công"
-                }, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new
-            {
-                status = false,
-                msg = "Có lỗi xảy ra."
-            }, JsonRequestBehavior.AllowGet);
-        }
-
         [HttpPost, ActionName("Delete")]
         public JsonResult Delete(string idDkxt)
         {
@@ -506,5 +556,9 @@ namespace HDU_AppXetTuyen.Controllers
         public string Dkxt_Diem_M2 { get; set; }
         public string Dkxt_Diem_M3 { get; set; }
         public string Dkxt_Diem_Tong { get; set; }
+        public string Dkxt_MinhChung_HB { get; set; }
+        public string Dkxt_MinhChung_CCCD { get; set; }
+        public string Dkxt_MinhChung_Bang { get; set; }
+        public string Dkxt_MinhChung_UuTien { get; set; }
     }
 }

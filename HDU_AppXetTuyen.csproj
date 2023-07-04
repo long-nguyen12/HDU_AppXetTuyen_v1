@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -279,6 +279,8 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\styles.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -506,6 +508,8 @@
     <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAuth\Register.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -537,6 +541,8 @@
     <Content Include="Scripts\ScriptsOLD\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\ScriptsOLD\modernizr-2.8.3.js" />
     <Content Include="Scripts\ScriptsOLD\scripts.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -565,6 +571,12 @@
     <Content Include="Views\LienCapTHCS\Create.cshtml" />
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Create.cshtml" />
+    <Content Include="Views\Shared\_Layout_empty.cshtml" />
+    <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutLienCap.cshtml" />
+    <Content Include="Views\LienCapTHCS\Create.cshtml" />
+    <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Delete.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Details.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
@@ -575,11 +587,17 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
+    <Folder Include="Uploads\LienCapTieuHoc\GiayUuTien\" />
+    <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
+    <Folder Include="Uploads\LienCapTieuHoc\MinhChungLePhi\" />
+    <Folder Include="Uploads\LienCapTieuHoc\MinhChungMN\" />
     <Folder Include="Uploads\LienCap\DinhDanh\" />
     <Folder Include="Uploads\LienCap\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCap\GiayUuTien\" />
     <Folder Include="Uploads\LienCap\HocBa\" />
     <Folder Include="Uploads\LienCap\LePhi\" />
+    <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\UploadMinhChungs\" />
     <Folder Include="Views\ExportFile\" />
   </ItemGroup>
