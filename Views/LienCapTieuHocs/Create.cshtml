@@ -8,11 +8,37 @@
 @using (Html.BeginForm("Create", "LienCapTieuHocs", FormMethod.Post, new { id = "dangkyForm", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
+    <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container-fluid px-12">
         <div id="fadeInUp">
+            <div class="card card-header-actions mt-3 mb-1">
+                <div class="card-header">Lưu ý</div>
+                <div class="card-body">
+                    <div class="col-xxl-12">
+                        <p style="color: red; font-style: italic" class="mb-1">
+                            - Những trường có dấu sao là trường bắt buộc nhập
+                        </p>
+                        <p style="color: red; font-style: italic" class="mb-1">
+                            - Sau khi đăng ký, vui lòng xác nhận lại các thông tin đã được gửi về email
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="card card-header-actions mt-3 mb-1 ">
-                <div class="card-header"> <h5>Đăng ký xét tuyển vào lớp 1</h5> <input type="button" onclick="createData()" value="Đăng ký" class="btn btn-primary" /></div>
+                <div class="card-header">
+                    Đăng ký xét tuyển vào lớp 1
+                    @*<input type="button" onclick="createData()" value="Đăng ký" class="btn btn-primary" />*@
+                </div>
                 <div class="card-body">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="row">
@@ -20,7 +46,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_DinhDanh">Mã định danh cá nhân <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_DinhDanh, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_DinhDanh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mã định danh" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_DinhDanh, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -29,7 +55,7 @@
                             <div class="form-group">
                                 <label class="control-label" for="HocSinh_HoTen">Họ và tên <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_HoTen, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_HoTen, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -52,7 +78,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ngày sinh" } })
+                                    @Html.EditorFor(model => model.HocSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", id = "datepicker", @placeholder = "dd/mm/yyyy" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_NgaySinh, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -65,7 +91,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_NoiSinh">Nơi sinh <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_NoiSinh, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_NoiSinh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nơi sinh" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_NoiSinh, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -74,7 +100,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_NoiCuTru">Nơi cư trú <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_NoiCuTru, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_NoiCuTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nơi cư trú" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_NoiCuTru, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -87,7 +113,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_Email, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -102,7 +128,7 @@
                                             new SelectListItem { Text = "Con của cán bộ viên chức đang công tác tại Trường Đại học Hồng Đức", Value = "1" },
                                             new SelectListItem { Text = "Học sinh Trường Mầm Non Thực Hành, Trường Đại học Hồng Đức", Value = "1" },
                                         }, "Chọn diện ưu tiên", htmlAttributes: new { @class = "form-select" })*@
-                                    @Html.EditorFor(model => model.HocSinh_UuTien, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_UuTien, new { htmlAttributes = new { @class = "form-control", @placeholder = "Diện ưu tiên" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_UuTien, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -113,7 +139,7 @@
                                     Đã hoàn thành chương trình mẫu giáo tại:
                                 </label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_TruongMN, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_TruongMN, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trường mầm non" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_TruongMN, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -126,7 +152,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_ThongTinCha">Họ tên cha <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_ThongTinCha, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_ThongTinCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ tên cha" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_ThongTinCha, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -135,7 +161,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_NgheNghiepCha">Nghề nghiệp cha </label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_NgheNghiepCha, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_NgheNghiepCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nghề nghiệp cha" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepCha, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -144,7 +170,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_DienThoaiCha">Điện thoại cha <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_DienThoaiCha, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_DienThoaiCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Điện thoại cha" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiCha, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -157,7 +183,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_ThongTinMe">Họ tên mẹ <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_ThongTinMe, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_ThongTinMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ tên mẹ" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_ThongTinMe, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -167,7 +193,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_NgheNghiepMe">Nghề nghiệp mẹ </label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_NgheNghiepMe, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_NgheNghiepMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nghề nghiệp mẹ" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepMe, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -176,13 +202,14 @@
                             <div class="form-group">
                                 <label class="control-label col-md-12" for="HocSinh_DienThoaiMe">Điện thoại mẹ <a style="color:red; text-decoration:none">(*)</a></label>
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.HocSinh_DienThoaiMe, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.HocSinh_DienThoaiMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Điện thoại mẹ" } })
                                     @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiMe, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <br />
+                    <div class="card-header mt-4">Minh chứng</div>
+
                     <div class="row">
                         <div class="col-sm-12 col-md-4">
                             <div class="form-group">
@@ -309,17 +336,24 @@
 
             </div>
         </div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Toast Title</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                </div>
+            </div>
+        </div>
     </div>
 
 }
 
 <script>
-    //$(document).ready(function () {
-    //    $('#datepicker').datepicker({
-    //        format: 'dd/mm/yyyy', // Specify the desired date format
-    //        autoclose: true // Close the datepicker when a date is selected
-    //    });
-    //});
+
+
+    resetForm();
 
     var formdataHocSinh_MinhChungMN = new FormData(); //FormData object
     var formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
@@ -327,29 +361,83 @@
     var formdataHocSinh_GiayUuTien = new FormData(); //FormData object
     var formdataHocSinh_MinhChungLePhi = new FormData(); //FormData object
 
+    function resetForm() {
+        formdataHocSinh_MinhChungMN = new FormData(); //FormData object
+        formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
+        formdataHocSinh_MinhChungMaDinhDanh = new FormData(); //FormData object
+        formdataHocSinh_GiayUuTien = new FormData(); //FormData object
+        formdataHocSinh_MinhChungLePhi = new FormData(); //FormData object
 
-    // custom data submit dangkyForm
-    function createData() {
+        $('#HocSinh_DinhDanh').val("");
+        $('#HocSinh_HoTen').val("");
+        $('#HocSinh_GioiTinh').val("3");
+        $('#datepicker').val("");
+        $('#HocSinh_NoiSinh').val("");
+        $('#HocSinh_Email').val("");
+        $('#HocSinh_NoiCuTru').val("");
+        $('#HocSinh_TruongMN').val("");
+        $('#HocSinh_UuTien').val("");
+        $('#HocSinh_ThongTinCha').val("");
+        $('#HocSinh_DienThoaiCha').val("");
+        $('#HocSinh_NgheNghiepCha').val("");
+        $('#HocSinh_ThongTinMe').val("");
+        $('#HocSinh_DienThoaiMe').val("");
+        $('#HocSinh_NgheNghiepMe').val("");
 
-        $("#dangkyForm").submit();
+
+        $('#FilesList_HocSinh_MinhChungMN tbody').empty();
+        $('#FilesList_HocSinh_MinhChungGiayKS tbody').empty();
+        $('#FilesList_HocSinh_MinhChungMaDinhDanh tbody').empty();
+        $('#FilesList_HocSinh_GiayUuTien tbody').empty();
+        $('#FilesList_HocSinh_MinhChungLePhi tbody').empty();
+
+        $("#HocSinh_MinhChungMN").val = '';
+        $("#HocSinh_MinhChungGiayKS").val = '';
+        $("#HocSinh_MinhChungMaDinhDanh").val = '';
+        $("#HocSinh_GiayUuTien").val = '';
+        $("#HocSinh_MinhChungLePhi").val = '';
+
     }
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+    // custom data submit dangkyForm
+    //function createData() {
+    //    $("#dangkyForm").submit();
+    //    resetForm();
+    //    alert("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
+
+    //}
+    $("#dangkyForm").submit(function (event) {
+        event.preventDefault(); // Prevents the form from submitting normally
+        showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
+        $("#loadingModal").modal("hide");
+        resetForm(); // Reset the form after submission
+    });
 
     function convertFormDataToDataTransfer(formData) {
         var dataTransfer = new DataTransfer();
-
         for (var pair of formData.entries()) {
             var inputName = pair[0];
             var inputValue = pair[1];
-
             if (inputValue instanceof File) {
                 dataTransfer.items.add(inputValue);
             }
         }
-
         return dataTransfer;
     }
 
     $(document).ready(function () {
+
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+
+
         $("#HocSinh_MinhChungMN").on("change", function () {
             let type = "HocSinh_MinhChungMN";
             var fileInput = document.getElementById('HocSinh_MinhChungMN');
@@ -360,8 +448,8 @@
                 let srandomid = Math.random().toString(36).substring(7);
 
                 formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
-                var markup = "<tr id='" + srandomid + "'> <td> <button onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' > <span class='glyphicon glyphicon-remove red'></span></button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
                 $("#FilesList_HocSinh_MinhChungMN tbody").append(markup)
 
             }
@@ -381,8 +469,8 @@
                 let srandomid = Math.random().toString(36).substring(7);
 
                 formdataHocSinh_MinhChungGiayKS.append(sfilename, fileInput.files[i]);
-                var markup = "<tr id='" + srandomid + "'> <td> <button onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' > <span class='glyphicon glyphicon-remove red'></span></button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
                 $("#FilesList_HocSinh_MinhChungGiayKS tbody").append(markup)
 
             }
@@ -402,8 +490,8 @@
 
                 formdataHocSinh_MinhChungMaDinhDanh.append(sfilename, fileInput.files[i]);
 
-                var markup = "<tr id='" + srandomid + "'> <td> <button onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' > <span class='glyphicon glyphicon-remove red'></span></button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
                 $("#FilesList_HocSinh_MinhChungMaDinhDanh tbody").append(markup)
 
             }
@@ -423,8 +511,8 @@
 
                 formdataHocSinh_GiayUuTien.append(sfilename, fileInput.files[i]);
 
-                var markup = "<tr id='" + srandomid + "'> <td> <button onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' > <span class='glyphicon glyphicon-remove red'></span></button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
                 $("#FilesList_HocSinh_GiayUuTien tbody").append(markup)
 
             }
@@ -444,8 +532,8 @@
 
                 formdataHocSinh_MinhChungLePhi.append(sfilename, fileInput.files[i]);
 
-                var markup = "<tr id='" + srandomid + "'> <td> <button onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' > <span class='glyphicon glyphicon-remove red'></span></button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
                 $("#FilesList_HocSinh_MinhChungLePhi tbody").append(markup)
 
             }
@@ -559,7 +647,8 @@
         }
     }
 </script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

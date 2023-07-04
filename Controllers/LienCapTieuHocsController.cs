@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using HDU_AppXetTuyen.Models;
@@ -55,6 +56,7 @@ namespace HDU_AppXetTuyen.Controllers
            IEnumerable<HttpPostedFileBase> HocSinh_MinhChungLePhi)
 
         {
+            string activationToken = Guid.NewGuid().ToString();
             try
             {
                 if (ModelState.IsValid) { 
@@ -186,12 +188,28 @@ namespace HDU_AppXetTuyen.Controllers
                 lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh = lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh != null ? lienCapTieuHoc.HocSinh_MinhChungMaDinhDanh.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
                 lienCapTieuHoc.HocSinh_GiayUuTien = lienCapTieuHoc.HocSinh_GiayUuTien!= null ? lienCapTieuHoc.HocSinh_GiayUuTien.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
                 lienCapTieuHoc.HocSinh_MinhChungLePhi = lienCapTieuHoc.HocSinh_MinhChungLePhi!=null? lienCapTieuHoc.HocSinh_MinhChungLePhi.ToString().Replace("System.Web.HttpPostedFileWrapper", "") : "";
-
+                lienCapTieuHoc.HocSinh_Activation = activationToken;
 
                 db.LienCapTieuHocs.Add(lienCapTieuHoc);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }catch  (Exception e)
+                string activationUrl = Url.Action("ConfirmInfomation", "LienCapTieuHoc", new { token = activationToken }, Request.Url.Scheme);
+                var subject = "Xác nhận thông tin đăng ký";
+                var body = "Xin chào " + lienCapTieuHoc.HocSinh_HoTen + ", <br/> Bạn vừa đăng ký dự tuyển vào lớp 1 trường TH, THCS & THPT Hồng Đức. Vui lòng xác nhận lại các thông tin sau: " +
+
+                     "<p> Họ và tên: " + lienCapTieuHoc.HocSinh_HoTen + "</p>" +
+                     "<p> Ngày tháng năm sinh: " + lienCapTieuHoc.HocSinh_NgaySinh + "</p>" +
+                     "<p> Nơi sinh: " + lienCapTieuHoc.HocSinh_NoiSinh + "</p>" +
+                     "<p> Nơi cư trú: " + lienCapTieuHoc.HocSinh_NoiCuTru + "</p>" +
+                     "<p> Họ và tên cha: " + lienCapTieuHoc.HocSinh_ThongTinCha + "</p>" +
+                     "<p> Số điện thoại: " + lienCapTieuHoc.HocSinh_DienThoaiCha + "</p>" +
+                     "<p> Họ và tên mẹ: " + lienCapTieuHoc.HocSinh_ThongTinMe + "</p>" +
+                     "<p> Số điện thoại: " + lienCapTieuHoc.HocSinh_DienThoaiMe + "</p>" +
+                     "<p>Nếu thông tin chính xác, vui lòng ấn vào đường link sau để xác nhận: " + activationUrl + " </p>";
+
+                SendEmail(lienCapTieuHoc.HocSinh_Email, body, subject);
+                return View();            
+            }
+            catch  (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
             }
@@ -253,6 +271,45 @@ namespace HDU_AppXetTuyen.Controllers
             db.LienCapTieuHocs.Remove(lienCapTieuHoc);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ConfirmInfomation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult ConfirmInfomation(string token)
+        {
+            var hocSinh = db.LienCapTHCSs.Where(n => n.HocSinh_Activation == token).FirstOrDefault();
+            if (hocSinh != null)
+            {
+                hocSinh.HocSinh_Activation = "";
+                hocSinh.HocSinh_TrangThai = 1;
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
+        private void SendEmail(string email, string body, string subject)
+        {
+            using (MailMessage mm = new MailMessage("xettuyen@hdu.edu.vn", email))
+            {
+                mm.Subject = subject;
+                mm.Body = body;
+
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+
+                NetworkCredential NetworkCred = new NetworkCredential("xettuyen@hdu.edu.vn", "hongduc1");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
+            }
         }
 
         protected override void Dispose(bool disposing)

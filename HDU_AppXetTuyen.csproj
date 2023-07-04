@@ -565,15 +565,12 @@
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
     <Content Include="Views\KetQuaXetTuyens\Index.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Create.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Delete.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Details.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_empty.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutLienCap.cshtml" />
     <Content Include="Views\LienCapTHCS\Create.cshtml" />
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\ConfirmInfomation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
