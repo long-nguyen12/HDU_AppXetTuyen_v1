@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>E:\TestAppHDU</_PublishTargetUrl>
-    <History>True|2023-07-01T00:12:03.2730406Z;True|2023-06-30T22:47:01.2312607+07:00;True|2023-06-30T22:36:27.5357986+07:00;True|2023-06-30T22:22:09.6751578+07:00;True|2023-06-30T21:58:29.8679924+07:00;True|2023-06-30T21:58:22.5726057+07:00;True|2023-06-30T21:35:47.6206735+07:00;True|2023-06-30T21:33:25.1706267+07:00;</History>
+    <History>True|2023-07-04T09:20:57.8695036Z;True|2023-07-04T15:59:47.4784694+07:00;True|2023-07-04T15:50:58.8831496+07:00;True|2023-07-04T15:20:09.3672154+07:00;True|2023-07-04T14:42:41.5123940+07:00;True|2023-07-04T13:55:44.9402293+07:00;True|2023-07-01T07:12:03.2730406+07:00;True|2023-06-30T22:47:01.2312607+07:00;True|2023-06-30T22:36:27.5357986+07:00;True|2023-06-30T22:22:09.6751578+07:00;True|2023-06-30T21:58:29.8679924+07:00;True|2023-06-30T21:58:22.5726057+07:00;True|2023-06-30T21:35:47.6206735+07:00;True|2023-06-30T21:33:25.1706267+07:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -178,7 +178,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/30/2023 15:49:19</publishTime>
     </File>
     <File Include="Areas/Admin/Views/ThiSinhDangKys/Index.cshtml">
-      <publishTime>06/30/2023 20:31:34</publishTime>
+      <publishTime>03/07/2023 15:58:06</publishTime>
     </File>
     <File Include="Areas/Admin/Views/Tinhs/Create.cshtml">
       <publishTime>06/29/2023 07:23:36</publishTime>
@@ -256,10 +256,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/29/2023 07:27:49</publishTime>
     </File>
     <File Include="bin/HDU_AppXetTuyen.dll">
-      <publishTime>07/01/2023 07:12:01</publishTime>
+      <publishTime>07/04/2023 16:20:56</publishTime>
     </File>
     <File Include="bin/HDU_AppXetTuyen.pdb">
-      <publishTime>07/01/2023 07:12:01</publishTime>
+      <publishTime>07/04/2023 16:20:56</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/09/2018 16:10:50</publishTime>
@@ -1146,6 +1146,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="SbAdminPro/timeline.html">
       <publishTime>06/27/2023 20:00:17</publishTime>
     </File>
+    <File Include="SbAdminPro/tmTestUploadFile.html">
+      <publishTime>07/03/2023 16:04:27</publishTime>
+    </File>
     <File Include="SbAdminPro/toasts.html">
       <publishTime>06/27/2023 20:00:17</publishTime>
     </File>
@@ -1297,7 +1300,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/30/2023 15:49:19</publishTime>
     </File>
     <File Include="Views/Auth/ForgotPassword.cshtml">
-      <publishTime>06/29/2023 07:39:56</publishTime>
+      <publishTime>03/07/2023 15:56:57</publishTime>
     </File>
     <File Include="Views/Auth/Index.cshtml">
       <publishTime>06/30/2023 17:12:54</publishTime>
@@ -1312,7 +1315,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/29/2023 07:39:56</publishTime>
     </File>
     <File Include="Views/DangKyXetTuyens/dkxthocba.cshtml">
-      <publishTime>07/01/2023 07:11:43</publishTime>
+      <publishTime>07/04/2023 15:33:24</publishTime>
     </File>
     <File Include="Views/DangKyXetTuyens/iddkxthocba.cshtml">
       <publishTime>06/30/2023 15:49:19</publishTime>
@@ -1342,7 +1345,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/29/2023 07:39:56</publishTime>
     </File>
     <File Include="Views/LePhiXetTuyens/Index.cshtml">
-      <publishTime>06/30/2023 20:31:34</publishTime>
+      <publishTime>03/07/2023 13:59:30</publishTime>
     </File>
     <File Include="Views/NCDangKyXetTuyens/Create.cshtml">
       <publishTime>06/30/2023 15:49:19</publishTime>

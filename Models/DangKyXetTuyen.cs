@@ -67,6 +67,8 @@ namespace HDU_AppXetTuyen.Models
         public string Dkxt_MinhChung_CCCD { get; set; }
         [StringLength(4000)]
         public string Dkxt_MinhChung_Bang { get; set; }
+        [StringLength(4000)]
+        public string Dkxt_MinhChung_UuTien { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen_DiemTS> DangKyXetTuyen_DiemTS { get; set; }
