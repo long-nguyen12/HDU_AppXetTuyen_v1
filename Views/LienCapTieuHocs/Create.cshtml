@@ -1,0 +1,671 @@
+﻿@model HDU_AppXetTuyen.Models.LienCapTieuHoc
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutLienCap.cshtml";
+}
+
+@using (Html.BeginForm("Create", "LienCapTieuHocs", FormMethod.Post, new { id = "dangkyForm", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid px-12">
+        <div id="fadeInUp">
+            <br />
+            @*<center><label class="text-bg-danger" id="checkSTT">@ViewBag.status</label> </center>*@
+
+            <div class="card card-header-actions mt-3 mb-1">
+                <div class="card-header">Lưu ý</div>
+                <div class="card-body">
+                    <div class="col-xxl-12">
+                        <p style="color: red; font-style: italic" class="mb-1">
+                            - Những trường có dấu sao là trường bắt buộc nhập
+                        </p>
+                        <p style="color: red; font-style: italic" class="mb-1">
+                            - Sau khi đăng ký, vui lòng xác nhận lại các thông tin đã được gửi về email
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-header-actions mt-3 mb-1 ">
+                <div class="card-header">
+                    Đăng ký xét tuyển vào lớp 1
+                    @*<input type="button" onclick="createData()" value="Đăng ký" class="btn btn-primary" />*@
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_DinhDanh">Mã định danh cá nhân <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_DinhDanh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mã định danh" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_DinhDanh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="HocSinh_HoTen">Họ và tên <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_HoTen, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_HoTen, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    <div class="col-md-12 col-md-3">
+                                        <input type="radio" id="radioNam" name="HocSinh_GioiTinh" checked value="0">
+                                        <label for="HocSinh_GioiTinh">Nam</label>
+                                        <input type="radio" id="radioNữ" name="HocSinh_GioiTinh" value="1">
+                                        <label for="HocSinh_GioiTinh">Nữ</label>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.HocSinh_GioiTinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", id = "datepicker", @placeholder = "dd/mm/yyyy" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_NgaySinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_NoiSinh">Nơi sinh <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_NoiSinh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nơi sinh" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_NoiSinh, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_NoiCuTru">Nơi cư trú <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_NoiCuTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nơi cư trú" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_NoiCuTru, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class=" col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_UuTien">Thuộc diện ưu tiên </label>
+                                <div class="col-md-12">
+                                    @*@Html.DropDownListFor(m => m.HocSinh_UuTien, new List<SelectListItem>
+                                        {
+                                            new SelectListItem { Text = "Không", Value = "0" },
+                                            new SelectListItem { Text = "Con của cán bộ viên chức đang công tác tại Trường Đại học Hồng Đức", Value = "1" },
+                                            new SelectListItem { Text = "Học sinh Trường Mầm Non Thực Hành, Trường Đại học Hồng Đức", Value = "1" },
+                                        }, "Chọn diện ưu tiên", htmlAttributes: new { @class = "form-select" })*@
+                                    @Html.EditorFor(model => model.HocSinh_UuTien, new { htmlAttributes = new { @class = "form-control", @placeholder = "Diện ưu tiên" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_UuTien, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_TruongMN">
+                                    Đã hoàn thành chương trình mẫu giáo tại:
+                                </label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_TruongMN, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trường mầm non" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_TruongMN, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_ThongTinCha">Họ tên cha <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_ThongTinCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ tên cha" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_ThongTinCha, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_NgheNghiepCha">Nghề nghiệp cha </label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_NgheNghiepCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nghề nghiệp cha" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepCha, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_DienThoaiCha">Điện thoại cha <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_DienThoaiCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Điện thoại cha" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiCha, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_ThongTinMe">Họ tên mẹ <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_ThongTinMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ tên mẹ" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_ThongTinMe, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_NgheNghiepMe">Nghề nghiệp mẹ </label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_NgheNghiepMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nghề nghiệp mẹ" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepMe, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label class="control-label col-md-12" for="HocSinh_DienThoaiMe">Điện thoại mẹ <a style="color:red; text-decoration:none">(*)</a></label>
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.HocSinh_DienThoaiMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Điện thoại mẹ" } })
+                                    @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiMe, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Chứng nhận hoàn thành GDMN </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungMN" name="HocSinh_MinhChungMN" placeholder="Chọn giấy chứng nhận" value="Chọn giấy chứng nhận" multiple="multiple" type="file" data-val="false" data-val-required="Vui lòng chọn file hoàn thành GDMN"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungMN">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Giấy khai sinh </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungGiayKS" name="HocSinh_MinhChungGiayKS" multiple="multiple" type="file" data-val="false" data-val-required="Vui lòng chọn file giấy khai sinh"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungGiayKS">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Định danh cá nhân </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungMaDinhDanh" multiple="multiple" name="HocSinh_MinhChungMaDinhDanh" type="file" data-val="false" data-val-required="Vui lòng chọn file định danh cá nhân"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungMaDinhDanh">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Giấy chứng nhận ưu tiên </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_GiayUuTien" multiple="multiple" name="HocSinh_GiayUuTien" type="file" data-val="false" data-val-required="Vui lòng chọn file chứng nhận ưu tiên"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_GiayUuTien">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="formFileMultiple" class="form-label">Xác nhận đóng lệ phí </label>
+                                <div class="col-md-12">
+                                    <input class="form-control" id="HocSinh_MinhChungLePhi" multiple="multiple" name="HocSinh_MinhChungLePhi" type="file" data-val="false" data-val-required="Vui lòng chọn file xác nhận đóng lệ phí"
+                                           accept="application/pdf,.png, .jpeg, .jpg" />
+                                    @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungLePhi">
+                                            <tr style="display:none">
+                                                <th>
+                                                    Attachment(s)
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <center><button onclick="createData()" value="Đăng ký" class="btn btn-primary"> Đăng ký </button></center>                        </div>
+                    </div>
+                    <br />
+                </div>
+
+            </div>
+        </div>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Toast Title</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<script>
+    $(document).ready(function () {
+
+        console.log('@TempData["Result"]')
+        if ('@TempData["Result"]' == "THANHCONG") {
+            toastr.success('Thành công, Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email');
+            resetForm();
+        }
+    });
+
+
+
+
+    var formdataHocSinh_MinhChungMN = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungMaDinhDanh = new FormData(); //FormData object
+    var formdataHocSinh_GiayUuTien = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungLePhi = new FormData(); //FormData object
+
+    function resetForm() {
+        formdataHocSinh_MinhChungMN = new FormData(); //FormData object
+        formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
+        formdataHocSinh_MinhChungMaDinhDanh = new FormData(); //FormData object
+        formdataHocSinh_GiayUuTien = new FormData(); //FormData object
+        formdataHocSinh_MinhChungLePhi = new FormData(); //FormData object
+
+        $('#HocSinh_DinhDanh').val("");
+        $('#HocSinh_HoTen').val("");
+        $('#HocSinh_GioiTinh').val("3");
+        $('#datepicker').val("");
+        $('#HocSinh_NoiSinh').val("");
+        $('#HocSinh_Email').val("");
+        $('#HocSinh_NoiCuTru').val("");
+        $('#HocSinh_TruongMN').val("");
+        $('#HocSinh_UuTien').val("");
+        $('#HocSinh_ThongTinCha').val("");
+        $('#HocSinh_DienThoaiCha').val("");
+        $('#HocSinh_NgheNghiepCha').val("");
+        $('#HocSinh_ThongTinMe').val("");
+        $('#HocSinh_DienThoaiMe').val("");
+        $('#HocSinh_NgheNghiepMe').val("");
+
+
+        $('#FilesList_HocSinh_MinhChungMN tbody').empty();
+        $('#FilesList_HocSinh_MinhChungGiayKS tbody').empty();
+        $('#FilesList_HocSinh_MinhChungMaDinhDanh tbody').empty();
+        $('#FilesList_HocSinh_GiayUuTien tbody').empty();
+        $('#FilesList_HocSinh_MinhChungLePhi tbody').empty();
+
+        $("#HocSinh_MinhChungMN").val = '';
+        $("#HocSinh_MinhChungGiayKS").val = '';
+        $("#HocSinh_MinhChungMaDinhDanh").val = '';
+        $("#HocSinh_GiayUuTien").val = '';
+        $("#HocSinh_MinhChungLePhi").val = '';
+
+    }
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+    // custom data submit dangkyForm
+    function createData() {
+        console.log("submit form");
+        $("#dangkyForm").submit();
+    }
+    //$("#dangkyForm").submit(function (event) {
+    //    event.preventDefault(); // Prevents the form from submitting normally
+    //    console.log("submit form");
+    //    $("#dangkyForm").submit();
+    //    let sttCheckSumit = $("#checkSTT").text();
+    //    if (sttCheckSumit == "DONE") {
+    //        $("#loadingModal").modal("hide");
+    //        showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
+    //        resetForm(); // Reset the form after submission
+    //    }
+    //});
+
+    function convertFormDataToDataTransfer(formData) {
+        var dataTransfer = new DataTransfer();
+        for (var pair of formData.entries()) {
+            var inputName = pair[0];
+            var inputValue = pair[1];
+            if (inputValue instanceof File) {
+                dataTransfer.items.add(inputValue);
+            }
+        }
+        return dataTransfer;
+    }
+
+    $(document).ready(function () {
+
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+
+
+        $("#HocSinh_MinhChungMN").on("change", function () {
+            let type = "HocSinh_MinhChungMN";
+            var fileInput = document.getElementById('HocSinh_MinhChungMN');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungMN tbody").append(markup)
+
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungMN);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungMN").files = fileConvert.files;
+            //$('#HocSinh_MinhChungMN').val('');
+        });
+
+        $("#HocSinh_MinhChungGiayKS").on("change", function () {
+            let type = "HocSinh_MinhChungGiayKS";
+            var fileInput = document.getElementById('HocSinh_MinhChungGiayKS');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungGiayKS.append(sfilename, fileInput.files[i]);
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungGiayKS tbody").append(markup)
+
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungGiayKS);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungGiayKS").files = fileConvert.files;
+        });
+
+        $("#HocSinh_MinhChungMaDinhDanh").on("change", function () {
+            let type = "HocSinh_MinhChungMaDinhDanh";
+            var fileInput = document.getElementById('HocSinh_MinhChungMaDinhDanh');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungMaDinhDanh.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungMaDinhDanh tbody").append(markup)
+
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungMaDinhDanh);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungMaDinhDanh").files = fileConvert.files;
+        });
+
+        $("#HocSinh_GiayUuTien").on("change", function () {
+            let type = "HocSinh_GiayUuTien";
+            var fileInput = document.getElementById('HocSinh_GiayUuTien');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_GiayUuTien.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_GiayUuTien tbody").append(markup)
+
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_GiayUuTien);
+            chkatchtbl();
+            document.getElementById("HocSinh_GiayUuTien").files = fileConvert.files;
+        });
+
+        $("#HocSinh_MinhChungLePhi").on("change", function () {
+            let type = "HocSinh_MinhChungLePhi";
+            var fileInput = document.getElementById('HocSinh_MinhChungLePhi');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+
+                formdataHocSinh_MinhChungLePhi.append(sfilename, fileInput.files[i]);
+
+                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
+                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                $("#FilesList_HocSinh_MinhChungLePhi tbody").append(markup)
+
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungLePhi);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungLePhi").files = fileConvert.files;
+        });
+    });
+    function DeleteFile(type, Fileid, FileName) {
+        if (type == "HocSinh_MinhChungMN") {
+            formdataHocSinh_MinhChungMN.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungMN').files;
+            console.log(fileInput, 'fileInput');
+            var fileBuffer = new DataTransfer();
+            //Iterating through each files selected in fileInput
+            for (let i = 0; i < fileInput.length; i++) {
+                console.log(fileInput, 'fileInput');
+                // Exclude file in specified index
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungMN").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        }
+        if (type == "HocSinh_MinhChungGiayKS") {
+            formdataHocSinh_MinhChungGiayKS.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungGiayKS').files;
+            var fileBuffer = new DataTransfer();
+            //Iterating through each files selected in fileInput
+            for (let i = 0; i < fileInput.length; i++) {
+                // Exclude file in specified index
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungGiayKS").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        } if (type == "HocSinh_MinhChungMaDinhDanh") {
+            formdataHocSinh_MinhChungMaDinhDanh.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungMaDinhDanh').files;
+            var fileBuffer = new DataTransfer();
+            //Iterating through each files selected in fileInput
+            for (let i = 0; i < fileInput.length; i++) {
+                // Exclude file in specified index
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungMaDinhDanh").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+
+        }
+        if (type == "HocSinh_GiayUuTien") {
+            formdataHocSinh_GiayUuTien.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_GiayUuTien').files;
+            var fileBuffer = new DataTransfer();
+            //Iterating through each files selected in fileInput
+            for (let i = 0; i < fileInput.length; i++) {
+                // Exclude file in specified index
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_GiayUuTien").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        }
+        if (type == "HocSinh_MinhChungLePhi") {
+            formdataHocSinh_MinhChungLePhi.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungLePhi').files;
+            var fileBuffer = new DataTransfer();
+            //Iterating through each files selected in fileInput
+            for (let i = 0; i < fileInput.length; i++) {
+                // Exclude file in specified index
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungLePhi").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        }
+
+
+    }
+
+    function chkatchtbl() {
+        if ($('#FilesList_HocSinh_MinhChungMN tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungMN").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungMN").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungGiayKS tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungMaDinhDanh tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_GiayUuTien tr').length > 1) {
+            $("#FilesList_HocSinh_GiayUuTien").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_GiayUuTien").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungLePhi tr').length > 1) {
+            $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "hidden");
+        }
+    }
+
+
+</script>
+<link href="~/Content/toastr.css" rel="stylesheet" />
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+<script src="~/Scripts/toastr.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
