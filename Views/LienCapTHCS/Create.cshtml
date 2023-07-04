@@ -307,15 +307,15 @@
             data: JSON.stringify(formData),
             contentType: "application/json;charset=utf-8",
             success: function (response) {
-                console.log(response)
                 showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
+                $("#loadingModal").modal("hide");
+                resetFields();
             },
             error: function (error) {
                 showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+                $("#loadingModal").modal("hide");
             }
         });
-
-        $("#loadingModal").modal("hide");
     }
 
     function validateEmail(email) {
@@ -376,6 +376,41 @@
         $("#myToast .toast-body").text(message);
         $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
         $("#myToast").toast("show");
+    }
+    function resetFields() {
+        $('#HocSinh_DinhDanh').val("");
+        $('#HocSinh_HoTen').val("");
+        $('#HocSinh_GioiTinh').val("3");
+        $('#datepicker').val("");
+        $('#HocSinh_NoiSinh').val("");
+        $('#HocSinh_Email').val("");
+        $('#HocSinh_NoiCuTru').val("");
+        $('#HocSinh_TruongTH').val("");
+        $('#HocSinh_UuTien').val("");
+        $('#HocSinh_HoTenCha').val("");
+        $('#HocSinh_SDTCha').val("");
+        $('#HocSinh_NNCha').val("");
+        $('#HocSinh_HoTenMe').val("");
+        $('#HocSinh_SDTMe').val("");
+        $('#HocSinh_NNMe').val("");
+        $('#HocSinh_DiemToan').val("");
+        $('#HocSinh_DiemTiengViet').val("");
+        $('#HocSinh_DiemTN').val("");
+        $('#HocSinh_DiemLSDL').val("");
+        $('#HocSinh_DiemTA').val("");
+        $('#HocSinh_MucDoNangLuc').val("");
+        $('#HocSinh_MucDoPhamChat').val("");
+        $('#files_uutien').val(null);
+        $('#files_madinhdanh').val(null);
+        $('#files_giayks').val(null);
+        $('#files_hocba').val(null);
+        $('#files_lephi').val(null);
+
+        $('#FilesList_UuTien_View tbody').empty();
+        $('#FilesList_MaDinhDanh_View tbody').empty();
+        $('#FilesList_LePhi_View tbody').empty();
+        $('#FilesList_GiayKS_View tbody').empty();
+        $('#FilesList_HocBa_View tbody').empty();
     }
 </script>
 <style>
