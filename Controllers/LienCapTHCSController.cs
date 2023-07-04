@@ -51,6 +51,12 @@ namespace HDU_AppXetTuyen.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: LienCapTHCS/Create
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Create()
         {
             return View();
@@ -77,7 +83,7 @@ namespace HDU_AppXetTuyen.Controllers
                     var fileName = Path.GetFileName(file.FileName);
                     fileName = HocSinh_DinhDanh +"_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "_" + fileName;
                     var filePath = Path.Combine(Server.MapPath("~/" + savePath), fileName);
-                    var savedPath = "Uploads/UploadMinhChungs/" + fileName;
+                    var savedPath = savePath + "/" + fileName;
                     if (i != Request.Files.Count - 1)
                     {
                         fileNameStored = fileNameStored + savedPath + "#";
