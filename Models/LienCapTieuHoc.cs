@@ -45,6 +45,7 @@
         [StringLength(100)]
         public string HocSinh_Email { get; set; }
 
+        [Required(ErrorMessage = "Nơi cư trú bắt buộc nhập")]
         [Display(Name = "Nơi cư trú")]
         [StringLength(500)]
         public string HocSinh_NoiCuTru { get; set; }

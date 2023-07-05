@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -578,11 +578,8 @@
     <Content Include="Views\LienCapTHCS\Create.cshtml" />
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmInfomation.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Delete.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Details.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
-    <Content Include="Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Views\LienCapTieuHocs\ConfirmRegister.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
   </ItemGroup>
