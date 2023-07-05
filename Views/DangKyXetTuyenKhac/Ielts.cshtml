@@ -203,7 +203,7 @@
                             </div>
                             <div class="col-xxl-6">
                                 <div class="form-group mb-2">
-                                    <label for="formFileMultiple" class="form-label">Bằng Tốt nghiệp</label>
+                                    <label for="formFileMultiple" class="form-label">Bằng tốt nghiệp (Nếu có)</label>
                                     <div class="col-md-12">
                                         <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
                                                accept="application/pdf,.png, .jpeg, .jpg" />
@@ -218,7 +218,7 @@
                             </div>
                             <div class="col-xxl-6">
                                 <div class="form-group mb-2">
-                                    <label for="formFileMultiple" class="form-label">Chứng nhận</label>
+                                    <label for="formFileMultiple" class="form-label">Chứng nhận (Nếu có)</label>
                                     <div class="col-md-12">
                                         <input class="form-control" id="files_chungnhan" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
                                                accept="application/pdf,.png, .jpeg, .jpg" />
@@ -226,6 +226,21 @@
                                         <table class="table" id="FilesList_ChungNhan_View" style="visibility:hidden; width: 100%">
                                             <tr style="display:none">
                                                 <th colspan="3"><input type="hidden" id="ChungNhan_Files" /></th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6">
+                                <div class="form-group mb-2">
+                                    <label for="formFileMultiple" class="form-label">Minh chứng ưu tiên (Nếu có)</label>
+                                    <div class="col-md-12">
+                                        <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
+                                               accept="application/pdf,.png, .jpeg, .jpg" />
+                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        <table class="table" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
+                                            <tr style="display:none">
+                                                <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
                                             </tr>
                                         </table>
                                     </div>
@@ -283,11 +298,14 @@
     var CCCDFormData = new FormData();
     var BangTNFormData = new FormData();
     var ChungNhanFormData = new FormData();
+    var UuTienFormData = new FormData();
+
     let fileData = [
         { data: HocBaFormData, name: "HOCBA", savePath: "" },
         { data: CCCDFormData, name: "CCCD", savePath: "" },
         { data: BangTNFormData, name: "BANGTN", savePath: "" },
         { data: ChungNhanFormData, name: "CHUNGNHAN", savePath: "" },
+        { data: UuTienFormData, name: "UUTIEN", savePath: "" },
     ];
 
     $(document).ready(function () {
@@ -371,6 +389,21 @@
             CheckAttachTable("#FilesList_ChungNhan_View");
             $('#files_chungnhan').val('');
         });
+        $("#files_uutien").on("change", function () {
+            var files_uutien = document.getElementById('files_uutien');
+            let j = 0;
+            for (i = 0; i < files_uutien.files.length; i++) {
+                j++;
+                var uploadFileName = files_uutien.files[i].name;
+                let uploadFileId = Math.random().toString(36).substring(7);
+                UuTienFormData.append(uploadFileName, files_uutien.files[i]);
+                var markup = `<tr id='${uploadFileId}'><td  style='color:blue'>Tệp ${j}: </td><td>${uploadFileName}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                    `title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteUploadedFile("UUTIEN", "#FilesList_UuTien_View", "${uploadFileId}", "${uploadFileName}")'>Xóa</a></td></tr>`;
+                $("#FilesList_UuTien_View tbody").append(markup);
+            }
+            CheckAttachTable("#FilesList_UuTien_View");
+            $('#files_uutien').val('');
+        });
     });
     function DeleteUploadedFile(FormDataName, ListId, Fileid, FileName) {
         let formData = null;
@@ -378,6 +411,7 @@
         if (FormDataName == "CCCD") formData = CCCDFormData;
         if (FormDataName == "BANGTN") formData = BangTNFormData;
         if (FormDataName == "CHUNGNHAN") formData = ChungNhanFormData;
+        if (FormDataName == "UUTIEN") formData = UuTienFormData;
         formData.delete(FileName)
         $("#" + Fileid).remove();
         CheckAttachTable(ListId);
@@ -439,6 +473,16 @@
         $('#Dkxt_KetQuaDatDuoc').val("");
         $('#Dkxt_TongDiem').val("");
         $('#datepicker').val("");
+        $('#files_hocba').val(null);
+        $('#FilesList_HocBa_View tbody').empty();
+        $('#files_cccd').val(null);
+        $('#FilesList_CCCD_View tbody').empty();
+        $('#files_bangtn').val(null);
+        $('#FilesList_BangTN_View tbody').empty();
+        $('#files_chungnhan').val(null);
+        $('#FilesList_ChungNhan_View tbody').empty();
+        $('#files_uutien').val(null);
+        $('#FilesList_UuTien_View tbody').empty();
     }
 
     function ListAllNguyenVong() {
@@ -597,6 +641,7 @@
             Dkxt_MinhChung_CCCD: fileData[1].savePath,
             Dkxt_MinhChung_Bang: fileData[2].savePath,
             Dkxt_MinhChung_KetQua: fileData[3].savePath,
+            Dkxt_MinhChung_UuTien: fileData[4].savePath,
         }
 
         $.ajax({

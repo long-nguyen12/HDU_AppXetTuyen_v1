@@ -23,6 +23,7 @@ namespace HDU_AppXetTuyen.Controllers
         public string Dkxt_MinhChung_CCCD { get; set; }
         public string Dkxt_MinhChung_Bang { get; set; }
         public string Dkxt_MinhChung_KetQua { get; set; }
+        public string Dkxt_MinhChung_UuTien { get; set; }
     }
     public class DangKyXetTuyenKhacController : Controller
     {
@@ -78,6 +79,7 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_MinhChung_CCCD = n.Dkxt_MinhChung_CCCD,
                 Dkxt_MinhChung_Bang = n.Dkxt_MinhChung_Bang,
                 Dkxt_MinhChung_KetQua = n.Dkxt_MinhChung_KetQua,
+                Dkxt_MinhChung_UuTien = n.Dkxt_MinhChung_UuTien,
             }).ToList();
             return Json(new
             {
@@ -110,6 +112,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_CCCD = student.Dkxt_MinhChung_CCCD;
                 dkxtt.Dkxt_MinhChung_Bang = student.Dkxt_MinhChung_Bang;
                 dkxtt.Dkxt_MinhChung_KetQua = student.Dkxt_MinhChung_KetQua;
+                dkxtt.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
                 dkxtt.Ptxt_ID = 5;
                 dkxtt.DoiTuong_ID = ts.DoiTuong_ID;
                 dkxtt.KhuVuc_ID = ts.KhuVuc_ID;
@@ -147,6 +150,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_CCCD = student.Dkxt_MinhChung_CCCD;
                 dkxtt.Dkxt_MinhChung_Bang = student.Dkxt_MinhChung_Bang;
                 dkxtt.Dkxt_MinhChung_KetQua = student.Dkxt_MinhChung_KetQua;
+                dkxtt.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
                 dkxtt.Ptxt_ID = 6;
                 dkxtt.DoiTuong_ID = ts.DoiTuong_ID;
                 dkxtt.KhuVuc_ID = ts.KhuVuc_ID;
