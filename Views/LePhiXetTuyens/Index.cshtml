@@ -66,7 +66,7 @@
                 if (response.success) {
                     let data = response.data;
                     let lePhi = response.lePhi;
-                    if (data.length > 0) {
+                    if (data || data > 0) {
                         $("#selectFile").show();
                         $("#uploadFile").show();
                         let html = "";
@@ -78,26 +78,21 @@
                                 minhChungLinks += `<a target="_blank" class="btn btn-info small" style="margin-left: 2px;" href="https://localhost:44308/${minhChungArray[i]}">Tệp ${i + 1}</a>`
                             }
                         }
-                        $('#TongLePhi').text(data.length * 30000)
-                        $.each(data, function (key, item) {
-                            html += "<tr>";
-                            html += '<td class="text-center">' + item.Dkxt_NguyenVong + '</td>';
-                            html += '<td>' + item.Dkxt_Nganh.Nganh_TenNganh + '</td>';
-                            if (key == 0) {
-                                if (!lePhi || lePhi.Lpxt_TrangThai == 0) {
-                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-danger">Chưa đóng phí</span></td>`;
-                                } else if (lePhi.Lpxt_TrangThai == 1) {
-                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-info">Chờ xác nhận</span></td>`;
-                                } else if (lePhi.Lpxt_TrangThai == 2) {
-                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-warning">Thiếu</span></td>`;
-                                } else if (lePhi.Lpxt_TrangThai == 3) {
-                                    html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center"><span class="badge bg-success">Đã đủ</span></td>`;
-                                }
-                                html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${minhChungLinks}</td>`;
-                                html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${lePhi.Lpxt_GhiChu == null ? "" : lePhi.Lpxt_GhiChu}</td>`;
-                            }
-                            html += "</tr>";
-                        });
+                        $('#TongLePhi').text(data * 30000)
+                        html += "<tr>";
+                        html += '<td>' + data + '</td>';
+                        if (!lePhi || lePhi.Lpxt_TrangThai == 0) {
+                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-danger">Chưa đóng phí</span></td>`;
+                        } else if (lePhi.Lpxt_TrangThai == 1) {
+                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-info">Chờ xác nhận</span></td>`;
+                        } else if (lePhi.Lpxt_TrangThai == 2) {
+                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-warning">Thiếu</span></td>`;
+                        } else if (lePhi.Lpxt_TrangThai == 3) {
+                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-success">Đã đủ</span></td>`;
+                        }
+                        html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${minhChungLinks}</td>`;
+                        html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${lePhi.Lpxt_GhiChu == null ? "" : lePhi.Lpxt_GhiChu}</td>`;
+                        html += "</tr>";
                         $('.tbody').html(html);
                     }
                 } else {
@@ -164,8 +159,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th width="10%" class="text-center">@Html.DisplayName("Nguyện vọng")</th>
-                            <th width="30%">@Html.DisplayName("Ngành")</th>
+                            <th width="30%">Tổng số nguyện vọng</th>
                             <th class="text-center">@Html.DisplayName("Trạng thái")</th>
                             <th class="text-center">@Html.DisplayName("Minh chứng")</th>
                             <th class="text-center">@Html.DisplayName("Ghi chú")</th>
