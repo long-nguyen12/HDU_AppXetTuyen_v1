@@ -80,7 +80,8 @@
                         }
                         $('#TongLePhi').text(data * 30000)
                         html += "<tr>";
-                        html += '<td>' + data + '</td>';
+                        html += '<td class="text-center">' + data + ' nguyện vọng </td>';
+                        html += '<td class="text-center">' + data * 30000 + ' VNĐ </td>';
                         if (!lePhi || lePhi.Lpxt_TrangThai == 0) {
                             html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-danger">Chưa đóng phí</span></td>`;
                         } else if (lePhi.Lpxt_TrangThai == 1) {
@@ -159,7 +160,8 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th width="30%">Tổng số nguyện vọng</th>
+                            <th width="20%" class="text-center">Tổng số nguyện vọng</th>
+                            <th width="20%" class="text-center">Tổng lệ phí</th>
                             <th class="text-center">@Html.DisplayName("Trạng thái")</th>
                             <th class="text-center">@Html.DisplayName("Minh chứng")</th>
                             <th class="text-center">@Html.DisplayName("Ghi chú")</th>
