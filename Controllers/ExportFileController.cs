@@ -42,7 +42,7 @@ namespace HDU_AppXetTuyen.Controllers
                 System.Diagnostics.Debug.WriteLine("idThiSinhInt: " + idThiSinhInt);
             }
 
-            string templateFilePath = Server.MapPath("~/Content/static/Mau_HB.docx");
+            string templateFilePath = Server.MapPath("~/Content/static/export-62-bieu-mau-xet-hoc-ba.docx");
             // Từ idDkxt lấy ra thông tin thí sinh
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
             // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
@@ -158,7 +158,104 @@ namespace HDU_AppXetTuyen.Controllers
 
                 }
                 // Generate a unique file name
-                string fileName = thiSinhInfo.ThiSinh_Ten + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".docx";
+                string fileName = thiSinhInfo.ThiSinh_Ten + "_bieu-mau-xet-hoc-ba_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".docx";
+
+                // Save the filled document to a temporary location on the server
+                string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
+                document.SaveAs(tempFilePath);
+
+                // Return the file for download
+                byte[] fileBytes = System.IO.File.ReadAllBytes(tempFilePath);
+                return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
+            }
+           
+        }
+        public ActionResult DownloadFile_XetTuyenThang(string idThiSinh)
+        {
+            // Không cần sử dụng string idThiSinh vì lấy id Thí sinh từ session
+
+            var idThiSinhInt = 0;
+            // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2 - DEV
+            if (Session["login_session"] == null)
+            {
+                idThiSinhInt = 2;
+                System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
+            }
+            else
+            {
+                string str_thisinh_session = Session["login_session"].ToString();
+                var thisinh_session = db.ThiSinhDangKies.Where(x => x.ThiSinh_MatKhau == str_thisinh_session).FirstOrDefault();
+                idThiSinhInt = (int)thisinh_session.ThiSinh_ID;
+                System.Diagnostics.Debug.WriteLine("idThiSinhInt: " + idThiSinhInt);
+            }
+
+            string templateFilePath = Server.MapPath("~/Content/static/export-63-bieu-mau-xet-tuyen-thang.docx");
+            // Từ idDkxt lấy ra thông tin thí sinh
+            var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
+            // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
+            var listDkxt = db.DangKyXetTuyenThangs.Where(x => x.ThiSinh_ID == idThiSinhInt).OrderBy(x => x.Dkxt_NguyenVong).ToArray();
+
+            int idKhuVucTS = (int)thiSinhInfo.KhuVuc_ID;
+            // Từ khu vực id lấy ra tên khu vực
+            var tenKhuVuc = db.KhuVucs.Find(idKhuVucTS).KhuVuc_Ten;
+
+            int idDoiTuongTS = (int)thiSinhInfo.DoiTuong_ID;
+            // Từ đối tượng id lấy ra tên đối tượng
+            var tenDoiTuong = db.DoiTuongs.Find(idDoiTuongTS).DoiTuong_Ten;
+            if (tenDoiTuong == null) tenDoiTuong = " ";
+            using (DocX document = DocX.Load(templateFilePath))
+            {
+                // Replace placeholders with actual data
+                string gt = thiSinhInfo.ThiSinh_GioiTinh == 0 ? "Nam" : "Nữ";
+                // Replace placeholders with actual data
+                document.ReplaceText("<<ThiSinh_HoLot>>", thiSinhInfo.ThiSinh_HoLot);
+                document.ReplaceText("<<ThiSinh_Ten>>", thiSinhInfo.ThiSinh_Ten);
+                document.ReplaceText("<<ThiSinh_CCCD>>", thiSinhInfo.ThiSinh_CCCD);
+                document.ReplaceText("<<ThiSinh_NgaySinh>>", thiSinhInfo.ThiSinh_NgaySinh);
+                document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
+                document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
+                document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
+                document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
+                document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
+
+                // Xử lý học lực và hạnh kiểm
+                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
+                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
+                document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
+
+                // Lấy ra table đầu tiên trong file word
+                var table = document.Tables[0];
+                int index = 1;
+
+                // Lấy ra tất cả  nguyện vọng của thí sinh
+                foreach (var item in listDkxt)
+                {
+                    // Chuẩn bị dữ liệu cho table
+                    //Từ ngành id lấy ra tên ngành và mã ngành
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
+
+                    // 1 nguyện vọng chèn 1 row
+                    table.InsertRow();
+                    // Thêm dữ liệu vào table
+                    table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_NguyenVong.ToString()).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[1].Paragraphs[0].Append(tenNganh).Font("Times New Roman");
+                    table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[3].Paragraphs[0].Append(item.Dkxt_ToHopXT).Font("Times New Roman");
+                    table.Rows[index].Cells[4].Paragraphs[0].Append(item.Dkxt_MonDatGiai).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[5].Paragraphs[0].Append(item.Dkxt_LoaiGiai).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[6].Paragraphs[0].Append(item.Dkxt_NamDatGiai).Font("Times New Roman").Alignment = Alignment.center;
+
+                    // Tăng giá trị index để fill nguyện vọng tiếp theo
+                    index = index + 1;
+
+                }
+                // Generate a unique file name
+                string fileName = thiSinhInfo.ThiSinh_Ten + "_bieu-mau-xet-tuyen-thang_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".docx";
 
                 // Save the filled document to a temporary location on the server
                 string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
@@ -169,7 +266,204 @@ namespace HDU_AppXetTuyen.Controllers
                 return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
             }
 
-           
+        }        
+
+        // Xét tuyển theo chứng chỉ ngoại ngữ
+        public ActionResult DownloadFile_XetTuyenCCNN(string idThiSinh)
+        {
+            // Không cần sử dụng string idThiSinh vì lấy id Thí sinh từ session
+
+            var idThiSinhInt = 0;
+            // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2 - DEV
+            if (Session["login_session"] == null)
+            {
+                idThiSinhInt = 2;
+                System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
+            }
+            else
+            {
+                string str_thisinh_session = Session["login_session"].ToString();
+                var thisinh_session = db.ThiSinhDangKies.Where(x => x.ThiSinh_MatKhau == str_thisinh_session).FirstOrDefault();
+                idThiSinhInt = (int)thisinh_session.ThiSinh_ID;
+                System.Diagnostics.Debug.WriteLine("idThiSinhInt: " + idThiSinhInt);
+            }
+
+            string templateFilePath = Server.MapPath("~/Content/static/export-64-bieu-mau-xet-ccnn.docx");
+            // Từ idDkxt lấy ra thông tin thí sinh
+            var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
+            // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
+            var listDkxt = db.DangKyXetTuyenKhacs.Where(x => x.ThiSinh_ID == idThiSinhInt && x.Dkxt_ToHopXT == "HDP5").OrderBy(x => x.Dkxt_NguyenVong).ToArray();
+
+            int idKhuVucTS = (int)thiSinhInfo.KhuVuc_ID;
+            // Từ khu vực id lấy ra tên khu vực
+            var tenKhuVuc = db.KhuVucs.Find(idKhuVucTS).KhuVuc_Ten;
+
+            int idDoiTuongTS = (int)thiSinhInfo.DoiTuong_ID;
+            // Từ đối tượng id lấy ra tên đối tượng
+            var tenDoiTuong = db.DoiTuongs.Find(idDoiTuongTS).DoiTuong_Ten;
+            if (tenDoiTuong == null) tenDoiTuong = " ";
+            using (DocX document = DocX.Load(templateFilePath))
+            {
+                // Replace placeholders with actual data
+                string gt = thiSinhInfo.ThiSinh_GioiTinh == 0 ? "Nam" : "Nữ";
+                // Replace placeholders with actual data
+                document.ReplaceText("<<ThiSinh_HoLot>>", thiSinhInfo.ThiSinh_HoLot);
+                document.ReplaceText("<<ThiSinh_Ten>>", thiSinhInfo.ThiSinh_Ten);
+                document.ReplaceText("<<ThiSinh_CCCD>>", thiSinhInfo.ThiSinh_CCCD);
+                document.ReplaceText("<<ThiSinh_NgaySinh>>", thiSinhInfo.ThiSinh_NgaySinh);
+                document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
+                document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
+                document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
+                document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
+                document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
+
+                // Xử lý học lực và hạnh kiểm
+                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
+                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
+                document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
+
+                // Lấy ra table đầu tiên trong file word
+                var table = document.Tables[0];
+                int index = 1;
+
+                // Lấy ra tất cả  nguyện vọng của thí sinh
+                foreach (var item in listDkxt)
+                {
+                    // Chuẩn bị dữ liệu cho table
+                    //Từ ngành id lấy ra tên ngành và mã ngành
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
+
+                    // 1 nguyện vọng chèn 1 row
+                    table.InsertRow();
+                    // Thêm dữ liệu vào table
+                    table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_NguyenVong.ToString()).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[1].Paragraphs[0].Append(tenNganh).Font("Times New Roman");
+                    table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[3].Paragraphs[0].Append(item.Dkxt_ToHopXT).Font("Times New Roman");
+                    table.Rows[index].Cells[4].Paragraphs[0].Append(item.Dkxt_DonViToChuc).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[5].Paragraphs[0].Append(item.Dkxt_KetQuaDatDuoc.ToString() + "/" + item.Dkxt_TongDiem.ToString() ).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[6].Paragraphs[0].Append(item.Dkxt_NgayDuThi).Font("Times New Roman").Alignment = Alignment.center;
+
+                    // Tăng giá trị index để fill nguyện vọng tiếp theo
+                    index = index + 1;
+
+                }
+                // Generate a unique file name
+                string fileName = thiSinhInfo.ThiSinh_Ten + "_bieu-mau-xet-ccnn_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".docx";
+
+                // Save the filled document to a temporary location on the server
+                string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
+                document.SaveAs(tempFilePath);
+
+                // Return the file for download
+                byte[] fileBytes = System.IO.File.ReadAllBytes(tempFilePath);
+                return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
+            }
+
+        }     
+        
+        // Xét tuyển đánh giá năng lực đánh giá tư duy
+        public ActionResult DownloadFile_XetTuyenDGNL_DGTD(string idThiSinh)
+        {
+            // Không cần sử dụng string idThiSinh vì lấy id Thí sinh từ session
+
+            var idThiSinhInt = 0;
+            // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2 - DEV
+            if (Session["login_session"] == null)
+            {
+                idThiSinhInt = 2;
+                System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
+            }
+            else
+            {
+                string str_thisinh_session = Session["login_session"].ToString();
+                var thisinh_session = db.ThiSinhDangKies.Where(x => x.ThiSinh_MatKhau == str_thisinh_session).FirstOrDefault();
+                idThiSinhInt = (int)thisinh_session.ThiSinh_ID;
+                System.Diagnostics.Debug.WriteLine("idThiSinhInt: " + idThiSinhInt);
+            }
+
+            string templateFilePath = Server.MapPath("~/Content/static/export-65-bieu-mau-xet-diem-dgnl-dgtd.docx");
+            // Từ idDkxt lấy ra thông tin thí sinh
+            var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
+            // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
+            var listDkxt = db.DangKyXetTuyenKhacs.Where(x => x.ThiSinh_ID == idThiSinhInt && x.Dkxt_ToHopXT == "HDP6").OrderBy(x => x.Dkxt_NguyenVong).ToArray();
+
+            int idKhuVucTS = (int)thiSinhInfo.KhuVuc_ID;
+            // Từ khu vực id lấy ra tên khu vực
+            var tenKhuVuc = db.KhuVucs.Find(idKhuVucTS).KhuVuc_Ten;
+
+            int idDoiTuongTS = (int)thiSinhInfo.DoiTuong_ID;
+            // Từ đối tượng id lấy ra tên đối tượng
+            var tenDoiTuong = db.DoiTuongs.Find(idDoiTuongTS).DoiTuong_Ten;
+            if (tenDoiTuong == null) tenDoiTuong = " ";
+            using (DocX document = DocX.Load(templateFilePath))
+            {
+                // Replace placeholders with actual data
+                string gt = thiSinhInfo.ThiSinh_GioiTinh == 0 ? "Nam" : "Nữ";
+                // Replace placeholders with actual data
+                document.ReplaceText("<<ThiSinh_HoLot>>", thiSinhInfo.ThiSinh_HoLot);
+                document.ReplaceText("<<ThiSinh_Ten>>", thiSinhInfo.ThiSinh_Ten);
+                document.ReplaceText("<<ThiSinh_CCCD>>", thiSinhInfo.ThiSinh_CCCD);
+                document.ReplaceText("<<ThiSinh_NgaySinh>>", thiSinhInfo.ThiSinh_NgaySinh);
+                document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
+                document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
+                document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
+                document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
+                document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
+
+                // Xử lý học lực và hạnh kiểm
+                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
+                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
+                document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
+
+                // Lấy ra table đầu tiên trong file word
+                var table = document.Tables[0];
+                int index = 1;
+
+                // Lấy ra tất cả  nguyện vọng của thí sinh
+                foreach (var item in listDkxt)
+                {
+                    // Chuẩn bị dữ liệu cho table
+                    //Từ ngành id lấy ra tên ngành và mã ngành
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
+
+                    // 1 nguyện vọng chèn 1 row
+                    table.InsertRow();
+                    // Thêm dữ liệu vào table
+                    table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_NguyenVong.ToString()).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[1].Paragraphs[0].Append(tenNganh).Font("Times New Roman");
+                    table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[3].Paragraphs[0].Append(item.Dkxt_ToHopXT).Font("Times New Roman");
+                    table.Rows[index].Cells[4].Paragraphs[0].Append(item.Dkxt_DonViToChuc).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[5].Paragraphs[0].Append(item.Dkxt_KetQuaDatDuoc.ToString() + "/" + item.Dkxt_TongDiem.ToString() ).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[6].Paragraphs[0].Append(item.Dkxt_NgayDuThi).Font("Times New Roman").Alignment = Alignment.center;
+
+                    // Tăng giá trị index để fill nguyện vọng tiếp theo
+                    index = index + 1;
+
+                }
+                // Generate a unique file name
+                string fileName = thiSinhInfo.ThiSinh_Ten + "_bieu-mau-xet-diem-dgnl-dgtd_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".docx";
+
+                // Save the filled document to a temporary location on the server
+                string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
+                document.SaveAs(tempFilePath);
+
+                // Return the file for download
+                byte[] fileBytes = System.IO.File.ReadAllBytes(tempFilePath);
+                return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
+            }
+
         }
         public string getHocLucById(int id)
         {
@@ -204,5 +498,54 @@ namespace HDU_AppXetTuyen.Controllers
                     return " ";
             }
         }
+
+        // Sử dụng cho phương thức xét tuyển thẳng
+        public string getTenMonById(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "Toán";
+                case 2:
+                    return "Vật lí";
+                case 3:
+                    return "Hóa học";
+                case 4:
+                    return "Sinh học";
+                case 5:
+                    return "Tin học";
+                case 6:
+                    return "Ngữ văn";
+                case 7:
+                    return "Lịch sử";
+                case 8:
+                    return "Địa lí";
+                case 9:
+                    return "Tiếng Anh";
+                case 10:
+                    return "Tiếng Nga";
+                case 11:
+                    return "Tiếng Pháp";
+                case 12:
+                    return "Tiếng Trung";
+                default:
+                    return " ";
+            }
+        }
+
+        public string getGiaiById(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "Giải nhất";
+                case 2:
+                    return "Giải nhì";
+                case 3:
+                    return "Giải ba";
+                default:
+                    return " ";
+            }
+        }
     }
-}
+}   
