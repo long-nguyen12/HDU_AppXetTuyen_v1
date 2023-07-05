@@ -15,6 +15,10 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+    #loadingModal {
+        background-color: rgba(0, 0, 0, 0.5);
+        background-color: transparent;
+    }
 </style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
@@ -31,6 +35,17 @@
         </div>
     </div>
 </header>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid px-12">
     <div id="div_list_nguyenvong">
         <div class="card card-header-actions">
@@ -630,6 +645,7 @@
             flag = false;
         }
         if (!flag) return;
+        $("#loadingModal").modal("show");
         uploadFiles();
         let formData = {
             Nganh_ID: Nganh_ID,
@@ -660,12 +676,15 @@
                     document.getElementById('div_list_nguyenvong').style.display = "inline";
                     document.getElementById('div_update_dk_nguyenvong').style.display = "none";
                     onResetFields();
+                    $("#loadingModal").modal("hide");
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                    $("#loadingModal").modal("hide");
                 }
             },
             error: function (errormessage) {
                 showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                $("#loadingModal").modal("hide");
             }
         });
     }

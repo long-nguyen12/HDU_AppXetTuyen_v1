@@ -304,7 +304,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         private void SendEmail(string email, string body, string subject)
         {
-            using (MailMessage mm = new MailMessage("nguyenhoanglong@hdu.edu.vn", email))
+            using (MailMessage mm = new MailMessage("xettuyen@hdu.edu.vn", email))
             {
                 mm.Subject = subject;
                 mm.Body = body;
@@ -314,7 +314,7 @@ namespace HDU_AppXetTuyen.Controllers
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
 
-                NetworkCredential NetworkCred = new NetworkCredential("nguyenhoanglong@hdu.edu.vn", "long.121100");
+                NetworkCredential NetworkCred = new NetworkCredential("xettuyen@hdu.edu.vn", "hongduc1");
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = 587;

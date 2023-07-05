@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -174,6 +176,22 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.DotXT_ID = dotXT.Dxt_ID;
                 db.DangKyXetTuyenThangs.Add(dkxtt);
                 db.SaveChanges();
+
+                int nganh_id = int.Parse(student.Nganh_ID);
+                var nganh = db.Nganhs.Where(n => n.Nganh_ID == nganh_id).FirstOrDefault();
+
+                var subject = "Đăng ký nguyện vọng";
+                var body = "Thí sinh " + ts.ThiSinh_Ten + ", Số CCCD: " + ts.ThiSinh_CCCD + " đã đăng ký nguyện vọng mới." +
+
+                     " <br/><b>Thông tin nguyện vọng:</b><br/>" +
+                     " <p> Phương thức đăng ký: Phương thức 4 </p>" +
+                     " <p> Mã ngành: "  + nganh.Nganh_MaNganh + " </p>" +
+                     " <p> Tên ngành: " + nganh.NganhTenNganh + " </p>" +
+                     " <p> Môn đạt giải: " + student.Dkxt_MonDatGiai + " </p>" +
+                     " <p> Loại giải: " + student.Dkxt_LoaiGiai + " </p>" +
+                     " <p> Năm đạt giải: " + student.Dkxt_NamDatGiai + " </p>";
+
+                SendEmail("xettuyen@hdu.edu.vn", body, subject);
                 return Json(new { success = true });
             }
             return Json(new { success = false });
@@ -267,5 +285,26 @@ namespace HDU_AppXetTuyen.Controllers
                 msg = "Có lỗi xảy ra."
             }, JsonRequestBehavior.AllowGet);
         }
+
+        private void SendEmail(string email, string body, string subject)
+        {
+            using (MailMessage mm = new MailMessage("xettuyen@hdu.edu.vn", email))
+            {
+                mm.Subject = subject;
+                mm.Body = body;
+
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+
+                NetworkCredential NetworkCred = new NetworkCredential("xettuyen@hdu.edu.vn", "hongduc1");
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
+            }
+        }
+
     }
 }
