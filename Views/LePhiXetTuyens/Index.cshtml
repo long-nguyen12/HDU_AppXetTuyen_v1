@@ -115,6 +115,12 @@
         $("#myToast").toast("show");
     }
 </script>
+<style>
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
 <div class="container-fluid px-12">
     <div id="fadeInUp">
         <div class="card card-header-actions mt-3 mb-1">
@@ -157,20 +163,22 @@
                 </form>
             </div>
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th width="20%" class="text-center">Tổng số nguyện vọng</th>
-                            <th width="20%" class="text-center">Tổng lệ phí</th>
-                            <th class="text-center">@Html.DisplayName("Trạng thái")</th>
-                            <th class="text-center">@Html.DisplayName("Minh chứng")</th>
-                            <th class="text-center">@Html.DisplayName("Ghi chú")</th>
-                            <th></th>
-                        </tr>
-                    </thead>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="20%" class="text-center">Tổng số nguyện vọng</th>
+                                <th width="20%" class="text-center">Tổng lệ phí</th>
+                                <th class="text-center">@Html.DisplayName("Trạng thái")</th>
+                                <th class="text-center">@Html.DisplayName("Minh chứng")</th>
+                                <th class="text-center">@Html.DisplayName("Ghi chú")</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
-                    <tbody class="tbody"></tbody>
-                </table>
+                        <tbody class="tbody"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

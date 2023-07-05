@@ -7,9 +7,12 @@
     label {
         white-space: nowrap !important;
     }
-
     .span_with_for {
         width: 65px !important
+    }
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 </style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
@@ -37,21 +40,23 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-xxl-12">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="vertical-align:middle;">Nguyện vọng</th>
-                                    <th style="vertical-align:middle;">Mã ngành - Ngành</th>
-                                    <th style="vertical-align: middle; text-align: center;">Môn đạt gải</th>
-                                    <th style="vertical-align: middle; text-align: center;">Loại giải</th>
-                                    <th style="vertical-align: middle; text-align: center;">Năm đạt giải</th>
-                                    @*<th style="vertical-align:middle;">Trạng thái</th>*@
-                                    <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_list_nguyenvong">
-                            </tbody>
-                        </table>
+                        <div class="table-container">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align:middle;">Nguyện vọng</th>
+                                        <th style="vertical-align:middle;">Mã ngành - Ngành</th>
+                                        <th style="vertical-align: middle; text-align: center;">Môn đạt gải</th>
+                                        <th style="vertical-align: middle; text-align: center;">Loại giải</th>
+                                        <th style="vertical-align: middle; text-align: center;">Năm đạt giải</th>
+                                        @*<th style="vertical-align:middle;">Trạng thái</th>*@
+                                        <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_list_nguyenvong">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -126,7 +131,6 @@
                                         </div>
                                     </td>
                                 </tr>
-
                         </table>
                     </div>
                     <div class="col-xxl-8">
