@@ -1,93 +1,269 @@
-﻿@model IEnumerable<HDU_AppXetTuyen.Models.DangKyXetTuyen>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script>
+    $('document').ready(function () {
+        $("#list-hocba").hide();
+        $("#list-tuyenthang").hide();
+        $("#list-ngoaingu").hide();
+        $("#list-dgnl").hide();
+        LoadData();
+    })
+    function LoadData() {
+        $.ajax({
+            url: "/KetQuaXetTuyens/GetAllNguyenVongs",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response.success) {
+                    let { HocBa, TuyenThang, NgoaiNgu, DanhGia } = response;
+                    if (HocBa.length > 0) {
+                        $("#list-hocba").show();
+                        let html = "";
+                        $.each(HocBa, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.DotXT_ID + '</td>';
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Thm.ToHopMon + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_Diem_Tong_Full + '</td>';
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody').html(html);
+                    }
+                    if (TuyenThang.length > 0) {
+                        $("#list-tuyenthang").show();
+                        let html = "";
+                        $.each(TuyenThang, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.DotXT_ID + '</td>';
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_MonDatGiai + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_LoaiGiai + '</td>';
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody-tuyenthang').html(html);
+                    }
+                    if (NgoaiNgu.length > 0) {
+                        $("#list-ngoaingu").show();
+                        let html = "";
+                        $.each(NgoaiNgu, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.DotXT_ID + '</td>';
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_DonViToChuc + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_KetQuaDatDuoc + "/" + item.Dkxt_TongDiem + '</td>';
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody-ngoaingu').html(html);
+                    }
+                    if (DanhGia.length > 0) {
+                        $("#list-dgnl").show();
+                        let html = "";
+                        $.each(DanhGia, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.DotXT_ID + '</td>';
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_DonViToChuc + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_KetQuaDatDuoc + "/" + item.Dkxt_TongDiem + '</td>';
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody-dgnl').html(html);
+                    }
+                } else {
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            },
+        });
+    }
+</script>
 <div class="container-fluid px-12">
     <div id="fadeInUp">
-        <div class="card card-header-actions mt-3 mb-1">
+        <div class="card card-header-actions mt-3 mb-1" id="list-hocba">
             <div class="card-header">
-                Kết quả xét tuyển
+                Theo phương thức sử dụng kết quả học tập ở THPT
             </div>
             <div class="card-body">
-
                 <table class="table">
                     <tr>
-                        <th>
-                            @Html.DisplayName("Đợt xét tuyển")
+                        <th class="text-center">Đợt xét tuyển</th>
+                        <th class="text-center">Mã ngành</th>
+                        <th>Tên ngành</th>
+                        <th class="text-center">
+                            Tên phương thức
+                        </th>
+                        <th class="text-center">
+                            Mã tổ hợp
+                        </th>
+                        <th class="text-center">
+                            Thứ tự nguyện vọng
                         </th>
                         <th>
-                            @Html.DisplayName("Mã ngành")
+                            Tổng điểm
                         </th>
-                        <th>
-                            @Html.DisplayName("Tên ngành")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Tên phương thức")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Mã tổ hợp")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Thứ tự nguyện vọng")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Tổng điểm")
-                        </th>
-                        <th width="15%">
-                            @Html.DisplayName("Trạng thái")
+                        <th width="15%" class="text-center">
+                            Trạng thái
                         </th>
                     </tr>
-
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nganh.Nganh_MaNganh)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nganh.NganhTenNganh)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ToHopMon.Thm_MaToHop)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong_Full)
-                            </td>
-                            <td>
-                                @{
-                                    if (item.Dkxt_TrangThai_KetQua == 0)
-                                    {
-                                        <span class="badge bg-info">Chờ xét duyệt</span>
-                                    }
-                                    else if (item.Dkxt_TrangThai_KetQua == 1)
-                                    {
-                                        <span class="badge bg-danger">Trượt</span>
-                                    }
-                                    else if (item.Dkxt_TrangThai_KetQua == 2)
-                                    {
-                                        <span class="badge bg-success">Trúng tuyển</span>
-                                    }
-                                }
-                            </td>
-                        </tr>
-                    }
-
+                    <tbody class="tbody">
+                    </tbody>
                 </table>
 
             </div>
         </div>
-    </div>
 
+        <div class="card card-header-actions mt-3 mb-1" id="list-tuyenthang">
+            <div class="card-header">
+                Thuộc diện xét tuyển thẳng học sinh giỏi
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr class="text-center">
+                        <th class="text-center">Đợt xét tuyển</th>
+                        <th class="text-center">Mã ngành</th>
+                        <th>Tên ngành</th>
+                        <th class="text-center">
+                            Tên phương thức
+                        </th>
+                        <th class="text-center">
+                            Mã tổ hợp
+                        </th>
+                        <th class="text-center">
+                            Môn đạt giải
+                        </th>
+                        <th>
+                            Giải
+                        </th>
+                        <th width="15%" class="text-center">
+                            Trạng thái
+                        </th>
+                    </tr>
+                    <tbody class="tbody-tuyenthang">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card-header-actions mt-3 mb-1" id="list-ngoaingu">
+            <div class="card-header">
+                Theo phương thức sử dụng chứng chỉ ngoại ngữ
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr class="text-center">
+                        <th class="text-center">Đợt xét tuyển</th>
+                        <th class="text-center">Mã ngành</th>
+                        <th>Tên ngành</th>
+                        <th class="text-center">
+                            Tên phương thức
+                        </th>
+                        <th class="text-center">
+                            Mã tổ hợp
+                        </th>
+                        <th class="text-center">
+                            Tên chứng chỉ
+                        </th>
+                        <th>
+                            Kết quả
+                        </th>
+                        <th width="15%" class="text-center">
+                            Trạng thái
+                        </th>
+                    </tr>
+                    <tbody class="tbody-ngoaingu">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card-header-actions mt-3 mb-1" id="list-dgnl">
+            <div class="card-header">
+                Theo phương thức sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr class="text-center">
+                        <th class="text-center">Đợt xét tuyển</th>
+                        <th class="text-center">Mã ngành</th>
+                        <th>Tên ngành</th>
+                        <th class="text-center">
+                            Tên phương thức
+                        </th>
+                        <th class="text-center">
+                            Mã tổ hợp
+                        </th>
+                        <th class="text-center">
+                            Tên trường tổ chức
+                        </th>
+                        <th>
+                            Kết quả
+                        </th>
+                        <th width="15%" class="text-center">
+                            Trạng thái
+                        </th>
+                    </tr>
+                    <tbody class="tbody-dgnl">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
