@@ -219,7 +219,7 @@
                                            accept="application/pdf,.png, .jpeg, .jpg" />
                                     @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
                                     <div class="col-12 table-responsive">
-                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungMN">
+                                        <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungMN">
                                             <tr style="display:none">
                                                 <th>
                                                     Attachment(s)
@@ -242,7 +242,7 @@
                                            accept="application/pdf,.png, .jpeg, .jpg" />
                                     @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
                                     <div class="col-12 table-responsive">
-                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungGiayKS">
+                                        <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungGiayKS">
                                             <tr style="display:none">
                                                 <th>
                                                     Attachment(s)
@@ -265,7 +265,7 @@
                                            accept="application/pdf,.png, .jpeg, .jpg" />
                                     @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
                                     <div class="col-12 table-responsive">
-                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungMaDinhDanh">
+                                        <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungMaDinhDanh">
                                             <tr style="display:none">
                                                 <th>
                                                     Attachment(s)
@@ -288,7 +288,7 @@
                                            accept="application/pdf,.png, .jpeg, .jpg" />
                                     @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
                                     <div class="col-12 table-responsive">
-                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_GiayUuTien">
+                                        <table class="table table-responsive-md" id="FilesList_HocSinh_GiayUuTien">
                                             <tr style="display:none">
                                                 <th>
                                                     Attachment(s)
@@ -310,7 +310,7 @@
                                            accept="application/pdf,.png, .jpeg, .jpg" />
                                     @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
                                     <div class="col-12 table-responsive">
-                                        <table class="table table-bordered table-responsive-md" id="FilesList_HocSinh_MinhChungLePhi">
+                                        <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungLePhi">
                                             <tr style="display:none">
                                                 <th>
                                                     Attachment(s)
@@ -457,8 +457,8 @@
                 let srandomid = Math.random().toString(36).substring(7);
                 if (!formdataHocSinh_MinhChungMN.has(sfilename)) {
                     formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
-                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
-                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
                     $("#FilesList_HocSinh_MinhChungMN tbody").append(markup)
                 }
             }
@@ -478,8 +478,8 @@
                 let srandomid = Math.random().toString(36).substring(7);
                 if (!formdataHocSinh_MinhChungGiayKS.has(sfilename)) {
                     formdataHocSinh_MinhChungGiayKS.append(sfilename, fileInput.files[i]);
-                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
-                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
                     $("#FilesList_HocSinh_MinhChungGiayKS tbody").append(markup)
                 }
             }
@@ -498,8 +498,8 @@
                 let srandomid = Math.random().toString(36).substring(7);
                 if (!formdataHocSinh_MinhChungMaDinhDanh.has(sfilename)) {
                     formdataHocSinh_MinhChungMaDinhDanh.append(sfilename, fileInput.files[i]);
-                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
-                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
                     $("#FilesList_HocSinh_MinhChungMaDinhDanh tbody").append(markup)
                 }
             }
@@ -518,8 +518,8 @@
                 let srandomid = Math.random().toString(36).substring(7);
                 if (!formdataHocSinh_GiayUuTien.has(sfilename)) {
                     formdataHocSinh_GiayUuTien.append(sfilename, fileInput.files[i]);
-                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
-                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
                     $("#FilesList_HocSinh_GiayUuTien tbody").append(markup)
                 }
             }
@@ -537,8 +537,8 @@
                 let srandomid = Math.random().toString(36).substring(7);
                 if (!formdataHocSinh_MinhChungLePhi.has(sfilename)) {
                     formdataHocSinh_MinhChungLePhi.append(sfilename, fileInput.files[i]);
-                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
-                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
                     $("#FilesList_HocSinh_MinhChungLePhi tbody").append(markup)
                 }
             }
