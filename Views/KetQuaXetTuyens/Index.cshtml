@@ -135,6 +135,12 @@
         });
     }
 </script>
+<style>
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
 <div class="container-fluid px-12">
     <div id="fadeInUp">
         <div class="card card-header-actions mt-3 mb-1" id="list-hocba">
@@ -142,31 +148,32 @@
                 Theo phương thức sử dụng kết quả học tập ở THPT
             </div>
             <div class="card-body">
-                <table class="table">
-                    <tr>
-                        <th class="text-center">Đợt xét tuyển</th>
-                        <th class="text-center">Mã ngành</th>
-                        <th>Tên ngành</th>
-                        <th class="text-center">
-                            Tên phương thức
-                        </th>
-                        <th class="text-center">
-                            Mã tổ hợp
-                        </th>
-                        <th class="text-center">
-                            Thứ tự nguyện vọng
-                        </th>
-                        <th>
-                            Tổng điểm
-                        </th>
-                        <th width="15%" class="text-center">
-                            Trạng thái
-                        </th>
-                    </tr>
-                    <tbody class="tbody">
-                    </tbody>
-                </table>
-
+                <div class="table-container">
+                    <table class="table">
+                        <tr>
+                            <th class="text-center">Đợt xét tuyển</th>
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Thứ tự nguyện vọng
+                            </th>
+                            <th>
+                                Tổng điểm
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -175,30 +182,32 @@
                 Thuộc diện xét tuyển thẳng học sinh giỏi
             </div>
             <div class="card-body">
-                <table class="table">
-                    <tr class="text-center">
-                        <th class="text-center">Đợt xét tuyển</th>
-                        <th class="text-center">Mã ngành</th>
-                        <th>Tên ngành</th>
-                        <th class="text-center">
-                            Tên phương thức
-                        </th>
-                        <th class="text-center">
-                            Mã tổ hợp
-                        </th>
-                        <th class="text-center">
-                            Môn đạt giải
-                        </th>
-                        <th>
-                            Giải
-                        </th>
-                        <th width="15%" class="text-center">
-                            Trạng thái
-                        </th>
-                    </tr>
-                    <tbody class="tbody-tuyenthang">
-                    </tbody>
-                </table>
+                <div class="table-container">
+                    <table class="table">
+                        <tr class="text-center">
+                            <th class="text-center">Đợt xét tuyển</th>
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Môn đạt giải
+                            </th>
+                            <th>
+                                Giải
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody-tuyenthang">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -207,30 +216,32 @@
                 Theo phương thức sử dụng chứng chỉ ngoại ngữ
             </div>
             <div class="card-body">
-                <table class="table">
-                    <tr class="text-center">
-                        <th class="text-center">Đợt xét tuyển</th>
-                        <th class="text-center">Mã ngành</th>
-                        <th>Tên ngành</th>
-                        <th class="text-center">
-                            Tên phương thức
-                        </th>
-                        <th class="text-center">
-                            Mã tổ hợp
-                        </th>
-                        <th class="text-center">
-                            Tên chứng chỉ
-                        </th>
-                        <th>
-                            Kết quả
-                        </th>
-                        <th width="15%" class="text-center">
-                            Trạng thái
-                        </th>
-                    </tr>
-                    <tbody class="tbody-ngoaingu">
-                    </tbody>
-                </table>
+                <div class="table-container">
+                    <table class="table">
+                        <tr class="text-center">
+                            <th class="text-center">Đợt xét tuyển</th>
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Tên chứng chỉ
+                            </th>
+                            <th>
+                                Kết quả
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody-ngoaingu">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -239,30 +250,32 @@
                 Theo phương thức sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy
             </div>
             <div class="card-body">
-                <table class="table">
-                    <tr class="text-center">
-                        <th class="text-center">Đợt xét tuyển</th>
-                        <th class="text-center">Mã ngành</th>
-                        <th>Tên ngành</th>
-                        <th class="text-center">
-                            Tên phương thức
-                        </th>
-                        <th class="text-center">
-                            Mã tổ hợp
-                        </th>
-                        <th class="text-center">
-                            Tên trường tổ chức
-                        </th>
-                        <th>
-                            Kết quả
-                        </th>
-                        <th width="15%" class="text-center">
-                            Trạng thái
-                        </th>
-                    </tr>
-                    <tbody class="tbody-dgnl">
-                    </tbody>
-                </table>
+                <div class="table-container">
+                    <table class="table">
+                        <tr class="text-center">
+                            <th class="text-center">Đợt xét tuyển</th>
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Tên trường tổ chức
+                            </th>
+                            <th>
+                                Kết quả
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody-dgnl">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

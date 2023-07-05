@@ -30,7 +30,10 @@ namespace HDU_AppXetTuyen.Controllers
         {
             var session = Session["login_session"].ToString();
             var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
-            var nguyenvongs = db.DangKyXetTuyens.Include(l => l.Nganh).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).ToList();
+            var nguyenvongs = db.DangKyXetTuyens.Include(l => l.Nganh).Include(l => l.ToHopMon).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).ToList();
+            var nguyenVongTuyenThang = db.DangKyXetTuyenThangs.Include(l => l.Nganh).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).ToList();
+            var nguyenVongNgoaiNgu = db.DangKyXetTuyenKhacs.Include(l => l.Nganh).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP5")).OrderBy(n => n.Dkxt_NguyenVong).ToList();
+            var nguyenVongDanhGia = db.DangKyXetTuyenKhacs.Include(l => l.Nganh).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP6")).OrderBy(n => n.Dkxt_NguyenVong).ToList(); 
             var lePhi = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(s => new
             {
                 Lpxt_SoTienDong = s.Lpxt_SoTienDong,
@@ -38,16 +41,12 @@ namespace HDU_AppXetTuyen.Controllers
                 Lpxt_MinhChung = s.Lpxt_MinhChung,
                 Lpxt_GhiChu = s.Lpxt_GhiChu
             }).FirstOrDefault();
-            var dataList = nguyenvongs.Select(s => new
-            {
-                Dkxt_NguyenVong = s.Dkxt_NguyenVong,
-                Nganh_ID = s.Nganh_ID,
-                Dkxt_Nganh = new
-                {
-                    Nganh_TenNganh = s.Nganh.NganhTenNganh
-                }
-            });
-            return Json(new { success = true, data = dataList, lePhi = lePhi }, JsonRequestBehavior.AllowGet);
+            int tongNguyenVong = 0;
+            if (nguyenvongs != null) tongNguyenVong += nguyenvongs.Count;
+            if (nguyenVongTuyenThang != null) tongNguyenVong += nguyenVongTuyenThang.Count;
+            if (nguyenVongNgoaiNgu != null) tongNguyenVong += nguyenVongNgoaiNgu.Count;
+            if (nguyenVongDanhGia != null) tongNguyenVong += nguyenVongDanhGia.Count;
+            return Json(new { success = true, data = tongNguyenVong, lePhi = lePhi }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -59,7 +58,7 @@ namespace HDU_AppXetTuyen.Controllers
                 var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
                 var lePhi = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).FirstOrDefault();
                 string minhchungs = "";
-                if(lePhi != null && lePhi.Lpxt_MinhChung != null)
+                if (lePhi != null && lePhi.Lpxt_MinhChung != null)
                 {
                     minhchungs = lePhi.Lpxt_MinhChung + "#";
                 }
