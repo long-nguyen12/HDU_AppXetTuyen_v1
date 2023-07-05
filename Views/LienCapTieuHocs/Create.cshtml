@@ -215,7 +215,7 @@
                             <div class="form-group">
                                 <label for="formFileMultiple" class="form-label">Chứng nhận hoàn thành GDMN </label>
                                 <div class="col-md-12">
-                                    <input class="form-control" id="HocSinh_MinhChungMN" name="HocSinh_MinhChungMN" placeholder="Chọn giấy chứng nhận" value="Chọn giấy chứng nhận" multiple="multiple" type="file" data-val="false" data-val-required="Vui lòng chọn file hoàn thành GDMN"
+                                    <input class="form-control" id="HocSinh_MinhChungMN" name="HocSinh_MinhChungMN" placeholder="Chọn giấy chứng nhận" class="hidden" value="Chọn giấy chứng nhận" multiple="multiple" type="file" data-val="false" data-val-required="Vui lòng chọn file hoàn thành GDMN"
                                            accept="application/pdf,.png, .jpeg, .jpg" />
                                     @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
                                     <div class="col-12 table-responsive">
@@ -453,16 +453,16 @@
             var fileInput = document.getElementById('HocSinh_MinhChungMN');
             //Iterating through each files selected in fileInput
             for (i = 0; i < fileInput.files.length; i++) {
-
                 var sfilename = fileInput.files[i].name;
                 let srandomid = Math.random().toString(36).substring(7);
-
-                formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
-                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
-                $("#FilesList_HocSinh_MinhChungMN tbody").append(markup)
-
+                if (!formdataHocSinh_MinhChungMN.has(sfilename)) {
+                    formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungMN tbody").append(markup)
+                }
             }
+
             var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungMN);
             chkatchtbl();
             document.getElementById("HocSinh_MinhChungMN").files = fileConvert.files;
@@ -474,15 +474,14 @@
             var fileInput = document.getElementById('HocSinh_MinhChungGiayKS');
             //Iterating through each files selected in fileInput
             for (i = 0; i < fileInput.files.length; i++) {
-
                 var sfilename = fileInput.files[i].name;
                 let srandomid = Math.random().toString(36).substring(7);
-
-                formdataHocSinh_MinhChungGiayKS.append(sfilename, fileInput.files[i]);
-                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
-                $("#FilesList_HocSinh_MinhChungGiayKS tbody").append(markup)
-
+                if (!formdataHocSinh_MinhChungGiayKS.has(sfilename)) {
+                    formdataHocSinh_MinhChungGiayKS.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungGiayKS tbody").append(markup)
+                }
             }
             var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungGiayKS);
             chkatchtbl();
@@ -497,13 +496,12 @@
 
                 var sfilename = fileInput.files[i].name;
                 let srandomid = Math.random().toString(36).substring(7);
-
-                formdataHocSinh_MinhChungMaDinhDanh.append(sfilename, fileInput.files[i]);
-
-                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
-                $("#FilesList_HocSinh_MinhChungMaDinhDanh tbody").append(markup)
-
+                if (!formdataHocSinh_MinhChungMaDinhDanh.has(sfilename)) {
+                    formdataHocSinh_MinhChungMaDinhDanh.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungMaDinhDanh tbody").append(markup)
+                }
             }
             var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungMaDinhDanh);
             chkatchtbl();
@@ -518,13 +516,12 @@
 
                 var sfilename = fileInput.files[i].name;
                 let srandomid = Math.random().toString(36).substring(7);
-
-                formdataHocSinh_GiayUuTien.append(sfilename, fileInput.files[i]);
-
-                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
-                $("#FilesList_HocSinh_GiayUuTien tbody").append(markup)
-
+                if (!formdataHocSinh_GiayUuTien.has(sfilename)) {
+                    formdataHocSinh_GiayUuTien.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_GiayUuTien tbody").append(markup)
+                }
             }
             var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_GiayUuTien);
             chkatchtbl();
@@ -536,33 +533,27 @@
             var fileInput = document.getElementById('HocSinh_MinhChungLePhi');
             //Iterating through each files selected in fileInput
             for (i = 0; i < fileInput.files.length; i++) {
-
                 var sfilename = fileInput.files[i].name;
                 let srandomid = Math.random().toString(36).substring(7);
-
-                formdataHocSinh_MinhChungLePhi.append(sfilename, fileInput.files[i]);
-
-                var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + srandomid + "\",\"" + sfilename +
-                    "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
-                $("#FilesList_HocSinh_MinhChungLePhi tbody").append(markup)
-
+                if (!formdataHocSinh_MinhChungLePhi.has(sfilename)) {
+                    formdataHocSinh_MinhChungLePhi.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td> <td>" + sfilename + " </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungLePhi tbody").append(markup)
+                }
             }
             var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungLePhi);
             chkatchtbl();
             document.getElementById("HocSinh_MinhChungLePhi").files = fileConvert.files;
         });
     });
-    function DeleteFile(type, Fileid, FileName) {
+    function DeleteFile(type, indexFormdata, Fileid, FileName) {
         if (type == "HocSinh_MinhChungMN") {
             formdataHocSinh_MinhChungMN.delete(FileName)
             $("#" + Fileid).remove();
             var fileInput = document.getElementById('HocSinh_MinhChungMN').files;
-            console.log(fileInput, 'fileInput');
             var fileBuffer = new DataTransfer();
-            //Iterating through each files selected in fileInput
             for (let i = 0; i < fileInput.length; i++) {
-                console.log(fileInput, 'fileInput');
-                // Exclude file in specified index
                 if (FileName !== fileInput[i].name)
                     fileBuffer.items.add(fileInput[i]);
             }
@@ -574,22 +565,19 @@
             $("#" + Fileid).remove();
             var fileInput = document.getElementById('HocSinh_MinhChungGiayKS').files;
             var fileBuffer = new DataTransfer();
-            //Iterating through each files selected in fileInput
             for (let i = 0; i < fileInput.length; i++) {
-                // Exclude file in specified index
                 if (FileName !== fileInput[i].name)
                     fileBuffer.items.add(fileInput[i]);
             }
             document.getElementById("HocSinh_MinhChungGiayKS").files = fileBuffer.files; // <-- according to your file input reference
             chkatchtbl();
-        } if (type == "HocSinh_MinhChungMaDinhDanh") {
+        }
+        if (type == "HocSinh_MinhChungMaDinhDanh") {
             formdataHocSinh_MinhChungMaDinhDanh.delete(FileName)
             $("#" + Fileid).remove();
             var fileInput = document.getElementById('HocSinh_MinhChungMaDinhDanh').files;
             var fileBuffer = new DataTransfer();
-            //Iterating through each files selected in fileInput
             for (let i = 0; i < fileInput.length; i++) {
-                // Exclude file in specified index
                 if (FileName !== fileInput[i].name)
                     fileBuffer.items.add(fileInput[i]);
             }
@@ -602,9 +590,7 @@
             $("#" + Fileid).remove();
             var fileInput = document.getElementById('HocSinh_GiayUuTien').files;
             var fileBuffer = new DataTransfer();
-            //Iterating through each files selected in fileInput
             for (let i = 0; i < fileInput.length; i++) {
-                // Exclude file in specified index
                 if (FileName !== fileInput[i].name)
                     fileBuffer.items.add(fileInput[i]);
             }
@@ -616,41 +602,37 @@
             $("#" + Fileid).remove();
             var fileInput = document.getElementById('HocSinh_MinhChungLePhi').files;
             var fileBuffer = new DataTransfer();
-            //Iterating through each files selected in fileInput
             for (let i = 0; i < fileInput.length; i++) {
-                // Exclude file in specified index
                 if (FileName !== fileInput[i].name)
                     fileBuffer.items.add(fileInput[i]);
             }
             document.getElementById("HocSinh_MinhChungLePhi").files = fileBuffer.files; // <-- according to your file input reference
             chkatchtbl();
         }
-
-
     }
 
     function chkatchtbl() {
-        if ($('#FilesList_HocSinh_MinhChungMN tr').length > 1) {
+        if ($('#FilesList_HocSinh_MinhChungMN tr').length > 0) {
             $("#FilesList_HocSinh_MinhChungMN").css("visibility", "visible");
         } else {
             $("#FilesList_HocSinh_MinhChungMN").css("visibility", "hidden");
         }
-        if ($('#FilesList_HocSinh_MinhChungGiayKS tr').length > 1) {
+        if ($('#FilesList_HocSinh_MinhChungGiayKS tr').length > 0) {
             $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "visible");
         } else {
             $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "hidden");
         }
-        if ($('#FilesList_HocSinh_MinhChungMaDinhDanh tr').length > 1) {
+        if ($('#FilesList_HocSinh_MinhChungMaDinhDanh tr').length > 0) {
             $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "visible");
         } else {
             $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "hidden");
         }
-        if ($('#FilesList_HocSinh_GiayUuTien tr').length > 1) {
+        if ($('#FilesList_HocSinh_GiayUuTien tr').length > 0) {
             $("#FilesList_HocSinh_GiayUuTien").css("visibility", "visible");
         } else {
             $("#FilesList_HocSinh_GiayUuTien").css("visibility", "hidden");
         }
-        if ($('#FilesList_HocSinh_MinhChungLePhi tr').length > 1) {
+        if ($('#FilesList_HocSinh_MinhChungLePhi tr').length > 0) {
             $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "visible");
         } else {
             $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "hidden");
