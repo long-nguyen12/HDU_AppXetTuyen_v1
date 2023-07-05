@@ -62,7 +62,7 @@
                 <div class="row">
                     <div class="col-xxl-12">
                         <center>
-                            <button id="downButton" class="btn btn-outline-success"> In phiếu tổng hợp</button>
+                            <button id="downButton" class="btn btn-outline-success"> Tải phiếu tổng hợp</button>
                             <a class="btn btn-outline-primary" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>
                         </center>
                     </div>
@@ -472,14 +472,14 @@
             { value: 2, text: "Vật lí" },
             { value: 3, text: "Hóa học" },
             { value: 4, text: "Sinh học" },
-            { value: 1, text: "Tin học" },
-            { value: 1, text: "Ngữ văn" },
-            { value: 1, text: "Lịch sử" },
-            { value: 1, text: "Địa lí" },
-            { value: 1, text: "Tiếng Anh" },
-            { value: 1, text: "Tiếng Nga" },
-            { value: 1, text: "Tiếng Pháp" },
-            { value: 1, text: "Tiếng Trung" },
+            { value: 5, text: "Tin học" },
+            { value: 6, text: "Ngữ văn" },
+            { value: 7, text: "Lịch sử" },
+            { value: 8, text: "Địa lí" },
+            { value: 9, text: "Tiếng Anh" },
+            { value: 10, text: "Tiếng Nga" },
+            { value: 11, text: "Tiếng Pháp" },
+            { value: 12, text: "Tiếng Trung" },
         ]
         let monOptions = $('#Dkxt_MonDatGiai');
         $.each(monList, function (index, option) {
@@ -740,7 +740,7 @@
 
     $(document).ready(function () {
         $('#downButton').click(function () {
-            window.location.href = '/ExportFile/DownloadFile_XetTuyenHB';
+            window.location.href = '/ExportFile/DownloadFile_XetTuyenThang';
         });
     });
 
