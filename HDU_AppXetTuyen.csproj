@@ -271,6 +271,7 @@
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
     <Content Include="Content\images\profile-1.png" />
+    <Content Include="Content\images\thongtintv.jpg" />
     <Content Include="Content\js\bootstrap.bundle.js" />
     <Content Include="Content\js\bootstrap.bundle.min.js" />
     <Content Include="Content\js\bootstrap.esm.js" />
@@ -579,6 +580,7 @@
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxtthptqg.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmRegister.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
@@ -587,6 +589,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Uploads\DKXTHocBaFile\" />
+    <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
     <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayUuTien\" />
