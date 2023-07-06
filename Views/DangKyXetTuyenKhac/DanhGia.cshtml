@@ -294,6 +294,23 @@
         </div>
     </div>
 </div>
+<style>
+    #loadingModal {
+        background-color: rgba(0, 0, 0, 0.5);
+        background-color: transparent;
+    }
+</style>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -422,7 +439,7 @@
         CheckAttachTable(ListId);
     }
     function CheckAttachTable(list) {
-        if ($(`${list} tr`).length > 1) {
+        if ($(`${list} tr`).length > 0) {
             $(list).css("visibility", "visible");
         } else {
             $(list).css("visibility", "hidden");
@@ -607,7 +624,11 @@
             flag = false;
         }
         if (!Dkxt_DonViToChuc) {
-            var errorMessage = "Vui lòng nhập tên chứng chỉ";
+            var errorMessage = "Vui lòng nhập tên trường";
+            $('#Dkxt_DonViToChuc_Error').text(errorMessage);
+            flag = false;
+        } else if (!Dkxt_DonViToChuc.trim()) {
+            var errorMessage = "Vui lòng nhập tên trường";
             $('#Dkxt_DonViToChuc_Error').text(errorMessage);
             flag = false;
         }
@@ -615,10 +636,18 @@
             var errorMessage = "Vui lòng nhập kết quả";
             $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
+        }else if(parseFloat(Dkxt_KetQuaDatDuoc) < 0){
+            var errorMessage = "Kết quả không hợp lệ";
+            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
+            flag = false;
         }
         if (!Dkxt_TongDiem) {
             var errorMessage = "Vui lòng nhập tổng điểm";
             $('#Dkxt_TongDiem_Error').text(errorMessage);
+            flag = false;
+        } else if(parseFloat(Dkxt_TongDiem) < 0){
+            var errorMessage = "Tổng điểm không hợp lệ";
+            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
         }
         if (parseFloat(Dkxt_KetQuaDatDuoc) > parseFloat(Dkxt_TongDiem)) {
@@ -630,8 +659,13 @@
             var errorMessage = "Vui lòng nhập ngày dự thi";
             $('#Dkxt_NgayDuThi_Error').text(errorMessage);
             flag = false;
+        } else if (!Dkxt_NgayDuThi.trim()) {
+            var errorMessage = "Vui lòng nhập ngày dự thi";
+            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
+            flag = false;
         }
         if (!flag) return;
+        $("#loadingModal").modal("show");
         uploadFiles();
         let formData = {
             Nganh_ID: Nganh_ID,
@@ -662,12 +696,15 @@
                     document.getElementById('div_list_nguyenvong').style.display = "inline";
                     document.getElementById('div_update_dk_nguyenvong').style.display = "none";
                     onResetFields();
+                    $("#loadingModal").modal("hide");
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                    $("#loadingModal").modal("hide");
                 }
             },
             error: function (errormessage) {
                 showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                $("#loadingModal").modal("hide");
             }
         });
     }

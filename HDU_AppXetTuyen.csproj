@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -271,6 +271,7 @@
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
     <Content Include="Content\images\profile-1.png" />
+    <Content Include="Content\images\thongtintv.jpg" />
     <Content Include="Content\js\bootstrap.bundle.js" />
     <Content Include="Content\js\bootstrap.bundle.min.js" />
     <Content Include="Content\js\bootstrap.esm.js" />
@@ -564,7 +565,7 @@
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Edit.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxthocba1.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
     <Content Include="Views\KetQuaXetTuyens\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
@@ -579,15 +580,19 @@
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxtthptqg.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmRegister.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Content\static\" />
     <Folder Include="Uploads\DKXTHocBaFile\" />
+    <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayUuTien\" />
     <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
@@ -640,7 +645,6 @@
     <Content Include="Content\js\bootstrap.esm.min.js.map" />
     <Content Include="Content\js\bootstrap.js.map" />
     <Content Include="Content\js\bootstrap.min.js.map" />
-    <Content Include="Content\static\Mau_HB.docx" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
