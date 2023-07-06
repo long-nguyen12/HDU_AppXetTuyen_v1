@@ -16,6 +16,7 @@ namespace HDU_AppXetTuyen.Controllers
     public class DangKyXetTuyensController : Controller
     {
         #region Đăng ký xét tuyển kết quả thi THPT quốc gia
+        [ThiSinhSessionCheck]
         public ActionResult dkxtthptqg()
         {
             return View();
