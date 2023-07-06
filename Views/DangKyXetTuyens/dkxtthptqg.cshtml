@@ -296,8 +296,8 @@
 
                         <div class="row mb-3">
                             <div class="col-xxl-12" style="text-align:center">
-                                <input class="btn btn-primary" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
-                                <input class="btn btn-secondary" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
+                                <input class="btn btn-primary col-5 col-auto" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
+                                <input class="btn btn-secondary col-5 col-auto" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
                             </div>
                         </div>
 
@@ -460,7 +460,7 @@
                 let srandomid_chungnhan_kqtn = Math.random().toString(36).substring(7);
                 formdata_file_chungnhan_kqtn.append(sfilename_chungnhan_kqtn, files_chungnhan_kqtn.files[i]);
 
-                var markup_chungnhan_kqtn = "<tr id='" + srandomid_chungnhan_kqtn + "'><td>" + sfilename_chungnhan_kqtn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_CNKQTN_Upload(\"" + srandomid_chungnhan_kqtn + "\",\"" + sfilename_chungnhan_kqtn + "\")'>Xóa</a></td></tr>";
+                var markup_chungnhan_kqtn = "<tr id='" + srandomid_chungnhan_kqtn + "'><td>" + sfilename_chungnhan_kqtn + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_CNKQTN_Upload(\"" + srandomid_chungnhan_kqtn + "\",\"" + sfilename_chungnhan_kqtn + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_CNKQTN_View tbody").append(markup_chungnhan_kqtn);
             }
             chkatchtbl_chungnhan_kqtn();
@@ -473,7 +473,7 @@
                 var sfilename_bang_tn = files_bangtn.files[i].name;
                 let srandomid_bang_tn = Math.random().toString(36).substring(7);
                 formdata_file_bang_tn.append(sfilename_bang_tn, files_bangtn.files[i]);
-                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_BANGTN_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
+                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_BANGTN_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_BangTN_View tbody").append(markup_bang_tn);
             }
             chkatchtbl_bang_tn();
@@ -485,7 +485,7 @@
                 var sfilename_hocba_ts = files_hocba_ts.files[i].name;
                 let srandomid_hocba_ts = Math.random().toString(36).substring(7);
                 formdata_file_hocba_ts.append(sfilename_hocba_ts, files_hocba_ts.files[i]);
-                var markup_hocba_ts = "<tr id='" + srandomid_hocba_ts + "'><td>" + sfilename_hocba_ts + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba_ts + "\",\"" + sfilename_hocba_ts + "\")'>Xóa</a></td></tr>";
+                var markup_hocba_ts = "<tr id='" + srandomid_hocba_ts + "'><td>" + sfilename_hocba_ts + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba_ts + "\",\"" + sfilename_hocba_ts + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_HocBa_View tbody").append(markup_hocba_ts);
             }
             chkatchtbl_hocba();
@@ -500,7 +500,7 @@
                 let srandomid_gtuutien = Math.random().toString(36).substring(7);
 
                 formdata_file_giayto_uutien.append(sfilename_gtuutien, files_giayto_uutien.files[i]);
-                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_GTUT_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
+                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_GTUT_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_GTUT_View tbody").append(markup_giayto_uutien);
 
             }
