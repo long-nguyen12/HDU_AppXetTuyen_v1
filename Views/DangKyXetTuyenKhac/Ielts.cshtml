@@ -623,6 +623,10 @@
             var errorMessage = "Vui lòng nhập tên chứng chỉ";
             $('#Dkxt_DonViToChuc_Error').text(errorMessage);
             flag = false;
+        } else if (!Dkxt_DonViToChuc.trim()) {
+            var errorMessage = "Vui lòng nhập tên chứng chỉ";
+            $('#Dkxt_DonViToChuc_Error').text(errorMessage);
+            flag = false;
         }
         if (!Dkxt_KetQuaDatDuoc) {
             var errorMessage = "Vui lòng nhập kết quả";
@@ -642,6 +646,10 @@
         if (!Dkxt_NgayDuThi) {
             var errorMessage = "Vui lòng nhập ngày dự thi";
             $('#Dkxt_NgayDuThi_Error').text(errorMessage);
+            flag = false;
+        } else if (!Dkxt_NgayDuThi.trim()) {
+            var errorMessage = "Vui lòng nhập ngày dự thi";
+            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
         }
         if (!flag) return;

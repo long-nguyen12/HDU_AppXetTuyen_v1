@@ -636,7 +636,7 @@
             var errorMessage = "Vui lòng chọn ngành";
             $('#Nganh_ID_Error').text(errorMessage);
             flag = false;
-        }
+        } 
         if (!Dkxt_MonDatGiai_Value || Dkxt_MonDatGiai_Value == "0") {
             var errorMessage = "Vui lòng chọn môn đạt giải";
             $('#Dkxt_MonDatGiai_Error').text(errorMessage);
@@ -650,6 +650,10 @@
         if (!Dkxt_NamDatGiai) {
             var errorMessage = "Vui lòng nhận năm đạt giải";
             $('#Dkxt_NamDatGiai_Error').text(errorMessage);
+            flag = false;
+        } else if (!Dkxt_NamDatGiai.trim()) {
+            var errorMessage = "Vui lòng chọn ngành";
+            $('#Nganh_ID_Error').text(errorMessage);
             flag = false;
         }
         if (!flag) return;
