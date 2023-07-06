@@ -435,7 +435,7 @@
         CheckAttachTable(ListId);
     }
     function CheckAttachTable(list) {
-        if ($(`${list} tr`).length > 1) {
+        if ($(`${list} tr`).length > 0) {
             $(list).css("visibility", "visible");
         } else {
             $(list).css("visibility", "hidden");
@@ -632,10 +632,18 @@
             var errorMessage = "Vui lòng nhập kết quả";
             $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
+        } else if (parseFloat(Dkxt_KetQuaDatDuoc) < 0) {
+            var errorMessage = "Kết quả không hợp lệ";
+            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
+            flag = false;
         }
         if (!Dkxt_TongDiem) {
             var errorMessage = "Vui lòng nhập tổng điểm";
             $('#Dkxt_TongDiem_Error').text(errorMessage);
+            flag = false;
+        } else if (parseFloat(Dkxt_TongDiem) < 0) {
+            var errorMessage = "Tổng điểm không hợp lệ";
+            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
         }
         if (parseFloat(Dkxt_KetQuaDatDuoc) > parseFloat(Dkxt_TongDiem)) {
