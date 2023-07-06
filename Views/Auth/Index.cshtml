@@ -9,11 +9,13 @@
 <script>
     $(document).ready(function () {
         $('#showSignup').click(function (e) {
-            e.preventDefault();
-            $('#loginForm').hide();
-            $('#signupForm').show();
-            $("#leftPanel").removeClass("col-lg-7").addClass("col-lg-5");
-            $("#rightPanel").removeClass("col-lg-5").addClass("col-lg-7");
+            //e.preventDefault();
+            //$('#loginForm').hide();
+            //$('#signupForm').show();
+            //$("#leftPanel").removeClass("col-lg-7").addClass("col-lg-5");
+            //$("#rightPanel").removeClass("col-lg-5").addClass("col-lg-7");
+
+            showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
         });
 
         $('#showLogin').click(function (e) {
@@ -67,6 +69,8 @@
         });
     })
     function submitForm() {
+        showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
+        return;
         $(".text-danger").text("");
         let cccd = $("#login_CCCD").val();
         let password = $("#login_password").val();
@@ -335,11 +339,13 @@
                 <span id="errorMessage" class="small mb-1 text-danger"></span>
             </div>
             <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                <input class="btn btn-primary" type="submit" onclick="submitForm()" value="Đăng nhập" />
+                <input class="btn btn-primary" type="submit" onclick="submitForm()" value="Đăng nhập"/>
             </div>
             <div class="text-center mt-4">
                 <div class="small"><a id="showSignup" style="text-decoration: none; color: #001D85;" href="#">Bạn chưa đăng kí thông tin? <b>Đăng kí tại đây</b></a></div>
-                <div class="small mt-2"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("ForgotPassword", "Auth")">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+                <div class="small mt-2"><a style="text-decoration: none; color: #001D85;" href="#" onclick="submitForm()">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+                @*<div class="small mt-2"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("ForgotPassword", "Auth")">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>*@
+
                 <div class="small mt-2"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("Index", "LienCapTHCS")">Đăng ký xét tuyển Trường TH, THCS, THPT Hồng Đức? <b>Tại đây</b></a></div>
             </div>
         </div>
@@ -536,7 +542,7 @@
                 <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
             </div>
             <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                <input class="btn btn-primary" type="submit" onclick="submitRegisterForm()" value="Đăng kí" />
+                <input class="btn btn-primary" type="submit" onclick="submitRegisterForm()" value="Đăng kí" disabled/>
             </div>
             <div class="text-center mt-4">
                 <div class="small"><a id="showLogin" style="text-decoration: none; color: #001D85;" href="#">Đã có tài khoản? <b>Đăng nhập ngay</b></a></div>
