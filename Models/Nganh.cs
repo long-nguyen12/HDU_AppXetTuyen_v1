@@ -1,4 +1,4 @@
-﻿namespace HDU_AppXetTuyen.Models
+namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +15,8 @@
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             ToHopMonNganhs = new HashSet<ToHopMonNganh>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
+            DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
+            DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
         }
 
         [Key]
@@ -50,5 +52,11 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
     }
 }
