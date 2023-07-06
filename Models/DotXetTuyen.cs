@@ -13,7 +13,7 @@ namespace HDU_AppXetTuyen.Models
         public DotXetTuyen()
         {
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
-            ThiSinhDangKies = new HashSet<ThiSinhDangKy>();
+            ThiSinhDangKies = new HashSet<ThiSinhDangKy>();       
         }
 
         [Key]

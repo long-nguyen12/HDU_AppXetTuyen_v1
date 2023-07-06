@@ -1,0 +1,937 @@
+﻿
+@{
+    ViewBag.Title = "dkxtthptqg";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .label_tieude {
+        white-space: nowrap !important;
+    }
+
+    .span_with_for {
+        width: 65px !important
+    }
+
+    .padding_input_text_number {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        text-align: center !important;
+    }
+</style>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <h1 class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Sử dụng kết quả thi tốt nghiệp THPT Quốc gia
+                    </h1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-12">
+    <div id="div_list_aspirations">
+        <div class="card card-header-actions">
+            <div class="card-header">
+                Các nguyện vọng đã đăng ký
+            </div>
+            <input type="hidden" id="dkxt_thptqg_id_checkin" style="display:none!important" />
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="vertical-align:middle;">Nguyện vọng</th>
+                                    <th style="vertical-align:middle;">Ngành</th>
+                                    <th style="vertical-align:middle;">Tổ hợp môn</th>
+                                    @*<th style="vertical-align:middle;">Trạng thái</th>*@
+                                    <th style="vertical-align:middle;">Tổng điểm</th>
+                                    <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody_list_nguyenvong">
+                            </tbody>
+
+                        </table>
+                        <script>
+                            $(document).ready(function () {
+                                ts_dkxt_thptqg_list_all();
+                            });
+                            function ts_dkxt_thptqg_list_all() {
+                                let _output = "";
+                                $.ajax({
+                                    url: "/DangKyXetTuyens/DangKyXetTuyenKQTHPTQG_ListAll/",
+                                    type: 'GET',
+                                    contentType: 'application/json;charset=utf-8',
+                                    dataType: 'json',
+                                    success: function (result_all) {
+
+                                        $('#span_Uutien_doituong').html(result_all.Tsdk_doituong_ten_diem);
+                                        $('#span_Uutien_khuvuc').html(result_all.Tsdk_khuvuv_ten_diem);
+                                        $('#txt_hocluc_12').val(result_all.Tsdk_xeploai_hocluc_12);
+                                        $('#txt_hanhkiem_12').val(result_all.Tsdk_xeploai_hanhkiem_12);
+
+                                        if (result_all.view_list_dkxt_thptqg_ts == 0) {
+                                            _output = '<tr><td colspan="5"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
+
+                                        }
+
+                                        else {
+                                            $.each(result_all.view_list_dkxt_thptqg_ts, function (i, result) {
+
+                                                _output += '<tr>' +
+                                                    '<td style="vertical-align: middle !important "> NV' + result.Dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_KQTQG_ID})" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
+                                                    '<td style="vertical-align: middle !important "> ' + result.Dkxt_KQTQG_TenAll.Nganh_GhiChu + ' </td>' +
+                                                    '<td style="vertical-align: middle !important ">' + result.Dkxt_KQTQG_TenAll.Thm_MaTen + '</td>' +
+                                                    '<td style="vertical-align: middle !important ">' + result.Dkxt_KQTQG_Diem_Tong_Full + '</td>' +
+                                                    /*'<td>' + '<a href="#" class="btn btn-outline-primary btn-sm" style="vertical-align: middle !important " title="Bấm chuột để xác nhận đăng ký nguyện vọng này"> <input type="checkbox" disabled /> Chưa xác nhận</a>' + '</td>' +*/
+                                                    '<td style="text-align: center; vertical-align: middle !important ">' + `<button class="btn btn-outline-danger btn-sm" onclick="bt_Delete_on_table_Click(${result.Dkxt_KQTQG_ID})"}>Xoá</button>` + '</td>' +
+                                                    '</tr>'
+                                                // + `<button class="btn btn-outline-primary btn-sm" onclick="bt_Update_on_table_Click(${result.Dkxt_ID})"}>Sửa</button>`  +' | '
+                                            });
+                                        }
+                                        document.getElementById('tbody_list_nguyenvong').innerHTML = _output;
+                                    },
+                                    error: function (errormessage) {
+                                        console.log("Có lỗi xảy ra trong quá trình thực hiện");
+                                    }
+                                });
+                            }
+                        </script>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <center>
+                            <button id="downButton" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
+                            <a class="btn btn-outline-primary" id="bt_add_aspirations">Thêm nguyện vọng</a>
+                        </center>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
+                        <p style="color:red; font-style:italic; text-align:justify" class="mb-1">-Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
+                        <p style="color: red; font-style: italic ;text-align:justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="div_update_aspirations" style="display: none">
+        <div class="card card-header-actions">
+            <div class="card-header">
+                Đăng ký nguyện vọng mới
+                <button class="btn-close" id="bt_close_div_update_aspirations_first" type="button" aria-label="Close"></button>
+                <script>
+
+                </script>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xxl-4">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Chọn ngành và tổ hợp môn <font color="red">(*)</font></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Khối ngành</td>
+                                    <td>
+                                        <select id="select_khoinganh" class="form-select"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ngành</td>
+                                    <td>
+                                        <select id="select_nganh" class="form-select"></select>
+                                        <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label_tieude">Tổ hợp môn</td>
+                                    <td>
+                                        <select id="select_tohopmon" class="form-select"></select>
+                                        <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="row">
+                                            <div class="col-6 mb-0 ">
+                                                <span id="span_Uutien_doituong">ĐT 05: ƯT 1 đ</span>
+                                                <hr style="margin-bottom: 6px " />
+                                            </div>
+                                            <div class="col-6 mb-0 ">
+                                                <span id="span_Uutien_khuvuc">KV2-NT: ƯT 0.5 đ</span>
+                                                <hr style="margin-bottom:6px" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6 mt-0">
+                                                <span> Học lực lớp 12</span>
+                                                <input id="txt_hocluc_12" type="text" class="form-control" value="" disabled />
+
+                                            </div>
+                                            <div class="col-6 mt-0">
+                                                <span>Hạnh kiểm lớp 12</span>
+                                                <input id="txt_hanhkiem_12" type="text" class="form-control" value="" disabled />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                        </table>
+                    </div>
+                    <div class="col-xxl-4">
+                        <div class="row md-0">
+                            <div class="col-xxl-12 mb-0">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="vertical-align:middle;" colspan="3">Điểm các môn xét tuyển <font color="red">(*)</font></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_list_diemmonhoc">
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-4">
+                                                        <label for="select_namtn" class="col-form-label">Năm tốt nghiệp:</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <select class="form-select" id="select_namtn"></select>
+                                                        <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                                                    </div>
+
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><label id="lb_tenmon_1" class="form-label"></label><input id="txt_m1" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" /></td>
+                                            <td><label id="lb_tenmon_2" class="form-label"></label><input id="txt_m2" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" /></td>
+                                            <td><label id="lb_tenmon_3" class="form-label"></label><input id="txt_m3" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" /></td>
+                                            <td><label id="lb_tongdiem" class="form-label">Tổng</label><input id="txt_tong_diem" type="text" class="form-control input-tong padding_input_text_number" value="25.68" disabled /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="col-xxl-12 mt-0 mb-0" style="text-align:center; ">
+                                <span id="Diem_All_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mt-0 mb-1">
+                            <div class="col-xxl-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Giấy chứng nhận KQ tốt nghiệp THPT<font color="red">(*)</font></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <div class="col-md-12">
+                                                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true" data-val-required="Vui lòng upload tệp chứng nhận tốt nghiệp"
+                                                                       accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_CNKQTN_View" style="visibility:hidden">
+                                                            <tr style="display:none">
+                                                                <th colspan="2"><input type="hidden" id="txt_uploader_file_hocba" /></th>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-4">
+                        <div class="row mb-0">
+                            <div class="col-xxl-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Dữ liệu minh chứng khác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-0">
+                                                            <label for="files_bangtn" class="form-label">Bằng Tốt nghiệp (nếu có)</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-0 mt-1">
+                                                            <label for="files_hocba_ts" class="form-label">Học bạ</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" data-val-required="Vui lòng chọn file Vui lòng chọn file học bạ"
+                                                                       accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files_hocba_ts" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-1 mb-0" id="FilesList_HocBa_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
+                                                    </div>
+                                                </div>
+
+                                                <script>
+
+                                                </script>
+
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-0 mt-1">
+                                                            <label for="files_giayto_uutien" class="form-label">Giấy tờ ưu tiên (nếu có)</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn giấy tờ ưu tiên" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                </table>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row mb-3">
+                            <div class="col-xxl-12" style="text-align:center">
+                                <input class="btn btn-primary" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
+                                <input class="btn btn-secondary" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Toast Title</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
+                    <input id="key_delete_dkxt_id" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
+                    <button class="btn btn-primary" type="button">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        let currentYear = new Date().getFullYear();
+        let namList = [
+            { value: 0, text: "Chọn năm" },
+            { value: currentYear, text: currentYear },
+            { value: currentYear - 1, text: currentYear -1  },
+            { value: currentYear - 2, text: currentYear -2 },
+        ]
+
+        let select_NamTN = $('#select_namtn');
+        $.each(namList, function (index, option) {
+            select_NamTN.append($('<option>', {
+                value: option.value,
+                text: option.text
+            }));
+        });
+        $("#select_khoinganh").change(function () {
+            select_nganh_view_data($("#select_khoinganh").val(), 0, 0);
+            reset_fields_controll_disabled_true()
+        });
+
+        $("#select_nganh").change(function () {
+            select_tohopmon_view_data($("#select_nganh").val(), 0, 0);
+            reset_fields_controll_disabled_true()
+        });
+
+        $("#select_tohopmon").change(function () {
+            let dataObj = {
+                Thm_ID: $("#select_tohopmon").val(),
+                Dkxt_KQTQG_ID: $('#dkxt_thptqg_id_checkin').val(),
+            }
+            if (dataObj.Dkxt_KQTQG_ID == 0 && dataObj.Thm_ID > 0) {
+                reset_fields_controll_disabled_false();
+                $.ajax({
+                    url: "/DangKyXetTuyens/DangKyXetTuyen_Get_Data_MonHoc",
+                    data: JSON.stringify(dataObj),
+                    type: 'POST',
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: 'json',
+                    success: function (res) {
+                        $('#lb_tenmon_1').text(res.thm_Mon1);
+                        $('#lb_tenmon_2').text(res.thm_Mon2);
+                        $('#lb_tenmon_3').text(res.thm_Mon3);
+                        $('#txt_m1').focus();
+                    },
+                    error: function (errormessage) {
+                        console.log(errormessage.error);
+                    }
+                });
+            }
+            else if (dataObj.Dkxt_KQTQG_ID == 0 && dataObj.Thm_ID == 0) {
+                reset_fields_controll_disabled_true()
+            }
+        });
+
+        on_listen_fields_input_data(".input-monhoc", '#txt_tong_diem');
+
+        $('input').on('input', function () {
+            hideErrorMessage($(this));
+        });
+
+        $('select').on('input', function () {
+            hideErrorMessage($(this));
+        })
+    });
+    var check_in_file_chungnhan_kqtn = false;
+    var formdata_file_chungnhan_kqtn = new FormData(); //FormData object chung nhan tot nghiep
+    var formdata_file_bang_tn = new FormData(); //FormData object bang TN
+    var formdata_file_hocba_ts = new FormData(); //FormData object hoc ba
+    var formdata_file_giayto_uutien = new FormData(); //FormData object giaytout
+    $(document).ready(function () {
+        $("#files_chungnhan_kqtn").on("change", function () {
+            var files_chungnhan_kqtn = document.getElementById('files_chungnhan_kqtn');
+            for (i = 0; i < files_chungnhan_kqtn.files.length; i++) {
+                var sfilename_chungnhan_kqtn = files_chungnhan_kqtn.files[i].name;
+                let srandomid_chungnhan_kqtn = Math.random().toString(36).substring(7);
+                formdata_file_chungnhan_kqtn.append(sfilename_chungnhan_kqtn, files_chungnhan_kqtn.files[i]);
+
+                var markup_chungnhan_kqtn = "<tr id='" + srandomid_chungnhan_kqtn + "'><td>" + sfilename_chungnhan_kqtn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_CNKQTN_Upload(\"" + srandomid_chungnhan_kqtn + "\",\"" + sfilename_chungnhan_kqtn + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_CNKQTN_View tbody").append(markup_chungnhan_kqtn);
+            }
+            chkatchtbl_chungnhan_kqtn();
+            $('#files_chungnhan_kqtn').val('');         
+        });
+
+        $("#files_bangtn").on("change", function () {
+            var files_bangtn = document.getElementById('files_bangtn');
+            for (i = 0; i < files_bangtn.files.length; i++) {
+                var sfilename_bang_tn = files_bangtn.files[i].name;
+                let srandomid_bang_tn = Math.random().toString(36).substring(7);
+                formdata_file_bang_tn.append(sfilename_bang_tn, files_bangtn.files[i]);
+                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_BANGTN_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_BangTN_View tbody").append(markup_bang_tn);
+            }
+            chkatchtbl_bang_tn();
+            $('#files_bangtn').val('');
+        });
+        $("#files_hocba_ts").on("change", function () {
+            var files_hocba_ts = document.getElementById('files_hocba_ts');
+            for (i = 0; i < files_hocba_ts.files.length; i++) {
+                var sfilename_hocba_ts = files_hocba_ts.files[i].name;
+                let srandomid_hocba_ts = Math.random().toString(36).substring(7);
+                formdata_file_hocba_ts.append(sfilename_hocba_ts, files_hocba_ts.files[i]);
+                var markup_hocba_ts = "<tr id='" + srandomid_hocba_ts + "'><td>" + sfilename_hocba_ts + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba_ts + "\",\"" + sfilename_hocba_ts + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_HocBa_View tbody").append(markup_hocba_ts);
+            }
+            chkatchtbl_hocba();
+            $('#files_hocba_ts').val('');
+        });
+        $("#files_giayto_uutien").on("change", function () {
+            var files_giayto_uutien = document.getElementById('files_giayto_uutien');
+            let j = 0;
+            for (i = 0; i < files_giayto_uutien.files.length; i++) {
+                j++;
+                var sfilename_gtuutien = files_giayto_uutien.files[i].name;
+                let srandomid_gtuutien = Math.random().toString(36).substring(7);
+
+                formdata_file_giayto_uutien.append(sfilename_gtuutien, files_giayto_uutien.files[i]);
+                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_GTUT_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_GTUT_View tbody").append(markup_giayto_uutien);
+
+            }
+            chkatchtbl_giayto_uutien();
+            $('#files_giayto_uutien').val('');
+        });
+    });
+    function DeleteFile_CNKQTN_Upload(Fileid, FileName) {
+        formdata_file_chungnhan_kqtn.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl_chungnhan_kqtn();
+    }
+    function chkatchtbl_chungnhan_kqtn() {
+        if ($('#FilesList_CNKQTN_View tr').length > 0) {
+            $("#FilesList_CNKQTN_View").css("visibility", "visible");
+            check_in_file_chungnhan_kqtn = true;
+        }
+        else {
+            $("#FilesList_CNKQTN_View").css("visibility", "hidden");
+            check_in_file_chungnhan_kqtn = false;
+            if (!check_in_file_chungnhan_kqtn) { var errorMessage = "Vui lòng upload tệp chứng nhận tốt nghiệp"; $('#ChungNhanTotNghiep_Error').text(errorMessage); flag = false; }
+        }
+    }
+    function DeleteFile_BANGTN_Upload(Fileid, FileName) {
+        formdata_file_bang_tn.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl_bang_tn();
+    }
+    function chkatchtbl_bang_tn() {
+        if ($('#FilesList_BangTN_View tr').length > 0) { $("#FilesList_BangTN_View").css("visibility", "visible"); }
+        else { $("#FilesList_BangTN_View").css("visibility", "hidden"); }
+    }
+    function DeleteFile_HoBas_Upload(Fileid, FileName) {
+        formdata_file_hocba_ts.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl_hocba();
+    }
+    function chkatchtbl_hocba() {
+        if ($('#FilesList_HocBa_View tr').length > 0) {
+            $("#FilesList_HocBa_View").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocBa_View").css("visibility", "hidden");
+        }
+    }
+    function DeleteFile_GTUT_Upload(Fileid, FileName) {
+        formdata_file_giayto_uutien.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl_giayto_uutien();
+    }
+    function chkatchtbl_giayto_uutien() {
+        if ($('#FilesList_GTUT_View tr').length > 0) {
+            $("#FilesList_GTUT_View").css("visibility", "visible");
+        } else {
+            $("#FilesList_GTUT_View").css("visibility", "hidden");
+        }
+    }
+    // button đồng ý thêm mới
+    $('#bt_ok_div_update_aspirations').click(function () {
+
+        let flag = true;
+        let _nganh_ID = $('#select_nganh').val();
+        let _thm_ID = $('#select_tohopmon').val();
+        let _dkxt_KQTQG_NamTotNghiep = $('#select_namtn').val();
+
+        let _kxt_KQTQG_Diem_M1 = { TenMon1: $('#lb_tenmon_1').text(), DiemM1: $('#txt_m1').val() };
+        let _kxt_KQTQG_Diem_M2 = { TenMon2: $('#lb_tenmon_2').text(), DiemM2: $('#txt_m2').val() };
+        let _kxt_KQTQG_Diem_M3 = { TenMon3: $('#lb_tenmon_3').text(), DiemM3: $('#txt_m3').val() };
+      
+
+        if (_nganh_ID == 0) { var errorMessage = "Vui lòng chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
+        if (_thm_ID == 0) { var errorMessage = "Vui lòng chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
+        if (_kxt_KQTQG_Diem_M1.DiemM1 == '' || _kxt_KQTQG_Diem_M2.DiemM2 == '' || _kxt_KQTQG_Diem_M3.DiemM3 == '') {
+            var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại"; $('#Diem_All_Error').text(errorMessage); flag = false;
+        }
+        if (!check_in_file_chungnhan_kqtn) { var errorMessage = "Vui lòng upload tệp chứng nhận tốt nghiệp"; $('#ChungNhanTotNghiep_Error').text(errorMessage); flag = false; }
+
+        if (_dkxt_KQTQG_NamTotNghiep == 0) { var errorMessage = "Vui lòng chọn năm tốt nghiệp"; $('#NamTotNghiep_Error').text(errorMessage); flag = false; }
+
+        if (!flag) return;
+
+        let _dkxt_KQTQG_Diem_Tong = parseFloat(_kxt_KQTQG_Diem_M1.DiemM1) + parseFloat(_kxt_KQTQG_Diem_M2.DiemM2) + parseFloat(_kxt_KQTQG_Diem_M3.DiemM3);
+
+        let _dkxt_KQTQG_MinhChung_CNTotNghiep = "";
+        let _dkxt_KQTQG_MinhChung_BangTN = "";
+        let _dkxt_KQTQG_MinhChung_HocBa = "";
+        let _dkxt_KQTQG_MinhChung_UuTien = "";      
+
+        /* phần upload file*/
+        let so_file_cn_totnghiep = 0;
+        let so_file_bang_tn = 0;
+        let so_file_hocba_ts = 0;      
+        let so_file_giayto_uutien = 0;
+
+        let formData_All = new FormData();
+
+        for (const item of formdata_file_chungnhan_kqtn) {
+            formData_All.append(item[0], item[1]);
+            so_file_cn_totnghiep ++;
+        }
+        for (const item of formdata_file_bang_tn) {
+            formData_All.append(item[0], item[1]);
+            so_file_bang_tn ++;
+        }
+        for (const item of formdata_file_hocba_ts) {
+            formData_All.append(item[0], item[1]);
+            so_file_hocba_ts++;
+        }
+        for (const item of formdata_file_giayto_uutien) {
+            formData_All.append(item[0], item[1]);
+            so_file_giayto_uutien++;
+        }
+
+        formData_All.append('so_file_cn_totnghiep', so_file_cn_totnghiep);
+        formData_All.append('so_file_bang_tn', so_file_bang_tn);
+        formData_All.append('so_file_hocba_ts', so_file_hocba_ts);
+        formData_All.append('so_file_giayto_uutien', so_file_giayto_uutien); 
+
+        $.ajax({
+            url: '/DangKyXetTuyens/DangKyXetTuyen_UploadFile_Multi_KQTQG',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: formData_All,
+            async: false,
+            success: function (res) {             
+                _dkxt_KQTQG_MinhChung_CNTotNghiep = res._KQTQG_MinhChung_CNTotNghiep;
+                _dkxt_KQTQG_MinhChung_BangTN = res._KQTQG_MinhChung_BangTN;
+                _dkxt_KQTQG_MinhChung_HocBa = res._KQTQG_MinhChung_HocBa;
+                _dkxt_KQTQG_MinhChung_UuTien = res._KQTQG_MinhChung_UuTien;
+                
+            },
+            error: function (err) {
+                console.log(err.statusText);
+            }
+        });
+       
+        console.log('=========Hết phần upload=============')     
+        /*hết phần upload file*/
+
+        /*phần khai báo đối tượng*/
+        let data_Obj_new = {
+            Nganh_ID: _nganh_ID,
+            Thm_ID: _thm_ID,
+            Dkxt_KQTQG_NamTotNghiep: _dkxt_KQTQG_NamTotNghiep,
+            Dkxt_Diem_M1: JSON.stringify(_kxt_KQTQG_Diem_M1),
+            Dkxt_Diem_M2: JSON.stringify(_kxt_KQTQG_Diem_M2),
+            Dkxt_Diem_M3: JSON.stringify(_kxt_KQTQG_Diem_M3),
+            Dkxt_Diem_Tong: _dkxt_KQTQG_Diem_Tong.toString(),
+
+            Dkxt_KQTQG_MinhChung_CNTotNghiep: _dkxt_KQTQG_MinhChung_CNTotNghiep,
+            Dkxt_KQTQG_MinhChung_BangTN: _dkxt_KQTQG_MinhChung_BangTN,
+            Dkxt_KQTQG_MinhChung_HocBa: _dkxt_KQTQG_MinhChung_HocBa,
+            Dkxt_KQTQG_MinhChung_UuTien: _dkxt_KQTQG_MinhChung_UuTien,
+
+        }
+        console.log('=========Hết KHAI BÁO ĐỐI TƯỢNG =============')
+
+        return;
+        $.ajax({
+            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Insert",
+            data: JSON.stringify(data_Obj_new),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (res) {
+                if (res.success) {
+                    HienThiNguyenVongDaDangKy();
+                    showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
+                    document.getElementById('div_list_nguyenvong').style.display = "inline";
+                    document.getElementById('div_update_dk_nguyenvong').style.display = "none";
+                    onResetFields();
+                } else {
+                    showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                }
+            },
+            error: function (errormessage) {
+                showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+            }
+        });
+    });
+
+    /*
+    $(document).ready(function () {
+        $("#files_hocba").on("change", function () {
+            var files_hocba = document.getElementById('files_hocba');
+            let j = 0;
+            for (i = 0; i < files_hocba.files.length; i++) {
+                j++;
+                var sfilename_hocba = files_hocba.files[i].name;
+                let srandomid_hocba = Math.random().toString(36).substring(7);
+                formdata_files_hocba.append(sfilename_hocba, files_hocba.files[i]);
+
+                var markup_hocba = "<tr id='" + srandomid_hocba + "'><td>" + sfilename_hocba + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba + "\",\"" + sfilename_hocba + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_HocBa_View tbody").append(markup_hocba);
+            }
+            chkatchtbl_hocba();
+            $('#files_hocba').val('');
+        });
+
+        $("#files_cancuoc_congdan").on("change", function () {
+            var files_cancuoc_congdan = document.getElementById('files_cancuoc_congdan');
+            let j = 0;
+            for (i = 0; i < files_cancuoc_congdan.files.length; i++) {
+                j++;
+                var sfilename_cccd = files_cancuoc_congdan.files[i].name;
+                let srandomid_cccd = Math.random().toString(36).substring(7);
+                formdata_cccd.append(sfilename_cccd, files_cancuoc_congdan.files[i]);
+                var markup_cccd = "<tr id='" + srandomid_cccd + "'><td>" + sfilename_cccd + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_cccd + "\",\"" + sfilename_cccd + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_CCCD_View tbody").append(markup_cccd);
+            }
+            chkatchtbl_cccd();
+            $('#files_cancuoc_congdan').val('');
+        });
+
+        $("#files_bangtn").on("change", function () {
+            var files_bangtn = document.getElementById('files_bangtn');
+
+            let j = 0;
+            for (i = 0; i < files_bangtn.files.length; i++) {
+                j++;
+                var sfilename_bang_tn = files_bangtn.files[i].name;
+                let srandomid_bang_tn = Math.random().toString(36).substring(7);
+
+                formdata_bang_tn.append(sfilename_bang_tn, files_bangtn.files[i]);
+                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_BangTN_View tbody").append(markup_bang_tn);
+
+            }
+            chkatchtbl_bang_tn();
+            $('#files_bangtn').val('');
+        });
+
+        $("#files_giayto_uutien").on("change", function () {
+            var files_giayto_uutien = document.getElementById('files_giayto_uutien');
+
+            let j = 0;
+            for (i = 0; i < files_giayto_uutien.files.length; i++) {
+                j++;
+                var sfilename_gtuutien = files_giayto_uutien.files[i].name;
+                let srandomid_gtuutien = Math.random().toString(36).substring(7);
+
+                formdata_giayto_uutien.append(sfilename_gtuutien, files_giayto_uutien.files[i]);
+                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_GTUT_View tbody").append(markup_giayto_uutien);
+
+            }
+            chkatchtbl_giayto_uutien();
+            $('#files_giayto_uutien').val('');
+        });
+    });
+    */
+    $('#bt_close_div_update_aspirations_second').click(function () {
+        document.getElementById('div_list_aspirations').style.display = "inline";
+        document.getElementById('div_update_aspirations').style.display = "none";
+        reset_fields_controll_disabled_true();
+    });
+    $('#bt_close_div_update_aspirations_first').click(function () {
+        document.getElementById('div_list_aspirations').style.display = "inline";
+        document.getElementById('div_update_aspirations').style.display = "none";
+        reset_fields_controll_disabled_true();
+    });
+    $('#bt_add_aspirations').click(function () {
+        document.getElementById('div_list_aspirations').style.display = "none";
+        document.getElementById('div_update_aspirations').style.display = "inline";
+        select_khoinganh_view_data(0, 0, 0);
+        reset_fields_controll_disabled_true();
+        $('#dkxt_thptqg_id_checkin').val('0');
+
+
+    });
+
+    function on_listen_fields_input_data(inputClass, outputClass) {
+        var inputFields = $(inputClass);
+        inputFields.on('input', function () {
+            var allFilled = true;
+            inputFields.each(function () {
+                if ($(this).val() === '' || $(this).val() < 0 || $(this).val() > 10) {
+                    allFilled = false;
+                    var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!";
+
+                    $('#Diem_All_Error').text(errorMessage);
+                    $(outputClass).val('');
+                    return false;
+                }
+            });
+
+            if (allFilled) {
+                $('#Diem_All_Error').text('');
+                let total = 0;
+                inputFields.each(function () {
+                    total += parseFloat($(this).val());
+                });
+                /* console.log(total / 3)*/
+                $(outputClass).val((total).toFixed(2));
+            }
+        });
+    }
+    function hideErrorMessage(input) {
+        var errorContainer = input.next('.text-danger');
+        errorContainer.text('');
+    }
+
+    function select_khoinganh_view_data(khoinganh_key, nganh_key, tohopmon_key) {
+        $('#select_khoinganh').empty()
+        $.ajax({
+            url: "/DangKyXetTuyens/KhoiNganhListAll",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result_all) {
+                $.each(result_all, function (i, result) {
+                    $('#select_khoinganh').append('<option value="' + result.khoiNganh_ID + '">' + result.khoiNganh_Ten + '</option>');
+                });
+
+                $('#select_khoinganh').val(khoinganh_key);
+                select_nganh_view_data(khoinganh_key, nganh_key, tohopmon_key);
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+    }
+    function select_nganh_view_data(id, nganh_key, tohopmon_key) { // id = KhoiNganh_ID
+        $("#select_nganh").empty();
+        $.ajax({
+            url: "/DangKyXetTuyens/NganhListAll/" + id,
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (result_all) {
+
+                $.each(result_all, function (i, result) {
+                    $('#select_nganh').append('<option value="' + result.nganh_ID + '">' + result.nganh_GhiChu + '</option>');
+                });
+
+                $('#select_nganh').val(nganh_key);
+                select_tohopmon_view_data(nganh_key, tohopmon_key);
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+    }
+    function select_tohopmon_view_data(id, tohopmon_key) { // id = Nganh_ID
+        $("#select_tohopmon").empty();
+        $.ajax({
+            url: "/DangKyXetTuyens/ToHopMonNganhListAll/" + id,
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (result_all) {
+                $.each(result_all, function (i, result) {
+                    $('#select_tohopmon').append('<option value="' + result.thm_ID + '">' + result.thm_MaTen + '</option>');
+                });
+                $('#select_tohopmon').val(tohopmon_key);
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+    }
+    function reset_fields_controll_disabled_false() {
+
+        $('#select_namtn').prop('disabled', false);
+
+        $('#lb_tenmon_1').text("Chưa chọn");
+        $('#lb_tenmon_2').text("Chưa chọn");
+        $('#lb_tenmon_3').text("Chưa chọn");
+        $('#lb_tongdiem').text('Tổng');
+
+        $('.input-mon').val('');
+        $('.input-tong').val('');
+
+        $('#txt_m1').prop('disabled', false);
+        $('#txt_m2').prop('disabled', false);
+        $('#txt_m3').prop('disabled', false);
+        $('#txt_tong_diem').prop('disabled', true);
+        $('#txt_m1').focus();
+
+        $('#files_chungnhan_kqtn').val(null);
+        $('#files_bangtn').val(null);
+        $('#files_cancuoc_congdan').val(null);
+        $('#files_giayto_uutien').val(null);
+
+        $('#files_chungnhan_kqtn').prop('disabled', false);
+        $('#files_bangtn').prop('disabled', false);
+        $('#files_hocba_ts').prop('disabled', false);
+        $('#files_giayto_uutien').prop('disabled', false);
+
+
+        $("#FilesList_CNKQTN_View tbody").empty();
+        $("#FilesList_BangTN_View tbody").empty();
+        $("#FilesList_HocBa_View tbody").empty();
+        $("#FilesList_GTUT_View tbody").empty();
+    }
+    function reset_fields_controll_disabled_true() {
+
+        $('#select_namtn').prop('disabled', true);
+
+        $('#lb_tenmon_1').text("Chưa chọn");
+        $('#lb_tenmon_2').text("Chưa chọn");
+        $('#lb_tenmon_3').text("Chưa chọn");
+        $('#lb_tongdiem').text('Tổng');
+
+        $('.input-monhoc').val('');
+        $('.input-tong').val('');
+
+        $('#txt_m1').prop('disabled', true);
+        $('#txt_m2').prop('disabled', true);
+        $('#txt_m3').prop('disabled', true);
+        $('#txt_tong_diem').prop('disabled', true);
+
+        $('#files_chungnhan_kqtn').val(null);
+        $('#files_bangtn').val(null);
+        $('#files_cancuoc_congdan').val(null);
+        $('#files_giayto_uutien').val(null);
+
+        $('#files_chungnhan_kqtn').prop('disabled', true);
+        $('#files_bangtn').prop('disabled', true);
+        $('#files_hocba_ts').prop('disabled', true);
+        $('#files_giayto_uutien').prop('disabled', true);
+
+
+        $("#FilesList_CNKQTN_View tbody").empty();
+        $("#FilesList_BangTN_View tbody").empty();
+        $("#FilesList_HocBa_View tbody").empty();
+        $("#FilesList_GTUT_View tbody").empty();
+    }
+
+</script>
