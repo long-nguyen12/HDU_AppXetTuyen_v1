@@ -249,7 +249,7 @@
                                                             <div class="col-md-12">
                                                                 <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true" data-val-required="Vui lòng upload tệp chứng nhận tốt nghiệp"
                                                                        accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>                                                               
+                                                                <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -344,7 +344,6 @@
                             <div class="col-xxl-12" style="text-align:center">
                                 <input class="btn btn-primary" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
                                 <input class="btn btn-secondary" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
-
                             </div>
                         </div>
 
@@ -387,16 +386,17 @@
 <script>
 
     $(document).ready(function () {
+        /* Khai báo dữ liệu cho dropdownlist chọn năm */
         let currentYear = new Date().getFullYear();
-        let namList = [
+        let nam_list = [
             { value: 0, text: "Chọn năm" },
             { value: currentYear, text: currentYear },
-            { value: currentYear - 1, text: currentYear -1  },
-            { value: currentYear - 2, text: currentYear -2 },
+            { value: currentYear - 1, text: currentYear - 1 },
+            { value: currentYear - 2, text: currentYear - 2 },
         ]
 
         let select_NamTN = $('#select_namtn');
-        $.each(namList, function (index, option) {
+        $.each(nam_list, function (index, option) {
             select_NamTN.append($('<option>', {
                 value: option.value,
                 text: option.text
@@ -451,6 +451,7 @@
             hideErrorMessage($(this));
         })
     });
+    // phần xử lý dữ liệu cho các tệp đính kèm
     var check_in_file_chungnhan_kqtn = false;
     var formdata_file_chungnhan_kqtn = new FormData(); //FormData object chung nhan tot nghiep
     var formdata_file_bang_tn = new FormData(); //FormData object bang TN
@@ -468,7 +469,7 @@
                 $("#FilesList_CNKQTN_View tbody").append(markup_chungnhan_kqtn);
             }
             chkatchtbl_chungnhan_kqtn();
-            $('#files_chungnhan_kqtn').val('');         
+            $('#files_chungnhan_kqtn').val('');
         });
 
         $("#files_bangtn").on("change", function () {
@@ -561,6 +562,7 @@
             $("#FilesList_GTUT_View").css("visibility", "hidden");
         }
     }
+    // hết phần xử lý dữ liệu cho các tệp đính kèm
     // button đồng ý thêm mới
     $('#bt_ok_div_update_aspirations').click(function () {
 
@@ -572,7 +574,7 @@
         let _kxt_KQTQG_Diem_M1 = { TenMon1: $('#lb_tenmon_1').text(), DiemM1: $('#txt_m1').val() };
         let _kxt_KQTQG_Diem_M2 = { TenMon2: $('#lb_tenmon_2').text(), DiemM2: $('#txt_m2').val() };
         let _kxt_KQTQG_Diem_M3 = { TenMon3: $('#lb_tenmon_3').text(), DiemM3: $('#txt_m3').val() };
-      
+
 
         if (_nganh_ID == 0) { var errorMessage = "Vui lòng chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
         if (_thm_ID == 0) { var errorMessage = "Vui lòng chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
@@ -590,23 +592,23 @@
         let _dkxt_KQTQG_MinhChung_CNTotNghiep = "";
         let _dkxt_KQTQG_MinhChung_BangTN = "";
         let _dkxt_KQTQG_MinhChung_HocBa = "";
-        let _dkxt_KQTQG_MinhChung_UuTien = "";      
+        let _dkxt_KQTQG_MinhChung_UuTien = "";
 
-        /* phần upload file*/
+        /* thực hiện upload file*/
         let so_file_cn_totnghiep = 0;
         let so_file_bang_tn = 0;
-        let so_file_hocba_ts = 0;      
+        let so_file_hocba_ts = 0;
         let so_file_giayto_uutien = 0;
 
         let formData_All = new FormData();
 
         for (const item of formdata_file_chungnhan_kqtn) {
             formData_All.append(item[0], item[1]);
-            so_file_cn_totnghiep ++;
+            so_file_cn_totnghiep++;
         }
         for (const item of formdata_file_bang_tn) {
             formData_All.append(item[0], item[1]);
-            so_file_bang_tn ++;
+            so_file_bang_tn++;
         }
         for (const item of formdata_file_hocba_ts) {
             formData_All.append(item[0], item[1]);
@@ -620,28 +622,26 @@
         formData_All.append('so_file_cn_totnghiep', so_file_cn_totnghiep);
         formData_All.append('so_file_bang_tn', so_file_bang_tn);
         formData_All.append('so_file_hocba_ts', so_file_hocba_ts);
-        formData_All.append('so_file_giayto_uutien', so_file_giayto_uutien); 
+        formData_All.append('so_file_giayto_uutien', so_file_giayto_uutien);
 
         $.ajax({
             url: '/DangKyXetTuyens/DangKyXetTuyen_UploadFile_Multi_KQTQG',
             type: "POST",
-            contentType: false, // Not to set any content header
-            processData: false, // Not to process data
+            contentType: false,
+            processData: false,
             data: formData_All,
             async: false,
-            success: function (res) {             
+            success: function (res) {
                 _dkxt_KQTQG_MinhChung_CNTotNghiep = res._KQTQG_MinhChung_CNTotNghiep;
                 _dkxt_KQTQG_MinhChung_BangTN = res._KQTQG_MinhChung_BangTN;
                 _dkxt_KQTQG_MinhChung_HocBa = res._KQTQG_MinhChung_HocBa;
                 _dkxt_KQTQG_MinhChung_UuTien = res._KQTQG_MinhChung_UuTien;
-                
             },
             error: function (err) {
                 console.log(err.statusText);
             }
         });
-       
-        console.log('=========Hết phần upload=============')     
+
         /*hết phần upload file*/
 
         /*phần khai báo đối tượng*/
@@ -649,20 +649,21 @@
             Nganh_ID: _nganh_ID,
             Thm_ID: _thm_ID,
             Dkxt_KQTQG_NamTotNghiep: _dkxt_KQTQG_NamTotNghiep,
-            Dkxt_Diem_M1: JSON.stringify(_kxt_KQTQG_Diem_M1),
-            Dkxt_Diem_M2: JSON.stringify(_kxt_KQTQG_Diem_M2),
-            Dkxt_Diem_M3: JSON.stringify(_kxt_KQTQG_Diem_M3),
-            Dkxt_Diem_Tong: _dkxt_KQTQG_Diem_Tong.toString(),
+
+            Dkxt_KQTQG_Diem_M1: JSON.stringify(_kxt_KQTQG_Diem_M1),
+            Dkxt_KQTQG_Diem_M2: JSON.stringify(_kxt_KQTQG_Diem_M2),
+            Dkxt_KQTQG_Diem_M3: JSON.stringify(_kxt_KQTQG_Diem_M3),
+
+            Dkxt_KQTQG_Diem_Tong: _dkxt_KQTQG_Diem_Tong.toString(),
 
             Dkxt_KQTQG_MinhChung_CNTotNghiep: _dkxt_KQTQG_MinhChung_CNTotNghiep,
             Dkxt_KQTQG_MinhChung_BangTN: _dkxt_KQTQG_MinhChung_BangTN,
             Dkxt_KQTQG_MinhChung_HocBa: _dkxt_KQTQG_MinhChung_HocBa,
             Dkxt_KQTQG_MinhChung_UuTien: _dkxt_KQTQG_MinhChung_UuTien,
-
         }
-        console.log('=========Hết KHAI BÁO ĐỐI TƯỢNG =============')
-
-        return;
+        /*hết phần khai báo đối tượng*/
+        console.log(data_Obj_new);
+       
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Insert",
             data: JSON.stringify(data_Obj_new),
@@ -670,6 +671,9 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (res) {
+                console.log(res);
+                return;
+
                 if (res.success) {
                     HienThiNguyenVongDaDangKy();
                     showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
