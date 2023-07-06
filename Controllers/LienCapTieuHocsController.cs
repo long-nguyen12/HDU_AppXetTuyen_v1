@@ -75,12 +75,14 @@ namespace HDU_AppXetTuyen.Controllers
                         // Lưu file vào thư mục trên server  
                         file.SaveAs(urlFile);
                         string fileUrl = "Uploads/LienCapTieuHoc/MinhChungMN/" + InputFileName;
-                        lienCapTieuHoc.HocSinh_MinhChungMN += fileUrl.ToString(); 
-                        // lấy đường dẫn các file
-                        if (indexMN < HocSinh_MinhChungMN.Count() - 1)
-                        {
-                            lienCapTieuHoc.HocSinh_MinhChungMN += "#";
-                        }
+                        lienCapTieuHoc.HocSinh_MinhChungMN += fileUrl.ToString();
+                            // lấy đường dẫn các file
+                         lienCapTieuHoc.HocSinh_MinhChungMN += "#";
+
+                        //    if (indexMN < HocSinh_MinhChungMN.Count() - 1)
+                        //{
+                        //    lienCapTieuHoc.HocSinh_MinhChungMN += "#";
+                        //}
                     }
                 }
                 

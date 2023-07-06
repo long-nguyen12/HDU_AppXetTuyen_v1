@@ -11,6 +11,12 @@
     .span_with_for {
         width: 65px !important
     }
+
+    .padding_input_text_number {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        text-align: center !important;
+    }
 </style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
@@ -19,7 +25,7 @@
                 <div class="col-auto mb-1">
                     <h1 class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        Sử dụng kết quả học tập THPT
+                        Sử dụng kết quả học tập ở THPT (Xét học bạ)                   
                     </h1>
                 </div>
 
@@ -28,7 +34,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div id="div_list_nguyenvong">
+    <div id="div_list_nguyenvong" >
         <div class="card card-header-actions">
             <div class="card-header">
                 Các nguyện vọng đã đăng ký
@@ -40,8 +46,8 @@
                             <thead>
                                 <tr>
                                     <th style="vertical-align:middle;">Nguyện vọng</th>
-                                    <th style="vertical-align:middle;">Mã ngành - Ngành</th>
-                                    <th style="vertical-align:middle;">Tổ hợp môn xét tuyển</th>
+                                    <th style="vertical-align:middle;">Ngành</th>
+                                    <th style="vertical-align:middle;">Tổ hợp môn</th>
                                     @*<th style="vertical-align:middle;">Trạng thái</th>*@
                                     <th style="vertical-align:middle;">Tổng điểm</th>
                                     <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
@@ -64,9 +70,9 @@
                     <div class="col-xxl-12">
 
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
-                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần bấm xác nhận để hoàn thành việc đăng ký sau khi thêm nguyện vọng mới hoặc hoặc sửa các nguyện vọng.</p>
-                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
-                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
+
+                        <p style="color:red; font-style:italic; text-align:justify"  class="mb-1">-Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
+                        <p style="color: red; font-style: italic; text-align: justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
 
                     </div>
                 </div>
@@ -85,7 +91,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th colspan="2">Chọn ngành và tổ hợp môn</th>
+                                    <th colspan="2">Chọn ngành và tổ hợp môn <font color="red">(*)</font></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,40 +146,44 @@
 
                         </table>
                     </div>
-                    <div class="col-xxl-8">
+                    <div class="col-xxl-4">
                         <div class="row md-0">
                             <div class="col-xxl-12">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th style="vertical-align:middle; width:9%">Môn</th>
-                                            <th style="vertical-align: middle; text-align: center; width: 23%">Kỳ 1/ lớp 11</th>
-                                            <th style="vertical-align: middle; text-align: center; width: 23%">Kỳ 2/ lớp 11</th>
-                                            <th style="vertical-align: middle; text-align: center; width: 23%">Kỳ 1/ lớp 12</th>
-                                            <th style="vertical-align: middle; text-align: center; width: 22%">Trung bình cộng</th>
+                                            <th style="vertical-align:middle;" colspan="5">Điểm các môn xét tuyển <font color="red">(*)</font></th>
                                         </tr>
+
                                     </thead>
                                     <tbody id="tbody_list_diemmonhoc">
+                                        <tr>
+                                            <td style="vertical-align:middle; width:9%">Môn</td>
+                                            <td style="vertical-align: middle; text-align: center; width: 23%">HK1/11</td>
+                                            <td style="vertical-align: middle; text-align: center; width: 23%">HK2/11</td>
+                                            <td style="vertical-align: middle; text-align: center; width: 23%">HK1/12</td>
+                                            <td style="vertical-align: middle; text-align: center; width: 22%">TBC</td>
+                                        </tr>
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_1" class="form-label">Chưa chọn</label></td>
-                                            <td><input id="txt_m1_k1" type="number" class="form-control input-mon1" value="" disabled /></td>
-                                            <td><input id="txt_m1_k2" type="number" class="form-control input-mon1" value="" disabled /></td>
-                                            <td><input id="txt_m1_k3" type="number" class="form-control input-mon1" value="" disabled /></td>
-                                            <td><input id="txt_tb_m1" type="number" class="form-control" value="" disabled /></td>
+                                            <td><input id="txt_m1_k1" type="number" class="form-control input-mon1 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_m1_k2" type="number" class="form-control input-mon1 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_m1_k3" type="number" class="form-control input-mon1 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_tb_m1" type="text" class="form-control padding_input_text_number " value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_2" class="form-label">Chưa chọn</label></td>
-                                            <td><input id="txt_m2_k1" type="number" class="form-control input-mon2" value="" disabled /></td>
-                                            <td><input id="txt_m2_k2" type="number" class="form-control input-mon2" value="" disabled /></td>
-                                            <td><input id="txt_m2_k3" type="number" class="form-control input-mon2" value="" disabled /></td>
-                                            <td><input id="txt_tb_m2" type="number" class="form-control" value="" disabled /></td>
+                                            <td><input id="txt_m2_k1" type="number" class="form-control input-mon2 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_m2_k2" type="number" class="form-control input-mon2 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_m2_k3" type="number" class="form-control input-mon2 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_tb_m2" type="text" class="form-control padding_input_text_number " value="" disabled /></td>
                                         </tr>
                                         <tr style="vertical-align:middle;">
                                             <td><label id="lb_tenmon_3" class="form-label">Chưa chọn</label></td>
-                                            <td><input id="txt_m3_k1" type="number" class="form-control input-mon3" value="" disabled /></td>
-                                            <td><input id="txt_m3_k2" type="number" class="form-control input-mon3" value="" disabled /></td>
-                                            <td><input id="txt_m3_k3" type="number" class="form-control input-mon3" value="" disabled /></td>
-                                            <td><input id="txt_tb_m3" type="number" class="form-control" value="" disabled /></td>
+                                            <td><input id="txt_m3_k1" type="number" class="form-control input-mon3 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_m3_k2" type="number" class="form-control input-mon3 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_m3_k3" type="number" class="form-control input-mon3 padding_input_text_number " value="" disabled /></td>
+                                            <td><input id="txt_tb_m3" type="text" class="form-control padding_input_text_number " value="" disabled /></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -184,85 +194,111 @@
                                 <span id="Diem_All_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
-                        <div class="row mb-0">
-                            <div class="col-xxl-6">
-                                <div class="row mt-0 md-0">
-                                    <div class="col-xxl-12">
-                                        <div class="form-group mb-2">
-                                            <label for="files_hocba" class="form-label">Chọn tệp học bạ <font color="red">(*)</font> </label>
-                                            <div class="col-md-12">
-                                                <input id="files_hocba" type="file" multiple class="form-control" data-val="true" data-val-required="Vui lòng chọn file học bạ"
-                                                       accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files_hocba" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-12">
-                                        <table class="table mt-0 mb-0" id="FilesList_HocBa_View" style="visibility:hidden">
-                                            <tr style="display:none">
-                                                <th colspan="3"><input type="hidden" id="txt_uploader_file_hocba" /></th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
+                        <div class="row md-0">
+                            <div class="col-xxl-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="vertical-align:middle;">Minh chứng học bạ <font color="red">(*)</font></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_list_diemmonhoc">
+                                        <tr>
+                                            <td>
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <input id="files_hocba" type="file" multiple class="form-control" data-val="true" data-val-required="Vui lòng chọn file học bạ"
+                                                               accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                        <span class="field-validation-valid text-primary" data-valmsg-for="files_hocba" data-valmsg-replace="true"></span>
 
-                            </div>
-                            <div class="col-xxl-6">
-                                <div class="row mt-0 md-0">
-                                    <div class="col-xxl-12">
-                                        <div class="form-group mb-2">
-                                            <label for="files_cancuoc_congdan" class="form-label">Căn cước công dân</label>
-                                            <div class="col-md-12">
-                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files_cancuoc_congdan" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
-                                                       accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files_cancuoc_congdan" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-12">
-                                        <table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
-                                    </div>
-                                </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_HocBa_View" style="visibility:hidden">
+                                                            <tr style="display:none">
+                                                                <th colspan="3"><input type="hidden" id="txt_uploader_file_hocba" /></th>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
 
-                            </div>
-
-                        </div>
-                        <div class="row mt-0 mb-3">
-                            <div class="col-xxl-6">
-                                <div class="row mt-0 md-0">
-                                    <div class="col-xxl-12">
-                                        <div class="form-group mb-2">
-                                            <label for="files_bangtn" class="form-label">Bằng Tốt nghiệp (nếu có)</label>
-                                            <div class="col-md-12">
-                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-12">
-                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xxl-6">
-                                <div class="row mt-0 md-0">
-                                    <div class="col-xxl-12">
-                                        <div class="form-group mb-2">
-                                            <label for="files_giayto_uutien" class="form-label">Giấy tờ ưu tiên (nếu có)</label>
-                                            <div class="col-md-12">
-                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn giấy tờ ưu tiên" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xxl-12">
-                                        <table class="table mt-0 mb-0"  id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table>
-                                    </div>
-                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <script>
 
+                    </div>
+                    <div class="col-xxl-4">
+                        <div class="row md-0">
+                            <div class="col-xxl-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="vertical-align:middle;">Minh chứng khác</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody id="tbody_list_diemmonhoc">
+                                        <tr>
+                                            <td>
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <label for="files_cancuoc_congdan" class="form-label">Căn cước công dân</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files_cancuoc_congdan" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
+                                                                       accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files_cancuoc_congdan" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <label for="files_bangtn" class="form-label">Bằng Tốt nghiệp (nếu có)</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <label for="files_giayto_uutien" class="form-label">Giấy tờ ưu tiên (nếu có)</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn giấy tờ ưu tiên" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mt-0 mb-1">
+                            <div class="col-xxl-12" style="text-align:center">
+                                <span id="Diem_All_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                        
                         </script>
                         <div class="row mb-3">
                             <div class="col-xxl-12" style="text-align:center">
@@ -358,6 +394,8 @@
                 $('#txt_tb_m1').val('');
                 $('#txt_tb_m2').val('');
                 $('#txt_tb_m3').val('');
+
+              
             }
             else {
                 $('#txt_m1_k1').prop('disabled', true);
@@ -453,7 +491,6 @@
             ToHopMon_ID_Select_Post: $("#select_tohopmon").val(),
             Nganh_ID_Select_Post: $("#select_nganh").val(),
             KhoiNganh_ID_Select_Post: $("#select_khoinganh").val(),
-
         };
 
 
@@ -525,9 +562,9 @@
         $('.input-mon1').val("");
         $('.input-mon2').val("");
         $('.input-mon3').val("");
-        $('#lb_tenmon_1').text("");
-        $('#lb_tenmon_2').text("");
-        $('#lb_tenmon_3').text("");
+        $('#lb_tenmon_1').text("Chưa chọn");
+        $('#lb_tenmon_2').text("Chưa chọn");
+        $('#lb_tenmon_3').text("Chưa chọn");
         $('#txt_tb_m1').val("");
         $('#txt_tb_m2').val("");
         $('#txt_tb_m3').val("");
@@ -558,7 +595,7 @@
                 $('#txt_hanhkiem_12').val(result_all.Dkxt_xeploai_hanhkiem_12);
 
                 if (result_all.length == 0) {
-                    _output += '<tr><td colspan="6"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
+                    _output += '<tr><td colspan="5"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
                 else {
                     $.each(result_all.select_list_dkxt_model, function (i, result) {
@@ -732,7 +769,7 @@
                 let srandomid_hocba = Math.random().toString(36).substring(7);
                 formdata_files_hocba.append(sfilename_hocba, files_hocba.files[i]);
 
-                var markup_hocba = "<tr id='" + srandomid_hocba + "'><td  style='width: 130px!important; color:blue'>Tệp học bạ " + j + ": </td><td>" + sfilename_hocba + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba + "\",\"" + sfilename_hocba + "\")'>Xóa</a></td></tr>";
+                var markup_hocba = "<tr id='" + srandomid_hocba + "'><td>" + sfilename_hocba + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba + "\",\"" + sfilename_hocba + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_HocBa_View tbody").append(markup_hocba);
             }
             chkatchtbl_hocba();
@@ -747,7 +784,7 @@
                 var sfilename_cccd = files_cancuoc_congdan.files[i].name;
                 let srandomid_cccd = Math.random().toString(36).substring(7);
                 formdata_cccd.append(sfilename_cccd, files_cancuoc_congdan.files[i]);
-                var markup_cccd = "<tr id='" + srandomid_cccd + "'><td style='width: 115px!important; color:blue; white-space: nowrap;' >Tệp CCCD " + j + ": </td><td>" + sfilename_cccd + "</td><td style='width: 40px!important; color:blue'><a href='#' style='text-decoration:none' title='Xóa bớt tệp nếu không đúng' onclick='DeleteFile_CCCD_View(\"" + srandomid_cccd + "\",\"" + sfilename_cccd + "\")'>Xóa</a></td></tr>"; // Binding the file name
+                var markup_cccd = "<tr id='" + srandomid_cccd + "'><td>" + sfilename_cccd + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_cccd + "\",\"" + sfilename_cccd + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_CCCD_View tbody").append(markup_cccd);
             }
             chkatchtbl_cccd();
@@ -764,9 +801,8 @@
                 let srandomid_bang_tn = Math.random().toString(36).substring(7);
 
                 formdata_bang_tn.append(sfilename_bang_tn, files_bangtn.files[i]);
-                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td  style='width: 140px!important; color:blue'>Tệp bằng TN " + j + ": </td><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteFile_BangTN_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
-
-                $("#FilesList_BangTN_View tbody").append(markup_bang_tn);
+                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
+                 $("#FilesList_BangTN_View tbody").append(markup_bang_tn);
 
             }
             chkatchtbl_bang_tn();
@@ -783,8 +819,7 @@
                 let srandomid_gtuutien = Math.random().toString(36).substring(7);
 
                 formdata_giayto_uutien.append(sfilename_gtuutien, files_giayto_uutien.files[i]);
-                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td  style='width: 140px!important; color:blue'>Tệp GTƯT " + j + ": </td><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Xóa bớt tệp nếu không đúng' href='#' onclick='DeleteFile_GTUT_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
-
+                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_GTUT_View tbody").append(markup_giayto_uutien);
 
             }
@@ -799,12 +834,11 @@
     });
     function DeleteFile_HoBas_Upload(Fileid, FileName) {
         formdata_files_hocba.delete(FileName)
-
         $("#" + Fileid).remove();
         chkatchtbl_hocba();
     }
     function chkatchtbl_hocba() {
-        if ($('#FilesList_HocBa_View tr').length > 1) {
+        if ($('#FilesList_HocBa_View tr').length > 0) {
             $("#FilesList_HocBa_View").css("visibility", "visible");
         } else {
             $("#FilesList_HocBa_View").css("visibility", "hidden");
@@ -817,7 +851,7 @@
         chkatchtbl_cccd();
     }
     function chkatchtbl_cccd() {
-        if ($('#FilesList_CCCD_View tr').length > 1) { $("#FilesList_CCCD_View").css("visibility", "visible"); }
+        if ($('#FilesList_CCCD_View tr').length > 0) { $("#FilesList_CCCD_View").css("visibility", "visible"); }
         else { $("#FilesList_CCCD_View").css("visibility", "hidden"); }
     }
 
@@ -827,7 +861,7 @@
         chkatchtbl_bang_tn();
     }
     function chkatchtbl_bang_tn() {
-        if ($('#FilesList_BangTN_View tr').length > 1) {
+        if ($('#FilesList_BangTN_View tr').length > 0) {
             $("#FilesList_BangTN_View").css("visibility", "visible");
         } else {
             $("#FilesList_BangTN_View").css("visibility", "hidden");
@@ -840,13 +874,13 @@
         chkatchtbl_giayto_uutien();
     }
     function chkatchtbl_giayto_uutien() {
-        if ($('#FilesList_GTUT_View tr').length > 1) {
+        if ($('#FilesList_GTUT_View tr').length > 0) {
             $("#FilesList_GTUT_View").css("visibility", "visible");
         } else {
             $("#FilesList_GTUT_View").css("visibility", "hidden");
         }
     }
- 
+
 
     function bt_DongY_Update_Dkxt_NVM_OnClick() {
 
@@ -940,7 +974,7 @@
         console.log('=========Hết phần upload=============')
         /*hết phần upload file*/
 
-     
+
         let formData_dknv_new = {
             Nganh_ID: Nganh_ID,
             Thm_ID: Thm_ID,
@@ -964,7 +998,7 @@
         console.log(formData_dknv_new.Dkxt_MinhChung_UuTien);
         console.log('=========Hết phần upload=============')
 
-       
+
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_Insert",
             data: JSON.stringify(formData_dknv_new),

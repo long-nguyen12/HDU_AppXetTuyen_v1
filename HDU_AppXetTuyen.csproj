@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -270,6 +270,7 @@
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
     <Content Include="Content\images\profile-1.png" />
+    <Content Include="Content\images\thongtintv.jpg" />
     <Content Include="Content\js\bootstrap.bundle.js" />
     <Content Include="Content\js\bootstrap.bundle.min.js" />
     <Content Include="Content\js\bootstrap.esm.js" />
@@ -582,11 +583,14 @@
     <Content Include="Views\LienCapTieuHocs\Edit.cshtml" />
     <Content Include="Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxtthptqg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Uploads\DKXTHocBaFile\" />
+    <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayUuTien\" />
     <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
@@ -597,7 +601,6 @@
     <Folder Include="Uploads\LienCap\GiayUuTien\" />
     <Folder Include="Uploads\LienCap\HocBa\" />
     <Folder Include="Uploads\LienCap\LePhi\" />
-    <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\UploadMinhChungs\" />
     <Folder Include="Views\ExportFile\" />
   </ItemGroup>
