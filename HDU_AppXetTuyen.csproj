@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -589,9 +589,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Content\static\" />
     <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
-    <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayUuTien\" />
     <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
@@ -644,7 +644,6 @@
     <Content Include="Content\js\bootstrap.esm.min.js.map" />
     <Content Include="Content\js\bootstrap.js.map" />
     <Content Include="Content\js\bootstrap.min.js.map" />
-    <Content Include="Content\static\Mau_HB.docx" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
