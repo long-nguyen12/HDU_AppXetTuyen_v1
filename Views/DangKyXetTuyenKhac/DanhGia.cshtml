@@ -439,7 +439,7 @@
         CheckAttachTable(ListId);
     }
     function CheckAttachTable(list) {
-        if ($(`${list} tr`).length > 1) {
+        if ($(`${list} tr`).length > 0) {
             $(list).css("visibility", "visible");
         } else {
             $(list).css("visibility", "hidden");
