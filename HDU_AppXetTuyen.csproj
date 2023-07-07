@@ -565,7 +565,6 @@
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Edit.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkxthocba1.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
     <Content Include="Views\KetQuaXetTuyens\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />

@@ -58,7 +58,7 @@
                             </tbody>
 
                         </table>
-                      
+
                     </div>
                 </div>
                 <div class="row">
@@ -287,17 +287,13 @@
 
                                             </td>
                                         </tr>
-
                                 </table>
                             </div>
-
                         </div>
-
-
                         <div class="row mb-3">
                             <div class="col-xxl-12" style="text-align:center">
-                                <input class="btn btn-primary" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
-                                <input class="btn btn-secondary" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
+                                <input class="btn btn-primary col-5 col-auto" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
+                                <input class="btn btn-secondary col-5 col-auto" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
                             </div>
                         </div>
 
@@ -322,15 +318,34 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_delete_first"></button>
                 </div>
                 <div class="modal-body">
-                    <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
-                    <input id="key_delete_dkxt_id" type="hidden" />
+                    <span>Bạn chắc chắn xóa nguyện vọng này?</span>
+                    <input id="key_delete_dkxt_kqtthptqg_id" type="hidden" />
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
-                    <button class="btn btn-primary" type="button">Đồng ý</button>
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_delete_second">Hủy</button>
+                    <button class="btn btn-primary" type="button" id="bt_ok_on_modal_delete">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_tb_thaydoinv" tabindex="-1" role="dialog" aria-labelledby="modal_tb_thaydoinv" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_tb_thaydoinv">Thông báo</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_change_first"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="infor_change">Bạn chắc chắn thay đổi nguyện vọng này?</span>
+                    <input id="key_change_dkxt_kqtthptqg_id" type="hidden" />
+                    <input id="key_check_down_up" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_change_second">Hủy</button>
+                    <button class="btn btn-primary" type="button" id="bt_ok_on_modal_change">Đồng ý</button>
                 </div>
             </div>
         </div>
@@ -349,7 +364,7 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (result_all) {
-            
+
                 $('#span_Uutien_doituong').html(result_all.Tsdk_doituong_ten_diem);
                 $('#span_Uutien_khuvuc').html(result_all.Tsdk_khuvuv_ten_diem);
                 $('#txt_hocluc_12').val(result_all.Tsdk_xeploai_hocluc_12);
@@ -361,16 +376,24 @@
 
                 else {
                     $.each(result_all.view_list_dkxt_thptqg_ts, function (i, result) {
-
-                        _output += '<tr>' +
-                            '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_KQTQG_ID})" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
-                            '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
-                            '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
-                            '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
-                            /*'<td>' + '<a href="#" class="btn btn-outline-primary btn-sm" style="vertical-align: middle !important " title="Bấm chuột để xác nhận đăng ký nguyện vọng này"> <input type="checkbox" disabled /> Chưa xác nhận</a>' + '</td>' +*/
-                            '<td style="text-align: center; vertical-align: middle !important ">' + `<button class="btn btn-outline-danger btn-sm" onclick="bt_Delete_on_table_Click(${result.Dkxt_KQTQG_ID})"}>Xoá</button>` + '</td>' +
-                            '</tr>'
-                        // + `<button class="btn btn-outline-primary btn-sm" onclick="bt_Update_on_table_Click(${result.Dkxt_ID})"}>Sửa</button>`  +' | '
+                        if (result_all.view_list_dkxt_thptqg_ts.length == 1) {
+                            _output = '<tr>' +
+                                '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" disabled>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" disabled>&#8744;</button>  </td>` +
+                                '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
+                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
+                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
+                                '<td style="text-align: center; vertical-align: middle !important">' + `<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})"}>Xoá</button>` + '</td>' +
+                                '</tr>'
+                        }
+                        else if (result_all.view_list_dkxt_thptqg_ts.length > 1) {
+                            _output += '<tr>' +
+                                '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == result_all.view_list_dkxt_thptqg_ts.length - 1 ? "disabled" : ""}>&#8744;</button></td>` +
+                                '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
+                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
+                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
+                                '<td style="text-align: center; vertical-align: middle !important">' + `<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})"}>Xoá</button>` + '</td>' +
+                                '</tr>'
+                        }
                     });
                 }
                 document.getElementById('tbody_list_nguyenvong_xtkqthpt').innerHTML = _output;
@@ -460,7 +483,7 @@
                 let srandomid_chungnhan_kqtn = Math.random().toString(36).substring(7);
                 formdata_file_chungnhan_kqtn.append(sfilename_chungnhan_kqtn, files_chungnhan_kqtn.files[i]);
 
-                var markup_chungnhan_kqtn = "<tr id='" + srandomid_chungnhan_kqtn + "'><td>" + sfilename_chungnhan_kqtn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_CNKQTN_Upload(\"" + srandomid_chungnhan_kqtn + "\",\"" + sfilename_chungnhan_kqtn + "\")'>Xóa</a></td></tr>";
+                var markup_chungnhan_kqtn = "<tr id='" + srandomid_chungnhan_kqtn + "'><td>" + sfilename_chungnhan_kqtn + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_CNKQTN_Upload(\"" + srandomid_chungnhan_kqtn + "\",\"" + sfilename_chungnhan_kqtn + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_CNKQTN_View tbody").append(markup_chungnhan_kqtn);
             }
             chkatchtbl_chungnhan_kqtn();
@@ -473,7 +496,7 @@
                 var sfilename_bang_tn = files_bangtn.files[i].name;
                 let srandomid_bang_tn = Math.random().toString(36).substring(7);
                 formdata_file_bang_tn.append(sfilename_bang_tn, files_bangtn.files[i]);
-                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_BANGTN_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
+                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_BANGTN_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_BangTN_View tbody").append(markup_bang_tn);
             }
             chkatchtbl_bang_tn();
@@ -485,7 +508,7 @@
                 var sfilename_hocba_ts = files_hocba_ts.files[i].name;
                 let srandomid_hocba_ts = Math.random().toString(36).substring(7);
                 formdata_file_hocba_ts.append(sfilename_hocba_ts, files_hocba_ts.files[i]);
-                var markup_hocba_ts = "<tr id='" + srandomid_hocba_ts + "'><td>" + sfilename_hocba_ts + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba_ts + "\",\"" + sfilename_hocba_ts + "\")'>Xóa</a></td></tr>";
+                var markup_hocba_ts = "<tr id='" + srandomid_hocba_ts + "'><td>" + sfilename_hocba_ts + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba_ts + "\",\"" + sfilename_hocba_ts + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_HocBa_View tbody").append(markup_hocba_ts);
             }
             chkatchtbl_hocba();
@@ -500,7 +523,7 @@
                 let srandomid_gtuutien = Math.random().toString(36).substring(7);
 
                 formdata_file_giayto_uutien.append(sfilename_gtuutien, files_giayto_uutien.files[i]);
-                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_GTUT_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
+                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_GTUT_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_GTUT_View tbody").append(markup_giayto_uutien);
 
             }
@@ -558,6 +581,14 @@
         }
     }
     // hết phần xử lý dữ liệu cho các tệp đính kèm
+    // hiển thị cửa sổ thêm mới:
+    $('#bt_add_aspirations').click(function () {
+        document.getElementById('div_list_aspirations').style.display = "none";
+        document.getElementById('div_update_aspirations').style.display = "inline";
+        select_khoinganh_view_data(0, 0, 0);
+        reset_fields_controll_disabled_true();
+        $('#dkxt_thptqg_id_checkin').val('0');
+    });
     // button đồng ý thêm mới
     $('#bt_ok_div_update_aspirations').click(function () {
 
@@ -658,18 +689,18 @@
         }
         /*hết phần khai báo đối tượng*/
         console.log(data_Obj_new);
-       
+
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Insert",
             data: JSON.stringify(data_Obj_new),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
-            success: function (res) {             
+            success: function (res) {
 
                 if (res.success) {
                     ts_dkxt_thptqg_list_all();
-                   // showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
+                    // showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
                     document.getElementById('div_list_aspirations').style.display = "inline";
                     document.getElementById('div_update_aspirations').style.display = "none";
                     reset_fields_controll_disabled_true();
@@ -682,27 +713,156 @@
             }
         });
     });
-       
-    $('#bt_close_div_update_aspirations_second').click(function () {
-        document.getElementById('div_list_aspirations').style.display = "inline";
-        document.getElementById('div_update_aspirations').style.display = "none";
-        reset_fields_controll_disabled_true();
-    });
+    // button tắt cửa sổ thêm mới phía trên
     $('#bt_close_div_update_aspirations_first').click(function () {
         document.getElementById('div_list_aspirations').style.display = "inline";
         document.getElementById('div_update_aspirations').style.display = "none";
         reset_fields_controll_disabled_true();
     });
-    $('#bt_add_aspirations').click(function () {
-        document.getElementById('div_list_aspirations').style.display = "none";
-        document.getElementById('div_update_aspirations').style.display = "inline";
-        select_khoinganh_view_data(0, 0, 0);
+    // button tắt cửa sổ thêm mới phía dưới
+    $('#bt_close_div_update_aspirations_second').click(function () {
+        document.getElementById('div_list_aspirations').style.display = "inline";
+        document.getElementById('div_update_aspirations').style.display = "none";
         reset_fields_controll_disabled_true();
-        $('#dkxt_thptqg_id_checkin').val('0');
+    });
+    //// button tắt cửa sổ thêm mới phía trên
+    //$('#bt_close_div_update_aspirations_first').click(function () {
+    //    document.getElementById('div_list_aspirations').style.display = "inline";
+    //    document.getElementById('div_update_aspirations').style.display = "none";
+    //    reset_fields_controll_disabled_true();
+    //});
+    // thay đổi nguyện vọng đã đăng ký:
+    function change_up_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
+        $('#key_change_dkxt_kqtthptqg_id').val('');
+        $('#key_check_down_up').val('');
+        $('#key_change_dkxt_kqtthptqg_id').val(_dkxt_kqtthptqg_id);
+        $('#key_check_down_up').val('1');
+        $('#infor_change').text('Bạn chắc chắn đổi nguyện vọng này lên trước?');
+        $('#modal_tb_thaydoinv').modal('show');   
+        console.log(_dkxt_kqtthptqg_id);
+    }
+    function change_down_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
+        $('#key_change_dkxt_kqtthptqg_id').val('');
+        $('#key_check_down_up').val('');
 
-
+        $('#infor_change').text('Bạn chắc chắn đổi nguyện vọng này xuống sau?');
+        $('#key_change_dkxt_kqtthptqg_id').val(_dkxt_kqtthptqg_id);
+        $('#key_check_down_up').val('2');
+        $('#modal_tb_thaydoinv').modal('show');     
+        console.log(_dkxt_kqtthptqg_id);
+    }
+    $('#bt_ok_on_modal_change').click(function () {
+        let _check_action = $('#key_check_down_up').val();
+        let data_Obj_change = { Dkxt_KQTQG_ID: $('#key_change_dkxt_kqtthptqg_id').val() };
+        console.log(_check_action);
+        console.log(data_Obj_change.Dkxt_KQTQG_ID);
+      
+        if (_check_action == 1) { // sửa lên trên
+            $.ajax({
+                url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Change_UpData",
+                data: JSON.stringify(data_Obj_change),
+                type: 'POST',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);                 
+                    if (res.status == true) {
+                        ts_dkxt_thptqg_list_all();
+                        $('#modal_tb_thaydoinv').modal('hide');
+                        $('#key_change_dkxt_kqtthptqg_id').val('');
+                        $('#key_check_down_up').val('');
+                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");
+                    }
+                    else {
+                        showToast("Lỗi", res.msg, "bg-success");
+                        console.log(response.msg);
+                    }
+                },
+                error: function (errormessage) {
+                    showToast("Thông báo", "Lỗi! Chưa thể thực hiện theo yêu cầu!", "bg-success");
+                }
+            });
+        }
+        if (_check_action == 2) { // sửa xuống dưới
+            $.ajax({
+                url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Change_DownData",
+                data: JSON.stringify(data_Obj_change),
+                type: 'POST',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);                  
+                    if (res.status == true) {
+                        ts_dkxt_thptqg_list_all();
+                        $('#modal_tb_thaydoinv').modal('hide');
+                        $('#key_change_dkxt_kqtthptqg_id').val('');
+                        $('#key_check_down_up').val('');
+                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");
+                    }
+                    else {
+                        showToast("Lỗi", res.msg, "bg-success");
+                        console.log(response.msg);
+                    }
+                },
+                error: function (errormessage) {
+                    showToast("Thông báo", "Lỗi! Chưa thể thực hiện theo yêu cầu!", "bg-success");
+                }
+            });
+        }
     });
 
+    $('#bt_cancel_on_modal_change_first').click(function () {
+        $('#modal_tb_thaydoinv').modal('hide');
+        $('#key_change_dkxt_kqtthptqg_id').val('');     
+        $('#key_check_down_up').val('');
+
+    })
+
+    $('#bt_cancel_on_modal_change_second').click(function () {
+        $('#modal_tb_thaydoinv').modal('hide');
+        $('#key_change_dkxt_kqtthptqg_id').val('');
+        $('#key_check_down_up').val('');
+    })
+
+    // button xóa nguyện vọng đã đăng ký:
+    function delete_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
+        $('#modal_tb_xoa').modal('show');
+        $('#key_delete_dkxt_kqtthptqg_id').val(_dkxt_kqtthptqg_id);
+    }
+    $('#bt_ok_on_modal_delete').click(function () {
+        let data_Obj_new = { Dkxt_KQTQG_ID: $('#key_delete_dkxt_kqtthptqg_id').val() };
+
+        $.ajax({
+            url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Delete",
+            data: JSON.stringify(data_Obj_new),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (res) {
+                if (res.status == true) {
+                    ts_dkxt_thptqg_list_all();
+                    $('#modal_tb_xoa').modal('hide');
+                    showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
+                }
+                else {
+                    showToast("Lỗi", res.msg, "bg-success");
+                    console.log(response.msg);
+                }
+            },
+            error: function (errormessage) {
+                showToast("Thông báo", "Lỗi! Chưa thể xóa theo yêu cầu!", "bg-success");
+            }
+        });
+    });
+
+    $('#bt_cancel_on_modal_delete_first').click(function () {
+        $('#modal_tb_xoa').modal('hide');
+        $('#key_delete_dkxt_kqtthptqg_id').val('');
+    })
+    $('#bt_cancel_on_modal_delete_second').click(function () {
+        $('#modal_tb_xoa').modal('hide');
+        $('#key_delete_dkxt_kqtthptqg_id').val('');
+    })
     function on_listen_fields_input_data(inputClass, outputClass) {
         var inputFields = $(inputClass);
         inputFields.on('input', function () {
@@ -733,7 +893,6 @@
         var errorContainer = input.next('.text-danger');
         errorContainer.text('');
     }
-
     function select_khoinganh_view_data(khoinganh_key, nganh_key, tohopmon_key) {
         $('#select_khoinganh').empty()
         $.ajax({
@@ -860,5 +1019,10 @@
         $("#FilesList_HocBa_View tbody").empty();
         $("#FilesList_GTUT_View tbody").empty();
     }
-
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
 </script>
