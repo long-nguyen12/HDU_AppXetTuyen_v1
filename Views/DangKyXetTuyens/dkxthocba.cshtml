@@ -1,8 +1,9 @@
-
+﻿
 @{
     ViewBag.Title = "dkxthocba";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <style>
     label {
         white-space: nowrap !important;
@@ -25,7 +26,7 @@
                 <div class="col-auto mb-1">
                     <h1 class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        Sử dụng kết quả học tập ở THPT (Xét học bạ)                   
+                        Sử dụng kết quả học tập ở THPT (Xét học bạ)
                     </h1>
                 </div>
 
@@ -33,8 +34,9 @@
         </div>
     </div>
 </header>
+
 <div class="container-fluid px-12">
-    <div id="div_list_nguyenvong" >
+    <div id="div_list_nguyenvong">
         <div class="card card-header-actions">
             <div class="card-header">
                 Các nguyện vọng đã đăng ký
@@ -70,7 +72,7 @@
                     <div class="col-xxl-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
 
-                        <p style="color:red; font-style:italic; text-align:justify"  class="mb-1">-Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
+                        <p style="color:red; font-style:italic; text-align:justify" class="mb-1">-Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic; text-align: justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
 
                     </div>
@@ -297,7 +299,7 @@
                                 <span id="Diem_All_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
-                        
+
                         </script>
                         <div class="row mb-3">
                             <div class="col-xxl-12" style="text-align:center">
@@ -394,7 +396,7 @@
                 $('#txt_tb_m2').val('');
                 $('#txt_tb_m3').val('');
 
-              
+
             }
             else {
                 $('#txt_m1_k1').prop('disabled', true);
@@ -700,48 +702,7 @@
         });
 
     }
-    /*
-    function get_data_for_update_dkvn(_dkxt_id) {
-        let data = {
-            int_input_a: $('#key_delete_dkxt_id').val(),
-            int_input_b: _dkxt_id,
-        };
-
-        $.ajax({
-            url: "/DangKyXetTuyens/DangKyXetTuyen_Get_KNTH",
-            data: JSON.stringify(data),
-            type: 'POST',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (res) {
-                get_data_forselect_khoinganh_all(res._khoinganhid, res._nganhid, res._tohopmonid);
-                key_dkxt_id_post = _dkxt_id;
-
-                let _ttmh_1 = new _thongtin_monhoc(res.thm_Mon1.TenMon1, res.thm_Mon1.HK1, res.thm_Mon1.HK2, res.thm_Mon1.HK3, res.thm_Mon1.DiemTrungBinh);
-                let _ttmh_2 = new _thongtin_monhoc(res.thm_Mon2.TenMon2, res.thm_Mon2.HK1, res.thm_Mon2.HK2, res.thm_Mon2.HK3, res.thm_Mon2.DiemTrungBinh);
-                let _ttmh_3 = new _thongtin_monhoc(res.thm_Mon3.TenMon3, res.thm_Mon3.HK1, res.thm_Mon3.HK2, res.thm_Mon3.HK3, res.thm_Mon3.DiemTrungBinh);
-                let _dkxt_id_update = res.dkxt_id_update;
-
-                let tenmon_1 = $('#lb_tenmon_1'); let _txt_m1_k1 = $('#txt_m1_k1'); let _txt_m1_k2 = $('#txt_m1_k2'); let _txt_m1_k3 = $('#txt_m1_k3'); let _txt_tb_m1 = $('#txt_tb_m1');
-                tenmon_1.text(_ttmh_1.ten_Mon); _txt_m1_k1.val(_ttmh_1.H_K1); _txt_m1_k2.val(_ttmh_1.H_K2); _txt_m1_k3.val(_ttmh_1.H_K3); _txt_tb_m1.val(_ttmh_1.DiemTrung_Binh);
-
-
-                let tenmon_2 = $('#lb_tenmon_2'); let _txt_m2_k1 = $('#txt_m2_k1'); let _txt_m2_k2 = $('#txt_m2_k2'); let _txt_m2_k3 = $('#txt_m2_k3'); let _txt_tb_m2 = $('#txt_tb_m2');
-                tenmon_2.text(_ttmh_2.ten_Mon); _txt_m2_k1.val(_ttmh_2.H_K1); _txt_m2_k2.val(_ttmh_2.H_K2); _txt_m2_k3.val(_ttmh_2.H_K3); _txt_tb_m2.val(res.thm_Mon2.DiemTrungBinh);
-
-
-                let tenmon_3 = $('#lb_tenmon_3'); let _txt_m3_k1 = $('#txt_m3_k1'); let _txt_m3_k2 = $('#txt_m3_k2'); let _txt_m3_k3 = $('#txt_m3_k3'); let _txt_tb_m3 = $('#txt_tb_m3');
-                tenmon_3.text(_ttmh_3.ten_Mon); _txt_m3_k1.val(_ttmh_3.H_K1); _txt_m3_k2.val(_ttmh_3.H_K2); _txt_m3_k3.val(_ttmh_3.H_K3); _txt_tb_m3.val(res.thm_Mon3.DiemTrungBinh);
-
-                document.getElementById('div_list_nguyenvong').style.display = "none";
-                document.getElementById('div_update_dk_nguyenvong').style.display = "inline";
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-    */
+  
     function HienTHi_ThemNguyenVongMoi_OnClick(khoinganh_key, nganh_key, tohopmon_key) {
 
         Dkxt_ID_UpDate = -1;
@@ -768,7 +729,7 @@
                 let srandomid_hocba = Math.random().toString(36).substring(7);
                 formdata_files_hocba.append(sfilename_hocba, files_hocba.files[i]);
 
-                var markup_hocba = "<tr id='" + srandomid_hocba + "'><td>" + sfilename_hocba + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba + "\",\"" + sfilename_hocba + "\")'>Xóa</a></td></tr>";
+                var markup_hocba = "<tr id='" + srandomid_hocba + "'><td>" + sfilename_hocba + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!'  class=\"btn btn-light btn-sm\"  onclick='DeleteFile_HoBas_Upload(\"" + srandomid_hocba + "\",\"" + sfilename_hocba + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_HocBa_View tbody").append(markup_hocba);
             }
             chkatchtbl_hocba();
@@ -783,7 +744,7 @@
                 var sfilename_cccd = files_cancuoc_congdan.files[i].name;
                 let srandomid_cccd = Math.random().toString(36).substring(7);
                 formdata_cccd.append(sfilename_cccd, files_cancuoc_congdan.files[i]);
-                var markup_cccd = "<tr id='" + srandomid_cccd + "'><td>" + sfilename_cccd + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_cccd + "\",\"" + sfilename_cccd + "\")'>Xóa</a></td></tr>";
+                var markup_cccd = "<tr id='" + srandomid_cccd + "'><td>" + sfilename_cccd + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!'  class=\"btn btn-light btn-sm\"  onclick='DeleteFile_HoBas_Upload(\"" + srandomid_cccd + "\",\"" + sfilename_cccd + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_CCCD_View tbody").append(markup_cccd);
             }
             chkatchtbl_cccd();
@@ -800,7 +761,7 @@
                 let srandomid_bang_tn = Math.random().toString(36).substring(7);
 
                 formdata_bang_tn.append(sfilename_bang_tn, files_bangtn.files[i]);
-                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
+                var markup_bang_tn = "<tr id='" + srandomid_bang_tn + "'><td>" + sfilename_bang_tn + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!'  class=\"btn btn-light btn-sm\"  onclick='DeleteFile_HoBas_Upload(\"" + srandomid_bang_tn + "\",\"" + sfilename_bang_tn + "\")'>Xóa</a></td></tr>";
                  $("#FilesList_BangTN_View tbody").append(markup_bang_tn);
 
             }
@@ -818,7 +779,7 @@
                 let srandomid_gtuutien = Math.random().toString(36).substring(7);
 
                 formdata_giayto_uutien.append(sfilename_gtuutien, files_giayto_uutien.files[i]);
-                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' href='#' onclick='DeleteFile_HoBas_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
+                var markup_giayto_uutien = "<tr id='" + srandomid_gtuutien + "'><td>" + sfilename_gtuutien + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!'  class=\"btn btn-light btn-sm\"  onclick='DeleteFile_HoBas_Upload(\"" + srandomid_gtuutien + "\",\"" + sfilename_gtuutien + "\")'>Xóa</a></td></tr>";
                 $("#FilesList_GTUT_View tbody").append(markup_giayto_uutien);
 
             }

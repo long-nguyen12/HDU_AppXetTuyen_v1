@@ -20,7 +20,7 @@
     </div>
     <div class="container-fluid px-12">
         <div id="fadeInUp">
-            <br />
+         
             @*<center><label class="text-bg-danger" id="checkSTT">@ViewBag.status</label> </center>*@
 
             <div class="card card-header-actions mt-3 mb-1">
@@ -352,13 +352,13 @@
 
 <script>
     $(document).ready(function () {
-
-        console.log('@TempData["Result"]')
         if ('@TempData["Result"]' == "THANHCONG") {
+                showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
             //toastr.success('Thành công, Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email');
             resetForm();
         } else if ('@TempData["Result"]' == "THATBAI") {
-            toastr.error('Thất bại, Đăng ký thông tin thất bại! Vui lòng kiểm tra lại thông tin và liên hệ với quản trị viên!');
+            showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+        //    toastr.error('Thất bại, Đăng ký thông tin thất bại! Vui lòng kiểm tra lại thông tin và liên hệ với quản trị viên!');
         }
     });
 
@@ -642,27 +642,27 @@
         window.history.replaceState(null, null, window.location.href);
     }
     // Kiểm tra nếu biểu mẫu đã được gửi
-    if (window.history && window.history.pushState) {
-        window.addEventListener('load', function () {
-            // Lưu trạng thái hiện tại của trang vào trong history state
-            window.history.pushState({ isFormSubmitted: true }, '');
-        });
+    //if (window.history && window.history.pushState) {
+    //    window.addEventListener('load', function () {
+    //        // Lưu trạng thái hiện tại của trang vào trong history state
+    //        window.history.pushState({ isFormSubmitted: true }, '');
+    //    });
 
-        window.addEventListener('popstate', function (event) {
-            // Kiểm tra nếu trạng thái popstate là biểu mẫu đã được gửi
-            if (event.state && event.state.isFormSubmitted) {
-                // Không làm gì nếu biểu mẫu đã được gửi
-                return;
-            }
-        });
-    }
+    //    window.addEventListener('popstate', function (event) {
+    //        // Kiểm tra nếu trạng thái popstate là biểu mẫu đã được gửi
+    //        if (event.state && event.state.isFormSubmitted) {
+    //            // Không làm gì nếu biểu mẫu đã được gửi
+    //            return;
+    //        }
+    //    });
+    //}
 
 
 </script>
-<link href="~/Content/toastr.css" rel="stylesheet" />
+@*<link href="~/Content/toastr.css" rel="stylesheet" />
 <link href="~/Content/toastr.min.css" rel="stylesheet" />
 <script src="~/Scripts/toastr.js"></script>
-<script src="~/Scripts/toastr.min.js"></script>
+<script src="~/Scripts/toastr.min.js"></script>*@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 @section Scripts {
