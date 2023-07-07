@@ -182,14 +182,15 @@ namespace HDU_AppXetTuyen.Controllers
                      "<p>Nếu thông tin chính xác, vui lòng ấn vào đường link sau để xác nhận: " + activationUrl + " </p>";
 
                 SendEmail(lienCapTieuHoc.HocSinh_Email, body, subject);
-                return RedirectToAction("ConfirmRegister", new { token = activationToken });
+                return View();
+                //return RedirectToAction("ConfirmRegister", new { token = activationToken });
             }
             catch (Exception e)
             {
-                TempData["Result"] = "THAIBAI";
+                TempData["Result"] = "THATBAI";
                 System.Diagnostics.Debug.WriteLine(e);
             }
-            TempData["Result"] = "THAIBAI";
+            TempData["Result"] = "THATBAI";
             return View();
         }
         public ActionResult ConfirmInfomation()
