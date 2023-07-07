@@ -351,9 +351,12 @@ namespace HDU_AppXetTuyen.Controllers
 
         #endregion
         #endregion
-
-
         #region Đăng ký xét tuyển học bạ
+
+        public ActionResult dkxthocba2()
+        {
+            return View();
+        }
         [ThiSinhSessionCheck]
         public ActionResult dkxthocba()
         {
@@ -716,7 +719,6 @@ namespace HDU_AppXetTuyen.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
         #region lấy dữ liệu ra dropdown list
         public JsonResult KhoiNganhListAll()
         {
@@ -818,7 +820,18 @@ namespace HDU_AppXetTuyen.Controllers
                 msg = "Có lỗi xảy ra."
             }, JsonRequestBehavior.AllowGet);
         }
-        #endregion        
+        #endregion
+
+        #region test login
+        public ActionResult Login()
+        {
+            return View();
+        }
+        public ActionResult Registers()
+        {
+            return View();
+        }
+        #endregion
     }
 
     #region Khai báo thêm đối tượng để xử lý
