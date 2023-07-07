@@ -20,7 +20,12 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
-
+    <style>
+        .style_wspacing {
+            word-spacing: -1.5px!important;
+        }
+       
+    </style>
 </head>
 <body class="nav-fixed">
     <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -66,8 +71,8 @@
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sidenav shadow-right sidenav-light">
-                <div class="sidenav-menu">
-                    <div class="nav accordion" id="accordionSidenav">
+                <div class="sidenav-menu"  >
+                    <div class="nav accordion" id="accordionSidenav" >
 
                         <!-- Sidenav Menu Heading (Core)-->
                         <div class="sidenav-menu-heading">MENU</div>
@@ -82,22 +87,22 @@
                             Đăng ký xét tuyển
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="menuPhuongThuc" data-bs-parent="#accordionSidenav">
+                        <div class="collapse" id="menuPhuongThuc" data-bs-parent="#accordionSidenav"  >
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link" href="@Url.Action("dkxtthptqg", "DangKyXetTuyens")">
-                                    Phương thức 1, 2
+                                <a  class="nav-link style_wspacing" href="@Url.Action("dkxtthptqg", "DangKyXetTuyens")">
+                                    Sử dụng KQ thi TN THPT
                                 </a>                            
-                                <a class="nav-link" href="@Url.Action("dkxthocba", "DangKyXetTuyens")">
-                                    Phương thức 3
+                                <a class="nav-link style_wspacing" href="@Url.Action("dkxthocba", "DangKyXetTuyens")" >
+                                   Sử dụng KQ học bạ THPT
                                 </a>
-                                <a class="nav-link" href="@Url.Action("Index", "DangKyXetTuyenThang")">
-                                    Phương thức 4
+                                <a class="nav-link style_wspacing" href="@Url.Action("Index", "DangKyXetTuyenThang")">
+                                    Tuyển thẳng theo Quy chế                                 
                                 </a>
-                                <a class="nav-link" href="@Url.Action("Ielts", "DangKyXetTuyenKhac")">
-                                    Phương thức 5
+                                <a class="nav-link style_wspacing" href="@Url.Action("Ielts", "DangKyXetTuyenKhac")" >
+                                    HS có chứng chỉ ngoại ngữ   
                                 </a>
-                                <a class="nav-link" href="@Url.Action("DanhGia", "DangKyXetTuyenKhac")">
-                                    Phương thức 6
+                                <a class="nav-link style_wspacing" href="@Url.Action("DanhGia", "DangKyXetTuyenKhac")" >
+                                   SD KQ thi ĐG năng lực                               
                                 </a>
                             </nav>
                         </div>

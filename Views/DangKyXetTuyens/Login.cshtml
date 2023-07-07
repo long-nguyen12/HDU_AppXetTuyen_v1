@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout_login.cshtml";
+}
+<style>
+    .colorlogin {
+        color: #ff6a00 !important;
+    }
+
+    .login-button {
+        padding: 8px 18px;
+        border-radius: 7px !important;
+        background-color: #ff6a00;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+    }
+
+        .login-button:hover {
+            background-color: #808080;
+            color: #fff;
+        }
+</style>
+<main>
+    <div class="row" style="padding-top:20px">
+        <div class="col-xxl-8" id="gioi_thieu_tuyen_sinh">
+            <div class="text-center text-uppercase">
+                <h5 class="colorlogin" style="font-weight: bold">HỆ THỐNG TUYỂN SINH TRỰC TUYẾN</h5>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body" style="margin: 0px!important">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4" id="dang_nhap_he_thong">
+            <div class="text-center text-uppercase">
+                <h5 class="colorlogin" style="font-weight: bold">CHỌN CHỨC NĂNG</h5>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title colorlogin" style="text-align: center; font-weight:unset">Đăng nhập hệ thống</h5>
+                            <hr />
+                            <div class="mb-2">
+                                <label for="txt_can_cuoc_cong_dan" class="form-label colorlogin">Tên đăng nhập</label>
+                                <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Số căn cước công dân">
+                            </div>
+                            <div class="mb-2">
+                                <label for="txt_mat_khau" class="form-label colorlogin">Mật khẩu</label>
+                                <input type="text" class="form-control" id="txt_can_cuoc_cong_dan" placeholder="Mật khẩu">
+                            </div>
+                            <div class="mb-2">
+                                <input type="button" value="Đăng nhập" id="bt_login" class="login-button" title="Click đăng nhập hệ thống" style="width:100%" />
+
+                            </div>
+                            <hr />
+                            <div class="text-center">
+                                <div class="small">
+                                    <input type="button" id="bt_show_reset_pass" value="Đặt lại mật khẩu" class="btn btn-light btn-sm" />
+                                </div>
+                                <div class="small ">
+                                    <input id="bt_show_signup_chinhquy" type="button" value="Đăng ký xét tuyển đại học chính quy" class="btn btn-light btn-sm" /><a id="showSignup" style="word-spacing: -1px !important;" class="btn btn-light btn-sm" href="#">Đăng ký xét tuyển đại học chính quy.</a>
+                                </div>
+                                @*<div class="small">
+                                        <input id="bt_show_signup_lienthong_vb2" type="button" value="Đăng ký xét tuyển đại học Liên thông, VB2" class="btn btn-light btn-sm" style="word-spacing: -2px !important;" />
+                                    </div>*@
+                                <hr class="mt-2 mb-3" />
+                                <div class="small">
+                                    <input id="bt_show_signup_liencap" type="button" value="Đăng ký XT Trường TH, THCS&THPT Hồng Đức" class="btn btn-light btn-sm" style="word-spacing: -2.5px !important;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top:5px">
+        <div class="col-xl-8">
+            <div class="row">
+                <div class="col-xl-12">
+                    <hr />
+                    <p class="m-0 colorlogin"><b>LIÊN HỆ</b></p>
+                    <p class="m-0 colorlogin">- Phòng Quản lý đào tạo - Phòng 208 Nhà điều hành, Số 565 Quang Trung - Phường Đông Vệ - TP.Thanh Hóa</p>
+                    <p class="m-0 colorlogin">- Điện thoại: (0237).3910.222, Fax: (0237).3910.475</p>
+                    <p class="m-0 colorlogin">- Homepage: <a href="http://hdu.edu.vn" class="card-link">www.hdu.edu.vn</a> </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="row">
+                <div class="col-xl-12">
+                    <hr />
+                    <p class="m-0 colorlogin"><b>LIÊN KẾT TUYỂN SINH</b></p>
+                    <p class="m-0 colorlogin">- Thông tin tuyển sinh ĐH Hồng Đức</p>
+                    <p class="m-0 colorlogin">- Tra cứu kết quả truyển sinh</p>
+                    <p class="m-0 colorlogin">- Video giới thiệu về ĐH Hồng Đức </p>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</main>
+@*<script>
+        var gioi_thieu_tuyen_sinh = document.getElementById('gioi_thieu_tuyen_sinh');
+        var dang_nhap_he_thong = document.getElementById("dang_nhap_he_thong");
+        if (window.innerWidth <= 1200) {
+            gioi_thieu_tuyen_sinh.style.display = "none";
+            dang_nhap_he_thong.classList.remove("col-xl-3 ");
+
+        }
+        else {
+            gioi_thieu_tuyen_sinh.style.display = "inline";
+            dang_nhap_he_thong.classList.add("col-xl-3");
+
+        }
+
+        function reportWindowSize() {
+            if (window.innerWidth <= 1200) {
+                gioi_thieu_tuyen_sinh.style.display = "none";
+                dang_nhap_he_thong.classList.remove("col-xl-3");
+
+            }
+            else {
+                gioi_thieu_tuyen_sinh.style.display = "inline";
+                dang_nhap_he_thong.classList.add("col-xl-3");
+
+            }
+        }
+        window.onresize = reportWindowSize;
+    </script>*@
