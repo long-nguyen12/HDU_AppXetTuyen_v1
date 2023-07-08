@@ -268,10 +268,15 @@
     <Content Include="Content\css\bootstrap.rtl.css" />
     <Content Include="Content\css\bootstrap.rtl.min.css" />
     <Content Include="Content\icon\edit.svg" />
+    <Content Include="Content\images\cntt.jpg" />
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
     <Content Include="Content\images\profile-1.png" />
+    <Content Include="Content\images\sptin.jpg" />
     <Content Include="Content\images\thongtintv.jpg" />
+    <Content Include="Content\images\ttdpt.jpg" />
+    <Content Include="Content\images\tttvts2023.jpg" />
+    <Content Include="Content\images\tttvts2023l.jpg" />
     <Content Include="Content\js\bootstrap.bundle.js" />
     <Content Include="Content\js\bootstrap.bundle.min.js" />
     <Content Include="Content\js\bootstrap.esm.js" />
@@ -584,6 +589,10 @@
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
     <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxthocba2.cshtml" />
+    <Content Include="Views\Shared\_Layout_login.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkdtnk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
