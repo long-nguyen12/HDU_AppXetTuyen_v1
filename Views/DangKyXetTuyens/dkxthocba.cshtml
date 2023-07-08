@@ -49,8 +49,7 @@
                                 <tr>
                                     <th style="vertical-align:middle;">Nguyện vọng</th>
                                     <th style="vertical-align:middle;">Ngành</th>
-                                    <th style="vertical-align:middle;">Tổ hợp môn</th>
-                                    @*<th style="vertical-align:middle;">Trạng thái</th>*@
+                                    <th style="vertical-align:middle;">Tổ hợp môn</th>                                  
                                     <th style="vertical-align:middle;">Tổng điểm</th>
                                     <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
                                 </tr>
@@ -63,7 +62,7 @@
                 <div class="row">
                     <div class="col-xxl-12">
                         <center>
-                            <button id="downButton" class="btn btn-outline-success"> In phiếu tổng hợp</button>
+                            <button id="bt_xuat_phieu_tong_hop" class="btn btn-outline-success"> In phiếu tổng hợp</button>
                             <a class="btn btn-outline-primary" onclick="HienTHi_ThemNguyenVongMoi_OnClick(0,0,0)">Thêm nguyện vọng</a>
                         </center>
                     </div>
@@ -116,7 +115,6 @@
                                         <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td colspan="2">
                                         <div class="row">
@@ -139,7 +137,6 @@
                                             <div class="col-6">
                                                 <span>Hạnh kiểm lớp 12</span>
                                                 <input id="txt_hanhkiem_12" type="text" class="form-control" value="" disabled />
-
                                             </div>
                                         </div>
                                     </td>
@@ -155,7 +152,6 @@
                                         <tr>
                                             <th style="vertical-align:middle;" colspan="5">Điểm các môn xét tuyển <font color="red">(*)</font></th>
                                         </tr>
-
                                     </thead>
                                     <tbody id="tbody_list_diemmonhoc">
                                         <tr>
@@ -997,7 +993,7 @@
     }
 
     $(document).ready(function () {
-        $('#downButton').click(function () {
+        $('#bt_xuat_phieu_tong_hop').click(function () {
             window.location.href = '/ExportFile/DownloadFile_XetTuyenHB';
         });
     });

@@ -23,10 +23,10 @@
         <div class="page-header-content">
             <div class="row align-items-center justify-content-between pt-3">
                 <div class="col-auto mb-1">
-                    <h1 class="page-header-title  mb-2">
+                    <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        Sử dụng kết quả thi tốt nghiệp THPT Quốc gia
-                    </h1>
+                        <span>Sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
+                    </div>
                 </div>
 
             </div>
@@ -37,7 +37,7 @@
     <div id="div_list_aspirations">
         <div class="card card-header-actions">
             <div class="card-header">
-                Các nguyện vọng đã đăng ký
+                <span>Các nguyện vọng đã đăng ký</span>
             </div>
             <input type="hidden" id="dkxt_thptqg_id_checkin" style="display:none!important" />
             <div class="card-body">
@@ -56,15 +56,13 @@
                             </thead>
                             <tbody id="tbody_list_nguyenvong_xtkqthpt">
                             </tbody>
-
                         </table>
-
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xxl-12">
                         <center>
-                            <button id="downButton" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
+                            <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
                             <a class="btn btn-outline-primary" id="bt_add_aspirations">Thêm nguyện vọng</a>
                         </center>
                     </div>
@@ -74,7 +72,6 @@
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
                         <p style="color:red; font-style:italic; text-align:justify" class="mb-1">-Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic ;text-align:justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
-
                     </div>
                 </div>
             </div>
@@ -738,7 +735,7 @@
         $('#key_change_dkxt_kqtthptqg_id').val(_dkxt_kqtthptqg_id);
         $('#key_check_down_up').val('1');
         $('#infor_change').text('Bạn chắc chắn đổi nguyện vọng này lên trước?');
-        $('#modal_tb_thaydoinv').modal('show');   
+        $('#modal_tb_thaydoinv').modal('show');
         console.log(_dkxt_kqtthptqg_id);
     }
     function change_down_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
@@ -748,7 +745,7 @@
         $('#infor_change').text('Bạn chắc chắn đổi nguyện vọng này xuống sau?');
         $('#key_change_dkxt_kqtthptqg_id').val(_dkxt_kqtthptqg_id);
         $('#key_check_down_up').val('2');
-        $('#modal_tb_thaydoinv').modal('show');     
+        $('#modal_tb_thaydoinv').modal('show');
         console.log(_dkxt_kqtthptqg_id);
     }
     $('#bt_ok_on_modal_change').click(function () {
@@ -756,7 +753,7 @@
         let data_Obj_change = { Dkxt_KQTQG_ID: $('#key_change_dkxt_kqtthptqg_id').val() };
         console.log(_check_action);
         console.log(data_Obj_change.Dkxt_KQTQG_ID);
-      
+
         if (_check_action == 1) { // sửa lên trên
             $.ajax({
                 url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Change_UpData",
@@ -765,7 +762,7 @@
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res);                 
+                    console.log(res);
                     if (res.status == true) {
                         ts_dkxt_thptqg_list_all();
                         $('#modal_tb_thaydoinv').modal('hide');
@@ -791,7 +788,7 @@
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res);                  
+                    console.log(res);
                     if (res.status == true) {
                         ts_dkxt_thptqg_list_all();
                         $('#modal_tb_thaydoinv').modal('hide');
@@ -813,7 +810,7 @@
 
     $('#bt_cancel_on_modal_change_first').click(function () {
         $('#modal_tb_thaydoinv').modal('hide');
-        $('#key_change_dkxt_kqtthptqg_id').val('');     
+        $('#key_change_dkxt_kqtthptqg_id').val('');
         $('#key_check_down_up').val('');
 
     })
@@ -1026,7 +1023,7 @@
         $("#myToast").toast("show");
     }
     $(document).ready(function () {
-        $('#downButton').click(function () {
+        $('#bt_xuat_phieu_tong_hop_kq').click(function () {
             window.location.href = '/ExportFile/DownloadFile_XetTuyenKQTQG';
         });
     });
