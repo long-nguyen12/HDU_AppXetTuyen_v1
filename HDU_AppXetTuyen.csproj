@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -268,10 +268,15 @@
     <Content Include="Content\css\bootstrap.rtl.css" />
     <Content Include="Content\css\bootstrap.rtl.min.css" />
     <Content Include="Content\icon\edit.svg" />
+    <Content Include="Content\images\cntt.jpg" />
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
     <Content Include="Content\images\profile-1.png" />
+    <Content Include="Content\images\sptin.jpg" />
     <Content Include="Content\images\thongtintv.jpg" />
+    <Content Include="Content\images\ttdpt.jpg" />
+    <Content Include="Content\images\tttvts2023.jpg" />
+    <Content Include="Content\images\tttvts2023l.jpg" />
     <Content Include="Content\js\bootstrap.bundle.js" />
     <Content Include="Content\js\bootstrap.bundle.min.js" />
     <Content Include="Content\js\bootstrap.esm.js" />
@@ -585,6 +590,10 @@
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
     <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkxthocba2.cshtml" />
+    <Content Include="Views\Shared\_Layout_login.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\dkdtnk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
