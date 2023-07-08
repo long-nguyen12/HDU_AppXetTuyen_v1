@@ -1,4 +1,4 @@
-﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
+@model HDU_AppXetTuyen.Models.ThiSinhDangKy
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_auth.cshtml";
@@ -12,11 +12,9 @@
             e.preventDefault();
             $('#loginForm').hide();
             $('#signupForm').show();
-            $("#leftPanel").removeClass("col-xxl-8").addClass("col-xxl-0");
-            $("#leftPanel").hide();
-            $("#rightPanel").removeClass("col-xxl-4").addClass("col-xxl-12");
-
-            /*showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");*/
+            $("#leftPanel").removeClass("col-lg-7").addClass("col-lg-5");
+            $("#rightPanel").removeClass("col-lg-5").addClass("col-lg-7");
+           // showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
         });
 
         $('#showLogin').click(function (e) {
@@ -71,8 +69,8 @@
         });
     })
     function submitForm() {
-        showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
-        return;
+        //showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
+        //return;
         $(".text-danger").text("");
         let cccd = $("#login_CCCD").val();
         let password = $("#login_password").val();
