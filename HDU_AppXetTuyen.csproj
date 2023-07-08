@@ -584,6 +584,7 @@
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
     <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
