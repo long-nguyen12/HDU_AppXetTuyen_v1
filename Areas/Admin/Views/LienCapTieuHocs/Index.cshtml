@@ -1,0 +1,187 @@
+﻿@*@model IEnumerable<HDU_AppXetTuyen.Models.LienCapTieuHoc>*@
+<!-- Thêm thư viện -->
+@model PagedList.IPagedList<HDU_AppXetTuyen.Models.LienCapTieuHoc>
+@using PagedList.Mvc;
+<!-- Kết thúc-->
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css" />
+
+<style>
+    /* Ensure that the demo table scrolls */
+    th, td {
+        white-space: nowrap;
+    }
+
+    div.dataTables_wrapper {
+        margin: 0 auto;
+    }
+</style>
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <h1 class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Liên cấp tiểu học
+                    </h1>
+                </div>
+                <div class="col-12 col-xl-auto mb-3">
+                    @*<a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","Huyens")">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Thêm mới
+                        </a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="col-12 table-responsive">
+
+                <table id="myTable" class="stripe row-border order-column cell-border" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mã định danh
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().HocSinh_HoTen)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().HocSinh_NoiSinh)
+                            </th>
+                            <th>
+                                Email liên hệ
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().HocSinh_NoiCuTru)
+                            </th>
+                            <th>
+                                Trường mẫu giáo
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().HocSinh_UuTien)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().HocSinh_ThongTinCha)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().HocSinh_ThongTinMe)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().HocSinh_TrangThai)
+                            </th>
+                            <th> Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HocSinh_DinhDanh)
+                                </td>
+                                <td>
+                                    - Họ tên: @Html.DisplayFor(modelItem => item.HocSinh_HoTen)
+                                    <br />
+                                    <div style="float:left;margin-right:2px">
+                                        - Giới tính:
+                                    </div> @{ if (@item.HocSinh_GioiTinh == 0)
+                                        { <div style="float:left">  Nam</div> }
+                                        else
+                                        {
+                                            <div style="float:left">  Nữ </div>
+                                        }
+                                    }
+                                    <div style="float:left"> - Ngày sinh:  @item.HocSinh_NgaySinh</div>
+
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HocSinh_NoiSinh)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HocSinh_Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HocSinh_NoiCuTru)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HocSinh_TruongMN)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HocSinh_UuTien)
+                                </td>
+                                <td>
+                                    - Họ tên:@Html.DisplayFor(modelItem => item.HocSinh_ThongTinCha)
+                                    <br />
+                                    - Nghề nghiệp: @Html.DisplayFor(modelItem => item.HocSinh_NgheNghiepCha)
+                                    <br />
+                                    - Điện thoại: @Html.DisplayFor(modelItem => item.HocSinh_DienThoaiCha)
+
+                                </td>
+                                <td>
+                                    - Họ tên: @Html.DisplayFor(modelItem => item.HocSinh_ThongTinMe)
+                                    <br />
+                                    - Nghề nghiệp: @Html.DisplayFor(modelItem => item.HocSinh_NgheNghiepMe)
+                                    <br />
+                                    - Điện thoại:@Html.DisplayFor(modelItem => item.HocSinh_DienThoaiMe)
+
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HocSinh_TrangThai)
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-success btn-sm" href="@Url.Action("Details","LienCapTieuHocs" , new { id = item.HocSinh_ID})">  Chi Tiết </a>&nbsp;
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.HocSinh_ID }) |*@
+                                    @*@Html.ActionLink("Chi tiết", "Details", new { id = item.HocSinh_ID })*@
+                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.HocSinh_ID })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <!-- Thêm mã phân trang -->
+                <br />
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+                @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page }))
+                <!-- Kết thúc -->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+
+
+<script>
+
+
+    new DataTable('#myTable', {
+        fixedColumns: {
+            right: 1
+        },
+        paging: false,
+        scrollCollapse: true,
+        scrollX: true,
+        //scrollY: 300,
+        searching: true,
+        bInfo: false,
+        oLanguage: {
+            sSearch: "Tìm kiếm:"
+        }
+    });
+</script>
