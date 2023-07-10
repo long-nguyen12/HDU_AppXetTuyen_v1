@@ -19,6 +19,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public string DEFAULT_URL = Constant.DEFAULT_URL;
 
         // GET: Admin/LienCapTHCS
+        [AdminSessionCheck]
         public ActionResult Index(int? page)
         {
             if (page == null) page = 1;
@@ -30,6 +31,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/LienCapTHCS/Details/5
+        [AdminSessionCheck]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -46,6 +48,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/LienCapTHCS/Create
+        [AdminSessionCheck]
         public ActionResult Create()
         {
             return View();
@@ -54,6 +57,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/LienCapTHCS/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "HocSinh_ID,HocSinh_DinhDanh,HocSinh_HoTen,HocSinh_GioiTinh,HocSinh_NgaySinh,HocSinh_NoiSinh,HocSinh_Email,HocSinh_NoiCuTru,HocSinh_TruongTH,HocSinh_UuTien,HocSinh_ThongTinCha,HocSinh_ThongTinMe,HocSinh_DiemHocTap,HocSinh_MucDoNangLuc,HocSinh_MucDoPhamChat,HocSinh_MinhChungHB,HocSinh_MinhChungGiayKS,HocSinh_MinhChungMaDinhDanh,HocSinh_GiayUuTien,HocSinh_XacNhanLePhi,HocSinh_Activation,HocSinh_TrangThai,HocSinh_GhiChu")] LienCapTHCS lienCapTHCS)
@@ -69,6 +73,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/LienCapTHCS/Edit/5
+        [AdminSessionCheck]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -88,6 +93,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AdminSessionCheck]
         public ActionResult Edit([Bind(Include = "HocSinh_ID,HocSinh_DinhDanh,HocSinh_HoTen,HocSinh_GioiTinh,HocSinh_NgaySinh,HocSinh_NoiSinh,HocSinh_Email,HocSinh_NoiCuTru,HocSinh_TruongTH,HocSinh_UuTien,HocSinh_ThongTinCha,HocSinh_ThongTinMe,HocSinh_DiemHocTap,HocSinh_MucDoNangLuc,HocSinh_MucDoPhamChat,HocSinh_MinhChungHB,HocSinh_MinhChungGiayKS,HocSinh_MinhChungMaDinhDanh,HocSinh_GiayUuTien,HocSinh_XacNhanLePhi,HocSinh_Activation,HocSinh_TrangThai,HocSinh_GhiChu")] LienCapTHCS lienCapTHCS)
         {
             if (ModelState.IsValid)
@@ -100,6 +106,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         // GET: Admin/LienCapTHCS/Delete/5
+        [AdminSessionCheck]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -117,6 +124,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/LienCapTHCS/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AdminSessionCheck]
         public ActionResult DeleteConfirmed(long id)
         {
             LienCapTHCS lienCapTHCS = db.LienCapTHCSs.Find(id);
