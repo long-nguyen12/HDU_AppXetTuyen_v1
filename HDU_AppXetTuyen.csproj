@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -580,7 +580,6 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Auth\ResetPassword.cshtml" />
-    <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Edit.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
@@ -607,6 +606,8 @@
     <Content Include="Views\Shared\_Layout_login.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
     <Content Include="Views\DangKyXetTuyens\dkdtnk.cshtml" />
+    <Content Include="Views\Auth\Index2.cshtml" />
+    <Content Include="Views\Auth\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

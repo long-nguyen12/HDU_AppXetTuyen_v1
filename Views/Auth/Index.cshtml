@@ -1,4 +1,4 @@
-@model HDU_AppXetTuyen.Models.ThiSinhDangKy
+﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_auth.cshtml";
@@ -67,6 +67,20 @@
                 }
             });
         });
+        function rearrangePanels() {
+            var windowWidth = $(window).width();
+            console.log(windowWidth)
+            if (windowWidth <= 768) {
+                $("#panelContainer").prepend($("#rightPanel"));
+                $("#leftPanel").addClass("mt-2");
+            } else {
+                $("#panelContainer").prepend($("#leftPanel"));
+            }
+        }
+
+        // Call the function on page load and window resize
+        rearrangePanels();
+        $(window).resize(rearrangePanels);
     })
     function submitForm() {
         //showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
@@ -148,7 +162,7 @@
             $('#register_password_Error').text(errorMessage);
             flag = false;
         } else if (register_password.length < 6) {
-            var errorMessage = "Mật khẩu phải có ít nhất 6 kí tự";
+            var errorMessage = "Mật khẩu phải có ít nhất 6 ký tự";
             $('#register_password_Error').text(errorMessage);
             flag = false;
         }
@@ -277,7 +291,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 if (response.success) {
-                    showToast("Thành công", "Đăng kí tài khoản thành công! Vui lòng kích hoạt tài khoản theo đường link gửi qua email!", "bg-success");
+                    showToast("Thành công", "Đăng ký tài khoản thành công! Vui lòng kých hoạt tài khoản theo đường link gửi qua email!", "bg-success");
                     $('#signupForm').hide();
                     $('#loginForm').show();
                     $("#rightPanel").removeClass("col-lg-7").addClass("col-lg-5");
@@ -285,12 +299,12 @@
                     $('#loadingModal').modal('hide');
                 } else {
                     $('#signupErrorMessage').text(response.message);
-                    showToast("Thất bại", "Đăng kí tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+                    showToast("Thất bại", "Đăng ký tài khoản thất bại! Vui lòng thử lại!", "bg-error");
                     $('#loadingModal').modal('hide');
                 }
             },
             error: function (xhr, status, error) {
-                showToast("Thất bại", "Đăng kí tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+                showToast("Thất bại", "Đăng ký tài khoản thất bại! Vui lòng thử lại!", "bg-error");
                 $('#loadingModal').modal('hide');
             },
             complete: function () {
@@ -335,7 +349,7 @@
         }
 </style>
 <div class="container">
-    <div class="row" style="padding-top:20px">
+    <div id="panelContainer" class="row" style="padding-top:20px">
         <div id="leftPanel" class="col-xxl-8">
             <div class="text-center text-uppercase">
                 <h5 class="colorlogin" style="font-weight: bold">HỆ THỐNG TUYỂN SINH TRỰC TUYẾN</h5>
@@ -390,7 +404,7 @@
                             <hr />
                             <div>
                                 <label class="small mb-1" for="ThiSinh_CCCD">Căn cước công dân</label>
-                                @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập CMND/CCCD", @id = "login_CCCD" } })
+                                @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập CCCD", @id = "login_CCCD" } })
                                 <span id="ThiSinh_CCCD_Error" class="small mb-1 text-danger"></span>
                             </div>
                             <div class="mb-3">
@@ -406,19 +420,19 @@
                             </div>
                             <hr class="mt-3 mb-3" />
                             <div class="text-center mt-4">
-                                <div class="small"><a id="showSignup" style="text-decoration: none; color: #ff6a00;" href="#">Bạn chưa đăng kí thông tin? <b>Đăng kí tại đây</b></a></div>
+                                <div class="small"><a id="showSignup" style="text-decoration: none; color: #ff6a00;" href="#">Bạn chưa đăng ký thông tin? <b>Đăng ký tại đây</b></a></div>
                                 <div class="small mt-2"><a style="text-decoration: none; color: #ff6a00;" href="#" onclick="submitForm()">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
                                 @*<div class="small mt-2"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("ForgotPassword", "Auth")">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>*@
                             </div>
                             <hr class="mt-4 mb-4" />
-                            <div class="small text-center mt-2"><a style="text-decoration: none; color: #ff6a00; " href="@Url.Action("Index", "LienCapTHCS")">Đăng ký xét tuyển Trường TH, THCS, THPT Hồng Đức? <b>Tại đây</b></a></div>
+                            <div class="small text-center mt-2 mb-4"><a style="text-decoration: none; color: #ff6a00; word-spacing: -2px !important" href="@Url.Action("Index", "LienCapTHCS")">Đăng ký xét tuyển Trường TH, THCS, THPT Hồng Đức? <b>Tại đây</b></a></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-12" id="signupForm" style="display: none;">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title text-uppercase colorlogin" style="text-align: center; font-weight:unset">Đăng kí tài khoản</h5>
+                            <h5 class="card-title text-uppercase colorlogin" style="text-align: center; font-weight:unset">Đăng ký tài khoản</h5>
                             <hr />
                             <div>
                                 <span id="errorMessage" class="small mb-1 text-danger"></span>
@@ -608,7 +622,7 @@
                                 <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                                <input class="btn btn-primary login-button" type="submit" onclick="submitRegisterForm()" value="Đăng kí" />
+                                <input class="btn btn-primary login-button" type="submit" onclick="submitRegisterForm()" value="Đăng ký" />
                             </div>
                             <div class="text-center mt-4">
                                 <div class="small"><a id="showLogin" style="text-decoration: none; color: #ff6a00;" href="#">Đã có tài khoản? <b>Đăng nhập ngay</b></a></div>
