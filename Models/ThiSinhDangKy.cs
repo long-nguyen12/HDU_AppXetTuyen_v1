@@ -12,6 +12,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ThiSinhDangKy()
         {
+            DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             LePhiXetTuyens = new HashSet<LePhiXetTuyen>();
 
@@ -137,5 +138,8 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
     }
 }
