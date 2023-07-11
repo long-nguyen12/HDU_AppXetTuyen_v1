@@ -525,6 +525,7 @@
     <Content Include="Areas\Admin\Views\LienCapTieuHocs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\LienCapTieuHocs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\LienCapTieuHocs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\ThongTinThiSinh.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
