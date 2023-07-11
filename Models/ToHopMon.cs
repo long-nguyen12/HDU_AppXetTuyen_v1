@@ -14,11 +14,8 @@
         {
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             ToHopMonNganhs = new HashSet<ToHopMonNganh>();
-
             DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
-            DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
-            DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
 
         }
 
@@ -56,16 +53,8 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
 
-    
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
