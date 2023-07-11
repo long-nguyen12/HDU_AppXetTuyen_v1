@@ -1,4 +1,4 @@
-@model HDU_AppXetTuyen.Models.ThiSinhDangKy
+﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_auth.cshtml";
@@ -12,8 +12,9 @@
             e.preventDefault();
             $('#loginForm').hide();
             $('#signupForm').show();
-            $("#leftPanel").removeClass("col-lg-7").addClass("col-lg-5");
-            $("#rightPanel").removeClass("col-lg-5").addClass("col-lg-7");
+            // $("#leftPanel").removeClass("col-lg-7").addClass("col-lg-0");
+            $("#leftPanel").hide();
+            $("#rightPanel").removeClass("col-xxl-4").addClass("col-xxl-12");
             // showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
         });
 
@@ -22,7 +23,6 @@
             $('#signupForm').hide();
             $('#loginForm').show();
             $("#rightPanel").removeClass("col-xxl-12").addClass("col-xxl-4");
-            $("#leftPanel").removeClass("col-xxl-0").addClass("col-xxl-8");
             $("#leftPanel").show();
         });
 
@@ -69,7 +69,6 @@
         });
         function rearrangePanels() {
             var windowWidth = $(window).width();
-            console.log(windowWidth)
             if (windowWidth <= 768) {
                 $("#panelContainer").prepend($("#rightPanel"));
                 $("#leftPanel").addClass("mt-2");
@@ -631,7 +630,7 @@
                     </div>
                 </div>
             </div>
-        </div>     
+        </div>
     </div>
     <div class="row">
         <div id="leftPanel" class="col-xxl-8 col-12">
@@ -652,7 +651,7 @@
                 <p class="m-0 colorlogin">- Video giới thiệu về ĐH Hồng Đức </p>
             </div>
         </div>
-       
+
     </div>
 </div>
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
