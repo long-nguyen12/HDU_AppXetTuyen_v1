@@ -75,6 +75,7 @@ namespace HDU_AppXetTuyen.Models
 
         public virtual Nganh Nganh { get; set; }
 
+
         public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
 
         public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }

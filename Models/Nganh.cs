@@ -12,11 +12,14 @@ namespace HDU_AppXetTuyen.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Nganh()
         {
+         
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             ToHopMonNganhs = new HashSet<ToHopMonNganh>();
+            DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
             DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
             DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
+
         }
 
         [Key]
@@ -40,12 +43,14 @@ namespace HDU_AppXetTuyen.Models
         [Display(Name = "Khối ngành")]
         public int? KhoiNganh_ID { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
+        public int? Nganh_ThiNK { get; set; }
 
         public virtual Khoa Khoa { get; set; }
 
         public virtual KhoiNganh KhoiNganh { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
@@ -58,5 +63,8 @@ namespace HDU_AppXetTuyen.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
     }
 }

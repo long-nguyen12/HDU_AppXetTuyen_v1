@@ -13,6 +13,7 @@ namespace HDU_AppXetTuyen.Models
         }
 
         public virtual DbSet<AdminAccount> AdminAccounts { get; set; }
+        public virtual DbSet<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
         public virtual DbSet<DangKyXetTuyen> DangKyXetTuyens { get; set; }
         public virtual DbSet<DangKyXetTuyen_DiemTS> DangKyXetTuyen_DiemTS { get; set; }
         public virtual DbSet<DoiTuong> DoiTuongs { get; set; }
