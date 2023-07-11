@@ -12,6 +12,7 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ThiSinhDangKy()
         {
+            DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             LePhiXetTuyens = new HashSet<LePhiXetTuyen>();
 
@@ -67,7 +68,8 @@
 
         [StringLength(500)]
         public string ThiSinh_ResetCode { get; set; }
-      
+
+        [Display(Name = "Ngày đăng ký")]
         [StringLength(300)]
         public string ThiSinh_NgayDangKy { get; set; }
 
@@ -95,22 +97,29 @@
         [Display(Name = "Đối tượng")]
         public int? DoiTuong_ID { get; set; }
 
+        [Display(Name = "Mã trường cấp ba")]
         [StringLength(300)]
         public string ThiSinh_TruongCapBa_Ma { get; set; }
 
+        [Display(Name = "Tên trường cấp ba")]
         [StringLength(300)]
         public string ThiSinh_TruongCapBa { get; set; }
 
+        [Display(Name = "Đợt xét tuyển")]
         public int? DotXT_ID { get; set; }
 
+        [Display(Name = "Trạng thái")]
         public int? ThiSinh_TrangThai { get; set; }
 
         public int? ThiSinh_TruongCapBa_Tinh_ID { get; set; }
 
+        [Display(Name = "Học lực lớp 12")]
         public int? ThiSinh_HocLucLop12 { get; set; }
 
+        [Display(Name = "Hạnh kiểm lớp 12")]
         public int? ThiSinh_HanhKiemLop12 { get; set; }
 
+        [Display(Name = "Ghi chú")]
         [StringLength(200)]
         public string ThiSinh_GhiChu { get; set; }
 
@@ -120,10 +129,13 @@
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
 
+        [Display(Name = "Đối tượng")]
         public virtual DoiTuong DoiTuong { get; set; }
 
+        [Display(Name = "Đợt xét tuyển")]
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 
+        [Display(Name = "Khu vực")]
         public virtual KhuVuc KhuVuc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -137,5 +149,8 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
     }
 }

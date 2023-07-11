@@ -14,6 +14,9 @@
         {
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             ToHopMonNganhs = new HashSet<ToHopMonNganh>();
+            DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
+            DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
+
         }
 
         [Key]
@@ -42,11 +45,20 @@
         [Display(Name = "Mã - Tên tổ hợp")]
         [StringLength(250)]
         public string Thm_MaTen { get; set; }
+        public int? Thm_Thi_NK { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
+
+
     }
 }

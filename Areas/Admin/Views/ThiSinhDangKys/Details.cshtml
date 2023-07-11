@@ -5,199 +5,200 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>Details</h2>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <h1 class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Thông tin thí sinh
+                    </h1>
+                </div>
+                <div class="col-12 col-xl-auto mb-3">
+                    @*<a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","Huyens")">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Thêm mới
+                        </a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <h4> Thông tin thí sinh </h4>
+            <hr />
+            <dl class="dl-horizontal">
 
-<div>
-    <h4>ThiSinhDangKy</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DoiTuong.DoiTuong_Ten)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DoiTuong.DoiTuong_Ten)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_HoLot)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_HoLot)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DotXetTuyen.Dxt_Ten)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_Ten)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.KhuVuc.KhuVuc_Ten)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_Ten)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.KhuVuc.KhuVuc_Ten)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_NgaySinh)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_CCCD)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_NgaySinh)
+                </dd>
+                <dt>
+                    Đối tượng
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_CCCD)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.DoiTuong.DoiTuong_Ten)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_MatKhau)
-        </dt>
+                <dt>
+                    Đợt xét tuyển
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_MatKhau)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.DotXetTuyen.Dxt_Ten)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_DienThoai)
-        </dt>
+                <dt>
+                    Khu vực
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_DienThoai)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.KhuVuc.KhuVuc_Ten)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_Email)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_CCCD)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_Email)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_CCCD)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_HoLot)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_DienThoai)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_HoLot)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_DienThoai)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_Ten)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_Email)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_Ten)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_Email)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_NamTotNghiep)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_NgaySinh)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_NamTotNghiep)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_NgayDangKy)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_NgaySinh)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_NgayDangKy)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_NamTotNghiep)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_DanToc)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_NamTotNghiep)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_DanToc)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_ResetCode)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_GioiTinh)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_ResetCode)
-        </dd>
+                <dd>
+                    @{ if (Model.ThiSinh_GioiTinh == 0)
+                        { <div>  Nam</div> }
+                        else
+                        {
+                            <div>  Nữ </div>
+                        }
+                    }
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_NgayDangKy)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_DCNhanGiayBao)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_NgayDangKy)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_DCNhanGiayBao)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_DanToc)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_DanToc)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_HoKhauThuongTru)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_GioiTinh)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru_Check)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_GioiTinh)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_HoKhauThuongTru_Check)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_DCNhanGiayBao)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa_Ma)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_DCNhanGiayBao)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_TruongCapBa_Ma)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_HoKhauThuongTru)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_TruongCapBa)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_HoKhauThuongTru_Check)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_TrangThai)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_HoKhauThuongTru_Check)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_TrangThai)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThiSinh_GhiChu)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa_Ma)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ThiSinh_GhiChu)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_TruongCapBa_Ma)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_TruongCapBa)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_TrangThai)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_TrangThai)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_TruongCapBa_Tinh_ID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_TruongCapBa_Tinh_ID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThiSinh_GhiChu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThiSinh_GhiChu)
-        </dd>
-
-    </dl>
+            </dl>
+        </div>
+    </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ThiSinh_ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Quay lại", "Index")
 </p>
