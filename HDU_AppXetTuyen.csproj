@@ -181,6 +181,8 @@
     <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LienCapTHCSController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PhuongThucXetTuyensController.cs" />
@@ -231,6 +233,7 @@
     <Compile Include="Models\TruongCapBa.cs" />
     <Compile Include="Models\Xa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ultils\Constant.cs" />
     <Compile Include="Ultils\DiemMon.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -518,6 +521,17 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Areas\Admin\Views\LienCapTHCS\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTHCS\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTHCS\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTHCS\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTHCS\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\ThongTinThiSinh.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -75,12 +75,12 @@
                         <!-- Sidenav Accordion (Dashboard)-->
                         <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKys")">
                             <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                            Thông tin thí sinh
+                            Thí sinh đăng ký
                         </a>
-                        <a class="nav-link" href="@Url.Action("Index", "DangKyXetTuyens")">
+                        @*<a class="nav-link" href="@Url.Action("Index", "DangKyXetTuyens")">
                             <div class="nav-link-icon"><i data-feather="grid"></i></div>
                             Đăng ký xét tuyển
-                        </a>
+                        </a>*@
                         <a class="nav-link" href="@Url.Action("Index", "ToHopMons")">
                             <div class="nav-link-icon"><i data-feather="filter"></i></div>
                             Tổ hợp môn
@@ -109,6 +109,18 @@
                                 <a class="nav-link" href="@Url.Action("Index", "KhoiNganhs")">Khối nghành</a>
                                 <a class="nav-link" href="@Url.Action("Index", "KhuVucs")">Khu vực</a>
                                 <a class="nav-link" href="@Url.Action("Index", "DoiTuongs")">Đối tượng</a>
+                            </nav>
+                        </div>
+
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLienCap" aria-expanded="false" aria-controls="collapseDashboards">
+                            <div class="nav-link-icon"><i data-feather="grid"></i></div>
+                            Quản lý Trường Liên cấp
+                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLienCap" data-bs-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                                <a class="nav-link" href="@Url.Action("Index", "LienCapTieuHocs")">Dự tuyển Tiểu học</a>
+                                <a class="nav-link" href="@Url.Action("Index", "LienCapTHCS")">Dự tuyển THCS</a>
                             </nav>
                         </div>
 
