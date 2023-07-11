@@ -1,0 +1,310 @@
+﻿@model HDU_AppXetTuyen.Models.LienCapTieuHoc
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <h1 class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        Liên cấp tiểu học
+                    </h1>
+                </div>
+                <div class="col-12 col-xl-auto mb-3">
+                    @*<a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","Huyens")">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Thêm mới
+                        </a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-4">
+    <div class="card">
+        <div class="card-body">
+            <h4> Thông tin học sinh </h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_DinhDanh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_DinhDanh)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_HoTen)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_HoTen)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_GioiTinh)
+                </dt>
+
+                <dd>
+                    @{ if (Model.HocSinh_GioiTinh == 0)
+                        { <div>  Nam</div> }
+                        else
+                        {
+                            <div>  Nữ </div>
+                        }
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_NgaySinh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_NgaySinh)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_NoiSinh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_NoiSinh)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_NoiCuTru)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_NoiCuTru)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_TruongMN)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_TruongMN)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_UuTien)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_UuTien)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_ThongTinCha)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_ThongTinCha)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_NgheNghiepCha)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_NgheNghiepCha)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_DienThoaiCha)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_DienThoaiCha)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_ThongTinMe)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_ThongTinMe)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_NgheNghiepMe)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_NgheNghiepMe)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_DienThoaiMe)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_DienThoaiMe)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_MinhChungMN)
+                </dt>
+
+                <dd>
+                    @{
+                        if (Model.HocSinh_MinhChungMN != null)
+                        {
+                            string[] strArr = Model.HocSinh_MinhChungMN.Split(new Char[] { '#' });
+                            int i = 0;
+                            foreach (string _item in strArr)
+                            {
+                                i++;
+                                if (_item.Trim().Length > 0)
+                                {
+
+                                    string str_url = ViewBag.URL + _item;
+                                    <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                }
+                            }
+                        }
+
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_MinhChungGiayKS)
+                </dt>
+
+                <dd>
+                    @{
+                        if (Model.HocSinh_MinhChungGiayKS != null)
+                        {
+                            string[] strArr = Model.HocSinh_MinhChungGiayKS.Split(new Char[] { '#' });
+                            int i = 0;
+                            foreach (string _item in strArr)
+                            {
+                                i++;
+                                if (_item.Trim().Length > 0)
+                                {
+
+                                    string str_url = ViewBag.URL + _item;
+                                    <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                }
+                            }
+                        }
+
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_MinhChungMaDinhDanh)
+                </dt>
+
+                <dd>
+                    @{
+                        if (Model.HocSinh_MinhChungMaDinhDanh != null)
+                        {
+                            string[] strArr = Model.HocSinh_MinhChungMaDinhDanh.Split(new Char[] { '#' });
+                            int i = 0;
+                            foreach (string _item in strArr)
+                            {
+                                i++;
+                                if (_item.Trim().Length > 0)
+                                {
+
+                                    string str_url = ViewBag.URL + _item;
+                                    <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                }
+                            }
+                        }
+
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_GiayUuTien)
+                </dt>
+
+                <dd>
+                    @{
+                        if (Model.HocSinh_GiayUuTien != null)
+                        {
+                            string[] strArr = Model.HocSinh_GiayUuTien.Split(new Char[] { '#' });
+                            int i = 0;
+                            foreach (string _item in strArr)
+                            {
+                                i++;
+                                if (_item.Trim().Length > 0)
+                                {
+
+                                    string str_url = ViewBag.URL + _item;
+                                    <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                }
+                            }
+                        }
+
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_MinhChungLePhi)
+                </dt>
+
+                <dd>
+                    @{
+                        if (Model.HocSinh_MinhChungLePhi != null)
+                        {
+                            string[] strArr = Model.HocSinh_MinhChungLePhi.Split(new Char[] { '#' });
+                            int i = 0;
+                            foreach (string _item in strArr)
+                            {
+                                i++;
+                                if (_item.Trim().Length > 0)
+                                {
+
+                                    string str_url = ViewBag.URL + _item;
+                                    <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                }
+                            }
+                        }
+
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_TrangThai)
+                </dt>
+
+                <dd>
+                    @{ if (Model.HocSinh_TrangThai == 0)
+                        { <div>  Chưa xác thực email</div> }
+                        else
+                        {
+                            <div>  Đã xác thực email </div>
+                        }
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HocSinh_GhiChu)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HocSinh_GhiChu)
+                </dd>
+            </dl>
+
+        </div>
+    </div>
+</div>
