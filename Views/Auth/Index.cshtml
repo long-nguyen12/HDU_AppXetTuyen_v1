@@ -390,7 +390,7 @@
             </div>
         </div>
 
-        <div id="rightPanel" class="col-xxl-4 col-12">
+        <div id="rightPanel" class="col-xxl-4">
             <div class="text-center text-uppercase">
                 <h5 class="colorlogin" style="font-weight: bold">CHỌN CHỨC NĂNG</h5>
                 <hr />
@@ -675,34 +675,3 @@
         </div>
     </div>
 </div>
-<script>
-    var gioi_thieu_tuyen_sinh = document.getElementById('leftPanel');
-    var dang_nhap_he_thong = document.getElementById("rightPanel");
-
-    $(document).ready(function () {
-
-        if (window.innerWidth <= 1400) {
-            gioi_thieu_tuyen_sinh.style.display = "none";
-            dang_nhap_he_thong.classList.remove("col-xxl-4 col-12");
-
-        }
-        else {
-            gioi_thieu_tuyen_sinh.style.display = "inline";
-            dang_nhap_he_thong.classList.add("col-xxl-4 col-12");
-
-        }
-    });
-    function reportWindowSize() {
-        if (window.innerWidth <= 1400) {
-            gioi_thieu_tuyen_sinh.style.display = "none";
-            dang_nhap_he_thong.classList.remove("col-xxl-4 col-12");
-
-        }
-        else {
-            gioi_thieu_tuyen_sinh.style.display = "inline";
-            dang_nhap_he_thong.classList.add("col-xxl-4 col-12");
-
-        }
-    }
-    window.onresize = reportWindowSize;
-</script>

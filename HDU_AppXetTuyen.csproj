@@ -606,7 +606,6 @@
     <Content Include="Views\Shared\_Layout_login.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
     <Content Include="Views\DangKyXetTuyens\dkdtnk.cshtml" />
-    <Content Include="Views\Auth\Index2.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
