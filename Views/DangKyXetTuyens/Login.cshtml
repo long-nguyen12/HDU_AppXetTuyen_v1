@@ -24,7 +24,7 @@
 </style>
 <main>
     <div class="row" style="padding-top:20px">
-        <div class="col-xxl-8" id="gioi_thieu_tuyen_sinh">
+        <div class="col-xxl-4" id="gioi_thieu_tuyen_sinh">
             <div class="text-center text-uppercase">
                 <h5 class="colorlogin" style="font-weight: bold">HỆ THỐNG TUYỂN SINH TRỰC TUYẾN</h5>
             </div>
@@ -41,13 +41,13 @@
                                 </div>
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
+                                        <img src="~/Content/images/timline.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
+                                        <img src="~/Content/images/timline.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
+                                        <img src="~/Content/images/timline.jpg" class="d-block w-100" alt="...">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-4" id="dang_nhap_he_thong">
+        <div class="col-xxl-4" id="dang_nhap_he_thong" style="display:none">
             <div class="text-center text-uppercase">
                 <h5 class="colorlogin" style="font-weight: bold">CHỌN CHỨC NĂNG</h5>
                 <hr />
@@ -95,13 +95,248 @@
                                 <div class="small ">
                                     <input id="bt_show_signup_chinhquy" type="button" value="Đăng ký xét tuyển đại học chính quy" class="btn btn-light btn-sm" /><a id="showSignup" style="word-spacing: -1px !important;" class="btn btn-light btn-sm" href="#">Đăng ký xét tuyển đại học chính quy.</a>
                                 </div>
-                                @*<div class="small">
-                                        <input id="bt_show_signup_lienthong_vb2" type="button" value="Đăng ký xét tuyển đại học Liên thông, VB2" class="btn btn-light btn-sm" style="word-spacing: -2px !important;" />
-                                    </div>*@
+
                                 <hr class="mt-2 mb-3" />
                                 <div class="small">
                                     <input id="bt_show_signup_liencap" type="button" value="Đăng ký XT Trường TH, THCS&THPT Hồng Đức" class="btn btn-light btn-sm" style="word-spacing: -2.5px !important;" />
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-8" id="dang_ky_tai_khoan">
+            <div class="text-center text-uppercase">
+                <h5 class="colorlogin" style="font-weight: bold">CHỌN CHỨC NĂNG</h5>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @*<h5 class="card-title colorlogin" style="text-align: center; font-weight:unset">Đăng ký tài khoản</h5>*@
+                            <h5 class="card-title text-uppercase colorlogin" style="text-align: center; font-weight:unset">Đăng ký tài khoản</h5>
+                            <hr />
+                            <div>
+                                <span id="errorMessage" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_CCCD">Căn cước công dân <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Số căn cước công dân" value="045193012333" />
+                                        <span id="register_CCCD_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_DienThoai">Điện thoại <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Nhập số điện thoại" value="0912.345.678" />
+                                        <span id="register_sdt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_MatKhau">Mật khẩu <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="password" class="form-control" id="txt_ten_dang_nhap" placeholder="Mật khẩu" value="vidudaylamatkhau" />
+                                        <span id="register_password_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_Re_MatKhau">Nhập lại mật khẩu <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input id="register_re_password" class="form-control text-box single-line password" name="register_re_password" placeholder="Nhập lại mật khẩu" type="password" value="vidudaylamatkhau" />
+                                        <span id="register_re_password_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row mt-2 g-2">
+                                <div class="col-md-4 col-7">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_HoLot">Họ lót <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Họ, tên lót" value="Nguyễn Thị Nghiêng" />
+                                        <span id="register_holot_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-5">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_Ten">Tên <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Tên" value="Nghiêng" />
+                                        <span id="register_ten_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-12">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Nhập email" value="nguyenthinghiengnghieng@gmail.com" />
+                                        <span id="register_email_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row  mt-2 g-2" ">
+
+
+                                <div class="col-md-4 col-5">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="date" class="form-control" id="txt_ten_dang_nhap" placeholder="12/12/2005" />
+
+                                        <span id="datepicker_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-4">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <select class="form-select">
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nu">Nữ</option>
+                                        </select>
+                                        <span id="register_gt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-3">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_DanToc">Dân tộc <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Tên" value="Mường" />
+                                        <span id="register_dantoc_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row  mt-2 g-2" ">
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="KhuVuc_ID">Khu vực <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <select class="form-select">
+                                            <option value="1">KV1</option>
+                                            <option value="2">KV2</option>
+                                            <option value="3">KV2-NT</option>
+                                            <option value="4">KV3</option>
+                                        </select>
+                                        <span id="register_kv_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="DoiTuong_ID">Đối tượng</label>
+                                        <select class="form-select">
+                                            <option value="1">01</option>
+                                            <option value="2">02</option>
+                                            <option value="3">03</option>
+                                            <option value="4">04</option>
+                                            <option value="5">05</option>
+                                            <option value="6">06</option>
+                                            <option value="7">07</option>
+                                        </select>
+                                        <span id="register_doituong_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    Học lực lớp 12 <a style="color:red; text-decoration:none">(*)</a>
+                                    <select id="register_HocLucLop12" class="form-select">
+                                        <option value="0">Chọn học lực</option>
+                                        <option value="4">Xuất sắc</option>
+                                        <option value="3">Giỏi</option>
+                                        <option value="2">Khá</option>
+                                        <option value="1">Trung bình</option>
+                                    </select>
+                                    <span id="register_HocLucLop12_Error" class="small mb-1 text-danger"></span>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <span>Hạnh kiểm lớp 12 <a style="color:red; text-decoration:none">(*)</a></span>
+                                    <select id="register_HanhKiemLop12" class="form-select">
+                                        <option value="0">Chọn hạnh kiểm</option>
+                                        <option value="4">Tốt</option>
+                                        <option value="3">Khá</option>
+                                        <option value="2">Trung bình</option>
+                                        <option value="1">Yếu</option>
+                                    </select>
+                                    <span id="register_HanhKiemLop12_Error" class="small mb-1 text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row  mt-2 g-2" ">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_TruongCapBa">Trường <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Tên trường cấp 3" />
+                                        <span id="register_truong_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="mã trường" />
+                                        <span id="register_ma_truong_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <select class="form-select">
+                                            <option value="1">Thanh Hóa</option>
+                                            <option value="2">Nghệ An</option>
+                                            <option value="3">Ninh Bình</option>
+                                        </select>
+                                        <span id="register_truongtinh_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row  mt-2 g-2">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_HoKhauThuongTru">Hộ khẩu thường trú <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Nhập tên phường/xã" />
+                                        <span id="register_phuongtt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <select class="form-select">
+                                            <option value="1">Chọn tỉnh..</option>
+                                            <option value="1">Thanh Hóa</option>
+                                            <option value="2">Nghệ An</option>
+                                            <option value="3">Ninh Bình</option>
+                                        </select>
+                                        <span id="register_tinhtt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="Huyen_ID">Quận/huyện <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <select id="register_huyentt" class="form-select">
+                                            <option value="0">Chọn huyện</option>
+                                        </select>
+                                        <span id="register_huyentt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row  mt-2 g-2">
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_DCNhanGiayBao">Địa chỉ liên hệ  <a style="color:red; text-decoration:none">(*)</a></label>
+                                        <input type="text" class="form-control" id="txt_ten_dang_nhap" placeholder="Nhập địa chỉ liên hệ" />
+                                        <span id="register_diachi_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="row  mt-2 g-2 align-items-center justify-content-center">
+                                <div class="col-md-6 col-6  ">
+                                    <input class="login-button" type="submit" onclick="submitRegisterForm()" value="Đăng ký" style="width:100%" />
+                                </div>
+                            </div>
+                          
+                            <div class="text-center mt-4">
+                                <div class="small"><a id="showLogin" style="text-decoration: none; color: #ff6a00;" href="#">Đã có tài khoản? <b>Đăng nhập ngay</b></a></div>
                             </div>
                         </div>
                     </div>
@@ -133,7 +368,8 @@
             </div>
         </div>
     </div>
-   
+
+
 </main>
 @*<script>
         var gioi_thieu_tuyen_sinh = document.getElementById('gioi_thieu_tuyen_sinh');
