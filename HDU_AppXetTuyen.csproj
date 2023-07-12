@@ -206,7 +206,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminAccount.cs" />
-    <Compile Include="Models\DangKyDuThiNangKhieu.cs" />
     <Compile Include="Models\DangKyXetTuyen.cs" />
     <Compile Include="Models\DangKyXetTuyenKhac.cs" />
     <Compile Include="Models\DangKyXetTuyenKQTQG.cs" />
@@ -531,7 +530,6 @@
     <Content Include="Areas\Admin\Views\LienCapTieuHocs\Details.cshtml" />
     <Content Include="Areas\Admin\Views\LienCapTieuHocs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\LienCapTieuHocs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ThiSinhDangKys\ThongTinThiSinh.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -615,7 +613,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Home\" />
     <Folder Include="Content\static\" />
-    <Folder Include="Uploads\DKDTNangKhieuFile\" />
     <Folder Include="Uploads\DKXTHocBaFile\" />
     <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
     <Folder Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\" />
