@@ -18,7 +18,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult Index()
         {
-            return View(db.KhuVucs.ToList());
+            return View(db.KhuVucs.Where(x => x.KhuVuc_ID >0).ToList());
         }
 
         // GET: Admin/KhuVucs/Details/5

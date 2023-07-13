@@ -78,9 +78,9 @@
                             Thí sinh đăng ký
                         </a>
                         @*<a class="nav-link" href="@Url.Action("Index", "DangKyXetTuyens")">
-                            <div class="nav-link-icon"><i data-feather="grid"></i></div>
-                            Đăng ký xét tuyển
-                        </a>*@
+                                <div class="nav-link-icon"><i data-feather="grid"></i></div>
+                                Đăng ký xét tuyển
+                            </a>*@
                         <a class="nav-link" href="@Url.Action("Index", "ToHopMons")">
                             <div class="nav-link-icon"><i data-feather="filter"></i></div>
                             Tổ hợp môn
@@ -97,24 +97,22 @@
                         </a>
                         <div class="collapse" id="collapseDashboards" data-bs-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link" href="@Url.Action("Index", "PhuongThucXetTuyens")">Phương thức xét tuyển</a>
-                                <a class="nav-link" href="@Url.Action("Index", "DotXetTuyens")">Đợt xét tuyển</a>
-                                <a class="nav-link" href="@Url.Action("Index", "Tinhs")">
-                                    Tỉnh thành
-                                    @*<span class="badge bg-primary-soft text-primary ms-auto">Updated</span>*@
-                                </a>
-                                <a class="nav-link" href="@Url.Action("Index", "Huyens")">Quận huyện</a>
-                                <a class="nav-link" href="@Url.Action("Index", "Xas")">Phường xã</a>
                                 <a class="nav-link" href="@Url.Action("Index", "Namhocs")">Năm học</a>
-                                <a class="nav-link" href="@Url.Action("Index", "KhoiNganhs")">Khối nghành</a>
+                                <a class="nav-link" href="@Url.Action("Index", "DotXetTuyens")">Đợt xét tuyển</a>
+                                <a class="nav-link" href="@Url.Action("Index", "PhuongThucXetTuyens")">Phương thức xét</a>
+                                @*<a class="nav-link" href="@Url.Action("Index", "KhoiNganhs")">Khối nghành</a>*@
                                 <a class="nav-link" href="@Url.Action("Index", "KhuVucs")">Khu vực</a>
                                 <a class="nav-link" href="@Url.Action("Index", "DoiTuongs")">Đối tượng</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Tinhs")"> Tỉnh thành</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Huyens")">Quận huyện</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Xas")">Phường xã</a>
+
                             </nav>
                         </div>
 
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLienCap" aria-expanded="false" aria-controls="collapseDashboards">
                             <div class="nav-link-icon"><i data-feather="grid"></i></div>
-                            Quản lý Trường Liên cấp
+                            QL Trường Liên cấp
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLienCap" data-bs-parent="#accordionSidenav">
@@ -146,7 +144,9 @@
             </main>
             <footer class="footer-admin mt-auto footer-light">
                 <div class="container-fluid px-12">
+                  
                     <div class="row">
+
                         <div class="col-md-6 small">Copyright &copy;208-FICT-HDU  2023</div>
                         <div class="col-md-6 text-md-end small">
                             <a href="#!" style="color:blue!important; text-decoration:none">Thông tin về trường ĐH Hồng Đức </a> <a href="#!" style="color:blue!important; text-decoration:none">và các ngành</a>

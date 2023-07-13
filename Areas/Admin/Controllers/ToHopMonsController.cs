@@ -20,8 +20,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Index(int? page)
         {
             var thms = (from h in db.ToHopMons
-                          select h).OrderBy(x => x.Thm_MaToHop);
-            int pageSize = 10;
+                          select h).Where(x => x.Thm_ID >0).OrderBy(x => x.Thm_MaToHop);
+            int pageSize = 7;
             int pageNumber = (page ?? 1);
             return View(thms.ToPagedList(pageNumber, pageSize));
         }

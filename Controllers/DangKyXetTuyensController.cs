@@ -15,12 +15,12 @@ namespace HDU_AppXetTuyen.Controllers
     public class DangKyXetTuyensController : Controller
     {
         #region Đăng ký dự thi năng khiếu Tiểu học, mầm non, gdtc
-
+        [ThiSinhSessionCheck]
         public ActionResult dkdtnk()
         {
             return View();
         }
-
+        [ThiSinhSessionCheck]
         public JsonResult DangKyDuThiNangKhieu_ListAll()
         {
             int ptxt_check = 7;
@@ -28,66 +28,66 @@ namespace HDU_AppXetTuyen.Controllers
             DbConnecttion db_thptqg = new DbConnecttion();
             if (Session["login_session"] != null)
             {
-                string str_login_session =  Session["login_session"].ToString();
+                string str_login_session = Session["login_session"].ToString();
 
-            var tsdk_Detail = db_tsdk.ThiSinhDangKies.Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault(ts => ts.ThiSinh_MatKhau == str_login_session);
+                var tsdk_Detail = db_tsdk.ThiSinhDangKies.Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault(ts => ts.ThiSinh_MatKhau == str_login_session);
 
-            string _xeploai_hocluc_12 = "";
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 3) { _xeploai_hocluc_12 = "Giỏi"; }
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 2) { _xeploai_hocluc_12 = "Khá"; }
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 1) { _xeploai_hocluc_12 = "Trung bình"; }
+                string _xeploai_hocluc_12 = "";
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 3) { _xeploai_hocluc_12 = "Giỏi"; }
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 2) { _xeploai_hocluc_12 = "Khá"; }
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 1) { _xeploai_hocluc_12 = "Trung bình"; }
 
-            string _xeploai_hanhkiem_12 = "";
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 4) { _xeploai_hanhkiem_12 = "Tốt"; }
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
-            if (tsdk_Detail.ThiSinh_HocLucLop12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
+                string _xeploai_hanhkiem_12 = "";
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 4) { _xeploai_hanhkiem_12 = "Tốt"; }
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
+                if (tsdk_Detail.ThiSinh_HocLucLop12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
 
-            string _ut_doituong_ten_diem = "ĐT " + tsdk_Detail.DoiTuong.DoiTuong_Ten + ": ƯT " + tsdk_Detail.DoiTuong.DoiTuong_DiemUuTien + " đ";
-            string _ut_khuvuv_ten_diem = tsdk_Detail.KhuVuc.KhuVuc_Ten + ": ƯT " + tsdk_Detail.KhuVuc.KhuVuc_DiemUuTien + " đ"; ;
+                string _ut_doituong_ten_diem = "ĐT " + tsdk_Detail.DoiTuong.DoiTuong_Ten + ": ƯT " + tsdk_Detail.DoiTuong.DoiTuong_DiemUuTien + " đ";
+                string _ut_khuvuv_ten_diem = tsdk_Detail.KhuVuc.KhuVuc_Ten + ": ƯT " + tsdk_Detail.KhuVuc.KhuVuc_DiemUuTien + " đ"; ;
 
 
-            long _thisinh_id = tsdk_Detail.ThiSinh_ID;
+                long _thisinh_id = tsdk_Detail.ThiSinh_ID;
 
-            var list_dkdt_nk_ts = db_thptqg.DangKyDuThiNangKhieus.Include(d => d.Nganh).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon)
-                                      .Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).ToList();
-             
-            var view_list_dkdt_nangkhieu_ts = list_dkdt_nk_ts.Select(s => new
-            {
+                var list_dkdt_nk_ts = db_thptqg.DangKyDuThiNangKhieus.Include(d => d.Nganh).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon)
+                                          .Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).ToList();
 
-                dkdt_NK_ID = s.Dkdt_NK_ID,
-                thiSinh_ID = s.ThiSinh_ID,
-                ptxt_ID = s.Ptxt_ID,
-                nganh_ID = s.Nganh_ID,
-                thm_ID = s.Thm_ID,
-                doiTuong_ID = s.DoiTuong_ID,
-                khuVuc_ID = s.KhuVuc_ID,
-                dkdt_NK_TrangThai = s.Dkdt_NK_TrangThai,
-                dotXT_ID = s.DotXT_ID,
-                dkdt_NK_TenAll = new
+                var view_list_dkdt_nangkhieu_ts = list_dkdt_nk_ts.Select(s => new
                 {
-                    khoiNganh_Ten = s.Nganh.KhoiNganh.KhoiNganh_Ten,
-                    nganh_GhiChu = s.Nganh.Nganh_GhiChu,
-                    thm_MaTen = s.ToHopMon.Thm_MaTen,
-                },
-                dkdt_NK_MonThi = s.Dkdt_NK_MonThi,
 
-            }).ToList();
+                    dkdt_NK_ID = s.Dkdt_NK_ID,
+                    thiSinh_ID = s.ThiSinh_ID,
+                    ptxt_ID = s.Ptxt_ID,
+                    nganh_ID = s.Nganh_ID,
+                    thm_ID = s.Thm_ID,
+                    doiTuong_ID = s.DoiTuong_ID,
+                    khuVuc_ID = s.KhuVuc_ID,
+                    dkdt_NK_TrangThai = s.Dkdt_NK_TrangThai,
+                    dotXT_ID = s.DotXT_ID,
+                    dkdt_NK_TenAll = new
+                    {
+                        khoiNganh_Ten = s.Nganh.KhoiNganh.KhoiNganh_Ten,
+                        nganh_GhiChu = s.Nganh.Nganh_GhiChu,
+                        thm_MaTen = s.ToHopMon.Thm_MaTen,
+                    },
+                    dkdt_NK_MonThi = s.Dkdt_NK_MonThi,
 
-            var Tsdk_doituong_ten_diem = _ut_doituong_ten_diem;
-            var Tsdk_khuvuv_ten_diem = _ut_khuvuv_ten_diem;
-            var Tsdk_xeploai_hocluc_12 = _xeploai_hocluc_12;
-            var Tsdk_xeploai_hanhkiem_12 = _xeploai_hanhkiem_12;
-            return Json(new
-            {
-                view_list_dkdt_nangkhieu_ts,
-                Tsdk_doituong_ten_diem,
-                Tsdk_khuvuv_ten_diem,
-                Tsdk_xeploai_hocluc_12,
-                Tsdk_xeploai_hanhkiem_12
+                }).ToList();
 
-            }, JsonRequestBehavior.AllowGet);
+                var Tsdk_doituong_ten_diem = _ut_doituong_ten_diem;
+                var Tsdk_khuvuv_ten_diem = _ut_khuvuv_ten_diem;
+                var Tsdk_xeploai_hocluc_12 = _xeploai_hocluc_12;
+                var Tsdk_xeploai_hanhkiem_12 = _xeploai_hanhkiem_12;
+                return Json(new
+                {
+                    view_list_dkdt_nangkhieu_ts,
+                    Tsdk_doituong_ten_diem,
+                    Tsdk_khuvuv_ten_diem,
+                    Tsdk_xeploai_hocluc_12,
+                    Tsdk_xeploai_hanhkiem_12
+
+                }, JsonRequestBehavior.AllowGet);
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
@@ -177,8 +177,6 @@ namespace HDU_AppXetTuyen.Controllers
                 _MinhChung_CCCD,
             }, JsonRequestBehavior.AllowGet);
         }
-
-
         public JsonResult DangKyDuThi_NangKhieu_Insert(DangKyDuThiNangKhieu dkdt_nk_post)
         {
 
@@ -240,7 +238,6 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult DangKyDuThiNK_Delete(DangKyDuThiNangKhieu dkxt_kqtqg_post)
         {
             DbConnecttion db = new DbConnecttion();
@@ -607,7 +604,7 @@ namespace HDU_AppXetTuyen.Controllers
         #endregion
         #endregion
         #region Đăng ký xét tuyển học bạ
-
+        [ThiSinhSessionCheck]
         public ActionResult dkxthocba2()
         {
             return View();
