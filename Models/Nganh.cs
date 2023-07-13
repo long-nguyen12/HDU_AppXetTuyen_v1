@@ -19,7 +19,6 @@ namespace HDU_AppXetTuyen.Models
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
             DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
             DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
-
         }
 
         [Key]
