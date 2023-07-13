@@ -10,88 +10,116 @@
         <div class="page-header-content">
             <div class="row align-items-center justify-content-between pt-3">
                 <div class="col-auto mb-1">
-                    <h1 class="page-header-title mb-2">
+                    <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        Tổ hợp môn
-                    </h1>
-                </div>
-                <div class="col-12 col-xl-auto mb-3">
-                    @*<a class="btn btn-sm btn-light text-primary" href="user-management-groups-list.html">
-                            <i class="me-1" data-feather="users"></i>
-                            Manage Groups
-                        </a>*@
-                    <a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","ToHopMons")">
-                        <i class="me-1" data-feather="user-plus"></i>
-                        Thêm mới
-                    </a>
+                        <span>Quản lý thông tin Tổ hợp môn</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<div class="container-fluid px-4">
-    <div class="card">
+
+<div class="container-fluid px-12" >
+    <div class="card card-header-actions" >
+        <div class="card-header">
+            <span>Danh sách Tổ hợp môn</span>
+            <a class="btn btn-outline-primary btn-sm align-items-center" href="@Url.Action("Create","ToHopMons")">
+                @*<i class="me-1" data-feather="user-plus" style="vertical-align:central!important"></i>*@
+                + Thêm mới
+            </a>
+
+        </div>
         <div class="card-body">
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_MaToHop)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_TenToHop)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon1)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon2)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon3)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_MaTen)
-                    </th>
-                    <th></th>
-                </tr>
+            <div class="row">
+                <div class="col-xl-12">
+                    <table class="table table-hover table-striped mt-0">
+                        <thead class="mt-0">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_MaToHop)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_TenToHop)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon1)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon2)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Thm_Mon3)
+                                </th>                               
+                                <th style="width:90px">Cập nhật</th>
+                            </tr>
+                        </thead>
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Thm_MaToHop)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Thm_TenToHop)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Thm_Mon1)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Thm_Mon2)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Thm_Mon3)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Thm_MaTen)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Thm_ID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Thm_ID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Thm_ID })
-                        </td>
-                    </tr>
-                }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Thm_MaToHop)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Thm_TenToHop)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Thm_Mon1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Thm_Mon2)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Thm_Mon3)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Thm_ID }) |
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Thm_ID })
+                                </td>
+                            </tr>
+                        }
 
-            </table>
-            <!-- Thêm mã phân trang -->
-            <br />
-            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    </table>
+                    <!-- Thêm mã phân trang -->
+                  
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Index",
+                        new { page }))
+                    <!-- Kết thúc -->
+                </div>
+            </div>
 
-            @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page }))
-            <!-- Kết thúc -->
         </div>
     </div>
 </div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
+                <input id="key_delete_dkxt_id" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
+                <button class="btn btn-primary" type="button">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+

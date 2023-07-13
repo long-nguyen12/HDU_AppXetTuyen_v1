@@ -23,7 +23,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             if (page == null) page = 1;
             var tinhs = (from h in db.Tinhs
-                          select h).OrderBy(x => x.Tinh_ID);
+                          select h).OrderBy(x => x.Tinh_Ten);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(tinhs.ToPagedList(pageNumber, pageSize));

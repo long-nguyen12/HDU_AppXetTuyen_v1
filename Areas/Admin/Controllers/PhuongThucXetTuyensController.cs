@@ -18,7 +18,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult Index()
         {
-            return View(db.PhuongThucXetTuyens.ToList());
+            var model = db.PhuongThucXetTuyens.Where(x => x.Ptxt_ID > 0).ToList();
+            return View(model);
         }
 
         // GET: Admin/PhuongThucXetTuyens/Details/5

@@ -22,8 +22,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             if (page == null) page = 1;
             var nganhs = (from h in db.Nganhs
-                          select h).OrderBy(x => x.Nganh_ID).Include(n => n.KhoiNganh).Include(n => n.Khoa);
-            int pageSize = 10;
+                          select h).OrderBy(x => x.Khoa.Khoa_TenKhoa).ThenBy(x => x.NganhTenNganh). Include(n => n.KhoiNganh).Include(n => n.Khoa).Where(x => x.Nganh_ID >0);
+            int pageSize = 7;
             int pageNumber = (page ?? 1);
             return View(nganhs.ToPagedList(pageNumber, pageSize));
         }
@@ -49,7 +49,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.KhoiNganh_ID = new SelectList(db.KhoiNganhs, "KhoiNganh_ID", "KhoiNganh_Ten");
-            ViewBag.Khoa_ID = new SelectList(db.KhoiNganhs, "Khoa_ID", "Khoa_TenKhoa");
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa");
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
 
             ViewBag.KhoiNganh_ID = new SelectList(db.KhoiNganhs, "KhoiNganh_ID", "KhoiNganh_Ten", nganh.KhoiNganh_ID);
-            ViewBag.Khoa_ID = new SelectList(db.KhoiNganhs, "Khoa_ID", "Khoa_TenKhoa");
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa", nganh.Khoa_ID);
             return View(nganh);
         }
 
@@ -87,7 +87,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.KhoiNganh_ID = new SelectList(db.KhoiNganhs, "KhoiNganh_ID", "KhoiNganh_Ten", nganh.KhoiNganh_ID);
-            ViewBag.Khoa_ID = new SelectList(db.KhoiNganhs, "Khoa_ID", "Khoa_TenKhoa");
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa", nganh.Khoa_ID);
+        
             return View(nganh);
         }
 
@@ -106,7 +107,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.KhoiNganh_ID = new SelectList(db.KhoiNganhs, "KhoiNganh_ID", "KhoiNganh_Ten", nganh.KhoiNganh_ID);
-            ViewBag.Khoa_ID = new SelectList(db.KhoiNganhs, "Khoa_ID", "Khoa_TenKhoa");
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa", nganh.Khoa_ID);
             return View(nganh);
         }
 

@@ -5,76 +5,156 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span>Quản lý thông tin Tổ hợp môn</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+@using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ToHopMon</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Thm_MaToHop, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Thm_MaToHop, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Thm_MaToHop, "", new { @class = "text-danger" })
+    <div class="container-fluid px-12">
+        <div class="card card-header-actions">
+            <div class="card-header">
+                <span>Thêm mới tổ hợp môn</span>
+                <a class="btn-close" aria-label="Close" href="@Url.Action("Index","ToHopMons")"></a>             
             </div>
-        </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card card-header-actions mt-1 mb-1 ">
+                            <div class="card-header">Thông tin tổ hợp môn mới</div>
+                            <div class="card-body">
+                                @Html.AntiForgeryToken()
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.Label("Mã tổ hợp", htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.Thm_MaToHop, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Thm_MaToHop, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.Label("Tên tổ hợp", htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.Thm_TenToHop, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Thm_TenToHop, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.Label("Tên môn 1", htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.Thm_Mon1, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Thm_Mon1, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.Label("Tên môn 2", htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.Thm_Mon2, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Thm_Mon2, "", new { @class = "text-danger" })                                                   
+                                                </div>
+                                            </div>
+                                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Thm_TenToHop, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Thm_TenToHop, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Thm_TenToHop, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.Label("Tên môn 3", htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.Thm_Mon3, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.Thm_Mon3, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card card-header-actions mt-1 mb-1 ">
+                            <div class="card-header">Ngành sử dụng tổ hợp môn mới</div>
+                            <div class="card-body">
+                                <table class="table table-striped table-hover">
+                                    <tr>
+                                        <td>7480201</td>
+                                        <td>Công nghệ thông tin</td>
+                                        <td style="width:80px">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7320104</td>
+                                        <td>Truyền thông đa phương tiện</td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7580201</td>
+                                        <td>Kỹ thuật xây dựng</td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7340301</td>
+                                        <td>Kế toán</td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Thm_Mon1, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Thm_Mon1, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Thm_Mon1, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Thm_Mon2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Thm_Mon2, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Thm_Mon2, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Thm_Mon3, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Thm_Mon3, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Thm_Mon3, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Thm_MaTen, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Thm_MaTen, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Thm_MaTen, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt-1 g-1 align-items-center justify-content-center">
+                    <hr class="mt-1 mb-1" />
+                    <div class="col-md-2 col-3">
+                        @*<input type="submit" value="Create" class="btn btn-default" />*@
+                        <input class="btn btn-outline-success" type="submit" value="Đồng ý" style="width:100%" />
+                    </div>
+                    <div class="col-md-2 col-3">
+                        @Html.ActionLink("Hủy bỏ", "Index", null, new { @class = "btn btn-outline-danger", @style = "width:100%; white-space:nowrap" })
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
