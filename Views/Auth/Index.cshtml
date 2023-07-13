@@ -12,9 +12,10 @@
             e.preventDefault();
             $('#loginForm').hide();
             $('#signupForm').show();
-            // $("#leftPanel").removeClass("col-lg-7").addClass("col-lg-0");
-            $("#leftPanel").hide();
-            $("#rightPanel").removeClass("col-xxl-4").addClass("col-xxl-12");
+            $("#leftPanel").removeClass("col-lg-8").addClass("col-lg-4");
+            $("#rightPanel").removeClass("col-lg-4").addClass("col-lg-8");
+            $("#leftLine").removeClass("col-lg-8").addClass("col-lg-4");
+            $("#rightLine").removeClass("col-lg-4").addClass("col-lg-8");
             // showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
         });
 
@@ -22,8 +23,10 @@
             e.preventDefault();
             $('#signupForm').hide();
             $('#loginForm').show();
-            $("#rightPanel").removeClass("col-xxl-12").addClass("col-xxl-4");
-            $("#leftPanel").show();
+            $("#rightPanel").removeClass("col-lg-8").addClass("col-lg-4");
+            $("#leftPanel").removeClass("col-lg-4").addClass("col-lg-8");
+            $("#leftLine").removeClass("col-lg-4").addClass("col-lg-8");
+            $("#rightLine").removeClass("col-lg-8").addClass("col-lg-4");
         });
 
         $('input').on('input', function () {
@@ -69,11 +72,12 @@
         });
         function rearrangePanels() {
             var windowWidth = $(window).width();
-            if (windowWidth <= 768) {
+            if (windowWidth < 992) {
                 $("#panelContainer").prepend($("#rightPanel"));
                 $("#leftPanel").addClass("mt-2");
             } else {
                 $("#panelContainer").prepend($("#leftPanel"));
+                $("#leftPanel").removeClass("mt-2");
             }
         }
 
@@ -349,7 +353,7 @@
 </style>
 <div class="container">
     <div id="panelContainer" class="row" style="padding-top:20px">
-        <div id="leftPanel" class="col-xxl-8">
+        <div id="leftPanel" class="col-lg-8">
             <div class="text-center text-uppercase">
                 <h5 class="colorlogin" style="font-weight: bold">HỆ THỐNG TUYỂN SINH TRỰC TUYẾN</h5>
             </div>
@@ -390,7 +394,7 @@
             </div>
         </div>
 
-        <div id="rightPanel" class="col-xxl-4">
+        <div id="rightPanel" class="col-lg-4">
             <div class="text-center text-uppercase">
                 <h5 class="colorlogin" style="font-weight: bold">CHỌN CHỨC NĂNG</h5>
                 <hr />
@@ -419,8 +423,8 @@
                             </div>
                             <hr class="mt-3 mb-3" />
                             <div class="text-center mt-4">
-                                <div class="small"><a id="showSignup" style="text-decoration: none; color: #ff6a00;" href="#">Bạn chưa đăng ký thông tin? <b>Đăng ký tại đây</b></a></div>
-                                <div class="small mt-2"><a style="text-decoration: none; color: #ff6a00;" href="#" onclick="submitForm()">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+                                <div class="small"><a id="showSignup" style="text-decoration: none; color: #ff6a00;" href="#">Chưa đăng ký thông tin? <b>Đăng ký tại đây</b></a></div>
+                                <div class="small mt-2"><a style="text-decoration: none; color: #ff6a00;" href="#" onclick="submitForm()">Quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
                                 @*<div class="small mt-2"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("ForgotPassword", "Auth")">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>*@
                             </div>
                             <hr class="mt-4 mb-4" />
@@ -436,31 +440,29 @@
                             <div>
                                 <span id="errorMessage" class="small mb-1 text-danger"></span>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
+                            <div class="row g-2">
+                                <div class="col-md-3 col-6">
                                     <div class="form-group">
-                                        <label class="small mb-1" for="ThiSinh_CCCD">Căn cước công dân <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        <label class="small mb-1" for="ThiSinh_CCCD">CCCD <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập căn cước công dân", @id = "register_CCCD" } })
                                         <span id="register_CCCD_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-3 col-6">
                                     <div class="form-group">
-                                        <label class="small mb-1" for="ThiSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @Html.EditorFor(model => model.ThiSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập email", @id = "register_email" } })
-                                        <span id="register_email_Error" class="small mb-1 text-danger"></span>
+                                        <label class="small mb-1" for="ThiSinh_DienThoai">Điện thoại <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @Html.EditorFor(model => model.ThiSinh_DienThoai, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập số điện thoại", @id = "register_sdt" } })
+                                        <span id="register_sdt_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-3 col-6">
                                     <div class="form-group">
                                         <label class="small mb-1" for="ThiSinh_MatKhau">Mật khẩu <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu", @id = "register_password" } })
                                         <span id="register_password_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-3 col-6">
                                     <div class="form-group">
                                         <label class="small mb-1" for="ThiSinh_Re_MatKhau">Nhập lại mật khẩu <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         <input id="register_re_password" class="form-control text-box single-line password" name="register_re_password" placeholder="Nhập lại mật khẩu" type="password" />
@@ -468,40 +470,39 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
+                            <div class="row mt-2 g-2">
+                                <div class="col-md-4 col-7">
                                     <div class="form-group">
                                         <label class="small mb-1" for="ThiSinh_HoLot">Họ lót <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.EditorFor(model => model.ThiSinh_HoLot, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập họ lót", @id = "register_holot" } })
                                         <span id="register_holot_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-3 col-5">
                                     <div class="form-group">
                                         <label class="small mb-1" for="ThiSinh_Ten">Tên <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.EditorFor(model => model.ThiSinh_Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên", @id = "register_ten" } })
                                         <span id="register_ten_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-5 col-12">
                                     <div class="form-group">
-                                        <label class="small mb-1" for="ThiSinh_DienThoai">Điện thoại <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @Html.EditorFor(model => model.ThiSinh_DienThoai, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập số điện thoại", @id = "register_sdt" } })
-                                        <span id="register_sdt_Error" class="small mb-1 text-danger"></span>
+                                        <label class="small mb-1" for="ThiSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @Html.EditorFor(model => model.ThiSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập email", @id = "register_email" } })
+                                        <span id="register_email_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                            </div>
+                            <div class="row mt-2 g-2">
+                                <div class="col-md-4 col-5">
                                     <div class="form-group">
                                         <label class="small mb-1" for="ThiSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.EditorFor(model => model.ThiSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", @id = "datepicker", @placeholder = "Chọn ngày sinh" } })
                                         <span id="datepicker_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
+
+                                <div class="col-md-4 col-4">
                                     <div class="form-group">
                                         <label class="small mb-1" for="ThiSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.DropDownListFor(m => m.ThiSinh_GioiTinh, new List<SelectListItem>
@@ -513,7 +514,7 @@
                                         <span id="register_gt_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-4 col-3">
                                     <div class="form-group">
                                         <label class="small mb-1" for="ThiSinh_DanToc">Dân tộc <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.EditorFor(model => model.ThiSinh_DanToc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập dân tộc", @id = "register_dantoc" } })
@@ -521,73 +522,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
+                            <div class="row mt-2 g-2">
+                                <div class="col-md-3 col-6">
                                     <div class="form-group">
                                         <label class="small mb-1" for="KhuVuc_ID">Khu vực <a style="color:red; text-decoration:none">(*)</a>  </label>
                                         @Html.DropDownList("KhuVuc_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_kv" })
                                         <span id="register_kv_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-3 col-6">
                                     <div class="form-group">
                                         <label class="small mb-1" for="DoiTuong_ID">Đối tượng</label>
                                         @Html.DropDownList("DoiTuong_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_doituong" })
                                         <span id="register_doituong_Error" class="small mb-1 text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="ThiSinh_TruongCapBa">Trường <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @Html.EditorFor(model => model.ThiSinh_TruongCapBa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập trường THPT", @id = "register_truong" } })
-                                        <span id="register_truong_Error" class="small mb-1 text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @Html.EditorFor(model => model.ThiSinh_TruongCapBa_Ma, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mã trường", @id = "register_ma_truong" } })
-                                        <span id="register_ma_truong_Error" class="small mb-1 text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_truongtinh" })
-                                        <span id="register_truongtinh_Error" class="small mb-1 text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="ThiSinh_HoKhauThuongTru">Hộ khẩu thường trú <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @Html.EditorFor(model => model.ThiSinh_HoKhauThuongTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên phường/xã", @id = "register_phuongtt" } })
-                                        <span id="register_phuongtt_Error" class="small mb-1 text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_tinhtt" })
-                                        <span id="register_tinhtt_Error" class="small mb-1 text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-12">
-                                    <div class="form-group">
-                                        <label class="small mb-1" for="Huyen_ID">Quận/huyện <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                        @* @Html.DropDownList("Huyen_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_huyentt" })*@
-                                        <select id="register_huyentt" class="form-select" disabled>
-                                            <option value="0">Chọn huyện</option>
-                                        </select>
-                                        <span id="register_huyentt_Error" class="small mb-1 text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 col-12">
+                                <div class="col-md-3 col-6">
                                     Học lực lớp 12 <a style="color:red; text-decoration:none">(*)</a>
                                     <select id="register_HocLucLop12" class="form-select">
                                         <option value="0">Chọn học lực</option>
@@ -598,8 +548,8 @@
                                     </select>
                                     <span id="register_HocLucLop12_Error" class="small mb-1 text-danger"></span>
                                 </div>
-                                <div class="col-md-6 col-12">
-                                    Xếp loại hạnh kiểm lớp 12 <a style="color:red; text-decoration:none">(*)</a>
+                                <div class="col-md-3 col-6">
+                                    Hạnh kiểm lớp 12 <a style="color:red; text-decoration:none">(*)</a>
                                     <select id="register_HanhKiemLop12" class="form-select">
                                         <option value="0">Chọn hạnh kiểm</option>
                                         <option value="4">Tốt</option>
@@ -608,6 +558,55 @@
                                         <option value="1">Yếu</option>
                                     </select>
                                     <span id="register_HanhKiemLop12_Error" class="small mb-1 text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mt-2 g-2">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_TruongCapBa">Trường <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @Html.EditorFor(model => model.ThiSinh_TruongCapBa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập trường THPT", @id = "register_truong" } })
+                                        <span id="register_truong_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @Html.EditorFor(model => model.ThiSinh_TruongCapBa_Ma, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mã trường", @id = "register_ma_truong" } })
+                                        <span id="register_ma_truong_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_truongtinh" })
+                                        <span id="register_truongtinh_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 g-2">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="ThiSinh_HoKhauThuongTru">Hộ khẩu thường trú <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @Html.EditorFor(model => model.ThiSinh_HoKhauThuongTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên phường/xã", @id = "register_phuongtt" } })
+                                        <span id="register_phuongtt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_tinhtt" })
+                                        <span id="register_tinhtt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="Huyen_ID">Quận/huyện <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                        @* @Html.DropDownList("Huyen_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_huyentt" })*@
+                                        <select id="register_huyentt" class="form-select" disabled>
+                                            <option value="0">Chọn huyện</option>
+                                        </select>
+                                        <span id="register_huyentt_Error" class="small mb-1 text-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -633,7 +632,7 @@
         </div>
     </div>
     <div class="row">
-        <div id="leftPanel" class="col-xxl-8 col-12">
+        <div id="leftLine" class="col-lg-8 col-12">
             <hr />
             <div class="row">
                 <div class="col-xl-12">
@@ -643,7 +642,7 @@
                 </div>
             </div>
         </div>
-        <div id="rightPanel" class="col-xxl-4 col-12">
+        <div id="rightLine" class="col-lg-4 col-12">
             <hr />
             <div class="row">
                 <p class="m-0 colorlogin"><b>LIÊN KẾT TUYỂN SINH</b></p>
