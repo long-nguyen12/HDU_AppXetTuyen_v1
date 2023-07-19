@@ -26,6 +26,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             return View();
         }
+        [Obsolete]
         public ActionResult DownloadFile_XetTuyenHB()
         {
             var idThiSinhInt = 0;
@@ -132,7 +133,7 @@ namespace HDU_AppXetTuyen.Controllers
                     table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_NguyenVong.ToString()).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[1].Paragraphs[0].Append(tenNganh).Font("Times New Roman");
                     table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman").Alignment = Alignment.center;
-                    table.Rows[index].Cells[3].Paragraphs[0].Append("Môn 1:" + mon1_tenmon).Font("Times New Roman");
+                    table.Rows[index].Cells[3].Paragraphs[0].Append("Môn 1: " + mon1_tenmon).Font("Times New Roman");
                     table.Rows[index].Cells[4].Paragraphs[0].Append(mon1_hk1).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[5].Paragraphs[0].Append(mon1_hk2).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[6].Paragraphs[0].Append(mon1_hk3).Font("Times New Roman").Alignment = Alignment.center;
@@ -178,6 +179,8 @@ namespace HDU_AppXetTuyen.Controllers
             }
            
         }
+
+        [Obsolete]
         public ActionResult DownloadFile_XetTuyenThang()
         {
 
@@ -274,9 +277,10 @@ namespace HDU_AppXetTuyen.Controllers
                 return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
             }
 
-        }        
+        }
 
         // Xét tuyển theo chứng chỉ ngoại ngữ
+        [Obsolete]
         public ActionResult DownloadFile_XetTuyenCCNN()
         {
 
@@ -373,9 +377,10 @@ namespace HDU_AppXetTuyen.Controllers
                 return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
             }
 
-        }     
-        
+        }
+
         // Xét tuyển đánh giá năng lực đánh giá tư duy
+        [Obsolete]
         public ActionResult DownloadFile_XetTuyenDGNL_DGTD()
         {
 
@@ -473,6 +478,7 @@ namespace HDU_AppXetTuyen.Controllers
             }
 
         }
+        [Obsolete]
         public ActionResult DownloadFile_XetTuyenKQTQG()
         {
 
@@ -609,6 +615,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
         
         // Xét tuyển thi năng khiếu
+        [Obsolete]
         public ActionResult DownloadFile_XetTuyenThiNangKhieu()
         {
             var idThiSinhInt = 0;
