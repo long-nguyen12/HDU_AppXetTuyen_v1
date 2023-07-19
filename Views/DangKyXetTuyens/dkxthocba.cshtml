@@ -26,7 +26,8 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span>   Sử dụng kết quả học tập ở THPT (Xét học bạ)</span>                     
+                        <span id="sp_tieude">Sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)</span>
+                       
                     </div>
                 </div>
             </div>
@@ -38,31 +39,70 @@
     <div id="div_list_nguyenvong">
         <div class="card card-header-actions">
             <div class="card-header">
-                Các nguyện vọng đã đăng ký
+                <span>Các nguyện vọng đã đăng ký</span>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-xxl-12">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="vertical-align:middle;">Nguyện vọng</th>
-                                    <th style="vertical-align:middle;">Ngành</th>
-                                    <th style="vertical-align:middle;">Tổ hợp môn</th>                                  
-                                    <th style="vertical-align:middle;">Tổng điểm</th>
-                                    <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_list_nguyenvong">
-                            </tbody>
-                        </table>
+                    <div class="col-sm-12 col-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align:middle;">Nguyện vọng</th>
+                                        <th style="vertical-align:middle;">Ngành</th>
+                                        <th style="vertical-align:middle;">Tổ hợp môn</th>
+                                        <th style="vertical-align:middle;">Tổng điểm</th>
+                                        <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_list_nguyenvong">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                  
                 </div>
                 <div class="row">
-                    <div class="col-xxl-12">
+                    <div class="col-sm-12">
                         <center>
-                            <button id="bt_xuat_phieu_tong_hop" class="btn btn-outline-success"> Xuất phiếu tổng hợp</button>
-                            <a class="btn btn-outline-primary" onclick="HienTHi_ThemNguyenVongMoi_OnClick(0,0,0)">Thêm nguyện vọng</a>
+                            <button id="bt_xuat_phieu_tong_hop" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
+                            <a id="bt_them_nguyen_vong" class="btn btn-outline-primary" onclick="HienTHi_ThemNguyenVongMoi_OnClick(0,0,0)">Thêm nguyện vọng</a>
+                            <script>
+                                $(document).ready(function () {
+                                    let sp_tieude = document.getElementById('sp_tieude');
+                                    let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop');
+                                    let bt_them_nguyen_vong = document.getElementById('bt_them_nguyen_vong');
+
+                                    if (window.innerWidth <= 700) {
+                                        sp_tieude.innerHTML = "Sử dụng KQ học tập THPT (Xét học bạ)";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm NV";
+                                       
+                                    }
+                                    else {
+                                        sp_tieude.innerHTML = "Sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+
+                                    }
+
+                                    function reportWindowSize() {
+                                        if (window.innerWidth <= 700) {
+                                            sp_tieude.innerHTML = "Sử dụng KQ học tập THPT (Xét học bạ)";
+                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
+                                            bt_them_nguyen_vong.innerHTML = "Thêm NV";
+
+                                        }
+                                        else {
+                                            sp_tieude.innerHTML = "Sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)";
+                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
+                                            bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+
+                                        }
+                                    }  
+                                    window.onresize = reportWindowSize;
+                                })
+                            </script>
                         </center>
                     </div>
                 </div>
@@ -102,7 +142,7 @@
                                 </tr>
                                 <tr>
                                     <td>Ngành <font color="red">(*)</font></td>
-                                    <td>
+                                    <td >
                                         <select id="select_nganh" class="form-select"></select>
                                         <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                                     </td>
@@ -297,9 +337,10 @@
 
                       
                         <div class="row mb-3">
-                            <div class="col-xxl-12" style="text-align:center">
-                                <input class="btn btn-primary" type="button" value="Đồng ý" onclick="bt_DongY_Update_Dkxt_NVM_OnClick()" ìd="bt_DongY_Update_Dkxt_NVM" />
+                            <div class="col-sm-12" style="text-align:center">
+                                <input  class="btn btn-primary" type="button" value="Đồng ý" onclick="bt_DongY_Update_Dkxt_NVM_OnClick()" ìd="bt_DongY_Update_Dkxt_NVM" />
                                 <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="_bt_HuyBo_Update_Dkxt_NVM_OnClick(0,0,0)" />
+                                
                             </div>
                         </div>
 
@@ -597,7 +638,7 @@
                     $.each(result_all.select_list_dkxt_model, function (i, result) {
 
                         _output += '<tr>' +
-                            '<td style="vertical-align: middle !important "> NV' + result.Dkxt_NguyenVong + "&nbsp;"+`<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID})" ${i == 0 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID})" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
+                            '<td style="vertical-align: middle !important;"> NV' + result.Dkxt_NguyenVong + "&nbsp;"+`<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID})" ${i == 0 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID})" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
                             '<td style="vertical-align: middle !important "> ' + result.Dkxt_TenAll.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_TenAll.Thm_MaTen + '</td>' +
                             '<td style="vertical-align: middle !important ">' + result.Dkxt_Diem_Tong_Full + '</td>' +
@@ -842,24 +883,24 @@
         let flag = true;
 
 
-        let Nganh_ID = $('#select_nganh').val();
-        let Thm_ID = $('#select_tohopmon').val();
+        let _nganh_ID = $('#select_nganh').val();
+        let _thm_ID = $('#select_tohopmon').val();
 
-        let Dkxt_Diem_M1 = { TenMon1: $('#lb_tenmon_1').text(), HK1: $('#txt_m1_k1').val(), HK2: $('#txt_m1_k2').val(), HK3: $('#txt_m1_k3').val(), DiemTrungBinh: $('#txt_tb_m1').val(), };
-        let Dkxt_Diem_M2 = { TenMon2: $('#lb_tenmon_2').text(), HK1: $('#txt_m2_k1').val(), HK2: $('#txt_m2_k2').val(), HK3: $('#txt_m2_k3').val(), DiemTrungBinh: $('#txt_tb_m2').val(), };
-        let Dkxt_Diem_M3 = { TenMon3: $('#lb_tenmon_3').text(), HK1: $('#txt_m3_k1').val(), HK2: $('#txt_m3_k2').val(), HK3: $('#txt_m3_k3').val(), DiemTrungBinh: $('#txt_tb_m3').val(), };
+        let _dkxt_Diem_M1 = { TenMon1: $('#lb_tenmon_1').text(), HK1: $('#txt_m1_k1').val(), HK2: $('#txt_m1_k2').val(), HK3: $('#txt_m1_k3').val(), DiemTrungBinh: $('#txt_tb_m1').val(), };
+        let _dkxt_Diem_M2 = { TenMon2: $('#lb_tenmon_2').text(), HK1: $('#txt_m2_k1').val(), HK2: $('#txt_m2_k2').val(), HK3: $('#txt_m2_k3').val(), DiemTrungBinh: $('#txt_tb_m2').val(), };
+        let _dkxt_Diem_M3 = { TenMon3: $('#lb_tenmon_3').text(), HK1: $('#txt_m3_k1').val(), HK2: $('#txt_m3_k2').val(), HK3: $('#txt_m3_k3').val(), DiemTrungBinh: $('#txt_tb_m3').val(), };
 
-        let DiemTBMon1 = $('#txt_tb_m1').val();
-        let DiemTBMon2 = $('#txt_tb_m2').val();
-        let DiemTBMon3 = $('#txt_tb_m3').val();
+        let _diemTBMon1 = $('#txt_tb_m1').val();
+        let _diemTBMon2 = $('#txt_tb_m2').val();
+        let _diemTBMon3 = $('#txt_tb_m3').val();
 
-        if (Nganh_ID == 0) { var errorMessage = "Chưa chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
-        if (Thm_ID == 0) { var errorMessage = "Chưa chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
+        if (_nganh_ID == 0) { var errorMessage = "Chưa chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
+        if (_thm_ID == 0) { var errorMessage = "Chưa chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
 
-        if (DiemTBMon1 == '' || DiemTBMon2 == '' || DiemTBMon3 == '') { var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!"; $('#Diem_All_Error').text(errorMessage); flag = false; }
+        if (_diemTBMon1 == '' || _diemTBMon2 == '' || _diemTBMon3 == '') { var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!"; $('#Diem_All_Error').text(errorMessage); flag = false; }
 
         if (!flag) return;
-        let Dkxt_Diem_Tong = parseFloat(DiemTBMon1) + parseFloat(DiemTBMon2) + parseFloat(DiemTBMon3);
+        let _dkxt_Diem_Tong = parseFloat(_diemTBMon1) + parseFloat(_diemTBMon2) + parseFloat(_diemTBMon3);
 
 
         let _Dkxt_MinhChung_HB = "";
@@ -905,10 +946,7 @@
             processData: false, // Not to process data
             data: formData_All,
             async: false,
-            success: function (res) {
-
-                console.log(res);
-                console.log('======================')
+            success: function (res) {            
                 _Dkxt_MinhChung_HB = res.MinhChung_HB;
                 _Dkxt_MinhChung_CCCD = res.MinhChung_CCCD;
                 _Dkxt_MinhChung_Bang = res.MinhChung_Bang;
@@ -918,42 +956,21 @@
                 alert(err.statusText);
             }
         });
-
-        console.log(_Dkxt_MinhChung_HB);
-        console.log('======================')
-        console.log(_Dkxt_MinhChung_CCCD);
-        console.log('======================')
-        console.log(_Dkxt_MinhChung_Bang);
-        console.log('======================')
-        console.log(_Dkxt_MinhChung_UuTien);
-        console.log('=========Hết phần upload=============')
         /*hết phần upload file*/
 
-
         let formData_dknv_new = {
-            Nganh_ID: Nganh_ID,
-            Thm_ID: Thm_ID,
-            Dkxt_Diem_M1: JSON.stringify(Dkxt_Diem_M1),
-            Dkxt_Diem_M2: JSON.stringify(Dkxt_Diem_M2),
-            Dkxt_Diem_M3: JSON.stringify(Dkxt_Diem_M3),
-            Dkxt_Diem_Tong: Dkxt_Diem_Tong.toString(),
+            Nganh_ID: _nganh_ID,
+            Thm_ID: _thm_ID,
+            Dkxt_Diem_M1: JSON.stringify(_dkxt_Diem_M1),
+            Dkxt_Diem_M2: JSON.stringify(_dkxt_Diem_M2),
+            Dkxt_Diem_M3: JSON.stringify(_dkxt_Diem_M3),
+            Dkxt_Diem_Tong: _dkxt_Diem_Tong.toString(),
 
             Dkxt_MinhChung_HB: _Dkxt_MinhChung_HB,
             Dkxt_MinhChung_CCCD:  _Dkxt_MinhChung_CCCD,
             Dkxt_MinhChung_Bang : _Dkxt_MinhChung_Bang,
             Dkxt_MinhChung_UuTien: _Dkxt_MinhChung_UuTien,
-        }
-
-        console.log(formData_dknv_new.Dkxt_MinhChung_HB);
-        console.log('======================')
-        console.log(formData_dknv_new.Dkxt_MinhChung_CCCD);
-        console.log('======================')
-        console.log(formData_dknv_new.Dkxt_MinhChung_Bang);
-        console.log('======================')
-        console.log(formData_dknv_new.Dkxt_MinhChung_UuTien);
-        console.log('=========Hết phần upload=============')
-
-
+        }   
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_Insert",
             data: JSON.stringify(formData_dknv_new),

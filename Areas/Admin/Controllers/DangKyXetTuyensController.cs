@@ -16,17 +16,263 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
     {
         private DbConnecttion db = new DbConnecttion();
 
+        public ActionResult Dkxtth()
+        {
+            return View();
+        }
         // GET: Admin/DangKyXetTuyens
         [AdminSessionCheck]
-        public ActionResult Index(int? page)
+        public ActionResult DkxtKQTthpt(int? page)
+        {
+            var model = (from ts in db.DangKyXetTuyenKQTQGs select ts)
+                                            .OrderBy(x => x.ThiSinh_ID)
+                                            .ThenBy(x => x.Dkxt_KQTQG_NguyenVong)
+                                            .ThenBy(x => x.Nganh.NganhTenNganh)
+                                            .Include(x => x.Nganh)
+                                            .Include(x => x.ThiSinhDangKy)
+                                            .Include(x => x.ThiSinhDangKy.DotXetTuyen)
+                                            .Include(x => x.ThiSinhDangKy.DoiTuong)
+                                            .Include(x => x.ThiSinhDangKy.KhuVuc)
+                                            .Include(x => x.ToHopMon);
+            if (page == null) page = 1;
+          
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(model.ToPagedList(pageNumber, pageSize));
+        }
+
+        //[AdminSessionCheck]
+
+        public ActionResult Index23(string searchString, string currentFilter, string filteriDotxt, int? page)
+        {
+
+            var thisinhs = (from ts_tem in db.ThiSinhDangKies select ts_tem).OrderBy(x => x.ThiSinh_ID).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc);
+
+            ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
+            #region lọc dữ liệu theo đợt
+            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
+            dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
+            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
+            ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
+            // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
+            if (String.IsNullOrEmpty(filteriDotxt) == true)
+            {
+                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID.ToString();
+            }
+            // thực hiện lọc 
+            if (!String.IsNullOrEmpty(filteriDotxt))
+            {
+                int _Dotxt_ID = Int32.Parse(filteriDotxt);
+                if (_Dotxt_ID != 0)
+                {
+                    thisinhs = thisinhs.Where(x => x.DotXT_ID == _Dotxt_ID);
+                }
+
+            }
+            #endregion
+            // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
+            #region Tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                thisinhs = thisinhs.Where(m => m.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
+                                    || m.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
+                                    || m.ThiSinh_CCCD.Contains(searchString)
+                                    || m.ThiSinh_DienThoai.Contains(searchString)
+                                    || m.ThiSinh_Email.Contains(searchString));
+            }
+            #endregion
+            // thực hiện phân trang
+            #region Phân trang
+            if (page == null) page = 1;
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            #endregion
+            // tham số khác
+            #region Tham số khác
+            if (searchString != null) { page = 1; }
+            else { searchString = currentFilter; }
+
+            ViewBag.pageCurren = page;
+            ViewBag.SearchString = searchString;
+            ViewBag.filteriDotxtSort = filteriDotxt;
+            ViewBag.totalRecod = thisinhs.Count();
+
+            #endregion
+            return View(thisinhs.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult DkxtHocBa(string searchString, string currentFilter, string filteriDotxt, int? page)
+        {
+         
+            var model = (from item in db.DangKyXetTuyens select item)
+                                                  .OrderBy(x => x.ThiSinh_ID)
+                                                  .ThenBy(x => x.Dkxt_NguyenVong)
+                                                  .ThenBy(x => x.Nganh.NganhTenNganh)
+                                                  .Include(x => x.DoiTuong)
+                                                  .Include(x => x.DotXetTuyen)
+                                                  .Include(x => x.KhuVuc)
+                                                  .Include(x => x.Nganh)
+                                                  .Include(x => x.PhuongThucXetTuyen)
+                                                  .Include(x => x.ThiSinhDangKy)
+                                                  .Include(x => x.ToHopMon);
+
+            ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
+            #region lọc dữ liệu theo đợt
+            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
+            dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
+            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
+            ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
+            // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
+            if (String.IsNullOrEmpty(filteriDotxt) == true)
+            {
+                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID.ToString();
+            }
+            // thực hiện lọc 
+            if (!String.IsNullOrEmpty(filteriDotxt))
+            {
+                int _Dotxt_ID = Int32.Parse(filteriDotxt);
+                if (_Dotxt_ID > 0)
+                {
+                    model = model.Where(x => x.DotXT_ID == _Dotxt_ID);
+                }
+            }
+            #endregion
+            // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
+            #region Tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(m => m.ThiSinhDangKy.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_CCCD.Contains(searchString)
+                                      || m.ThiSinhDangKy.ThiSinh_DienThoai.Contains(searchString)
+                                      || m.ThiSinhDangKy.ThiSinh_Email.Contains(searchString));
+            }
+            #endregion
+
+            // thực hiện phân trang
+            #region Phân trang
+            if (page == null) page = 1;
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            #endregion
+            // tham số khác
+            #region Tham số khác
+            if (searchString != null) { page = 1; }
+            else { searchString = currentFilter; }
+
+            ViewBag.pageCurren = page;
+            ViewBag.SearchString = searchString;
+            ViewBag.filteriDotxtSort = filteriDotxt;
+            ViewBag.totalRecod = model.Count();
+
+            #endregion
+            return View(model.ToPagedList(pageNumber, pageSize));
+        }
+        [AdminSessionCheck]
+        public ActionResult DkxtTt(int? page)
+        {
+            if (page == null) page = 1;
+            var model = (from item in db.DangKyXetTuyenThangs select item)
+                                        .OrderBy(x => x.ThiSinh_ID)
+                                        .ThenBy(x => x.Dkxt_NguyenVong)
+                                        .ThenBy(x => x.Nganh.NganhTenNganh)
+                                        .Include(d => d.ThiSinhDangKy.DoiTuong)
+                                        .Include(d => d.ThiSinhDangKy.DotXetTuyen)
+                                        .Include(d => d.ThiSinhDangKy.KhuVuc)
+                                        .Include(d => d.Nganh)                                        
+                                        .Include(d => d.ThiSinhDangKy);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(model.ToPagedList(pageNumber, pageSize));
+        }
+       
+
+        public ActionResult Dkxtccnn(int? page)
         {
             if (page == null) page = 1;
             var dangKyXetTuyens = (from h in db.DangKyXetTuyens
-                          select h).OrderBy(x => x.Dkxt_ID).Include(d => d.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon);
+                                   select h).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_NguyenVong).ThenBy(x => x.Nganh.NganhTenNganh).Include(d => d.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(dangKyXetTuyens.ToPagedList(pageNumber, pageSize));
         }
+        public ActionResult DkxtkqDgnl(int? page)
+        {
+            if (page == null) page = 1;
+            var dangKyXetTuyens = (from h in db.DangKyXetTuyens
+                                   select h).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_NguyenVong).ThenBy(x => x.Nganh.NganhTenNganh).Include(d => d.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(dangKyXetTuyens.ToPagedList(pageNumber, pageSize));
+        }
+        public ActionResult Dkdttnk(string searchString, string currentFilter, string filteriDotxt, int? page)
+        {
+            if (page == null) page = 1;
+            var model = (from item in db.DangKyDuThiNangKhieus  select item)
+                                        .OrderBy(x => x.ThiSinh_ID)
+                                        .ThenBy(x => x.Dkdt_NK_NguyenVong)
+                                        .ThenBy(x => x.Nganh.NganhTenNganh)                                        
+                                        .Include(x => x.ThiSinhDangKy.DoiTuong)                                       
+                                        .Include(x => x.ThiSinhDangKy.KhuVuc)
+                                        .Include(x => x.Nganh)
+                                        .Include(x => x.PhuongThucXetTuyen)
+                                        .Include(x => x.ThiSinhDangKy)
+                                        .Include(x => x.ToHopMon);
+            // lấy thông tin năm hiện tại
+            ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
+
+            #region lọc dữ liệu theo đợt
+            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
+            dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
+            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
+            ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
+            // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
+            if (String.IsNullOrEmpty(filteriDotxt) == true)
+            {
+                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID.ToString();
+            }
+            // thực hiện lọc 
+            if (!String.IsNullOrEmpty(filteriDotxt))
+            {
+                int _Dotxt_ID = Int32.Parse(filteriDotxt);
+                if (_Dotxt_ID != 0)
+                {
+                    model = model.Where(x => x.DotXT_ID == _Dotxt_ID);
+                }
+            }
+            #endregion
+            // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
+            #region Tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(m => m.ThiSinhDangKy.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_CCCD.Contains(searchString)
+                                      || m.ThiSinhDangKy.ThiSinh_DienThoai.Contains(searchString)                                   
+                                      || m.Nganh.NganhTenNganh.Contains(searchString)
+                                      || m.ToHopMon.Thm_TenToHop.Contains(searchString));
+            }
+            #endregion
+
+            // thực hiện phân trang
+            #region Phân trang
+            if (page == null) page = 1;
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            #endregion
+            // tham số khác
+            #region Tham số khác
+            if (searchString != null) { page = 1; }
+            else { searchString = currentFilter; }
+
+            ViewBag.pageCurren = page;
+            ViewBag.SearchString = searchString;
+            ViewBag.FilterDotXT = filteriDotxt;
+            ViewBag.totalRecod = model.Count();
+            #endregion         
+            return View(model.ToPagedList(pageNumber, pageSize));
+        }
+     
+        #region
 
         // GET: Admin/DangKyXetTuyens/Details/5
         [AdminSessionCheck]
@@ -166,5 +412,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

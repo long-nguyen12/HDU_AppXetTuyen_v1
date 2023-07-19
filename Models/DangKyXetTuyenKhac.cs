@@ -9,8 +9,14 @@ namespace HDU_AppXetTuyen.Models
     [Table("DangKyXetTuyenKhac")]
     public partial class DangKyXetTuyenKhac
     {
+        public DangKyXetTuyenKhac()
+        {
+            KinhPhis = new HashSet<KinhPhi>();
+        }
+
         [Key]
         public long Dkxt_ID { get; set; }
+        public int? ChungChi_ID { get; set; }
 
         public long? ThiSinh_ID { get; set; }
 
@@ -70,6 +76,9 @@ namespace HDU_AppXetTuyen.Models
 
         public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }
 
-        public virtual Nganh Nganh { get; set; }
+        public virtual Nganh Nganh { get; set; }    
+      
+
+        public virtual ICollection<KinhPhi> KinhPhis { get; set; }
     }
 }
