@@ -91,7 +91,7 @@
                                 $(document).ready(function () {
                                     let sp_tieude = document.getElementById('sp_tieude');
                                     let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
-                                    let bt_them_nguyen_vong = document.getElementById('bt_them_nguyen_vong');
+                                    let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
 
                                     if (window.innerWidth <= 700) {
                                         sp_tieude.innerHTML = "Sử dụng KQ thi TN THPT Quốc gia";
@@ -415,7 +415,7 @@
     function ts_dkxt_thptqg_list_all() {
         let _output = "";
         $.ajax({
-            url: "/DangKyXetTuyens/DangKyXetTuyenKQTHPTQG_ListAll/",
+            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_ListAll/",
             type: 'GET',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
@@ -464,7 +464,7 @@
         let currentYear = new Date().getFullYear();
         let nam_list = [
             { value: 0, text: "Chọn năm" },
-            { value: currentYear, text: currentYear },
+           /* { value: currentYear, text: currentYear },*/
             { value: currentYear - 1, text: currentYear - 1 },
             { value: currentYear - 2, text: currentYear - 2 },
         ]
@@ -494,7 +494,7 @@
             if (dataObj.Dkxt_KQTQG_ID == 0 && dataObj.Thm_ID > 0) {
                 reset_fields_controll_disabled_false();
                 $.ajax({
-                    url: "/DangKyXetTuyens/DangKyXetTuyen_Get_Data_MonHoc",
+                    url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Get_Data_MonHoc",
                     data: JSON.stringify(dataObj),
                     type: 'POST',
                     contentType: 'application/json;charset=utf-8',
@@ -707,7 +707,7 @@
         formData_All.append('so_file_giayto_uutien', so_file_giayto_uutien);
 
         $.ajax({
-            url: '/DangKyXetTuyens/DangKyXetTuyen_UploadFile_Multi_KQTQG',
+            url: '/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_UploadFile_Multi',
             type: "POST",
             contentType: false,
             processData: false,
@@ -781,12 +781,6 @@
         document.getElementById('div_update_aspirations').style.display = "none";
         reset_fields_controll_disabled_true();
     });
-    //// button tắt cửa sổ thêm mới phía trên
-    //$('#bt_close_div_update_aspirations_first').click(function () {
-    //    document.getElementById('div_list_aspirations').style.display = "inline";
-    //    document.getElementById('div_update_aspirations').style.display = "none";
-    //    reset_fields_controll_disabled_true();
-    //});
     // thay đổi nguyện vọng đã đăng ký:
     function change_up_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
         $('#key_change_dkxt_kqtthptqg_id').val('');
@@ -815,7 +809,7 @@
 
         if (_check_action == 1) { // sửa lên trên
             $.ajax({
-                url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Change_UpData",
+                url: "/DangKyXetTuyens/DangKyXetTuyen_KQTTHPTQG_Change_UpData",
                 data: JSON.stringify(data_Obj_change),
                 type: 'POST',
                 contentType: 'application/json;charset=utf-8',
@@ -841,7 +835,7 @@
         }
         if (_check_action == 2) { // sửa xuống dưới
             $.ajax({
-                url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Change_DownData",
+                url: "/DangKyXetTuyens/DangKyXetTuyen_KQTTHPTQG_Change_DownData",
                 data: JSON.stringify(data_Obj_change),
                 type: 'POST',
                 contentType: 'application/json;charset=utf-8',
@@ -889,7 +883,7 @@
         let data_Obj_new = { Dkxt_KQTQG_ID: $('#key_delete_dkxt_kqtthptqg_id').val() };
 
         $.ajax({
-            url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Delete",
+            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTTHPTQG_Delete",
             data: JSON.stringify(data_Obj_new),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',

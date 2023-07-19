@@ -606,16 +606,15 @@
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTHCS\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkxtthptqg.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkxtthptqg.cshtml" />
     <Content Include="Views\LienCapTieuHocs\ConfirmRegister.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkxthocba.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkxthocba2.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkxthocba.cshtml" />
     <Content Include="Views\Shared\_Layout_login.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkdtnk.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
