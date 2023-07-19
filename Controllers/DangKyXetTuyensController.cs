@@ -25,7 +25,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             int ptxt_check = 7;
             DbConnecttion db_tsdk = new DbConnecttion();
-            DbConnecttion db_thptqg = new DbConnecttion();
+            DbConnecttion db_dkdt_nk = new DbConnecttion();
             if (Session["login_session"] != null)
             {
                 string str_login_session = Session["login_session"].ToString();
@@ -50,7 +50,7 @@ namespace HDU_AppXetTuyen.Controllers
 
                 long _thisinh_id = tsdk_Detail.ThiSinh_ID;
 
-                var list_dkdt_nk_ts = db_thptqg.DangKyDuThiNangKhieus.Include(d => d.Nganh).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon)
+                var list_dkdt_nk_ts = db_dkdt_nk.DangKyDuThiNangKhieus.Include(d => d.Nganh).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon)
                                           .Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).ToList();
 
                 var view_list_dkdt_nangkhieu_ts = list_dkdt_nk_ts.Select(s => new
@@ -71,7 +71,7 @@ namespace HDU_AppXetTuyen.Controllers
                         nganh_GhiChu = s.Nganh.Nganh_GhiChu,
                         thm_MaTen = s.ToHopMon.Thm_MaTen,
                     },
-                    dkdt_NK_MonThi = s.Dkdt_NK_MonThi,
+                    dkdt_NK_MonThi = s.Dkdt_NK_MonThi,                   
 
                 }).ToList();
 
@@ -203,7 +203,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkdt_nk_new.Dkdt_NK_NamTotNghiep = dkdt_nk_post.Dkdt_NK_NamTotNghiep;
                 dkdt_nk_new.Dkdt_NK_MonThi = dkdt_nk_post.Dkdt_NK_MonThi;
                 dkdt_nk_new.Dkdt_NK_MinhChung_CCCD = dkdt_nk_post.Dkdt_NK_MinhChung_CCCD;
-                dkdt_nk_new.Dkdt_NK_NgayDangKy = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                dkdt_nk_new.Dkdt_NK_NgayDangKy = DateTime.Now.ToString("dd/MM/YYYY");
 
                 dkdt_nk_new.ThiSinh_ID = ts.ThiSinh_ID;
                 dkdt_nk_new.DoiTuong_ID = ts.DoiTuong_ID;
@@ -890,14 +890,14 @@ namespace HDU_AppXetTuyen.Controllers
 
                 DangKyXetTuyen dkxt = new DangKyXetTuyen();
 
-                dkxt.Nganh_ID = int.Parse(nguyenvong.Nganh_ID);
-                dkxt.Thm_ID = int.Parse(nguyenvong.Thm_ID);
-                var diemTong = double.Parse(nguyenvong.Dkxt_Diem_Tong);
+                dkxt.Nganh_ID = int.Parse(nguyenvong.Nganh_ID.ToString());
+                dkxt.Thm_ID = int.Parse(nguyenvong.Thm_ID.ToString());
+                var diemTong = double.Parse(nguyenvong.Dkxt_Diem_Tong.ToString());
 
                 dkxt.Dkxt_Diem_M1 = nguyenvong.Dkxt_Diem_M1;
                 dkxt.Dkxt_Diem_M2 = nguyenvong.Dkxt_Diem_M2;
                 dkxt.Dkxt_Diem_M3 = nguyenvong.Dkxt_Diem_M3;
-                dkxt.Dkxt_Diem_Tong = nguyenvong.Dkxt_Diem_Tong;
+                dkxt.Dkxt_Diem_Tong = diemTong.ToString();
 
                 dkxt.Dkxt_MinhChung_HB = nguyenvong.Dkxt_MinhChung_HB;
                 dkxt.Dkxt_MinhChung_CCCD = nguyenvong.Dkxt_MinhChung_CCCD;
@@ -1089,8 +1089,8 @@ namespace HDU_AppXetTuyen.Controllers
     #region Khai báo thêm đối tượng để xử lý
     public class NguyenVong
     {
-        public string Nganh_ID { get; set; }
-        public string Thm_ID { get; set; }
+        public int Nganh_ID { get; set; }
+        public int Thm_ID { get; set; }
         public string Dkxt_Diem_M1 { get; set; }
         public string Dkxt_Diem_M2 { get; set; }
         public string Dkxt_Diem_M3 { get; set; }
@@ -1107,14 +1107,14 @@ namespace HDU_AppXetTuyen.Controllers
     }
     public class ThongTinNguyenVong
     {
-        public string Nganh_ID { get; set; }
-        public string Thm_ID { get; set; }
+        public int Nganh_ID { get; set; }
+        public int Thm_ID { get; set; }
         public string Dkxt_XepLoaiHocLuc_12 { get; set; }
         public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
         public string Dkxt_Diem_M1 { get; set; }
         public string Dkxt_Diem_M2 { get; set; }
         public string Dkxt_Diem_M3 { get; set; }
-        public string Dkxt_Diem_Tong { get; set; }
+        public double Dkxt_Diem_Tong { get; set; }
         public string Dkxt_MinhChung_HB { get; set; }
         public string Dkxt_MinhChung_CCCD { get; set; }
         public string Dkxt_MinhChung_Bang { get; set; }

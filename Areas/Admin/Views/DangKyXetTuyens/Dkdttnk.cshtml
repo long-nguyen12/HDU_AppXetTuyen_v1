@@ -1,24 +1,18 @@
-﻿<!-- Thêm thư viện -->
-@model PagedList.IPagedList<HDU_AppXetTuyen.Models.ThiSinhDangKy>
+﻿@model PagedList.IPagedList<HDU_AppXetTuyen.Models.DangKyDuThiNangKhieu>
 @using PagedList.Mvc;
-
 <!-- Kết thúc-->
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "QL DS DKXT";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
+<!-- Thêm thư viện -->
+
 
 <style>
-    /* Ensure that the demo table scrolls */
     th, td {
         white-space: nowrap;
     }
-
-   /* div.dataTables_wrapper {
-        margin: 0 auto;
-    }*/
 </style>
-
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
         <div class="page-header-content">
@@ -26,22 +20,20 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span> Quản lý thông tin Thí sinh đăng ký</span>
+                        <span>Quản lý Thí sinh đăng ký xét tuyển</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
-
 <div class="container-fluid px-12">
     <div class="card card-header-actions">
-        @using (Html.BeginForm("Index", "ThiSinhDangKys", FormMethod.Get))
+        @using (Html.BeginForm("Dkdttnk", "DangKyXetTuyens", FormMethod.Get))
         {
             <div class="card-header">
 
-                <div id="div_tieude"><span>Danh sách thí sinh đăng ký thông tin</span></div>
-
+                <div id="div_tieude"><span>Danh sách thí sinh đăng ký dự thi năng khiếu</span></div>
                 <div class="row align-items-center justify-content-center mt-0">
                     <div class="col-auto  p-1" id="div_lb_nam">
                         <label style=" color:black; font-weight:normal">Năm:</label>
@@ -49,16 +41,16 @@
                     <div class="col-auto p-1" style="padding-right:10px!important" id="div_txt_nam">
                         <input type="text" id="txtNam" class="form-control form-control" value="@ViewBag.filteriNam" style="width: 60px; " disabled>
                     </div>
-
                     <div class="col-auto p-1" id="div_select_dot">
                         @Html.DropDownList("filteriDotxt", null, new { @class = "form-select", @style = "padding-left:3px; padding-right:30px;" })
                     </div>
                     <div class="col-auto  p-1 ">
-                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })                       
+                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })
                     </div>
                     <div class="col-auto  p-1 ">
-                        <button class="btn btn-outline-primary" id="bt_search" style="width: 75px; padding-left:4px; padding-right:4px ">Tìm kiếm</button>
-                        <a class="btn btn-outline-secondary" id="bt_reset" href="@Url.Action("Index", "ThiSinhDangKys")">Tải lại</a>
+                        <button class="btn btn-outline-primary" id="bt_search" style="width: 75px; padding-left:4px; padding-right:4px ">Tìm kiếm</button>    
+                        <a class="btn btn-outline-primary" id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")">Tải lại</a>
+                        <a class="btn btn-outline-primary" id="bt_export" href="#")>Xuất DL</a>
                     </div>
 
                 </div>
@@ -72,6 +64,7 @@
                 let div_select_dot = document.getElementById('div_select_dot');
                 let txt_key_search = document.getElementById('searchString');
                 let bt_reset = document.getElementById('bt_reset');
+                let bt_export = document.getElementById('bt_export');
 
                 if (window.innerWidth <= 1200) {
                     div_tieude.style.display = "none";
@@ -79,8 +72,8 @@
                     div_txt_nam.style.display = "none";
                     div_select_dot.style.display = "inline";
                     bt_reset.style.display = "none";
+                    bt_export.style.display = "none";
                     txt_key_search.style.width = "140px"
-
                 }
                 else {
                     div_tieude.style.display = "inline";
@@ -88,9 +81,9 @@
                     div_txt_nam.style.display = "inline";
                     div_select_dot.style.display = "inline";
                     bt_reset.style.display = "inline";
+                    bt_export.style.display = "inline";
                     txt_key_search.style.removeProperty("width");
                 }
-
                 function reportWindowSize() {
                     if (window.innerWidth <= 1200) {
                         div_tieude.style.display = "none";
@@ -98,6 +91,7 @@
                         div_txt_nam.style.display = "none";
                         div_select_dot.style.display = "inline";
                         bt_reset.style.display = "none";
+                        bt_export.style.display = "none";
                         txt_key_search.style.width = "140px"
 
                     }
@@ -107,6 +101,7 @@
                         div_txt_nam.style.display = "inline";
                         div_select_dot.style.display = "inline";
                         bt_reset.style.display = "inline";
+                        bt_export.style.display = "inline";
                         txt_key_search.style.removeProperty("width");
                     }
                 }
@@ -120,102 +115,61 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>
-                                        @Html.DisplayName("Họ, tên lót")
-                                    </th>
-                                    <th>
-                                        @Html.DisplayName("Tên")
-                                    </th>
-                                    <th>
-                                        @Html.DisplayName("Điện thoại")
-                                    </th>
-                                    <th>
-                                        @Html.DisplayName("Email")
-                                    </th>
-                                    <th>
-                                        @Html.DisplayName("Ngày sinh")
-                                    </th>
-                                    <th>
-                                        @Html.DisplayName("Phái")
-                                    </th>
-                                    <th>
-                                        @Html.DisplayName("Ngày đăng ký")
-                                    </th>
-                                    <th style="text-align:center; width:100px">
-                                        @Html.DisplayName("Cập nhật")
-                                    </th>
+                                    <th>Họ tên</th>
+                                    <th>Điện thoại</th>
+                                    <th>Ngành</th>
+                                    <th>Tổ hợp môn</th>
+                                    <th>Tên môn dự thi</th>
+                                    <th>Nộp lệ phí</th>
+                                    <th style="width:100px">Cập nhật</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
+                                    //DateTime d = DateTime.Parse(item.Dkdt_NK_NgayDangKy.ToString())
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ThiSinh_HoLot)
+                                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot) @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ThiSinh_Ten)
+                                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ThiSinh_DienThoai)
+                                            @Html.DisplayFor(modelItem => item.Nganh.NganhTenNganh)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ThiSinh_Email)
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.ThiSinh_NgaySinh)
+                                            @Html.DisplayFor(modelItem => item.ToHopMon.Thm_TenToHop)
                                         </td>
                                         <td>
-                                            @{
-                                                if (item.ThiSinh_GioiTinh == 0)
-                                                {@Html.DisplayName("Nam")}
-                                            else
-                                            {@Html.DisplayName("Nữ") }
-                                            }
-
+                                            @Html.DisplayFor(modelItem => item.Dkdt_NK_MonThi)
                                         </td>
-
                                         <td>
-                                            @{DateTime dateTime = DateTime.Parse(item.ThiSinh_NgayDangKy);
-                                                string formattedDate = dateTime.ToString("dd/MM/yyyy");
-                                                <div> @formattedDate </div>
-                                            }
-
+                                            @{ 
+                                                if(item.Dkdt_NK_TrangThai == 0)
+                                                {
+                                                    <a href="#" class="btn btn-outline-danger btn-sm">Chưa nộp</a>
+                                                }
+                                            }                                           
                                         </td>
-                                        <td style="text-align:center; vertical-align:middle">
-                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.ThiSinh_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.ThiSinh_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.ThiSinh_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                        <td style="white-space:nowrap">
+                                            <a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("Details","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("Delete","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
                                         </td>
                                     </tr>
+
                                 }
                             </tbody>
                         </table>
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new{page, searchString = ViewBag.SearchString, filteriDotxt = ViewBag.filteriDotxtSort}))                       
-                        <!-- Kết thúc -->
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new {  searchString = ViewBag.SearchString, filteriDotxt = ViewBag.FilterDotXT , page}))
+                        <!-- Kết thúc -->                  
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>
 
-@*<script>
-    new DataTable('#myTable', {
-        fixedColumns: {
-            right: 1
-        },
-        paging: false,
-        scrollCollapse: true,
-        scrollX: true,
-        //scrollY: 300,
-        searching: false,
-        bInfo: false,
-        oLanguage: {
-            sSearch: "Tìm kiếm:"
-        }
-    });
-</script>*@

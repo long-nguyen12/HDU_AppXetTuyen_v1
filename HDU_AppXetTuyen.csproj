@@ -209,6 +209,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminAccount.cs" />
+    <Compile Include="Models\ChungChi.cs" />
     <Compile Include="Models\DangKyDuThiNangKhieu.cs" />
     <Compile Include="Models\DangKyXetTuyen.cs" />
     <Compile Include="Models\DangKyXetTuyenKhac.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="Models\Khoa.cs" />
     <Compile Include="Models\KhoiNganh.cs" />
     <Compile Include="Models\KhuVuc.cs" />
+    <Compile Include="Models\KinhPhi.cs" />
     <Compile Include="Models\LePhiXetTuyen.cs" />
     <Compile Include="Models\LienCapTHCS.cs" />
     <Compile Include="Models\LienCapTieuHoc.cs" />
@@ -304,7 +306,6 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout_Admin.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout_Admin_auth.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
     <Content Include="SbAdminPro\account-billing.html" />
@@ -496,7 +497,7 @@
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Details.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa.cshtml" />
     <Content Include="Areas\Admin\Views\ThiSinhDangKys\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ThiSinhDangKys\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\ThiSinhDangKys\Details.cshtml" />
@@ -532,6 +533,13 @@
     <Content Include="Scripts\bootstrap.esm.js.map" />
     <Content Include="Scripts\bootstrap.esm.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout_Admin.cshtml" />
+    <Content Include="Areas\Admin\Views\ThiSinhDangKys\DetailItem.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkxtth.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

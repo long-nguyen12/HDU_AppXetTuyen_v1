@@ -138,9 +138,7 @@ namespace HDU_AppXetTuyen.Controllers
                      " <p> Loại chứng chỉ: " + student.Dkxt_DonViToChuc + " </p>" +
                      " <p> Kết quả: " + student.Dkxt_KetQuaDatDuoc + " </p>" +
                      " <p> Ngày dự thi: " + student.Dkxt_NgayDuThi + " </p>";
-
                 SendEmail("xettuyen@hdu.edu.vn", body, subject);
-
                 return Json(new { success = true });
             }
             return Json(new { success = false });
