@@ -20,7 +20,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Index(int? page)
         {
             var thms = (from h in db.ToHopMons
-                          select h).Where(x => x.Thm_ID >0).OrderBy(x => x.Thm_MaToHop);
+                        select h).Where(x => x.Thm_ID > 0).OrderBy(x => x.Thm_MaToHop);
             int pageSize = 7;
             int pageNumber = (page ?? 1);
             return View(thms.ToPagedList(pageNumber, pageSize));
@@ -126,6 +126,44 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             db.ToHopMons.Remove(toHopMon);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public JsonResult getAllToHopMon()
+        {
+            var tohops = db.ToHopMons.Select(n => new
+            {
+                Thm_ID = n.Thm_ID,
+                Thm_MaToHop = n.Thm_MaToHop,
+                Thm_TenToHop = n.Thm_TenToHop,
+                Thm_Mon1 = n.Thm_Mon1,
+                Thm_Mon2 = n.Thm_Mon2,
+                Thm_Mon3 = n.Thm_Mon3,
+                Thm_MaTen = n.Thm_MaTen,
+                Thm_Thi_NK = n.Thm_Thi_NK,
+            }).ToList();
+            if (tohops != null && tohops.Count > 0)
+            {
+                return Json(new { success = true, tohops = tohops });
+            }
+            return Json(new { success = false });
+        }
+        public JsonResult getAllNganhs()
+        {
+            var nganhs = db.Nganhs.Select(n => new
+            {
+                Nganh_ID = n.Nganh_ID,
+                Nganh_MaNganh = n.Nganh_MaNganh,
+                NganhTenNganh = n.NganhTenNganh,
+                Khoa_ID = n.Khoa_ID,
+                Nganh_GhiChu = n.Nganh_GhiChu,
+                KhoiNganh_ID = n.KhoiNganh_ID,
+                Nganh_ThiNK = n.Nganh_ThiNK,
+            }).ToList();
+            if (nganhs != null && nganhs.Count > 0)
+            {
+                return Json(new { success = true, nganhs = nganhs }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
