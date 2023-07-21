@@ -63,13 +63,13 @@ namespace HDU_AppXetTuyen.Models
 
         public int? Dkxt_KQTQG_TrangThai_KetQua { get; set; }
 
-       
+
         public string Dkxt_KQTQG_MinhChung_CNTotNghiep { get; set; }
-      
+
         public string Dkxt_KQTQG_MinhChung_BangTN { get; set; }
-    
+
         public string Dkxt_KQTQG_MinhChung_HocBa { get; set; }
-      
+
         public string Dkxt_KQTQG_MinhChung_UuTien { get; set; }
 
         public virtual Nganh Nganh { get; set; }
@@ -77,6 +77,9 @@ namespace HDU_AppXetTuyen.Models
         public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }
 
         public virtual ToHopMon ToHopMon { get; set; }
+
+        public virtual DotXetTuyen DotXetTuyen { get; set; }
+        public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
 
         public virtual ICollection<KinhPhi> KinhPhis { get; set; }
     }

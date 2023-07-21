@@ -53,10 +53,21 @@ namespace HDU_AppXetTuyen.Models
                 .WithOptional(e => e.DangKyXetTuyenThang)
                 .HasForeignKey(e => e.Dkxt_TT_ID);
 
+
             modelBuilder.Entity<DotXetTuyen>()
-                .HasMany(e => e.DangKyXetTuyens)
+               .HasMany(e => e.DangKyDuThiNangKhieus)
+               .WithOptional(e => e.DotXetTuyen)
+               .HasForeignKey(e => e.DotXT_ID);
+
+            modelBuilder.Entity<DotXetTuyen>()
+                .HasMany(e => e.DangKyXetTuyenKQTQGs)
                 .WithOptional(e => e.DotXetTuyen)
                 .HasForeignKey(e => e.DotXT_ID);
+
+            modelBuilder.Entity<DotXetTuyen>()
+               .HasMany(e => e.DangKyXetTuyens)
+               .WithOptional(e => e.DotXetTuyen)
+               .HasForeignKey(e => e.DotXT_ID);
 
             modelBuilder.Entity<DotXetTuyen>()
                 .HasMany(e => e.ThiSinhDangKies)

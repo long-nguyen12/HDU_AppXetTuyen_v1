@@ -7,11 +7,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using HDU_AppXetTuyen.Models;
 using PagedList;
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
+    public class StatusTracking
+    {
+        public int st_ID { get; set; }
+        public string st_Name { get; set; }
+    }
     public class DangKyXetTuyensController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
@@ -22,32 +28,172 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
         // GET: Admin/DangKyXetTuyens
         [AdminSessionCheck]
-        public ActionResult DkxtKQTthpt(int? page)
+        public ActionResult DkxtKQTthpt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
             var model = (from ts in db.DangKyXetTuyenKQTQGs select ts)
                                             .OrderBy(x => x.ThiSinh_ID)
                                             .ThenBy(x => x.Dkxt_KQTQG_NguyenVong)
                                             .ThenBy(x => x.Nganh.NganhTenNganh)
-                                            .Include(x => x.Nganh)
                                             .Include(x => x.ThiSinhDangKy)
-                                            .Include(x => x.ThiSinhDangKy.DotXetTuyen)
+                                            .Include(x => x.Nganh)
+                                            .Include(x => x.ToHopMon)
+                                            .Include(x => x.DotXetTuyen)
                                             .Include(x => x.ThiSinhDangKy.DoiTuong)
                                             .Include(x => x.ThiSinhDangKy.KhuVuc)
-                                            .Include(x => x.ToHopMon);
+                                            .Include(x => x.PhuongThucXetTuyen);
+
+
+
+            ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
+            #region lọc dữ liệu theo đợt xét tuyển
+            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
+            dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
+
+            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID; // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
+            ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
+
+            // thực hiện lọc 
+            if (!String.IsNullOrEmpty(filteriDotxt))
+            {
+                int _Dotxt_ID = Int32.Parse(filteriDotxt);
+                if (_Dotxt_ID > 0)
+                {
+                    model = model.Where(x => x.DotXT_ID == _Dotxt_ID);
+                }
+            }
+            #endregion
+
+            #region lọc dữ liệu theo nguyện vọng
+            var list_items_nv = (from item in model select (new { value_item = item.Dkxt_KQTQG_NguyenVong.ToString(), text_item = item.Dkxt_KQTQG_NguyenVong.ToString() })).Distinct().ToList();
+            ViewBag.filteriNvong = new SelectList(list_items_nv.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            // thực hiện lọc theo nguyện vọng
+            if (!String.IsNullOrEmpty(filteriNvong))
+            {
+                int _dkxt_KQTQG_NguyenVong = Int32.Parse(filteriNvong);
+                model = model.Where(x => x.Dkxt_KQTQG_NguyenVong == _dkxt_KQTQG_NguyenVong);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo ngành
+            var list_items_nganh = (from item in model select (new { value_item = item.Nganh.Nganh_ID, text_item = item.Nganh.NganhTenNganh })).Distinct().ToList();
+            ViewBag.filteriNganh = new SelectList(list_items_nganh.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            if (!String.IsNullOrEmpty(filteriNganh))
+            {
+                int _dkxt_KQTQG_Nganh_ID = Int32.Parse(filteriNganh);
+                model = model.Where(x => x.Nganh_ID == _dkxt_KQTQG_Nganh_ID);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi lệ phí
+            var list_items_lephi = (from item in model select item.Dkxt_KQTQG_TrangThai).Distinct().ToList();
+            List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
+
+            foreach (var _item in list_items_lephi)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa đóng phí" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 1, st_Name = "Đã nộp lệ phí" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+
+            if (!String.IsNullOrEmpty(filteriLePhi))
+            {
+                int _dkxt_KQTQG_TrangThai = Int32.Parse(filteriLePhi);
+                model = model.Where(x => x.Dkxt_KQTQG_TrangThai == _dkxt_KQTQG_TrangThai);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
+            var list_items_hoso = (from item in model select item.Dkxt_KQTQG_TrangThai_KetQua).Distinct().ToList();
+            List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
+
+            foreach (var _item in list_items_hoso)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa kiểm tra" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 1, st_Name = "Minh chứng sai" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+            if (!String.IsNullOrEmpty(filteriHoSo))
+            {
+                int _dkxt_KQTQG_TrangThai_KetQua = Int32.Parse(filteriHoSo);
+                model = model.Where(x => x.Dkxt_KQTQG_TrangThai_KetQua == _dkxt_KQTQG_TrangThai_KetQua);
+            }
+            #endregion
+
+            // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
+            #region Tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(m => m.ThiSinhDangKy.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_CCCD.Contains(searchString)
+                                      || m.ThiSinhDangKy.ThiSinh_DienThoai.Contains(searchString)
+                                      || m.ThiSinhDangKy.ThiSinh_Email.Contains(searchString)
+                                      || m.Nganh.Nganh_GhiChu.Contains(searchString)
+                                      || m.ToHopMon.Thm_MaTen.Contains(searchString)
+                                      || m.Dkxt_KQTQG_TongDiem_Full.Contains(searchString));
+            }
+            #endregion
+
+            // thực hiện phân trang
+            #region Phân trang
             if (page == null) page = 1;
-          
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+            #endregion
+            // tham số khác
+            #region Tham số khác
+            if (searchString != null) { page = 1; }
+            else { searchString = currentFilter; }
+
+
+            ViewBag.DotxtFilteri = filteriDotxt;
+            ViewBag.NvongFilteri = filteriNvong;
+            ViewBag.NganhFilteri = filteriNganh;
+            ViewBag.LePhiFilteri = filteriLePhi;
+            ViewBag.HoSoFilteri = filteriHoSo;
+            ViewBag.SearchString = searchString;
+            ViewBag.pageCurren = page;
+            
+            ViewBag.totalRecod = model.Count();
+
+            #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
 
-        //[AdminSessionCheck]
-
-        public ActionResult Index23(string searchString, string currentFilter, string filteriDotxt, int? page)
+        [AdminSessionCheck]
+        public ActionResult DkxtHocBa(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-
-            var thisinhs = (from ts_tem in db.ThiSinhDangKies select ts_tem).OrderBy(x => x.ThiSinh_ID).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc);
-
+            var model = (from item in db.DangKyXetTuyens select item)
+                                                  .OrderBy(x => x.ThiSinh_ID)
+                                                  .ThenBy(x => x.Dkxt_NguyenVong)
+                                                  .ThenBy(x => x.Nganh.NganhTenNganh)
+                                                  .Include(x => x.ThiSinhDangKy)
+                                                  .Include(x => x.Nganh)
+                                                  .Include(x => x.ToHopMon)
+                                                  .Include(x => x.DotXetTuyen)
+                                                  .Include(x => x.DoiTuong)
+                                                  .Include(x => x.KhuVuc)
+                                                  .Include(x => x.PhuongThucXetTuyen);
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             #region lọc dữ liệu theo đợt
             var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
@@ -63,24 +209,103 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (!String.IsNullOrEmpty(filteriDotxt))
             {
                 int _Dotxt_ID = Int32.Parse(filteriDotxt);
-                if (_Dotxt_ID != 0)
+                if (_Dotxt_ID > 0)
                 {
-                    thisinhs = thisinhs.Where(x => x.DotXT_ID == _Dotxt_ID);
+                    model = model.Where(x => x.DotXT_ID == _Dotxt_ID);
                 }
+            }
+            #endregion
 
+            #region lọc dữ liệu theo nguyện vọng
+            var list_items_nv = (from item in model select (new { value_item = item.Dkxt_NguyenVong.ToString(), text_item = item.Dkxt_NguyenVong.ToString() })).Distinct().ToList();
+            ViewBag.filteriNvong = new SelectList(list_items_nv.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            // thực hiện lọc theo nguyện vọng
+            if (!String.IsNullOrEmpty(filteriNvong))
+            {
+                int _dkxt_KQTQG_NguyenVong = Int32.Parse(filteriNvong);
+                model = model.Where(x => x.Dkxt_NguyenVong == _dkxt_KQTQG_NguyenVong);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo ngành
+            var list_items_nganh = (from item in model select (new { value_item = item.Nganh.Nganh_ID, text_item = item.Nganh.NganhTenNganh })).Distinct().ToList();
+            ViewBag.filteriNganh = new SelectList(list_items_nganh.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            if (!String.IsNullOrEmpty(filteriNganh))
+            {
+                int _dkxt_KQTQG_Nganh_ID = Int32.Parse(filteriNganh);
+                model = model.Where(x => x.Nganh_ID == _dkxt_KQTQG_Nganh_ID);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi lệ phí
+            var list_items_lephi = (from item in model select item.Dkxt_TrangThai).Distinct().ToList();
+            List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
+
+            foreach (var _item in list_items_lephi)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa đóng phí" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 1, st_Name = "Đã nộp lệ phí" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+
+            if (!String.IsNullOrEmpty(filteriLePhi))
+            {
+                int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
+                model = model.Where(x => x.Dkxt_TrangThai == _dkxt_TrangThai);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
+            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_KetQua).Distinct().ToList();
+            List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
+
+            foreach (var _item in list_items_hoso)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa kiểm tra" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 1, st_Name = "Minh chứng sai" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+            if (!String.IsNullOrEmpty(filteriHoSo))
+            {
+                int _dkxt_TrangThai_KetQua = Int32.Parse(filteriHoSo);
+                model = model.Where(x => x.Dkxt_TrangThai_KetQua == _dkxt_TrangThai_KetQua);
             }
             #endregion
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
             if (!String.IsNullOrEmpty(searchString))
             {
-                thisinhs = thisinhs.Where(m => m.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
-                                    || m.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
-                                    || m.ThiSinh_CCCD.Contains(searchString)
-                                    || m.ThiSinh_DienThoai.Contains(searchString)
-                                    || m.ThiSinh_Email.Contains(searchString));
+                model = model.Where(m => m.ThiSinhDangKy.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
+                                      || m.ThiSinhDangKy.ThiSinh_CCCD.Contains(searchString)
+                                      || m.ThiSinhDangKy.ThiSinh_DienThoai.Contains(searchString)
+                                      || m.ThiSinhDangKy.ThiSinh_Email.Contains(searchString)
+                                      || m.Nganh.Nganh_GhiChu.Contains(searchString)
+                                      || m.ToHopMon.Thm_MaTen.Contains(searchString)
+                                      || m.Dkxt_Diem_Tong_Full.Contains(searchString));
             }
             #endregion
+
             // thực hiện phân trang
             #region Phân trang
             if (page == null) page = 1;
@@ -92,28 +317,33 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (searchString != null) { page = 1; }
             else { searchString = currentFilter; }
 
-            ViewBag.pageCurren = page;
+
+            ViewBag.DotxtFilteri = filteriDotxt;
+            ViewBag.NvongFilteri = filteriNvong;
+            ViewBag.NganhFilteri = filteriNganh;
+            ViewBag.LePhiFilteri = filteriLePhi;
+            ViewBag.HoSoFilteri = filteriHoSo;
             ViewBag.SearchString = searchString;
-            ViewBag.filteriDotxtSort = filteriDotxt;
-            ViewBag.totalRecod = thisinhs.Count();
+            ViewBag.pageCurren = page;
+
+            ViewBag.totalRecod = model.Count();
 
             #endregion
-            return View(thisinhs.ToPagedList(pageNumber, pageSize));
+            return View(model.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult DkxtHocBa(string searchString, string currentFilter, string filteriDotxt, int? page)
+        //[AdminSessionCheck]
+       
+        public ActionResult DkxtTt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-         
-            var model = (from item in db.DangKyXetTuyens select item)
-                                                  .OrderBy(x => x.ThiSinh_ID)
-                                                  .ThenBy(x => x.Dkxt_NguyenVong)
-                                                  .ThenBy(x => x.Nganh.NganhTenNganh)
-                                                  .Include(x => x.DoiTuong)
-                                                  .Include(x => x.DotXetTuyen)
-                                                  .Include(x => x.KhuVuc)
-                                                  .Include(x => x.Nganh)
-                                                  .Include(x => x.PhuongThucXetTuyen)
-                                                  .Include(x => x.ThiSinhDangKy)
-                                                  .Include(x => x.ToHopMon);
+           
+            var model = (from item in db.DangKyXetTuyenThangs select item)
+                                        .OrderBy(x => x.ThiSinh_ID)
+                                        .ThenBy(x => x.Dkxt_NguyenVong)
+                                        .ThenBy(x => x.Nganh.NganhTenNganh)
+                                        .Include(x => x.ThiSinhDangKy)
+                                        .Include(x => x.Nganh)                                       
+                                        .Include(x => x.ThiSinhDangKy.DoiTuong)                                       
+                                        .Include(x => x.ThiSinhDangKy.KhuVuc);
 
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             #region lọc dữ liệu theo đợt
@@ -136,6 +366,83 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 }
             }
             #endregion
+
+            #region lọc dữ liệu theo nguyện vọng
+            var list_items_nv = (from item in model select (new { value_item = item.Dkxt_NguyenVong.ToString(), text_item = item.Dkxt_NguyenVong.ToString() })).Distinct().ToList();
+            ViewBag.filteriNvong = new SelectList(list_items_nv.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            // thực hiện lọc theo nguyện vọng
+            if (!String.IsNullOrEmpty(filteriNvong))
+            {
+                int _dkxt_KQTQG_NguyenVong = Int32.Parse(filteriNvong);
+                model = model.Where(x => x.Dkxt_NguyenVong == _dkxt_KQTQG_NguyenVong);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo ngành
+            var list_items_nganh = (from item in model select (new { value_item = item.Nganh.Nganh_ID, text_item = item.Nganh.NganhTenNganh })).Distinct().ToList();
+            ViewBag.filteriNganh = new SelectList(list_items_nganh.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            if (!String.IsNullOrEmpty(filteriNganh))
+            {
+                int _dkxt_TT_Nganh_ID = Int32.Parse(filteriNganh);
+                model = model.Where(x => x.Nganh_ID == _dkxt_TT_Nganh_ID);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi lệ phí
+            var list_items_lephi = (from item in model select item.Dkxt_TrangThai).Distinct().ToList();
+            List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
+
+            foreach (var _item in list_items_lephi)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa đóng phí" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 1, st_Name = "Đã nộp lệ phí" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+
+            if (!String.IsNullOrEmpty(filteriLePhi))
+            {
+                int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
+                model = model.Where(x => x.Dkxt_TrangThai == _dkxt_TrangThai);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
+            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_KetQua).Distinct().ToList();
+            List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
+
+            foreach (var _item in list_items_hoso)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa kiểm tra" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 1, st_Name = "Minh chứng sai" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+            if (!String.IsNullOrEmpty(filteriHoSo))
+            {
+                int _dkxt_TrangThai_KetQua = Int32.Parse(filteriHoSo);
+                model = model.Where(x => x.Dkxt_TrangThai_KetQua == _dkxt_TrangThai_KetQua);
+            }
+            #endregion
+
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
             if (!String.IsNullOrEmpty(searchString))
@@ -144,7 +451,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                       || m.ThiSinhDangKy.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
                                       || m.ThiSinhDangKy.ThiSinh_CCCD.Contains(searchString)
                                       || m.ThiSinhDangKy.ThiSinh_DienThoai.Contains(searchString)
-                                      || m.ThiSinhDangKy.ThiSinh_Email.Contains(searchString));
+                                      || m.ThiSinhDangKy.ThiSinh_Email.Contains(searchString)
+                                      || m.Nganh.Nganh_GhiChu.Contains(searchString)
+                                      || m.Dkxt_MonDatGiai.Contains(searchString)
+                                      || m.Dkxt_NamDatGiai.Contains(searchString));
             }
             #endregion
 
@@ -159,32 +469,21 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (searchString != null) { page = 1; }
             else { searchString = currentFilter; }
 
-            ViewBag.pageCurren = page;
+
+            ViewBag.DotxtFilteri = filteriDotxt;
+            ViewBag.NvongFilteri = filteriNvong;
+            ViewBag.NganhFilteri = filteriNganh;
+            ViewBag.LePhiFilteri = filteriLePhi;
+            ViewBag.HoSoFilteri = filteriHoSo;
             ViewBag.SearchString = searchString;
-            ViewBag.filteriDotxtSort = filteriDotxt;
+            ViewBag.pageCurren = page;
+
             ViewBag.totalRecod = model.Count();
 
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
-        [AdminSessionCheck]
-        public ActionResult DkxtTt(int? page)
-        {
-            if (page == null) page = 1;
-            var model = (from item in db.DangKyXetTuyenThangs select item)
-                                        .OrderBy(x => x.ThiSinh_ID)
-                                        .ThenBy(x => x.Dkxt_NguyenVong)
-                                        .ThenBy(x => x.Nganh.NganhTenNganh)
-                                        .Include(d => d.ThiSinhDangKy.DoiTuong)
-                                        .Include(d => d.ThiSinhDangKy.DotXetTuyen)
-                                        .Include(d => d.ThiSinhDangKy.KhuVuc)
-                                        .Include(d => d.Nganh)                                        
-                                        .Include(d => d.ThiSinhDangKy);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(model.ToPagedList(pageNumber, pageSize));
-        }
-       
+
 
         public ActionResult Dkxtccnn(int? page)
         {
@@ -204,42 +503,120 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             int pageNumber = (page ?? 1);
             return View(dangKyXetTuyens.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult Dkdttnk(string searchString, string currentFilter, string filteriDotxt, int? page)
+        [AdminSessionCheck]
+        public ActionResult Dkdttnk(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-            if (page == null) page = 1;
-            var model = (from item in db.DangKyDuThiNangKhieus  select item)
+        //    public ActionResult Dkdttnk(string searchString, string currentFilter, string filteriDotxt, int? page)
+        //{
+        
+
+            var model = (from item in db.DangKyDuThiNangKhieus select item)
                                         .OrderBy(x => x.ThiSinh_ID)
                                         .ThenBy(x => x.Dkdt_NK_NguyenVong)
-                                        .ThenBy(x => x.Nganh.NganhTenNganh)                                        
-                                        .Include(x => x.ThiSinhDangKy.DoiTuong)                                       
-                                        .Include(x => x.ThiSinhDangKy.KhuVuc)
-                                        .Include(x => x.Nganh)
-                                        .Include(x => x.PhuongThucXetTuyen)
+                                        .ThenBy(x => x.Nganh.NganhTenNganh)
                                         .Include(x => x.ThiSinhDangKy)
-                                        .Include(x => x.ToHopMon);
+                                        .Include(x => x.Nganh)
+                                        .Include(x => x.ToHopMon)
+                                        .Include(x => x.ThiSinhDangKy.DoiTuong)
+                                        .Include(x => x.ThiSinhDangKy.KhuVuc)                                      
+                                        .Include(x => x.PhuongThucXetTuyen);
+           
+            
             // lấy thông tin năm hiện tại
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
-
             #region lọc dữ liệu theo đợt
             var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
             dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
             int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
             ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
-            // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
-            if (String.IsNullOrEmpty(filteriDotxt) == true)
-            {
-                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID.ToString();
-            }
+           
             // thực hiện lọc 
             if (!String.IsNullOrEmpty(filteriDotxt))
             {
                 int _Dotxt_ID = Int32.Parse(filteriDotxt);
-                if (_Dotxt_ID != 0)
+                if (_Dotxt_ID > 0)
                 {
                     model = model.Where(x => x.DotXT_ID == _Dotxt_ID);
                 }
             }
             #endregion
+
+            #region lọc dữ liệu theo nguyện vọng
+            var list_items_nv = (from item in model select (new { value_item = item.Dkdt_NK_NguyenVong.ToString(), text_item = item.Dkdt_NK_NguyenVong.ToString() })).Distinct().ToList();
+            ViewBag.filteriNvong = new SelectList(list_items_nv.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            // thực hiện lọc theo nguyện vọng
+            if (!String.IsNullOrEmpty(filteriNvong))
+            {
+                int dkdt_NK_NguyenVong = Int32.Parse(filteriNvong);
+                model = model.Where(x => x.Dkdt_NK_NguyenVong == dkdt_NK_NguyenVong);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo ngành
+            var list_items_nganh = (from item in model select (new { value_item = item.Nganh.Nganh_ID, text_item = item.Nganh.NganhTenNganh })).Distinct().ToList();
+            ViewBag.filteriNganh = new SelectList(list_items_nganh.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
+            if (!String.IsNullOrEmpty(filteriNganh))
+            {
+                int _dkdt_NK_Nganh_ID = Int32.Parse(filteriNganh);
+                model = model.Where(x => x.Nganh_ID == _dkdt_NK_Nganh_ID);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi lệ phí
+            var list_items_lephi = (from item in model select item.Dkdt_NK_TrangThai).Distinct().ToList();
+            List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
+
+            foreach (var _item in list_items_lephi)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa đóng phí" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 1, st_Name = "Đã nộp lệ phí" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+
+            if (!String.IsNullOrEmpty(filteriLePhi))
+            {
+                int _dkdt_nk_TrangThai = Int32.Parse(filteriLePhi);
+                model = model.Where(x => x.Dkdt_NK_TrangThai == _dkdt_nk_TrangThai);
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
+            var list_items_hoso = (from item in model select item.Dkdt_NK_TrangThai_KetQua).Distinct().ToList();
+            List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
+
+            foreach (var _item in list_items_hoso)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa kiểm tra" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 1, st_Name = "Minh chứng sai" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+            if (!String.IsNullOrEmpty(filteriHoSo))
+            {
+                int _dkdt_NK_TrangThai_KetQua = Int32.Parse(filteriHoSo);
+                model = model.Where(x => x.Dkdt_NK_TrangThai_KetQua == _dkdt_NK_TrangThai_KetQua);
+            }
+            #endregion
+
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
             if (!String.IsNullOrEmpty(searchString))
@@ -247,7 +624,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 model = model.Where(m => m.ThiSinhDangKy.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
                                       || m.ThiSinhDangKy.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
                                       || m.ThiSinhDangKy.ThiSinh_CCCD.Contains(searchString)
-                                      || m.ThiSinhDangKy.ThiSinh_DienThoai.Contains(searchString)                                   
+                                      || m.ThiSinhDangKy.ThiSinh_DienThoai.Contains(searchString)
                                       || m.Nganh.NganhTenNganh.Contains(searchString)
                                       || m.ToHopMon.Thm_TenToHop.Contains(searchString));
             }
@@ -264,14 +641,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (searchString != null) { page = 1; }
             else { searchString = currentFilter; }
 
-            ViewBag.pageCurren = page;
+            ViewBag.DotxtFilteri = filteriDotxt;
+            ViewBag.NvongFilteri = filteriNvong;
+            ViewBag.NganhFilteri = filteriNganh;
+            ViewBag.LePhiFilteri = filteriLePhi;
+            ViewBag.HoSoFilteri = filteriHoSo;
             ViewBag.SearchString = searchString;
-            ViewBag.FilterDotXT = filteriDotxt;
+            ViewBag.pageCurren = page;
+
             ViewBag.totalRecod = model.Count();
-            #endregion         
+
+            #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
-     
         #region
 
         // GET: Admin/DangKyXetTuyens/Details/5
