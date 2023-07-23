@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.UI;
 using HDU_AppXetTuyen.Models;
 using HDU_AppXetTuyen.Ultils;
+using Newtonsoft.Json;
 using PagedList;
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
@@ -20,14 +21,45 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         // GET: Admin/LienCapTHCS
         [AdminSessionCheck]
-        public ActionResult Index(int? page)
-        {
+        public ActionResult Index(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
+        {    
+
+            List<LienCapTHCS> model = new List<LienCapTHCS>();
+
+            foreach (LienCapTHCS s in db.LienCapTHCSs.ToList().OrderByDescending(x => x.HocSinh_ID))
+            {
+                LienCapTHCS item_prs = new LienCapTHCS();
+                item_prs.HocSinh_ID = s.HocSinh_ID;
+                item_prs.HocSinh_DinhDanh = s.HocSinh_DinhDanh;
+                item_prs.HocSinh_HoTen = s.HocSinh_HoTen;
+                item_prs.HocSinh_GioiTinh = s.HocSinh_GioiTinh;
+                item_prs.HocSinh_NgaySinh = s.HocSinh_NgaySinh;
+                item_prs.HocSinh_NoiSinh = s.HocSinh_NoiSinh;
+                item_prs.HocSinh_Email = s.HocSinh_Email;
+                item_prs.HocSinh_NoiCuTru = s.HocSinh_NoiCuTru;
+                item_prs.HocSinh_TruongTH = s.HocSinh_TruongTH;
+                item_prs.HocSinh_UuTien = s.HocSinh_UuTien;              
+                item_prs.HocSinh_MucDoNangLuc = s.HocSinh_MucDoNangLuc;
+                item_prs.HocSinh_MucDoPhamChat = s.HocSinh_MucDoPhamChat;
+                item_prs.HocSinh_MinhChungHB = s.HocSinh_MinhChungHB;
+                item_prs.HocSinh_MinhChungGiayKS = s.HocSinh_MinhChungGiayKS;
+                item_prs.HocSinh_MinhChungMaDinhDanh = s.HocSinh_MinhChungMaDinhDanh;
+                item_prs.HocSinh_GiayUuTien = s.HocSinh_GiayUuTien;
+                item_prs.HocSinh_XacNhanLePhi = s.HocSinh_XacNhanLePhi;
+                item_prs.HocSinh_TrangThai = s.HocSinh_TrangThai;
+                item_prs.HocSinh_GhiChu = s.HocSinh_GhiChu;
+                item_prs.HocSinh_Activation = s.HocSinh_Activation;
+                item_prs.PhBo = JsonConvert.DeserializeObject<PhuHuynh>(s.HocSinh_ThongTinCha);
+                item_prs.PhMe = JsonConvert.DeserializeObject<PhuHuynh>(s.HocSinh_ThongTinMe);
+                item_prs.Monhocs = JsonConvert.DeserializeObject<MonHocTHCS>(s.HocSinh_DiemHocTap);
+                item_prs.TongDiem = item_prs.Monhocs.Toan + item_prs.Monhocs.TiengViet + item_prs.Monhocs.TuNhien + item_prs.Monhocs.LichSuDiaLy + item_prs.Monhocs.TiengAnh;
+                model.Add(item_prs);
+            }
+
             if (page == null) page = 1;
-            var thisinhs = (from h in db.LienCapTHCSs
-                            select h).OrderBy(x => x.HocSinh_ID);
             int pageSize = 5;
             int pageNumber = (page ?? 1);
-            return View(thisinhs.ToPagedList(pageNumber, pageSize));
+            return View(model.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/LienCapTHCS/Details/5

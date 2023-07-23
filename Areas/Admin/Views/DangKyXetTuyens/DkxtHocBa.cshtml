@@ -12,7 +12,7 @@
     }
 
     .bt-hs {
-        width: 120px;
+        width: 80px;
     }
 
     .bd-rd {
@@ -34,7 +34,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-header-actions">
+    <div class="card card-collapsable mt-1 mb-1">
         <div class="card-header">
             <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng học bạ</span></div>
             @*<button class="btn btn-outline-primary btn-icon btn-sm" style="display:inline; border-radius:50%;" id="bt_fa_chevron_up" name="bt_fa_chevron_up">
@@ -51,7 +51,7 @@
             {
 
                 <div class="row g-1">
-                  
+
                     <div class="col-xxl-1 col-md-6">
                         @Html.DropDownList("filteriDotxt", null, new { @class = "form-select form-select-sm bd-rd" })
                     </div>
@@ -149,15 +149,15 @@
                                             @{
                                                 if (item.Dkxt_TrangThai == 0)
                                                 {
-                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng phí</a>
+                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng</a>
                                                 }
                                                 if (item.Dkxt_TrangThai == 1)
                                                 {
-                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp phí</a>
+                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp</a>
                                                 }
                                                 if (item.Dkxt_TrangThai == 2)
                                                 {
-                                                    <a href="#" style="color: blue; text-decoration: none">Đã kiểm duyệt</a>
+                                                    <a href="#" style="color: blue; text-decoration: none">Đã duyệt</a>
                                                 }
                                             }
                                         </td>
@@ -165,15 +165,15 @@
                                             @{
                                                 if (item.Dkxt_TrangThai_KetQua == 0)
                                                 {
-                                                    <a href="#" class="btn btn-danger btn-sm  bt-hs  bd-rd">Chưa kiểm tra</a>
+                                                    <a href="#" class="btn btn-outline-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
                                                 }
                                                 if (item.Dkxt_TrangThai_KetQua == 1)
                                                 {
-                                                    <a href="#" class="btn btn-success btn-sm bt-hs  bd-rd">Minh chứng sai</a>
+                                                    <a href="#" class="btn btn-outline-success btn-sm bt-hs  bd-rd">MC sai</a>
                                                 }
                                                 if (item.Dkxt_TrangThai_KetQua == 2)
                                                 {
-                                                    <a href="#" class="btn btn-primary btn-sm bt-hs  bd-rd">Đã kiểm duyệt</a>
+                                                    <a href="#" class="btn btn-outline-primary btn-sm bt-hs  bd-rd">Đã duyệt</a>
                                                 }
                                             }
                                         </td>
@@ -202,10 +202,9 @@
                             page
                         }))
                         <!-- Kết thúc  -->
-
                         <!-- Thêm mã phân trang -->
                         @*Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("DkxtHocBa", new { page }))*@
+                            @Html.PagedListPager(Model, page => Url.Action("DkxtHocBa", new { page }))*@
                         <!-- Kết thúc -->
                     </div>
                 </div>

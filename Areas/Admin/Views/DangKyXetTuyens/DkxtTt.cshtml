@@ -13,7 +13,7 @@
     }
 
     .bt-hs {
-        width: 120px;
+        width: 80px;
     }
 
     .bd-rd {
@@ -35,7 +35,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-header-actions">
+    <div class="card card-collapsable mt-1 mb-1">
         <div class="card-header">
             <div><span id="sp_tieude">Danh sách thí sinh ĐKXT theo phương thức tuyển thẳng theo Quy chế của trường</span></div>
         </div>
@@ -93,7 +93,7 @@
                 </div>
             }
             <div class="row">
-                <div class="col-sm-12 col-12">
+                <div class="col-lg-12 col-12">
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
@@ -112,7 +112,6 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-
                                     <tr>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot) @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
@@ -136,15 +135,15 @@
                                             @{
                                                 if (item.Dkxt_TrangThai == 0)
                                                 {
-                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng phí</a>
+                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng</a>
                                                 }
                                                 if (item.Dkxt_TrangThai == 1)
                                                 {
-                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp phí</a>
+                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp </a>
                                                 }
                                                 if (item.Dkxt_TrangThai == 2)
                                                 {
-                                                    <a href="#" style="color: blue; text-decoration: none">Đã kiểm duyệt</a>
+                                                    <a href="#" style="color: blue; text-decoration: none">Đã duyệt</a>
                                                 }
                                             }
                                         </td>
@@ -152,15 +151,15 @@
                                             @{
                                                 if (item.Dkxt_TrangThai_KetQua == 0)
                                                 {
-                                                    <a href="#" class="btn btn-danger btn-sm  bt-hs  bd-rd">Chưa kiểm tra</a>
+                                                    <a href="#" class="btn btn-outline-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
                                                 }
                                                 if (item.Dkxt_TrangThai_KetQua == 1)
                                                 {
-                                                    <a href="#" class="btn btn-success btn-sm bt-hs  bd-rd">Minh chứng sai</a>
+                                                    <a href="#" class="btn btn-outline-success btn-sm bt-hs  bd-rd">MC sai</a>
                                                 }
                                                 if (item.Dkxt_TrangThai_KetQua == 2)
                                                 {
-                                                    <a href="#" class="btn btn-primary btn-sm bt-hs  bd-rd">Đã kiểm duyệt</a>
+                                                    <a href="#" class="btn btn-outline-primary btn-sm bt-hs  bd-rd">Đã duyệt</a>
                                                 }
                                             }
                                         </td>
@@ -172,13 +171,21 @@
                                     </tr>
                                 }
                             </tbody>
-
-
                         </table>
+
                         <!-- Thêm mã phân trang -->
-                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-                        @Html.PagedListPager(Model, page => Url.Action("DkxtTt", new { page }))
-                        <!-- Kết thúc -->
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
+                        @Html.PagedListPager(Model, page => Url.Action("DkxtKQTthpt", new
+                        {
+                            filteriDotxt = ViewBag.DotxtFilteri,
+                            filteriNvong = ViewBag.NvongFilteri,
+                            filteriNganh = ViewBag.NganhFilteri,
+                            filteriLePhi = ViewBag.LePhiFilteri,
+                            filteriHoSo = ViewBag.HoSoFilteri,
+                            searchString = ViewBag.SearchString,
+                            page
+                        }))
+                        <!-- Kết thúc  -->
                     </div>
                 </div>
             </div>

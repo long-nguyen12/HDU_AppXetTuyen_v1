@@ -431,24 +431,364 @@
         background-color: transparent;
     }
 </style>
-<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="container-fluid px-12">
-    <div id="fadeInUp">
-        <div class="card card-header-actions mt-3 mb-1">
-            <div class="card-header">Lưu ý</div>
-            <div class="card-body">
-                <div class="col-xxl-12">
+    <div class="card card-collapsable mt-3 mb-1">
+        <div class="card-header">
+            <div id="div_tieude"><span>Đăng ký xét tuyển vào lớp 6</span></div>
+        </div>
+        <div class="card-body">
+            <div class="row g-1">
+                <div class="col-xl-4 col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Thông tin học sinh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>  <label class="form-label mb-1" for="HocSinh_DinhDanh">Mã định danh <a style="color:red; text-decoration:none">(*)</a> </label></td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_DinhDanh" name="HocSinh_DinhDanh" type="number" placeholder="Nhập mã định danh" value="" />
+                                    <span id="HocSinh_DinhDanh_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_HoTen">Họ và tên <a style="color:red; text-decoration:none">(*)</a> </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_HoTen" name="HocSinh_HoTen" type="text" placeholder="Họ và tên" value="" />
+                                    <span id="HocSinh_HoTen_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="datepicker" name="HocSinh_NgaySinh" type="text" placeholder="Ngày sinh" value="" />
+                                    <span id="HocSinh_NgaySinh_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>  <label class="form-label mb-1" for="HocSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label></td>
+                                <td>
+                                    <select class="form-select" id="HocSinh_GioiTinh" name="HocSinh_GioiTinh" placeholder="Giới tính" value=""></select>
+                                    <span id="HocSinh_GioiTinh_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label class="form-label mb-1" for="HocSinh_NoiSinh">Nơi sinh <a style="color:red; text-decoration:none">(*)</a> </label></td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_NoiSinh" name="HocSinh_NoiSinh" type="text" placeholder="Nơi sinh" value="" />
+                                    <span id="HocSinh_NoiSinh_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_NoiCuTru">Nơi cứ trú <a style="color:red; text-decoration:none">(*)</a> </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_NoiCuTru" name="HocSinh_NoiSinh" type="text" placeholder="Nơi cư trú" value="" />
+                                    <span id="HocSinh_NoiCuTru_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_UuTien">Thuộc diện ưu tiên </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_UuTien" name="HocSinh_UuTien" type="text" placeholder="Diện ưu tiên" value="" />
+                                    <span id="HocSinh_UuTien_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-xl-4 col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Thông tin phụ huynh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_HoTenCha">Họ, tên bố <a style="color:red; text-decoration:none">(*)</a> </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_HoTenCha" name="HocSinh_HoTenCha" type="text" placeholder="Họ và tên bố" value="" />
+                                    <span id="HocSinh_HoTenCha_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_SDTCha">Điện thoại  <a style="color:red; text-decoration:none">(*)</a></label>
+                                </td>
+
+                                <td>
+                                    <input class="form-control" id="HocSinh_SDTCha" name="HocSinh_SDTCha" type="text" placeholder="Số điện thoại bố" value="" />
+                                    <span id="HocSinh_SDTCha_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_NNCha">Nghề nghiệp</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_NNCha" name="HocSinh_NNCha" type="text" placeholder="Nghề nghiệp bố" value="" />
+                                    <span id="HocSinh_NNCha_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_HoTenMe">Họ, tên mẹ <a style="color:red; text-decoration:none">(*)</a> </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_HoTenMe" name="HocSinh_HoTenMe" type="text" placeholder="Họ  và tên mẹ" value="" />
+                                    <span id="HocSinh_HoTenMe_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_SDTMe">Điện thoại <a style="color:red; text-decoration:none">(*)</a></label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_SDTMe" name="HocSinh_SDTMe" type="text" placeholder="Số điện thoại mẹ" value="" />
+                                    <span id="HocSinh_SDTMe_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_NNMe">Nghề nghiệp</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_NNMe" name="HocSinh_NNMe" type="text" placeholder="Nghề nghiệp mẹ" value="" />
+                                    <span id="HocSinh_NNMe_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a> </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_Email" name="HocSinh_NoiSinh" type="text" placeholder="Email" value="" />
+                                    <span id="HocSinh_Email_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+                <div class="col-xl-4 col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Thông tin điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_TruongTH">Trường tiểu học </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_TruongTH" name="HocSinh_TruongTH" type="text" placeholder="Tên trường tiểu học" value="" />
+                                    <span id="HocSinh_TruongTH_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="row g-1">
+                                        <div class="col-6">
+                                            <label class="form-label mb-1" for="HocSinh_DiemToan">Toán <a style="color:red; text-decoration:none">(*)</a> </label>
+                                            <input class="form-control" id="HocSinh_DiemToan" name="HocSinh_DiemToan" type="number" placeholder="Điểm Toán" value="" />
+                                            <span id="HocSinh_DiemToan_Error" class="small mb-1 text-danger"></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label mb-1" for="HocSinh_DiemTiengViet">Tiếng Việt <a style="color:red; text-decoration:none">(*)</a> </label>
+                                            <input class="form-control" id="HocSinh_DiemTiengViet" name="HocSinh_DiemTiengViet" type="number" placeholder="Điểm Tiếng Việt" value="" />
+                                            <span id="HocSinh_DiemTiengViet_Error" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="row g-1">
+                                        <div class="col-6">
+                                            <label class="form-label mb-1" for="HocSinh_DiemTN">TN & KH/XH <a style="color:red; text-decoration:none">(*)</a> </label>
+                                            <input class="form-control" id="HocSinh_DiemTN" name="HocSinh_DiemTN" type="number" placeholder="TN & KH/XH" value="" />
+                                            <span id="HocSinh_DiemTN_Error" class="small mb-1 text-danger"></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label mb-1" for="HocSinh_DiemLSDL">Lịch sử & Địa lý <a style="color:red; text-decoration:none">(*)</a> </label>
+                                            <input class="form-control" id="HocSinh_DiemLSDL" name="HocSinh_DiemLSDL" type="number" placeholder="L.Sử & Địa lý" value="" />
+                                            <span id="HocSinh_DiemLSDL_Error" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="form-label mb-1" for="HocSinh_DiemTA">Tiếng Anh <a style="color:red; text-decoration:none">(*)</a> </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" id="HocSinh_DiemTA" name="HocSinh_DiemTA" type="number" placeholder="Điểm Tiếng Anh" value="" />
+                                    <span id="HocSinh_DiemTA_Error" class="small mb-1 text-danger"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="row g-1 mt-1">
+                                        <div class="col-md-6">
+                                            <label class="form-label mb-1" for="HocSinh_MucDoNangLuc">Mức độ năng lực </label>
+                                            <input class="form-control" id="HocSinh_MucDoNangLuc" name="HocSinh_MucDoNangLuc" placeholder="Mức độ năng lực" value="" />
+                                            <span id="HocSinh_MucDoNangLuc_Error" class="small mb-1 text-danger"></span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label mb-1" for="HocSinh_MucDoPhamChat">Mức độ phẩm chất </label>
+                                            <input class="form-control" id="HocSinh_MucDoPhamChat" name="HocSinh_MucDoPhamChat" placeholder="Mức độ phẩm chất" value="" />
+                                            <span id="HocSinh_MucDoPhamChat" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row g-1">
+                <div class="col-xl-12 col-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Hình ảnh minh chứng giấy tờ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="row gx-xxl-3 mb-1">
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-1" for="HocSinh_NoiCuTru">Mã định danh </label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="files_madinhdanh" multiple="multiple" name="files" type="file"
+                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                <table class="table" id="FilesList_MaDinhDanh_View" style="visibility:hidden">
+                                                    <tr style="display:none">
+                                                        <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-1" for="HocSinh_NoiCuTru">Học bạ </label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file"
+                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
+                                                    <tr style="display:none">
+                                                        <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-1" for="HocSinh_NoiCuTru">Giấy khai sinh </label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="files_giayks" multiple="multiple" name="files" type="file"
+                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                <table class="table" id="FilesList_GiayKS_View" style="visibility:hidden">
+                                                    <tr style="display:none">
+                                                        <th colspan="3"><input type="hidden" id="GiayKS_Files" /></th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label mb-1" for="HocSinh_NoiCuTru">Chứng nhận ưu tiên</label>
+                                            <div class="col-md-12">
+                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file"
+                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                <table class="table" id="FilesList_UuTien_View" style="visibility:hidden">
+                                                    <tr style="display:none">
+                                                        <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row g-1">
+                <div class="col-xl-12 col-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Hình ảnh minh chứng nộp lệ phí</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="row gx-xxl-3 mb-1">
+                                        <div class="col-lg-6 col-sm-12">
+                                            <div class="row flex-nowrap align-items-center">
+                                                <label class="col-2 form-label align-items-center" for="HocSinh_NoiCuTru">Lệ phí</label>
+                                                <div class="col-10">
+                                                    <div class="row col-12">
+                                                        <input class="form-control" id="files_lephi" multiple="multiple" name="files" type="file"
+                                                               accept="application/pdf,.png, .jpeg, .jpg" />
+                                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                        <table class="table" id="FilesList_LePhi_View" style="visibility:hidden">
+                                                            <tr style="display:none">
+                                                                <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6  col-12">
+                                            <div class="row col-12 col-12justify-content-center mb-1 align-items-center">
+                                                <center>
+                                                    <button type="button" onclick="onCreate()" class="btn btn-primary col-xl-6 col-sm-12">Đăng ký</button>
+                                                </center>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row g-1">
+                <div class="col-xl-12 col-12">
+                    <p style="color: red; font-style: italic; font-weight:bold" class="mb-1">Lưu ý</p>
                     <p style="color: red; font-style: italic" class="mb-1">
                         - Những trường có dấu sao là trường bắt buộc nhập
                     </p>
@@ -458,217 +798,25 @@
                 </div>
             </div>
         </div>
-        <div class="card card-header-actions mt-3 mb-1 ">
-            <div class="card-header">Đăng ký xét tuyển vào lớp 6</div>
-            <div class="card-body">
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="HocSinh_DinhDanh">Mã định danh cá nhân <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_DinhDanh" name="HocSinh_DinhDanh" type="text" placeholder="Mã định danh cá nhân" value="" />
-                        <span id="HocSinh_DinhDanh_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="HocSinh_HoTen">Họ và tên <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_HoTen" name="HocSinh_HoTen" type="text" placeholder="Họ và tên" value="" />
-                        <span id="HocSinh_HoTen_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="datepicker" name="HocSinh_NgaySinh" type="text" placeholder="Ngày sinh" value="" />
-                        <span id="HocSinh_NgaySinh_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="HocSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <select class="form-select" id="HocSinh_GioiTinh" name="HocSinh_GioiTinh" placeholder="Giới tính" value=""></select>
-                        <span id="HocSinh_GioiTinh_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-6">
-                        <label class="form-label mb-1" for="HocSinh_NoiSinh">Nơi sinh <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_NoiSinh" name="HocSinh_NoiSinh" type="text" placeholder="Nơi sinh" value="" />
-                        <span id="HocSinh_NoiSinh_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Nơi cứ trú <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_NoiCuTru" name="HocSinh_NoiSinh" type="text" placeholder="Nơi cư trú" value="" />
-                        <span id="HocSinh_NoiCuTru_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_Email" name="HocSinh_NoiSinh" type="text" placeholder="Email" value="" />
-                        <span id="HocSinh_Email_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_UuTien">Thuộc diện ưu tiên </label>
-                        <input class="form-control" id="HocSinh_UuTien" name="HocSinh_UuTien" type="text" placeholder="Diện ưu tiên" value="" />
-                        <span id="HocSinh_UuTien_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_TruongTH">Trường tiểu học </label>
-                        <input class="form-control" id="HocSinh_TruongTH" name="HocSinh_TruongTH" type="text" placeholder="Diện ưu tiên" value="" />
-                        <span id="HocSinh_TruongTH_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_HoTenCha">Họ và tên cha <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_HoTenCha" name="HocSinh_HoTenCha" type="text" placeholder="Họ và tên cha" value="" />
-                        <span id="HocSinh_HoTenCha_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_SDTCha">Số điện thoại  <a style="color:red; text-decoration:none">(*)</a></label>
-                        <input class="form-control" id="HocSinh_SDTCha" name="HocSinh_SDTCha" type="text" placeholder="Số điện thoại cha" value="" />
-                        <span id="HocSinh_SDTCha_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_NNCha">Nghề nghiệp cha </label>
-                        <input class="form-control" id="HocSinh_NNCha" name="HocSinh_NNCha" type="text" placeholder="Nghề nghiệp cha" value="" />
-                        <span id="HocSinh_NNCha_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_HoTenMe">Họ và tên mẹ <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_HoTenMe" name="HocSinh_HoTenMe" type="text" placeholder="Họ và tên mẹ" value="" />
-                        <span id="HocSinh_HoTenMe_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_SDTMe">Số điện thoại <a style="color:red; text-decoration:none">(*)</a></label>
-                        <input class="form-control" id="HocSinh_SDTMe" name="HocSinh_SDTMe" type="text" placeholder="Số điện thoại mẹ" value="" />
-                        <span id="HocSinh_SDTMe_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_NNMe">Nghề nghiệp mẹ  </label>
-                        <input class="form-control" id="HocSinh_NNMe" name="HocSinh_NNMe" type="text" placeholder="Nghề nghiệp mẹ" value="" />
-                        <span id="HocSinh_NNMe_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-2">
-                        <label class="form-label mb-1" for="HocSinh_DiemToan">Điểm Toán <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_DiemToan" name="HocSinh_DiemToan" type="number" placeholder="Điểm Toán" value="" />
-                        <span id="HocSinh_DiemToan_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label mb-1" for="HocSinh_DiemTiengViet">Điểm Tiếng Việt <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_DiemTiengViet" name="HocSinh_DiemTiengViet" type="number" placeholder="Điểm Tiếng Việt" value="" />
-                        <span id="HocSinh_DiemTiengViet_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="HocSinh_DiemTN">Điểm Tự nhiên và KH/XH <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_DiemTN" name="HocSinh_DiemTN" type="number" placeholder="Điểm Tự nhiên và KH/XH" value="" />
-                        <span id="HocSinh_DiemTN_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="HocSinh_DiemLSDL">Điểm Lịch sử và Địa lý <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_DiemLSDL" name="HocSinh_DiemLSDL" type="number" placeholder="Điểm Lịch sử và Địa lý" value="" />
-                        <span id="HocSinh_DiemLSDL_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label mb-1" for="HocSinh_DiemTA">Điểm Tiếng Anh <a style="color:red; text-decoration:none">(*)</a> </label>
-                        <input class="form-control" id="HocSinh_DiemTA" name="HocSinh_DiemTA" type="number" placeholder="Điểm Tiếng Anh" value="" />
-                        <span id="HocSinh_DiemTA_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-6">
-                        <label class="form-label mb-1" for="HocSinh_MucDoNangLuc">Mức độ năng lực </label>
-                        <input class="form-control" id="HocSinh_MucDoNangLuc" name="HocSinh_MucDoNangLuc" placeholder="Mức độ năng lực" value="" />
-                        <span id="HocSinh_MucDoNangLuc_Error" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label mb-1" for="HocSinh_MucDoPhamChat">Mức độ phẩm chất </label>
-                        <input class="form-control" id="HocSinh_MucDoPhamChat" name="HocSinh_MucDoPhamChat" placeholder="Mức độ phẩm chất" value="" />
-                        <span id="HocSinh_MucDoPhamChat" class="small mb-1 text-danger"></span>
-                    </div>
-                </div>
-                @*
-                    <div class="card-header mt-4">Minh chứng</div>*@
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Học bạ </label>
-                        <div class="col-md-12">
-                            <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file"
-                                   accept="application/pdf,.png, .jpeg, .jpg" />
-                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                            <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
-                                <tr style="display:none">
-                                    <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Giấy khai sinh </label>
-                        <div class="col-md-12">
-                            <input class="form-control" id="files_giayks" multiple="multiple" name="files" type="file"
-                                   accept="application/pdf,.png, .jpeg, .jpg" />
-                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                            <table class="table" id="FilesList_GiayKS_View" style="visibility:hidden">
-                                <tr style="display:none">
-                                    <th colspan="3"><input type="hidden" id="GiayKS_Files" /></th>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Lệ phí </label>
-                        <div class="col-md-12">
-                            <input class="form-control" id="files_lephi" multiple="multiple" name="files" type="file"
-                                   accept="application/pdf,.png, .jpeg, .jpg" />
-                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                            <table class="table" id="FilesList_LePhi_View" style="visibility:hidden">
-                                <tr style="display:none">
-                                    <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Mã định danh </label>
-                        <div class="col-md-12">
-                            <input class="form-control" id="files_madinhdanh" multiple="multiple" name="files" type="file"
-                                   accept="application/pdf,.png, .jpeg, .jpg" />
-                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                            <table class="table" id="FilesList_MaDinhDanh_View" style="visibility:hidden">
-                                <tr style="display:none">
-                                    <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Chứng nhận ưu tiên</label>
-                        <div class="col-md-12">
-                            <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file"
-                                   accept="application/pdf,.png, .jpeg, .jpg" />
-                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                            <table class="table" id="FilesList_UuTien_View" style="visibility:hidden">
-                                <tr style="display:none">
-                                    <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mb-1">
-                    <div class="col-auto">
-                        <button type="button" onclick="onCreate()" class="btn btn-primary btm-sm">Đăng ký</button>
-                    </div>
-                </div>
-            </div>
+    </div>
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
         </div>
     </div>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
+</div>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </div>
     </div>

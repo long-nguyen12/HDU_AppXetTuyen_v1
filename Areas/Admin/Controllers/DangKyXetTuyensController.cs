@@ -331,8 +331,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
-        //[AdminSessionCheck]
-       
+        [AdminSessionCheck]
         public ActionResult DkxtTt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
            

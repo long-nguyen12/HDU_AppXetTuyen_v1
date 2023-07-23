@@ -12,7 +12,7 @@
     }
 
     .bt-hs {
-        width: 120px;
+        width: 80px;
     }
 
     .bd-rd {
@@ -111,15 +111,15 @@
                                             @{
                                                 if (item.Dkdt_NK_TrangThai == 0)
                                                 {
-                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng phí</a>
+                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng</a>
                                                 }
                                                 if (item.Dkdt_NK_TrangThai == 1)
                                                 {
-                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp phí</a>
+                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp</a>
                                                 }
                                                 if (item.Dkdt_NK_TrangThai == 2)
                                                 {
-                                                    <a href="#" style="color: blue; text-decoration: none">Đã kiểm duyệt</a>
+                                                    <a href="#" style="color: blue; text-decoration: none">Đã duyệt</a>
                                                 }
                                             }
                                         </td>
@@ -127,15 +127,15 @@
                                             @{
                                                 if (item.Dkdt_NK_TrangThai_KetQua == 0)
                                                 {
-                                                    <a href="#" class="btn btn-danger btn-sm  bt-hs  bd-rd">Chưa kiểm tra</a>
+                                                    <a href="#" class="btn btn-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
                                                 }
                                                 if (item.Dkdt_NK_TrangThai_KetQua == 1)
                                                 {
-                                                    <a href="#" class="btn btn-success btn-sm bt-hs  bd-rd">Minh chứng sai</a>
+                                                    <a href="#" class="btn btn-success btn-sm bt-hs  bd-rd">MC sai</a>
                                                 }
                                                 if (item.Dkdt_NK_TrangThai_KetQua == 2)
                                                 {
-                                                    <a href="#" class="btn btn-primary btn-sm bt-hs  bd-rd">Đã kiểm duyệt</a>
+                                                    <a href="#" class="btn btn-primary btn-sm bt-hs  bd-rd">Đã KT</a>
                                                 }
                                             }
                                         </td>

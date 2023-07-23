@@ -5,11 +5,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 <script>
-    $('document').ready(function () {
-       
+    $('document').ready(function () {      
        
         loadData();
-        var itemsPerPage = 5; // Number of items to display per page
+        var itemsPerPage = 4; // Number of items to display per page
         var currentPage = 1; // Current page
         var present_on = document.getElementById("present_on");
         present_on.innerHTML = 1;
@@ -94,7 +93,7 @@
                     });
                     document.getElementById('infoList').innerHTML = htmlString;
                     var startIndex = 0;
-                    var endIndex = startIndex + 5;
+                    var endIndex = startIndex + 4;
                     $(".table tbody tr").hide().slice(startIndex, endIndex).show();
                 } else {
                 }
@@ -246,13 +245,13 @@
                                 <nav >
                                     <ul class="pagination justify-content-center" style="margin-top:0px; margin-bottom:0px" >
                                         <li class="page-item disabled">
-                                            <a class="page-link prev" href="#" tabindex="-1">Trước</a>
+                                            <a class="page-link small prev" href="#" tabindex="-1">Trước</a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link" id="present_on" href="#"></a>
+                                            <a class="page-link small" id="present_on" href="#"></a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link next" href="#">Sau</a>
+                                            <a class="page-link small next" href="#">Sau</a>
                                         </li>
                                     </ul>
                                 </nav>
