@@ -106,7 +106,7 @@ namespace HDU_AppXetTuyen.Controllers
                     DanhGia = nguyenVongDanhGia
                 }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return Json(new
                 {

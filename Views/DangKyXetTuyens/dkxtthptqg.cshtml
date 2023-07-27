@@ -293,23 +293,8 @@
                                             <td>
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-0">
-                                                            <label for="files_bangtn" class="form-label">Bằng Tốt nghiệp (nếu có)</label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-0 md-0">
-                                                    <div class="col-xxl-12">
                                                         <div class="form-group mb-0 mt-1">
-                                                            <label for="files_hocba_ts" class="form-label">Học bạ</label>
+                                                            <label for="files_hocba_ts" class="form-label">Học bạ/Bằng tốt nghiệp</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" data-val-required="Vui lòng chọn file Vui lòng chọn file học bạ"
                                                                        accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
@@ -322,9 +307,20 @@
                                                     </div>
                                                 </div>
 
-                                                <script>
-
-                                                </script>
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-0">
+                                                            <label for="files_bangtn" class="form-label">Căn cước công dân</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
+                                                    </div>
+                                                </div>
 
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
@@ -653,9 +649,9 @@
         let _thm_ID = $('#select_tohopmon').val();
         let _dkxt_KQTQG_NamTotNghiep = $('#select_namtn').val();
 
-        let _kxt_KQTQG_Diem_M1 = { TenMon1: $('#lb_tenmon_1').text(), DiemM1: $('#txt_m1').val() };
-        let _kxt_KQTQG_Diem_M2 = { TenMon2: $('#lb_tenmon_2').text(), DiemM2: $('#txt_m2').val() };
-        let _kxt_KQTQG_Diem_M3 = { TenMon3: $('#lb_tenmon_3').text(), DiemM3: $('#txt_m3').val() };
+        let _kxt_KQTQG_Diem_M1 = { TenMon: $('#lb_tenmon_1').text(), Diem: $('#txt_m1').val() };
+        let _kxt_KQTQG_Diem_M2 = { TenMon: $('#lb_tenmon_2').text(), Diem: $('#txt_m2').val() };
+        let _kxt_KQTQG_Diem_M3 = { TenMon: $('#lb_tenmon_3').text(), Diem: $('#txt_m3').val() };
 
 
         if (_nganh_ID == 0) { var errorMessage = "Vui lòng chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
@@ -669,7 +665,7 @@
 
         if (!flag) return;
 
-        let _dkxt_KQTQG_Diem_Tong = parseFloat(_kxt_KQTQG_Diem_M1.DiemM1) + parseFloat(_kxt_KQTQG_Diem_M2.DiemM2) + parseFloat(_kxt_KQTQG_Diem_M3.DiemM3);
+        let _dkxt_KQTQG_Diem_Tong = parseFloat(_kxt_KQTQG_Diem_M1.Diem) + parseFloat(_kxt_KQTQG_Diem_M2.Diem) + parseFloat(_kxt_KQTQG_Diem_M3.Diem);
 
         let _dkxt_KQTQG_MinhChung_CNTotNghiep = "";
         let _dkxt_KQTQG_MinhChung_BangTN = "";

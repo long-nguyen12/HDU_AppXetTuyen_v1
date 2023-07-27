@@ -111,21 +111,5 @@
 
         [NotMapped]
         public PhuHuynh PhMe { get; set; }
-
-    }
-    public class MonHocTHCS
-    {
-        public double Toan { get; set; }
-        public double TiengViet { get; set; }
-        public double TuNhien { get; set; }
-        public double LichSuDiaLy { get; set; }
-        public double TiengAnh { get; set; }
-       
-    }   
-    public class PhuHuynh
-    {
-        public string HoTen { get; set; }
-        public string SoDienThoai { get; set; }
-        public string NgheNghiep { get; set; }       
-    }
+    } 
 }

@@ -129,6 +129,7 @@ namespace HDU_AppXetTuyen.Controllers
                 studentLC.HocSinh_XacNhanLePhi = student.HocSinh_XacNhanLePhi;
                 studentLC.HocSinh_TrangThai = 0;
                 studentLC.HocSinh_Activation = activationToken;
+                
                 db.LienCapTHCSs.Add(studentLC);
                 db.SaveChanges();
 

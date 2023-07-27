@@ -9,15 +9,13 @@ using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HDU_AppXetTuyen.Models;
+using Newtonsoft.Json;
 using PagedList;
+
+
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
-    public class StatusTracking
-    {
-        public int st_ID { get; set; }
-        public string st_Name { get; set; }
-    }
     public class DangKyXetTuyensController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
@@ -173,13 +171,81 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.HoSoFilteri = filteriHoSo;
             ViewBag.SearchString = searchString;
             ViewBag.pageCurren = page;
-            
+
             ViewBag.totalRecod = model.Count();
 
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult DkxtKQTthpt_hs_view()
+        {            
+            return View();
+        }
+        public ActionResult DkxtKQTthpt_hs_Detail()
+        {
+            int dkxt_KQTQG_ID = 20004;
+            DbConnecttion dbhb = new DbConnecttion();
+
+            DangKyXetTuyenKQTQG model_diem = db.DangKyXetTuyenKQTQGs.Find(dkxt_KQTQG_ID);
+        
+            string _xeploai_hocluc_12 = "";
+            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
+            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
+            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
+            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
+
+            string _xeploai_hanhkiem_12 = "";
+            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
+            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
+            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
+            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
+
+            // DiemThiGQMon khai báo trong  Model.LibraryUsers
+            DiemThiGQMon _mondiem1 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M1);
+            DiemThiGQMon _mondiem2 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M2);
+            DiemThiGQMon _mondiem3 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M3);
+
+            var model_item = dbhb.DangKyXetTuyenKQTQGs.Where(x => x.Dkxt_KQTQG_ID == dkxt_KQTQG_ID).ToList();
+            var tt_ts_dk = model_item.Select(s => new
+            {
+                dkxt_KQTQG_ID = s.Dkxt_KQTQG_ID,
+                thiSinh_ID = s.ThiSinh_ID,
+                thiSinh_HoTen = s.ThiSinhDangKy.ThiSinh_HoLot + " " + s.ThiSinhDangKy.ThiSinh_Ten,
+                nganh_Ten = s.Nganh.NganhTenNganh,
+                thm_ID = s.Thm_ID,
+                doiTuong_All = s.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + "Ưu tiên: " + s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                khuVuc_All = s.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + "- Ưu tiên: " + s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+                dkxt_KQTQG_NguyenVong = s.Dkxt_KQTQG_NguyenVong,
+                dkxt_KQTQG_NamTotNghiep = s.Dkxt_KQTQG_NamTotNghiep,
+
+                tenMon1 = _mondiem1.TenMon,
+                tenMon2 = _mondiem2.TenMon,
+                tenMon3 = _mondiem3.TenMon,
+
+                diemMon1 = _mondiem1.Diem,
+                diemMon2 = _mondiem2.Diem,
+                diemMon3 = _mondiem3.Diem,
+
+                dkxt_KQTQG_Diem_Tong = s.Dkxt_KQTQG_Diem_Tong,
+                khoiNganh_Ten = s.Nganh.KhoiNganh.KhoiNganh_Ten,
+                nganh_GhiChu = s.Nganh.Nganh_GhiChu,
+                thm_MaTen = s.ToHopMon.Thm_MaTen,
+
+             
+                dkxt_KQTQG_NgayDangKy = s.Dkxt_KQTQG_NgayDangKy,
+                dkxt_KQTQG_XepLoaiHocLuc_12 = _xeploai_hocluc_12,
+                dkxt_KQTQG_XepLoaiHanhKiem_12 = _xeploai_hanhkiem_12,
+                // lấy ra chuỗi các minh chứng
+                dkxt_KQTQG_MinhChung_CNTotNghiep = s.Dkxt_KQTQG_MinhChung_CNTotNghiep,
+                dkxt_KQTQG_MinhChung_HocBa = s.Dkxt_KQTQG_MinhChung_HocBa,
+                dkxt_KQTQG_MinhChung_CCCD = s.Dkxt_KQTQG_MinhChung_BangTN, // lưu ý là minh chứng căn cước công dân
+                dkxt_KQTQG_MinhChung_UuTien = s.Dkxt_KQTQG_MinhChung_UuTien,
+
+            });
+            return Json(tt_ts_dk, JsonRequestBehavior.AllowGet);
+        
+        }
         [AdminSessionCheck]
         public ActionResult DkxtHocBa(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
@@ -331,17 +397,29 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
+        public ActionResult DkxtHocBa_view_hs(int Dkxt_ID = 20)
+        {
+
+            return View();
+        }
+        public JsonResult DkxtHocBa_Detail_HoSo(int Dkxt_ID = 20)
+        {
+            DbConnecttion dbhb = new DbConnecttion();
+            var model = dbhb.DangKyXetTuyens.Find(Dkxt_ID);
+
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
         [AdminSessionCheck]
         public ActionResult DkxtTt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-           
+
             var model = (from item in db.DangKyXetTuyenThangs select item)
                                         .OrderBy(x => x.ThiSinh_ID)
                                         .ThenBy(x => x.Dkxt_NguyenVong)
                                         .ThenBy(x => x.Nganh.NganhTenNganh)
                                         .Include(x => x.ThiSinhDangKy)
-                                        .Include(x => x.Nganh)                                       
-                                        .Include(x => x.ThiSinhDangKy.DoiTuong)                                       
+                                        .Include(x => x.Nganh)
+                                        .Include(x => x.ThiSinhDangKy.DoiTuong)
                                         .Include(x => x.ThiSinhDangKy.KhuVuc);
 
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
@@ -483,7 +561,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(model.ToPagedList(pageNumber, pageSize));
         }
 
-
         public ActionResult Dkxtccnn(int? page)
         {
             if (page == null) page = 1;
@@ -505,9 +582,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult Dkdttnk(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-        //    public ActionResult Dkdttnk(string searchString, string currentFilter, string filteriDotxt, int? page)
-        //{
-        
 
             var model = (from item in db.DangKyDuThiNangKhieus select item)
                                         .OrderBy(x => x.ThiSinh_ID)
@@ -517,10 +591,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                         .Include(x => x.Nganh)
                                         .Include(x => x.ToHopMon)
                                         .Include(x => x.ThiSinhDangKy.DoiTuong)
-                                        .Include(x => x.ThiSinhDangKy.KhuVuc)                                      
+                                        .Include(x => x.ThiSinhDangKy.KhuVuc)
                                         .Include(x => x.PhuongThucXetTuyen);
-           
-            
+
+
             // lấy thông tin năm hiện tại
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             #region lọc dữ liệu theo đợt
@@ -528,7 +602,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
             int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
             ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
-           
+
             // thực hiện lọc 
             if (!String.IsNullOrEmpty(filteriDotxt))
             {
@@ -668,92 +742,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            return View(dangKyXetTuyen);
-        }
-
-        // GET: Admin/DangKyXetTuyens/Create
-        [AdminSessionCheck]
-        public ActionResult Create()
-        {
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten");
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten");
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten");
-            ViewBag.Nganh_ID = new SelectList(db.Nganhs, "Nganh_ID", "Nganh_MaNganh");
-            ViewBag.Ptxt_ID = new SelectList(db.PhuongThucXetTuyens, "Ptxt_ID", "Ptxt_TenPhuongThuc");
-            ViewBag.ThiSinh_ID = new SelectList(db.ThiSinhDangKies, "ThiSinh_ID", "ThiSinh_CCCD");
-            ViewBag.Thm_ID = new SelectList(db.ToHopMons, "Thm_ID", "Thm_MaToHop");
-            return View();
-        }
-
-        // POST: Admin/DangKyXetTuyens/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [AdminSessionCheck]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Dkxt_ID,ThiSinh_ID,Ptxt_ID,Nganh_ID,Thm_ID,DoiTuong_ID,KhuVuc_ID,Dkxt_TrangThai,Dkxt_NguyenVong,DotXT_ID,Dkxt_GhiChu,Dkxt_Diem_M1,Dkxt_Diem_M2,Dkxt_Diem_M3,Dkxt_Diem_Tong,Dkxt_Diem_Tong_Full")] DangKyXetTuyen dangKyXetTuyen)
-        {
-            if (ModelState.IsValid)
-            {
-                db.DangKyXetTuyens.Add(dangKyXetTuyen);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", dangKyXetTuyen.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", dangKyXetTuyen.DotXT_ID);
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", dangKyXetTuyen.KhuVuc_ID);
-            ViewBag.Nganh_ID = new SelectList(db.Nganhs, "Nganh_ID", "Nganh_MaNganh", dangKyXetTuyen.Nganh_ID);
-            ViewBag.Ptxt_ID = new SelectList(db.PhuongThucXetTuyens, "Ptxt_ID", "Ptxt_TenPhuongThuc", dangKyXetTuyen.Ptxt_ID);
-            ViewBag.ThiSinh_ID = new SelectList(db.ThiSinhDangKies, "ThiSinh_ID", "ThiSinh_CCCD", dangKyXetTuyen.ThiSinh_ID);
-            ViewBag.Thm_ID = new SelectList(db.ToHopMons, "Thm_ID", "Thm_MaToHop", dangKyXetTuyen.Thm_ID);
-            return View(dangKyXetTuyen);
-        }
-
-        // GET: Admin/DangKyXetTuyens/Edit/5
-        [AdminSessionCheck]
-        public ActionResult Edit(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            DangKyXetTuyen dangKyXetTuyen = db.DangKyXetTuyens.Find(id);
-            if (dangKyXetTuyen == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", dangKyXetTuyen.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", dangKyXetTuyen.DotXT_ID);
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", dangKyXetTuyen.KhuVuc_ID);
-            ViewBag.Nganh_ID = new SelectList(db.Nganhs, "Nganh_ID", "Nganh_MaNganh", dangKyXetTuyen.Nganh_ID);
-            ViewBag.Ptxt_ID = new SelectList(db.PhuongThucXetTuyens, "Ptxt_ID", "Ptxt_TenPhuongThuc", dangKyXetTuyen.Ptxt_ID);
-            ViewBag.ThiSinh_ID = new SelectList(db.ThiSinhDangKies, "ThiSinh_ID", "ThiSinh_CCCD", dangKyXetTuyen.ThiSinh_ID);
-            ViewBag.Thm_ID = new SelectList(db.ToHopMons, "Thm_ID", "Thm_MaToHop", dangKyXetTuyen.Thm_ID);
-            return View(dangKyXetTuyen);
-        }
-
-        // POST: Admin/DangKyXetTuyens/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [AdminSessionCheck]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Dkxt_ID,ThiSinh_ID,Ptxt_ID,Nganh_ID,Thm_ID,DoiTuong_ID,KhuVuc_ID,Dkxt_TrangThai,Dkxt_NguyenVong,DotXT_ID,Dkxt_GhiChu,Dkxt_Diem_M1,Dkxt_Diem_M2,Dkxt_Diem_M3,Dkxt_Diem_Tong,Dkxt_Diem_Tong_Full")] DangKyXetTuyen dangKyXetTuyen)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(dangKyXetTuyen).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", dangKyXetTuyen.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", dangKyXetTuyen.DotXT_ID);
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", dangKyXetTuyen.KhuVuc_ID);
-            ViewBag.Nganh_ID = new SelectList(db.Nganhs, "Nganh_ID", "Nganh_MaNganh", dangKyXetTuyen.Nganh_ID);
-            ViewBag.Ptxt_ID = new SelectList(db.PhuongThucXetTuyens, "Ptxt_ID", "Ptxt_TenPhuongThuc", dangKyXetTuyen.Ptxt_ID);
-            ViewBag.ThiSinh_ID = new SelectList(db.ThiSinhDangKies, "ThiSinh_ID", "ThiSinh_CCCD", dangKyXetTuyen.ThiSinh_ID);
-            ViewBag.Thm_ID = new SelectList(db.ToHopMons, "Thm_ID", "Thm_MaToHop", dangKyXetTuyen.Thm_ID);
             return View(dangKyXetTuyen);
         }
 
