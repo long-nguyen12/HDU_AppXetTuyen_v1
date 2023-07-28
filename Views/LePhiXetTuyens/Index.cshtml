@@ -1,118 +1,134 @@
-﻿@model IEnumerable<HDU_AppXetTuyen.Models.LePhiXetTuyen>
-@{
-    ViewBag.Title = "Index"; Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script>
-    $("document").ready(function () {
-        loadData();
-        $('#selectFile').hide();
-        $('#uploadFile').hide();
-        $("#uploadFile").click(function () {
-            var files = $("#selectFile")[0].files;
-
-            if (files.length > 0) {
-                var formData = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    formData.append("filesMinhChung", files[i]);
-                }
-                $.ajax({
-                    url: "/LePhiXetTuyens/UploadLePhiMinhChung",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        if (response.success) {
-                            showToast(
-                                "Thông báo",
-                                "Tải lên minh chứng thành công!",
-                                "bg-error"
-                            );
-                        } else {
-                            showToast(
-                                "Cảnh báo",
-                                "Tải lên minh chứng thất bại! Vui lòng thử lại",
-                                "bg-error"
-                            );
-                        }
-                        $('#lephiForm')[0].reset();
-                        loadData();
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle the upload error
-                        showToast(
-                            "Cảnh báo",
-                            "Tải lên minh chứng thất bại! Vui lòng thử lại",
-                            "bg-error"
-                        );
-                        $('#lephiForm')[0].reset();
-                    },
-                });
-            } else {
-                showToast(
-                    "Cảnh báo",
-                    "Vui lòng chọn file minh chứng!",
-                    "bg-error"
-                );
-            }
-        });
-    });
-    function loadData() {
+    $('document').ready(function () {
+        $("#list-hocba").hide();
+        $("#list-tuyenthang").hide();
+        $("#list-ngoaingu").hide();
+        $("#list-dgnl").hide();
+        LoadData();
+    })
+    function LoadData() {
         $.ajax({
-            url: "/LePhiXetTuyens/GetAllLePhi",
+            url: "/KetQuaXetTuyens/GetAllNguyenVongs",
             type: "GET",
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 if (response.success) {
-                    let data = response.data;
-                    let lePhi = response.lePhi;
-                    if (data || data > 0) {
-                        $("#selectFile").show();
-                        $("#uploadFile").show();
+                    let { HocBa, TuyenThang, NgoaiNgu, DanhGia } = response;
+                    if (HocBa.length > 0) {
+                        $("#list-hocba").show();
                         let html = "";
-                        let minhchungs = lePhi.Lpxt_MinhChung ? lePhi.Lpxt_MinhChung : "";
-                        let minhChungLinks = "";
-                        if (minhchungs) {
-                            let minhChungArray = minhchungs.split("#");
-                            for (let i = 0; i < minhChungArray.length; i++) {
-                                minhChungLinks += `<a target="_blank" class="btn btn-info small" style="margin-left: 2px;" href="https://localhost:44308/${minhChungArray[i]}">Tệp ${i + 1}</a>`
+                        $.each(HocBa, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
                             }
-                        }
-                        $('#TongLePhi').text(data * 30000)
-                        html += "<tr>";
-                        html += '<td class="text-center">' + data + ' nguyện vọng </td>';
-                        html += '<td class="text-center">' + data * 30000 + ' VNĐ </td>';
-                        if (!lePhi || lePhi.Lpxt_TrangThai == 0) {
-                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-danger">Chưa đóng phí</span></td>`;
-                        } else if (lePhi.Lpxt_TrangThai == 1) {
-                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-info">Chờ xác nhận</span></td>`;
-                        } else if (lePhi.Lpxt_TrangThai == 2) {
-                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-warning">Thiếu</span></td>`;
-                        } else if (lePhi.Lpxt_TrangThai == 3) {
-                            html += `<td style="vertical-align: middle!important;" class="text-center"><span class="badge bg-success">Đã đủ</span></td>`;
-                        }
-                        html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${minhChungLinks}</td>`;
-                        html += `<td rowspan=${data.length} style="vertical-align: middle!important;" class="text-center">${lePhi.Lpxt_GhiChu == null ? "" : lePhi.Lpxt_GhiChu}</td>`;
-                        html += "</tr>";
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Thm.ToHopMon + '</td>';
+                            html += `<td class="text-center"><button class="btn btn-outline-primary btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Nộp lệ phí</button></td>`;
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
                         $('.tbody').html(html);
+                    }
+                    if (TuyenThang.length > 0) {
+                        $("#list-tuyenthang").show();
+                        let html = "";
+                        $.each(TuyenThang, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
+                            html += `<td class="text-center"><button class="btn btn-outline-primary btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 4)">Nộp lệ phí</button></td>`;
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody-tuyenthang').html(html);
+                    }
+                    if (NgoaiNgu.length > 0) {
+                        $("#list-ngoaingu").show();
+                        let html = "";
+                        $.each(NgoaiNgu, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
+                            html += `<td class="text-center"><button class="btn btn-outline-primary btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 5)">Nộp lệ phí</button></td>`;
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody-ngoaingu').html(html);
+                    }
+                    if (DanhGia.length > 0) {
+                        $("#list-dgnl").show();
+                        let html = "";
+                        $.each(DanhGia, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
+                            html += `<td class="text-center"><button class="btn btn-outline-primary btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 6)">Nộp lệ phí</button></td>`;
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody-dgnl').html(html);
                     }
                 } else {
                 }
             },
             error: function (xhr, status, error) {
-                // Handle any errors
                 console.error(error);
             },
         });
-    }
 
-    function showToast(title, message, bgColor) {
-        $("#myToast .toast-header .me-auto").text(title);
-        $("#myToast .toast-body").text(message);
-        $("#myToast .toast")
-            .removeClass("bg-success bg-danger")
-            .addClass(bgColor);
-        $("#myToast").toast("show");
+        function NopLePhi(id, type) {
+
+        }
     }
 </script>
 <style>
@@ -123,79 +139,143 @@
 </style>
 <div class="container-fluid px-12">
     <div id="fadeInUp">
-        <div class="card card-header-actions mt-3 mb-1">
-            <div class="card-header">Lưu ý</div>
-            <div class="card-body">
-                <div class="col-xxl-12">
-                    <p style="color: red; font-style: italic" class="mb-1">
-                        - Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp
-                        giao dịch chuyển tiền)
-                    </p>
-                    <p style="color: red; font-style: italic" class="mb-1">
-                        - Nếu thí sinh không đóng đủ lệ phí xét tuyển, nhà trường sẽ chỉ
-                        xét đến một số nguyện vọng nhất định
-                    </p>
-                    <p style="color: red; font-style: italic" class="mb-1">
-                        - Lệ phí xét tuyển: 30000 VNĐ/nguyện vọng
-                    </p>
-                    <p style="color: red; font-style: italic" class="mb-1">
-                        - Tổng lệ phí xét tuyển của bạn: <span id="TongLePhi"></span> VNĐ
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="card card-header-actions mt-3 mb-1">
+        <div class="card card-header-actions mt-3 mb-1" id="list-hocba">
             <div class="card-header">
-                Thông tin đóng phí
-                <form id="lephiForm" method="post" enctype="multipart/form-data">
-                    <div style="display: flex">
-                        <input id="selectFile"
-                               name="filesMinhChung"
-                               class="form-control"
-                               type="file"
-                               style="color: blue !important; margin-right: 2px"
-                               multiple />
-                        <input id="uploadFile"
-                               class="btn btn-primary"
-                               type="button"
-                               value="Lưu" />
-                    </div>
-                </form>
+                Theo phương thức sử dụng kết quả học tập ở THPT
             </div>
             <div class="card-body">
                 <div class="table-container">
                     <table class="table">
-                        <thead>
-                            <tr>
-                                <th width="20%" class="text-center">Tổng số nguyện vọng</th>
-                                <th width="20%" class="text-center">Tổng lệ phí</th>
-                                <th class="text-center">@Html.DisplayName("Trạng thái")</th>
-                                <th class="text-center">@Html.DisplayName("Minh chứng")</th>
-                                <th class="text-center">@Html.DisplayName("Ghi chú")</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                        <tr>
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Lệ phí
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-                        <tbody class="tbody"></tbody>
+        <div class="card card-header-actions mt-3 mb-1" id="list-tuyenthang">
+            <div class="card-header">
+                Thuộc diện xét tuyển thẳng học sinh giỏi
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table class="table">
+                        <tr class="text-center">
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Lệ phí
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody-tuyenthang">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-header-actions mt-3 mb-1" id="list-ngoaingu">
+            <div class="card-header">
+                Theo phương thức sử dụng chứng chỉ ngoại ngữ
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table class="table">
+                        <tr class="text-center">
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Lệ phí
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody-ngoaingu">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-header-actions mt-3 mb-1" id="list-dgnl">
+            <div class="card-header">
+                Theo phương thức sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table class="table">
+                        <tr class="text-center">
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Lệ phí
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody-dgnl">
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="myToast"
-             class="toast"
-             role="alert"
-             aria-live="assertive"
-             aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Toast Title</strong>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="toast"
-                        aria-label="Close"></button>
+    <div class="modal fade" id="modal_dongphi" tabindex="-1" role="dialog" aria-labelledby="modal_dongphi" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_dongphi">Thông báo</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
+                    <input id="key_delete_dkxt_id" type="hidden" />
+                    <input id="key_delete_dkxt_tohop" type="hidden" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="deleteRecordCancel()">Hủy</button>
+                    <button class="btn btn-primary" type="button" onclick="deleteRecordConfirmed()">Đồng ý</button>
+                </div>
             </div>
-            <div class="toast-body"></div>
         </div>
     </div>
 </div>

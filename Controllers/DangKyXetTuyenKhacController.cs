@@ -173,7 +173,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_KetQua = student.Dkxt_MinhChung_KetQua;
                 dkxtt.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
                 dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("dd/MM/yyyy");
-                dkxtt.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1]);
+                dkxtt.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
                 dkxtt.DoiTuong_ID = ts.DoiTuong_ID;
                 dkxtt.KhuVuc_ID = ts.KhuVuc_ID;
                 dkxtt.Dkxt_TrangThai = 0;
@@ -208,6 +208,7 @@ namespace HDU_AppXetTuyen.Controllers
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
             var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals(student.Dkxt_ToHopXT)).ToList();
             var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
+            string ToHop = student.Dkxt_ToHopXT;
             if (ts != null)
             {
                 DangKyXetTuyenKhac dkxtt = new DangKyXetTuyenKhac();
@@ -226,7 +227,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_KetQua = student.Dkxt_MinhChung_KetQua;
                 dkxtt.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
                 dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("dd/MM/yyyy");
-                dkxtt.Ptxt_ID = 6;
+                dkxtt.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
                 dkxtt.DoiTuong_ID = ts.DoiTuong_ID;
                 dkxtt.KhuVuc_ID = ts.KhuVuc_ID;
                 dkxtt.Dkxt_TrangThai = 0;
@@ -242,7 +243,7 @@ namespace HDU_AppXetTuyen.Controllers
                 var body = "Thí sinh " + ts.ThiSinh_Ten + ", Số CCCD: " + ts.ThiSinh_CCCD + " đã đăng ký nguyện vọng mới." +
 
                      " <br/><b>Thông tin nguyện vọng:</b><br/>" +
-                     " <p> Phương thức đăng ký: Phương thức 5 </p>" +
+                     " <p> Phương thức đăng ký: Phương thức " + ToHop[ToHop.Length - 1].ToString() + "</p>" +
                      " <p> Mã ngành: " + nganh.Nganh_MaNganh + " </p>" +
                      " <p> Tên ngành: " + nganh.NganhTenNganh + " </p>" +
                      " <p> Đơn vị tổ chức: " + student.Dkxt_DonViToChuc + " </p>" +
