@@ -25,7 +25,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span>Theo phương thức sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy</span>                       
+                        <span>Theo phương thức sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ</span>
                     </div>
                 </div>
             </div>
@@ -47,8 +47,9 @@
                                     <tr>
                                         <th style="vertical-align:middle;">Nguyện vọng</th>
                                         <th style="vertical-align:middle;">Mã ngành - Ngành</th>
-                                        <th style="vertical-align: middle; text-align: center;">Tên trường tổ chức</th>
-                                        <th style="vertical-align: middle; text-align: center;">Kết quả đạt được</th>
+                                        <th style="vertical-align: middle; text-align: center;">Tên đơn vị tổ chức</th>
+                                        <th style="vertical-align: middle; text-align: center;">Tổ hợp XT</th>
+                                        <th style="vertical-align: middle; text-align: center;">Kết quả</th>
                                         <th style="vertical-align: middle; text-align: center;">Ngày dự thi</th>
                                         <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
                                     </tr>
@@ -108,15 +109,22 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Tổ hợp môn <font color="red">(*)</font></td>
+                                    <td>Phương thức <font color="red">(*)</font></td>
                                     <td>
-                                        <input id="Dkxt_ToHopXT" type="text" class="form-control" value="HDP6" disabled />
+                                        <select id="ChungChi_ID" class="form-select"></select>
+                                        <span id="ChungChi_ID_Error" class="small mb-1 text-danger"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tổ hợp xét tuyển <font color="red">(*)</font></td>
+                                    <td>
+                                        <input id="Dkxt_ToHopXT" type="text" class="form-control" value="" placeholder="Tổ hợp xét tuyển" disabled />
                                         <span id="Dkxt_ToHopXT_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="3">
                                         <div class="row">
                                             <div class="col-6">
                                                 <span> Học lực lớp 12</span>
@@ -131,38 +139,69 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                            </tbody>
                         </table>
                     </div>
-                    <div class="col-xxl-8">
+                    <div class="col-xxl-4">
                         <div class="row md-0">
                             <div class="col-xxl-12">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th style="vertical-align:middle; width: 35%">Tên trường tổ chức</th>
-                                            <th style="vertical-align: middle; text-align: center; width: 20%">Kết quả</th>
-                                            <th style="vertical-align: middle; text-align: center; width: 20%">Tổng điểm</th>
-                                            <th style="vertical-align: middle; text-align: center; width: 25%">Ngày dự thi</th>
+                                            <th colspan="2" style="vertical-align:middle;">Thông tin xét tuyển</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_list_diemmonhoc">
                                         <tr style="vertical-align:middle;">
-                                            <td>
-                                                <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên trường" value="" />
-                                                <span id="Dkxt_DonViToChuc_Error" class="small mb-1 text-danger"></span>
+                                            <td colspan="4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-4">
+                                                        <label for="select_namtn" class="col-form-label">Tên đơn vị:</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị" value="" />
+                                                        <span id="Dkxt_DonViToChuc_Error" class="small mb-1 text-danger"></span>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td>
-                                                <input id="Dkxt_KetQuaDatDuoc" type="number" class="form-control" placeholder="Kết quả" value="" />
-                                                <span id="Dkxt_KetQuaDatDuoc_Error" class="small mb-1 text-danger"></span>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-4">
+                                                        <label for="select_namtn" class="col-form-label">Kết quả:</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input id="Dkxt_KetQuaDatDuoc" type="number" class="form-control" placeholder="Kết quả" value="" />
+                                                        <span id="Dkxt_KetQuaDatDuoc_Error" class="small mb-1 text-danger"></span>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td>
-                                                <input id="Dkxt_TongDiem" type="number" class="form-control" placeholder="Tổng điểm" value="" />
-                                                <span id="Dkxt_TongDiem_Error" class="small mb-1 text-danger"></span>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-4">
+                                                        <label for="select_namtn" class="col-form-label">Thang điểm:</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input id="Dkxt_TongDiem" type="number" class="form-control" placeholder="Thang điểm" value="" disabled/>
+                                                        <span id="Dkxt_TongDiem_Error" class="small mb-1 text-danger"></span>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td>
-                                                <input id="datepicker" name="Dkxt_NgayDuThi" type="text" class="form-control" placeholder="Ngày thi" value="" />
-                                                <span id="Dkxt_NgayDuThi_Error" class="small mb-1 text-danger"></span>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-4">
+                                                        <label for="select_namtn" class="col-form-label">Ngày thi:</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input id="datepicker" name="Dkxt_NgayDuThi" type="text" class="form-control" placeholder="Ngày thi" value="" />
+                                                        <span id="Dkxt_NgayDuThi_Error" class="small mb-1 text-danger"></span>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -175,52 +214,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-xxl-6">
-                                <div class="form-group mb-2">
-                                    <label for="formFileMultiple" class="form-label">Học bạ </label>
-                                    <div class="col-md-12">
-                                        <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
-                                               accept="application/pdf,.png, .jpeg, .jpg" />
-                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                        <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
-                                            <tr style="display:none">
-                                                <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xxl-6">
-                                <div class="form-group mb-2">
-                                    <label for="formFileMultiple" class="form-label">Căn cước công dân</label>
-                                    <div class="col-md-12">
-                                        <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
-                                               accept="application/pdf,.png, .jpeg, .jpg" />
-                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                        <table class="table" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
-                                            <tr style="display:none">
-                                                <th colspan="3"><input type="hidden" id="CCCD_Files" /></th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xxl-6">
-                                <div class="form-group mb-2">
-                                    <label for="formFileMultiple" class="form-label">Bằng Tốt nghiệp</label>
-                                    <div class="col-md-12">
-                                        <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                               accept="application/pdf,.png, .jpeg, .jpg" />
-                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                        <table class="table" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
-                                            <tr style="display:none">
-                                                <th colspan="3"><input type="hidden" id="BangTN_Files" /></th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xxl-6">
+                            <div class="col-xxl-12">
                                 <div class="form-group mb-2">
                                     <label for="formFileMultiple" class="form-label">Chứng nhận</label>
                                     <div class="col-md-12">
@@ -235,26 +229,98 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-6">
-                                <div class="form-group mb-2">
-                                    <label for="formFileMultiple" class="form-label">Minh chứng ưu tiên (Nếu có)</label>
-                                    <div class="col-md-12">
-                                        <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                               accept="application/pdf,.png, .jpeg, .jpg" />
-                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                        <table class="table" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
-                                            <tr style="display:none">
-                                                <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-xxl-12" style="text-align:center">
                                 <input class="btn btn-primary" type="button" value="Đồng ý" onclick="SubmitData()" />
                                 <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="_bt_HuyBo_Dkxt_NVM_OnClick(0,0,0)" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xxl-4">
+                        <div class="row md-0">
+                            <div class="col-xxl-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="vertical-align:middle;">Tệp minh chứng khác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row mb-3">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <label for="formFileMultiple" class="form-label">Học bạ </label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
+                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
+                                                                    <tr style="display:none">
+                                                                        <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <label for="formFileMultiple" class="form-label">Căn cước công dân</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
+                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <table class="table" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
+                                                                    <tr style="display:none">
+                                                                        <th colspan="3"><input type="hidden" id="CCCD_Files" /></th>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <label for="formFileMultiple" class="form-label">Bằng Tốt nghiệp</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
+                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <table class="table" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
+                                                                    <tr style="display:none">
+                                                                        <th colspan="3"><input type="hidden" id="BangTN_Files" /></th>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-2">
+                                                            <label for="formFileMultiple" class="form-label">Minh chứng ưu tiên (Nếu có)</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
+                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <table class="table" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
+                                                                    <tr style="display:none">
+                                                                        <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mt-0">
+                            <div class="col-xxl-12" style="text-align:center">
+                                <span id="Diem_All_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
 
@@ -332,6 +398,7 @@
     $(document).ready(function () {
         ListAllNguyenVong();
         GetAllKhoiNganh();
+        GetAllChungChi();
         $('#datepicker').datepicker({
             format: 'dd/mm/yyyy', // Specify the desired date format
             autoclose: true // Close the datepicker when a date is selected
@@ -340,6 +407,16 @@
         $("#select_khoinganh").change(function () {
             let id = $("#select_khoinganh").val();
             GetNganhData(id);
+        });
+
+        $('#ChungChi_ID').change(function () {
+            let id = $("#ChungChi_ID").val();
+            if (parseInt(id) > 0) {
+                GetChungChiId(id);
+            } else {
+                $('#Dkxt_ToHopXT').val("").text("");
+                $('#Dkxt_TongDiem').val("").text("");
+            }
         });
 
         $('input').on('input', function () {
@@ -466,7 +543,6 @@
                     contentType: false,
                     async: false,
                     success: function (response) {
-                        console.log(response)
                         if (response.success) {
                             savedPath = response.message;
                         }
@@ -513,9 +589,6 @@
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify({
-                MaToHop: $('#Dkxt_ToHopXT').val()
-            }),
             success: function (response) {
                 let result_all = response.data;
                 let thiSinh = response.thisinh;
@@ -541,12 +614,12 @@
                 }
                 else {
                     $.each(result_all, function (i, result) {
-                        console.log(result)
                         _output += '<tr>' +
                             '<td style="vertical-align: middle !important "> NV' + result.Dkxt_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID})" ${i == 0 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID})" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
                             '<td style="vertical-align: middle !important "> ' + result.Nganh_All.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_DonViToChuc + '</td>' +
-                            '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_KetQuaDatDuoc + "/" + result.Dkxt_TongDiem + '</td>' +
+                            '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_ToHopXT + '</td>' +
+                            '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_KetQuaDatDuoc + "/" + result.Dkxt_TongDiem.toFixed(2) + '</td>' +
                             '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_NgayDuThi + '</td>' +
                             '<td style="text-align: center; vertical-align: middle !important ">' + `<button class="btn btn-outline-danger btn-sm" onclick="deleteRecord(${result.Dkxt_ID})"}>Xoá</button>` + '</td>' +
                             '</tr>'
@@ -573,6 +646,50 @@
                 $.each(data, function (index, item) {
                     khoiNganhs.append($('<option></option>').val(item.KhoiNganh_ID).text(item.KhoiNganh_Ten));
                 });
+            },
+            error: function (errormessage) {
+                console.log(errormessage)
+            }
+        });
+    }
+
+    function GetAllChungChi() {
+        $.ajax({
+            url: "/DangKyXetTuyenKhac/GetAllChungChis/",
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                let chungchi = response.chungchi;
+                let chungchis = $('#ChungChi_ID');
+                chungchis.empty();
+                chungchis.append($('<option></option>').val(0).text("Chọn chứng chỉ"));
+                $.each(chungchi, function (index, item) {
+                    chungchis.append($('<option></option>').val(item.ChungChi_ID).text(item.ChungChi_Ten));
+                });
+            },
+            error: function (errormessage) {
+                console.log(errormessage)
+            }
+        });
+    }
+
+    function GetChungChiId(id) {
+        $.ajax({
+            url: "/DangKyXetTuyenKhac/GetChungChiByID/",
+            type: 'POST',
+            data: JSON.stringify({
+                id: id
+            }),
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                let chungchi = response.chungchi;
+                console.log(chungchi)
+                let pt = "HDP" + chungchi.ChungChi_PhuongThuc;
+                let thangdiem = chungchi.ChungChi_ThangDiem;
+                $('#Dkxt_ToHopXT').val(pt).text(pt);
+                $('#Dkxt_TongDiem').val(thangdiem).text(thangdiem);
             },
             error: function (errormessage) {
                 console.log(errormessage)
@@ -623,11 +740,11 @@
             flag = false;
         }
         if (!Dkxt_DonViToChuc) {
-            var errorMessage = "Vui lòng nhập tên trường";
+            var errorMessage = "Vui lòng nhập tên đơn vị tổ chức";
             $('#Dkxt_DonViToChuc_Error').text(errorMessage);
             flag = false;
         } else if (!Dkxt_DonViToChuc.trim()) {
-            var errorMessage = "Vui lòng nhập tên trường";
+            var errorMessage = "Vui lòng nhập tên đơn vị tổ chức";
             $('#Dkxt_DonViToChuc_Error').text(errorMessage);
             flag = false;
         }
@@ -635,7 +752,7 @@
             var errorMessage = "Vui lòng nhập kết quả";
             $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
-        }else if(parseFloat(Dkxt_KetQuaDatDuoc) < 0){
+        } else if (parseFloat(Dkxt_KetQuaDatDuoc) < 0) {
             var errorMessage = "Kết quả không hợp lệ";
             $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
@@ -644,7 +761,7 @@
             var errorMessage = "Vui lòng nhập tổng điểm";
             $('#Dkxt_TongDiem_Error').text(errorMessage);
             flag = false;
-        } else if(parseFloat(Dkxt_TongDiem) < 0){
+        } else if (parseFloat(Dkxt_TongDiem) < 0) {
             var errorMessage = "Tổng điểm không hợp lệ";
             $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -183,6 +183,8 @@
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TruongLienCapsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KinhPhisController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LienCapTHCSController.cs" />
     <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocDotxetsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
@@ -394,6 +396,11 @@
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\KinhPhis\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KinhPhis\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KinhPhis\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KinhPhis\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KinhPhis\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
