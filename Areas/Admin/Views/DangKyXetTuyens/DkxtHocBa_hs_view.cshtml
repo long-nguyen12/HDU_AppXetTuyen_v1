@@ -1,0 +1,232 @@
+﻿@model HDU_AppXetTuyen.Models.DangKyXetTuyen
+
+@{
+    ViewBag.Title = "DkxtHocBaHoSo";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+<style>
+    label {
+        white-space: nowrap !important;
+    }
+
+    .span_with_for {
+        width: 65px !important
+    }
+
+    .padding_input_text_number {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        text-align: center !important;
+    }
+</style>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span> Quản lý Thí sinh đăng ký xét tuyển</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-12">
+    <div class="card card-collapsable mt-1 mb-1">
+        <div class="card-header">
+            <div><span id="sp_tieude">Kiểm tra và xác thực thông tin đăng ký xét tuyển bằng học bạ</span></div>
+            <script>
+                $(document).ready(function () {
+                    let sp_tieude = document.getElementById('sp_tieude');
+                    if (window.innerWidth <= 1200) {
+                        sp_tieude.innerText = "Kiểm tra, xác thực TT ĐKXT bằng HB";
+                    }
+                    else {
+                        sp_tieude.innerText = "Kiểm tra và xác thực thông tin đăng ký xét tuyển bằng học bạ";
+                    }
+
+                    function reportWindowSize() {
+                        if (window.innerWidth <= 1200) {
+                            sp_tieude.innerText = "Kiểm tra, xác thực TT ĐKXT bằng HB";
+                        }
+                        else {
+                            sp_tieude.innerText = "Kiểm tra và xác thực thông tin đăng ký xét tuyển bằng học bạ";
+                        }
+                    }
+                    window.onresize = reportWindowSize;
+                })
+            </script>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-1">
+                <div class="col-lg-8 col-md-12">
+                    <ul class="nav" style="margin:0px">
+                        <li class="nav-item dropdown" style="margin:0px">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" id="bt_mc_showlabel" style="color:black">Các tệp minh chứng học bạ</a>
+                            <ul class="dropdown-menu" style="margin:0px">
+                                <li><a class="dropdown-item" href="#" id="bt_mc_hocba" style="color:black">Các tệp minh chứng học bạ</a></li>
+                                <li><a class="dropdown-item" href="#" id="bt_mc_bangtn">Các tệp minh chứng Bằng tốt nghiệp</a></li>
+                                <li><a class="dropdown-item" href="#" id="bt_mc_cccd">Các tệp minh chứng CCCD</a></li>
+                                <li><a class="dropdown-item" href="#" id="bt_mc_gtut">Các tệp minh chứng giấy tờ Ưu tiên</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <script>
+                        $(document).ready(function () {
+                            $('#bt_mc_hocba').click(function (e) {
+                                e.preventDefault();
+                                $('#bt_mc_showlabel').text($('#bt_mc_hocba').text());
+                                console.log('vui 0');
+                            });
+                            $('#bt_mc_bangtn').click(function (e) {
+                                e.preventDefault();
+                                $('#bt_mc_showlabel').text($('#bt_mc_bangtn').text());
+                                console.log('vui 1');
+
+                            });
+                            $('#bt_mc_cccd').click(function (e) {
+                                e.preventDefault();
+                                $('#bt_mc_showlabel').text($('#bt_mc_cccd').text());
+                                console.log('vui 2');
+                            });
+                            $('#bt_mc_gtut').click(function (e) {
+                                e.preventDefault();
+                                $('#bt_mc_showlabel').text($('#bt_mc_gtut').text());
+                                console.log('vui 3');
+                            });
+                        })
+                    </script>
+                    <hr style="margin-top: 2px; margin-bottom:8px" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active overflow-auto">
+                                        <img src="~/Uploads/DKXTHocBaFile/0002.jpeg" class="h-100 d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item  overflow-auto">
+                                        <img src="~/Uploads/DKXTHocBaFile/0003.jpeg" class="h-100 d-block w-100" alt="...">
+                                    </div>
+                                    <div class="carousel-item  overflow-auto">
+                                        <img src="~/Uploads/DKXTHocBaFile/0004.jpeg" class=" h-100 d-block w-100" alt="...">
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <ul class="nav" style="margin:0px">
+                        <li class="nav-item " style="margin:0px">
+                            <a class="nav-link" href="#" role="button" style="color:black">Điểm các môn thí sinh nhập</a>
+                         
+                        </li>
+                    </ul>   
+                    <hr style="margin-top: 2px; margin-bottom:8px" />
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align:middle; width:9%">Môn</th>
+                                        <th style="vertical-align: middle; text-align: center; width: 22%">HK1/11</th>
+                                        <th style="vertical-align: middle; text-align: center; width: 22%">HK2/11</th>
+                                        <th style="vertical-align: middle; text-align: center; width: 22%">HK1/12</th>
+                                        <th style="vertical-align: middle; text-align: center; width: 25%">TBC</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_list_diemmonhoc">
+
+                                    <tr style="vertical-align:middle;">
+                                        <td><label id="lb_tenmon_1" class="form-label">Toán</label></td>
+                                        <td><input id="txt_m1_k1" type="text" class="form-control input-mon1 padding_input_text_number " value="8.3" disabled /></td>
+                                        <td><input id="txt_m1_k2" type="text" class="form-control input-mon1 padding_input_text_number " value="7.2" disabled /></td>
+                                        <td><input id="txt_m1_k3" type="text" class="form-control input-mon1 padding_input_text_number " value="8.0" disabled /></td>
+                                        <td><input id="txt_tb_m1" type="text" class="form-control padding_input_text_number input-tong" value="7.83" disabled /></td>
+                                    </tr>
+                                    <tr style="vertical-align:middle;">
+                                        <td><label id="lb_tenmon_2" class="form-label">Lý</label></td>
+                                        <td><input id="txt_m2_k1" type="text" class="form-control input-mon2 padding_input_text_number " value="8.0" disabled /></td>
+                                        <td><input id="txt_m2_k2" type="text" class="form-control input-mon2 padding_input_text_number " value="8.0" disabled /></td>
+                                        <td><input id="txt_m2_k3" type="text" class="form-control input-mon2 padding_input_text_number " value="8.0" disabled /></td>
+                                        <td><input id="txt_tb_m2" type="text" class="form-control padding_input_text_number input-tong" value="8.0" disabled /></td>
+                                    </tr>
+                                    <tr style="vertical-align:middle;">
+                                        <td><label id="lb_tenmon_3" class="form-label">GDCD</label></td>
+                                        <td><input id="txt_m3_k1" type="text" class="form-control input-mon3 padding_input_text_number " value="7.5" disabled /></td>
+                                        <td><input id="txt_m3_k2" type="text" class="form-control input-mon3 padding_input_text_number " value="8.5" disabled /></td>
+                                        <td><input id="txt_m3_k3" type="text" class="form-control input-mon3 padding_input_text_number " value="8.0" disabled /></td>
+                                        <td><input id="txt_tb_m3" type="text" class="form-control padding_input_text_number input-tong" value="8.0" disabled /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Kiểm duyệt hồ sơ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_list_diemmonhoc">
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class="d-inline-flex flex-nowrap">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="radioNam" name="HocSinh_GioiTinh" checked value="0">
+                                                    <label class="form-check-label" for="radioNam">
+                                                        Minh chứng sai
+                                                    </label>
+                                                </div>
+                                                <div class="form-check" style="margin-left:10px">
+                                                    <input class="form-check-input" type="radio" id="radioNu" name="HocSinh_GioiTinh" value="1">
+                                                    <label class="form-check-label" for="radioNua">
+                                                        Hồ sơ đầy đủ
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:60px">   <label class="form-label">Ghi chú</label></td>
+                                        <td> <input type="text" class=" form-control" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12" style="text-align:center">
+                            <input type="button" class="btn btn-primary" value="Xác nhận thông tin thí sinh" />
+                            <input type="button" class="btn btn-primary" value="Hủy bỏ" />
+                        </div>
+                    </div>
+                    <hr style="margin-top: 4px; " />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Xceed.Document.NET;
 using Xceed.Words.NET;
-using HDU_AppXetTuyen.Ultils;
+
 using System.Web.UI.WebControls;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 
@@ -99,27 +99,28 @@ namespace HDU_AppXetTuyen.Controllers
                     var jsonStringMon1 = JsonConvert.SerializeObject(item.Dkxt_Diem_M1);
                     var jsonStringMon2 = JsonConvert.SerializeObject(item.Dkxt_Diem_M2);
                     var jsonStringMon3 = JsonConvert.SerializeObject(item.Dkxt_Diem_M3);
-
-                    DiemMon1 diemmon1 = JsonConvert.DeserializeObject<DiemMon1>(item.Dkxt_Diem_M1);
-                    DiemMon2 diemmon2 = JsonConvert.DeserializeObject<DiemMon2>(item.Dkxt_Diem_M2);
-                    DiemMon3 diemmon3 = JsonConvert.DeserializeObject<DiemMon3>(item.Dkxt_Diem_M3);
+                  
+                    // MonDiem khai báo trong  Model.LibraryUsers
+                    MonDiem diemmon1 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_Diem_M1);
+                    MonDiem diemmon2 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_Diem_M2);
+                    MonDiem diemmon3 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_Diem_M3);
 
                     // Lấy ra thông tin chi tiết của từng môn1
-                    var mon1_tenmon = diemmon1.TenMon1.ToString();
+                    var mon1_tenmon = diemmon1.TenMon.ToString();
                     var mon1_hk1 = diemmon1.HK1.ToString();
                     var mon1_hk2 = diemmon1.HK2.ToString();
                     var mon1_hk3 = diemmon1.HK3.ToString();
                     var mon1_diemtb = diemmon1.DiemTrungBinh != null ? diemmon1.DiemTrungBinh.ToString() : " ";
 
                     // Lấy ra thông tin chi tiết của từng môn2
-                    var mon2_tenmon = diemmon2.TenMon2.ToString();
+                    var mon2_tenmon = diemmon2.TenMon.ToString();
                     var mon2_hk1 = diemmon2.HK1.ToString();
                     var mon2_hk2 = diemmon2.HK2.ToString();
                     var mon2_hk3 = diemmon2.HK3.ToString();
                     var mon2_diemtb = diemmon2.DiemTrungBinh != null ? diemmon2.DiemTrungBinh.ToString() : " ";
 
                     // Lấy ra thông tin chi tiết của từng môn3
-                    var mon3_tenmon = diemmon3.TenMon3.ToString();
+                    var mon3_tenmon = diemmon3.TenMon.ToString();
                     var mon3_hk1 = diemmon3.HK1.ToString();
                     var mon3_hk2 = diemmon3.HK2.ToString();
                     var mon3_hk3 = diemmon3.HK3.ToString();
@@ -547,20 +548,21 @@ namespace HDU_AppXetTuyen.Controllers
                     //Từ ngành id lấy ra tên ngành và mã ngành
                     var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
-
-                    DiemThiGQMon1 diemmon1 = JsonConvert.DeserializeObject<DiemThiGQMon1>(item.Dkxt_KQTQG_Diem_M1);
-                    DiemThiGQMon2 diemmon2 = JsonConvert.DeserializeObject<DiemThiGQMon2>(item.Dkxt_KQTQG_Diem_M2);
-                    DiemThiGQMon3 diemmon3 = JsonConvert.DeserializeObject<DiemThiGQMon3>(item.Dkxt_KQTQG_Diem_M3);
+                   
+                    // DiemThiGQMon khai báo trong  Model.LibraryUsers
+                    DiemThiGQMon diemmon1 = JsonConvert.DeserializeObject<DiemThiGQMon>(item.Dkxt_KQTQG_Diem_M1);
+                    DiemThiGQMon diemmon2 = JsonConvert.DeserializeObject<DiemThiGQMon>(item.Dkxt_KQTQG_Diem_M2);
+                    DiemThiGQMon diemmon3 = JsonConvert.DeserializeObject<DiemThiGQMon>(item.Dkxt_KQTQG_Diem_M3);
 
                     // Lấy ra thông tin chi tiết của từng môn1
-                    var mon1_tenmon = diemmon1.TenMon1.ToString();
-                    var mon1_diem = diemmon1.DiemM1.ToString();
+                    var mon1_tenmon = diemmon1.TenMon.ToString();
+                    var mon1_diem = diemmon1.Diem.ToString();
                     // Lấy ra thông tin chi tiết của từng môn2
-                    var mon2_tenmon = diemmon2.TenMon2.ToString();
-                    var mon2_diem = diemmon2.DiemM2.ToString();
+                    var mon2_tenmon = diemmon2.TenMon.ToString();
+                    var mon2_diem = diemmon2.Diem.ToString();
                     // Lấy ra thông tin chi tiết của từng môn3
-                    var mon3_tenmon = diemmon3.TenMon3.ToString();
-                    var mon3_diem = diemmon3.DiemM3.ToString();
+                    var mon3_tenmon = diemmon3.TenMon.ToString();
+                    var mon3_diem = diemmon3.Diem.ToString();
 
                     var tongdiem = item.Dkxt_KQTQG_Diem_Tong;
 

@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Newtonsoft.Json;
-using HDU_AppXetTuyen.Ultils;
+
 using System.IO;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 
@@ -298,9 +298,13 @@ namespace HDU_AppXetTuyen.Controllers
 
 
                 long _thisinh_id = tsdk_Detail.ThiSinh_ID;
-
-                var list_dkxt_thptqg_ts = db_thptqg.DangKyXetTuyenKQTQGs.Include(d => d.Nganh).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon)
-                                          .Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_KQTQG_NguyenVong).ToList();
+               
+                var list_dkxt_thptqg_ts = db_thptqg.DangKyXetTuyenKQTQGs.
+                                                    Include(d => d.ThiSinhDangKy).
+                                                    Include(d => d.Nganh).
+                                                    Include(d => d.ToHopMon).
+                                                    Include(d => d.DotXetTuyen).
+                                                    Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_KQTQG_NguyenVong).ToList();
 
                 var view_list_dkxt_thptqg_ts = list_dkxt_thptqg_ts.Select(s => new
                 {
@@ -327,7 +331,6 @@ namespace HDU_AppXetTuyen.Controllers
                     dkxt_KQTQG_Diem_Tong_Full = s.Dkxt_KQTQG_TongDiem_Full,
 
                 }).ToList();
-
                 var Tsdk_doituong_ten_diem = _ut_doituong_ten_diem;
                 var Tsdk_khuvuv_ten_diem = _ut_khuvuv_ten_diem;
                 var Tsdk_xeploai_hocluc_12 = _xeploai_hocluc_12;
@@ -399,20 +402,20 @@ namespace HDU_AppXetTuyen.Controllers
                 // lấy chuỗi lưu vào csdl
                 if (i < so_file_cn_totnghiep)
                 {
-                    _KQTQG_MinhChung_CNTotNghiep += "#/Uploads/DKXTKQTTHPTQGFile/" + fname;
+                    _KQTQG_MinhChung_CNTotNghiep += "/Uploads/DKXTKQTTHPTQGFile/" + fname + "#";
                 }
                 if (i >= so_file_cn_totnghiep && i < so_file_bang_tn + so_file_cn_totnghiep)
                 {
-                    _KQTQG_MinhChung_BangTN += "#/Uploads/DKXTKQTTHPTQGFile/" + fname;
+                    _KQTQG_MinhChung_BangTN += "#/Uploads/DKXTKQTTHPTQGFile/" + fname+"#";
                 }
 
                 if (i >= so_file_bang_tn + so_file_cn_totnghiep && i < so_file_hocba_ts + so_file_bang_tn + so_file_cn_totnghiep)
                 {
-                    _KQTQG_MinhChung_HocBa += "#/Uploads/DKXTKQTTHPTQGFile/" + fname;
+                    _KQTQG_MinhChung_HocBa += "#/Uploads/DKXTKQTTHPTQGFile/" + fname + "#";
                 }
                 if (i >= so_file_hocba_ts + so_file_bang_tn + so_file_cn_totnghiep && i < so_file_giayto_uutien + so_file_hocba_ts + so_file_bang_tn + so_file_cn_totnghiep)
                 {
-                    _KQTQG_MinhChung_UuTien += "#/Uploads/DKXTKQTTHPTQGFile/" + fname;
+                    _KQTQG_MinhChung_UuTien += "#/Uploads/DKXTKQTTHPTQGFile/" + fname + "#";
                 }
 
                 // Get the complete folder path and store the file inside it.      
@@ -601,20 +604,21 @@ namespace HDU_AppXetTuyen.Controllers
                 if (tsdk_Detail.ThiSinh_HocLucLop12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
                 if (tsdk_Detail.ThiSinh_HocLucLop12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
 
-                string _ut_doituong_ten_diem = "ĐT " + tsdk_Detail.DoiTuong.DoiTuong_Ten + ": ƯT " + tsdk_Detail.DoiTuong.DoiTuong_DiemUuTien + " đ";
+                string _ut_doituong_ten_diem = tsdk_Detail.DoiTuong.DoiTuong_Ten + ": ƯT " + tsdk_Detail.DoiTuong.DoiTuong_DiemUuTien + " đ";
                 string _ut_khuvuv_ten_diem = tsdk_Detail.KhuVuc.KhuVuc_Ten + ": ƯT " + tsdk_Detail.KhuVuc.KhuVuc_DiemUuTien + " đ"; ;
 
 
                 long _thisinh_id = tsdk_Detail.ThiSinh_ID;
 
                 var dkxt_Detail_list = db_dkxt.DangKyXetTuyens.
-                                       Include(d => d.DoiTuong).
-                                       Include(d => d.DotXetTuyen).
-                                       Include(d => d.KhuVuc).
-                                       Include(d => d.Nganh).
-                                       Include(d => d.PhuongThucXetTuyen).
-                                       Include(d => d.ThiSinhDangKy).
-                                       Include(d => d.ToHopMon).Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_NguyenVong).ToList();
+                                               Include(d => d.ThiSinhDangKy).
+                                               Include(d => d.Nganh).
+                                               Include(d => d.ToHopMon).
+                                               Include(d => d.DotXetTuyen).
+                                               Include(d => d.DoiTuong).                                       
+                                               Include(d => d.KhuVuc).                                      
+                                               Include(d => d.PhuongThucXetTuyen).                                       
+                                               Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_NguyenVong).ToList();
                 var select_list_dkxt_model = dkxt_Detail_list.Select(s => new
                 {
                     dkxt_ID = s.Dkxt_ID,
@@ -715,20 +719,20 @@ namespace HDU_AppXetTuyen.Controllers
                 // lấy chuỗi lưu vào csdl
                 if (i < so_file_hb)
                 {
-                    MinhChung_HB += "#/Uploads/DKXTHocBaFile/" + fname;
+                    MinhChung_HB += "/Uploads/DKXTHocBaFile/" + fname + "#";
                 }
                 if (i >= so_file_hb && i < so_file_hb + so_file_cccd)
                 {
-                    MinhChung_CCCD += "#/Uploads/DKXTHocBaFile/" + fname;
+                    MinhChung_CCCD += "/Uploads/DKXTHocBaFile/" + fname + "#";
                 }
 
                 if (i >= so_file_hb + so_file_cccd && i < so_file_btn + so_file_hb + so_file_cccd)
                 {
-                    MinhChung_Bang += "#/Uploads/DKXTHocBaFile/" + fname;
+                    MinhChung_Bang += "/Uploads/DKXTHocBaFile/" + fname + "#";
                 }
                 if (i >= so_file_btn + so_file_hb + so_file_cccd && i < so_file_gtut + so_file_btn + so_file_hb + so_file_cccd)
                 {
-                    MinhChung_UuTien += "#/Uploads/DKXTHocBaFile/" + fname;
+                    MinhChung_UuTien += "/Uploads/DKXTHocBaFile/" + fname + "#";
                 }
 
                 // Get the complete folder path and store the file inside it.      

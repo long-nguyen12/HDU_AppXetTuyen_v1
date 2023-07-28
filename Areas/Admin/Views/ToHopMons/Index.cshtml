@@ -73,9 +73,14 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Thm_Mon3)
                                 </td>
-                                <td>
+                                @*<td>
                                     @Html.ActionLink("Sửa", "Edit", new { id = item.Thm_ID }) |
                                     @Html.ActionLink("Xóa", "Delete", new { id = item.Thm_ID })
+                                </td>*@
+                                <td style="white-space:nowrap; text-align:center">
+                                    @*<a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Thm_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |*@
+                                    <a href="@Url.Action("Edit","ToHopMons" , new { id = item.Thm_ID })" title="Chỉnh sửa thông tin tổ hợp môn"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                    <a href="@Url.Action("Delete","ToHopMons" , new { id = item.Thm_ID })" title="Xóa thông tin tổ hợp môn"><i data-feather="trash-2" style="vertical-align:middle!important"></i></a>
                                 </td>
                             </tr>
                         }

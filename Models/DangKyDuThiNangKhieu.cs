@@ -32,8 +32,7 @@
         public int? DotXT_ID { get; set; }
 
         public int? Dkdt_NK_NamTotNghiep { get; set; }
-        public int? Ptxt_ID { get; set; }
-        public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
+        public int? Ptxt_ID { get; set; }    
 
         [StringLength(500)]
         public string Dkdt_NK_GhiChu { get; set; }
@@ -41,7 +40,6 @@
         [StringLength(1000)]
         public string Dkdt_NK_MonThi { get; set; }
         public int? Dkdt_NK_NguyenVong { get; set; }
-
         [StringLength(100)]
         public string Dkdt_NK_NgayDangKy { get; set; }
 
@@ -69,5 +67,7 @@
         public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }
 
         public virtual ToHopMon ToHopMon { get; set; }
+        public virtual DotXetTuyen DotXetTuyen { get; set; }
+        public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
     }
 }

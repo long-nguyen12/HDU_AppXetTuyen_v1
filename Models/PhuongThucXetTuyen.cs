@@ -12,7 +12,9 @@ namespace HDU_AppXetTuyen.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhuongThucXetTuyen()
         {
-            DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
+            DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
+            DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
+            DangKyXetTuyens = new HashSet<DangKyXetTuyen>();          
         }
 
         [Key]
@@ -26,5 +28,9 @@ namespace HDU_AppXetTuyen.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
     }
 }
