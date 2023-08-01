@@ -68,8 +68,7 @@
 
         public string HocSinh_NgheNghiepCha { get; set; }
 
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
-                   ErrorMessage = "Số điện thoại sai đinh dạng")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Số điện thoại sai đinh dạng")]
         [Display(Name = "Điện thoại cha")]
         [Required(ErrorMessage = "Điện thoại cha bắt buộc nhập")]
 
@@ -85,8 +84,7 @@
         [StringLength(4000)]
         public string HocSinh_NgheNghiepMe { get; set; }
 
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",
-           ErrorMessage = "Số điện thoại sai đinh dạng.")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",   ErrorMessage = "Số điện thoại sai đinh dạng.")]
         [Required(ErrorMessage = "Điện thoại mẹ bắt buộc nhập")]
         [Display(Name = "Điện thoại mẹ")]
         [StringLength(20)]
@@ -129,5 +127,6 @@
 
         [StringLength(4000)]
         public string HocSinh_Activation { get; set; }
+
     }
 }

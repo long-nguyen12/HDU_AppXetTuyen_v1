@@ -29,7 +29,6 @@
                         <span>Đăng ký dự thi năng khiếu</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -50,6 +49,7 @@
                                     <th style="vertical-align:middle;">Ngành</th>
                                     <th style="vertical-align:middle;">Tổ hợp môn</th>
                                     <th style="vertical-align:middle;">Môn thi NK</th>
+                                    <th style="vertical-align:middle;">Nộp lệ phí</th>
                                     <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
                                 </tr>
                             </thead>
@@ -306,12 +306,18 @@
                 }
                 else {
                     $.each(result_all.view_list_dkdt_nangkhieu_ts, function (i, result) {
-                        _output += '<tr>' +
-                            '<td style="vertical-align: middle !important "> ' + result.dkdt_NK_TenAll.nganh_GhiChu + ' </td>' +
-                            '<td style="vertical-align: middle !important ">' + result.dkdt_NK_TenAll.thm_MaTen + '</td>' +
-                            '<td style="vertical-align: middle !important ">' + result.dkdt_NK_MonThi + '</td>' +
-                            '<td style="text-align: center; vertical-align: middle !important">' + `<button class="btn btn-outline-danger btn-sm" onclick="delete_registration_on_table_onclick(${result.dkdt_NK_ID})"}>Xoá</button>` + '</td>' +
-                            '</tr>'
+                        _output += '<tr>';
+                        _output += '<td style="vertical-align: middle !important "> ' + result.dkdt_NK_TenAll.nganh_GhiChu + ' </td>';
+                        _output += '<td style="vertical-align: middle !important ">' + result.dkdt_NK_TenAll.thm_MaTen + '</td>';
+                        _output += '<td style="vertical-align: middle !important ">' + result.dkdt_NK_MonThi + '</td>';
+                        if (result.dkdt_NK_TrangThai == 0) {
+                            _output += '<td style="vertical-align: middle !important "> <a href="#" class="btn btn-outline-danger btn-sm">Chưa nộp</a></td>';
+                        }
+                        if (result.dkdt_NK_TrangThai > 0) {
+                            _output += '<td style="vertical-align: middle !important "> <a href="#" class="btn btn-outline-primary btn-sm">Đã nộp</a></td>';
+                        }
+                        _output += '<td style="text-align: center; vertical-align: middle !important">' + `<button class="btn btn-outline-danger btn-sm" onclick="delete_registration_on_table_onclick(${result.dkdt_NK_ID})"}>Xoá</button>` + '</td>';
+                        _output += '</tr>'
                     });
                 }
                 document.getElementById('tbody_list_dkdt_nk').innerHTML = _output;

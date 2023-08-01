@@ -1,0 +1,171 @@
+﻿@model PagedList.IPagedList<HDU_AppXetTuyen.Models.DangKyDuThiNangKhieu>
+@using PagedList.Mvc;
+<!-- Kết thúc-->
+@{
+    ViewBag.Title = "QL DS DKXT";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+<!-- Thêm thư viện -->
+<style>
+    th, td {
+        white-space: nowrap;
+    }
+
+    .bt-hs {
+        width: 80px;
+    }
+
+    .bd-rd {
+       /* border-radius: 0px !important;*/
+    }
+</style>
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span>Quản lý Thí sinh đăng ký dự thi năng khiếu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-12">
+    <div class="card card-header-actions">
+        <div class="card-header">
+            <div id="div_tieude"><span>Danh sách thí sinh đăng ký dự thi năng khiếu</span></div>            
+        </div>   
+        <div class="card-body">
+            @using (Html.BeginForm("Dkdttnk", "DangKyXetTuyens", FormMethod.Get))
+            {
+                <div class="row g-1">                  
+                    <div class="col-xxl-1 col-md-12">
+                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select form-select-sm bd-rd" })
+                    </div>
+                    <div class="col-xxl-1 col-md-12">
+                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select form-select-sm bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select form-select-sm bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select form-select-sm bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select form-select-sm bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control form-control-sm bd-rd", @placeholder = "Nhập từ khóa..." })
+                    </div>
+                    <div class="col-xxl-2 col-xl-12">
+                        <div class="d-inline-flex flex-nowrap align-items-center">
+                            <button class="btn btn-outline-primary bd-rd btn-sm" id="bt_search" style="margin-right:4px">Lọc</button>
+                            <a class="btn btn-outline-secondary bd-rd  btn-sm" id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                            <a class="btn btn-outline-primary bd-rd  btn-sm" id="bt_reset" href="#" style="padding-right:6px; padding-left:6px">Xuất excel</a>
+                        </div>
+                    </div>
+                    <hr class="mt-2 mb-2" />
+                </div>
+            }
+            <div class="row g-1">
+                <div class="col-sm-12 col-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Họ tên</th>
+                                    <th>Điện thoại</th>
+                                    <th>Ngành</th>
+                                    <th>Tổ hợp môn</th>
+                                    <th>Tên môn dự thi</th>
+                                    <th>Lệ phí</th>
+                                    <th>Hồ sơ</th>
+                                    <th style="width:100px">Cập nhật</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot) @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nganh.NganhTenNganh)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ToHopMon.Thm_TenToHop)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Dkdt_NK_MonThi)
+                                        </td>
+
+                                        <td>
+                                            @{
+                                                if (item.Dkdt_NK_TrangThai == 0)
+                                                {
+                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng</a>
+                                                }
+                                                if (item.Dkdt_NK_TrangThai == 1)
+                                                {
+                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp</a>
+                                                }
+                                                if (item.Dkdt_NK_TrangThai == 2)
+                                                {
+                                                    <a href="#" style="color: blue; text-decoration: none">Đã duyệt</a>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.Dkdt_NK_TrangThai_KetQua == 0)
+                                                {
+                                                    <a href="#" class="btn btn-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
+                                                }
+                                                if (item.Dkdt_NK_TrangThai_KetQua == 1)
+                                                {
+                                                    <a href="#" class="btn btn-success btn-sm bt-hs  bd-rd">MC sai</a>
+                                                }
+                                                if (item.Dkdt_NK_TrangThai_KetQua == 2)
+                                                {
+                                                    <a href="#" class="btn btn-primary btn-sm bt-hs  bd-rd">Đã KT</a>
+                                                }
+                                            }
+                                        </td>
+                                        <td style="white-space:nowrap">
+                                            <a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("Details","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("Delete","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                        <!-- Thêm mã phân trang -->
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
+                        @Html.PagedListPager(Model, page => Url.Action("Dkdttnk", new
+                        {
+                            filteriDotxt = ViewBag.DotxtFilteri,
+                            filteriNvong = ViewBag.NvongFilteri,
+                            filteriNganh = ViewBag.NganhFilteri,
+                            filteriLePhi = ViewBag.LePhiFilteri,
+                            filteriHoSo = ViewBag.HoSoFilteri,
+                            searchString = ViewBag.SearchString,
+                            page
+                        }))
+                        <!-- Kết thúc  -->                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

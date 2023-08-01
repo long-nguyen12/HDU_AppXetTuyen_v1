@@ -1,22 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Thông tin tổng thể";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout_admin.cshtml";
+    ViewBag.Title = "Dkxtth";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
-
 
 <style>
     th, td {
         white-space: nowrap;
     }
 </style>
-@*<header class="py-10 mb-4 bg-gradient-primary-to-secondary">
-    <div class="container-xl px-4">
-        <div class="text-center">
-            <h1 class="text-white">TRANG QUẢN TRỊ HỒ SƠ XÉT TUYỂN</h1>
-            <p class="lead mb-0 text-white"> Trường Đại học Hồng Đức</p>
-        </div>
-    </div>
-</header>*@
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
         <div class="page-header-content">
@@ -24,7 +15,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span>Quản lý thí sinh đăng ký xét tuyển</span>
+                        <span>Quản lý Thí sinh đăng ký xét tuyển</span>
                     </div>
                 </div>
             </div>
@@ -32,7 +23,10 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-header-actions">      
+    <div class="card card-header-actions">
+        @*<div class="card-header">
+                <div id="div_tieude"><span>Danh sách thí sinh đăng ký dự thi năng khiếu</span></div>
+            </div>*@
         <div class="card-body">
             <div class="row">
                 <div class="col-xxl-4  mt-2 md-2">
@@ -77,6 +71,7 @@
 
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-lg-4 mt-2 md-2">
                     <div class="card">
                         <div class="card-header">Xét tuyển sd chứng chỉ ngoại ngữ</div>
@@ -122,38 +117,3 @@
     </div>
 </div>
 
-
-
-<!--
-<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
-    <div class="container-fluid px-4">
-        <div class="page-header-content">
-            <div class="row align-items-center justify-content-between pt-3">
-                <div class="col-auto mb-1">
-                    <div class="page-header-title  mb-2">
-                        <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span>Quản lý thông tin thí sinh</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<div class="container-fluid px-12">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-header-actions mt-1 mb-1 ">
-                <div class="card-header">
-                    <span>Chi tiết thông tin thí sinh</span>
-                    <a class="btn-close" aria-label="Close" href="#"></a>
-                </div>
-                <div class="card-body">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
--->

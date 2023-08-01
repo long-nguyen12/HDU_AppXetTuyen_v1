@@ -25,7 +25,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span>Sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
+                        <span id="sp_tieude">Sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
                     </div>
                 </div>
 
@@ -33,6 +33,27 @@
         </div>
     </div>
 </header>
+<script>
+    $(document).ready(function () {
+        let sp_tieude = document.getElementById('sp_tieude');    
+        if (window.innerWidth <= 1200) {
+            sp_tieude.innerText = "Sử dụng KQ thi TN THPT Quốc gia";
+        }
+        else {
+            sp_tieude.innerText = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+        }
+
+        function reportWindowSize() {
+            if (window.innerWidth <= 1200) {
+                sp_tieude.innerText = "Sử dụng KQ thi TN THPT Quốc gia";
+            }
+            else {
+                sp_tieude.innerText = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+            }
+        }
+        window.onresize = reportWindowSize;
+    })
+</script>
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
         <div class="card card-header-actions">
@@ -42,33 +63,71 @@
             <input type="hidden" id="dkxt_thptqg_id_checkin" style="display:none!important" />
             <div class="card-body">
                 <div class="row">
-                    <div class="col-xxl-12">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th style="vertical-align:middle;">Nguyện vọng</th>
-                                    <th style="vertical-align:middle;">Ngành</th>
-                                    <th style="vertical-align:middle;">Tổ hợp môn</th>
-                                    @*<th style="vertical-align:middle;">Trạng thái</th>*@
-                                    <th style="vertical-align:middle;">Tổng điểm</th>
-                                    <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_list_nguyenvong_xtkqthpt">
-                            </tbody>
-                        </table>
+                    <div class="col-sm-12 col-12">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align:middle;">Nguyện vọng</th>
+                                        <th style="vertical-align:middle;">Ngành</th>
+                                        <th style="vertical-align:middle;">Tổ hợp môn</th>
+                                        @*<th style="vertical-align:middle;">Trạng thái</th>*@
+                                        <th style="vertical-align:middle;">Tổng điểm</th>
+                                        <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_list_nguyenvong_xtkqthpt">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xxl-12">
+                    <div class="col-sm-12">
                         <center>
                             <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
                             <a class="btn btn-outline-primary" id="bt_add_aspirations">Thêm nguyện vọng</a>
+                            <script>
+                                $(document).ready(function () {
+                                    let sp_tieude = document.getElementById('sp_tieude');
+                                    let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
+                                    let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
+
+                                    if (window.innerWidth <= 700) {
+                                        sp_tieude.innerHTML = "Sử dụng KQ thi TN THPT Quốc gia";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm NV";
+
+                                    }
+                                    else {
+                                        sp_tieude.innerHTML = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+
+                                    }
+
+                                    function reportWindowSize() {
+                                        if (window.innerWidth <= 700) {
+                                            sp_tieude.innerHTML = "Sử dụng KQ thi TN THPT Quốc gia";
+                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
+                                            bt_them_nguyen_vong.innerHTML = "Thêm NV";
+
+                                        }
+                                        else {
+                                            sp_tieude.innerHTML = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
+                                            bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+
+                                        }
+                                    }
+                                    window.onresize = reportWindowSize;
+                                })
+                            </script>
                         </center>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xxl-12">
+                    <div class="col-sm-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
                         <p style="color:red; font-style:italic; text-align:justify" class="mb-1">-Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic ;text-align:justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
@@ -234,23 +293,8 @@
                                             <td>
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-0">
-                                                            <label for="files_bangtn" class="form-label">Bằng Tốt nghiệp (nếu có)</label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-0 md-0">
-                                                    <div class="col-xxl-12">
                                                         <div class="form-group mb-0 mt-1">
-                                                            <label for="files_hocba_ts" class="form-label">Học bạ</label>
+                                                            <label for="files_hocba_ts" class="form-label">Học bạ/Bằng tốt nghiệp</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" data-val-required="Vui lòng chọn file Vui lòng chọn file học bạ"
                                                                        accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
@@ -263,9 +307,20 @@
                                                     </div>
                                                 </div>
 
-                                                <script>
-
-                                                </script>
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-0">
+                                                            <label for="files_bangtn" class="form-label">Căn cước công dân</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
+                                                    </div>
+                                                </div>
 
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
@@ -356,7 +411,7 @@
     function ts_dkxt_thptqg_list_all() {
         let _output = "";
         $.ajax({
-            url: "/DangKyXetTuyens/DangKyXetTuyenKQTHPTQG_ListAll/",
+            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_ListAll/",
             type: 'GET',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
@@ -405,7 +460,7 @@
         let currentYear = new Date().getFullYear();
         let nam_list = [
             { value: 0, text: "Chọn năm" },
-            { value: currentYear, text: currentYear },
+           /* { value: currentYear, text: currentYear },*/
             { value: currentYear - 1, text: currentYear - 1 },
             { value: currentYear - 2, text: currentYear - 2 },
         ]
@@ -435,7 +490,7 @@
             if (dataObj.Dkxt_KQTQG_ID == 0 && dataObj.Thm_ID > 0) {
                 reset_fields_controll_disabled_false();
                 $.ajax({
-                    url: "/DangKyXetTuyens/DangKyXetTuyen_Get_Data_MonHoc",
+                    url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Get_Data_MonHoc",
                     data: JSON.stringify(dataObj),
                     type: 'POST',
                     contentType: 'application/json;charset=utf-8',
@@ -594,9 +649,9 @@
         let _thm_ID = $('#select_tohopmon').val();
         let _dkxt_KQTQG_NamTotNghiep = $('#select_namtn').val();
 
-        let _kxt_KQTQG_Diem_M1 = { TenMon1: $('#lb_tenmon_1').text(), DiemM1: $('#txt_m1').val() };
-        let _kxt_KQTQG_Diem_M2 = { TenMon2: $('#lb_tenmon_2').text(), DiemM2: $('#txt_m2').val() };
-        let _kxt_KQTQG_Diem_M3 = { TenMon3: $('#lb_tenmon_3').text(), DiemM3: $('#txt_m3').val() };
+        let _kxt_KQTQG_Diem_M1 = { TenMon: $('#lb_tenmon_1').text(), Diem: $('#txt_m1').val() };
+        let _kxt_KQTQG_Diem_M2 = { TenMon: $('#lb_tenmon_2').text(), Diem: $('#txt_m2').val() };
+        let _kxt_KQTQG_Diem_M3 = { TenMon: $('#lb_tenmon_3').text(), Diem: $('#txt_m3').val() };
 
 
         if (_nganh_ID == 0) { var errorMessage = "Vui lòng chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
@@ -610,7 +665,7 @@
 
         if (!flag) return;
 
-        let _dkxt_KQTQG_Diem_Tong = parseFloat(_kxt_KQTQG_Diem_M1.DiemM1) + parseFloat(_kxt_KQTQG_Diem_M2.DiemM2) + parseFloat(_kxt_KQTQG_Diem_M3.DiemM3);
+        let _dkxt_KQTQG_Diem_Tong = parseFloat(_kxt_KQTQG_Diem_M1.Diem) + parseFloat(_kxt_KQTQG_Diem_M2.Diem) + parseFloat(_kxt_KQTQG_Diem_M3.Diem);
 
         let _dkxt_KQTQG_MinhChung_CNTotNghiep = "";
         let _dkxt_KQTQG_MinhChung_BangTN = "";
@@ -648,7 +703,7 @@
         formData_All.append('so_file_giayto_uutien', so_file_giayto_uutien);
 
         $.ajax({
-            url: '/DangKyXetTuyens/DangKyXetTuyen_UploadFile_Multi_KQTQG',
+            url: '/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_UploadFile_Multi',
             type: "POST",
             contentType: false,
             processData: false,
@@ -722,12 +777,6 @@
         document.getElementById('div_update_aspirations').style.display = "none";
         reset_fields_controll_disabled_true();
     });
-    //// button tắt cửa sổ thêm mới phía trên
-    //$('#bt_close_div_update_aspirations_first').click(function () {
-    //    document.getElementById('div_list_aspirations').style.display = "inline";
-    //    document.getElementById('div_update_aspirations').style.display = "none";
-    //    reset_fields_controll_disabled_true();
-    //});
     // thay đổi nguyện vọng đã đăng ký:
     function change_up_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
         $('#key_change_dkxt_kqtthptqg_id').val('');
@@ -756,7 +805,7 @@
 
         if (_check_action == 1) { // sửa lên trên
             $.ajax({
-                url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Change_UpData",
+                url: "/DangKyXetTuyens/DangKyXetTuyen_KQTTHPTQG_Change_UpData",
                 data: JSON.stringify(data_Obj_change),
                 type: 'POST',
                 contentType: 'application/json;charset=utf-8',
@@ -782,7 +831,7 @@
         }
         if (_check_action == 2) { // sửa xuống dưới
             $.ajax({
-                url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Change_DownData",
+                url: "/DangKyXetTuyens/DangKyXetTuyen_KQTTHPTQG_Change_DownData",
                 data: JSON.stringify(data_Obj_change),
                 type: 'POST',
                 contentType: 'application/json;charset=utf-8',
@@ -830,7 +879,7 @@
         let data_Obj_new = { Dkxt_KQTQG_ID: $('#key_delete_dkxt_kqtthptqg_id').val() };
 
         $.ajax({
-            url: "/DangKyXetTuyens/DangKyXetTuyenKQTTHPTQG_Delete",
+            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTTHPTQG_Delete",
             data: JSON.stringify(data_Obj_new),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',

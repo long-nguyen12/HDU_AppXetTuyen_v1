@@ -9,6 +9,7 @@ namespace HDU_AppXetTuyen.Models
     [Table("DangKyXetTuyenThang")]
     public partial class DangKyXetTuyenThang
     {
+
         [Key]
         public long Dkxt_ID { get; set; }
 

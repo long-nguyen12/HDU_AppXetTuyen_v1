@@ -16,20 +16,69 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/ThiSinhDangKys
-        [AdminSessionCheck]
-        public ActionResult Index(int? page)
+
+        [AdminSessionCheck] // hiển thị thông tin các thi sinh đăng ký
+        public ActionResult Index(string searchString, string currentFilter, string filteriDotxt, int? page)
         {
+
+            var thisinhs = (from ts_tem in db.ThiSinhDangKies select ts_tem).OrderBy(x => x.ThiSinh_ID).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc);
+
+            ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten; 
+            #region lọc dữ liệu theo đợt
+            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
+            dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
+            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
+            ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
+            // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
+            if (String.IsNullOrEmpty(filteriDotxt) == true)
+            {
+                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID.ToString();
+            } 
+            // thực hiện lọc 
+            if (!String.IsNullOrEmpty(filteriDotxt))
+            {                
+                int _Dotxt_ID = Int32.Parse(filteriDotxt);
+                if(_Dotxt_ID != 0)
+                {
+                    thisinhs = thisinhs.Where(x => x.DotXT_ID == _Dotxt_ID);
+                }
+                
+            }
+            #endregion
+            // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
+            #region Tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                thisinhs = thisinhs.Where(m => m.ThiSinh_Ten.ToUpper().Contains(searchString.ToUpper())
+                                    || m.ThiSinh_HoLot.ToUpper().Contains(searchString.ToUpper())
+                                    || m.ThiSinh_CCCD.Contains(searchString)
+                                    || m.ThiSinh_DienThoai.Contains(searchString)
+                                    || m.ThiSinh_Email.Contains(searchString));
+            }
+            #endregion
+            // thực hiện phân trang
+            #region Phân trang
             if (page == null) page = 1;
-            var thisinhs = (from h in db.ThiSinhDangKies
-                          select h).OrderBy(x => x.ThiSinh_ID).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+            #endregion
+            // tham số khác
+            #region Tham số khác
+            if (searchString != null) { page = 1; }
+            else { searchString = currentFilter; }
+
+            ViewBag.pageCurren = page;
+            ViewBag.SearchString = searchString;
+            ViewBag.filteriDotxtSort = filteriDotxt;
+            ViewBag.totalRecod = thisinhs.Count();
+
+            #endregion
             return View(thisinhs.ToPagedList(pageNumber, pageSize));
         }
 
-        [AdminSessionCheck]
+        [AdminSessionCheck] // xem chi tiết thông tin 1 thí sinh
 
-        public ActionResult ThongTinThiSinh(long? id)
+        public ActionResult DetailItem(long? id)
         {
             if (id != null)
             {
@@ -128,7 +177,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     DanhGia = nguyenVongDanhGia
                 }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return Json(new
                 {
@@ -153,6 +202,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(thiSinhDangKy);
         }
 
+        #region code tự tạo
         // GET: Admin/ThiSinhDangKys/Create
         [AdminSessionCheck]
         public ActionResult Create()
@@ -259,5 +309,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

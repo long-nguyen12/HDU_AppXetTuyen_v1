@@ -23,6 +23,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
-        }
+        }       
     }
 }

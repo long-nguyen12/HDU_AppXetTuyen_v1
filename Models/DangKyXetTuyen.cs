@@ -9,7 +9,6 @@ namespace HDU_AppXetTuyen.Models
     [Table("DangKyXetTuyen")]
     public partial class DangKyXetTuyen
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]      
 
         [Key]
         public long Dkxt_ID { get; set; }

@@ -177,6 +177,17 @@ namespace HDU_AppXetTuyen.Controllers
                 db.DangKyXetTuyenThangs.Add(dkxtt);
                 db.SaveChanges();
 
+                #region Kinh phí
+                KinhPhi kp = new KinhPhi();
+                kp.ThiSinh_ID = ts.ThiSinh_ID;
+                kp.Dkxt_ID = dkxtt.Dkxt_ID;
+                kp.Ptxt_ID = 4;
+                kp.Dxt_ID = dotXT.Dxt_ID;
+                kp.KinhPhi_TrangThai = 0;
+                db.KinhPhis.Add(kp);
+                db.SaveChanges();
+                #endregion
+
                 int nganh_id = int.Parse(student.Nganh_ID);
                 var nganh = db.Nganhs.Where(n => n.Nganh_ID == nganh_id).FirstOrDefault();
 

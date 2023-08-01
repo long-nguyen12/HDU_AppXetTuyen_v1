@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HDU_AppXetTuyen.Models;
-using HDU_AppXetTuyen.Ultils;
+
 using PagedList;
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers

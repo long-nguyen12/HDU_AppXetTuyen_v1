@@ -15,7 +15,6 @@
             DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
             DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
             LePhiXetTuyens = new HashSet<LePhiXetTuyen>();
-
             DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
             DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();

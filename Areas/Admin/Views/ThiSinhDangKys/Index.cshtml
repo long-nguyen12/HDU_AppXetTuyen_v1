@@ -7,135 +7,203 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
-<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css" />
+
 <style>
     /* Ensure that the demo table scrolls */
     th, td {
         white-space: nowrap;
     }
 
-    div.dataTables_wrapper {
+   /* div.dataTables_wrapper {
         margin: 0 auto;
-    }
+    }*/
 </style>
+
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
         <div class="page-header-content">
             <div class="row align-items-center justify-content-between pt-3">
                 <div class="col-auto mb-1">
-                    <h1 class="page-header-title mb-2">
+                    <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        Thí sinh
-                    </h1>
-                </div>
-                <div class="col-12 col-xl-auto mb-3">
-                    @*<a class="btn btn-sm btn-light text-primary" href="@Url.Action("Create","Huyens")">
-                            <i class="me-1" data-feather="user-plus"></i>
-                            Thêm mới
-                        </a>*@
+                        <span> Quản lý thông tin Thí sinh đăng ký</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<div class="container-fluid px-4">
-    <div class="card">
-        <div class="card-body">
-            <div class="col-12 table-responsive">
-                <table id="myTable" class="stripe row-border order-column cell-border" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoLot)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_Ten)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_DienThoai)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_Email)
-                            </th>
 
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_NgaySinh)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().ThiSinh_HoKhauThuongTru)
-                            </th>
-                            <th>
-                                Ngày đăng ký
-                            </th>
+<div class="container-fluid px-12">
+    <div class="card card-header-actions">
+        @using (Html.BeginForm("Index", "ThiSinhDangKys", FormMethod.Get))
+        {
+            <div class="card-header">
 
-                            <th style="text-align:center">
-                                Hành động
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ThiSinh_HoLot)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ThiSinh_Ten)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ThiSinh_DienThoai)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ThiSinh_Email)
-                                </td>
+                <div id="div_tieude"><span>Danh sách thí sinh đăng ký thông tin</span></div>
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ThiSinh_NgaySinh)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ThiSinh_HoKhauThuongTru)
-                                </td>
-                                <td>
-                                    @{DateTime dateTime = DateTime.Parse(item.ThiSinh_NgayDangKy);
-                                        string formattedDate = dateTime.ToString("dd/MM/yyyy - HH:mm");
-                                        <div> @formattedDate </div>
-                                    }
+                <div class="row align-items-center justify-content-center mt-0">
+                    <div class="col-auto  p-1" id="div_lb_nam">
+                        <label style=" color:black; font-weight:normal">Năm:</label>
+                    </div>
+                    <div class="col-auto p-1" style="padding-right:10px!important" id="div_txt_nam">
+                        <input type="text" id="txtNam" class="form-control form-control" value="@ViewBag.filteriNam" style="width: 60px; " disabled>
+                    </div>
 
-                                </td>
+                    <div class="col-auto p-1" id="div_select_dot">
+                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select", @style = "padding-left:3px; padding-right:30px;" })
+                    </div>
+                    <div class="col-auto  p-1 ">
+                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })                       
+                    </div>
+                    <div class="col-auto  p-1 ">
+                        <button class="btn btn-outline-primary" id="bt_search" style="width: 75px; padding-left:4px; padding-right:4px ">Tìm kiếm</button>
+                        <a class="btn btn-outline-secondary" id="bt_reset" href="@Url.Action("Index", "ThiSinhDangKys")">Tải lại</a>
+                    </div>
 
-                                <td style="text-align:center; width:180px">
-                                    <a class="btn btn-outline-success btn-sm" href="@Url.Action("ThongTinThiSinh","ThiSinhDangKys" , new { id = item.ThiSinh_ID })">  Chi tiết </a>&nbsp;
-                                    <a class="btn btn-outline-primary btn-sm m-1" href="@Url.Action("Edit","ThiSinhDangKys", new { id = item.ThiSinh_ID } )">  Sửa </a>&nbsp;
-                                    @*<a class="btn btn-outline-danger btn-sm" href="@Url.Action("Delete","ThiSinhDangKys" , new { id = item.ThiSinh_ID })">  Xoá </a>&nbsp;*@
-                                    @*<a class="btn btn-datatable" href="@Url.Action("Edit","ThiSinhDangKys")"><i data-feather="edit" class="text-primary"> </i> </a>
-                                        <a class="btn btn-datatable" href="@Url.Action("Details","ThiSinhDangKys")"><i data-feather="eye" class="text-success"></i></a>
-                                        <a class="btn btn-datatable" href="@Url.Action("Delete","ThiSinhDangKys")"><i data-feather="trash-2" class="text-danger"></i></a>*@
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-
-                </table>
-                <!-- Thêm mã phân trang -->
-              
-                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-
-                @Html.PagedListPager(Model, page => Url.Action("Index",
-                    new { page }))
-                <!-- Kết thúc -->
+                </div>
             </div>
+        }
+        <script>
+            $(document).ready(function () {
+                let div_tieude = document.getElementById('div_tieude');
+                let div_lb_nam = document.getElementById('div_lb_nam');
+                let div_txt_nam = document.getElementById('div_txt_nam');
+                let div_select_dot = document.getElementById('div_select_dot');
+                let txt_key_search = document.getElementById('searchString');
+                let bt_reset = document.getElementById('bt_reset');
+
+                if (window.innerWidth <= 1200) {
+                    div_tieude.style.display = "none";
+                    div_lb_nam.style.display = "none";
+                    div_txt_nam.style.display = "none";
+                    div_select_dot.style.display = "inline";
+                    bt_reset.style.display = "none";
+                    txt_key_search.style.width = "140px"
+
+                }
+                else {
+                    div_tieude.style.display = "inline";
+                    div_lb_nam.style.display = "inline";
+                    div_txt_nam.style.display = "inline";
+                    div_select_dot.style.display = "inline";
+                    bt_reset.style.display = "inline";
+                    txt_key_search.style.removeProperty("width");
+                }
+
+                function reportWindowSize() {
+                    if (window.innerWidth <= 1200) {
+                        div_tieude.style.display = "none";
+                        div_lb_nam.style.display = "none";
+                        div_txt_nam.style.display = "none";
+                        div_select_dot.style.display = "inline";
+                        bt_reset.style.display = "none";
+                        txt_key_search.style.width = "140px"
+
+                    }
+                    else {
+                        div_tieude.style.display = "inline";
+                        div_lb_nam.style.display = "inline";
+                        div_txt_nam.style.display = "inline";
+                        div_select_dot.style.display = "inline";
+                        bt_reset.style.display = "inline";
+                        txt_key_search.style.removeProperty("width");
+                    }
+                }
+                window.onresize = reportWindowSize;
+            })
+        </script>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Họ, tên lót")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Tên")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Điện thoại")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Email")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Ngày sinh")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Phái")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Ngày đăng ký")
+                                    </th>
+                                    <th style="text-align:center; width:100px">
+                                        @Html.DisplayName("Cập nhật")
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinh_HoLot)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinh_Ten)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinh_DienThoai)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinh_Email)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinh_NgaySinh)
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.ThiSinh_GioiTinh == 0)
+                                                {@Html.DisplayName("Nam")}
+                                            else
+                                            {@Html.DisplayName("Nữ") }
+                                            }
+
+                                        </td>
+
+                                        <td>
+                                            @{DateTime dateTime = DateTime.Parse(item.ThiSinh_NgayDangKy);
+                                                string formattedDate = dateTime.ToString("dd/MM/yyyy");
+                                                <div> @formattedDate </div>
+                                            }
+
+                                        </td>
+                                        <td style="text-align:center; vertical-align:middle">
+                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.ThiSinh_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.ThiSinh_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.ThiSinh_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <!-- Thêm mã phân trang -->
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new{page, searchString = ViewBag.SearchString, filteriDotxt = ViewBag.filteriDotxtSort}))                       
+                        <!-- Kết thúc -->
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
 </div>
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
-<script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
 
-
-<script>
-
-
+@*<script>
     new DataTable('#myTable', {
         fixedColumns: {
             right: 1
@@ -144,10 +212,10 @@
         scrollCollapse: true,
         scrollX: true,
         //scrollY: 300,
-        searching: true,
+        searching: false,
         bInfo: false,
         oLanguage: {
             sSearch: "Tìm kiếm:"
         }
     });
-</script>
+</script>*@
