@@ -183,7 +183,6 @@ namespace HDU_AppXetTuyen.Controllers
                 db.DangKyXetTuyenKhacs.Add(dkxtt);
                 db.SaveChanges();
 
-                var NguyenVong = db.DangKyXetTuyenKhacs.OrderByDescending(n => n.Dkxt_ID).Take(1).FirstOrDefault();
                 KinhPhi kp = new KinhPhi();
                 kp.ThiSinh_ID = ts.ThiSinh_ID;
                 kp.Dkxt_ID = dkxtt.Dkxt_ID;
