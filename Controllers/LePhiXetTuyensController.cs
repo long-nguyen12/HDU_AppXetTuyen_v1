@@ -177,6 +177,7 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 kinhPhi.KinhPhi_TepMinhChung = kp.KinhPhi_TepMinhChung;
                 kinhPhi.KinhPhi_SoTC = kp.KinhPhi_SoTC;
+                kinhPhi.KinhPhi_TrangThai = 1;
                 kinhPhi.KinhPhi_NgayThang = DateTime.Now.ToString("dd/MM/yyyy");
                 db.SaveChanges();
 
