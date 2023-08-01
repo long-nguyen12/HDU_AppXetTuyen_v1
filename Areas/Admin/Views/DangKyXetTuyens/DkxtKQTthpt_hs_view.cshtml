@@ -42,7 +42,7 @@
     <div class="card card-collapsable mt-1 mb-1">
         <div class="card-header">
             <div><span id="sp_tieude">Kiểm tra và xác thực thông tin đăng ký xét tuyển bằng điểm thi tốt nghiệp THPT Quốc gia</span></div>
-           
+
         </div>
         <div class="card-body">
             <div class="row g-1">
@@ -66,8 +66,7 @@
                                 $("#div_mc_cn_totnghiep").show();
                                 $("#div_mc_hocba_bangtn").hide();
                                 $("#div_mc_cccd").hide();
-                                $("#div_mc_gtut").hide();
-                                console.log('vui 0');
+                                $("#div_mc_gtut").hide();                             
                             });
                             $('#bt_mc_hocba_bangtn').click(function (e) {
                                 e.preventDefault();
@@ -76,9 +75,7 @@
                                 $("#div_mc_cn_totnghiep").hide();
                                 $("#div_mc_hocba_bangtn").show();
                                 $("#div_mc_cccd").hide();
-                                $("#div_mc_gtut").hide();
-                                console.log('vui 1');
-
+                                $("#div_mc_gtut").hide(); 
                             });
                             $('#bt_mc_cccd').click(function (e) {
                                 e.preventDefault();
@@ -88,7 +85,7 @@
                                 $("#div_mc_cccd").show();
                                 $("#div_mc_gtut").hide();
 
-                                console.log('vui 2');
+                               
                             });
                             $('#bt_mc_gtut').click(function (e) {
                                 e.preventDefault();
@@ -96,9 +93,7 @@
                                 $("#div_mc_cn_totnghiep").hide();
                                 $("#div_mc_hocba_bangtn").hide();
                                 $("#div_mc_cccd").hide();
-                                $("#div_mc_gtut").show();
-
-                                console.log('vui 3');
+                                $("#div_mc_gtut").show();                             
                             });
                         })
                     </script>
@@ -171,7 +166,6 @@
                         </div>
                     </div>
                 </div>
-            
                 <div class="col-lg-4 col-md-12">
                     <ul class="nav" style="margin:0px">
                         <li class="nav-item " style="margin:0px">
@@ -239,7 +233,7 @@
                     <div class="row">
                         <div class="col-12" style="text-align:center">
                             <input type="button" class="btn btn-primary" value="Xác nhận thông tin thí sinh" />
-                            <input type="button" class="btn btn-primary" value="Hủy bỏ" />
+                            <input type="button" class="btn btn-primary" value="Hủy bỏ" id="bt_returnform_list" />
                         </div>
                     </div>
 
@@ -253,6 +247,16 @@
         </div>
     </div>
 </div>
+<!--Các tham số lưu để truyền dữ liệu-->
+<input type="hidden" value="@ViewBag.DotxtFilteri" id="filteriDotxt_bak" name="filteriDotxt_bak" />
+<input type="hidden" value="@ViewBag.NvongFilteri" id="filteriNvong_bak" name="filteriNvong_bak" />
+<input type="hidden" value="@ViewBag.NganhFilteri" id="filteriNganh_bak" name="filteriNganh_bak" />
+<input type="hidden" value="@ViewBag.LePhiFilteri" id="filteriLePhi_bak" name="filteriLePhi_bak" />
+<input type="hidden" value="@ViewBag.HoSoFilteri" id="filteriHoSo_bak" name="filteriHoSo_bak" />
+<input type="hidden" value="@ViewBag.SearchString" id="searchString_bak" name="searchString_bak" />
+<input type="hidden" value="@ViewBag.pageCurren" id="page_bak" name="page_bak" />
+<input type="hidden" value="@ViewBag.Dkxt_KQTQG_ID" id="dkxt_kqtqg_id_checkin" name="dkxt_kqtqg_id_checkin" />
+<!--Hết phần Các tham số lưu để truyền dữ liệu-->
 @*<embed src="~/Uploads/DKXTHocBaFile/0030.pdf#toolbar=0#zoom=100" style="width: 100% !important; height: 650px" />*@
 <script>
     $(document).ready(function () {
@@ -273,12 +277,29 @@
             }
         }
         window.onresize = reportWindowSize;
+
         ts_dkxt_thptqg_detail();
-    })  
+
+        $('#bt_returnform_list').click(function () {
+              var str = '?filteriDotxt=' + $('#filteriDotxt_bak').val() +
+                        '&filteriNvong=' + $('#filteriNvong_bak').val() +
+                        '&filteriNganh=' + $('#filteriNganh_bak').val() +
+                        '&filteriLePhi=' + $('#filteriLePhi_bak').val() +
+                        '&filteriHoSo=' + $('#filteriHoSo_bak').val() +
+                        '&searchString=' + $('#searchString_bak').val() +
+                        '&page=' + $('#page_bak').val();
+            window.location.href = "/Admin/DangKyXetTuyens/DkxtKQTthpt" + str;
+        });
+    })
+   
     function ts_dkxt_thptqg_detail() {
+        var dataObj = {           
+            Dkxt_KQTQG_ID: $('#dkxt_kqtqg_id_checkin').val()
+        }
         $.ajax({
-            url: "/Admin/DangKyXetTuyens/DkxtKQTthpt_hs_Detail/",
-            type: 'GET',
+            url: '/Admin/DangKyXetTuyens/DkxtKQTthpt_hs_Detail/',
+            data: JSON.stringify(dataObj),
+            type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (result) {
@@ -340,7 +361,7 @@
 
                 // hiển thị minh chứng giấy tờ ưu tiên
                 var mc_gtut = result[0].dkxt_KQTQG_MinhChung_UuTien;
-                var mc_gtut_arr = mc_gtut.split("#");             
+                var mc_gtut_arr = mc_gtut.split("#");
                 for (var index_mc_gtut = 0; index_mc_gtut < mc_gtut_arr.length - 1; index_mc_gtut++) {
                     if (index_mc_gtut == 0) {
                         var str_bt_gtut_first = '<button type="button" data-bs-target="#carousel_giayto_uutien" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>';
@@ -366,13 +387,14 @@
                 $('#txt_m1').val(((result[0].diemMon1) * 100 / 100).toFixed(2));
                 $('#txt_m2').val(((result[0].diemMon2) * 100 / 100).toFixed(2));
                 $('#txt_m3').val(((result[0].diemMon3) * 100 / 100).toFixed(2));
-                $('#txt_tong_diem').val(((result[0].dkxt_KQTQG_Diem_Tong) * 100 / 100).toFixed(2));   
+                $('#txt_tong_diem').val(((result[0].dkxt_KQTQG_Diem_Tong) * 100 / 100).toFixed(2));
             },
             error: function (errormessage) {
                 console.log("Có lỗi xảy ra trong quá trình thực hiện");
             }
         });
-    }   
+    }
+
 </script>
 
 

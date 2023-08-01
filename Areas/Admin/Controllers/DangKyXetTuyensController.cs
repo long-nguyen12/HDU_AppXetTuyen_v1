@@ -24,7 +24,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             return View();
         }
-        // GET: Admin/DangKyXetTuyens
+
+        #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi tn thpt qg
         [AdminSessionCheck]
         public ActionResult DkxtKQTthpt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
@@ -177,18 +178,26 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
+        [AdminSessionCheck]
+        public ActionResult DkxtKQTthpt_hs_view(long dkxt_KQTQG_ID, string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
+        {
+            ViewBag.DotxtFilteri = filteriDotxt;
+            ViewBag.NvongFilteri = filteriNvong;
+            ViewBag.NganhFilteri = filteriNganh;
+            ViewBag.LePhiFilteri = filteriLePhi;
+            ViewBag.HoSoFilteri = filteriHoSo;
+            ViewBag.SearchString = searchString;
+            ViewBag.pageCurren = page;
+            ViewBag.Dkxt_KQTQG_ID = dkxt_KQTQG_ID;
 
-        public ActionResult DkxtKQTthpt_hs_view()
-        {            
             return View();
         }
-        public ActionResult DkxtKQTthpt_hs_Detail()
+        [AdminSessionCheck]
+        public JsonResult DkxtKQTthpt_hs_Detail(DangKyXetTuyenKQTQG entity)
         {
-            int dkxt_KQTQG_ID = 20004;
-            DbConnecttion dbhb = new DbConnecttion();
+            long dkxt_KQTQG_ID = entity.Dkxt_KQTQG_ID;
 
             DangKyXetTuyenKQTQG model_diem = db.DangKyXetTuyenKQTQGs.Find(dkxt_KQTQG_ID);
-        
             string _xeploai_hocluc_12 = "";
             if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
             if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
@@ -206,7 +215,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             DiemThiGQMon _mondiem2 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M2);
             DiemThiGQMon _mondiem3 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M3);
 
-            var model_item = dbhb.DangKyXetTuyenKQTQGs.Where(x => x.Dkxt_KQTQG_ID == dkxt_KQTQG_ID).ToList();
+            DbConnecttion dbthpt = new DbConnecttion();
+            var model_item = dbthpt.DangKyXetTuyenKQTQGs.Where(x => x.Dkxt_KQTQG_ID == dkxt_KQTQG_ID).ToList();
             var tt_ts_dk = model_item.Select(s => new
             {
                 dkxt_KQTQG_ID = s.Dkxt_KQTQG_ID,
@@ -214,8 +224,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 thiSinh_HoTen = s.ThiSinhDangKy.ThiSinh_HoLot + " " + s.ThiSinhDangKy.ThiSinh_Ten,
                 nganh_Ten = s.Nganh.NganhTenNganh,
                 thm_ID = s.Thm_ID,
-                doiTuong_All = s.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + "Ưu tiên: " + s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
-                khuVuc_All = s.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + "- Ưu tiên: " + s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+                doiTuong_All = s.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + " - Ưu tiên: " + s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                khuVuc_All = s.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + " - Ưu tiên: " + s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
                 dkxt_KQTQG_NguyenVong = s.Dkxt_KQTQG_NguyenVong,
                 dkxt_KQTQG_NamTotNghiep = s.Dkxt_KQTQG_NamTotNghiep,
 
@@ -232,7 +242,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 nganh_GhiChu = s.Nganh.Nganh_GhiChu,
                 thm_MaTen = s.ToHopMon.Thm_MaTen,
 
-             
+
                 dkxt_KQTQG_NgayDangKy = s.Dkxt_KQTQG_NgayDangKy,
                 dkxt_KQTQG_XepLoaiHocLuc_12 = _xeploai_hocluc_12,
                 dkxt_KQTQG_XepLoaiHanhKiem_12 = _xeploai_hanhkiem_12,
@@ -244,8 +254,16 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             });
             return Json(tt_ts_dk, JsonRequestBehavior.AllowGet);
-        
+
         }
+        public JsonResult DkxtKQTthpt_hs_Update_tt_hs(DangKyXetTuyenKQTQG entity)
+        {
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+        #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng học bạ
+
         [AdminSessionCheck]
         public ActionResult DkxtHocBa(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
@@ -397,18 +415,96 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult DkxtHocBa_view_hs(int Dkxt_ID = 20)
+        [AdminSessionCheck]
+        public ActionResult DkxtHocBa_hs_view(long Dkxt_ID, string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-
+            ViewBag.DotxtFilteri = filteriDotxt;
+            ViewBag.NvongFilteri = filteriNvong;
+            ViewBag.NganhFilteri = filteriNganh;
+            ViewBag.LePhiFilteri = filteriLePhi;
+            ViewBag.HoSoFilteri = filteriHoSo;
+            ViewBag.SearchString = searchString;
+            ViewBag.pageCurren = page;
+            ViewBag.Dkxt_ID = Dkxt_ID;
             return View();
         }
-        public JsonResult DkxtHocBa_Detail_HoSo(int Dkxt_ID = 20)
+        [AdminSessionCheck]
+        public JsonResult DkxtHocBa_hs_Detail(DangKyXetTuyen entity)
         {
-            DbConnecttion dbhb = new DbConnecttion();
-            var model = dbhb.DangKyXetTuyens.Find(Dkxt_ID);
 
-            return Json(false, JsonRequestBehavior.AllowGet);
+            long dkxt_id = entity.Dkxt_ID;
+
+            DangKyXetTuyen model_01 = db.DangKyXetTuyens.Find(dkxt_id);
+            string _xeploai_hocluc_12 = "";
+            if (model_01.Dkxt_XepLoaiHocLuc_12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
+            if (model_01.Dkxt_XepLoaiHocLuc_12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
+            if (model_01.Dkxt_XepLoaiHocLuc_12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
+            if (model_01.Dkxt_XepLoaiHocLuc_12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
+
+            string _xeploai_hanhkiem_12 = "";
+            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
+            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
+            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
+            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
+
+            // DiemThiGQMon khai báo trong  Model.LibraryUsers
+
+            MonDiem _mondiem1 = JsonConvert.DeserializeObject<MonDiem>(model_01.Dkxt_Diem_M1);
+            MonDiem _mondiem2 = JsonConvert.DeserializeObject<MonDiem>(model_01.Dkxt_Diem_M2);
+            MonDiem _mondiem3 = JsonConvert.DeserializeObject<MonDiem>(model_01.Dkxt_Diem_M3);
+
+            DbConnecttion dbhb = new DbConnecttion();
+            var model_item = dbhb.DangKyXetTuyens.Where(x => x.Dkxt_ID == dkxt_id).ToList();
+            var tt_ts_dk = model_item.Select(s => new
+            {
+                dkxt_ID = s.Dkxt_ID,
+                thiSinh_ID = s.ThiSinh_ID,
+                thiSinh_HoTen = s.ThiSinhDangKy.ThiSinh_HoLot + " " + s.ThiSinhDangKy.ThiSinh_Ten,
+                nganh_Ten = s.Nganh.NganhTenNganh,
+                thm_ID = s.Thm_ID,
+                doiTuong_All = s.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + " - Ưu tiên: " + s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                khuVuc_All = s.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + " - Ưu tiên: " + s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+                dkxt_NguyenVong = s.Dkxt_NguyenVong,
+
+                tenMon1 = _mondiem1.TenMon,
+                diemMon1_HK1 = _mondiem1.HK1,
+                diemMon1_HK2 = _mondiem1.HK2,
+                diemMon1_HK3 = _mondiem1.HK3,
+                diemMon1_TBMon = _mondiem1.DiemTrungBinh,
+
+
+                tenMon2 = _mondiem2.TenMon,
+                diemMon2_HK1 = _mondiem2.HK1,
+                diemMon2_HK2 = _mondiem2.HK2,
+                diemMon2_HK3 = _mondiem2.HK3,
+                diemMon2_TBMon = _mondiem2.DiemTrungBinh,
+
+                tenMon3 = _mondiem3.TenMon,
+                diemMon3_HK1 = _mondiem3.HK1,
+                diemMon3_HK2 = _mondiem3.HK2,
+                diemMon3_HK3 = _mondiem3.HK3,
+                diemMon3_TBMon = _mondiem3.DiemTrungBinh,
+
+                dkxt_Diem_Tong = s.Dkxt_Diem_Tong,
+                khoiNganh_Ten = s.Nganh.KhoiNganh.KhoiNganh_Ten,
+                nganh_GhiChu = s.Nganh.Nganh_GhiChu,
+                thm_MaTen = s.ToHopMon.Thm_MaTen,
+
+                //dkxt_NgayDangKy = s.Dkxt_NgayDangKy,
+                dkxt_XepLoaiHocLuc_12 = _xeploai_hocluc_12,
+                dkxt_XepLoaiHanhKiem_12 = _xeploai_hanhkiem_12,
+                // lấy ra chuỗi các minh chứng
+
+                dkxt_MinhChung_HocBa = s.Dkxt_MinhChung_HB,
+                dkxt_MinhChung_Bang = s.Dkxt_MinhChung_Bang,
+                dkxt_MinhChung_CCCD = s.Dkxt_MinhChung_CCCD,
+                dkxt_MinhChung_UuTien = s.Dkxt_MinhChung_UuTien,
+            });
+            return Json(tt_ts_dk, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+       
+        #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển tuyển thẳng
         [AdminSessionCheck]
         public ActionResult DkxtTt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
@@ -561,6 +657,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(model.ToPagedList(pageNumber, pageSize));
         }
 
+        #endregion
+       
+        #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi ngoại ngữ
+        [AdminSessionCheck]
         public ActionResult Dkxtccnn(int? page)
         {
             if (page == null) page = 1;
@@ -570,6 +670,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             int pageNumber = (page ?? 1);
             return View(dangKyXetTuyens.ToPagedList(pageNumber, pageSize));
         }
+        #endregion
+
+        #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực
         public ActionResult DkxtkqDgnl(int? page)
         {
             if (page == null) page = 1;
@@ -579,6 +682,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             int pageNumber = (page ?? 1);
             return View(dangKyXetTuyens.ToPagedList(pageNumber, pageSize));
         }
+        #endregion
+     
+        #region hiển thị và kiểm tra thông tin thí sinh đăng ký thi năng khiếu
         [AdminSessionCheck]
         public ActionResult Dkdttnk(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
@@ -727,7 +833,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
-        #region
+
+        #endregion
+
+        #region hàm khác
 
         // GET: Admin/DangKyXetTuyens/Details/5
         [AdminSessionCheck]

@@ -16,7 +16,7 @@
     }
 
     .bd-rd {
-       /* border-radius: 0px !important;*/
+        /* border-radius: 0px !important;*/
     }
 </style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
@@ -36,7 +36,7 @@
 <div class="container-fluid px-12">
     <div class="card card-collapsable mt-1 mb-1">
         <div class="card-header">
-            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng học bạ</span></div>   
+            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng học bạ</span></div>
         </div>
 
         <div class="card-body">
@@ -158,20 +158,45 @@
                                             @{
                                                 if (item.Dkxt_TrangThai_KetQua == 0)
                                                 {
-                                                    <a href="@Url.Action("DkxtHocBaHoSo","DangKyXetTuyens" , new { id = item.Dkxt_ID })" class="btn btn-outline-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
+                                                    <a href="@Url.Action("DkxtHocBa_hs_view","DangKyXetTuyens" , new {
+                                                                    dkxt_ID=item.Dkxt_ID,
+                                                                    filteriDotxt =ViewBag.DotxtFilteri,
+                                                                    filteriNvong =ViewBag.NvongFilteri,
+                                                                    filteriNganh =  ViewBag.NganhFilteri,
+                                                                    filteriLePhi = ViewBag.LePhiFilteri,
+                                                                    filteriHoSo =ViewBag.HoSoFilteri,
+                                                                    searchString =ViewBag.SearchString,
+                                                                    page = ViewBag.pageCurren})"
+                                                       class="btn btn-outline-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
                                                 }
                                                 if (item.Dkxt_TrangThai_KetQua == 1)
                                                 {
-                                                    <a href="@Url.Action("DkxtHocBaHoSo","DangKyXetTuyens" , new { id = item.Dkxt_ID })" class="btn btn-outline-success btn-sm bt-hs  bd-rd">MC sai</a>
+                                                    <a href="@Url.Action("DkxtHocBa_hs_view","DangKyXetTuyens" , new {
+                                                                    dkxt_ID=item.Dkxt_ID,
+                                                                    filteriDotxt =ViewBag.DotxtFilteri,
+                                                                    filteriNvong =ViewBag.NvongFilteri,
+                                                                    filteriNganh =  ViewBag.NganhFilteri,
+                                                                    filteriLePhi = ViewBag.LePhiFilteri,
+                                                                    filteriHoSo =ViewBag.HoSoFilteri,
+                                                                    searchString =ViewBag.SearchString,
+                                                                    page = ViewBag.pageCurren})"
+                                                       class="btn btn-outline-success btn-sm bt-hs  bd-rd">MC sai</a>
                                                 }
                                                 if (item.Dkxt_TrangThai_KetQua == 2)
                                                 {
-                                                    <a href="@Url.Action("DkxtHocBaHoSo","DangKyXetTuyens" , new { id = item.Dkxt_ID })" class="btn btn-outline-primary btn-sm bt-hs  bd-rd">Đã duyệt</a>
+                                                    <a href="@Url.Action("DkxtHocBa_hs_view","DangKyXetTuyens" , new {
+                                                                    dkxt_ID=item.Dkxt_ID,
+                                                                    filteriDotxt =ViewBag.DotxtFilteri,
+                                                                    filteriNvong =ViewBag.NvongFilteri,
+                                                                    filteriNganh =  ViewBag.NganhFilteri,
+                                                                    filteriLePhi = ViewBag.LePhiFilteri,
+                                                                    filteriHoSo =ViewBag.HoSoFilteri,
+                                                                    searchString =ViewBag.SearchString,
+                                                                    page = ViewBag.pageCurren})"
+                                                       class="btn btn-outline-primary btn-sm bt-hs  bd-rd">Đã duyệt</a>
                                                 }
                                             }
-                                        </td>
-
-
+                                        </td>    
                                         <td style="white-space:nowrap">
                                             <a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
                                             <a href="@Url.Action("Details","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |

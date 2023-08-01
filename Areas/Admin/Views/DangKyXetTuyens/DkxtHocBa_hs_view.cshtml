@@ -59,9 +59,7 @@
                 })
             </script>
         </div>
-
         <div class="card-body">
-
             <div class="row g-1">
                 <div class="col-lg-8 col-md-12">
                     <ul class="nav" style="margin:0px">
@@ -74,72 +72,83 @@
                                 <li><a class="dropdown-item" href="#" id="bt_mc_gtut">Các tệp minh chứng giấy tờ Ưu tiên</a></li>
                             </ul>
                         </li>
-                    </ul>
-                    <script>
-                        $(document).ready(function () {
-                            $('#bt_mc_hocba').click(function (e) {
-                                e.preventDefault();
-                                $('#bt_mc_showlabel').text($('#bt_mc_hocba').text());
-                                console.log('vui 0');
-                            });
-                            $('#bt_mc_bangtn').click(function (e) {
-                                e.preventDefault();
-                                $('#bt_mc_showlabel').text($('#bt_mc_bangtn').text());
-                                console.log('vui 1');
-
-                            });
-                            $('#bt_mc_cccd').click(function (e) {
-                                e.preventDefault();
-                                $('#bt_mc_showlabel').text($('#bt_mc_cccd').text());
-                                console.log('vui 2');
-                            });
-                            $('#bt_mc_gtut').click(function (e) {
-                                e.preventDefault();
-                                $('#bt_mc_showlabel').text($('#bt_mc_gtut').text());
-                                console.log('vui 3');
-                            });
-                        })
-                    </script>
+                    </ul>                  
                     <hr style="margin-top: 2px; margin-bottom:8px" />
-                    <div class="row">
+                    <div class="row" id="div_mc_hocba">
                         <div class="col-xl-12">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <div id="carousel_cn_hocba" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators" id="list_item_bt_cn_hocba"></div>
+                                <div class="carousel-inner" id="list_item_div_cn_hocba">
+                                    @*<embed src="~/Uploads/DKXTHocBaFile/0030.pdf#toolbar=0#zoom=100" style="width: 100% !important; height: 650px" />*@
                                 </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active overflow-auto">
-                                        <img src="~/Uploads/DKXTHocBaFile/0002.jpeg" class="h-100 d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item  overflow-auto">
-                                        <img src="~/Uploads/DKXTHocBaFile/0003.jpeg" class="h-100 d-block w-100" alt="...">
-                                    </div>
-                                    <div class="carousel-item  overflow-auto">
-                                        <img src="~/Uploads/DKXTHocBaFile/0004.jpeg" class=" h-100 d-block w-100" alt="...">
-                                    </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel_cn_hocba" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel_cn_hocba" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="div_mc_bang_totnghiep" style="display:none">
+                        <div class="col-xl-12">
+                            <div id="carousel_cn_bang_totnghiep" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators" id="list_item_bt_cn_bang_tn"></div>
+                                <div class="carousel-inner" id="list_item_div_cn_bang_tn">
+                                    @*<embed src="~/Uploads/DKXTHocBaFile/0030.pdf#toolbar=0#zoom=100" style="width: 100% !important; height: 650px" />*@
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel_cn_bang_totnghiep" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel_cn_bang_totnghiep" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" id="div_mc_cccd" style="display:none">
+                        <div class="col-xl-12">
+                            <div id="carousel_cancuoc_congdan" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators" id="list_item_bt_cn_cccd"></div>
+                                <div class="carousel-inner" id="list_item_div_cn_cccd"></div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel_cancuoc_congdan" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel_cancuoc_congdan" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
                             </div>
-
                         </div>
                     </div>
+
+                    <div class="row" id="div_mc_gtut" style="display:none">
+                        <div class="col-xl-12">
+                            <div id="carousel_giayto_uutien" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators" id="list_item_bt_cn_gtut"> </div>
+                                <div class="carousel-inner" id="list_item_div_cn_gtut"> </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel_giayto_uutien" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel_giayto_uutien" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>                  
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <ul class="nav" style="margin:0px">
                         <li class="nav-item " style="margin:0px">
                             <a class="nav-link" href="#" role="button" style="color:black">Điểm các môn thí sinh nhập</a>
-                         
                         </li>
-                    </ul>   
+                    </ul>
                     <hr style="margin-top: 2px; margin-bottom:8px" />
                     <div class="row">
                         <div class="col-xl-12">
@@ -176,8 +185,13 @@
                                         <td><input id="txt_m3_k3" type="text" class="form-control input-mon3 padding_input_text_number " value="8.0" disabled /></td>
                                         <td><input id="txt_tb_m3" type="text" class="form-control padding_input_text_number input-tong" value="8.0" disabled /></td>
                                     </tr>
+
                                 </tbody>
                             </table>
+                            <script>
+
+
+</script>
                         </div>
                     </div>
                     <div class="row">
@@ -213,20 +227,212 @@
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-12" style="text-align:center">
                             <input type="button" class="btn btn-primary" value="Xác nhận thông tin thí sinh" />
-                            <input type="button" class="btn btn-primary" value="Hủy bỏ" />
+                            <input type="button" class="btn btn-primary" value="Hủy bỏ" id="bt_returnform_list" />
                         </div>
                     </div>
-                    <hr style="margin-top: 4px; " />
+                    <hr style="margin-top: 4px;" />
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--Các tham số lưu để truyền dữ liệu-->
+<div>
+    <input type="hidden" value="@ViewBag.DotxtFilteri" id="filteriDotxt_bak" name="filteriDotxt_bak" />
+    <input type="hidden" value="@ViewBag.NvongFilteri" id="filteriNvong_bak" name="filteriNvong_bak" />
+    <input type="hidden" value="@ViewBag.NganhFilteri" id="filteriNganh_bak" name="filteriNganh_bak" />
+    <input type="hidden" value="@ViewBag.LePhiFilteri" id="filteriLePhi_bak" name="filteriLePhi_bak" />
+    <input type="hidden" value="@ViewBag.HoSoFilteri" id="filteriHoSo_bak" name="filteriHoSo_bak" />
+    <input type="hidden" value="@ViewBag.SearchString" id="searchString_bak" name="searchString_bak" />
+    <input type="hidden" value="@ViewBag.pageCurren" id="page_bak" name="page_bak" />
+    <input type="hidden" value="10" id="dkxt_id_checkin" name="dkxt_id_checkin" />
+</div>
+<!--Hết phần Các tham số lưu để truyền dữ liệu-->
+<script>
+    $(document).ready(function () {
+        
+    })
+    $(document).ready(function () {
+        let sp_tieude = document.getElementById('sp_tieude');
+        if (window.innerWidth <= 1200) {
+            sp_tieude.innerText = "Kiểm tra, xác thực TT ĐKXT bằng Học bạ";
+        }
+        else {
+            sp_tieude.innerText = "Kiểm tra và xác thực thông tin đăng ký xét tuyển bằng học bạ";
+        }
 
+        function reportWindowSize() {
+            if (window.innerWidth <= 1200) {
+                sp_tieude.innerText = "Kiểm tra, xác thực TT ĐKXT bằng Học bạ";
+            }
+            else {
+                sp_tieude.innerText = "Kiểm tra và xác thực thông tin đăng ký xét tuyển bằng học bạ";
+            }
+        }
+        window.onresize = reportWindowSize;
+
+        $('#bt_mc_hocba').click(function (e) {
+            e.preventDefault();
+            $('#bt_mc_showlabel').text($('#bt_mc_hocba').text());
+            $("#div_mc_hocba").show();
+            $("#div_mc_bang_totnghiep").hide();
+            $("#div_mc_cccd").hide();
+            $("#div_mc_gtut").hide();
+        });
+        $('#bt_mc_bangtn').click(function (e) {
+            e.preventDefault();
+            $('#bt_mc_showlabel').text($('#bt_mc_bangtn').text());
+            $("#div_mc_hocba").hide();
+            $("#div_mc_bang_totnghiep").show();
+            $("#div_mc_cccd").hide();
+            $("#div_mc_gtut").hide();
+        });
+        $('#bt_mc_cccd').click(function (e) {
+            e.preventDefault();
+            $('#bt_mc_showlabel').text($('#bt_mc_cccd').text());
+            $("#div_mc_hocba").hide();
+            $("#div_mc_bang_totnghiep").hide();
+            $("#div_mc_cccd").show();
+            $("#div_mc_gtut").hide();
+        });
+        $('#bt_mc_gtut').click(function (e) {
+            e.preventDefault();
+            $('#bt_mc_showlabel').text($('#bt_mc_gtut').text());
+            $("#div_mc_hocba").hide();
+            $("#div_mc_bang_totnghiep").hide();
+            $("#div_mc_cccd").hide();
+            $("#div_mc_gtut").show();
+        });
+
+        ts_dkxt_hocba_detail();
+        $('#bt_returnform_list').click(function () {
+            var str = '?filteriDotxt=' + $('#filteriDotxt_bak').val() +
+                '&filteriNvong=' + $('#filteriNvong_bak').val() +
+                '&filteriNganh=' + $('#filteriNganh_bak').val() +
+                '&filteriLePhi=' + $('#filteriLePhi_bak').val() +
+                '&filteriHoSo=' + $('#filteriHoSo_bak').val() +
+                '&searchString=' + $('#searchString_bak').val() +
+                '&page=' + $('#page_bak').val();
+            window.location.href = "/Admin/DangKyXetTuyens/DkxtHocBa" + str;
+        });
+    })
+
+    function ts_dkxt_hocba_detail() {
+        var dataObj = {
+            Dkxt_ID: $('#dkxt_id_checkin').val()
+        }
+        $.ajax({
+            url: '/Admin/DangKyXetTuyens/DkxtHocBa_hs_Detail/',
+            data: JSON.stringify(dataObj),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result); 
+                // hiển thị minh chứng học bạ
+                var mc_hocba = result[0].dkxt_MinhChung_HocBa;
+                var mc_hocba_arr = mc_hocba.split("#");
+                for (var index_mc_hb = 0; index_mc_hb < mc_hocba_arr.length - 1; index_mc_hb++) {
+                    if (index_mc_hb == 0) {
+                        var str_bt_hb_first = '<button type="button" data-bs-target="#carousel_cn_hocba" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>';
+                        $('#list_item_bt_cn_hocba').append(str_bt_hb_first);
+                        var str_div_hb_first = '<div class="carousel-item active">' + '<img src="' + mc_hocba_arr[0] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_hocba').append(str_div_hb_first);
+                    }
+                    else {
+                        var str_bt_hb_second = '<button type="button" data-bs-target="#carousel_cn_hocba" data-bs-slide-to="' + index_mc_hb + '" aria-label="Slide ' + index_mc_hb + '"></button>';
+                        $('#list_item_bt_cn_hocba').append(str_bt_hb_second);
+                        var str_div_hb_second = '<div class="carousel-item">' + '<img src="' + mc_hocba_arr[index_mc_hb] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_hocba').append(str_div_hb_second);
+                    }
+                }
+
+                // hiển thị minh chứng  bằng
+                var mc_bangtn = result[0].dkxt_MinhChung_Bang;
+                var mc_bangtn_arr = mc_bangtn.split("#");
+                for (var index_mc_bang = 0; index_mc_bang < mc_bangtn_arr.length - 1; index_mc_bang++) {
+
+                    if (index_mc_bang == 0) {
+                        var str_bt_bang_first = '<button type="button" data-bs-target="#carousel_cn_bang_totnghiep" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>';
+                        $('#list_item_bt_cn_bang_tn').append(str_bt_bang_first);
+                        var str_div_bang_first = '<div class="carousel-item active">' + '<img src="' + mc_bangtn_arr[0] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_bang_tn').append(str_div_bang_first);
+                    }
+                    else {
+                        var str_bt_bang_second = '<button type="button" data-bs-target="#carousel_cn_bang_totnghiep" data-bs-slide-to="' + index_mc_bang + '" aria-label="Slide ' + index_mc_bang + '"></button>';
+                        $('#list_item_bt_cn_bang_tn').append(str_bt_bang_second);
+                        var str_div_bang_second = '<div class="carousel-item">' + '<img src="' + mc_bangtn_arr[index_mc_bang] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_bang_tn').append(str_div_bang_second);
+                    }
+                }
+
+                // hiển thị minh chứng căn cước công dân
+                var mc_cccd = result[0].dkxt_MinhChung_CCCD;
+                var mc_cccd_arr = mc_cccd.split("#");
+                for (var index_mc_cccd = 0; index_mc_cccd < mc_cccd_arr.length - 1; index_mc_cccd++) {
+
+                    if (index_mc_cccd == 0) {
+                        var str_bt_cccd_first = '<button type="button" data-bs-target="#carousel_cancuoc_congdan" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>';
+                        $('#list_item_bt_cn_cccd').append(str_bt_cccd_first);
+                        var str_div_cccd_first = '<div class="carousel-item active">' + '<img src="' + mc_cccd_arr[0] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_cccd').append(str_div_cccd_first);
+                    }
+                    else {
+                        var str_bt_cccd_second = '<button type="button" data-bs-target="#carousel_cancuoc_congdan" data-bs-slide-to="' + index_mc_cccd + '" aria-label="Slide ' + index_mc_cccd + '"></button>';
+                        $('#list_item_bt_cn_cccd').append(str_bt_cccd_second);
+                        var str_div_cccd_second = '<div class="carousel-item">' + '<img src="' + mc_cccd_arr[index_mc_cccd] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_cccd').append(str_div_cccd_second);
+                    }
+                }
+
+                // hiển thị minh chứng giấy tờ ưu tiên
+                var mc_gtut = result[0].dkxt_MinhChung_UuTien;
+                var mc_gtut_arr = mc_gtut.split("#");
+                for (var index_mc_gtut = 0; index_mc_gtut < mc_gtut_arr.length - 1; index_mc_gtut++) {
+                    if (index_mc_gtut == 0) {
+                        var str_bt_gtut_first = '<button type="button" data-bs-target="#carousel_giayto_uutien" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>';
+                        $('#list_item_bt_cn_gtut').append(str_bt_gtut_first);
+                        var str_div_gtut_first = '<div class="carousel-item active">' + '<img src="' + mc_gtut_arr[0] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_gtut').append(str_div_gtut_first);
+                    }
+                    else {
+                        var str_bt_gtut_second = '<button type="button" data-bs-target="#carousel_giayto_uutien" data-bs-slide-to="' + index_mc_gtut + '" aria-label="Slide ' + index_mc_gtut + '"></button>';
+                        $('#list_item_bt_cn_gtut').append(str_bt_gtut_second);
+                        var str_div_gtut_second = '<div class="carousel-item">' + '<img src="' + mc_gtut_arr[index_mc_gtut] + '" class="h-100 d-block w-100" alt="...">' + '</div>';
+                        $('#list_item_div_cn_gtut').append(str_div_gtut_second);
+                    }
+                }
+
+                // hiển thị tên môn học đã đăng ký
+                $('#lb_tenmon_1').text(result[0].tenMon1);
+                $('#lb_tenmon_2').text(result[0].tenMon2);
+                $('#lb_tenmon_3').text(result[0].tenMon3);
+
+                // hiển thị điểm môn học đã đăng ký
+                $('#txt_m1_k1').val(((result[0].diemMon1_HK1) * 100 / 100).toFixed(2));
+                $('#txt_m1_k2').val(((result[0].diemMon1_HK2) * 100 / 100).toFixed(2));
+                $('#txt_m1_k3').val(((result[0].diemMon1_HK3) * 100 / 100).toFixed(2));
+                $('#txt_tb_m1').val(((result[0].diemMon1_TBMon) * 100 / 100).toFixed(2));
+
+                $('#txt_m2_k1').val(((result[0].diemMon2_HK1) * 100 / 100).toFixed(2));
+                $('#txt_m2_k2').val(((result[0].diemMon2_HK2) * 100 / 100).toFixed(2));
+                $('#txt_m2_k3').val(((result[0].diemMon2_HK3) * 100 / 100).toFixed(2));
+                $('#txt_tb_m2').val(((result[0].diemMon2_TBMon) * 100 / 100).toFixed(2));
+
+                $('#txt_m3_k1').val(((result[0].diemMon3_HK1) * 100 / 100).toFixed(2));
+                $('#txt_m3_k2').val(((result[0].diemMon3_HK2) * 100 / 100).toFixed(2));
+                $('#txt_m3_k3').val(((result[0].diemMon3_HK3) * 100 / 100).toFixed(2));
+                $('#txt_tb_m3').val(((result[0].diemMon3_TBMon) * 100 / 100).toFixed(2));
+
+            },
+            error: function (errormessage) {
+                console.log("Có lỗi xảy ra trong quá trình thực hiện");
+            }
+        });
+    }
+</script>
