@@ -17,7 +17,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // GET: Admin/KinhPhis
         public ActionResult Index()
         {
-            var kinhPhis = db.KinhPhis.Include(k => k.DangKyDuThiNangKhieu).Include(k => k.DangKyXetTuyen).Include(k => k.DangKyXetTuyenKhac).Include(k => k.DangKyXetTuyenKQTQG).Include(k => k.DangKyXetTuyenThang).Include(k => k.ThiSinhDangKy);
+            var kinhPhis = db.KinhPhis.Include(k => k.ThiSinhDangKy);
             return View(kinhPhis.ToList());
         }
 
@@ -62,11 +62,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Dkdt_NK_ID = new SelectList(db.DangKyDuThiNangKhieus, "Dkdt_NK_ID", "Dkdt_NK_GhiChu", kinhPhi.Dkdt_NK_ID);
-            ViewBag.Dkxt_ID = new SelectList(db.DangKyXetTuyens, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_ID);
-            ViewBag.Dkxt_Khac_ID = new SelectList(db.DangKyXetTuyenKhacs, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_Khac_ID);
-            ViewBag.Dkxt_KQTQG_ID = new SelectList(db.DangKyXetTuyenKQTQGs, "Dkxt_KQTQG_ID", "Dkxt_KQTQG_GhiChu", kinhPhi.Dkxt_KQTQG_ID);
-            ViewBag.Dkxt_TT_ID = new SelectList(db.DangKyXetTuyenThangs, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_TT_ID);
             ViewBag.ThiSinh_ID = new SelectList(db.ThiSinhDangKies, "ThiSinh_ID", "ThiSinh_CCCD", kinhPhi.ThiSinh_ID);
             return View(kinhPhi);
         }
@@ -83,11 +78,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Dkdt_NK_ID = new SelectList(db.DangKyDuThiNangKhieus, "Dkdt_NK_ID", "Dkdt_NK_GhiChu", kinhPhi.Dkdt_NK_ID);
-            ViewBag.Dkxt_ID = new SelectList(db.DangKyXetTuyens, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_ID);
-            ViewBag.Dkxt_Khac_ID = new SelectList(db.DangKyXetTuyenKhacs, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_Khac_ID);
-            ViewBag.Dkxt_KQTQG_ID = new SelectList(db.DangKyXetTuyenKQTQGs, "Dkxt_KQTQG_ID", "Dkxt_KQTQG_GhiChu", kinhPhi.Dkxt_KQTQG_ID);
-            ViewBag.Dkxt_TT_ID = new SelectList(db.DangKyXetTuyenThangs, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_TT_ID);
+
             ViewBag.ThiSinh_ID = new SelectList(db.ThiSinhDangKies, "ThiSinh_ID", "ThiSinh_CCCD", kinhPhi.ThiSinh_ID);
             return View(kinhPhi);
         }
@@ -105,11 +96,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Dkdt_NK_ID = new SelectList(db.DangKyDuThiNangKhieus, "Dkdt_NK_ID", "Dkdt_NK_GhiChu", kinhPhi.Dkdt_NK_ID);
-            ViewBag.Dkxt_ID = new SelectList(db.DangKyXetTuyens, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_ID);
-            ViewBag.Dkxt_Khac_ID = new SelectList(db.DangKyXetTuyenKhacs, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_Khac_ID);
-            ViewBag.Dkxt_KQTQG_ID = new SelectList(db.DangKyXetTuyenKQTQGs, "Dkxt_KQTQG_ID", "Dkxt_KQTQG_GhiChu", kinhPhi.Dkxt_KQTQG_ID);
-            ViewBag.Dkxt_TT_ID = new SelectList(db.DangKyXetTuyenThangs, "Dkxt_ID", "Dkxt_GhiChu", kinhPhi.Dkxt_TT_ID);
+
             ViewBag.ThiSinh_ID = new SelectList(db.ThiSinhDangKies, "ThiSinh_ID", "ThiSinh_CCCD", kinhPhi.ThiSinh_ID);
             return View(kinhPhi);
         }

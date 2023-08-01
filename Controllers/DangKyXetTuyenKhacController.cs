@@ -183,13 +183,23 @@ namespace HDU_AppXetTuyen.Controllers
                 db.DangKyXetTuyenKhacs.Add(dkxtt);
                 db.SaveChanges();
 
+                var NguyenVong = db.DangKyXetTuyenKhacs.OrderByDescending(n => n.Dkxt_ID).Take(1).FirstOrDefault();
+                KinhPhi kp = new KinhPhi();
+                kp.ThiSinh_ID = ts.ThiSinh_ID;
+                kp.Dkxt_ID = dkxtt.Dkxt_ID;
+                kp.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
+                kp.Dxt_ID = dotXT.Dxt_ID;
+                kp.KinhPhi_TrangThai = 0;
+                db.KinhPhis.Add(kp); 
+                db.SaveChanges();
+
                 int nganh_id = int.Parse(student.Nganh_ID);
                 var nganh = db.Nganhs.Where(n => n.Nganh_ID == nganh_id).FirstOrDefault();
                 var subject = "Đăng ký nguyện vọng";
                 var body = "Thí sinh " + ts.ThiSinh_Ten + ", Số CCCD: " + ts.ThiSinh_CCCD + " đã đăng ký nguyện vọng mới." +
 
                      " <br/><b>Thông tin nguyện vọng:</b><br/>" +
-                     " <p> Phương thức đăng ký: Phương thức 5 </p>" +
+                     " <p> Phương thức đăng ký: Phương thức " + ToHop[ToHop.Length - 1].ToString() + "</p>" +
                      " <p> Mã ngành: " + nganh.Nganh_MaNganh + " </p>" +
                      " <p> Tên ngành: " + nganh.NganhTenNganh + " </p>" +
                      " <p> Loại chứng chỉ: " + student.Dkxt_DonViToChuc + " </p>" +
@@ -236,6 +246,15 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.DotXT_ID = dotXT.Dxt_ID;
                 db.DangKyXetTuyenKhacs.Add(dkxtt);
                 db.SaveChanges();
+
+                var NguyenVong = db.DangKyXetTuyenKhacs.OrderByDescending(n => n.Dkxt_ID).Take(1).FirstOrDefault();
+                KinhPhi kp = new KinhPhi();
+                kp.ThiSinh_ID = ts.ThiSinh_ID;
+                kp.Dkxt_ID = NguyenVong.Dkxt_ID;
+                kp.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
+                kp.Dxt_ID = dotXT.Dxt_ID;
+                kp.KinhPhi_TrangThai = 0;
+                db.KinhPhis.Add(kp); db.SaveChanges();
 
                 int nganh_id = int.Parse(student.Nganh_ID);
                 var nganh = db.Nganhs.Where(n => n.Nganh_ID == nganh_id).FirstOrDefault();
