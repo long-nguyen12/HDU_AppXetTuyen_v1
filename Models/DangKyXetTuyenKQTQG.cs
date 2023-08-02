@@ -9,10 +9,6 @@
     [Table("DangKyXetTuyenKQTQG")]
     public partial class DangKyXetTuyenKQTQG
     {
-        public DangKyXetTuyenKQTQG()
-        {
-            KinhPhis = new HashSet<KinhPhi>();
-        }
 
         [Key]
         public long Dkxt_KQTQG_ID { get; set; }
@@ -76,7 +72,5 @@
 
         public virtual DotXetTuyen DotXetTuyen { get; set; }
         public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
-
-        public virtual ICollection<KinhPhi> KinhPhis { get; set; }
     }
 }

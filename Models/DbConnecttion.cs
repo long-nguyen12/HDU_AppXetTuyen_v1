@@ -43,21 +43,10 @@ namespace HDU_AppXetTuyen.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DangKyXetTuyenKhac>()
-                .HasMany(e => e.KinhPhis)
-                .WithOptional(e => e.DangKyXetTuyenKhac)
-                .HasForeignKey(e => e.Dkxt_Khac_ID);
-
-            modelBuilder.Entity<DangKyXetTuyenThang>()
-                .HasMany(e => e.KinhPhis)
-                .WithOptional(e => e.DangKyXetTuyenThang)
-                .HasForeignKey(e => e.Dkxt_TT_ID);
-
-
             modelBuilder.Entity<DotXetTuyen>()
-               .HasMany(e => e.DangKyDuThiNangKhieus)
-               .WithOptional(e => e.DotXetTuyen)
-               .HasForeignKey(e => e.DotXT_ID);
+                .HasMany(e => e.DangKyDuThiNangKhieus)
+                .WithOptional(e => e.DotXetTuyen)
+                .HasForeignKey(e => e.DotXT_ID);
 
             modelBuilder.Entity<DotXetTuyen>()
                 .HasMany(e => e.DangKyXetTuyenKQTQGs)
