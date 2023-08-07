@@ -23,11 +23,12 @@
         <div class="page-header-content">
             <div class="row align-items-center justify-content-between pt-3">
                 <div class="col-auto mb-1">
-                    <div class="page-header-title  mb-2">
+                    <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span>Theo phương thức sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ</span>
+                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ</span>
+
                     </div>
-                </div>
+                </div>             
             </div>
         </div>
     </div>
@@ -63,8 +64,48 @@
                 <div class="row">
                     <div class="col-xxl-12">
                         <center>
-                            <button id="downButton" class="btn btn-outline-success"> Xuất phiếu tổng hợp</button>
-                            <a class="btn btn-outline-primary" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>
+                            @*<button id="downButton" class="btn btn-outline-success"> Xuất phiếu tổng hợp</button>
+                            <a class="btn btn-outline-primary" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>*@
+
+                            <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
+                            <a id="bt_add_aspirations" class="btn btn-outline-primary" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>
+                            <script>
+                                $(document).ready(function () {
+                                    let sp_tieude = document.getElementById('sp_tieude');
+                                    let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
+                                    let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
+
+                                    if (window.innerWidth <= 1200) {
+                                        sp_tieude.innerHTML = "ĐKXT SD Kết quả DGNL hoặc CCNN";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm NV";
+
+                                    }
+                                    else {
+                                        sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+
+                                    }
+
+                                    function reportWindowSize() {
+                                        if (window.innerWidth <= 1200) {
+                                            sp_tieude.innerHTML = "ĐKXT SD Kết quả DGNL hoặc CCNN";
+                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
+                                            bt_them_nguyen_vong.innerHTML = "Thêm NV";
+
+                                        }
+                                        else {
+                                            sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ";
+                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
+                                            bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+
+                                        }
+                                    }
+                                    window.onresize = reportWindowSize;
+                                })
+                            </script>
+
                         </center>
                     </div>
                 </div>
@@ -91,32 +132,32 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th colspan="2">Chọn ngành</th>
+                                    <th colspan="2">Chọn ngành và loại kết quả xét <font color="red">(*)</font></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="width:130px">Khối ngành <font color="red">(*)</font></td>
+                                    <td style="width:130px">Khối ngành </td>
                                     <td>
                                         <select id="select_khoinganh" class="form-select"></select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Ngành <font color="red">(*)</font></td>
+                                    <td>Ngành</td>
                                     <td>
                                         <select id="Nganh_ID" class="form-select"></select>
                                         <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Phương thức <font color="red">(*)</font></td>
+                                    <td>Chọn kết quả</td>
                                     <td>
                                         <select id="ChungChi_ID" class="form-select"></select>
                                         <span id="ChungChi_ID_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Tổ hợp xét tuyển <font color="red">(*)</font></td>
+                                    <td>Tổ hợp xét</td>
                                     <td>
                                         <input id="Dkxt_ToHopXT" type="text" class="form-control" value="" placeholder="Tổ hợp xét tuyển" disabled />
                                         <span id="Dkxt_ToHopXT_Error" class="small mb-1 text-danger"></span>
@@ -148,7 +189,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th colspan="2" style="vertical-align:middle;">Thông tin xét tuyển</th>
+                                            <th colspan="2" style="vertical-align:middle;">Thông tin kết quả nộp xét tuyển <font color="red">(*)</font></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_list_diemmonhoc">
@@ -195,7 +236,7 @@
                                             <td colspan="4">
                                                 <div class="row g-3 align-items-center">
                                                     <div class="col-4">
-                                                        <label for="select_namtn" class="col-form-label">Ngày thi:</label>
+                                                        <label for="Dkxt_NgayDuThi" class="col-form-label">Ngày thi:</label>
                                                     </div>
                                                     <div class="col-8">
                                                         <input id="datepicker" name="Dkxt_NgayDuThi" type="text" class="form-control" placeholder="Ngày thi" value="" />
@@ -230,12 +271,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-xxl-12" style="text-align:center">
-                                <input class="btn btn-primary" type="button" value="Đồng ý" onclick="SubmitData()" />
-                                <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="_bt_HuyBo_Dkxt_NVM_OnClick(0,0,0)" />
-                            </div>
-                        </div>
+                        
 
                     </div>
                     <div class="col-xxl-4">
@@ -326,6 +362,12 @@
 
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-xxl-12" style="text-align:center">
+                        <input class="btn btn-primary" type="button" value="Đồng ý" onclick="SubmitData()" />
+                        <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="_bt_HuyBo_Dkxt_NVM_OnClick(0,0,0)" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -406,8 +448,13 @@
         });
 
         $("#select_khoinganh").change(function () {
-            let id = $("#select_khoinganh").val();
-            GetNganhData(id);
+            let id_kn = $("#select_khoinganh").val();
+            GetNganhData(id_kn);         
+        });
+
+        $("#Nganh_ID").change(function () {
+            let id_nganh = $("#Nganh_ID").val();
+            GetAllChungChi(id_nganh);
         });
 
         $('#ChungChi_ID').change(function () {
@@ -647,32 +694,68 @@
                 $.each(data, function (index, item) {
                     khoiNganhs.append($('<option></option>').val(item.KhoiNganh_ID).text(item.KhoiNganh_Ten));
                 });
+                let id = $("#select_khoinganh").val();
+                GetNganhData(id);
             },
             error: function (errormessage) {
                 console.log(errormessage)
             }
         });
     }
-
-    function GetAllChungChi() {
+    function GetNganhData(id) { // id = KhoiNganh_ID
+        $('#Nganh_ID').empty();
         $.ajax({
-            url: "/DangKyXetTuyenKhac/GetAllChungChis/",
-            type: 'GET',
+            url: "/DangKyXetTuyenThang/GetAllNganhs/",
+            type: 'POST',
+            data: JSON.stringify({
+                idKhoiNganh: id
+            }),
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (response) {
-                let chungchi = response.chungchi;
-                let chungchis = $('#ChungChi_ID');
-                chungchis.empty();
-                chungchis.append($('<option></option>').val(0).text("Chọn chứng chỉ"));
-                $.each(chungchi, function (index, item) {
-                    chungchis.append($('<option></option>').val(item.ChungChi_ID).text(item.ChungChi_Ten));
-                });
+                if (response.success) {
+                    let data = response.data
+                    $.each(data, function (i, result) {
+                        $('#Nganh_ID').append('<option value="' + result.Nganh_ID + '">' + result.NganhTenNganh + '</option>');
+                    });  
+                    let id = $("#Nganh_ID").val();
+                    GetAllChungChi(id);
+                }
             },
             error: function (errormessage) {
                 console.log(errormessage)
             }
         });
+    }
+    function GetAllChungChi(id_nganh) { // id ngành
+        if (id_nganh == 0) {
+           
+            var chungchis = $('#ChungChi_ID');
+            chungchis.empty();
+            chungchis.append($('<option></option>').val(0).text("Chọn kết quả xét..."));
+            $('#Dkxt_TongDiem').val("");
+        }
+        else if (id_nganh > 0) {
+            $.ajax({
+                url: "/DangKyXetTuyenKhac/GetAllChungChis/",
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    let chungchi = response.chungchi;
+                    var chungchis = $('#ChungChi_ID');
+                    chungchis.empty();
+                    chungchis.append($('<option></option>').val(0).text("Chọn kết quả xét..."));
+                    $.each(chungchi, function (index, item) {
+                        chungchis.append($('<option></option>').val(item.ChungChi_ID).text(item.ChungChi_Ten));
+                    });
+                },
+                error: function (errormessage) {
+                    console.log(errormessage)
+                }
+            });
+        }
+        
     }
 
     function GetChungChiId(id) {
@@ -691,31 +774,6 @@
                 let thangdiem = chungchi.ChungChi_ThangDiem;
                 $('#Dkxt_ToHopXT').val(pt).text(pt);
                 $('#Dkxt_TongDiem').val(thangdiem).text(thangdiem);
-            },
-            error: function (errormessage) {
-                console.log(errormessage)
-            }
-        });
-    }
-
-    function GetNganhData(id) { // id = KhoiNganh_ID
-        $('#Nganh_ID').empty();
-        $.ajax({
-            url: "/DangKyXetTuyenThang/GetAllNganhs/",
-            type: 'POST',
-            data: JSON.stringify({
-                idKhoiNganh: id
-            }),
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    let data = response.data
-                    $.each(data, function (i, result) {
-                        $('#Nganh_ID').append('<option value="' + result.Nganh_ID + '">' + result.NganhTenNganh + '</option>');
-                    });
-                    /*$('#Nganh_ID').val(nganh_key);*/
-                }
             },
             error: function (errormessage) {
                 console.log(errormessage)
@@ -892,7 +950,7 @@
     }
 
     $(document).ready(function () {
-        $('#downButton').click(function () {
+        $('#bt_xuat_phieu_tong_hop_kq').click(function () {
             window.location.href = '/ExportFile/DownloadFile_XetTuyenDGNL_DGTD';
         });
     });

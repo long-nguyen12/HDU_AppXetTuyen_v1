@@ -9,20 +9,19 @@
     [Table("ThiSinhDangKy")]
     public partial class ThiSinhDangKy
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        
         public ThiSinhDangKy()
         {
             DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
-            DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
-            LePhiXetTuyens = new HashSet<LePhiXetTuyen>();
+            DangKyXetTuyenHBs = new HashSet<DangKyXetTuyenHB>();
             DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
             DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
-        }
+        }       
 
         [Key]
         public long ThiSinh_ID { get; set; }
-      
+
         [StringLength(50)]
         [Required(ErrorMessage = "Vui lòng nhập CMND/CCCD")]
         [Display(Name = "CMND/CCCD")]
@@ -102,10 +101,7 @@
 
         [Display(Name = "Tên trường cấp ba")]
         [StringLength(300)]
-        public string ThiSinh_TruongCapBa { get; set; }
-
-        [Display(Name = "Đợt xét tuyển")]
-        public int? DotXT_ID { get; set; }
+        public string ThiSinh_TruongCapBa { get; set; }     
 
         [Display(Name = "Trạng thái")]
         public int? ThiSinh_TrangThai { get; set; }
@@ -124,32 +120,15 @@
 
         [StringLength(200)]
         public string ThiSinh_Email_Temp { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
-
+        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }        
+        public virtual ICollection<DangKyXetTuyenHB> DangKyXetTuyenHBs { get; set; }        
+        public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }        
+        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }        
+        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }   
         [Display(Name = "Đối tượng")]
         public virtual DoiTuong DoiTuong { get; set; }
 
-        [Display(Name = "Đợt xét tuyển")]
-        public virtual DotXetTuyen DotXetTuyen { get; set; }
-
         [Display(Name = "Khu vực")]
         public virtual KhuVuc KhuVuc { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LePhiXetTuyen> LePhiXetTuyens { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
     }
 }

@@ -28,5 +28,6 @@
         public int? Huyen_ID { get; set; }
 
         public virtual Huyen Huyen { get; set; }
+      
     }
 }

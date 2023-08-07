@@ -17,8 +17,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // GET: Admin/KinhPhis
         public ActionResult Index()
         {
-            var kinhPhis = db.KinhPhis.Include(k => k.ThiSinhDangKy);
-            return View(kinhPhis.ToList());
+            //var kinhPhis = db.KinhPhis.Include(k => k.ThiSinhDangKy);
+            return View();
         }
 
         // GET: Admin/KinhPhis/Details/5
@@ -40,7 +40,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Create()
         {
             ViewBag.Dkdt_NK_ID = new SelectList(db.DangKyDuThiNangKhieus, "Dkdt_NK_ID", "Dkdt_NK_GhiChu");
-            ViewBag.Dkxt_ID = new SelectList(db.DangKyXetTuyens, "Dkxt_ID", "Dkxt_GhiChu");
+            ViewBag.Dkxt_ID = new SelectList(db.DangKyXetTuyenHBs, "Dkxt_ID", "Dkxt_GhiChu");
             ViewBag.Dkxt_Khac_ID = new SelectList(db.DangKyXetTuyenKhacs, "Dkxt_ID", "Dkxt_GhiChu");
             ViewBag.Dkxt_KQTQG_ID = new SelectList(db.DangKyXetTuyenKQTQGs, "Dkxt_KQTQG_ID", "Dkxt_KQTQG_GhiChu");
             ViewBag.Dkxt_TT_ID = new SelectList(db.DangKyXetTuyenThangs, "Dkxt_ID", "Dkxt_GhiChu");

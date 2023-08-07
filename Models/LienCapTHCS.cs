@@ -1,23 +1,22 @@
 ﻿namespace HDU_AppXetTuyen.Models
 {
-    using HDU_AppXetTuyen.Controllers;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.Diagnostics;
 
     [Table("LienCapTHCS")]
     public partial class LienCapTHCS
-    {
+    {        
+
         [Key]
         public long HocSinh_ID { get; set; }
 
         [Display(Name = "Mã định danh cá nhân")]
         [StringLength(100)]
         public string HocSinh_DinhDanh { get; set; }
-        
+
         [Display(Name = "Họ và tên")]
         [StringLength(100)]
         public string HocSinh_HoTen { get; set; }
@@ -99,8 +98,8 @@
         [Display(Name = "Ghi chú")]
         [StringLength(4000)]
         public string HocSinh_GhiChu { get; set; }
-        
-        [NotMapped]  
+
+        [NotMapped]
         public MonHocTHCS Monhocs { get; set; }
 
         [NotMapped]
@@ -111,5 +110,5 @@
 
         [NotMapped]
         public PhuHuynh PhMe { get; set; }
-    } 
+    }
 }

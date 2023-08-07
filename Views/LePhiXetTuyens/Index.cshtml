@@ -59,7 +59,37 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 if (response.success) {
-                    let { HocBa, TuyenThang, NgoaiNgu, DanhGia } = response;
+                    let { TrungHocPT,  HocBa, TuyenThang, NgoaiNgu, DanhGia } = response;
+
+                    if (TrungHocPT.length > 0) {
+                        $("#list-kqthi-thpt").show();
+                        let html = "";
+                        $.each(TrungHocPT, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+                            html += "<tr>";
+                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
+                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
+                            html += '<td class="text-center">' + item.Thm.ToHopMon + '</td>';
+                            html += `<td class="text-center"><button class="btn btn-outline-primary btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Nộp lệ phí</button></td>`;
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += "</tr>";
+                        });
+                        $('.tbody-trunghoc-ptqg').html(html);
+                    }
+                    else {
+                        $("#list-kqthi-thpt").hide();
+                    }
+
                     if (HocBa.length > 0) {
                         $("#list-hocba").show();
                         let html = "";
@@ -83,8 +113,12 @@
                             html += '<td class="text-center">' + trangthai + '</td>';
                             html += "</tr>";
                         });
-                        $('.tbody').html(html);
+                        $('.tbody-hocba').html(html);
                     }
+                    else {
+                        $("#list-hocba").hide();
+                    }
+
                     if (TuyenThang.length > 0) {
                         $("#list-tuyenthang").show();
                         let html = "";
@@ -110,6 +144,10 @@
                         });
                         $('.tbody-tuyenthang').html(html);
                     }
+                    else {
+                        $("#list-tuyenthang").hide();
+                    }
+
                     if (NgoaiNgu.length > 0) {
                         $("#list-ngoaingu").show();
                         let html = "";
@@ -135,6 +173,10 @@
                         });
                         $('.tbody-ngoaingu').html(html);
                     }
+                    else {
+                        $("#list-ngoaingu").hide();
+                    }
+
                     if (DanhGia.length > 0) {
                         $("#list-dgnl").show();
                         let html = "";
@@ -160,7 +202,9 @@
                         });
                         $('.tbody-dgnl').html(html);
                     }
-                } else {
+                }
+                else {
+                    // thông báo lỗi
                 }
             },
             error: function (xhr, status, error) {
@@ -285,6 +329,36 @@
 </style>
 <div class="container-fluid px-12">
     <div id="fadeInUp">
+        <div class="card card-header-actions mt-3 mb-1" id="list-kqthi-thpt">
+            <div class="card-header">
+                Theo phương thức sử dụng kết quả thi THPT Quốc gia
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table class="table">
+                        <tr>
+                            <th class="text-center">Mã ngành</th>
+                            <th>Tên ngành</th>
+                            <th class="text-center">
+                                Tên phương thức
+                            </th>
+                            <th class="text-center">
+                                Mã tổ hợp
+                            </th>
+                            <th class="text-center">
+                                Lệ phí
+                            </th>
+                            <th width="15%" class="text-center">
+                                Trạng thái
+                            </th>
+                        </tr>
+                        <tbody class="tbody-trunghoc-ptqg">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="card card-header-actions mt-3 mb-1" id="list-hocba">
             <div class="card-header">
                 Theo phương thức sử dụng kết quả học tập ở THPT
@@ -308,7 +382,7 @@
                                 Trạng thái
                             </th>
                         </tr>
-                        <tbody class="tbody">
+                        <tbody class="tbody-hocba">
                         </tbody>
                     </table>
                 </div>
@@ -405,56 +479,57 @@
             </div>
         </div>
     </div>
-    <input id="key_dkxt_id" type="hidden" />
-    <input id="key_dkxt_pt" type="hidden" />
-    <div class="modal fade" id="modal_dongphi" tabindex="-1" role="dialog" aria-labelledby="modal_dongphi" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal_dongphi">Nhập thông tin</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="onCancel()"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row g-3 align-items-center mb-2">
-                        <div class="col-4">
-                            <label for="select_namtn" class="col-form-label">Mã giao dịch:</label>
-                        </div>
-                        <div class="col-8">
-                            <input id="KinhPhi_SoTC" class="form-control" placeholder="Mã giao dịch" value="" />
-                            <span id="KinhPhi_SoTC_Error" class="small mb-1 text-danger"></span>
-                        </div>
+</div>
+<input id="key_dkxt_id" type="hidden" />
+<input id="key_dkxt_pt" type="hidden" />
+
+<div class="modal fade" id="modal_dongphi" tabindex="-1" role="dialog" aria-labelledby="modal_dongphi" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_dongphi">Nhập thông tin</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="onCancel()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3 align-items-center mb-2">
+                    <div class="col-4">
+                        <label for="select_namtn" class="col-form-label">Mã giao dịch:</label>
                     </div>
-                    <div class="col-xxl-12">
-                        <div class="form-group mb-2">
-                            <label class="form-label">Tệp minh chứng: </label>
-                            <div class="col-md-12">
-                                <input class="form-control" id="file_minhchung" multiple name="files" type="file" data-val="true" data-val-required="Vui lòng chọn tệp minh chứng"
-                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                <table class="table" id="FilesList_KinhPhi_TepMinhChung_View" style="visibility:hidden; width: 100%">
-                                    <tr style="display:none">
-                                        <th colspan="3"><input type="hidden" id="KinhPhi_TepMinhChung_Files" /></th>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="col-8">
+                        <input id="KinhPhi_SoTC" class="form-control" placeholder="Mã giao dịch" value="" />
+                        <span id="KinhPhi_SoTC_Error" class="small mb-1 text-danger"></span>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="onCancel()">Hủy</button>
-                    <button class="btn btn-primary" type="button" onclick="onSubmit()">Đồng ý</button>
+                <div class="col-xxl-12">
+                    <div class="form-group mb-2">
+                        <label class="form-label">Tệp minh chứng: </label>
+                        <div class="col-md-12">
+                            <input class="form-control" id="file_minhchung" multiple name="files" type="file" data-val="true" data-val-required="Vui lòng chọn tệp minh chứng"
+                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                            <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                            <table class="table" id="FilesList_KinhPhi_TepMinhChung_View" style="visibility:hidden; width: 100%">
+                                <tr style="display:none">
+                                    <th colspan="3"><input type="hidden" id="KinhPhi_TepMinhChung_Files" /></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="onCancel()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="onSubmit()">Đồng ý</button>
             </div>
         </div>
     </div>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-            </div>
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
         </div>
     </div>
 </div>

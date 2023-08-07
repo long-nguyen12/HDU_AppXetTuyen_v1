@@ -8,8 +8,8 @@ namespace HDU_AppXetTuyen.Models
     
     public class StatusTracking // khai báo để tạo dữ liệu cho dropdowlis trạng thái hồ sơ và trạng thái kinh phí
     {
-        public int st_ID { get; set; }
-        public string st_Name { get; set; }
+        public int St_ID { get; set; }
+        public string St_Name { get; set; }
     }
     // Cương khai báo ..Chưa hiểu làm gì
     public class Constant
@@ -50,5 +50,12 @@ namespace HDU_AppXetTuyen.Models
         public string HoTen { get; set; }
         public string SoDienThoai { get; set; }
         public string NgheNghiep { get; set; }
-    }   
+    }
+    public class KinhPhiInfo
+    {
+        public string KinhPhi_SoTC { get; set; }
+        public string KinhPhi_TepMinhChung { get; set; }
+        public string key_dkxt_id { get; set; }
+        public string key_dkxt_pt { get; set; }
+    }
 }

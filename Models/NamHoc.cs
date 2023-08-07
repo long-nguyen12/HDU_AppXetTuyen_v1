@@ -9,7 +9,7 @@ namespace HDU_AppXetTuyen.Models
     [Table("NamHoc")]
     public partial class NamHoc
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        
         public NamHoc()
         {
             DotXetTuyens = new HashSet<DotXetTuyen>();
@@ -26,7 +26,7 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(250)]
         public string NamHoc_GhiChu { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<DotXetTuyen> DotXetTuyens { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<!-- Thêm thư viện -->
-@model PagedList.IPagedList<HDU_AppXetTuyen.Models.DangKyXetTuyen>
+@model PagedList.IPagedList<HDU_AppXetTuyen.Models.DangKyXetTuyenHB>
 @using PagedList.Mvc;
 <!-- Kết thúc-->
 @{
@@ -126,7 +126,7 @@
                                             @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
+                                            @Html.DisplayFor(modelItem => item.Dkxt_HB_NguyenVong)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Nganh.Nganh_GhiChu)
@@ -135,20 +135,20 @@
                                             @Html.DisplayFor(modelItem => item.ToHopMon.Thm_MaTen)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Dkxt_Diem_Tong_Full)
+                                            @Html.DisplayFor(modelItem => item.Dkxt_HB_Diem_Tong_Full)
                                         </td>
 
                                         <td>
                                             @{
-                                                if (item.Dkxt_TrangThai == 0)
+                                                if (item.Dkxt_HB_TrangThai == 0)
                                                 {
                                                     <a href="#" style="color:red; text-decoration:none">Chưa đóng</a>
                                                 }
-                                                if (item.Dkxt_TrangThai == 1)
+                                                if (item.Dkxt_HB_TrangThai == 1)
                                                 {
                                                     <a href="#" style="color: green; text-decoration: none">Đã nộp</a>
                                                 }
-                                                if (item.Dkxt_TrangThai == 2)
+                                                if (item.Dkxt_HB_TrangThai == 2)
                                                 {
                                                     <a href="#" style="color: blue; text-decoration: none">Đã duyệt</a>
                                                 }
@@ -156,10 +156,10 @@
                                         </td>
                                         <td>
                                             @{
-                                                if (item.Dkxt_TrangThai_KetQua == 0)
+                                                if (item.Dkxt_HB_TrangThai_KetQua == 0)
                                                 {
                                                     <a href="@Url.Action("DkxtHocBa_hs_view","DangKyXetTuyens" , new {
-                                                                    dkxt_ID=item.Dkxt_ID,
+                                                                    dkxt_ID=item.Dkxt_HB_ID,
                                                                     filteriDotxt =ViewBag.DotxtFilteri,
                                                                     filteriNvong =ViewBag.NvongFilteri,
                                                                     filteriNganh =  ViewBag.NganhFilteri,
@@ -169,10 +169,10 @@
                                                                     page = ViewBag.pageCurren})"
                                                        class="btn btn-outline-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
                                                 }
-                                                if (item.Dkxt_TrangThai_KetQua == 1)
+                                                if (item.Dkxt_HB_TrangThai_KetQua == 1)
                                                 {
                                                     <a href="@Url.Action("DkxtHocBa_hs_view","DangKyXetTuyens" , new {
-                                                                    dkxt_ID=item.Dkxt_ID,
+                                                                    dkxt_ID=item.Dkxt_HB_ID,
                                                                     filteriDotxt =ViewBag.DotxtFilteri,
                                                                     filteriNvong =ViewBag.NvongFilteri,
                                                                     filteriNganh =  ViewBag.NganhFilteri,
@@ -182,10 +182,10 @@
                                                                     page = ViewBag.pageCurren})"
                                                        class="btn btn-outline-success btn-sm bt-hs  bd-rd">MC sai</a>
                                                 }
-                                                if (item.Dkxt_TrangThai_KetQua == 2)
+                                                if (item.Dkxt_HB_TrangThai_KetQua == 2)
                                                 {
                                                     <a href="@Url.Action("DkxtHocBa_hs_view","DangKyXetTuyens" , new {
-                                                                    dkxt_ID=item.Dkxt_ID,
+                                                                    dkxt_ID=item.Dkxt_HB_ID,
                                                                     filteriDotxt =ViewBag.DotxtFilteri,
                                                                     filteriNvong =ViewBag.NvongFilteri,
                                                                     filteriNganh =  ViewBag.NganhFilteri,
@@ -198,9 +198,9 @@
                                             }
                                         </td>    
                                         <td style="white-space:nowrap">
-                                            <a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("Details","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("Delete","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                            <a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Dkxt_HB_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("Details","DangKyXetTuyens" , new { id = item.Dkxt_HB_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("Delete","DangKyXetTuyens" , new { id = item.Dkxt_HB_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
                                         </td>
                                     </tr>
                                 }

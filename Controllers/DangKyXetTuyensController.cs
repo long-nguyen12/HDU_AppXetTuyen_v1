@@ -184,7 +184,7 @@ namespace HDU_AppXetTuyen.Controllers
             string str_login_session = Session["login_session"].ToString(); //"$2a$11$jwPUP78RBpC9R3uW7Dqpau.SXwogLasbvVx3q0vqhoE93Lx044lcu";// 
 
             var ts = db_tsdk.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(str_login_session)).
-                Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+                Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
             DbConnecttion db_dxt = new DbConnecttion();
             var dotxettuyen = db_dxt.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
@@ -224,15 +224,15 @@ namespace HDU_AppXetTuyen.Controllers
                 db_dkdt_nk.SaveChanges();
                 // add LePhiXetTuyen
                 DbConnecttion db_lephixt = new DbConnecttion();
-                var lePhiRecord = db_lephixt.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
-                if (lePhiRecord == null)
-                {
-                    LePhiXetTuyen lpxt = new LePhiXetTuyen();
-                    lpxt.ThiSinh_ID = ts.ThiSinh_ID;
-                    lpxt.Lpxt_TrangThai = 0;
-                    db_lephixt.LePhiXetTuyens.Add(lpxt);
-                    db_lephixt.SaveChanges();
-                }
+                //var lePhiRecord = db_lephixt.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
+                //if (lePhiRecord == null)
+                //{
+                //    LePhiXetTuyen lpxt = new LePhiXetTuyen();
+                //    lpxt.ThiSinh_ID = ts.ThiSinh_ID;
+                //    lpxt.Lpxt_TrangThai = 0;
+                //    db_lephixt.LePhiXetTuyens.Add(lpxt);
+                //    db_lephixt.SaveChanges();
+                //}
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
@@ -440,7 +440,7 @@ namespace HDU_AppXetTuyen.Controllers
             string str_login_session = Session["login_session"].ToString(); //"$2a$11$jwPUP78RBpC9R3uW7Dqpau.SXwogLasbvVx3q0vqhoE93Lx044lcu";// 
 
             var ts = db_tsdk.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(str_login_session)).
-                Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+                Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
             DbConnecttion db_dxt = new DbConnecttion();
             var dotxettuyen = db_dxt.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
@@ -487,15 +487,15 @@ namespace HDU_AppXetTuyen.Controllers
                 db_dkxt_kqtqg.SaveChanges();
                 // add LePhiXetTuyen
                 DbConnecttion db_lephixt = new DbConnecttion();
-                var lePhiRecord = db_lephixt.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
-                if (lePhiRecord == null)
-                {
-                    LePhiXetTuyen lpxt = new LePhiXetTuyen();
-                    lpxt.ThiSinh_ID = ts.ThiSinh_ID;
-                    lpxt.Lpxt_TrangThai = 0;
-                    db_lephixt.LePhiXetTuyens.Add(lpxt);
-                    db_lephixt.SaveChanges();
-                }
+                //var lePhiRecord = db_lephixt.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
+                //if (lePhiRecord == null)
+                //{
+                //    LePhiXetTuyen lpxt = new LePhiXetTuyen();
+                //    lpxt.ThiSinh_ID = ts.ThiSinh_ID;
+                //    lpxt.Lpxt_TrangThai = 0;
+                //    db_lephixt.LePhiXetTuyens.Add(lpxt);
+                //    db_lephixt.SaveChanges();
+                //}
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
@@ -610,26 +610,26 @@ namespace HDU_AppXetTuyen.Controllers
 
                 long _thisinh_id = tsdk_Detail.ThiSinh_ID;
 
-                var dkxt_Detail_list = db_dkxt.DangKyXetTuyens.
+                var dkxt_Detail_list = db_dkxt.DangKyXetTuyenHBs.
                                                Include(d => d.ThiSinhDangKy).
                                                Include(d => d.Nganh).
                                                Include(d => d.ToHopMon).
                                                Include(d => d.DotXetTuyen).
-                                               Include(d => d.DoiTuong).                                       
-                                               Include(d => d.KhuVuc).                                      
+                                               Include(d => d.ThiSinhDangKy.DoiTuong).                                       
+                                               Include(d => d.ThiSinhDangKy.KhuVuc).                                      
                                                Include(d => d.PhuongThucXetTuyen).                                       
-                                               Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_NguyenVong).ToList();
+                                               Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_HB_NguyenVong).ToList();
                 var select_list_dkxt_model = dkxt_Detail_list.Select(s => new
                 {
-                    dkxt_ID = s.Dkxt_ID,
+                    dkxt_ID = s.Dkxt_HB_ID,
                     thiSinh_ID = s.ThiSinh_ID,
                     ptxt_ID = s.Ptxt_ID,
                     nganh_ID = s.Nganh_ID,
                     thm_ID = s.Thm_ID,
                     doiTuong_ID = s.DoiTuong_ID,
                     khuVuc_ID = s.KhuVuc_ID,
-                    dkxt_TrangThai = s.Dkxt_TrangThai,
-                    dkxt_NguyenVong = s.Dkxt_NguyenVong,
+                    dkxt_TrangThai = s.Dkxt_HB_TrangThai,
+                    dkxt_NguyenVong = s.Dkxt_HB_NguyenVong,
                     dotXT_ID = s.DotXT_ID,
                     dkxt_TenAll = new
                     {
@@ -637,11 +637,11 @@ namespace HDU_AppXetTuyen.Controllers
                         nganh_GhiChu = s.Nganh.Nganh_GhiChu,
                         thm_MaTen = s.ToHopMon.Thm_MaTen,
                     },
-                    dkxt_Diem_M1 = s.Dkxt_Diem_M1,
-                    dkxt_Diem_M2 = s.Dkxt_Diem_M2,
-                    dkxt_Diem_M3 = s.Dkxt_Diem_M3,
-                    dkxt_Diem_Tong = s.Dkxt_Diem_Tong,
-                    dkxt_Diem_Tong_Full = s.Dkxt_Diem_Tong_Full,
+                    dkxt_Diem_M1 = s.Dkxt_HB_Diem_M1,
+                    dkxt_Diem_M2 = s.Dkxt_HB_Diem_M2,
+                    dkxt_Diem_M3 = s.Dkxt_HB_Diem_M3,
+                    dkxt_Diem_Tong = s.Dkxt_HB_Diem_Tong,
+                    dkxt_Diem_Tong_Full = s.Dkxt_HB_Diem_Tong_Full,
 
                 }).ToList();
 
@@ -661,11 +661,11 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DangKyXetTuyen_HB_Get_Data_MonHoc(DangKyXetTuyen dkxt_hb_item)
+        public JsonResult DangKyXetTuyen_HB_Get_Data_MonHoc(DangKyXetTuyenHB dkxt_hb_item)
         {
 
             int _thm_ID = int.Parse(dkxt_hb_item.Thm_ID.ToString());
-            int _dkxt_ID = int.Parse(dkxt_hb_item.Dkxt_ID.ToString());
+            int _dkxt_ID = int.Parse(dkxt_hb_item.Dkxt_HB_ID.ToString());
             DbConnecttion db_Thm = new DbConnecttion();
             if (_dkxt_ID == 0 && _thm_ID > 0)// trường hợp lấy dữ liệu tên môn học cho thêm mới
             {
@@ -749,86 +749,86 @@ namespace HDU_AppXetTuyen.Controllers
 
             }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DangKyXetTuyen_HB_Insert(DangKyXetTuyen dkxt_hb_item)
+        public JsonResult DangKyXetTuyen_HB_Insert(DangKyXetTuyenHB entity)
         {
             DbConnecttion db = new DbConnecttion();
             DbConnecttion db_dkxt = new DbConnecttion();
             var session = Session["login_session"].ToString();
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
-                Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+                Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
             var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
             if (ts != null)
             {
-                var nvs = db.DangKyXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).OrderByDescending(x => x.Dkxt_NguyenVong).ToList();
+                var nvs = db.DangKyXetTuyenHBs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).OrderByDescending(x => x.Dkxt_HB_NguyenVong).ToList();
 
-                DangKyXetTuyen dkxt_new = new DangKyXetTuyen();
+                DangKyXetTuyenHB dkxt_hb_new = new DangKyXetTuyenHB();
 
-                dkxt_new.Nganh_ID = int.Parse(dkxt_hb_item.Nganh_ID.ToString());
-                dkxt_new.Thm_ID = int.Parse(dkxt_hb_item.Thm_ID.ToString());
-                var diemTong = double.Parse(dkxt_hb_item.Dkxt_Diem_Tong.ToString());
+                dkxt_hb_new.Nganh_ID = entity.Nganh_ID;
+                dkxt_hb_new.Thm_ID = entity.Thm_ID;
+                var diemTong = entity.Dkxt_HB_Diem_Tong;
 
-                dkxt_new.Dkxt_Diem_M1 = dkxt_hb_item.Dkxt_Diem_M1;
-                dkxt_new.Dkxt_Diem_M2 = dkxt_hb_item.Dkxt_Diem_M2;
-                dkxt_new.Dkxt_Diem_M3 = dkxt_hb_item.Dkxt_Diem_M3;
-                dkxt_new.Dkxt_Diem_Tong = diemTong.ToString();
+                dkxt_hb_new.Dkxt_HB_Diem_M1 = entity.Dkxt_HB_Diem_M1;
+                dkxt_hb_new.Dkxt_HB_Diem_M2 = entity.Dkxt_HB_Diem_M2;
+                dkxt_hb_new.Dkxt_HB_Diem_M3 = entity.Dkxt_HB_Diem_M3;
+                dkxt_hb_new.Dkxt_HB_Diem_Tong = diemTong;
 
-                dkxt_new.Dkxt_MinhChung_HB = dkxt_hb_item.Dkxt_MinhChung_HB;
-                dkxt_new.Dkxt_MinhChung_CCCD = dkxt_hb_item.Dkxt_MinhChung_CCCD;
-                dkxt_new.Dkxt_MinhChung_Bang = dkxt_hb_item.Dkxt_MinhChung_HB;
-                dkxt_new.Dkxt_MinhChung_UuTien = dkxt_hb_item.Dkxt_MinhChung_UuTien;
+                dkxt_hb_new.Dkxt_HB_MinhChung_HB = entity.Dkxt_HB_MinhChung_HB;
+                dkxt_hb_new.Dkxt_HB_MinhChung_CCCD = entity.Dkxt_HB_MinhChung_CCCD;
+                dkxt_hb_new.Dkxt_HB_MinhChung_Bang = entity.Dkxt_HB_MinhChung_HB;
+                dkxt_hb_new.Dkxt_HB_MinhChung_UuTien = entity.Dkxt_HB_MinhChung_UuTien;
 
-                dkxt_new.ThiSinh_ID = ts.ThiSinh_ID;
-                dkxt_new.DoiTuong_ID = ts.DoiTuong_ID;
-                dkxt_new.KhuVuc_ID = ts.KhuVuc_ID;
-                dkxt_new.DotXT_ID = dotxettuyen.Dxt_ID;
-                dkxt_new.Dkxt_TrangThai = 0;
-                dkxt_new.Dkxt_TrangThai_KetQua = 0;
+                dkxt_hb_new.ThiSinh_ID = ts.ThiSinh_ID;
+                dkxt_hb_new.DoiTuong_ID = ts.DoiTuong_ID;
+                dkxt_hb_new.KhuVuc_ID = ts.KhuVuc_ID;
+                dkxt_hb_new.DotXT_ID = dotxettuyen.Dxt_ID;
+                dkxt_hb_new.Dkxt_HB_TrangThai = 0;
+                dkxt_hb_new.Dkxt_HB_TrangThai_KetQua = 0;
 
-                dkxt_new.Dkxt_XepLoaiHocLuc_12 = ts.ThiSinh_HocLucLop12;
-                dkxt_new.Dkxt_XepLoaiHanhKiem_12 = ts.ThiSinh_HanhKiemLop12;
+                dkxt_hb_new.Dkxt_HB_XepLoaiHocLuc_12 = ts.ThiSinh_HocLucLop12;
+                dkxt_hb_new.Dkxt_HB_XepLoaiHanhKiem_12 = ts.ThiSinh_HanhKiemLop12;
 
                 var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;
                 var khuVucDoiTuong = ts.KhuVuc.KhuVuc_DiemUuTien;
                 var diemTongFull = diemTong + diemDoiTuong + khuVucDoiTuong;
 
-                dkxt_new.Dkxt_Diem_Tong_Full = diemTongFull.ToString();
-                dkxt_new.Ptxt_ID = 3;
+                dkxt_hb_new.Dkxt_HB_Diem_Tong_Full = diemTongFull.ToString();
+                dkxt_hb_new.Ptxt_ID = 3;
 
-                dkxt_new.Dkxt_NguyenVong = nvs.Count + 1;
+                dkxt_hb_new.Dkxt_HB_NguyenVong = nvs.Count + 1;
 
-                db.DangKyXetTuyens.Add(dkxt_new);
+                db.DangKyXetTuyenHBs.Add(dkxt_hb_new);
                 // add LePhiXetTuyen
-                var lePhiRecord = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
-                if (lePhiRecord == null)
-                {
-                    LePhiXetTuyen lpxt = new LePhiXetTuyen();
-                    lpxt.ThiSinh_ID = ts.ThiSinh_ID;
-                    lpxt.Lpxt_TrangThai = 0;
-                    db.LePhiXetTuyens.Add(lpxt);
-                }
+                //var lePhiRecord = db.LePhiXetTuyens.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).FirstOrDefault();
+                //if (lePhiRecord == null)
+                //{
+                //    LePhiXetTuyen lpxt = new LePhiXetTuyen();
+                //    lpxt.ThiSinh_ID = ts.ThiSinh_ID;
+                //    lpxt.Lpxt_TrangThai = 0;
+                //    db.LePhiXetTuyens.Add(lpxt);
+                //}
                 db.SaveChanges();
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DangKyXetTuyen_HB_Delete(DangKyXetTuyen dkxt_delete_item)
+        public JsonResult DangKyXetTuyen_HB_Delete(DangKyXetTuyenHB dkxt_delete_item)
         {
 
             DbConnecttion db = new DbConnecttion();
-            long _dkxt_ID = long.Parse(dkxt_delete_item.Dkxt_ID.ToString());
+            long _dkxt_ID = long.Parse(dkxt_delete_item.Dkxt_HB_ID.ToString());
 
-            DangKyXetTuyen dkxt_item = db.DangKyXetTuyens.Find(_dkxt_ID);
+            DangKyXetTuyenHB dkxt_item = db.DangKyXetTuyenHBs.Find(_dkxt_ID);
 
-            int nv_current = (int)dkxt_item.Dkxt_NguyenVong;
+            int nv_current = (int)dkxt_item.Dkxt_HB_NguyenVong;
             int idThisinh = (int)dkxt_item.ThiSinh_ID;
 
-            db.DangKyXetTuyens.Remove(dkxt_item);
+            db.DangKyXetTuyenHBs.Remove(dkxt_item);
 
-            foreach (var item in db.DangKyXetTuyens.Where(nv => nv.Dkxt_NguyenVong > nv_current && nv.ThiSinh_ID == idThisinh).OrderBy(x => x.Dkxt_NguyenVong))
+            foreach (var item in db.DangKyXetTuyenHBs.Where(nv => nv.Dkxt_HB_NguyenVong > nv_current && nv.ThiSinh_ID == idThisinh).OrderBy(x => x.Dkxt_HB_NguyenVong))
             {
-                DangKyXetTuyen _dkxt_item_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == item.Dkxt_NguyenVong && i.ThiSinh_ID == idThisinh);
-                _dkxt_item_change.Dkxt_NguyenVong = item.Dkxt_NguyenVong - 1;
+                DangKyXetTuyenHB _dkxt_item_change = db.DangKyXetTuyenHBs.FirstOrDefault(i => i.Dkxt_HB_NguyenVong == item.Dkxt_HB_NguyenVong && i.ThiSinh_ID == idThisinh);
+                _dkxt_item_change.Dkxt_HB_NguyenVong = item.Dkxt_HB_NguyenVong - 1;
             }
 
             db.SaveChanges();
@@ -838,46 +838,46 @@ namespace HDU_AppXetTuyen.Controllers
                 msg = "Xoá dữ liệu thành công"
             }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DangKyXetTuyen_HB_Change_UpData(DangKyXetTuyen dkxt_hb_change)
+        public JsonResult DangKyXetTuyen_HB_Change_UpData(DangKyXetTuyenHB dkxt_hb_change)
         {
             DbConnecttion db = new DbConnecttion();
             //  System.Diagnostics.Debug.WriteLine(dkxt_kqtqg_change.Dkxt_KQTQG_ID.ToString());
-            long _dkxt_ID = long.Parse(dkxt_hb_change.Dkxt_ID.ToString());
+            long _dkxt_ID = long.Parse(dkxt_hb_change.Dkxt_HB_ID.ToString());
 
-            DangKyXetTuyen dkxt_hb_getby_id = db.DangKyXetTuyens.Find(_dkxt_ID);
+            DangKyXetTuyenHB dkxt_hb_getby_id = db.DangKyXetTuyenHBs.Find(_dkxt_ID);
 
-            int nv_current = int.Parse(dkxt_hb_getby_id.Dkxt_NguyenVong.ToString());
+            int nv_current = int.Parse(dkxt_hb_getby_id.Dkxt_HB_NguyenVong.ToString());
             int idThisinh = int.Parse(dkxt_hb_getby_id.ThiSinh_ID.ToString());
 
-            dkxt_hb_getby_id.Dkxt_NguyenVong = nv_current - 1;
+            dkxt_hb_getby_id.Dkxt_HB_NguyenVong = nv_current - 1;
 
-            DangKyXetTuyen dkxt_item_get_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current - 1 && i.ThiSinh_ID == idThisinh);
+            DangKyXetTuyenHB dkxt_item_get_change = db.DangKyXetTuyenHBs.FirstOrDefault(i => i.Dkxt_HB_NguyenVong == nv_current - 1 && i.ThiSinh_ID == idThisinh);
             if (dkxt_item_get_change != null)
             {
-                dkxt_item_get_change.Dkxt_NguyenVong = nv_current;
+                dkxt_item_get_change.Dkxt_HB_NguyenVong = nv_current;
                 db.SaveChanges();
                 return Json(new { status = true, msg = "Thay đổi dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { status = false, msg = "Có lỗi xảy ra." }, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DangKyXetTuyen_HB_Change_DownData(DangKyXetTuyen dkxt_hb_change)
+        public JsonResult DangKyXetTuyen_HB_Change_DownData(DangKyXetTuyenHB dkxt_hb_change)
         {
 
             DbConnecttion db = new DbConnecttion();
             //  System.Diagnostics.Debug.WriteLine(dkxt_kqtqg_change.Dkxt_KQTQG_ID.ToString());
-            long _dkxt_ID = long.Parse(dkxt_hb_change.Dkxt_ID.ToString());
+            long _dkxt_ID = long.Parse(dkxt_hb_change.Dkxt_HB_ID.ToString());
 
-            DangKyXetTuyen dkxt_hb_getby_id = db.DangKyXetTuyens.Find(_dkxt_ID);
+            DangKyXetTuyenHB dkxt_hb_getby_id = db.DangKyXetTuyenHBs.Find(_dkxt_ID);
 
-            int nv_current = int.Parse(dkxt_hb_getby_id.Dkxt_NguyenVong.ToString());
+            int nv_current = int.Parse(dkxt_hb_getby_id.Dkxt_HB_NguyenVong.ToString());
             int idThisinh = int.Parse(dkxt_hb_getby_id.ThiSinh_ID.ToString());
 
-            dkxt_hb_getby_id.Dkxt_NguyenVong = nv_current + 1;
+            dkxt_hb_getby_id.Dkxt_HB_NguyenVong = nv_current + 1;
 
-            DangKyXetTuyen dkxt_item_get_change = db.DangKyXetTuyens.FirstOrDefault(i => i.Dkxt_NguyenVong == nv_current + 1 && i.ThiSinh_ID == idThisinh);
+            DangKyXetTuyenHB dkxt_item_get_change = db.DangKyXetTuyenHBs.FirstOrDefault(i => i.Dkxt_HB_NguyenVong == nv_current + 1 && i.ThiSinh_ID == idThisinh);
             if (dkxt_item_get_change != null)
             {
-                dkxt_item_get_change.Dkxt_NguyenVong = nv_current;
+                dkxt_item_get_change.Dkxt_HB_NguyenVong = nv_current;
                 db.SaveChanges();
                 return Json(new { status = true, msg = "Thay đổi dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }

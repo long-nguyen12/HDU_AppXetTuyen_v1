@@ -21,7 +21,7 @@ namespace HDU_AppXetTuyen.Models
 
         public int? Thm_N_TrangThai { get; set; }
 
-        [StringLength(500)]
+        [StringLength(1000)]
         public string Thm_N_GhiChu { get; set; }
 
         public virtual Nganh Nganh { get; set; }

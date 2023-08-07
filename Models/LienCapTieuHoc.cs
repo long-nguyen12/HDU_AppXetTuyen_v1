@@ -9,6 +9,8 @@
     [Table("LienCapTieuHoc")]
     public partial class LienCapTieuHoc
     {
+       
+
         [Key]
         public long HocSinh_ID { get; set; }
 
@@ -17,7 +19,7 @@
         [StringLength(100)]
         public string HocSinh_DinhDanh { get; set; }
 
-        [Required(ErrorMessage = "Họ và tên bắt buộc nhập")]    
+        [Required(ErrorMessage = "Họ và tên bắt buộc nhập")]
         [Display(Name = "Họ và tên")]
         [StringLength(100)]
         public string HocSinh_HoTen { get; set; }
@@ -84,7 +86,7 @@
         [StringLength(4000)]
         public string HocSinh_NgheNghiepMe { get; set; }
 
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",   ErrorMessage = "Số điện thoại sai đinh dạng.")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Số điện thoại sai đinh dạng.")]
         [Required(ErrorMessage = "Điện thoại mẹ bắt buộc nhập")]
         [Display(Name = "Điện thoại mẹ")]
         [StringLength(20)]
@@ -115,7 +117,7 @@
         [Display(Name = "Ghi chú")]
         [StringLength(4000)]
         public string HocSinh_GhiChu { get; set; }
-        
+
         [NotMapped]
         [StringLength(4000)]
         public string HocSinh_GhiChu2 { get; set; }
@@ -127,6 +129,5 @@
 
         [StringLength(4000)]
         public string HocSinh_Activation { get; set; }
-
     }
 }

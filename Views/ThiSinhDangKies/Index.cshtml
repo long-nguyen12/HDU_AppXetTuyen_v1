@@ -20,99 +20,162 @@
         ]
         for (let i = 0; i < hocLucList.length; i++) {
             if (hocLucList[i].value == @Model.ThiSinh_HocLucLop12) {
-                $('#input_hocluc').val(hocLucList[i].text);
+                $('#input_hocluc').text(hocLucList[i].text);
                 break;
             }
         }
         for (let i = 0; i < hanhKiemList.length; i++) {
             if (hanhKiemList[i].value == @Model.ThiSinh_HanhKiemLop12) {
-                $('#input_hanhkiem').val(hanhKiemList[i].text);
+                $('#input_hanhkiem').text(hanhKiemList[i].text);
                 break;
             }
         }
     })
 </script>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span id="sp_tieude">Quản lý thông tin của thí</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
 <div class="container-fluid px-12">
-    <div id="fadeInUp">
-        <div class="card card-header-actions mt-3 mb-1 ">
-            <div class="card-header">Thông tin chung <a href="@Url.Action("Edit", "ThiSinhDangKies", new {id = Model.ThiSinh_ID})" class="btn btn-light" style="color:blue!important">Cập nhật</a></div>
-            <div class="card-body">
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="inputFirstName">Căn cước công dân  </label>
-                        <input class="form-control" id="input_cccd_ts" name="input_cccd_ts" type="text" placeholder="Số căn cước công dân" value="@Model.ThiSinh_CCCD" disabled />
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_hovaten">Họ và tên  </label>
-                        <input class="form-control" id="input_hovaten" type="text" placeholder="Hoàng Việt Anh" value="@Model.ThiSinh_HoLot @Model.ThiSinh_Ten" disabled />
-                    </div>
+    <div class="card card-header-actions">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-4">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Thông tin cơ bản</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_ngaysinh">Ngày sinh  </label>
-                        <input class="form-control" id="input_ngaysinh" type="text" placeholder="20/12/2005" value="@Model.ThiSinh_NgaySinh" disabled />
-                    </div>
-                    <div class="col-md-1">
-                        <label class="form-label mb-1" for="input_gioitinh">Giới tính  </label>
-                        @{
-                            var gt = Model.ThiSinh_GioiTinh == 0 ? "Nam" : "Nữ";
-                        }
-                        <input class="form-control" id="input_gioitinh" type="text" placeholder="Nam" value="@gt" disabled />
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label mb-1" for="input_dantoc">Dân tộc  </label>
-                        <input class="form-control" id="input_dantoc" type="text" placeholder="Kinh" value="@Model.ThiSinh_DanToc" disabled />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_dienthoai_ts">Điện thoại  </label>
-                        <input class="form-control" id="input_dienthoai_ts" type="text" placeholder="0912.345.678" value="@Model.ThiSinh_DienThoai" disabled />
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_email_ts">Emai </label>
-                        <input class="form-control" id="input_email_ts" type="text" placeholder="Enter your last name" value="@Model.ThiSinh_Email" disabled />
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_khuvuc">Khu vực  </label>
-                        <input class="form-control" id="input_khuvuc" type="text" placeholder="KV_2NT" value="@Model.KhuVuc.KhuVuc_Ten" disabled />
-                    </div>
+                            <tr>
+                                <td>Họ và tên:</td>
+                                <td>@Model.ThiSinh_HoLot @Model.ThiSinh_Ten</td>
+                            </tr>
+                            <tr>
+                                <td>Ngày sinh:</td>
+                                <td>@Model.ThiSinh_NgaySinh</td>
+                            </tr>
+                            <tr>
+                                <td>Giới tính:</td>
+                                <td>
+                                    @{
+                                        var gt = Model.ThiSinh_GioiTinh == 0 ? "Nam" : "Nữ";
+                                    }
+                                    @gt
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dân tộc:</td>
+                                <td>
+                                    @Model.ThiSinh_DanToc
+                                </td>
+                            </tr>
 
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_doituong">Đối tượng  </label>
-                        <input class="form-control" id="input_doituong" type="text" placeholder="ĐT 01" value="@Model.DoiTuong.DoiTuong_Ten" disabled />
-                    </div>
+                            <tr>
+                                <td style="width:130px">CC công dân:</td>
+                                <td>
+                                    @Model.ThiSinh_CCCD
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Điện thoại:</td>
+                                <td>@Model.ThiSinh_DienThoai</td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td>@Model.ThiSinh_Email</td>
+                            </tr>
+                    </table>
                 </div>
-                <div class="row gx-xxl-3 mb-1">
-                    <div class="col-md-4">
-                        <label class="form-label mb-1" for="input_diachinhangiaybao">Trường </label>
-                        <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_TruongCapBa" disabled />
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label mb-1" for="input_diachinhangiaybao">Mã trường </label>
-                        <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_TruongCapBa_Ma" disabled />
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_diachinhangiaybao">Học lực </label>
-                        <input class="form-control" id="input_hocluc" type="text" placeholder="Chưa có dữ liệu" value="" disabled />
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label mb-1" for="input_diachinhangiaybao">Hạnh kiểm </label>
-                        <input class="form-control" id="input_hanhkiem" type="text" placeholder="Chưa có dữ liệu" value="" disabled />
-                    </div>
+                <div class="col-xl-4">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Thông tin học cấp 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="width:35%">Tỉnh học:</td>
+                                <td>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mã trường:</td>
+                                <td>@Model.ThiSinh_TruongCapBa_Ma</td>
+                            </tr>
+                            <tr>
+                                <td>Tên trường:</td>
+                                <td>@Model.ThiSinh_TruongCapBa</td>
+                            </tr>
+                            <tr>
+                                <td>Học lực 12:</td>
+                                <td>
+                                    <span id="input_hocluc"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Hạnh kiểm 12:</td>
+                                <td><span id="input_hanhkiem"></span></td>
+                            </tr>
+                            <tr>
+                                <td>Khu vực:</td>
+                                <td>@Model.KhuVuc.KhuVuc_Ten</td>
+                            </tr>
+                            <tr>
+                                <td>Đối tượng:</td>
+                                <td>@Model.DoiTuong.DoiTuong_Ten</td>
+                            </tr>
+
+                    </table>
                 </div>
-                <div class="row gx-xl-3">
-                    <div class="col-md-12">
-                        <label class="form-label mb-1" for="input_diachinhangiaybao">Địa chỉ nhận giấy báo  </label>
-                        <input class="form-control" id="input_diachinhangiaybao" type="text" placeholder="Chưa có dữ liệu" value="@Model.ThiSinh_DCNhanGiayBao" disabled />
-                    </div>
-                </div>
-                <div class="row gx-xl-3 mb-1">
-                    <div class="col-md-12">
-                        <label class="form-label mb-1" for="input_hokhauthuongtru">Hộ khẩu thường trú</label>
-                        <input class="form-control" id="input_hokhauthuongtru" type="text" placeholder="nhập hộ khẩu thường trú" value="@Model.ThiSinh_HoKhauThuongTru" disabled />
+                <div class="col-xl-4">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Thông tin khác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p class="mt-0 mb-2"> Hộ khẩu thường trú: </p>
+                                    <p class="mt-1 mb-0"> @Model.ThiSinh_HoKhauThuongTru</p>
+                                   
+                                </td>
+                            </tr>
+                           
+                            <tr>
+                                <td>
+                                    <p class="mt-0 mb-2"> Địa chỉ nhận giấy báo: </p>
+                                    <p class="mt-1 mb-0"> @Model.ThiSinh_DCNhanGiayBao</p>                                    
+                                </td>
+                            </tr>                            
+                    </table>
+                    <div class="row">
+                        <div class="col-12">
+                            <center>
+                                <a href="@Url.Action("Edit", "ThiSinhDangKies", new {id = Model.ThiSinh_ID})" class="btn btn-light" style="color:blue!important">Cập nhật</a>
+                            </center>                           
+                        </div>
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    

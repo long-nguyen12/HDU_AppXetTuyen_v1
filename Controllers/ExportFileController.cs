@@ -48,7 +48,7 @@ namespace HDU_AppXetTuyen.Controllers
             // Từ idDkxt lấy ra thông tin thí sinh
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
             // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
-            var listDkxt = db.DangKyXetTuyens.Where(x => x.ThiSinh_ID == idThiSinhInt).OrderBy(x => x.Dkxt_NguyenVong).ToArray();
+            var listDkxt = db.DangKyXetTuyenHBs.Where(x => x.ThiSinh_ID == idThiSinhInt).OrderBy(x => x.Dkxt_HB_NguyenVong).ToArray();
 
             int idKhuVucTS = (int) thiSinhInfo.KhuVuc_ID;
             // Từ khu vực id lấy ra tên khu vực
@@ -78,8 +78,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_DCNhanGiayBao>>", thiSinhInfo.ThiSinh_DCNhanGiayBao);
 
                 // Xử lý học lực và hạnh kiểm
-                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
-                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_HB_XepLoaiHocLuc_12);
+                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_HB_XepLoaiHanhKiem_12);
                 document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
                 document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
 
@@ -96,14 +96,14 @@ namespace HDU_AppXetTuyen.Controllers
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
 
                     // string to obj   
-                    var jsonStringMon1 = JsonConvert.SerializeObject(item.Dkxt_Diem_M1);
-                    var jsonStringMon2 = JsonConvert.SerializeObject(item.Dkxt_Diem_M2);
-                    var jsonStringMon3 = JsonConvert.SerializeObject(item.Dkxt_Diem_M3);
+                    var jsonStringMon1 = JsonConvert.SerializeObject(item.Dkxt_HB_Diem_M1);
+                    var jsonStringMon2 = JsonConvert.SerializeObject(item.Dkxt_HB_Diem_M2);
+                    var jsonStringMon3 = JsonConvert.SerializeObject(item.Dkxt_HB_Diem_M3);
                   
                     // MonDiem khai báo trong  Model.LibraryUsers
-                    MonDiem diemmon1 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_Diem_M1);
-                    MonDiem diemmon2 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_Diem_M2);
-                    MonDiem diemmon3 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_Diem_M3);
+                    MonDiem diemmon1 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_HB_Diem_M1);
+                    MonDiem diemmon2 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_HB_Diem_M2);
+                    MonDiem diemmon3 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_HB_Diem_M3);
 
                     // Lấy ra thông tin chi tiết của từng môn1
                     var mon1_tenmon = diemmon1.TenMon.ToString();
@@ -131,7 +131,7 @@ namespace HDU_AppXetTuyen.Controllers
                     table.InsertRow();
                     table.InsertRow();
                     // Thêm dữ liệu vào table
-                    table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_NguyenVong.ToString()).Font("Times New Roman").Alignment = Alignment.center;
+                    table.Rows[index].Cells[0].Paragraphs[0].Append(item.Dkxt_HB_NguyenVong.ToString()).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[1].Paragraphs[0].Append(tenNganh).Font("Times New Roman");
                     table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[3].Paragraphs[0].Append("Môn 1: " + mon1_tenmon).Font("Times New Roman");

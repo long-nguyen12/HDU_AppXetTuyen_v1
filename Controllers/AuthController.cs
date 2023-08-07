@@ -51,15 +51,15 @@ namespace HDU_AppXetTuyen.Controllers
             var khuvucList = db.KhuVucs.ToList();
             var tinhList = db.Tinhs.ToList();
             var huyenList = db.Huyens.ToList();
-
-            khuvucList.Insert(0, new KhuVuc { KhuVuc_ID = 0, KhuVuc_Ten = "Chọn khu vực" });
+       
             tinhList.Insert(0, new Tinh { Tinh_ID = 0, Tinh_Ten = "Chọn tỉnh" });
             huyenList.Insert(0, new Huyen { Huyen_ID = 0, Huyen_TenHuyen = "Chọn huyện" });
-
-            ViewBag.DoiTuong_ID = new SelectList(doituongList, "DoiTuong_ID", "DoiTuong_Ten");
+          
             ViewBag.KhuVuc_ID = new SelectList(khuvucList, "KhuVuc_ID", "KhuVuc_Ten");
+            ViewBag.DoiTuong_ID = new SelectList(doituongList, "DoiTuong_ID", "DoiTuong_Ten");
             ViewBag.Tinh_ID = new SelectList(tinhList, "Tinh_ID", "Tinh_Ten");
             ViewBag.Huyen_ID = new SelectList(huyenList, "Huyen_ID", "Huyen_TenHuyen");
+           
             return View();
         }
 
@@ -117,11 +117,7 @@ namespace HDU_AppXetTuyen.Controllers
             return RedirectToAction("Index", "Auth");
         }
 
-        /*public ActionResult Register()
-        {
-            ViewBag.Tinh_ID = new SelectList(db.Tinhs, "Tinh_Ma", "Tinh_Ten");
-            return View();
-        }*/
+       
 
         [HttpPost]
         public JsonResult GetHuyen(string tinhID)
@@ -172,7 +168,7 @@ namespace HDU_AppXetTuyen.Controllers
                 ts.ThiSinh_TruongCapBa = thiSinh_register.ThiSinh_TruongCapBa;
                 ts.ThiSinh_TruongCapBa_Tinh_ID = int.Parse(thiSinh_register.ThiSinh_TruongCapBa_Tinh_ID);
                 ts.ThiSinh_HoKhauThuongTru_Check = thiSinh_register.ThiSinh_HoKhauThuongTru_Check;
-                ts.ThiSinh_NgayDangKy = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                ts.ThiSinh_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 ts.ThiSinh_MatKhau = hash_password;
                 ts.ThiSinh_TrangThai = 0;
                 ts.ThiSinh_ResetCode = activationToken;

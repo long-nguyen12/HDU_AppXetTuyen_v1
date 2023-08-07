@@ -9,14 +9,15 @@ namespace HDU_AppXetTuyen.Models
     [Table("DotXetTuyen")]
     public partial class DotXetTuyen
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DotXetTuyen()
         {
             DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
+            DangKyXetTuyenHBs = new HashSet<DangKyXetTuyenHB>();
+            DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
-            DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
-            ThiSinhDangKies = new HashSet<ThiSinhDangKy>();
+            DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
         }
+
 
         [Key]
         public int Dxt_ID { get; set; }
@@ -30,9 +31,11 @@ namespace HDU_AppXetTuyen.Models
 
         public int? NamHoc_ID { get; set; }
         public virtual NamHoc NamHoc { get; set; }
-        public virtual ICollection<ThiSinhDangKy> ThiSinhDangKies { get; set; }
-        public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
-        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
         public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
+        public virtual ICollection<DangKyXetTuyenHB> DangKyXetTuyenHBs { get; set; }
+        public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
+        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
+        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
+
     }
 }

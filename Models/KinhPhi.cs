@@ -1,4 +1,4 @@
-﻿namespace HDU_AppXetTuyen.Models
+namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -33,7 +33,5 @@
 
         [StringLength(4000)]
         public string KinhPhi_GhiChu { get; set; }
-
-        public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }
     }
 }

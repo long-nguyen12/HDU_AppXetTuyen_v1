@@ -25,7 +25,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
+                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
                     </div>
                 </div>
 
@@ -33,27 +33,7 @@
         </div>
     </div>
 </header>
-<script>
-    $(document).ready(function () {
-        let sp_tieude = document.getElementById('sp_tieude');    
-        if (window.innerWidth <= 1200) {
-            sp_tieude.innerText = "Sử dụng KQ thi TN THPT Quốc gia";
-        }
-        else {
-            sp_tieude.innerText = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
-        }
 
-        function reportWindowSize() {
-            if (window.innerWidth <= 1200) {
-                sp_tieude.innerText = "Sử dụng KQ thi TN THPT Quốc gia";
-            }
-            else {
-                sp_tieude.innerText = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
-            }
-        }
-        window.onresize = reportWindowSize;
-    })
-</script>
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
         <div class="card card-header-actions">
@@ -94,30 +74,28 @@
                                     let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
 
                                     if (window.innerWidth <= 700) {
-                                        sp_tieude.innerHTML = "Sử dụng KQ thi TN THPT Quốc gia";
+                                        sp_tieude.innerText = "ĐKXT bằng KQ thi TN THPT Quốc gia";                                    
                                         bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
                                         bt_them_nguyen_vong.innerHTML = "Thêm NV";
 
                                     }
                                     else {
-                                        sp_tieude.innerHTML = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+                                        sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
                                         bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
                                         bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-
                                     }
 
                                     function reportWindowSize() {
                                         if (window.innerWidth <= 700) {
-                                            sp_tieude.innerHTML = "Sử dụng KQ thi TN THPT Quốc gia";
+                                            sp_tieude.innerText = "ĐKXT bằng KQ thi TN THPT Quốc gia";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
                                             bt_them_nguyen_vong.innerHTML = "Thêm NV";
 
                                         }
                                         else {
-                                            sp_tieude.innerHTML = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+                                            sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
                                             bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-
                                         }
                                     }
                                     window.onresize = reportWindowSize;
@@ -275,7 +253,6 @@
                                             </td>
                                         </tr>
                                 </table>
-
                             </div>
                         </div>
                     </div>

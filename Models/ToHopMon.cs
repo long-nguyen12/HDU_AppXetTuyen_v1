@@ -9,15 +9,14 @@
     [Table("ToHopMon")]
     public partial class ToHopMon
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ToHopMon()
         {
-            DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
-            ToHopMonNganhs = new HashSet<ToHopMonNganh>();
             DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
-            DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
-
+            DangKyXetTuyenHBs = new HashSet<DangKyXetTuyenHB>();
+            DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();         
+            ToHopMonNganhs = new HashSet<ToHopMonNganh>();
         }
+
 
         [Key]
         public int Thm_ID { get; set; }
@@ -46,19 +45,9 @@
         [StringLength(250)]
         public string Thm_MaTen { get; set; }
         public int? Thm_Thi_NK { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
-
-
+        public virtual ICollection<DangKyXetTuyenHB> DangKyXetTuyenHBs { get; set; }
+        public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }    
+        public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
     }
 }
