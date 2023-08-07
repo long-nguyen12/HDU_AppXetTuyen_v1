@@ -145,14 +145,11 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Document.NET, Version=2.5.23177.21230, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>packages\Xceed.Document.NET.2.5.23177.2123\lib\net40\Xceed.Document.NET.dll</HintPath>
+    <Reference Include="Xceed.Document.NET, Version=2.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\DocX.2.4.0\lib\net40\Xceed.Document.NET.dll</HintPath>
     </Reference>
-    <Reference Include="Xceed.Pdf, Version=2.5.23177.21230, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>packages\Xceed.Pdf.2.5.23177.2123\lib\net40\Xceed.Pdf.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Words.NET, Version=2.5.23177.21230, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
-      <HintPath>packages\Xceed.Words.NET.2.5.23177.2123\lib\net40\Xceed.Words.NET.dll</HintPath>
+    <Reference Include="Xceed.Words.NET, Version=2.4.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\DocX.2.4.0\lib\net40\Xceed.Words.NET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
