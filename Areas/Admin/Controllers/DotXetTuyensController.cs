@@ -18,7 +18,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult Index()
         {
-            var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc);
+            var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc).Where(d => d.Dxt_Classify ==0 ||d.Dxt_Classify == 1);
             return View(dotXetTuyens.ToList());
         }
 

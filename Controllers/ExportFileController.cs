@@ -92,7 +92,7 @@ namespace HDU_AppXetTuyen.Controllers
                 {
                     // Chuẩn bị dữ liệu cho table
                     //Từ ngành id lấy ra tên ngành và mã ngành
-                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_TenNganh;
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
 
                     // string to obj   
@@ -248,7 +248,7 @@ namespace HDU_AppXetTuyen.Controllers
                 {
                     // Chuẩn bị dữ liệu cho table
                     //Từ ngành id lấy ra tên ngành và mã ngành
-                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_TenNganh;
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
 
                     // 1 nguyện vọng chèn 1 row
@@ -348,7 +348,7 @@ namespace HDU_AppXetTuyen.Controllers
                 {
                     // Chuẩn bị dữ liệu cho table
                     //Từ ngành id lấy ra tên ngành và mã ngành
-                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_TenNganh;
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
 
                     // 1 nguyện vọng chèn 1 row
@@ -448,7 +448,7 @@ namespace HDU_AppXetTuyen.Controllers
                 {
                     // Chuẩn bị dữ liệu cho table
                     //Từ ngành id lấy ra tên ngành và mã ngành
-                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_TenNganh;
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
 
                     // 1 nguyện vọng chèn 1 row
@@ -546,7 +546,7 @@ namespace HDU_AppXetTuyen.Controllers
                 {
                     // Chuẩn bị dữ liệu cho table
                     //Từ ngành id lấy ra tên ngành và mã ngành
-                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).NganhTenNganh;
+                    var tenNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_TenNganh;
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
                    
                     // DiemThiGQMon khai báo trong  Model.LibraryUsers
@@ -580,7 +580,7 @@ namespace HDU_AppXetTuyen.Controllers
                     table.Rows[index].Cells[2].Paragraphs[0].Append(maNganh).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[2].VerticalAlignment = VerticalAlignment.Center; ;
 
-                    table.Rows[index].Cells[3].Paragraphs[0].Append("Môn 1:" + mon1_tenmon).Font("Times New Roman");
+                    table.Rows[index].Cells[3].Paragraphs[0].Append("Môn 1: " + mon1_tenmon).Font("Times New Roman");
                     table.Rows[index].Cells[4].Paragraphs[0].Append(mon1_diem).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[5].Paragraphs[0].Append(tongdiem).Font("Times New Roman").Alignment = Alignment.center;
                     table.Rows[index].Cells[5].VerticalAlignment = VerticalAlignment.Center; ;

@@ -27,12 +27,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #region lọc dữ liệu theo đợt
             var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
             dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
-            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
+            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 0).FirstOrDefault().Dxt_ID;
             ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
             // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
             if (String.IsNullOrEmpty(filteriDotxt) == true)
             {
-                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID.ToString();
+                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai_Xt == 1).FirstOrDefault().Dxt_ID.ToString();
             } 
             // thực hiện lọc 
           
@@ -93,7 +93,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Thm = new
                     {
@@ -112,7 +112,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
                     Dkxt_NguyenVong = n.Dkxt_NguyenVong,
@@ -129,7 +129,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
@@ -147,7 +147,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
                     Dkxt_TrangThai = n.Dkxt_TrangThai,

@@ -50,9 +50,9 @@
                         <input type="text" id="txtNam" class="form-control form-control" value="@ViewBag.filteriNam" style="width: 60px; " disabled>
                     </div>
 
-                    <div class="col-auto p-1" id="div_select_dot">
+                    @*<div class="col-auto p-1" id="div_select_dot">
                         @Html.DropDownList("filteriDotxt", null, new { @class = "form-select", @style = "padding-left:3px; padding-right:30px;" })
-                    </div>
+                    </div>*@
                     <div class="col-auto  p-1 ">
                         @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })                       
                     </div>
@@ -69,7 +69,7 @@
                 let div_tieude = document.getElementById('div_tieude');
                 let div_lb_nam = document.getElementById('div_lb_nam');
                 let div_txt_nam = document.getElementById('div_txt_nam');
-                let div_select_dot = document.getElementById('div_select_dot');
+             /*   let div_select_dot = document.getElementById('div_select_dot');*/
                 let txt_key_search = document.getElementById('searchString');
                 let bt_reset = document.getElementById('bt_reset');
 
@@ -77,8 +77,8 @@
                     div_tieude.style.display = "none";
                     div_lb_nam.style.display = "none";
                     div_txt_nam.style.display = "none";
-                    div_select_dot.style.display = "inline";
-                    bt_reset.style.display = "none";
+                  /*  div_select_dot.style.display = "inline";
+                  bt_reset.style.display = "none";*/
                     txt_key_search.style.width = "140px"
 
                 }
@@ -86,8 +86,8 @@
                     div_tieude.style.display = "inline";
                     div_lb_nam.style.display = "inline";
                     div_txt_nam.style.display = "inline";
-                    div_select_dot.style.display = "inline";
-                    bt_reset.style.display = "inline";
+                  /*  div_select_dot.style.display = "inline";
+                    bt_reset.style.display = "inline";*/
                     txt_key_search.style.removeProperty("width");
                 }
 
@@ -96,8 +96,8 @@
                         div_tieude.style.display = "none";
                         div_lb_nam.style.display = "none";
                         div_txt_nam.style.display = "none";
-                        div_select_dot.style.display = "inline";
-                        bt_reset.style.display = "none";
+                     /*   div_select_dot.style.display = "inline";
+                        bt_reset.style.display = "none";*/
                         txt_key_search.style.width = "140px"
 
                     }
@@ -105,8 +105,8 @@
                         div_tieude.style.display = "inline";
                         div_lb_nam.style.display = "inline";
                         div_txt_nam.style.display = "inline";
-                        div_select_dot.style.display = "inline";
-                        bt_reset.style.display = "inline";
+                       /* div_select_dot.style.display = "inline";
+                        bt_reset.style.display = "inline";*/
                         txt_key_search.style.removeProperty("width");
                     }
                 }

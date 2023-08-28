@@ -1,4 +1,4 @@
-namespace HDU_AppXetTuyen.Models
+﻿namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace HDU_AppXetTuyen.Models
 
         [StringLength(250)]
         public string DoiTuong_Ten { get; set; }
-
+        [Required(ErrorMessage = "Điểm ưu tiên phải lớn hơn 0")]
         public double? DoiTuong_DiemUuTien { get; set; }
 
         [StringLength(2000)]

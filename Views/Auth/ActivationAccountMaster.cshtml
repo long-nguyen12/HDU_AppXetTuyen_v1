@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Kích hoạt tài khoản";
+    Layout = "~/Views/Shared/_Layout_auth.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var token = urlParams.get('token');
+
+        $.ajax({
+            url: `/Auth/ActivationAccountMaster/`,
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "JSON",
+            data: JSON.stringify({ token: token }),
+            success: function (response) {
+                if (response.success) {
+                    $('#resultMessage').text("Bạn đã kích hoạt tài khoản thành công");
+                    $('#resultButton').prop('disabled', false);
+                } else {
+                    $('#resultMessage').text("Bạn đã kích hoạt tài khoản thất bại");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error)
+                $('#resultMessage').text("Bạn đã kích hoạt tài khoản thất bại");
+            }
+        })
+    })
+</script>
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container-xl px-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header justify-content-center">
+                                <img src="~/Content/images/logo-hdu.png" style="width: 100%;" />
+                            </div>
+                            <div class="card-body text-center">
+                                <p id="resultMessage"></p>
+                                <div class="d-flex align-items-center justify-content-center mt-4 mb-2">
+                                    <a id="resultButton" class="btn btn-primary" href="@Url.Action("Login", "Auth")">Về trang đăng nhập</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="~/Scripts/scripts.js"></script>

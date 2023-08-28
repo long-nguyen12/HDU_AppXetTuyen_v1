@@ -93,16 +93,23 @@
                         <!-- Sidenav Accordion (Dashboard)-->
                         <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKys")">
                             <div class="nav-link-icon"><i data-feather="monitor"></i></div>
-                            Thông tin thí sinh
+                            Danh sách tt thí sinh
+                        </a>
+                        <a class="nav-link" href="@Url.Action("KpKiemTra", "KinhPhis")">
+                            <div class="nav-link-icon"><i data-feather="shield"></i></div>
+                            Theo dõi nộp kinh phí
                         </a>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#menuThiSinh" aria-expanded="false" aria-controls="menuThiSinh">
                             <div class="nav-link-icon"><i data-feather="database"></i></div>
-                            Đăng ký xét tuyển
+                           QL Đăng ký xét tuyển
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+
+
                         <div class="collapse" id="menuThiSinh" data-bs-parent="#menuThiSinh">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link style_wspacing" href="@Url.Action("Dkxtth", "DangKyXetTuyens")">Thống kê chung</a>
+                                @*<a class="nav-link style_wspacing" href="@Url.Action("Dkxtth", "DangKyXetTuyens")">Thống kê chung</a>*@
+                             
                                 <a class="nav-link style_wspacing" href="@Url.Action("DkxtKQTthpt", "DangKyXetTuyens")">Sử dụng KQ thi TN THPT</a>
                                 <a class="nav-link style_wspacing" href="@Url.Action("DkxtHocBa", "DangKyXetTuyens")">Sử dụng KQ học bạ THPT</a>
                                 <a class="nav-link style_wspacing" href="@Url.Action("DkxtTt", "DangKyXetTuyens")">Tuyển thẳng theo QĐ</a>

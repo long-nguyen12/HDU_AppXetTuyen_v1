@@ -1,4 +1,4 @@
-﻿@model HDU_AppXetTuyen.Models.DangKyXetTuyen
+﻿@model HDU_AppXetTuyen.Models.DangKyXetTuyenHB
 
 @{
     ViewBag.Title = "DkxtHocBaHoSo";
@@ -185,13 +185,8 @@
                                         <td><input id="txt_m3_k3" type="text" class="form-control input-mon3 padding_input_text_number " value="8.0" disabled /></td>
                                         <td><input id="txt_tb_m3" type="text" class="form-control padding_input_text_number input-tong" value="8.0" disabled /></td>
                                     </tr>
-
                                 </tbody>
-                            </table>
-                            <script>
-
-
-</script>
+                            </table>                            
                         </div>
                     </div>
                     <div class="row">
@@ -250,7 +245,8 @@
     <input type="hidden" value="@ViewBag.HoSoFilteri" id="filteriHoSo_bak" name="filteriHoSo_bak" />
     <input type="hidden" value="@ViewBag.SearchString" id="searchString_bak" name="searchString_bak" />
     <input type="hidden" value="@ViewBag.pageCurren" id="page_bak" name="page_bak" />
-    <input type="hidden" value="10" id="dkxt_id_checkin" name="dkxt_id_checkin" />
+   
+    <input type="hidden" value="@ViewBag.Dkxt_HB_ID" id="dkxt_hb_id_checkin" name="dkxt_hb_id_checkin" />
 </div>
 <!--Hết phần Các tham số lưu để truyền dữ liệu-->
 <script>
@@ -324,7 +320,7 @@
 
     function ts_dkxt_hocba_detail() {
         var dataObj = {
-            Dkxt_ID: $('#dkxt_id_checkin').val()
+            Dkxt_HB_ID: $('#dkxt_hb_id_checkin').val()
         }
         $.ajax({
             url: '/Admin/DangKyXetTuyens/DkxtHocBa_hs_Detail/',

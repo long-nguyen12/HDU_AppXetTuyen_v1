@@ -30,7 +30,7 @@
 
         [Display(Name = "Tên ngành")]
         [StringLength(500)]
-        public string NganhTenNganh { get; set; }
+        public string Nganh_TenNganh { get; set; }
 
         [Display(Name = "Khoa")]
         public int Khoa_ID { get; set; }
@@ -47,25 +47,16 @@
         public virtual Khoa Khoa { get; set; }
 
         public virtual KhoiNganh KhoiNganh { get; set; }
-
-
-
         
         public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
         
         public virtual ICollection<DangKyXetTuyenHB> DangKyXetTuyenHBs { get; set; }
         
         public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
-
         
         public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
-
         
-        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
-
-    
-
-        
+        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }   
         public virtual ICollection<ToHopMonNganh> ToHopMonNganhs { get; set; }
     }
 }

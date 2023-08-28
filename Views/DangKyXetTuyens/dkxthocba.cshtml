@@ -27,7 +27,7 @@
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
                         <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)</span>
-                      
+
                     </div>
                 </div>
 
@@ -37,9 +37,9 @@
 </header>
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
-        <div class="card card-header-actions">
+        <div class="card card-collapsable">
             <div class="card-header">
-                <span>Các nguyện vọng đã đăng ký</span>
+                <span >Các nguyện vọng đã đăng ký</span>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -63,7 +63,7 @@
                     <div class="col-xxl-12">
                         <center>
                             <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
-                            <a id="bt_add_aspirations" class="btn btn-outline-primary" >Thêm nguyện vọng</a>
+                            <a id="bt_add_aspirations" class="btn btn-outline-primary">Thêm nguyện vọng</a>
                             <script>
                                 $(document).ready(function () {
                                     let sp_tieude = document.getElementById('sp_tieude');
@@ -249,7 +249,7 @@
                                                     <div class="col-xxl-12">
                                                         <table class="table mt-0 mb-0" id="FilesList_HocBa_View" style="visibility:hidden">
                                                             <tr style="display:none">
-                                                                <th colspan="3"><input type="hidden" id="txt_uploader_file_hocba" /></th>
+                                                                <th colspan="2"><input type="hidden" id="txt_uploader_file_hocba" /></th>
                                                             </tr>
                                                         </table>
                                                     </div>
@@ -286,7 +286,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
+                                                        <table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
                                                     </div>
                                                 </div>
 
@@ -300,7 +300,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
+                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
                                                     </div>
                                                 </div>
 
@@ -314,7 +314,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="3"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table>
+                                                        <table class="table mt-0 mb-0" id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table>
                                                     </div>
                                                 </div>
                                             </td>
@@ -329,9 +329,9 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-xxl-12" style="text-align:center">                            
+                            <div class="col-xxl-12" style="text-align:center">
                                 <input class="btn btn-primary col-5 col-auto" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
-                                <input class="btn btn-secondary col-5 col-auto" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />                             
+                                <input class="btn btn-secondary col-5 col-auto" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
                             </div>
                         </div>
 
@@ -389,6 +389,25 @@
     </div>
 
 </div>
+
+<style>
+    #loadingModal {
+        background-color: rgba(0, 0, 0, 0.5);
+        background-color: transparent;
+    }
+</style>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // phần hiển thị dữ liệu đã đăng ký
     $(document).ready(function () {
@@ -450,8 +469,11 @@
 
     $('#bt_ok_on_modal_delete').click(function () {
         let data = {
-            Dkxt_ID: $('#key_delete_dkxt_id').val(),
+            Dkxt_HB_ID: $('#key_delete_dkxt_id').val(),
         };
+        // console.log(data.Dkxt_HB_ID)
+        //  return;
+
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_HB_Delete",
             data: JSON.stringify(data),
@@ -466,9 +488,7 @@
                 }
                 else {
                     showToast("Lỗi", res.msg, "bg-success");
-                    alert(response.msg);
                 }
-
             },
             error: function (errormessage) {
                 showToast("Thông báo", "Lỗi! Chưa thể xóa theo yêu cầu!", "bg-success");
@@ -494,7 +514,7 @@
         $('#key_change_dkxt_hocba_id').val(_dkxt_hb_id);
         $('#key_check_down_up').val('1');
         $('#infor_change').text('Bạn chắc chắn đổi nguyện vọng này lên trước?');
-        $('#modal_tb_thaydoinv').modal('show');     
+        $('#modal_tb_thaydoinv').modal('show');
     }
     function change_down_aspirations_on_table_onclick(_dkxt_hb_id) {
         $('#key_change_dkxt_hocba_id').val('');
@@ -503,14 +523,12 @@
         $('#infor_change').text('Bạn chắc chắn đổi nguyện vọng này xuống sau?');
         $('#key_change_dkxt_hocba_id').val(_dkxt_hb_id);
         $('#key_check_down_up').val('2');
-        $('#modal_tb_thaydoinv').modal('show');      
+        $('#modal_tb_thaydoinv').modal('show');
     }
 
     $('#bt_ok_on_modal_change').click(function () {
         let _check_action = $('#key_check_down_up').val();
-        let data_Obj_change = { Dkxt_ID: $('#key_change_dkxt_hocba_id').val() };
-        //console.log(_check_action);
-        //console.log(data_Obj_change.Dkxt_ID);
+        let data_Obj_change = { Dkxt_HB_ID: $('#key_change_dkxt_hocba_id').val() };
 
         if (_check_action == 1) { // sửa lên trên
             $.ajax({
@@ -594,10 +612,10 @@
         $("#select_tohopmon").change(function () {
             let dataObj = {
                 Thm_ID: $("#select_tohopmon").val(),
-                Dkxt_ID: $('#dkxt_hocba_id_checkin').val()
+                Dkxt_HB_ID: $('#dkxt_hocba_id_checkin').val()
             }
             // trường hợp là thêm mới
-            if (dataObj.Dkxt_ID == 0 && dataObj.Thm_ID > 0) {
+            if (dataObj.Dkxt_HB_ID == 0 && dataObj.Thm_ID > 0) {
 
                 $.ajax({
                     url: "/DangKyXetTuyens/DangKyXetTuyen_HB_Get_Data_MonHoc",
@@ -617,7 +635,7 @@
                 });
             }
             // trường hợp sửa => chưa làm
-            else if (dataObj.Dkxt_ID == 0 && dataObj.Thm_ID == 0 ) {
+            else if (dataObj.Dkxt_HB_ID == 0 && dataObj.Thm_ID == 0) {
                 reset_fields_controll_disabled_true()
             }
         });
@@ -875,7 +893,7 @@
             }
             chkatchtbl_giayto_uutien();
             $('#files_giayto_uutien').val('');
-        });      
+        });
     });
     function DeleteFile_HoBas_Upload(Fileid, FileName) {
         formdata_files_hocba.delete(FileName)
@@ -931,6 +949,26 @@
     }
     $('#bt_ok_div_update_aspirations').click(function () {
         let flag = true;
+       
+        var _nganh_ID = $('#select_nganh').val();
+        var _thm_ID = $('#select_tohopmon').val();
+
+        console.log(_nganh_ID)
+
+        var _dkxt_Diem_M1 = { TenMon: $('#lb_tenmon_1').text(), HK1: $('#txt_m1_k1').val(), HK2: $('#txt_m1_k2').val(), HK3: $('#txt_m1_k3').val(), DiemTrungBinh: $('#txt_tb_m1').val(), };
+        var _dkxt_Diem_M2 = { TenMon: $('#lb_tenmon_2').text(), HK1: $('#txt_m2_k1').val(), HK2: $('#txt_m2_k2').val(), HK3: $('#txt_m2_k3').val(), DiemTrungBinh: $('#txt_tb_m2').val(), };
+        var _dkxt_Diem_M3 = { TenMon: $('#lb_tenmon_3').text(), HK1: $('#txt_m3_k1').val(), HK2: $('#txt_m3_k2').val(), HK3: $('#txt_m3_k3').val(), DiemTrungBinh: $('#txt_tb_m3').val(), };
+
+        var _diemTBMon1 = $('#txt_tb_m1').val();
+        var _diemTBMon2 = $('#txt_tb_m2').val();
+        var _diemTBMon3 = $('#txt_tb_m3').val();
+
+        if (_nganh_ID == 0) { var errorMessage = "Chưa chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
+        if (_thm_ID == 0) { var errorMessage = "Chưa chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
+        if (_diemTBMon1 == '' || _diemTBMon2 == '' || _diemTBMon3 == '') { var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!"; $('#Diem_All_Error').text(errorMessage); flag = false; }
+
+      
+
         /* xử lý phần upload file lên server*/
 
         let _Dkxt_MinhChung_HB = "";
@@ -990,28 +1028,8 @@
             });
         }
         /*hết phần upload file*/
-        var _nganh_ID = $('#select_nganh').val();
-        var _thm_ID = $('#select_tohopmon').val();
-
-        console.log(_nganh_ID)
-
-        var _dkxt_Diem_M1 = { TenMon: $('#lb_tenmon_1').text(), HK1: $('#txt_m1_k1').val(), HK2: $('#txt_m1_k2').val(), HK3: $('#txt_m1_k3').val(), DiemTrungBinh: $('#txt_tb_m1').val(), };
-        var _dkxt_Diem_M2 = { TenMon: $('#lb_tenmon_2').text(), HK1: $('#txt_m2_k1').val(), HK2: $('#txt_m2_k2').val(), HK3: $('#txt_m2_k3').val(), DiemTrungBinh: $('#txt_tb_m2').val(), };
-        var _dkxt_Diem_M3 = { TenMon: $('#lb_tenmon_3').text(), HK1: $('#txt_m3_k1').val(), HK2: $('#txt_m3_k2').val(), HK3: $('#txt_m3_k3').val(), DiemTrungBinh: $('#txt_tb_m3').val(), };
-
-        var _diemTBMon1 = $('#txt_tb_m1').val();
-        var _diemTBMon2 = $('#txt_tb_m2').val();
-        var _diemTBMon3 = $('#txt_tb_m3').val();
-
-        if (_nganh_ID == 0) { var errorMessage = "Chưa chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
-        if (_thm_ID == 0) { var errorMessage = "Chưa chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
-        if (_diemTBMon1 == '' || _diemTBMon2 == '' || _diemTBMon3 == '') { var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!"; $('#Diem_All_Error').text(errorMessage); flag = false; }
-
         if (!flag) return;
         var _dkxt_Diem_Tong = parseFloat(_diemTBMon1) + parseFloat(_diemTBMon2) + parseFloat(_diemTBMon3);
-
-
-
         var formData_dknv_new = {
             Nganh_ID: _nganh_ID,
             Thm_ID: _thm_ID,
@@ -1026,8 +1044,8 @@
             Dkxt_MinhChung_UuTien: _Dkxt_MinhChung_UuTien,
         }
 
-        console.log(formData_dknv_new.Nganh_ID);
-      
+       /* console.log(formData_dknv_new.Nganh_ID);*/
+        $("#loadingModal").modal("show");
 
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_HB_Insert",
@@ -1042,12 +1060,16 @@
                     document.getElementById('div_list_aspirations').style.display = "inline";
                     document.getElementById('div_update_aspirations').style.display = "none";
                     reset_fields_controll_disabled_true();
+
+                    $("#loadingModal").modal("hide");
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                    $("#loadingModal").modal("hide");
                 }
             },
             error: function (errormessage) {
                 showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                $("#loadingModal").modal("hide");
             }
         });
 

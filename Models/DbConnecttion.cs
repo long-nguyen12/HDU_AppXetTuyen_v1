@@ -20,7 +20,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
         public virtual DbSet<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
         public virtual DbSet<DoiTuong> DoiTuongs { get; set; }
-        public virtual DbSet<DotXetTuyen> DotXetTuyens { get; set; }
+        public virtual DbSet<DotXetTuyen> DotXetTuyens { get; set; }       
         public virtual DbSet<Huyen> Huyens { get; set; }
         public virtual DbSet<Khoa> Khoas { get; set; }
         public virtual DbSet<KhoiNganh> KhoiNganhs { get; set; }
@@ -30,6 +30,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<LienCapTieuHoc> LienCapTieuHocs { get; set; }
         public virtual DbSet<NamHoc> NamHocs { get; set; }
         public virtual DbSet<Nganh> Nganhs { get; set; }
+    
         public virtual DbSet<PhuongThucXetTuyen> PhuongThucXetTuyens { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<ThiSinhDangKy> ThiSinhDangKies { get; set; }
@@ -37,8 +38,11 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<ToHopMon> ToHopMons { get; set; }
         public virtual DbSet<TruongCapBa> TruongCapBas { get; set; }
         public virtual DbSet<Xa> Xas { get; set; }
+       
         public virtual DbSet<ToHopMonNganh> ToHopMonNganhs { get; set; }
-
+        public virtual DbSet<NganhMaster> NganhMasters { get; set; }
+        public virtual DbSet<HocVienDangKy> HocVienDangKies { get; set; }
+        public virtual DbSet<HocVienDuTuyen> HocVienDuTuyens { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DotXetTuyen>()
@@ -65,8 +69,6 @@ namespace HDU_AppXetTuyen.Models
                 .HasMany(e => e.DangKyXetTuyenThangs)
                 .WithOptional(e => e.DotXetTuyen)
                 .HasForeignKey(e => e.DotXT_ID);
-
-
 
             modelBuilder.Entity<ToHopMon>()
                 .HasMany(e => e.DangKyXetTuyenKQTQGs)

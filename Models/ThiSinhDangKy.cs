@@ -17,6 +17,7 @@
             DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
             DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
+            KinhPhis = new HashSet<KinhPhi>();
         }       
 
         [Key]
@@ -95,18 +96,18 @@
         [Display(Name = "Đối tượng")]
         public int? DoiTuong_ID { get; set; }
 
+        [Display(Name = "Tên trường cấp ba")]
+        [StringLength(2000)]
+        public string ThiSinh_TruongCapBa { get; set; }
+
         [Display(Name = "Mã trường cấp ba")]
         [StringLength(300)]
         public string ThiSinh_TruongCapBa_Ma { get; set; }
 
-        [Display(Name = "Tên trường cấp ba")]
-        [StringLength(300)]
-        public string ThiSinh_TruongCapBa { get; set; }     
+        public int? ThiSinh_TruongCapBa_Tinh_ID { get; set; }
 
         [Display(Name = "Trạng thái")]
-        public int? ThiSinh_TrangThai { get; set; }
-
-        public int? ThiSinh_TruongCapBa_Tinh_ID { get; set; }
+        public int? ThiSinh_TrangThai { get; set; }   
 
         [Display(Name = "Học lực lớp 12")]
         public int? ThiSinh_HocLucLop12 { get; set; }
@@ -118,17 +119,22 @@
         [StringLength(200)]
         public string ThiSinh_GhiChu { get; set; }
 
+
         [StringLength(200)]
-        public string ThiSinh_Email_Temp { get; set; }
+        public string ThiSinh_Email_Temp { get; set; }    
+
         public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }        
         public virtual ICollection<DangKyXetTuyenHB> DangKyXetTuyenHBs { get; set; }        
         public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }        
         public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }        
-        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }   
+        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
+        public virtual ICollection<KinhPhi> KinhPhis { get; set; }
         [Display(Name = "Đối tượng")]
         public virtual DoiTuong DoiTuong { get; set; }
 
         [Display(Name = "Khu vực")]
         public virtual KhuVuc KhuVuc { get; set; }
+     
+      
     }
 }

@@ -1,94 +1,273 @@
-﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
-
+﻿
 @{
-    ViewBag.Title = "Đăng nhập";
+    ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout_auth.cshtml";
 }
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
-    /*$(document).ready(function () {
-        $('#formLogin').submit(function (event) {
-            event.preventDefault(); // Prevent the default form submission
+    $(document).ready(function () {
 
-            var formData = $(this).serialize(); // Serialize the form data
-            var listInfo = formData.split("&");
-            var data = {
-                cccd: listInfo[0],
-                password: listInfo[1]
+        //$("#login_CCCD").val('1');
+        //$("#login_password").val('123456');
+
+        function rearrangePanels() {
+            var windowWidth = $(window).width();
+        
+            if (windowWidth < 992) {
+                $("#panelContainer").prepend($("#rightPanel"));
+                $("#leftPanel").addClass("mt-3");
+                $("#h_tieude_trai").addClass("letterspacing");              
+            } else {
+                $("#panelContainer").prepend($("#leftPanel"));
+                $("#leftPanel").removeClass("mt-3");       
+                $("#h_tieude_trai").removeClass("letterspacing");
             }
-            console.log(data)
-            *//*$.ajax({
-                url: '/your-endpoint', // Replace with your server-side endpoint
-                type: 'POST',
-                data: formData,
+        }
+
+        // Call the function on page load and window resize
+        rearrangePanels();
+        $(window).resize(rearrangePanels);
+    })
+    function submitForm() {
+        //showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
+        //return;
+        //$("#login_CCCD").val('2');
+        //$("#login_password").val('123456');
+
+        $(".text-danger").text("");
+        let cccd = $("#login_CCCD").val();
+        let password = $("#login_password").val();
+      
+        if (!cccd) {
+            var errorMessage = "Vui lòng nhập CCCD";
+            $('#login_CCCD_Error').text(errorMessage);
+        }
+        if (!password) {
+            var errorMessage = "Vui lòng nhập mật khẩu";
+            $('#login_password_Error').text(errorMessage);
+        }
+        if (!cccd || !password) return;
+        let formData = {
+            cccd: cccd,
+            password: password
+        }
+        // đăng nhập khi là thí sinh đăng ký xét tuyển đại học
+        if ($('#radioDaiHoc').is(':checked')) {
+            $.ajax({
+                url: "/Auth/LoginColleger",
+                type: "POST",
+                data: JSON.stringify(formData),
+                contentType: "application/json;charset=utf-8",
                 success: function (response) {
-                    // Handle the success response here
+                  
+                    if (response.success) {
+                        window.location.href = '/ThiSinhDangKies/Index';
+                    } else {
+                        $('#errorMessage').text(response.message);
+                    }
                 },
                 error: function (xhr, status, error) {
-                    // Handle the error response here
+                    // Handle any errors
+                    console.error(error);
                 }
-            });*//*
-        });
-    });*/
-    function submitForm() {
-        var name = $("#ThiSinh_CCCD").val();
-        var email = $("#ThiSinh_MatKhau").val();
-        
-    var formData = {
-        name: name,
-        email: email
-        };
-        console.log(formData)
-}
+            });
+        }
+        // đăng nhập khi là học viên đăng ký sau đại học
+        else if ($('#radioSauDaiHoc').is(':checked')) {
+            $.ajax({
+                url: "/Auth/LoginMaster",
+                type: "POST",
+                data: JSON.stringify(formData),
+                contentType: "application/json;charset=utf-8",
+                success: function (response) {  
+                    if (response.success) {
+                        window.location.href = '/HocVienDangKies/HvThongTin';
+                    } else {
+                        $('#errorMessage').text(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors
+                    console.error(error);
+                }
+            });
+        }       
+    }
+
+    function hideErrorMessage(input) {
+        var errorContainer = input.next('.text-danger');
+        errorContainer.text('');
+    }
+    
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
 </script>
-<div id="layoutAuthentication">
-    <div id="layoutAuthentication_content">
-        <main>
-            <div class="container-xl px-4">
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header justify-content-center">
-                                <img src="~/Content/images/logo-hdu.png" style="width: 100%;" />
-                            </div>
-                            <div class="card-body">
-                                <!-- Login form-->
-                                @using (Ajax.BeginForm("Login", "Auth", null, new { id = "formLogin" }))
-                                {
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <div class="mb-3">
-                                        <label class="small mb-1" for="ThiSinh_CCCD">CMND/CCCD</label>
-                                        @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập CMND/CCCD" } })
-                                        @Html.ValidationMessageFor(model => model.ThiSinh_CCCD, "", new { @class = "small mb-1 text-danger" })
+<style>
+    .colorlogin {
+        color: #ff6a00 !important;
+    }
+    .letterspacing {
+        letter-spacing: -1.2px;
+    }
+    .login-button {
+        padding: 8px 18px;
+        border-radius: 7px !important;
+        background-color: #ff6a00;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+    }
+
+        .login-button:hover {
+            background-color: #808080;
+            color: #fff;
+        }
+</style>
+<div class="container">
+    <div id="panelContainer" class="row" style="padding-top:20px">
+        <div id="leftPanel" class="col-lg-8">
+            <div class="text-center text-uppercase">
+                <h5 class="colorlogin" style="font-weight: bold " id="h_tieude_trai">HỆ THỐNG TUYỂN SINH TRỰC TUYẾN</h5>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body" style="margin: 0px!important">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
                                     </div>
-                                    <div class="mb-3" style="margin-top:5px">
-                                        <label class="small mb-1" for="inputPassword">Mật khẩu</label>
-                                        @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu" } })
-                                        @Html.ValidationMessageFor(model => model.ThiSinh_MatKhau, "", new { @class = "small mb-1 text-danger" })
+                                    <div class="carousel-item">
+                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
                                     </div>
-                                    <div>
-                                        @{
-                                            if (ViewBag.LoginErrorMessager != null)
-                                            {
-                                                <label class="small mb-1 text-danger" name="error_login" id="error_login">@ViewBag.LoginErrorMessager</label>
-                                            }
-                                        }
+                                    <div class="carousel-item">
+                                        <img src="~/Content/images/tttvts2023.jpg" class="d-block w-100" alt="...">
                                     </div>
-                                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
-                                        <input class="btn btn-primary" type="submit" onclick="submitForm()" value="Đăng nhập" />
-                                    </div>
-                                }
-                            </div>
-                            <div class="card-footer text-center">
-                                <div class="small"><a style="text-decoration: none; color: #001D85;" href="@Url.Action("Register", "Auth")">Bạn chưa đăng kí thông tin? <b>Đăng kí tại đây</b></a></div>
-                                <div class="small"><a style="text-decoration: none; color: #001D85; " href="@Url.Action("ForgotPassword", "Auth")">Bạn quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+
+        <div id="rightPanel" class="col-lg-4">
+            <div class="text-center text-uppercase">
+                <h5 class="colorlogin" style="font-weight: bold">ĐĂNG NHẬP HỆ THỐNG</h5>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-xl-12" id="loginForm">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase colorlogin" style="text-align: center; font-weight:unset">Thông tin đăng nhập</h5>
+                            <hr />
+                            <div>
+                                <label class="small mb-1" for="login_CCCD">Căn cước công dân</label>
+                                <input name="login_CCCD" id="login_CCCD" class="form-control" , placeholder="Nhập CCCD" value="1" />
+                                <span id="login_CCCD_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputPassword">Mật khẩu</label>
+                                <input name="login_password" id="login_password" class="form-control" , placeholder="Nhập mk" value="123456" />
+                                <span id="login_password_Error" class="small mb-1 text-danger"></span>
+                            </div>
+
+                            <div class="d-inline-flex flex-nowrap align-items-center justify-content-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="radioDaiHoc" name="radioHeDaoTao" checked value="0">
+                                    <label class="form-check-label" for="radioDaiHoc">Hệ đại học</label>
+                                </div>
+                                <div class="form-check" style="margin-left:15px">
+                                    <input class="form-check-input" type="radio" id="radioSauDaiHoc" name="radioHeDaoTao" value="1">
+                                    <label class="form-check-label" for="radioSauDaiHoc">
+                                        Hệ sau đại học
+                                    </label>
+                                </div>                               
+                            </div>
+
+                            <div>
+                                <span id="errorMessage" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+                                @*<input class="login-button" type="submit" value="Đăng nhập" style="width: 100%" />*@
+                                <input class="login-button" type="submit" onclick="submitForm()" value="Đăng nhập" style="width: 100%" />
+                            </div>
+                            <hr class="mt-3 mb-2" />
+                            <div class="text-center mt-2">
+                                <div class="small"><a id="showSignup" style="text-decoration: none; color: #ff6a00; letter-spacing: -0.5px; " href="@Url.Action("RegisterColleger", "Auth")">Đăng ký thông tin xét tuyển đại học <b>tại đây</b></a></div>
+                                <div class="small mt-1"><a id="showSignupSDH" style="text-decoration: none; color: #ff6a00; letter-spacing: -0.5px; " href="@Url.Action("RegisterMaster", "Auth")">Đăng ký  thông tin tuyển sinh sau đại học <b>tại đây</b></a></div>
+                                <div class="small mt-1"><a style="text-decoration: none; color: #ff6a00;" href="#" >Quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+                            </div>
+                            <hr class="mt-1 mb-1" />
+                            <div class="small text-center mt-2 mb-2"><a style="text-decoration: none; color: #ff6a00; word-spacing: -2px !important" href="@Url.Action("Index", "LienCapTHCS")">Đăng ký xét tuyển Trường TH, THCS, THPT Hồng Đức? <b>Tại đây</b></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="leftLine" class="col-lg-8 col-12">
+            <hr />
+            <div class="row">
+                <div class="col-xl-12">
+                    <p class="m-0 colorlogin"><b>LIÊN HỆ</b></p>
+                    <p class="m-0 colorlogin">- Phòng Quản lý đào tạo - Phòng 208 Nhà điều hành, Số 565 Quang Trung - Phường Đông Vệ - TP.Thanh Hóa</p>
+                    <p class="m-0 colorlogin">- Điện thoại: (0237).3910.222, Fax: (0237).3910.475, trang chủ: <a href="http://hdu.edu.vn" class="card-link">www.hdu.edu.vn</a> </p>
+                </div>
+            </div>
+        </div>
+        <div id="rightLine" class="col-lg-4 col-12">
+            <hr />
+            <div class="row">
+                <p class="m-0 colorlogin"><b>LIÊN KẾT TUYỂN SINH</b></p>
+                <p class="m-0 colorlogin">- Thông tin tuyển sinh ĐH Hồng Đức</p>
+                <p class="m-0 colorlogin">- Video giới thiệu về ĐH Hồng Đức </p>
+            </div>
+        </div>
+
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="~/Scripts/scripts.js"></script>
-@Scripts.Render("~/bundles/jqueryval")
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

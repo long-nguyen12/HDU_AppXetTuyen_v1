@@ -33,9 +33,10 @@
                             <tr>
                                 <th>@Html.DisplayName("Tên năm") </th>
                                 <th>@Html.DisplayName("Tên đợt") </th>
-                                <th>@Html.DisplayName("Trạng thái")</th>
+                                <th>@Html.DisplayName("Xét tuyển")</th>
+                                <th>@Html.DisplayName("Dự thi năng khiếu")</th>
                                 <th>@Html.DisplayName("Ghi chú")</th>
-                                <th style="width:100px; text-align:center">@Html.DisplayName("Cập nhật")</th>                                
+                                <th style="width:100px; text-align:center">@Html.DisplayName("Cập nhật")</th>
                             </tr>
                         </thead>
                         @foreach (var item in Model)
@@ -48,13 +49,16 @@
                                     @Html.DisplayFor(modelItem => item.Dxt_Ten)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Dxt_TrangThai)
+                                    @Html.DisplayFor(modelItem => item.Dxt_TrangThai_TNK)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Dxt_TrangThai_Xt)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Dxt_GhiChu)
                                 </td>
                                 <td style="width:100px; text-align:center">
-                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Dxt_ID }) |                                 
+                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Dxt_ID }) |
                                     @Html.ActionLink("Xóa", "Delete", new { id = item.Dxt_ID })
                                 </td>
                             </tr>                            

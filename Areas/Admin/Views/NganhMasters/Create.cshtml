@@ -1,0 +1,101 @@
+﻿@model HDU_AppXetTuyen.Models.NganhMaster
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin_Master.cshtml";
+}
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span>Quản lý thông tin Ngành</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container-fluid px-12">
+        <div class="card card-header-actions">
+            <div class="card-header">
+                <span>Thêm mới ngành</span>
+                <a class="btn-close" aria-label="Close" href="@Url.Action("Index","Nganhs")"></a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="col-lg-4 col-12">
+                            <label class="control-label col-md-12">Mã ngành</label>
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Nganh_Mt_MaNganh, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nganh_Mt_MaNganh, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+
+                            <label class="control-label col-md-12">Tên ngành</label>
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Nganh_Mt_TenNganh, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nganh_Mt_TenNganh, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-12">
+
+                            <label class="control-label col-md-12">Định hướng nghiên cứu</label>
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Nganh_Mt_NghienCuu_Ten, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nganh_Mt_NghienCuu_Ten, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+
+                            <label class="control-label col-md-12">Chọn khoa quản lý</label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Nganh_Mt_TenKhoa, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nganh_Mt_TenKhoa, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label class="control-label col-md-12">Trạng thái</label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Nganh_Mt_TrangThai, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nganh_Mt_TrangThai, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <label class="control-label col-md-12">Ghi chú</label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Nganh_Mt_GhiChu, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nganh_Mt_GhiChu, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="row  mt-1 g-1 align-items-center justify-content-center">
+                    <hr class="mt-1 mb-1" />
+                    <div class="col-md-2 col-3">
+                        @*<input type="submit" value="Create" class="btn btn-default" />*@
+                        <input class="btn btn-outline-success" type="submit" value="Đồng ý" style="width:100%" />
+                    </div>
+                    <div class="col-md-2 col-3">
+                        @Html.ActionLink("Hủy bỏ", "Index", null, new { @class = "btn btn-outline-danger", @style = "width:100%; white-space:nowrap" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

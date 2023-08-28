@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "dkdtnk";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <style>
     .label_tieude {
         white-space: nowrap !important;
@@ -35,7 +33,7 @@
 </header>
 <div class="container-fluid px-12">
     <div id="div_list_registration">
-        <div class="card card-header-actions">
+        <div class="card card-collapsable">
             <div class="card-header">
                 <span>Các nguyện vọng đã đăng ký</span>
             </div>
@@ -283,6 +281,25 @@
     </div>
 </div>
 
+
+<style>
+    #loadingModal {
+        background-color: rgba(0, 0, 0, 0.5);
+        background-color: transparent;
+    }
+</style>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         ts_dkxt_thptqg_list_all();
@@ -299,7 +316,7 @@
             dataType: 'json',
             success: function (result_all) {
                 console.log(result_all.view_list_dkdt_nangkhieu_ts)
-              // return;
+                // return;
 
                 if (result_all.view_list_dkdt_nangkhieu_ts == 0) {
                     _output = '<tr><td colspan="5"  style="text-align:center">Chưa đăng ký môn thi năng khiếu nào!</td></tr>';
@@ -345,8 +362,6 @@
                 text: option.text
             }));
         });
-
-
 
         $("#select_nganh").change(function () {
             select_tohopmon_view_data($("#select_nganh").val(), 0);
@@ -544,8 +559,9 @@
             Dkdt_NK_MinhChung_CCCD: _dkdt_NK_MinhChung_CCCD,
         }
         /*hết phần khai báo đối tượng*/
-        console.log(data_Obj_new);
+      //  console.log(data_Obj_new);
 
+        $("#loadingModal").modal("show");
         $.ajax({
             url: "/DangKyXetTuyens/DangKyDuThi_NangKhieu_Insert",
             data: JSON.stringify(data_Obj_new),
@@ -559,25 +575,28 @@
                     showToast("Thông báo", "Đăng ký thành công!", "bg-success");
                     document.getElementById('div_list_registration').style.display = "inline";
                     document.getElementById('div_exam_registration').style.display = "none";
+                    $("#loadingModal").modal("hide");
                     //reset_fields_controll_disabled_true();
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                    $("#loadingModal").modal("hide");
                 }
             },
             error: function (errormessage) {
                 showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                $("#loadingModal").modal("hide");
             }
         });
     })
-      // button xóa nguyện vọng đã đăng ký:
+    // button xóa nguyện vọng đã đăng ký:
     function delete_registration_on_table_onclick(_dkdt_nk_id) {
         $('#modal_tb_xoa').modal('show');
         $('#key_delete_dkdt_nk_id').val(_dkdt_nk_id);
     }
-  
+
     $('#bt_ok_on_modal_delete').click(function () {
         let data_Obj_new = { Dkdt_NK_ID: $('#key_delete_dkdt_nk_id').val() };
-              $.ajax({
+        $.ajax({
             url: "/DangKyXetTuyens/DangKyDuThiNK_Delete",
             data: JSON.stringify(data_Obj_new),
             type: 'POST',

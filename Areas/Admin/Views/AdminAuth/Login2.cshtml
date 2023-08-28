@@ -1,0 +1,130 @@
+﻿@model HDU_AppXetTuyen.Models.AdminAccount
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập hệ thống</title>
+    <link href="~/Content/bootstrap.5.1.3.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .login-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #aaa;
+            max-width: 450px;
+            width: 100%;
+        }
+
+            .login-form h2 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .login-form input[type="text"],
+            .login-form input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: none;
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px #ccc;
+            }
+
+            .login-form button[type="submit"] {
+                background-color: #ff6a00;
+                color: white;
+                width: 100%;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+                .login-form button[type="submit"]:hover {
+                    background-color: #808080;
+                    /*  background-color: #0037ffb4;*/
+                }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .register-link a {
+                color: #4CAF50;
+            }
+
+        .colorlogin {
+            color: #ff6a00 !important;
+        }
+
+        .letterspacing {
+            letter-spacing: -1.2px;
+        }
+
+        .login-button {
+            padding: 8px 18px;
+            border-radius: 7px !important;
+            background-color: #ff6a00;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+        }
+
+            .login-button:hover {
+                background-color: #808080;
+                color: #fff;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <form class="login-form" method="post">
+            <div class="text-center text-uppercase">
+                <h5 class="colorlogin" style="font-weight: bold">ĐĂNG NHẬP HỆ THỐNG</h5>
+                <hr />
+            </div>
+            <input type="text" placeholder="Tên đăng nhập" name="Admin_Username" id="Admin_Username" required class="form-control">
+            <span id="Admin_Username_Error" class="small mb-1 text-danger"></span>
+            <input type="password" placeholder="Mật khẩu" name="Admin_Pass" id="Admin_Pass" required class="form-control">
+            <span id="Admin_Pass_Error" class="small mb-1 text-danger"></span>
+            <div class="d-inline-flex flex-nowrap align-items-center justify-content-center mb-3 mt-0">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="radioDaiHoc" name="radioHeDaoTao" checked value="0">
+                    <label class="form-check-label" for="radioDaiHoc">Hệ đại học</label>
+                </div>
+                <div class="form-check" style="margin-left:15px">
+                    <input class="form-check-input" type="radio" id="radioSauDaiHoc" name="radioHeDaoTao" value="1">
+                    <label class="form-check-label" for="radioSauDaiHoc">
+                        Hệ sau đại học
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn login-button">Đăng nhập</button>
+            <div class="register-link">
+                Bạn chưa có tài khoản? <a href="#">Đăng ký</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

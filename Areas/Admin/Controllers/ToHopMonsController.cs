@@ -153,7 +153,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 Nganh_ID = n.Nganh_ID,
                 Nganh_MaNganh = n.Nganh_MaNganh,
-                NganhTenNganh = n.NganhTenNganh,
+                NganhTenNganh = n.Nganh_TenNganh,
                 Khoa_ID = n.Khoa_ID,
                 Nganh_GhiChu = n.Nganh_GhiChu,
                 KhoiNganh_ID = n.KhoiNganh_ID,

@@ -1,4 +1,5 @@
 ﻿using HDU_AppXetTuyen.Models;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,20 +24,14 @@ namespace HDU_AppXetTuyen.Controllers
             try
             {
                 var session = Session["login_session"].ToString();
-                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+                var thiSinh = db.ThiSinhDangKies.Where(t => t.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
-                var nguyenvongTHPTQG = db.DangKyXetTuyenKQTQGs.Include(l => l.Nganh).Include(l => l.ToHopMon).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
+                var nguyenvongTHPTQG = db.DangKyXetTuyenKQTQGs.Include(x => x.Nganh).Include(x => x.ToHopMon).Include(x => x.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
                 {
                     Ptxt_ID = n.Ptxt_ID,
-                    Nganh_ID = new
-                    {
-                        Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
-                    },
-                    Thm = new
-                    {
-                        ToHopMon = n.ToHopMon.Thm_MaToHop
-                    },
+                    Nganh_ID = new { NganhXet = n.Nganh.Nganh_GhiChu },
+                    Thm_ID = new { ThmXet = n.ToHopMon.Thm_MaToHop + " " + n.ToHopMon.Thm_TenToHop },                 
+
                     Dkxt_TrangThai = n.Dkxt_KQTQG_TrangThai,
                     Dkxt_NguyenVong = n.Dkxt_KQTQG_NguyenVong,
                     DotXT_ID = n.DotXT_ID,
@@ -45,18 +40,11 @@ namespace HDU_AppXetTuyen.Controllers
                     Dkxt_TrangThai_KetQua = n.Dkxt_KQTQG_TrangThai_KetQua,
                 }).OrderBy(n => n.Dkxt_NguyenVong).ToList();
 
-                var nguyenvongHocBa = db.DangKyXetTuyenHBs.Include(l => l.Nganh).Include(l => l.ToHopMon).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
+                var nguyenvongHocBa = db.DangKyXetTuyenHBs.Include(x => x.Nganh).Include(x => x.ToHopMon).Include(x => x.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
                 {
                     Ptxt_ID = n.Ptxt_ID,
-                    Nganh_ID = new
-                    {
-                        Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
-                    },
-                    Thm = new
-                    {
-                        ToHopMon = n.ToHopMon.Thm_MaToHop
-                    },
+                    Nganh_ID = new { NganhXet = n.Nganh.Nganh_GhiChu },                   
+                    Thm_ID = new { ThmXet = n.ToHopMon.Thm_MaToHop + " " + n.ToHopMon.Thm_TenToHop },                   
                     Dkxt_TrangThai = n.Dkxt_HB_TrangThai,
                     Dkxt_NguyenVong = n.Dkxt_HB_NguyenVong,
                     DotXT_ID = n.DotXT_ID,
@@ -65,85 +53,77 @@ namespace HDU_AppXetTuyen.Controllers
                     Dkxt_TrangThai_KetQua = n.Dkxt_HB_TrangThai_KetQua,
                 }).OrderBy(n => n.Dkxt_NguyenVong).ToList();
                
-                var nguyenVongTuyenThang = db.DangKyXetTuyenThangs.Include(l => l.Nganh).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
+                var nguyenVongTuyenThang = db.DangKyXetTuyenThangs.Include(x => x.Nganh).Include(x => x.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
                 {
                     Ptxt_ID = n.Ptxt_ID,
-                    Nganh_ID = new
-                    {
-                        Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
-                    },
+                    Nganh_ID = new { NganhXet = n.Nganh.Nganh_GhiChu },
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
                     Dkxt_NguyenVong = n.Dkxt_NguyenVong,
                     DotXT_ID = n.DotXT_ID,
                     Dkxt_ToHopXT = n.Dkxt_ToHopXT,
-                    Dkxt_MonDatGiai = n.Dkxt_MonDatGiai,
                     Dkxt_NamDatGiai = n.Dkxt_NamDatGiai,
+                    Dkxt_MonDatGiai = n.Dkxt_MonDatGiai,
+               
                     Dkxt_LoaiGiai = n.Dkxt_LoaiGiai,
                     Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
                 }).OrderBy(n => n.Dkxt_NguyenVong).ToList();
 
-                var nguyenVongNgoaiNgu = db.DangKyXetTuyenKhacs.Include(l => l.Nganh).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP5")).Select(n => new
+                var nguyenVongNgoaiNgu = db.DangKyXetTuyenKhacs.Include(x => x.Nganh).Include(x => x.ChungChi).Include(x => x.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP5")).Select(n => new
                 {
                     Ptxt_ID = n.Ptxt_ID,
-                    Nganh_ID = new
-                    {
-                        Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
-                    },
+                    Nganh_ID = new { NganhXet = n.Nganh.Nganh_GhiChu },
+
                     Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
                     Dkxt_NguyenVong = n.Dkxt_NguyenVong,
                     DotXT_ID = n.DotXT_ID,
                     Dkxt_ToHopXT = n.Dkxt_ToHopXT,
                     Dkxt_DonViToChuc = n.Dkxt_DonViToChuc,
+                    ChungChi_ID =  new { chungChi_Ten = n.ChungChi.ChungChi_Ten },
                     Dkxt_KetQuaDatDuoc = n.Dkxt_KetQuaDatDuoc,
                     Dkxt_TongDiem = n.Dkxt_TongDiem,
                     Dkxt_NgayDuThi = n.Dkxt_NgayDuThi,
                 }).OrderBy(n => n.Dkxt_NguyenVong).ToList();
 
-                var nguyenVongDanhGia = db.DangKyXetTuyenKhacs.Include(l => l.Nganh).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP6")).Select(n => new
+                var nguyenVongDanhGia = db.DangKyXetTuyenKhacs.Include(x => x.Nganh).Include(x => x.ChungChi).Include(x => x.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP6")).Select(n => new
                 {
                     Ptxt_ID = n.Ptxt_ID,
-                    Nganh_ID = new
-                    {
-                        Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
-                    },
+                    Nganh_ID = new { NganhXet = n.Nganh.Nganh_GhiChu },
+
                     Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
                     Dkxt_NguyenVong = n.Dkxt_NguyenVong,
                     DotXT_ID = n.DotXT_ID,
                     Dkxt_ToHopXT = n.Dkxt_ToHopXT,
                     Dkxt_DonViToChuc = n.Dkxt_DonViToChuc,
+                    ChungChi_ID =  new { chungChi_Ten = n.ChungChi.ChungChi_Ten },
                     Dkxt_KetQuaDatDuoc = n.Dkxt_KetQuaDatDuoc,
                     Dkxt_TongDiem = n.Dkxt_TongDiem,
                     Dkxt_NgayDuThi = n.Dkxt_NgayDuThi,
                 }).OrderBy(n => n.Dkxt_NguyenVong).ToList();
 
-                var dangkyDuThiNK = db.DangKyDuThiNangKhieus.Include(l => l.Nganh).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
+                var dangkyDuThiNK = db.DangKyDuThiNangKhieus.Include(x => x.Nganh).Include(x => x.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
                 {
-                    Ptxt_ID = n.Ptxt_ID,
-                    Nganh_ID = new
-                    {
-                        Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
-                    },
+                    Ptxt_ID = n.Ptxt_ID,                   
+               
+                    Nganh_ID = new { NganhXet = n.Nganh.Nganh_GhiChu },
+                    Dkxt_MonThi = n.Dkdt_NK_MonThi,
+                    DotXT_ID = new { TenDot = n.DotXetTuyen.Dxt_Ten },
+                    Dkdt_NK_NgayThi = new{ NgayThi = n.DotXetTuyen.Dxt_ThoiGian_KetThuc },
                     Dkxt_TrangThai_KetQua = n.Dkdt_NK_TrangThai_KetQua,
                     Dkxt_TrangThai = n.Dkdt_NK_TrangThai,
-                    Dkxt_NguyenVong = n.Dkdt_NK_NguyenVong,
-                    DotXT_ID = n.DotXT_ID,
-                    Dkxt_MonThi = n.Dkdt_NK_MonThi,                 
-                }).OrderBy(n => n.Dkxt_NguyenVong).ToList();
+        
+                }).ToList();
 
                 return Json(new
                 {
                     success = true,
-                    THPTQG = nguyenvongTHPTQG,
+                    ThptQg = nguyenvongTHPTQG,
                     HocBa = nguyenvongHocBa,
                     TuyenThang = nguyenVongTuyenThang,
                     NgoaiNgu = nguyenVongNgoaiNgu,
-                    DanhGia = nguyenVongDanhGia
+                    DanhGia = nguyenVongDanhGia, 
+                    DtNangKhieu = dangkyDuThiNK
                 }, JsonRequestBehavior.AllowGet);
             }
             catch(Exception)

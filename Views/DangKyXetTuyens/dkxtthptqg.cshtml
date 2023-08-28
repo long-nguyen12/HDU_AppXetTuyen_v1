@@ -36,7 +36,7 @@
 
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
-        <div class="card card-header-actions">
+        <div class="card card-collapsable">
             <div class="card-header">
                 <span>Các nguyện vọng đã đăng ký</span>
             </div>
@@ -119,7 +119,6 @@
             <div class="card-header">
                 <span>Đăng ký nguyện vọng mới</span>
                 <button class="btn-close" id="bt_close_div_update_aspirations_first" type="button" aria-label="Close"></button>
-
             </div>
             <div class="card-body">
                 <div class="row">
@@ -718,7 +717,7 @@
         }
         /*hết phần khai báo đối tượng*/
         console.log(data_Obj_new);
-
+        $("#loadingModal").modal("show");
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Insert",
             data: JSON.stringify(data_Obj_new),
@@ -733,12 +732,16 @@
                     document.getElementById('div_list_aspirations').style.display = "inline";
                     document.getElementById('div_update_aspirations').style.display = "none";
                     reset_fields_controll_disabled_true();
+                    $("#loadingModal").modal("hide");
                 } else {
+                    $("#loadingModal").modal("hide");
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                   
                 }
             },
             error: function (errormessage) {
-                showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                $("#loadingModal").modal("hide");
+                showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");              
             }
         });
     });

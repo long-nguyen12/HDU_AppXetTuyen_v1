@@ -37,7 +37,7 @@ namespace HDU_AppXetTuyen.Controllers
     public class AuthController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
-        // GET: Auth
+
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Index()
         {
@@ -51,73 +51,18 @@ namespace HDU_AppXetTuyen.Controllers
             var khuvucList = db.KhuVucs.ToList();
             var tinhList = db.Tinhs.ToList();
             var huyenList = db.Huyens.ToList();
-       
+
             tinhList.Insert(0, new Tinh { Tinh_ID = 0, Tinh_Ten = "Chọn tỉnh" });
             huyenList.Insert(0, new Huyen { Huyen_ID = 0, Huyen_TenHuyen = "Chọn huyện" });
-          
+
             ViewBag.KhuVuc_ID = new SelectList(khuvucList, "KhuVuc_ID", "KhuVuc_Ten");
             ViewBag.DoiTuong_ID = new SelectList(doituongList, "DoiTuong_ID", "DoiTuong_Ten");
             ViewBag.Tinh_ID = new SelectList(tinhList, "Tinh_ID", "Tinh_Ten");
             ViewBag.Huyen_ID = new SelectList(huyenList, "Huyen_ID", "Huyen_TenHuyen");
-           
+
             return View();
         }
 
-        /*[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public ActionResult Login()
-        {
-            if (Session["login_session"] != null)
-            {
-                return RedirectToAction("tsdkttts", "ThiSinhDangKys");
-            }
-            return View();
-        }*/
-
-        [HttpPost]
-        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public JsonResult Login(string cccd, string password)
-        {
-            /* if (Session["login_session"] != null)
-             {
-                 return RedirectToAction("Index", "Home");
-             }*/
-            string mk_client = password;
-            string user_client = cccd;
-
-            /*string mk_db = ComputeHash(user_client, mk_client);*/
-            var ts_login_details = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == cccd).FirstOrDefault();
-            if (ts_login_details != null)
-            {
-                bool verifiedPassword = Verify(user_client, mk_client, ts_login_details.ThiSinh_MatKhau);
-                if (ts_login_details.ThiSinh_TrangThai == 0)
-                {
-                    return Json(new { success = false, message = "Tài khoản chưa được kích hoạt" }, JsonRequestBehavior.AllowGet);
-                }
-                else if (verifiedPassword == true)
-                {
-                    Session["login_session"] = ts_login_details.ThiSinh_MatKhau;
-                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(new { success = false, message = "Mật khẩu không chính xác" }, JsonRequestBehavior.AllowGet);
-                }
-            }
-            else
-            {
-                return Json(new { success = false, message = "Không tìm thấy thông tin tài khoản" }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public ActionResult Logout()
-        {
-            Session["login_session"] = null;
-            Session.Clear();
-            Session.RemoveAll();
-            return RedirectToAction("Index", "Auth");
-        }
-
-       
 
         [HttpPost]
         public JsonResult GetHuyen(string tinhID)
@@ -331,5 +276,362 @@ namespace HDU_AppXetTuyen.Controllers
 
             return new string(randomString);
         }
+
+        #region Login 
+
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public ActionResult Login()
+        {
+            if (Session["login_session"] != null)
+            {
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Cache.SetNoStore();
+                return RedirectToAction("Index", "ThiSinhDangKies");
+            }
+            return View();
+        }
+
+
+        [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public JsonResult Login(string cccd, string password)
+        {
+            /* if (Session["login_session"] != null)
+             {
+                 return RedirectToAction("Index", "Home");
+             }*/
+            string mk_client = password;
+            string user_client = cccd;
+
+            /*string mk_db = ComputeHash(user_client, mk_client);*/
+            var ts_login_details = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == cccd).FirstOrDefault();
+            if (ts_login_details != null)
+            {
+                bool verifiedPassword = Verify(user_client, mk_client, ts_login_details.ThiSinh_MatKhau);
+                if (ts_login_details.ThiSinh_TrangThai == 0)
+                {
+                    return Json(new { success = false, message = "Tài khoản chưa được kích hoạt" }, JsonRequestBehavior.AllowGet);
+                }
+                else if (verifiedPassword == true)
+                {
+                    Session["login_session"] = ts_login_details.ThiSinh_MatKhau;
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Mật khẩu không chính xác" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "Không tìm thấy thông tin tài khoản" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public JsonResult LoginColleger(string cccd, string password)
+        {          
+            string mk_client = password;
+            string user_client = cccd;
+          
+            var ts_login_details = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == cccd).FirstOrDefault();
+            if (ts_login_details != null)
+            {
+                bool verifiedPassword = Verify(user_client, mk_client, ts_login_details.ThiSinh_MatKhau);
+                if (ts_login_details.ThiSinh_TrangThai == 0)
+                {
+                    return Json(new { success = false, message = "Tài khoản chưa được kích hoạt" }, JsonRequestBehavior.AllowGet);
+                }
+                else if (verifiedPassword == true)
+                {
+                    Session["login_session"] = ts_login_details.ThiSinh_MatKhau;
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Mật khẩu không chính xác" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "Không tìm thấy thông tin tài khoản" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public JsonResult LoginMaster(string cccd, string password)
+        {           
+            string mk_client = password;
+            string user_client = cccd;
+
+            /*string mk_db = ComputeHash(user_client, mk_client);*/
+            var hv_login_details = db.HocVienDangKies.Where(x => x.HocVien_CCCD == cccd).FirstOrDefault();
+            if (hv_login_details != null)
+            {
+                bool verifiedPassword = Verify(user_client, mk_client, hv_login_details.HocVien_MatKhau);
+                if (hv_login_details.HocVien_TrangThai == 0)
+                {
+                    return Json(new { success = false, message = "Tài khoản chưa được kích hoạt" }, JsonRequestBehavior.AllowGet);
+                }
+                else if (verifiedPassword == true)
+                {
+                    Session["login_session"] = hv_login_details.HocVien_MatKhau;
+                    string str = Session["login_session"].ToString();
+                    return Json(new { success = true, strSs = str }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Mật khẩu không chính xác" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(new { success = false, message = "Không tìm thấy thông tin tài khoản" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult Logout()
+        {
+            Session["login_session"] = null;
+            Session.Clear();
+            Session.RemoveAll();
+            Session.Abandon();
+            return RedirectToAction("Login", "Auth");
+        }
+        #endregion
+
+        #region RegisterColleger
+        public ActionResult RegisterColleger()
+        {
+            if (Session["login_session"] != null)
+            {
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Cache.SetNoStore();
+                return RedirectToAction("Index", "ThiSinhDangKies");
+            }
+            var doituongList = db.DoiTuongs.ToList();
+            var khuvucList = db.KhuVucs.ToList();
+            var tinhList = db.Tinhs.ToList();
+            var huyenList = db.Huyens.ToList();
+
+            tinhList.Insert(0, new Tinh { Tinh_ID = 0, Tinh_Ten = "Chọn tỉnh" });
+            huyenList.Insert(0, new Huyen { Huyen_ID = 0, Huyen_TenHuyen = "Chọn huyện" });
+
+            ViewBag.KhuVuc_ID = new SelectList(khuvucList, "KhuVuc_ID", "KhuVuc_Ten");
+            ViewBag.DoiTuong_ID = new SelectList(doituongList, "DoiTuong_ID", "DoiTuong_Ten");
+            ViewBag.Tinh_ID = new SelectList(tinhList, "Tinh_ID", "Tinh_Ten");
+            ViewBag.Huyen_ID = new SelectList(huyenList, "Huyen_ID", "Huyen_TenHuyen");
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult RegisterColleger(ThiSinhDangKy ts_register)
+        {
+            var ts_login_details = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == ts_register.ThiSinh_CCCD).FirstOrDefault();
+            if (ts_login_details != null)
+            {
+                return Json(new { success = false, message = "Số CMND/CCCD đã tồn tại. Vui lòng thử lại" }, JsonRequestBehavior.AllowGet);
+            }
+            var ts_login_details_email = db.ThiSinhDangKies.Where(x => x.ThiSinh_Email == ts_register.ThiSinh_Email).FirstOrDefault();
+            if (ts_login_details_email != null)
+            {
+                return Json(new { success = false, message = "Email đã tồn tại. Vui lòng thử lại" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ThiSinhDangKy ts = new ThiSinhDangKy();
+                string activationToken = Guid.NewGuid().ToString();
+                var hash_password = ComputeHash(ts_register.ThiSinh_CCCD, ts_register.ThiSinh_MatKhau);
+
+                ts.ThiSinh_CCCD = ts_register.ThiSinh_CCCD;
+                ts.ThiSinh_HoLot = ts_register.ThiSinh_HoLot;
+                ts.ThiSinh_Ten = ts_register.ThiSinh_Ten;
+                ts.ThiSinh_DienThoai = ts_register.ThiSinh_DienThoai;
+                ts.ThiSinh_Email = ts_register.ThiSinh_Email;
+                ts.ThiSinh_NgaySinh = ts_register.ThiSinh_NgaySinh;
+                ts.ThiSinh_DanToc = ts_register.ThiSinh_DanToc;
+                ts.ThiSinh_GioiTinh = ts_register.ThiSinh_GioiTinh;
+                ts.ThiSinh_DCNhanGiayBao = ts_register.ThiSinh_DCNhanGiayBao;
+                ts.ThiSinh_HoKhauThuongTru = ts_register.ThiSinh_HoKhauThuongTru;
+                ts.KhuVuc_ID = ts_register.KhuVuc_ID;
+                ts.DoiTuong_ID = ts_register.DoiTuong_ID;
+                ts.ThiSinh_TruongCapBa_Ma = ts_register.ThiSinh_TruongCapBa_Ma;
+                ts.ThiSinh_TruongCapBa = ts_register.ThiSinh_TruongCapBa;
+                ts.ThiSinh_TruongCapBa_Tinh_ID = ts_register.ThiSinh_TruongCapBa_Tinh_ID;
+                ts.ThiSinh_HoKhauThuongTru_Check = ts_register.ThiSinh_HoKhauThuongTru_Check;
+                ts.ThiSinh_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                ts.ThiSinh_MatKhau = hash_password;
+                ts.ThiSinh_TrangThai = 0;
+                ts.ThiSinh_ResetCode = activationToken;
+                ts.ThiSinh_HocLucLop12 = ts_register.ThiSinh_HocLucLop12;
+                ts.ThiSinh_HanhKiemLop12 = ts_register.ThiSinh_HanhKiemLop12;
+                db.ThiSinhDangKies.Add(ts);
+                db.SaveChanges();
+
+                #region Gửi mail xác thực
+                string activationUrl = Url.Action("ActivationAccount", "Auth", new { token = activationToken }, Request.Url.Scheme);
+                var subject = "Xác nhận tài khoản";
+                var body = "Xin chào " + ts_register.ThiSinh_Ten + ", <br/> Bạn vừa đăng kí tài khoản tại hệ thống xét tuyển trực tuyến của trường Đại học Hồng Đức. " +
+
+                     " <br/>Để kích hoạt tài khoản, vui lòng ấn vào đường link sau: <br/>" +
+
+                     " <br/>" + activationUrl + " <br/>";
+
+                SendEmail(ts_register.ThiSinh_Email, body, subject);
+                #endregion
+
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion
+
+        #region RegisterMaster
+        public ActionResult RegisterMaster()
+        {
+            if (Session["login_session"] != null)
+            {
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Cache.SetNoStore();
+                return RedirectToAction("Index", "ThiSinhDangKies");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult RegisterMasterCheckCCCD(HocVienDangKy entity)
+        {
+            var model = db.HocVienDangKies.Where(x => x.HocVien_CCCD == entity.HocVien_CCCD).FirstOrDefault();
+
+            if (model != null)
+            {
+                return Json(new { success = true, message = "Email đã tồn tại." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, message = entity.HocVien_CCCD }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult RegisterMasterCheckEmail(HocVienDangKy entity)
+        {
+            var model  = db.HocVienDangKies.Where(x => x.HocVien_Email == entity.HocVien_Email).FirstOrDefault();
+
+            if (model != null)
+            {
+                return Json(new { success = true , message = "Số Căn cước công dân đã có." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, message = entity.HocVien_Email }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult RegisterMaster(HocVienDangKy hv_register)
+        {
+            var register_check_CCCD_HV = db.HocVienDangKies.Where(x => x.HocVien_CCCD == hv_register.HocVien_CCCD).FirstOrDefault();
+
+            if (register_check_CCCD_HV != null)
+            {
+                return Json(new { success = false, message = "Số Căn cước công dân đã có." }, JsonRequestBehavior.AllowGet);
+            }
+
+            var register_check_Email_HV = db.HocVienDangKies.Where(x => x.HocVien_Email == hv_register.HocVien_Email).FirstOrDefault();
+            if (register_check_Email_HV != null)
+            {
+                return Json(new { success = false, message = "Email đã tồn tại." }, JsonRequestBehavior.AllowGet);
+            }
+
+            else
+            {
+                HocVienDangKy hv_new = new HocVienDangKy();
+                string activationToken = Guid.NewGuid().ToString();
+                var hash_password = ComputeHash(hv_register.HocVien_CCCD, hv_register.HocVien_MatKhau);
+               
+                hv_new.HocVien_HoDem = hv_register.HocVien_HoDem;
+                hv_new.HocVien_Ten = hv_register.HocVien_Ten;
+                hv_new.HocVien_GioiTinh = hv_register.HocVien_GioiTinh;
+                hv_new.HocVien_NgaySinh = hv_register.HocVien_NgaySinh;
+              
+                hv_new.HocVien_CCCD = hv_register.HocVien_CCCD;
+                hv_new.HocVien_CCCD_NgayCap = hv_register.HocVien_CCCD_NgayCap;
+              
+                hv_new.HocVien_BangDaiHoc = hv_register.HocVien_BangDaiHoc;
+                hv_new.HocVien_BoTucKienThuc = hv_register.HocVien_BoTucKienThuc;
+                hv_new.HocVien_DoiTuongUuTien = hv_register.HocVien_DoiTuongUuTien;
+
+                hv_new.HocVien_DienThoai = hv_register.HocVien_DienThoai;
+                hv_new.HocVien_Email = hv_register.HocVien_Email;
+                hv_new.HocVien_NoiOHienNay = hv_register.HocVien_NoiOHienNay;
+                hv_new.HocVien_DiaChiLienHe = hv_register.HocVien_DiaChiLienHe;
+                hv_new.HocVien_NoiSinh = hv_register.HocVien_NoiSinh;
+              
+                hv_new.HocVien_MatKhau = hash_password;
+
+                hv_new.HocVien_ResetCode = activationToken;
+                hv_new.HocVien_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                hv_new.HocVien_TrangThai = 0;
+
+                hv_new.HocVien_TenDonViCongTac = "";
+                hv_new.HocVien_ChuyenMon = "";
+                hv_new.HocVien_ThamNien = "";
+                hv_new.HocVien_ChucVu = "";
+                hv_new.HocVien_NamCT = "";
+                hv_new.HocVien_LoaiCB = -1;
+
+                db.HocVienDangKies.Add(hv_new);
+                db.SaveChanges();
+
+                #region Gửi mail xác thực
+                string activationUrl = Url.Action("ActivationAccountMaster", "Auth", new { token = activationToken }, Request.Url.Scheme);
+                var subject = "Xác nhận tài khoản";
+                var body = "Xin chào " + hv_register.HocVien_HoDem + " " + hv_register.HocVien_Ten + ", <br/> Bạn vừa đăng kí tài khoản tại hệ thống xét tuyển trực tuyến của trường Đại học Hồng Đức. " +
+
+                     " <br/>Để kích hoạt tài khoản, vui lòng ấn vào đường link sau: <br/>" +
+
+                     " <br/>" + activationUrl + " <br/>";
+
+                SendEmail(hv_register.HocVien_Email, body, subject);
+                #endregion
+
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetTinh()
+        {
+            var TinhList = db.Tinhs.Select(t => new
+            {
+                tinh_ID = t.Tinh_ID,
+                tinh_Ma = t.Tinh_Ma,
+                tinh_Ten = t.Tinh_Ten
+            });
+            return Json(new { success = true, data = TinhList.ToList() });
+        }
+       
+        public ActionResult ActivationAccountMaster()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult ActivationAccountMaster(string token)
+        {
+            var hocvien = db.HocVienDangKies.Where(n => n.HocVien_ResetCode == token).FirstOrDefault();
+            if (hocvien != null)
+            {
+                hocvien.HocVien_ResetCode = "";
+                hocvien.HocVien_TrangThai = 1;
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        #endregion
     }
 }

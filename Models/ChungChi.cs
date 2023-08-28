@@ -21,7 +21,8 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(500)]
         public string ChungChi_TruongTCThi { get; set; }
         public double? ChungChi_ThangDiem { get; set; }
-        [StringLength(1000)]
+       
+        [StringLength(10)]
         public string ChungChi_PhuongThuc { get; set; }
         public int? ChungChi_TrangThai { get; set; }
         [StringLength(1000)]
