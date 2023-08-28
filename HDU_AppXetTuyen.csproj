@@ -191,9 +191,7 @@
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\DangKyXetTuyenThangController.cs" />
     <Compile Include="Controllers\ExportFileController.cs" />
-    <Compile Include="Controllers\HocVienDangKies1Controller.cs" />
     <Compile Include="Controllers\HocVienDangKiesController.cs" />
-    <Compile Include="Controllers\HocVienDuTuyensController.cs" />
     <Compile Include="Controllers\KetQuaXetTuyensController.cs" />
     <Compile Include="Controllers\LePhiXetTuyensController.cs" />
     <Compile Include="Controllers\LienCapTHCSController.cs" />
@@ -748,24 +746,10 @@
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_master.cshtml" />
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
-    <Content Include="Views\Auth\RegisterMaster2.cshtml" />
-    <Content Include="Views\HocVienDangKies\HvThongTin - Copy.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\KqDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\HdSD.cshtml" />
-    <Content Include="Views\Auth\RegisterMaster2 - Copy.cshtml" />
-    <Content Include="Views\HocVienDangKies\Index.cshtml" />
-    <Content Include="Views\HocVienDangKies1\Create.cshtml" />
-    <Content Include="Views\HocVienDangKies1\Delete.cshtml" />
-    <Content Include="Views\HocVienDangKies1\Details.cshtml" />
-    <Content Include="Views\HocVienDangKies1\Edit.cshtml" />
-    <Content Include="Views\HocVienDangKies1\Index.cshtml" />
-    <Content Include="Views\HocVienDuTuyens\Create.cshtml" />
-    <Content Include="Views\HocVienDuTuyens\Delete.cshtml" />
-    <Content Include="Views\HocVienDuTuyens\Details.cshtml" />
-    <Content Include="Views\HocVienDuTuyens\Edit.cshtml" />
-    <Content Include="Views\HocVienDuTuyens\Index.cshtml" />
-    <Content Include="Views\HocVienDangKies\HvThongTin - Copy %282%29.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyenDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

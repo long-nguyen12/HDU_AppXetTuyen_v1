@@ -18,21 +18,12 @@ namespace HDU_AppXetTuyen.Controllers
     public class HocVienDangKiesController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
-        //public ActionResult Index()
-        //{           
-        //    var str_check = "$2a$11$PMxXFsJFA9AD1f0JjITar.BmUDrlLEYoP2WRzq..4CxIx5x.iNNV2";
-        //    var model = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_check).FirstOrDefault();
-        //    return View(model);
-        //}
+        #region thông tin học viên
         public ActionResult HvThongTin()
-        {
-            //Session["login_session"] = "$2a$11$PMxXFsJFA9AD1f0JjITar.BmUDrlLEYoP2WRzq..4CxIx5x.iNNV2";
-            //ViewBag.str = Session["login_session"].ToString();
-            //var  str_check = Session["login_session"].ToString();
-            //var model = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_check).ToList();
+        {            
             return View();
         }
-        public JsonResult GetHocVien()
+        public JsonResult HvThongTinGetByID()
         {
             var str_check = Session["login_session"].ToString();
             var model = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_check).FirstOrDefault();
@@ -79,31 +70,8 @@ namespace HDU_AppXetTuyen.Controllers
             }
             else { return Json(new { success = false }, JsonRequestBehavior.AllowGet); }
         }
-
-        public ActionResult DkDuTuyen()
-        {
-            return View();
-        }
-        public JsonResult GetHvDuTuyen()
-        {
-            var str_check = Session["login_session"].ToString();
-
-            var id_dxt = db.DotXetTuyens.FirstOrDefault(x => x.Dxt_Classify == 2 && x.Dxt_TrangThai_Xt == 1).Dxt_ID;
-            var model_data = db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).Where(x => x.Dxt_ID == id_dxt);
-
-            var data = model_data.Select(s => new
-            {
-                dt_ID = s.DuTuyen_ID,
-                nmt_MaNganh = s.NganhMaster.Nganh_Mt_MaNganh,
-                nmt_TenNganh = s.NganhMaster.Nganh_Mt_TenNganh,
-                Dt_MaNghienCuu = s.DuTuyen_MaNghienCuu,
-                Hv_DKDTNgoaiNgu = s.HocVien_DKDTNgoaiNgu,
-                Hv_DoiTuongDuThi = s.HocVien_DoiTuongDuThi,
-            });
-            return Json(new { success = true, data }, JsonRequestBehavior.AllowGet);
-        }
         [HttpPost]
-        public JsonResult HvDangkyUpdate(HocVienDangKy entity)
+        public JsonResult HvThongTinUpdate_DangKy(HocVienDangKy entity)
         {
             var model = db.HocVienDangKies.Where(x => x.HocVien_ID == entity.HocVien_ID).FirstOrDefault();
             model.HocVien_HoDem = entity.HocVien_HoDem;
@@ -124,7 +92,32 @@ namespace HDU_AppXetTuyen.Controllers
             db.SaveChanges();
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Đăng ký dự tuyển
+        public ActionResult DkDuTuyen()
+        {
+            return View();
+        }
+        public JsonResult DkDuTuyenGetByID()
+        {
+            var str_check = Session["login_session"].ToString();
+
+            var id_dxt = db.DotXetTuyens.FirstOrDefault(x => x.Dxt_Classify == 2 && x.Dxt_TrangThai_Xt == 1).Dxt_ID;
+            var model_data = db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).Where(x => x.Dxt_ID == id_dxt);
+
+            var data = model_data.Select(s => new
+            {
+                dt_ID = s.DuTuyen_ID,
+                nmt_MaNganh = s.NganhMaster.Nganh_Mt_MaNganh,
+                nmt_TenNganh = s.NganhMaster.Nganh_Mt_TenNganh,
+                Dt_MaNghienCuu = s.DuTuyen_MaNghienCuu,
+                Hv_DKDTNgoaiNgu = s.HocVien_DKDTNgoaiNgu,
+                Hv_DoiTuongDuThi = s.HocVien_DoiTuongDuThi,
+            });
+            return Json(new { success = true, data }, JsonRequestBehavior.AllowGet);
+        }
+     
         [HttpPost]
         public JsonResult HvDangkyUpdateDonViCongTac(HocVienDangKy entity)
         {
@@ -141,7 +134,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
 
         [HttpPost]
-        public JsonResult HocVienDuTuyenRegister(HocVienDuTuyen entity)
+        public JsonResult DkDuTuyen_DangKy(HocVienDuTuyen entity)
         {
             var hv_detail = db.HocVienDangKies.Where(x => x.HocVien_ID == entity.HocVien_ID).FirstOrDefault();
             var nganh_detail = db.NganhMasters.Where(x => x.Nganh_Mt_ID == entity.Nganh_Mt_ID).FirstOrDefault();
@@ -179,6 +172,8 @@ namespace HDU_AppXetTuyen.Controllers
             #endregion
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
         public ActionResult KqDuTuyen()
         {
             return View();
