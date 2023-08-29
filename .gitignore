@@ -1,5 +1,6 @@
 
 obj/
+packages/
 
 bin/
 
@@ -8,5 +9,4 @@ bin/
 Web.config
 
 Uploads/
-
 Properties/PublishProfiles/

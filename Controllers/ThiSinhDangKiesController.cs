@@ -38,7 +38,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             if (filterContext.HttpContext.Session == null || filterContext.HttpContext.Session["login_session"] == null)
             {
-                filterContext.Result = new RedirectResult("~/Auth/Index");
+                filterContext.Result = new RedirectResult("~/Auth/Login");
             }
         }
     }

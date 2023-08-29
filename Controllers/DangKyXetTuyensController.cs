@@ -24,7 +24,23 @@ namespace HDU_AppXetTuyen.Controllers
         {
             return View();
         }
+
         [ThiSinhSessionCheck]
+        public JsonResult DotThiHienTai()
+        {
+            DbConnecttion db_dt = new DbConnecttion();
+            var model = db_dt.DotXetTuyens.Where(d => d.Dxt_Classify == 1 && d.Dxt_TrangThai_Xt == 1);
+            var data = model.Select(s => new
+            {
+                dxt_ID= s.Dxt_ID,
+                dxt_Ten= s.Dxt_Ten,
+                dxt_ThoiGian_BatDau= s.Dxt_ThoiGian_BatDau,
+                dxt_ThoiGian_KetThuc=  s.Dxt_ThoiGian_KetThuc,
+                dDxt_TrangThai_Xt=  s.Dxt_TrangThai_Xt,
+                dxt_GhiChu= s.Dxt_GhiChu
+            });
+            return Json(new { success = true, data }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult DangKyDuThiNangKhieu_ListAll()
         {
             int ptxt_check = 7;
