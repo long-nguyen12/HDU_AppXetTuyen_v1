@@ -1,15 +1,10 @@
 ﻿@model PagedList.IPagedList<HDU_AppXetTuyen.Models.HocVienDangKy>
 @using PagedList.Mvc;
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin_Master.cshtml";
-}
 
-<style>
-    th, td {
-        white-space: nowrap;
-    }
-</style>
+@{
+    ViewBag.Title = "DsHvDangKy";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin_Master.cshtml";   
+}
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
@@ -18,7 +13,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span> Quản lý danh sách học viên đăng ký</span>
+                        <span> Quản lý danh mục học viên đăng ký tài khoản</span>
                     </div>
                 </div>
             </div>
@@ -31,29 +26,9 @@
             <div><span id="sp_tieude">Danh sách học viên đăng ký</span></div>
         </div>
         <div class="card-body">
-            @using (Html.BeginForm("Index", "HocVienDangKys", FormMethod.Get))
+            @using (Html.BeginForm("DsHvDangKy", "HocVienDangKys", FormMethod.Get))
             {
                 <div class="row g-1">
-                    <div class="col-lg-2 col-12">
-                        <select id="dotXetTuyen" class="form-select">
-                            <option value="1" selected>Chọn đợt..</option>
-                            <option value="1" >Đợt 1 - 2023</option>
-                            <option value="2">Đợt 2 - 2023</option>
-                        </select>
-                        @*@Html.DropDownList("filteriDotxt", null, new { @class = "form-select " })*@
-                    </div>
-                    @*<div class="col-xxl-1 col-xl-12">
-                            @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select" })
-                        </div>
-                        <div class="col-xxl-2 colxl-12">
-                            @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select" })
-                        </div>
-                        <div class="col-xxl-2 col-xl-12">
-                            @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select " })
-                        </div>
-                        <div class="col-xxl-2 col-xl-12">
-                            @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select " })
-                        </div>*@
                     <div class="col-xxl-2 col-xl-12">
                         @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control ", @placeholder = "Nhập từ khóa..." })
                     </div>
@@ -61,7 +36,7 @@
                     <div class="col-xxl-2 col-xl-12">
                         <div class="d-inline-flex flex-nowrap align-items-center">
                             <button class="btn btn-outline-primary bd-rd " id="bt_search" style="margin-right:4px">Lọc</button>
-                            <a class="btn btn-outline-secondary bd-rd  " id="bt_reset" href="@Url.Action("Index", "HocVienDangKys")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                            <a class="btn btn-outline-secondary bd-rd  " id="bt_reset" href="@Url.Action("DsHvDangKy", "HocVienDangKys")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
                             <a class="btn btn-outline-primary bd-rd  " id="bt_export_excel" href="#" style="padding-right:6px; padding-left:6px">Xuất excel</a>
                         </div>
                     </div>
@@ -114,9 +89,6 @@
                                         @Html.DisplayName("Giới tính")
                                     </th>
                                     <th>
-                                        @Html.DisplayName("Ngành học")
-                                    </th>
-                                    <th>
                                         @Html.DisplayName("Ngày đăng ký")
                                     </th>
                                     <th style="text-align:center; width:160px">
@@ -134,6 +106,8 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.HocVien_Ten)
                                         </td>
+
+
                                         <td>
                                             @Html.DisplayFor(modelItem => item.HocVien_DienThoai)
                                         </td>
@@ -153,9 +127,7 @@
                                             else
                                             {@Html.DisplayName("Nữ") }}
                                         </td>
-                                        <td>
-                                            @*@Html.DisplayFor(modelItem => item.HocVien_ChuyenNganhDuThi)*@
-                                        </td>
+
                                         <td>
                                             @{DateTime dateTime = DateTime.Parse(item.HocVien_NgayDangKy);
                                                 string formattedDate = dateTime.ToString("dd/MM/yyyy");
@@ -175,7 +147,7 @@
                         </table>
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString, filteriDotxt = ViewBag.filteriDotxtSort }))
+                        @Html.PagedListPager(Model, page => Url.Action("DsHvDangKy", new { page, searchString = ViewBag.SearchString, filteriDotxt = ViewBag.filteriDotxtSort }))
                         <!-- Kết thúc -->
                     </div>
                 </div>
@@ -183,4 +155,3 @@
         </div>
     </div>
 </div>
-

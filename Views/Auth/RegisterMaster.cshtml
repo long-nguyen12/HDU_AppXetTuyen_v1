@@ -116,6 +116,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                           
                                             <div class="col-lg-6 col-6 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12" for="HocVien_MatKhau">Mật khẩu</label>
@@ -276,7 +277,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-5 col-12 p-1">
+                                            <div class="col-lg-6 col-6 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12" for="HocVien_NoiSinh">Nơi sinh</label>
                                                     <div class="col-md-12">
@@ -286,13 +287,22 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-6 col-6 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12" for="HocVien_DanToc">Dân tộc</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control text-box single-line" id="HocVien_DanToc" name="HocVien_DanToc" type="text" value="a" />
+                                                        <span id="Error_Rgt_HocVien_DanToc" class="small mb-1 text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="col-lg-12 col-12 p-1">
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_NoiOHienNay">Nơi ở hiện nay</label>
+                                                    <label class="control-label col-md-12" for="HocVien_HoKhauThuongTru">Hộ khẩu thường trú</label>
                                                     <div class="col-md-12">
 
-                                                        <input class="form-control text-box single-line" id="HocVien_NoiOHienNay" name="HocVien_NoiOHienNay" type="text" value="a" />
-                                                        <span id="Error_Rgt_HocVien_NoiOHienNay" class="small mb-1 text-danger"></span>
+                                                        <input class="form-control text-box single-line" id="HocVien_HoKhauThuongTru" name="HocVien_HoKhauThuongTru" type="text" value="a" />
+                                                        <span id="Error_Rgt_HocVien_HoKhauThuongTru" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -440,6 +450,7 @@
             let _hocVien_Email = $('#HocVien_Email').val();
             let _hocVien_DienThoai = $('#HocVien_DienThoai').val();
 
+            let _hocVien_DanToc = $('#HocVien_DanToc').val();
             let _hocVien_GioiTinh = -1; if ($('#radioNam').is(':checked')) { _hocVien_GioiTinh = 1; } if ($('#radioNu').is(':checked')) { _hocVien_GioiTinh = 0; }
 
             let _hocVien_MatKhau = $('#HocVien_MatKhau').val();
@@ -457,10 +468,13 @@
             let _hocVien_DoiTuongUuTien = $('#HocVien_DoiTuongUuTien').val();
 
             let _hocVien_NoiSinh = $('#HocVien_NoiSinh').val();
-            let _hocVien_NoiOHienNay = $('#HocVien_NoiOHienNay').val();
+            let _hocVien_HoKhauThuongTru = $('#HocVien_HoKhauThuongTru').val();
             let _hocVien_DiaChiLienHe = $('#HocVien_DiaChiLienHe').val();
 
             let flag = true;
+
+            if (!_hocVien_DanToc) { var errorMessage = "Nhập dân tộc"; $('#Error_Rgt_HocVien_DanToc').text(errorMessage); flag = false; }
+
             if (_hocVien_BoTucKienThuc == 0) { var errorMessage = "Chọn loại bổ sung kiến thức"; $('#Error_Rgt_HocVien_BoTucKienThuc_Select').text(errorMessage); flag = false; }
 
             if (!_hocVien_HoDem) { var errorMessage = "Nhập họ, tên đệm"; $('#Error_Rgt_HocVien_HoDem').text(errorMessage); flag = false; }
@@ -468,6 +482,7 @@
             if (!_hocVien_Ten) { var errorMessage = "Nhập tên"; $('#Error_Rgt_HocVien_Ten').text(errorMessage); flag = false; }
 
             if (!_hocVien_CCCD) { var errorMessage = "Nhập CCCD"; $('#Error_Rgt_HocVien_CCCD').text(errorMessage); flag = false; }
+
             let checkCc = { HocVien_CCCD: _hocVien_CCCD };
             $.ajax({
                 url: "/Auth/RegisterMasterCheckCCCD/",
@@ -478,7 +493,6 @@
                 success: function (res) {
                     if (res.success == true) {
                         $('#Error_Rgt_HocVien_CCCD').text("Số CCCD đã tồn tại."); flag = false;
-
                     }
                 },
                 error: function () { }
@@ -529,7 +543,7 @@
 
             if (_hocVien_NoiSinh == 0) { var errorMessage = "Chọn nơi sinh"; $('#Error_Rgt_HocVien_NoiSinh').text(errorMessage); flag = false; }
 
-            if (!_hocVien_NoiOHienNay) { var errorMessage = "Nhập nơi ở hiện nay"; $('#Error_Rgt_HocVien_NoiOHienNay').text(errorMessage); flag = false; }
+            if (!_hocVien_HoKhauThuongTru) { var errorMessage = "Nhập hộ khẩu thường trú"; $('#Error_Rgt_HocVien_HoKhauThuongTru').text(errorMessage); flag = false; }
 
             if (!_hocVien_DiaChiLienHe) { var errorMessage = "Nhập địa chỉ liên hệ"; $('#Error_Rgt_HocVien_DiaChiLienHe').text(errorMessage); flag = false; }
 
@@ -550,6 +564,7 @@
                 HocVien_HoDem: _hocVien_HoDem,
                 HocVien_Ten: _hocVien_Ten,
                 HocVien_GioiTinh: _hocVien_GioiTinh,
+                HocVien_DanToc: _hocVien_DanToc,
                 HocVien_NgaySinh: _hocVien_NgaySinh,
                 HocVien_CCCD: _hocVien_CCCD,
                 HocVien_CCCD_NgayCap: _hocVien_CCCD_NgayCap,
@@ -562,7 +577,7 @@
                 HocVien_DienThoai: _hocVien_DienThoai,
                 HocVien_Email: _hocVien_Email,
                 HocVien_NoiSinh: _hocVien_NoiSinh,
-                HocVien_NoiOHienNay: _hocVien_NoiOHienNay,
+                HocVien_HoKhauThuongTru: _hocVien_HoKhauThuongTru,
                 HocVien_DiaChiLienHe: _hocVien_DiaChiLienHe,
 
                 HocVien_TenDonViCongTac: "",

@@ -377,8 +377,8 @@ namespace HDU_AppXetTuyen.Controllers
                 else if (verifiedPassword == true)
                 {
                     Session["login_session"] = hv_login_details.HocVien_MatKhau;
-                    string str = Session["login_session"].ToString();
-                    return Json(new { success = true, strSs = str }, JsonRequestBehavior.AllowGet);
+                    //string str = Session["login_session"].ToString();
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -508,7 +508,7 @@ namespace HDU_AppXetTuyen.Controllers
 
             if (model != null)
             {
-                return Json(new { success = true, message = "Email đã tồn tại." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, message = "Số Căn cước công dân tồn tại." }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -523,7 +523,7 @@ namespace HDU_AppXetTuyen.Controllers
 
             if (model != null)
             {
-                return Json(new { success = true , message = "Số Căn cước công dân đã có." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true , message = "Email đã tồn tại." }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -556,6 +556,7 @@ namespace HDU_AppXetTuyen.Controllers
                 hv_new.HocVien_HoDem = hv_register.HocVien_HoDem;
                 hv_new.HocVien_Ten = hv_register.HocVien_Ten;
                 hv_new.HocVien_GioiTinh = hv_register.HocVien_GioiTinh;
+                hv_new.HocVien_DanToc = hv_register.HocVien_DanToc;
                 hv_new.HocVien_NgaySinh = hv_register.HocVien_NgaySinh;
               
                 hv_new.HocVien_CCCD = hv_register.HocVien_CCCD;
@@ -567,7 +568,7 @@ namespace HDU_AppXetTuyen.Controllers
 
                 hv_new.HocVien_DienThoai = hv_register.HocVien_DienThoai;
                 hv_new.HocVien_Email = hv_register.HocVien_Email;
-                hv_new.HocVien_NoiOHienNay = hv_register.HocVien_NoiOHienNay;
+                hv_new.HocVien_HoKhauThuongTru = hv_register.HocVien_HoKhauThuongTru;
                 hv_new.HocVien_DiaChiLienHe = hv_register.HocVien_DiaChiLienHe;
                 hv_new.HocVien_NoiSinh = hv_register.HocVien_NoiSinh;
               

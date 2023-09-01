@@ -167,7 +167,9 @@
     <Compile Include="Areas\Admin\Controllers\DanhMucDonVisController.cs" />
     <Compile Include="Areas\Admin\Controllers\DoiTuongsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExportDatasController.cs" />
     <Compile Include="Areas\Admin\Controllers\HocVienDangKysController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HocVienDuTuyens12Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
@@ -406,9 +408,9 @@
     <Content Include="Areas\Admin\Views\DoiTuongs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\DoiTuongs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\DoiTuongs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\CollegerCreate.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\CollegerEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\CollegerIndex.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Huyens\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Huyens\Edit.cshtml" />
@@ -472,8 +474,17 @@
     <Content Include="Areas\Admin\Views\NganhMasters\Details.cshtml" />
     <Content Include="Areas\Admin\Views\NganhMasters\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NganhMasters\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\HocVienDangKys\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\HocVienDangKys\QLDotDuTuyenSDH.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDuTuyen.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\MasterIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\MasterCreate.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens\MasterEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\testMtDR.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -746,15 +757,17 @@
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_master.cshtml" />
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
-    <Content Include="Views\HocVienDangKies\DkDuTuyen.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyen2.cshtml" />
     <Content Include="Views\HocVienDangKies\KqDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\HdSD.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenDetail.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Uploads\DKSauDaiHocFile\" />
+    <Folder Include="Areas\Admin\Views\ExportDatas\" />
+    <Folder Include="Uploads\DkSauDaiHocFile\" />
     <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
     <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
     <Folder Include="Uploads\LienCap\DinhDanh\" />

@@ -52,32 +52,41 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-7 col-7 p-1">
+                                                <div class="col-lg-4 col-12 p-1">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12"
-                                                               for="HocVien_NgaySinh">Ngày sinh</label>
+                                                        <label class="control-label col-md-12" for="HocVien_NgaySinh">Ngày sinh</label>
                                                         <div class="col-md-12">
                                                             <input class="form-control text-box text-infor-tm" id="HocVien_NgaySinh" name="HocVien_NgaySinh" type="date" value="2020-02-02" disabled />
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-5 col-5 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Giới tính</label>
-                                                        <div class="col-md-12">
-                                                            <div class="d-inline-flex flex-nowrap  ">
-                                                                <div class="form-check align-items-center mt-1" id="div_gt_nam">
-                                                                    <input class="form-check-input" type="radio" id="radioNam" name="HocVien_GioiTinh">
-                                                                    <label class="form-check-label" for="radioNam">Nam</label>
-                                                                </div>
-                                                                <div class="form-check  align-items-center mt-1" id="div_gt_nu" style="margin-left:8px">
-                                                                    <input class="form-check-input" type="radio" id="radioNu" name="HocVien_GioiTinh">
-                                                                    <label class="form-check-label" for="radioNu">Nữ</label>
-                                                                </div>
-                                                            </div>
 
+                                                <div class="col-lg-4 col-6 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12" >Dân tộc</label>
+                                                        <div class="col-md-12">
+                                                            <input class="form-control text-box text-infor-tm" id="HocVien_DanToc" name="HocVien_DanToc" type="text" disabled />
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="col-lg-4 col-6 p-1">
+                                                    <center>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-12">Giới tính</label>
+                                                            <div class="col-md-12">
+                                                                <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                                    <div class="form-check align-items-center mt-1" id="div_gt_nam">
+                                                                        <input class="form-check-input" type="radio" id="radioNam" name="HocVien_GioiTinh">
+                                                                        <label class="form-check-label" for="radioNam">Nam</label>
+                                                                    </div>
+                                                                    <div class="form-check  align-items-center mt-1" id="div_gt_nu" style="margin-left:8px">
+                                                                        <input class="form-check-input" type="radio" id="radioNu" name="HocVien_GioiTinh">
+                                                                        <label class="form-check-label" for="radioNu">Nữ</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </center>
                                                 </div>
                                                 <div class="col-lg-7 col-7 p-1">
                                                     <div class="form-group">
@@ -216,17 +225,23 @@
                                         <td>
                                             <div class="row">
 
-                                                <div class="col-lg-4 col-12 p-1">
+                                                <div class="col-lg-12 col-12 p-1">
                                                     <div class="form-group">
                                                         <label class="control-label col-md-12" for="HocVien_NoiSinh">Nơi sinh</label>
                                                         <div class="col-md-12">
-
                                                             <input class="form-control" id="HocVien_NoiSinh" name="HocVien_NoiSinh" type="text" disabled />
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-lg-8 col-12 p-1">
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12" >Hộ khẩu thường trú</label>
+                                                        <div class="col-md-12">
+                                                            <input class="form-control text-box text-infor-tm" id="HocVien_HoKhauThuongTru" name="HocVien_NoiOHienNay" type="text" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-12 p-1">
                                                     <div class="form-group">
                                                         <label class="control-label col-md-12" for="HocVien_NoiOHienNay">Nơi ở hiện nay</label>
                                                         <div class="col-md-12">
@@ -296,21 +311,30 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-7 col-7 p-1">
+                                                <div class="col-lg-4 col-12 p-1">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12"
-                                                               for="Update_HocVien_NgaySinh">Ngày sinh</label>
+                                                        <label class="control-label col-md-12" for="Update_HocVien_NgaySinh">Ngày sinh</label>
                                                         <div class="col-md-12">
                                                             <input class="form-control text-box text-infor-tm" id="Update_HocVien_NgaySinh" name="Update_HocVien_NgaySinh" type="date" />
                                                             <span id="Error_Rgt_HocVien_NgaySinh" class="small mb-1 text-danger"></span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-5 col-5 p-1">
+
+                                                <div class="col-lg-4 col-6 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12" for="Update_HocVien_DanToc">Dân tộc</label>
+                                                        <div class="col-md-12">
+                                                            <input class="form-control text-box text-infor-tm" id="Update_HocVien_DanToc" name="Update_HocVien_DanToc" type="text"/>
+                                                            <span id="Error_Rgt_HocVien_DanToc" class="small mb-1 text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-6 p-1">
                                                     <div class="form-group">
                                                         <label class="control-label col-md-12">Giới tính</label>
                                                         <div class="col-md-12">
-                                                            <div class="d-inline-flex flex-nowrap  ">
+                                                            <div class="d-inline-flex flex-nowrap  align-items-center ">
                                                                 <div class="form-check align-items-center mt-1" id="div_gt_nam">
                                                                     <input class="form-check-input" type="radio" id="Update_radioNam" name="Update_HocVien_GioiTinh">
                                                                     <label class="form-check-label" for="Update_radioNam">Nam</label>
@@ -488,7 +512,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Hộ khẩu thường trú</label>
+                                                        <div class="col-md-12">
+                                                            <input class="form-control text-box text-infor-tm" id="Update_HocVien_HoKhauThuongTru" name="Update_HocVien_NoiOHienNay" type="text"/>
+                                                            <span id="Error_Rgt_HocVien_HoKhauThuongTru" class="small mb-1 text-danger"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-12 col-12 p-1">
                                                     <div class="form-group">
                                                         <label class="control-label col-md-12" for="Update_HocVien_NoiOHienNay">Nơi ở hiện nay</label>
@@ -503,7 +535,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-12" for="Update_HocVien_DiaChiLienHe">Địa chỉ liên hệ</label>
                                                         <div class="col-md-12">
-                                                            <input class="form-control text-box text-infor-tm" id="Update_HocVien_DiaChiLienHe" name="Update_HocVien_DiaChiLienHe" type="text" />
+                                                            <input class="form-control text-box text-infor-tm" id="Update_HocVien_DiaChiLienHe" name="Update_HocVien_DiaChiLienHe" type="text"  />
                                                             <span id="Error_Rgt_HocVien_DiaChiLienHe" class="small mb-1 text-danger"></span>
                                                         </div>
                                                     </div>
@@ -609,6 +641,7 @@
                     $('#HocVien_HoDem').val(data.HocVien_HoDem);
                     $('#HocVien_Ten').val(data.HocVien_Ten);
                     $('#HocVien_NgaySinh').val(data.HocVien_NgaySinh);
+                    $('#HocVien_DanToc').val(data.HocVien_DanToc);
                     $('#HocVien_CCCD').val(data.HocVien_CCCD);
                     $('#HocVien_CCCD_NgayCap').val(data.HocVien_CCCD_NgayCap);
                     $('#HocVien_BangDaiHoc_TenTruongTN').val(data.HocVien_BDH_TenTruongTN);
@@ -619,16 +652,17 @@
                     $('#HocVien_BangDaiHoc_LoaiTN').val(data.HocVien_BDH_LoaiTN);
                     $('#HocVien_DoiTuongUuTien').val(data.HocVien_DoiTuongUuTien);
                     $('#HocVien_NoiSinh').val(data.HocVien_NoiSinh);
+                    $('#HocVien_HoKhauThuongTru').val(data.HocVien_HoKhauThuongTru);
                     $('#HocVien_NoiOHienNay').val(data.HocVien_NoiOHienNay);
                     $('#HocVien_DiaChiLienHe').val(data.HocVien_DiaChiLienHe);
                     $('#HocVien_Email').val(data.HocVien_Email);
                     $('#HocVien_DienThoai').val(data.HocVien_DienThoai);
                     if (data.HocVien_GioiTinh == 1) {
                         $('#radioNam').attr('checked', 'checked');
-                        $('#div_gt_nu').css('display', 'none');
+                        $('#radioNu').attr('disabled', 'disabled');
                     } else if (data.HocVien_GioiTinh == 0) {
                         $('#radioNu').attr('checked', 'checked');
-                        $('#div_gt_nam').css('display', 'none');
+                        $('#radioNam').attr('disabled', 'disabled');
                     }
                     if (data.HocVien_BoTucKienThuc == "1") {
                         $('#HocVien_BoTucKienThuc').val('Chưa học');
@@ -659,6 +693,7 @@
                     $('#Update_HocVien_HoDem').val(data.HocVien_HoDem);
                     $('#Update_HocVien_Ten').val(data.HocVien_Ten);
                     $('#Update_HocVien_NgaySinh').val(data.HocVien_NgaySinh);
+                    $('#Update_HocVien_DanToc').val(data.HocVien_DanToc);
                     $('#Update_HocVien_CCCD').val(data.HocVien_CCCD);
                     $('#Update_HocVien_CCCD_NgayCap').val(data.HocVien_CCCD_NgayCap);
                     $('#Update_HocVien_BangDaiHoc_TenTruongTN').val(data.HocVien_BDH_TenTruongTN);
@@ -670,6 +705,7 @@
                     $('#Update_HocVien_DoiTuongUuTien').val(data.HocVien_DoiTuongUuTien);
 
                     $('#Update_HocVien_NoiSinh_Key').val(data.HocVien_NoiSinh_ID);
+                    $('#Update_HocVien_HoKhauThuongTru').val(data.HocVien_HoKhauThuongTru);
                     $('#Update_HocVien_NoiOHienNay').val(data.HocVien_NoiOHienNay);
                     $('#Update_HocVien_DiaChiLienHe').val(data.HocVien_DiaChiLienHe);
                     $('#Update_HocVien_Email').val(data.HocVien_Email);

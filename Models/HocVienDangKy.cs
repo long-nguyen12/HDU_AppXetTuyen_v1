@@ -25,6 +25,9 @@ namespace HDU_AppXetTuyen.Models
 
         public int? HocVien_GioiTinh { get; set; }
 
+        [StringLength(100)]
+        public string HocVien_DanToc { get; set; }
+
         [StringLength(500)]
         public string HocVien_NgaySinh { get; set; }
 
@@ -49,6 +52,9 @@ namespace HDU_AppXetTuyen.Models
         public int? HocVien_BoTucKienThuc { get; set; }
 
         public int? HocVien_NoiSinh { get; set; }
+
+        [StringLength(500)]
+        public string HocVien_HoKhauThuongTru { get; set; }
 
         [StringLength(500)]
         public string HocVien_NoiOHienNay { get; set; }

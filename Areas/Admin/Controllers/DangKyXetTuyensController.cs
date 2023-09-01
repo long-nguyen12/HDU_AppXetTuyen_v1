@@ -713,8 +713,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                         .Include(x => x.ToHopMon)
                                         .Include(x => x.ThiSinhDangKy.DoiTuong)
                                         .Include(x => x.ThiSinhDangKy.KhuVuc);
-
-
             // lấy thông tin năm hiện tại
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             #region lọc dữ liệu theo đợt

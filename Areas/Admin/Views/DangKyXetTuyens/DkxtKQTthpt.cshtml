@@ -17,7 +17,7 @@
     }
 
     .bd-rd {
-        /*  border-radius: 0px !important;*/
+        border-radius: 3px;
     }
 </style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
@@ -44,28 +44,28 @@
             {
                 <div class="row g-1">
                     <div class="col-xxl-1 col-xl-12">
-                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select " })
+                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-1 col-xl-12">
-                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select" })
+                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-2 colxl-12">
-                        @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select" })
+                        @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-xl-12">
-                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select " })
+                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-xl-12">
-                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select " })
+                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-xl-12">
-                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control ", @placeholder = "Nhập từ khóa..." })
+                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control bd-rd", @placeholder = "Nhập từ khóa..." })
                     </div>
 
                     <div class="col-xxl-2 col-xl-12">
                         <div class="d-inline-flex flex-nowrap align-items-center">
                             <button class="btn btn-outline-primary bd-rd " id="bt_search" style="margin-right:4px">Lọc</button>
-                            <a class="btn btn-outline-secondary bd-rd  " id="bt_reset" href="@Url.Action("DkxtKQTthpt", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                            <a class="btn btn-outline-secondary bd-rd" id="bt_reset" href="@Url.Action("DkxtKQTthpt", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
                             <a class="btn btn-outline-primary bd-rd  " id="bt_export_excel" href="#" style="padding-right:6px; padding-left:6px">Xuất excel</a>
                         </div>
                     </div>

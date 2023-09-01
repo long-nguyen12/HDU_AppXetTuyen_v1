@@ -14,9 +14,9 @@
     .bt-hs {
         width: 80px;
     }
-
+   
     .bd-rd {
-       /* border-radius: 0px !important;*/
+        border-radius: 3px
     }
 </style>
 
@@ -65,7 +65,7 @@
                         <div class="d-inline-flex flex-nowrap align-items-center">
                             <button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
                             <a class="btn btn-outline-secondary bd-rd " id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
-                            <a class="btn btn-outline-primary bd-rd  " id="bt_reset" href="#" style="padding-right:6px; padding-left:6px">Xuất excel</a>
+                            <a class="btn btn-outline-primary bd-rd  " id="bt_reset" href="@Url.Action("ExportTsDKThiNangKhieu", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
                         </div>
                     </div>
                     <hr class="mt-2 mb-2" />

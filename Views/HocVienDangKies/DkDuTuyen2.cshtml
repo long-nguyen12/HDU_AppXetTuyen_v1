@@ -33,577 +33,113 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Học viên đăng ký dự tuyển</span>
+                        <span id="sp_tieude">Đăng ký dự tuyển</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<script>
-    function showimg(url, loaimc) {
-        var pdf_view = document.getElementById("pdf_view");
-        pdf_view.style.display = "none";
-        pdf_view.style.height = "0px";
 
-        $('#img_view').hide();
-        $("#img_view").attr("src", "");
-
-        if (loaimc == 1) {
-            $('#img_txt_card_hearder').text('Hình ảnh minh chứng sơ yếu lý lịch');
-        }
-        if (loaimc == 2) {
-            $('#img_txt_card_hearder').text('Minh chứng bằng đại học');
-        }
-        if (loaimc == 3) {
-            $('#img_txt_card_hearder').text('Minh chứng bảng điểm');
-        }
-        if (loaimc == 4) {
-            $('#img_txt_card_hearder').text('Giấy khám sức khỏe');
-        }
-        var lastChar = url.substr(url.length - 4); // => "1"
-
-        if (lastChar.toLowerCase() != ".pdf") {
-
-            console.log("không phải pdf", lastChar);
-            pdf_view.style.display = "none";
-            pdf_view.style.height = "0px";
-
-            $("#img_view").attr("src", url);
-            $("#img_view").show();
-
-            $('#div_view_img').show();
-        }
-        if (lastChar.toLowerCase() === ".pdf") {
-            console.log("là tệp pdf", lastChar);
-            pdf_view.style.display = "inline";
-            pdf_view.style.height = "700px";
-
-            $("#pdf_view").attr("src", url);
-            $("#pdf_view").show();
-            $("#img_view").hide();
-
-            $('#div_view_img').show();
-        }
-
-
-        /*  document.getElementById('div_view_img').style.display = "inline";          */
-    }
-    $(document).ready(function () {
-        $('#bt_close_div_view_img').click(function () {
-            $('#div_view_img').hide();
-            $("#img_view").attr("src", "");
-            $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
-            /*   document.getElementById('div_view_img').style.display = "none";*/
-        });
-    });
-
-    $(document).ready(function () {
-        GetHvDuTuyen();
-    });
-    function GetHvDuTuyen() {
-        $.ajax({
-            url: "/HocVienDangKies/DkDuTuyenGetByID",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (res) {
-                if (res.success) {
-                    $("#div_add_data_dutuyen").hide();
-                    $("#div_view_data_dutuyen").show();
-                    let data = res.data[0];
-                    /*   console.log(data)*/
-                    //return;
-
-                    $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
-                    $('#View_HocVien_ChuyenNganhDuThi_MaCN').val(data.nmt_MaNganh);
-                    if (data.Dt_MaNghienCuu == 1) {
-                        $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
-                        $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
-                    }
-                    if (data.Dt_MaNghienCuu == 2) {
-                        $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
-                        $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
-                    }
-
-                    if (data.Hv_DKDTNgoaiNgu == 1) {
-                        $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('checked', 'checked');
-                        $('#View_HocVien_DKDTNgoaiNgu_No').attr('disabled', 'disabled');
-                    }
-                    if (data.Hv_DKDTNgoaiNgu == 0) {
-                        $('#View_HocVien_DKDTNgoaiNgu_No').attr('checked', 'checked');
-                        $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('disabled', 'disabled');
-                    }
-                    $('#View_HocVien_VanBangNgoaiNgu').val(data.Hv_VanBangNgoaiNgu);
-
-                    if (data.Hv_DoiTuongDuThi == 1) {
-                        $('#View_radioDTDT_CuDiHoc').attr('checked', 'checked');
-                        $('#View_radioDTDT_TSTuDo').attr('disabled', 'disabled');
-                    }
-                    if (data.Hv_DoiTuongDuThi == 0) {
-                        $('#View_radioDTDT_TSTuDo').attr('checked', 'checked');
-                        $('#View_radioDTDT_CuDiHoc').attr('disabled', 'disabled');
-                    }
-
-                    $('#View_HocVien_TenDonViCongTac').val(data.Hv_TenDonViCongTac);
-                    $('#View_HocVien_ChuyenMon').val(data.Hv_ChuyenMon);
-                    $('#View_HocVien_ThamNien').val(data.Hv_ThamNien);
-                    $('#View_HocVien_ChucVu').val(data.Hv_ChucVu);
-                    $('#View_HocVien_NamCT').val(data.Hv_NamBDCT);
-
-                    if (data.Hv_LoaiCB == 1) {
-                        $('#View_HocVien_LoaiCB_BienChe').attr('checked', 'checked');
-                        $('#View_HocVien_LoaiCB_HopDong').attr('disabled', 'disabled');
-                    }
-                    if (data.Hv_LoaiCB == 0) {
-                        $('#View_HocVien_LoaiCB_HopDong').attr('checked', 'checked');
-                        $('#View_HocVien_LoaiCB_BienChe').attr('disabled', 'disabled');
-                    }
-
-
-                    if (data.Hv_SoYeuLyLich) {
-                        const ArrSoYeuLyLich = data.Hv_SoYeuLyLich.split("#");
-                        for (i = 0; i < ArrSoYeuLyLich.length - 1; i++) {
-                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrSoYeuLyLich[i]}', 1)">Tệp ${i + 1}</a> &ensp;`;
-                            $('#div_list_view_soyeulylich').append(str_a);
-                        }
-                    }
-                    else {
-                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                        $('#div_list_view_soyeulylich').append(str_a);
-                    }
-
-                    if (data.Hv_MCBangDaiHoc) {
-                        const ArrBangDaiHoc = data.Hv_MCBangDaiHoc.split("#");
-                        for (i = 0; i < ArrBangDaiHoc.length - 1; i++) {
-                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDaiHoc[i]}', 2)">Tệp ${i + 1}</a> &ensp;`;
-                            $('#div_list_view_bangdaihoc').append(str_a);
-                        }
-                    }
-                    else {
-                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                        $('#div_list_view_bangdaihoc').append(str_a);
-                    }
-
-
-                    if (data.Hv_MCBangDiem) {
-                        const ArrBangDiem = data.Hv_MCBangDiem.split("#");
-                        for (i = 0; i < ArrBangDiem.length - 1; i++) {
-                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDiem[i]}', 3)">Tệp ${i + 1}</a> &ensp;`;
-                            $('#div_list_view_bangdiem').append(str_a);
-                        }
-                    }
-                    else {
-                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                        $('#div_list_view_bangdiem').append(str_a);
-                    }
-
-
-                    if (data.Hv_MCGiayKhamSucKhoe) {
-                        const ArrGiayKhamSK = data.Hv_MCGiayKhamSucKhoe.split("#");
-                        for (i = 0; i < ArrGiayKhamSK.length - 1; i++) {
-                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrGiayKhamSK[i]}', 4)">Tệp ${i + 1}</a> &ensp;`;
-                            $('#div_list_view_giaykhamsuckhoe').append(str_a);
-                        }
-                    }
-                    else {
-                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                        $('#div_list_view_giaykhamsuckhoe').append(str_a);
-                    }
-
-
-                    if (data.Hv_Anh46) {
-                        const ArrAnh4x6 = data.Hv_Anh46.split("#");
-                        for (i = 0; i < ArrAnh4x6.length - 1; i++) {
-                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrAnh4x6[i]}', 5)">Tệp ${i + 1}</a> &ensp;`;
-                            $('#div_list_view_anh4x6').append(str_a);
-                        }
-                    }
-                    else {
-                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                        $('#div_list_view_anh4x6').append(str_a);
-                    }
-
-
-                    if (data.Hv_MCCCNN) {
-                        const ArrChungChiVBNN = data.Hv_MCCCNN.split("#");
-                        for (i = 0; i < ArrChungChiVBNN.length - 1; i++) {
-                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrChungChiVBNN[i]}', 6)">Tệp ${i + 1}</a> &ensp;`;
-                            $('#div_list_view_cc_bang_ngoaingu').append(str_a);
-                        }
-                    }
-                    else {
-                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                        $('#div_list_view_cc_bang_ngoaingu').append(str_a);
-                    }
-
-
-                    if (data.Hv_MCKhac) {
-                        const ArrMinhChungKhac = data.Hv_MCKhac.split("#");
-                        for (i = 0; i < ArrMinhChungKhac.length - 1; i++) {
-                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMinhChungKhac[i]}', 7)">Tệp ${i + 1}</a> &ensp;`;
-                            $('#div_list_view_mckhac').append(str_a);
-                        }
-                    }
-                    else {
-                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                        $('#div_list_view_mckhac').append(str_a);
-                    }
-
-                }
-                else {
-                    $("#div_view_data_dutuyen").hide();
-                    $("#div_add_data_dutuyen").show();
-                }
-            },
-            error: function (errormessage) {
-                console.log(errormessage.responseText);
-            }
-        });
-    }
-</script>
 <div class="container-fluid px-12">
-    <div id="div_view_data_dutuyen" style="display:none">
-        <div class="card card-header-actions">
-            <div class="card-header mt-0 mb-0">
-                <span>Thông tin đăng ký dự tuyển</span>
-            </div>
+    <div id="div_show_dutuyen">
+        <div class="card card-header-actions mt-0">
             <div class="card-body" style="padding-bottom: 2px; padding-top: 4px">
                 <div class="row">
-                    <div class="col-lg-3 pl-1 pr-1">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Chuyên ngành đăng ký dự thi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-lg-8 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" id="lb_tencn_dt">Tên CN dự tuyển</label>
-                                                    <div class="col-md-12"><input id="View_HocVien_ChuyenNganhDuThi_Ten" class="form-control" disabled /></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" id="lb_ma_chuyennganh">Mã CN</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control" id="View_HocVien_ChuyenNganhDuThi_MaCN" name="HocVien_ChuyenNganhDuThi_MaCN" type="text" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-12  p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Định hướng chương trình đào tạo</label>
-                                                    <div class="col-md-12">
-                                                        <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center mt-1  mb-2">
-                                                                <input class="form-check-input" type="radio" id="View_HocVien_ChuyenNganhDuThi_UngDung" name="View_HocVien_ChuyenNganhDuThi_DHCTDT_Rd">
-                                                                <label class="form-check-label" for="View_HocVien_ChuyenNganhDuThi_UngDung">Ứng dụng</label>
-                                                            </div>
-                                                            <div class="form-check align-items-center  mt-1 mb-2" style="margin-left:8px">
-                                                                <input class="form-check-input" type="radio" id="View_HocVien_ChuyenNganhDuThi_NghienCuu" name="View_HocVien_ChuyenNganhDuThi_DHCTDT_Rd">
-                                                                <label class="form-check-label" for="View_HocVien_ChuyenNganhDuThi_NghienCuu">Nghiên cứu</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5 col-12  p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">ĐKDT Ngoại ngữ</label>
-                                                    <div class="col-md-12">
-                                                        <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center mt-1">
-                                                                <input class="form-check-input" type="radio" id="View_HocVien_DKDTNgoaiNgu_Yes" name="View_HocVien_DKDTNgoaiNgu_RD">
-                                                                <label class="form-check-label" for="View_HocVien_DKDTNgoaiNgu_Yes">Có</label>
-                                                            </div>
-                                                            <div class="form-check align-items-center mt-1" style="margin-left:8px">
-                                                                <input class="form-check-input" type="radio" id="View_HocVien_DKDTNgoaiNgu_No" name="View_HocVien_DKDTNgoaiNgu_RD">
-                                                                <label class="form-check-label" for="View_HocVien_DKDTNgoaiNgu_No">Không</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-7 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Bằng ngoại ngữ đã học</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control" id="View_HocVien_VanBangNgoaiNgu" name="View_HocVien_VanBangNgoaiNgu" type="text" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12 mt-1 mb-2">Đối tượng dự thi</label>
-                                                    <div class="col-md-12">
-                                                        <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center">
-                                                                <input class="form-check-input" type="radio" id="View_radioDTDT_CuDiHoc" name="View_HocVien_DoiTuongDuThi">
-                                                                <label class="form-check-label" for="View_radioDTDT_CuDiHoc">Cơ quan cử đi học</label>
-                                                            </div>
-                                                            <div class="form-check align-items-center" style="margin-left:10px">
-                                                                <input class="form-check-input" type="radio" id="View_radioDTDT_TSTuDo" name="View_HocVien_DoiTuongDuThi">
-                                                                <label class="form-check-label" for="View_radioDTDT_TSTuDo">Thí sinh tự do</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                        </table>
-                    </div>
-
-                    <div class="col-lg-3 pl-2 pr-2">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Thông tin cơ quan công tác</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-
-                                            <div class="col-lg-12 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Đơn vị công tác</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control" id="View_HocVien_TenDonViCongTac" name="View_HocVien_TenDonViCongTac" type="text" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6  col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Chuyên môn</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control " id="View_HocVien_ChuyenMon" name="View_HocVien_ChuyenMon" type="text" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6  col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Thâm niên nghề</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control" id="View_HocVien_ThamNien" name="View_HocVien_ThamNien" type="text" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6 col-12  p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Chức vụ</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control" id="View_HocVien_ChucVu" name="View_HocVien_ChucVu" type="text" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6  col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Năm BĐ công tác</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control" id="View_HocVien_NamCT" name="View_HocVien_NamCT" type="number" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Hiện là cán bộ</label>
-                                                    <div class="col-md-12 mt-2">
-                                                        <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center mt-1">
-                                                                <input class="form-check-input " type="radio" id="View_HocVien_LoaiCB_HopDong" name="View_HocVien_LoaiCanBo">
-                                                                <label class="form-check-label" for="View_HocVien_LoaiCB_HopDong">Hợp đồng</label>
-                                                            </div>
-                                                            <div class="form-check align-items-center mt-1" style="margin-left:8px">
-                                                                <input class="form-check-input" type="radio" id="View_HocVien_LoaiCB_BienChe" name="View_HocVien_LoaiCanBo">
-                                                                <label class="form-check-label" for="View_HocVien_LoaiCB_BienChe">Biên chế</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                        </table>
-                    </div>
-                    <div class="col-lg-3 pl-2 pr-2">
-                        <div class="table-responsive">
-                            <table class="table" style="width:97%">
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-12">
+                            <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="letter-spacing: -0.3px;">Hình ảnh các minh chứng giấy tờ</th>
+                                        <th>
+                                            Mã chuyên ngành
+                                        </th>
+                                        <th>
+                                            Tên chuyên ngành
+                                        </th>
+                                        <th>
+                                            Định hướng đào tạo
+                                        </th>
+                                        <th>
+                                            Dự thi ngoại ngữ
+                                        </th>
+                                        <th>
+                                            Đối tượng dự thi
+                                        </th>
+                                        <th style="text-align:center">
+                                            <a  class="btn btn-sm  btn-light btn-outline-indigo" style="white-space: nowrap; display: none "  id="bt_no_register_hocvien_dutuyen">Cập nhật</a>
+                                            <a href="#" class="btn btn-sm btn-outline-primary" style="white-space:nowrap;"  id="bt_register_hocvien_dutuyen">Cập nhật</a>
+                                            <a href="#" class="btn btn-sm btn-outline-primary" style="white-space:nowrap" id="bt_export_data_dutuyen">Xuất phiếu</a>
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-lg-12 col-12 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Sơ yếu lý lịch:</label>
-                                                        <div class="col-md-12" id="div_list_view_soyeulylich">
-                                                            @*<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('/Content/images/tttvts2023.jpg','1')">Tệp 1</a>&ensp;*@
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="mt-0 mb-1" />
-                                                <div class="col-lg-12 col-12 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Minh chứng bằng đại học:</label>
-                                                        <div class="col-md-12" id="div_list_view_bangdaihoc">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="mt-0 mb-1" />
-                                                <div class="col-lg-12 col-12 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Minh chứng bảng điểm:</label>
-                                                        <div class="col-md-12" id="div_list_view_bangdiem">
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <hr class="mt-0 mb-1" />
-                                                <div class="col-lg-12 col-12 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Giấy khám sức khỏe:</label>
-                                                        <div class="col-md-12 mb-1" id="div_list_view_giaykhamsuckhoe">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody id="get_dutuyen_hocvien">
+                                </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 pl-2 pr-2">
-                        <div class="table-responsive">
-                            <table class="table" style="width:97%">
-                                <thead>
-                                    <tr>
-                                        <th style="letter-spacing: -0.3px;"><a style="visibility:hidden">a</a></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-lg-12 col-12 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Ảnh 4 x 6:</label>
-                                                        <div class="col-md-12" id="div_list_view_anh4x6">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="mt-0 mb-1" />
-                                                <div class="col-lg-12 col-12 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Chứng chỉ/văn bằng ngoại ngữ:</label>
-                                                        <div class="col-md-12" id="div_list_view_cc_bang_ngoaingu">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="mt-0 mb-1" />
-                                                <div class="col-lg-12 col-12 p-1">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12">Minh chứng khác (nếu có):</label>
-                                                        <div class="col-md-12" id="div_list_view_mckhac">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="mt-0 mb-1" />
-                                                <div class="col-lg-12 col-12 mb-1 mt-3 p-1">
-                                                    <center>
-                                                        <div class="col-md-12">
-                                                            <input class="btn login-button" type="submit" id="bt_submit_update_hocvien" value="Cập nhật" />
-                                                            <a class="btn btn-success" id="bt_export_data_hocvien">Xuất file</a>
-                                                        </div>
-                                                    </center>
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                            </table>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            GetHvDuTuyen();
+        });
+        function GetHvDuTuyen() {
+            $.ajax({
+                url: "/HocVienDangKies/DkDuTuyenGetByID",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (response) {
+                    /*    console.log(response)*/
+                    /*    return;*/
+                    if (response.success) {
+                        let data = response.data;
+                        var markup = '';
 
-    <div id="div_view_img" style="display:none">
-        <div class="row">
-            <div class="col-xl-12 mt-2">
-                <div class="card card-header-actions">
-                    <div class="card-header mt-0 mb-0">
-                        <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
-                        <div>
-                            @*<a class="btn btn-danger btn-sm">Xóa</a>&ensp;&ensp;<a class="btn btn-primary btn-sm" id="bt_close_div_view_img">Đóng</a>*@
-                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
-                        </div>
-                    </div>
-                    <div class="card-body" style="margin: 0px!important">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active" id="div_item_view_minhchung">
-                                    <img class="d-block w-100 img-hide" alt="..." id="img_view">
-                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                        if (data.length == 0) {
+                            //document.getElementById('bt_register_hocvien_dutuyen').style.display = "inline";
+                            //document.getElementById('bt_no_register_hocvien_dutuyen').style.display = "none";
+                            markup = '<tr><td colspan="6">Chưa có dữ liệu</td></tr>'
+                        }
+                        else if (data.length > 0) {
+                            //document.getElementById('bt_register_hocvien_dutuyen').style.display = "none";
+                            //document.getElementById('bt_no_register_hocvien_dutuyen').style.display = "inline";
+                         
+                            for (i = 0; i < data.length; i++) {
+                                //console.log("Thi NN", i, data[i].Hv_DKDTNgoaiNgu);
+                                //console.log("DT", i, data[i].Hv_DoiTuongDuThi);
+                                markup += '<tr>'
+                                markup += '<td>' + data[i].nmt_MaNganh + '</td>';
+                                markup += '<td>' + data[i].nmt_TenNganh + '</td>';
+                                if (data[i].Dt_MaNghienCuu == "1") {
+                                    markup += '<td> Ứng dụng </td>';
+                                } else if (data[i].Dt_MaNghienCuu == "2")
+                                { markup += '<td> Nghiên cứu </td>'; }
+                                if (data[i].Hv_DKDTNgoaiNgu == "1") { markup += '<td> ĐK dự thi NN </td>'; } else if (data[i].Hv_DKDTNgoaiNgu == 0) { markup += '<td> Không dự thi NN  </td>'; }
+                                if (data[i].Hv_DoiTuongDuThi == "1") { markup += '<td> CQ cử đi học </td>'; } else if (data[i].Hv_DoiTuongDuThi == 0) { markup += '<td> Thí sinh tự do </td>'; }
+                                markup += '<td style="text-align:center"> <a href="#" >Chi tiết</a> | <a href="#" >Sửa</a> | <a href="#" >Xóa</a></td>';
+                                markup += '</tr>';
+                            }
+                        }
 
-    <div id="div_view_notification_server" >
-        <div class="row">
-            <div class="col-xl-12 mt-2">
-                <div class="card card-header-actions">
-                    <div class="card-header mt-0 mb-0">
-                        <span id="img_txt_card_hearder">Thông báo từ hệ thống</span>
-                        <div>                         
-                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_notification_server"></button>
-                        </div>
-                    </div>
-                    <div class="card-body" style="margin: 0px!important">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active" id="div_item_view_minhchung">
-                                    <span id="img_txt_card_hearder">Đã đăng ký thành công, chờ kiểm duyệt của admin.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                        $('#get_dutuyen_hocvien').html(markup);
+                        /*  $("#get_dutuyen_hocvien").append(markup);    */
+                    } else {
 
-    <div id="div_add_data_dutuyen" style="display:none">
-        <div class="card card-header-actions">
-            <div class="card-header mt-0 mb-0">
-                <span>Đăng ký dự tuyển mới</span>
-            </div>
+                    }
+                },
+                error: function (errormessage) {
+                    console.log(errormessage.responseText);
+                }
+            });
+        }
+    </script>
+    <div id="div_add_dutuyen">
+        <div class="card card-header-actions mt-0">
             <div class="card-body" style="padding-bottom: 2px; padding-top: 4px">
                 <div class="row">
                     <div class="col-lg-3 pl-1 pr-1">
@@ -773,7 +309,7 @@
                                             <div class="col-lg-12 col-12 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Hiện là cán bộ</label>
-                                                    <div class="col-md-12 mt-2">
+                                                    <div class="col-md-12">
                                                         <div class="d-inline-flex flex-nowrap">
                                                             <div class="form-check align-items-center mt-1">
                                                                 <input class="form-check-input input-hv-dvcongtac" type="radio" id="HocVien_LoaiCB_HopDong" name="HocVien_LoaiCanBo">
@@ -927,7 +463,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12 col-12 mb-1 mt-3 p-1">
+                                                <div class="col-lg-12 col-12 mb-1 mt-1 p-1">
                                                     <center>
                                                         <span id="SignupErrorMessage" class="small mb-1 text-danger"></span>
                                                         <div class="col-md-12">
@@ -946,11 +482,10 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 <input id="hocVien_id_update" type="hidden" style="display:none" />
+
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -973,7 +508,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     $(document).ready(function () {
@@ -1101,11 +635,11 @@
     $(document).ready(function () {
 
         $("#File_HocVien_SoYeuLyLich").on("change", function () {
-
+          
 
             var test_value = $("#File_HocVien_SoYeuLyLich").val();
             var extension = test_value.split('.').pop().toLowerCase();
-            if ($.inArray(extension, ['png', 'gif', 'jpeg', 'jpg']) == -1) {
+            if ($.inArray(extension, ['png', 'gif', 'jpeg', 'jpg']) == -1) {              
                 var errorMessage = "Upload tệp ảnh"; $('#Error_Rgt_File_HocVien_SoYeuLyLich').text(errorMessage); flag = false;
             } else {
                 var File_HocVien_SoYeuLyLich = document.getElementById('File_HocVien_SoYeuLyLich');
@@ -1119,7 +653,7 @@
                 }
                 chkatchtbl_soyeulylich();
                 $('#File_HocVien_SoYeuLyLich').val('');
-            }
+            }            
         });
 
         $("#File_HocVien_MCBangDaiHoc").on("change", function () {
@@ -1435,7 +969,7 @@
         });
 
     })
-
+  
     // phần xử lý button đăng ký thông tin mới của học viên
     $(document).ready(function () {
 
@@ -1526,7 +1060,7 @@
             formData_All.append('so_file_anh4x6', so_file_anh4x6);
             formData_All.append('so_file_ccnn', so_file_ccnn);
             formData_All.append('so_file_mckhac', so_file_mckhac);
-
+          
             $.ajax({
                 url: '/HocVienDangKies/DangKyDuTuyen_SDH_UploadFile_Multi',
                 type: "POST",
@@ -1598,9 +1132,9 @@
                 HocVien_MCCCNN: _hocVien_MCCCNN_Url,
                 HocVien_MCKhac: _hocVien_MCKhac_Url,
             }
-
+          
             if (flag == false) return;
-
+         
             $("#loadingModal").modal("show");
             $.ajax({
                 url: "/HocVienDangKies/HvDangkyUpdateDonViCongTac",
@@ -1622,18 +1156,18 @@
                 data: JSON.stringify(data_hvdt_new),
                 contentType: "application/json;charset=utf-8",
                 success: function (res) {
-                    if (res.success) {
-                        $('#loadingModal').modal('hide');                     
-                        GetHvDuTuyen();
-                    }                 
+                    $('#loadingModal').modal('hide');
+                    $('#div_add_dutuyen').css('display', 'none');
+                    $('#div_show_dutuyen').css('display', 'inline');
+                    GetHvDuTuyen();
                     //if (res.success == true) {console.log(response.success);console.log("Them moi ok");}
                 },
                 error: function (xhr, status, error) {
-                    console.log('Lỗi thêm nv mới', error);
+                    console.log('Them nguyen vong moi');
                     $('#loadingModal').modal('hide');
                 },
                 complete: function () {
-                    console.log('đăng ký thành công');
+                    console.log('Loi dk');
                     // Hide the loading modal
                     $('#loadingModal').modal('hide');
                 }
@@ -1642,3 +1176,4 @@
     });
 
 </script>
+
