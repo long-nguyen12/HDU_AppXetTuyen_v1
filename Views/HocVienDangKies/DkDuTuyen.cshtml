@@ -98,6 +98,9 @@
         });
     });
 
+    // Khai báo dự tuyển ID
+    let dutuyen_id = null;
+
     $(document).ready(function () {
         GetHvDuTuyen();
     });
@@ -113,6 +116,8 @@
                     $("#div_add_data_dutuyen").hide();
                     $("#div_view_data_dutuyen").show();
                     let data = res.data[0];
+                    // Lấy ra ID dự tuyển để xuất phiếu
+                    dutuyen_id = data.dt_ID;
                     /*   console.log(data)*/
                     //return;
 
@@ -1014,7 +1019,6 @@
         // hiển thị thông tin cơ quan công tác của học viên nếu có
         LoadDataCoQuanCongTac()
     })
-
     // Hàm hiển thị thông tin cơ quan công tác của học viên nếu có
     function LoadDataCoQuanCongTac() {
         $.ajax({
@@ -1639,6 +1643,13 @@
                 }
             });
         })
+    });
+
+    $(document).ready(function () {
+        $('#bt_export_data_hocvien').click(function () {
+            //dutuyen_id được lấy từ func GetHvDuTuyen
+            window.location.href = `/ExportFile/DownloadFile_XetTuyenSDH?dutuyen_id=${dutuyen_id}`;
+        });
     });
 
 </script>

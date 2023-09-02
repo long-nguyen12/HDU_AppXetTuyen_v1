@@ -705,6 +705,142 @@ namespace HDU_AppXetTuyen.Controllers
 
         }
 
+        public ActionResult DownloadFile_XetTuyenSDH(string dutuyen_id)
+        {
+            System.Diagnostics.Debug.WriteLine("dutuyen_id: ", dutuyen_id);
+
+            var idHocVienInt = 0;
+            // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
+            if (Session["login_session"] == null)
+            {
+                idHocVienInt = 15;
+                System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
+            }
+            else
+            {
+                string str_hocvien_session = Session["login_session"].ToString();
+                var hocvien_session = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_hocvien_session).FirstOrDefault();
+                idHocVienInt = (int)hocvien_session.HocVien_ID;
+                System.Diagnostics.Debug.WriteLine("idHocVienInt: " + idHocVienInt);
+            }
+
+            string templateFilePath = Server.MapPath("~/Content/static/export-2023-phieu-dang-ky-du-thi-thac-si-2023.docx");
+            var hocVienInfo = db.HocVienDangKies.Find(idHocVienInt);
+            int idDuTuyenInt = int.Parse(dutuyen_id);
+
+            var duTuyenInfo = db.HocVienDuTuyens.Find(idDuTuyenInt);
+
+            // Từ dự tuyển lấy ra ngành đăng ký
+            var nganhDangKy = db.NganhMasters.Find(duTuyenInfo.Nganh_Mt_ID);
+            // Từ id nơi sinh lấy ra tên nơi sinh
+            var noisinh = db.Tinhs.Find(hocVienInfo.HocVien_NoiSinh).Tinh_Ten;
+
+
+            var jsonStringBangDaiHoc = JsonConvert.SerializeObject(hocVienInfo.HocVien_BangDaiHoc);
+            // BangDaiHoc khai báo trong  Model.LibraryUsers
+            BangDaiHoc bangDaiHoc = JsonConvert.DeserializeObject<BangDaiHoc>(hocVienInfo.HocVien_BangDaiHoc);
+            var checkbox_x = "x";
+            var cb_bienche = " ";
+            var cb_hopdong = " ";
+            var cb_cudihoc = " ";
+            var cb_tudo = " ";
+            var cb_ungdung = " ";
+            var cb_nghiencuu = " ";
+            var cb_nn_yes = " ";
+            var cb_nn_no = " ";
+
+            // Bien che 1 , hop dong 0
+            if (hocVienInfo.HocVien_LoaiCB == 0) cb_hopdong = checkbox_x;
+            else cb_bienche = checkbox_x;
+
+            // Tu do 0, cu di hoc 1
+            if (duTuyenInfo.HocVien_DoiTuongDuThi == 0) cb_tudo = checkbox_x;
+            else cb_cudihoc = checkbox_x;
+
+            // Ngoai ngu 1, khong ngoai ngu 0
+            if (duTuyenInfo.HocVien_DKDTNgoaiNgu == 0) cb_nn_no = checkbox_x;
+            else cb_nn_yes = checkbox_x;
+
+            // Nghien cuu 2, ung dung 1
+            if (duTuyenInfo.DuTuyen_MaNghienCuu == 1) cb_ungdung = checkbox_x;
+            else cb_nghiencuu = checkbox_x;
+
+
+            using (DocX document = DocX.Load(templateFilePath))
+            {
+                // Replace placeholders with actual data
+                string gt = hocVienInfo.HocVien_GioiTinh == 0 ? "Nam" : "Nữ";
+                // Replace placeholders with actual data
+                document.ReplaceText("<<HocVien_HoDem>>", hocVienInfo.HocVien_HoDem);
+                document.ReplaceText("<<HocVien_Ten>>", hocVienInfo.HocVien_Ten);
+                document.ReplaceText("<<HocVien_NoiSinh>>", noisinh);
+                document.ReplaceText("<<HocVien_CCCD>>", hocVienInfo.HocVien_CCCD);
+                document.ReplaceText("<<HocVien_NgaySinh>>", convertDate(hocVienInfo.HocVien_NgaySinh));
+                document.ReplaceText("<<HocVien_GioiTinh>>", gt);
+                document.ReplaceText("<<HocVien_CCCD_NgayCap>>", convertDate(hocVienInfo.HocVien_CCCD_NgayCap));
+                document.ReplaceText("<<HocVien_NoiOHienNay>>", hocVienInfo.HocVien_NoiOHienNay);
+                document.ReplaceText("<<NCT>>", hocVienInfo.HocVien_NamCT);
+                document.ReplaceText("<<HocVien_ChucVu>>", hocVienInfo.HocVien_ChucVu);
+                document.ReplaceText("<<HocVien_ChuyenMon>>", hocVienInfo.HocVien_ChuyenMon);
+                document.ReplaceText("<<ThamNien>>", hocVienInfo.HocVien_ThamNien);
+                document.ReplaceText("<<HocVien_DoiTuongUuTien>>", hocVienInfo.HocVien_DoiTuongUuTien);
+                document.ReplaceText("<<HocVien_TenDonViCongTac>>", hocVienInfo.HocVien_TenDonViCongTac);
+                document.ReplaceText("<<HocVien_TruongTN>>", bangDaiHoc.HocVien_BangDaiHoc_TenTruongTN);
+                document.ReplaceText("<<HocVien_NganhTN>>", bangDaiHoc.HocVien_BangDaiHoc_TenNganhTN);
+                document.ReplaceText("<<HocVien_NamTN>>", bangDaiHoc.HocVien_BangDaiHoc_NamTN);
+                document.ReplaceText("<<HocVien_LoaiTN>>", bangDaiHoc.HocVien_BangDaiHoc_LoaiTN);
+                document.ReplaceText("<<DiemTB>>", bangDaiHoc.HocVien_BangDaiHoc_DiemToanKhoa);
+                document.ReplaceText("<<HeDaoTao>>", bangDaiHoc.HocVien_BangDaiHoc_HeDaoTao);
+                document.ReplaceText("<<DoiTuongUuTien>>", hocVienInfo.HocVien_DoiTuongUuTien);
+                document.ReplaceText("<<BoSungKienThuc>>", getBSKienThucById(hocVienInfo.HocVien_BoTucKienThuc));
+                document.ReplaceText("<<ChuyenNganh>>", nganhDangKy.Nganh_Mt_TenNganh);
+                document.ReplaceText("<<MaNganh>>", nganhDangKy.Nganh_Mt_MaNganh);
+
+                // Xu ly checkbox
+                document.ReplaceText("<<cb_bienche>>", cb_bienche);
+                document.ReplaceText("<<cb_hopdong>>", cb_hopdong);
+                document.ReplaceText("<<cb_cudihoc>>", cb_cudihoc);
+                document.ReplaceText("<<cb_tudo>>", cb_tudo);
+                document.ReplaceText("<<cb_ungdung>>", cb_ungdung);
+                document.ReplaceText("<<cb_nghiencuu>>", cb_nghiencuu);
+                document.ReplaceText("<<cb_nn_yes>>", cb_nn_yes);
+                document.ReplaceText("<<cb_nn_no>>", cb_nn_no);
+                document.ReplaceText("<<VanBangNgoaiNgu>>", duTuyenInfo.HocVien_VanBangNgoaiNgu);
+                document.ReplaceText("<<DiaChiLienHe>>", hocVienInfo.HocVien_DiaChiLienHe);
+                document.ReplaceText("<<DienThoai>>", hocVienInfo.HocVien_DienThoai);
+                document.ReplaceText("<<Email>>", hocVienInfo.HocVien_Email);
+
+                // Generate a unique file name
+                string fileName = hocVienInfo.HocVien_Ten + "_phieu-dang-ky-du-thi-thac-si_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".docx";
+
+                // Save the filled document to a temporary location on the server
+                string tempFilePath = Path.Combine(Path.GetTempPath(), fileName);
+                document.SaveAs(tempFilePath);
+
+                // Return the file for download
+                byte[] fileBytes = System.IO.File.ReadAllBytes(tempFilePath);
+                return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
+            }
+
+        }
+
+
+        public string getBSKienThucById(int? id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "Chưa học";
+                case 2:
+                    return "Đã học";
+                case 3:
+                    return "Chuyên ngành đúng";
+                default:
+                    return " ";
+            }
+        }
+
+
         public string getHocLucById(int id)
         {
             switch (id)
@@ -786,6 +922,19 @@ namespace HDU_AppXetTuyen.Controllers
                 default:
                     return " ";
             }
+        }
+
+        //convert  "yyyy-MM-dd" to "dd-MM-yyyy"
+        public string convertDate(string inputDateString)
+        {
+            // Parse the input string into a DateTime object
+            DateTime date = DateTime.ParseExact(inputDateString, "yyyy-MM-dd", null);
+            // Convert the DateTime object to the "dd-MM-yyyy" format
+            string outputDateString = date.ToString("dd-MM-yyyy");
+            // Output the result
+            Console.WriteLine("Input Date String: " + inputDateString);
+            Console.WriteLine("Output Date String: " + outputDateString);
+            return outputDateString;
         }
     }
 }   
