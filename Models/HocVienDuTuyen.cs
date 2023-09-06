@@ -43,6 +43,17 @@ namespace HDU_AppXetTuyen.Models
         public string DuTuyen_GhiChu { get; set; }
         public int? DuTuyen_TrangThai { get; set; }
 
+
+        [StringLength(20)]
+        public string HocVien_LePhi_MaThamChieu { get; set; }
+
+        [StringLength(2500)]
+        public string HocVien_LePhi_TepMinhChung { get; set; }
+
+        [StringLength(100)]
+        public string HocVien_LePhi_NgayNop { get; set; }
+        public int? HocVien_LePhi_TrangThai { get; set; }
+
         public int? Dxt_ID { get; set; }
 
         public virtual DotXetTuyen DotXetTuyen { get; set; }

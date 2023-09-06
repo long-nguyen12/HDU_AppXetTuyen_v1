@@ -1,0 +1,687 @@
+﻿
+@{
+    ViewBag.Title = "Đăng ký dự tuyển";
+    Layout = "~/Views/Shared/_Layout_master.cshtml";
+}
+<style>
+    .colorlogin {
+        color: #ff6a00 !important;
+    }
+
+    .login-button {
+        padding: 7px 17px;
+        border-radius: 3px !important;
+        background-color: #ff6a00;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+    }
+
+        .login-button:hover {
+            background-color: #808080;
+            color: #fff;
+        }
+
+    .form-control {
+        border-radius: 3px
+    }
+
+    th td {
+        /* white-space: nowrap;*/
+    }
+</style>
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span id="sp_tieude">Học viên đăng ký dự tuyển</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid px-12">
+    <div id="div_view_data_dutuyen" style="display:none">
+        <div class="card card-header-actions">
+            <div class="card-header mt-0 mb-0">
+                <span>Thông tin đăng ký dự tuyển</span>
+            </div>
+            <div class="card-body" style="padding-bottom: 2px; padding-top: 4px">
+                <div class="row">
+                    <div class="col-lg-3 pl-1 pr-1">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Chuyên ngành đăng ký dự thi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12" id="lb_tencn_dt">Tên CN dự tuyển</label>
+                                                    <div class="col-md-12"><input id="View_HocVien_ChuyenNganhDuThi_Ten" class="form-control" disabled /></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12" id="lb_ma_chuyennganh">Mã CN</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="View_HocVien_ChuyenNganhDuThi_MaCN" name="HocVien_ChuyenNganhDuThi_MaCN" type="text" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-12  p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Định hướng chương trình đào tạo</label>
+                                                    <div class="col-md-12">
+                                                        <div class="d-inline-flex flex-nowrap">
+                                                            <div class="form-check align-items-center mt-1  mb-2">
+                                                                <input class="form-check-input" type="radio" id="View_HocVien_ChuyenNganhDuThi_UngDung" name="View_HocVien_ChuyenNganhDuThi_DHCTDT_Rd">
+                                                                <label class="form-check-label" for="View_HocVien_ChuyenNganhDuThi_UngDung">Ứng dụng</label>
+                                                            </div>
+                                                            <div class="form-check align-items-center  mt-1 mb-2" style="margin-left:8px">
+                                                                <input class="form-check-input" type="radio" id="View_HocVien_ChuyenNganhDuThi_NghienCuu" name="View_HocVien_ChuyenNganhDuThi_DHCTDT_Rd">
+                                                                <label class="form-check-label" for="View_HocVien_ChuyenNganhDuThi_NghienCuu">Nghiên cứu</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-12  p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">ĐKDT Ngoại ngữ</label>
+                                                    <div class="col-md-12">
+                                                        <div class="d-inline-flex flex-nowrap">
+                                                            <div class="form-check align-items-center mt-1">
+                                                                <input class="form-check-input" type="radio" id="View_HocVien_DKDTNgoaiNgu_Yes" name="View_HocVien_DKDTNgoaiNgu_RD">
+                                                                <label class="form-check-label" for="View_HocVien_DKDTNgoaiNgu_Yes">Có</label>
+                                                            </div>
+                                                            <div class="form-check align-items-center mt-1" style="margin-left:8px">
+                                                                <input class="form-check-input" type="radio" id="View_HocVien_DKDTNgoaiNgu_No" name="View_HocVien_DKDTNgoaiNgu_RD">
+                                                                <label class="form-check-label" for="View_HocVien_DKDTNgoaiNgu_No">Không</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-7 col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Bằng ngoại ngữ đã học</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="View_HocVien_VanBangNgoaiNgu" name="View_HocVien_VanBangNgoaiNgu" type="text" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12 mt-1 mb-2">Đối tượng dự thi</label>
+                                                    <div class="col-md-12">
+                                                        <div class="d-inline-flex flex-nowrap">
+                                                            <div class="form-check align-items-center">
+                                                                <input class="form-check-input" type="radio" id="View_radioDTDT_CuDiHoc" name="View_HocVien_DoiTuongDuThi">
+                                                                <label class="form-check-label" for="View_radioDTDT_CuDiHoc">Cơ quan cử đi học</label>
+                                                            </div>
+                                                            <div class="form-check align-items-center" style="margin-left:10px">
+                                                                <input class="form-check-input" type="radio" id="View_radioDTDT_TSTuDo" name="View_HocVien_DoiTuongDuThi">
+                                                                <label class="form-check-label" for="View_radioDTDT_TSTuDo">Thí sinh tự do</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-3 pl-2 pr-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Thông tin cơ quan công tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+
+                                            <div class="col-lg-12 col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Đơn vị công tác</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="View_HocVien_TenDonViCongTac" name="View_HocVien_TenDonViCongTac" type="text" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6  col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Chuyên môn</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control " id="View_HocVien_ChuyenMon" name="View_HocVien_ChuyenMon" type="text" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Thâm niên nghề</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="View_HocVien_ThamNien" name="View_HocVien_ThamNien" type="text" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-12  p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Chức vụ</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="View_HocVien_ChucVu" name="View_HocVien_ChucVu" type="text" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6  col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Năm BĐ công tác</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="View_HocVien_NamCT" name="View_HocVien_NamCT" type="number" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Hiện là cán bộ</label>
+                                                    <div class="col-md-12 mt-2">
+                                                        <div class="d-inline-flex flex-nowrap">
+                                                            <div class="form-check align-items-center mt-1">
+                                                                <input class="form-check-input " type="radio" id="View_HocVien_LoaiCB_HopDong" name="View_HocVien_LoaiCanBo">
+                                                                <label class="form-check-label" for="View_HocVien_LoaiCB_HopDong">Hợp đồng</label>
+                                                            </div>
+                                                            <div class="form-check align-items-center mt-1" style="margin-left:8px">
+                                                                <input class="form-check-input" type="radio" id="View_HocVien_LoaiCB_BienChe" name="View_HocVien_LoaiCanBo">
+                                                                <label class="form-check-label" for="View_HocVien_LoaiCB_BienChe">Biên chế</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-3 pl-2 pr-2">
+                        <div class="table-responsive">
+                            <table class="table" style="width:97%">
+                                <thead>
+                                    <tr>
+                                        <th style="letter-spacing: -0.3px;">Hình ảnh các minh chứng giấy tờ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Sơ yếu lý lịch:</label>
+                                                        <div class="col-md-12" id="div_list_view_soyeulylich">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="mt-0 mb-1" />
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Minh chứng bằng đại học:</label>
+                                                        <div class="col-md-12" id="div_list_view_bangdaihoc">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="mt-0 mb-1" />
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Minh chứng bảng điểm:</label>
+                                                        <div class="col-md-12" id="div_list_view_bangdiem">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="mt-0 mb-1" />
+                                                <div class="col-lg-12 col-12 p-1 mb-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Giấy khám sức khỏe:</label>
+                                                        <div class="col-md-12 mb-1" id="div_list_view_giaykhamsuckhoe">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 pl-2 pr-2">
+                        <div class="table-responsive">
+                            <table class="table" style="width:97%">
+                                <thead>
+                                    <tr>
+                                        <th style="letter-spacing: -0.3px;"><a style="visibility:hidden">a</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Ảnh 4 x 6:</label>
+                                                        <div class="col-md-12" id="div_list_view_anh4x6">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="mt-0 mb-1" />
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Chứng chỉ/văn bằng ngoại ngữ:</label>
+                                                        <div class="col-md-12" id="div_list_view_cc_bang_ngoaingu">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="mt-0 mb-1" />
+                                                <div class="col-lg-12 col-12 p-1">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-12">Minh chứng khác (nếu có):</label>
+                                                        <div class="col-md-12" id="div_list_view_mckhac">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr class="mt-0 mb-1" />
+                                                <div class="col-lg-12 col-12 mb-2 mt-3 p-1">
+                                                    <center>
+                                                        <div class="col-md-12">
+                                                            <a href="@Url.Action("DkDuTuyenEdit","HocVienDangKies")" class="btn login-button">Cập nhật</a>
+                                                            <a class="btn btn-danger" id="bt_delete_data_dutuyen" style="border-radius:3px">Xóa</a>
+                                                            <a class="btn btn-success" id="bt_export_data_hocvien" style="border-radius:3px">Xuất file</a>
+                                                        </div>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_view_img" >
+        <div class="row">
+            <div class="col-xl-12 mt-2">
+                <div class="card card-header-actions">
+                    <div class="card-header mt-0 mb-0">
+                        <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
+                        <div>
+                            <a class="btn btn-danger btn-sm" id="bt_delete_minhchung" onclick="bt_delete_minhchung_click()">Xóa</a>&ensp;
+                            <a class="btn btn-primary btn-sm" id="bt_close_div_view_img">Đóng</a>
+                            @*<button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>*@
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin: 0px!important">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" id="div_item_view_minhchung">
+                                    <img class="d-block w-100 img-hide" alt="..." id="img_view">
+                                    <embed  id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_view_notification_server">
+        <div class="row">
+            <div class="col-xl-12 mt-2">
+                <div class="card card-header-actions">
+                    <div class="card-header mt-0 mb-0">
+                        <span id="img_txt_card_hearder">Thông báo từ hệ thống</span>
+                        <div>
+                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_notification_server"></button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin: 0px!important">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" id="div_item_thongbao">
+                                    <span id="img_txt_card_hearder">Đã đăng ký thành công, chờ kiểm duyệt của admin.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_delete_first"></button>
+            </div>
+            <div class="modal-body">
+                <span>Bạn chắc chắn xóa dữ liệu đăng ký dự tuyển này?</span>
+                <input id="key_delete_dkdt_id" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_delete_second">Hủy</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_delete">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#bt_delete_data_dutuyen').click(function () {
+            $('#modal_tb_xoa').modal('show');
+        });
+
+        $('#bt_cancel_on_modal_delete_first').click(function () {
+            $('#modal_tb_xoa').modal('hide');
+            $('#key_delete_dkdt_id').val('');
+        })
+        $('#bt_cancel_on_modal_delete_second').click(function () {
+            $('#modal_tb_xoa').modal('hide');
+            $('#key_delete_dkdt_id').val('');
+        })
+        $('#bt_ok_on_modal_delete').click(function () {
+
+
+            $('#modal_tb_xoa').modal('hide');
+            $('#key_delete_dkdt_id').val('');
+        })
+    })
+   
+    function bt_delete_minhchung_click() {
+        var url_mc = "";
+        if ($('#img_view').attr('src').length > 4) {
+            url_mc = $('#img_view').attr('src')
+        }
+        if ($("#url_file_pdf").val().length > 4) {
+            url_mc = $('#pdf_view').attr('src')
+        }
+        var data_delete = {
+            DuTuyen_ID: $('#id_hocvien_dutuyen_minhchung_delete').val(),
+            DuTuyen_MaNghienCuu: $('#key_minhchung_hvdt_delete').val(),
+            DuTuyen_GhiChu: url_mc,
+        }
+
+        $.ajax({
+            url: "/HocVienDangKies/DkDuTuyenDeleteMinhChungItem",
+            type: "POST",
+            data: JSON.stringify(data_delete),
+            contentType: "application/json;charset=utf-8",
+            async: false,
+            success: function (res) {
+                if (res.success == true) {
+                    console.log("OK dã xóa", res.success);
+                } else if (res.success == false) {
+                }
+            },
+            error: function (res) {
+                console.log("Lỗi", res);
+            }
+        });
+
+    }
+
+    function showimg(url, loaimc, id_key_hv_dutuyen) {
+
+        $('#key_minhchung_hvdt_delete').val(loaimc);
+        $('#id_hocvien_dutuyen_minhchung_delete').val(id_key_hv_dutuyen)
+
+        var pdf_view = document.getElementById("pdf_view");
+        pdf_view.style.display = "none";
+        pdf_view.style.height = "0px";
+
+        $('#img_view').hide();
+        $("#img_view").attr("src", "");
+
+        if (loaimc == 1) {
+            $('#img_txt_card_hearder').text('Hình ảnh minh chứng sơ yếu lý lịch');
+        }
+        if (loaimc == 2) {
+            $('#img_txt_card_hearder').text('Minh chứng bằng đại học');
+        }
+        if (loaimc == 3) {
+            $('#img_txt_card_hearder').text('Minh chứng bảng điểm');
+        }
+        if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Giấy khám sức khỏe');
+        }
+        var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
+
+        if (lastChar.toLowerCase() != ".pdf") {
+
+            console.log("không phải pdf", lastChar);
+            pdf_view.style.display = "none";
+            pdf_view.style.height = "0px";
+
+            $("#img_view").attr("src", url);
+            $("#img_view").show();
+
+            $('#div_view_img').show();
+        }
+        if (lastChar.toLowerCase() === ".pdf") {
+            console.log("là tệp pdf", lastChar);
+
+            pdf_view.style.display = "inline";
+            pdf_view.style.height = "700px";
+            $("#url_file_pdf").val(url);
+            $("#pdf_view").attr("src", url);
+            $("#pdf_view").show();
+            $("#img_view").hide();
+
+            $('#div_view_img').show();
+        }
+    }
+    $(document).ready(function () {
+        $('#bt_close_div_view_img').click(function () {
+            $('#div_view_img').hide();
+            $("#img_view").attr("src", "");
+            $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
+        });
+
+    });
+
+    $(document).ready(function () {
+        GetHvDuTuyen();
+    });
+    function GetHvDuTuyen() {
+        $.ajax({
+            url: "/HocVienDangKies/DkDuTuyenGetByID",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (res) {
+                if (res.success) {
+
+                    $("#div_add_data_dutuyen").hide();
+                    $("#div_view_data_dutuyen").show();
+                    $('#div_view_notification_server').show();
+                    let data = res.data[0];
+                    /*   console.log(data)*/
+
+                    $("#key_delete_dkdt_id").val(data.dt_ID);
+
+                    $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
+                    $('#View_HocVien_ChuyenNganhDuThi_MaCN').val(data.nmt_MaNganh);
+                    if (data.Dt_MaNghienCuu == 1) {
+                        $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
+                        $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
+                    }
+                    if (data.Dt_MaNghienCuu == 2) {
+                        $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
+                        $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
+                    }
+
+                    if (data.Hv_DKDTNgoaiNgu == 1) {
+                        $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('checked', 'checked');
+                        $('#View_HocVien_DKDTNgoaiNgu_No').attr('disabled', 'disabled');
+                    }
+                    if (data.Hv_DKDTNgoaiNgu == 0) {
+                        $('#View_HocVien_DKDTNgoaiNgu_No').attr('checked', 'checked');
+                        $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('disabled', 'disabled');
+                    }
+                    $('#View_HocVien_VanBangNgoaiNgu').val(data.Hv_VanBangNgoaiNgu);
+
+                    if (data.Hv_DoiTuongDuThi == 1) {
+                        $('#View_radioDTDT_CuDiHoc').attr('checked', 'checked');
+                        $('#View_radioDTDT_TSTuDo').attr('disabled', 'disabled');
+                    }
+                    if (data.Hv_DoiTuongDuThi == 0) {
+                        $('#View_radioDTDT_TSTuDo').attr('checked', 'checked');
+                        $('#View_radioDTDT_CuDiHoc').attr('disabled', 'disabled');
+                    }
+
+                    $('#View_HocVien_TenDonViCongTac').val(data.Hv_TenDonViCongTac);
+                    $('#View_HocVien_ChuyenMon').val(data.Hv_ChuyenMon);
+                    $('#View_HocVien_ThamNien').val(data.Hv_ThamNien);
+                    $('#View_HocVien_ChucVu').val(data.Hv_ChucVu);
+                    $('#View_HocVien_NamCT').val(data.Hv_NamBDCT);
+
+                    if (data.Hv_LoaiCB == 1) {
+                        $('#View_HocVien_LoaiCB_BienChe').attr('checked', 'checked');
+                        $('#View_HocVien_LoaiCB_HopDong').attr('disabled', 'disabled');
+                    }
+                    if (data.Hv_LoaiCB == 0) {
+                        $('#View_HocVien_LoaiCB_HopDong').attr('checked', 'checked');
+                        $('#View_HocVien_LoaiCB_BienChe').attr('disabled', 'disabled');
+                    }
+
+
+                    if (data.Hv_SoYeuLyLich) {
+                        const ArrSoYeuLyLich = data.Hv_SoYeuLyLich.split("#");
+                        for (i = 0; i < ArrSoYeuLyLich.length; i++) {
+                            if (ArrSoYeuLyLich[i].length > 0) {
+                                var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrSoYeuLyLich[i]}', 1,${data.dt_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                $('#div_list_view_soyeulylich').append(str_a);
+                            }
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_soyeulylich').append(str_a);
+                    }
+
+                    if (data.Hv_MCBangDaiHoc) {
+                        const ArrBangDaiHoc = data.Hv_MCBangDaiHoc.split("#");
+                        for (i = 0; i < ArrBangDaiHoc.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDaiHoc[i]}', 2,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_bangdaihoc').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_bangdaihoc').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCBangDiem) {
+                        const ArrBangDiem = data.Hv_MCBangDiem.split("#");
+                        for (i = 0; i < ArrBangDiem.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDiem[i]}', 3,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_bangdiem').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_bangdiem').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCGiayKhamSucKhoe) {
+                        const ArrGiayKhamSK = data.Hv_MCGiayKhamSucKhoe.split("#");
+                        for (i = 0; i < ArrGiayKhamSK.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrGiayKhamSK[i]}', 4,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_giaykhamsuckhoe').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_giaykhamsuckhoe').append(str_a);
+                    }
+
+
+                    if (data.Hv_Anh46) {
+                        const ArrAnh4x6 = data.Hv_Anh46.split("#");
+                        for (i = 0; i < ArrAnh4x6.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrAnh4x6[i]}', 5,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_anh4x6').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_anh4x6').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCCCNN) {
+                        const ArrChungChiVBNN = data.Hv_MCCCNN.split("#");
+                        for (i = 0; i < ArrChungChiVBNN.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrChungChiVBNN[i]}', 6,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_cc_bang_ngoaingu').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_cc_bang_ngoaingu').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCKhac) {
+                        const ArrMinhChungKhac = data.Hv_MCKhac.split("#");
+                        for (i = 0; i < ArrMinhChungKhac.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMinhChungKhac[i]}', 7,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_mckhac').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_mckhac').append(str_a);
+                    }
+
+                }
+                else {
+                    $("#div_view_data_dutuyen").hide();
+                    $('#div_view_notification_server').hide();
+                    $("#div_add_data_dutuyen").show();
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+    }
+
+</script>
