@@ -676,11 +676,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi ngoại ngữ
         [AdminSessionCheck]
-        public ActionResult Dkxtccnn(int? page)
+        public ActionResult DkxtkqCcnn(int? page)
         {
             if (page == null) page = 1;
-            var dangKyXetTuyens = (from h in db.DangKyXetTuyenHBs
-                                   select h).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_HB_NguyenVong).ThenBy(x => x.Nganh.Nganh_TenNganh).Include(d => d.ThiSinhDangKy.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.ThiSinhDangKy.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon);
+            var dangKyXetTuyens = (from h in db.DangKyXetTuyenKhacs
+                                   select h).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_NguyenVong).ThenBy(x => x.Nganh.Nganh_TenNganh).Include(d => d.ThiSinhDangKy.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.ThiSinhDangKy.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(dangKyXetTuyens.ToPagedList(pageNumber, pageSize));
@@ -690,9 +690,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực
         public ActionResult DkxtkqDgnl(int? page)
         {
+
             if (page == null) page = 1;
-            var dangKyXetTuyens = (from h in db.DangKyXetTuyenHBs
-                                   select h).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_HB_NguyenVong).ThenBy(x => x.Nganh.Nganh_TenNganh).Include(d => d.ThiSinhDangKy.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.ThiSinhDangKy.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy).Include(d => d.ToHopMon);
+            var dangKyXetTuyens = (from h in db.DangKyXetTuyenKhacs
+                                   select h).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_NguyenVong).ThenBy(x => x.Nganh.Nganh_TenNganh).Include(d => d.ThiSinhDangKy.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.ThiSinhDangKy.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(dangKyXetTuyens.ToPagedList(pageNumber, pageSize));
