@@ -107,6 +107,8 @@
 
     $(document).ready(function () {
         GetHvDuTuyen();
+        console.log(dutuyen_id,'dutuyen_id')
+
     });
     function GetHvDuTuyen() {
         $.ajax({
@@ -117,14 +119,12 @@
             async: false,
             success: function (res) {
                 if (res.success) {
-                    $("#div_add_data_dutuyen").hide();
-                    $("#div_view_data_dutuyen").show();
                     let data = res.data[0];
                     // Lấy ra ID dự tuyển để xuất phiếu
                     dutuyen_id = data.dt_ID;
-                    /*   console.log(data)*/
                     //return;
-
+                    $("#div_add_data_dutuyen").hide();
+                    $("#div_view_data_dutuyen").show();
                     $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
                     $('#View_HocVien_ChuyenNganhDuThi_MaCN').val(data.nmt_MaNganh);
                     if (data.Dt_MaNghienCuu == 1) {
@@ -1305,12 +1305,13 @@
             async: false,
             success: function (res) {
                 if (res.success) {
+                    let data = res.data[0];
+                    // Lấy ra ID dự tuyển để xuất phiếu
+                    dutuyen_id = data.dt_ID;
 
                     $("#div_add_data_dutuyen").hide();
                     $("#div_view_data_dutuyen").show();
                     $('#div_view_notification_server').show();
-
-                    let data = res.data[0];
                     $("#dutuyen_id_xoa").val(data.dt_ID);
 
                     if (data.Hv_LePhi_TrangThai == 0) {
