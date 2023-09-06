@@ -762,6 +762,8 @@
     <Content Include="Views\HocVienDangKies\HdSD.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenDetail.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyenEdit.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyen3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

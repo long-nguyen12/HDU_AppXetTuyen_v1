@@ -3,6 +3,11 @@
     ViewBag.Title = "Thông tin học viên";
     Layout = "~/Views/Shared/_Layout_master.cshtml";
 }
+<style>
+    .form-control{
+        border-radius: 3px;
+    }
+</style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
         <div class="page-header-content">
@@ -18,7 +23,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div id="div_hocvien_thongtin">
+    <div id="div_hocvien_view">
         <div class="card card-header-actions mt-0">
             <div class="card card-header-actions mt-0">
                 <div class="card-body" style="padding-bottom: 2px; padding-top: 4px">
@@ -260,7 +265,7 @@
                                                 </div>
                                                 <div class="col-lg-12 col-12 p-1 mt-4">
                                                     <center>
-                                                        <input class="btn btn-primary" type="submit" id="bt_hocvien_view_div_update" value="Cập nhật thông tin" />
+                                                        <input class="btn btn-primary" type="submit" id="bt_hocvien_view_div_update" value="Cập nhật thông tin"  style="border-radius: 3px;"/>
                                                     </center>
                                                 </div>
                                             </div>
@@ -273,7 +278,6 @@
             </div>
         </div>
     </div>
-
 
     <div id="div_hocvien_update" style="display:none">
         <div class="card card-header-actions mt-0">
@@ -542,8 +546,8 @@
                                                 </div>
                                                 <div class="col-lg-12 col-12 p-1 mt-4">
                                                     <center>
-                                                        <input class="btn btn-primary" type="submit" id="bt_submit_update_hocvien" value="Đồng ý" />
-                                                        <a class="btn btn-primary" href="#" id="bt_submit_cancel_hocvien">Hủy bỏ</a>
+                                                        <input class="btn btn-primary" type="submit" id="bt_submit_update_hocvien" value="Đồng ý" style="border-radius: 3px;" />
+                                                        <a class="btn btn-primary" href="#" id="bt_submit_cancel_hocvien" style="border-radius: 3px;">Hủy bỏ</a>
                                                     </center>
                                                 </div>
                                             </div>
@@ -608,19 +612,19 @@
         // hiển thị thông tin cho nơi sinh - Tỉnh
         $('#bt_hocvien_view_div_update').click(function () {
 
-            $('#div_hocvien_thongtin').css('display', 'none');
+            $('#div_hocvien_view').css('display', 'none');
             $('#div_hocvien_update').css('display', 'inline');
             View_Data_HocVien_Edit();
             View_Data_NoiSinh_Update();
         });
         $('#bt_submit_update_hocvien').click(function () {
             Submit_Data_HocVien_Update();
-            $('#div_hocvien_thongtin').css('display', 'inline');
+            $('#div_hocvien_view').css('display', 'inline');
             $('#div_hocvien_update').css('display', 'none');
           
         });
         $('#bt_submit_cancel_hocvien').click(function () {           
-            $('#div_hocvien_thongtin').css('display', 'inline');
+            $('#div_hocvien_view').css('display', 'inline');
             $('#div_hocvien_update').css('display', 'none');
         });
     })
@@ -703,7 +707,6 @@
                     $('#Update_HocVien_BangDaiHoc_DiemToanKhoa').val(data.HocVien_BDH_DiemToanKhoa);
                     $('#Update_HocVien_BangDaiHoc_LoaiTN').val(data.HocVien_BDH_LoaiTN);
                     $('#Update_HocVien_DoiTuongUuTien').val(data.HocVien_DoiTuongUuTien);
-
                     $('#Update_HocVien_NoiSinh_Key').val(data.HocVien_NoiSinh_ID);
                     $('#Update_HocVien_HoKhauThuongTru').val(data.HocVien_HoKhauThuongTru);
                     $('#Update_HocVien_NoiOHienNay').val(data.HocVien_NoiOHienNay);
@@ -846,10 +849,7 @@
             HocVien_NoiOHienNay: _hocVien_NoiOHienNay,
             HocVien_DiaChiLienHe: _hocVien_DiaChiLienHe,
         }
-
-
        /* $("#loadingModal").modal("show");*/
-
         $.ajax({
             url: "/HocVienDangKies/HvThongTinUpdate_DangKy",
             type: "POST",
@@ -859,7 +859,7 @@
                 if (response.success == true) {
                     /* $('#loadingModal').modal("hide");*/
                     $('#div_hocvien_update').css('display', 'none');
-                    $('#div_hocvien_thongtin').css('display', 'inline');
+                    $('#div_hocvien_view').css('display', 'inline');
                     View_Data_HocVien();
                     showToast("Thông báo", "Cập nhật dữ liệu thành công!", "bg-error");
                    
