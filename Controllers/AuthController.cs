@@ -562,13 +562,14 @@ namespace HDU_AppXetTuyen.Controllers
                 hv_new.HocVien_CCCD = hv_register.HocVien_CCCD;
                 hv_new.HocVien_CCCD_NgayCap = hv_register.HocVien_CCCD_NgayCap;
               
-                hv_new.HocVien_BangDaiHoc = hv_register.HocVien_BangDaiHoc;
-                hv_new.HocVien_BoTucKienThuc = hv_register.HocVien_BoTucKienThuc;
-                hv_new.HocVien_DoiTuongUuTien = hv_register.HocVien_DoiTuongUuTien;
+                hv_new.HocVien_BangDaiHoc ="";
+                hv_new.HocVien_BoTucKienThuc = -1;
+                hv_new.HocVien_DoiTuongUuTien = "";
 
                 hv_new.HocVien_DienThoai = hv_register.HocVien_DienThoai;
                 hv_new.HocVien_Email = hv_register.HocVien_Email;
                 hv_new.HocVien_HoKhauThuongTru = hv_register.HocVien_HoKhauThuongTru;
+                hv_new.HocVien_NoiOHienNay = hv_register.HocVien_HoKhauThuongTru;
                 hv_new.HocVien_DiaChiLienHe = hv_register.HocVien_DiaChiLienHe;
                 hv_new.HocVien_NoiSinh = hv_register.HocVien_NoiSinh;
               
@@ -578,12 +579,12 @@ namespace HDU_AppXetTuyen.Controllers
                 hv_new.HocVien_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 hv_new.HocVien_TrangThai = 0;
 
-                hv_new.HocVien_TenDonViCongTac = "";
-                hv_new.HocVien_ChuyenMon = "";
-                hv_new.HocVien_ThamNien = "";
-                hv_new.HocVien_ChucVu = "";
-                hv_new.HocVien_NamCT = "";
-                hv_new.HocVien_LoaiCB = -1;
+                hv_new.HocVien_TenDonViCongTac = hv_register.HocVien_TenDonViCongTac;
+                hv_new.HocVien_ChuyenMon = hv_register.HocVien_ChuyenMon;
+                hv_new.HocVien_ThamNien = hv_register.HocVien_ThamNien;
+                hv_new.HocVien_ChucVu = hv_register.HocVien_ChucVu;
+                hv_new.HocVien_NamCT = hv_register.HocVien_NamCT;
+                hv_new.HocVien_LoaiCB = hv_register.HocVien_LoaiCB;
 
                 db.HocVienDangKies.Add(hv_new);
                 db.SaveChanges();

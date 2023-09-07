@@ -105,6 +105,7 @@ namespace HDU_AppXetTuyen.Models
         public string HocVien_BangDaiHoc_HeDaoTao { get; set; }
         public string HocVien_BangDaiHoc_TenNganhTN { get; set; }
         public string HocVien_BangDaiHoc_NamTN { get; set; }
+        public string HocVien_BangDaiHoc_ThangDiem { get; set; }
         public string HocVien_BangDaiHoc_DiemToanKhoa { get; set; }       
         public string HocVien_BangDaiHoc_LoaiTN { get; set; }
     }   

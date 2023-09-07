@@ -39,6 +39,7 @@ namespace HDU_AppXetTuyen.Models
 
         [StringLength(100)]
         public string DuTuyen_NgayDangKy { get; set; }
+
         [StringLength(2500)]
         public string DuTuyen_GhiChu { get; set; }
         public int? DuTuyen_TrangThai { get; set; }

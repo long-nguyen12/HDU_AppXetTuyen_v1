@@ -63,9 +63,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
 
-        protected IList<HocVienDuTuyen> ListHvDuTuyenExport = null;
+        protected IList<HocVienDuTuyen> ListHvDuTuyenExport;
         // GET: Admin/HocVienDangKys
-        public ActionResult DsHvDuTuyen(string searchString, string currentFilter, string filteriDotxt, int? page)
+        public ActionResult DsHvDuTuyen(string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, string filteriDotxt, int? page)
         {
             var hocviens = db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).ToList();
 
@@ -83,7 +83,64 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             // thực hiện lọc 
 
             #endregion
+            #region lọc dữ liệu theo trạng thái theo dõi lệ phí
+            var list_items_lephi = (from item in hocviens select item.HocVien_LePhi_TrangThai).Distinct().ToList();
+            List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
 
+            foreach (var _item in list_items_lephi)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa đóng phí" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp lệ phí" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm duyệt" });
+                }
+                if (_item == 3)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 3, St_Name = "Thông tin lệ phí sai" });
+                }
+            }
+            ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
+
+            if (!String.IsNullOrEmpty(filteriLePhi))
+            {
+                int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
+                hocviens = hocviens.Where(x => x.HocVien_LePhi_TrangThai ==  _dkxt_TrangThai).ToList();
+            }
+            #endregion
+
+            #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
+            var list_items_hoso = (from item in hocviens select item.DuTuyen_TrangThai).Distinct().ToList();
+            List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
+
+            foreach (var _item in list_items_hoso)
+            {
+                if (_item == 0)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
+                }
+                if (_item == 1)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Minh chứng sai" });
+                }
+                if (_item == 2)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm duyệt" });
+                }
+            }
+            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
+            if (!String.IsNullOrEmpty(filteriHoSo))
+            {
+                int _dkxt_TrangThai_KetQua = Int32.Parse(filteriHoSo);
+                hocviens = hocviens.Where(x => x.DuTuyen_TrangThai == _dkxt_TrangThai_KetQua).ToList();
+            }
+            #endregion
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
             if (!String.IsNullOrEmpty(searchString))
@@ -109,6 +166,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.pageCurren = page;
             ViewBag.SearchString = searchString;
             ViewBag.filteriDotxtSort = filteriDotxt;
+            ViewBag.LePhiFilteri = filteriLePhi;
+            ViewBag.HoSoFilteri = filteriHoSo;
+
             ViewBag.totalRecod = hocviens.Count();
             ListHvDuTuyenExport = hocviens.ToList();
             #endregion

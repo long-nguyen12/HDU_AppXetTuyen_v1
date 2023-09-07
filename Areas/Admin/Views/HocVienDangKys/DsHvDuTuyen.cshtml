@@ -43,6 +43,20 @@
                         @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-xl-12">
+                        <select class = "form-select bd-rd">
+                            <option>Chọn ngành</option>
+                            <option>Khoa học máy tính</option>
+                            <option>Khoa học cây trồng</option>
+                        </select>
+                        @*@Html.DropDownList("filteriNganhHoc", null, "Ngành...", new { @class = "form-select bd-rd" })*@
+                    </div>
+                    <div class="col-xxl-2 col-xl-12">
+                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-xl-12">
+                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-xl-12">
                         @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control bd-rd", @placeholder = "Nhập từ khóa..." })
                     </div>
 
@@ -91,18 +105,18 @@
                 $(document).ready(function () {
                     let sp_tieude = document.getElementById('sp_tieude');
                     if (window.innerWidth <= 1200) {
-                        sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
+                        sp_tieude.innerText = "Danh sách học viên DK dự tuyển";
                     }
                     else {
-                        sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
+                        sp_tieude.innerText = "Danh sách học viên đăng ký dự tuyển";
                     }
 
                     function reportWindowSize() {
                         if (window.innerWidth <= 1200) {
-                            sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
+                            sp_tieude.innerText = "Danh sách học viên DK dự tuyển";
                         }
                         else {
-                            sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
+                            sp_tieude.innerText = "Danh sách học viên đăng ký dự tuyển";
                         }
                     }
                     window.onresize = reportWindowSize;
@@ -195,11 +209,11 @@
                                             }
                                         </td>
                                         <td style="text-align:center; vertical-align:middle">
-                                            <a href="@Url.Action("DsHvDuTuyenCheck","HocVienDangKys" , new {id = item.HocVien_ID})" class="btn btn-light btn-sm bt-hs bd-rd">Kiểm tra</a> | 
+                                            <a href="@Url.Action("DsHvDuTuyenCheck","HocVienDangKys" , new {id = item.HocVien_ID})" class="btn btn-light btn-sm bt-hs bd-rd">Kiểm tra</a> 
 
                                             @*<a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.HocVien_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
                                                 <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.HocVien_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |*@
-                                            <a href="@Url.Action("hvdk_Delete","HocVienDangKys" , new { id = item.HocVien_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                            @*<a href="@Url.Action("hvdk_Delete","HocVienDangKys" , new { id = item.HocVien_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>*@
                                         </td>
 
                                     </tr>

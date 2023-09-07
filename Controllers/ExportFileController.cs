@@ -707,34 +707,33 @@ namespace HDU_AppXetTuyen.Controllers
 
         public ActionResult DownloadFile_XetTuyenSDH(string dutuyen_id)
         {
-            System.Diagnostics.Debug.WriteLine("dutuyen_id: ", dutuyen_id);
+            System.Diagnostics.Debug.WriteLine("dutuyen_id_export: ", dutuyen_id);
 
-            var idHocVienInt = 0;
-            // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
-            if (Session["login_session"] == null)
-            {
-                idHocVienInt = 15;
-                System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
-            }
-            else
-            {
-                string str_hocvien_session = Session["login_session"].ToString();
-                var hocvien_session = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_hocvien_session).FirstOrDefault();
-                idHocVienInt = (int)hocvien_session.HocVien_ID;
-                System.Diagnostics.Debug.WriteLine("idHocVienInt: " + idHocVienInt);
-            }
+            //var idHocVienInt = 0;
+            //// Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
+            //if (Session["login_session"] == null)
+            //{
+            //    idHocVienInt = 15;
+            //    System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
+            //}
+            //else
+            //{
+            //    string str_hocvien_session = Session["login_session"].ToString();
+            //    var hocvien_session = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_hocvien_session).FirstOrDefault();
+            //    idHocVienInt = (int)hocvien_session.HocVien_ID;
+            //    System.Diagnostics.Debug.WriteLine("idHocVienInt: " + idHocVienInt);
+            //}
 
-            string templateFilePath = Server.MapPath("~/Content/static/export-2023-phieu-dang-ky-du-thi-thac-si-2023.docx");
-            var hocVienInfo = db.HocVienDangKies.Find(idHocVienInt);
             int idDuTuyenInt = int.Parse(dutuyen_id);
-
             var duTuyenInfo = db.HocVienDuTuyens.Find(idDuTuyenInt);
+            var hocVienInfo = db.HocVienDangKies.Find(duTuyenInfo.HocVien_ID);   
 
+            string templateFilePath = Server.MapPath("~/Content/static/export-2023-phieu-dang-ky-du-thi-thac-si-2023.docx");          
+          
             // Từ dự tuyển lấy ra ngành đăng ký
             var nganhDangKy = db.NganhMasters.Find(duTuyenInfo.Nganh_Mt_ID);
             // Từ id nơi sinh lấy ra tên nơi sinh
             var noisinh = db.Tinhs.Find(hocVienInfo.HocVien_NoiSinh).Tinh_Ten;
-
 
             var jsonStringBangDaiHoc = JsonConvert.SerializeObject(hocVienInfo.HocVien_BangDaiHoc);
             // BangDaiHoc khai báo trong  Model.LibraryUsers
@@ -821,9 +820,7 @@ namespace HDU_AppXetTuyen.Controllers
                 byte[] fileBytes = System.IO.File.ReadAllBytes(tempFilePath);
                 return File(fileBytes, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileName);
             }
-
         }
-
 
         public string getBSKienThucById(int? id)
         {
