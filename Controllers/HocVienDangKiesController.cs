@@ -179,6 +179,8 @@ namespace HDU_AppXetTuyen.Controllers
 
                     DuTuyen_ID_Present = s.DuTuyen_ID,
                     Hv_ID = s.HocVien_ID,
+                    Dt_TrangThai = s.DuTuyen_TrangThai,
+                    Dt_ThongBaoKiemDuyet = s.DuTuyen_ThongBaoKiemDuyet,
                     maNganh_ID = s.Nganh_Mt_ID,
                     nmt_MaNganh = s.NganhMaster.Nganh_Mt_MaNganh,
                     nmt_TenNganh = s.NganhMaster.Nganh_Mt_TenNganh,
@@ -264,6 +266,7 @@ namespace HDU_AppXetTuyen.Controllers
             model.HocVien_MCKhac = entity.HocVien_MCKhac;
 
             model.HocVien_LePhi_TrangThai = 0;
+            model.HocVien_LePhi_MaThamChieu = "0";
 
             db.HocVienDuTuyens.Add(model);
 
@@ -271,8 +274,6 @@ namespace HDU_AppXetTuyen.Controllers
             #region Gửi mail xác thực
 
             var nganh_detail = db.NganhMasters.Where(x => x.Nganh_Mt_ID == entity.Nganh_Mt_ID).FirstOrDefault();
-
-
             SendEmail send = new SendEmail();
             var subject = "Đăng ký dự tuyển sau đại học";
             var body = "Xin chào " + hv_detail.HocVien_HoDem + " " + hv_detail.HocVien_Ten + ", <br/> Bạn vừa đăng ký thành công dự tuyển sau đại học trên hệ thống trực tuyến của trường Đại học Hồng Đức." +
@@ -332,8 +333,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         [ThiSinhSessionCheck]
         public JsonResult DkDuTuyenEdit_MCLePhi(HocVienDuTuyen entity)
-        {
-          
+        {          
             try
             {
                 HocVienDuTuyen model = db.HocVienDuTuyens.Find(entity.DuTuyen_ID);

@@ -24,13 +24,13 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
         public ActionResult testMtDR()
         {
-            return View();  
+            return View();
         }
         public ActionResult DsHvDangKy(string searchString, string currentFilter, string filteriDotxt, int? page)
         {
             var hocviens = db.HocVienDangKies.ToList();
 
-        
+
 
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
@@ -56,7 +56,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             ViewBag.pageCurren = page;
             ViewBag.SearchString = searchString;
-         
+
             ViewBag.totalRecod = hocviens.Count();
 
             #endregion
@@ -65,9 +65,13 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         protected IList<HocVienDuTuyen> ListHvDuTuyenExport;
         // GET: Admin/HocVienDangKys
-        public ActionResult DsHvDuTuyen(string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, string filteriDotxt, int? page)
+        public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, 
+            string filteriDotxt, string sortOrder, int? page)
         {
-            var hocviens = db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).ToList();
+            var hocviens = db.HocVienDuTuyens
+                             .Include(h => h.DotXetTuyen)
+                             .Include(h => h.HocVienDangKy)
+                             .Include(h => h.NganhMaster).ToList();
 
 
             #region lọc dữ liệu theo đợt
@@ -83,6 +87,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             // thực hiện lọc 
 
             #endregion
+
+            #region lọc dữ liệu theo ngành
+            var list_items_nganh = (from item in hocviens select new { item.NganhMaster.Nganh_Mt_ID, item.NganhMaster.Nganh_Mt_TenNganh }).Distinct().ToList();
+
+            ViewBag.filteriNganhHoc = new SelectList(list_items_nganh.OrderBy(x => x.Nganh_Mt_ID).ToList(), "Nganh_Mt_ID", "Nganh_Mt_TenNganh");
+
+            if (!String.IsNullOrEmpty(filteriNganhHoc))
+            {
+                int _nganh_Mt_ID = Int32.Parse(filteriNganhHoc);
+                hocviens = hocviens.Where(x => x.Nganh_Mt_ID == _nganh_Mt_ID).ToList();
+            }
+            #endregion
+
             #region lọc dữ liệu theo trạng thái theo dõi lệ phí
             var list_items_lephi = (from item in hocviens select item.HocVien_LePhi_TrangThai).Distinct().ToList();
             List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
@@ -99,11 +116,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 }
                 if (_item == 2)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm duyệt" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Mã tham chiếu sai" });
                 }
-                if (_item == 3)
+                if (_item == 9)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 3, St_Name = "Thông tin lệ phí sai" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm duyệt" });
                 }
             }
             ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -111,7 +128,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (!String.IsNullOrEmpty(filteriLePhi))
             {
                 int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
-                hocviens = hocviens.Where(x => x.HocVien_LePhi_TrangThai ==  _dkxt_TrangThai).ToList();
+                hocviens = hocviens.Where(x => x.HocVien_LePhi_TrangThai == _dkxt_TrangThai).ToList();
             }
             #endregion
 
@@ -121,24 +138,24 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             foreach (var _item in list_items_hoso)
             {
-                if (_item == 0)
-                {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
-                }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Minh chứng sai" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm duyệt" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Có sai sót" });
+                }
+                if (_item == 9)
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm duyệt" });
                 }
             }
             ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
             if (!String.IsNullOrEmpty(filteriHoSo))
             {
-                int _dkxt_TrangThai_KetQua = Int32.Parse(filteriHoSo);
-                hocviens = hocviens.Where(x => x.DuTuyen_TrangThai == _dkxt_TrangThai_KetQua).ToList();
+                int _duTuyen_TrangThai = Int32.Parse(filteriHoSo);
+                hocviens = hocviens.Where(x => x.DuTuyen_TrangThai == _duTuyen_TrangThai).ToList();
             }
             #endregion
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
@@ -151,6 +168,54 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                     || h.HocVienDangKy.HocVien_DienThoai.Contains(searchString)).ToList();
 
             }
+            #endregion
+
+            #region phần sắp xếp theo các cột dữ liệu
+            // 
+            ViewBag.HocVien_HoDem = sortOrder == "hodem_asc" ? "hodem_desc" : "td_asc";
+            ViewBag.HocVien_Ten = sortOrder == "ten_asc" ? "ten_desc" : "ten_asc";
+            ViewBag.Nganh_Mt_TenNganh = sortOrder == "tennganh_asc" ? "tennganh_desc" : "tennganh_asc";
+            ViewBag.DuTuyen_TrangThai = sortOrder == "hoSo_asc" ? "hoSo_desc" : "hoSo_asc";
+            ViewBag.HocVien_LePhi_TrangThai = sortOrder == "lePhi_asc" ? "lePhi_desc" : "lePhi_asc";
+
+            switch (sortOrder)
+            {
+                case "hodem_desc":
+                    hocviens = hocviens.OrderByDescending(m => m.HocVienDangKy.HocVien_HoDem).ToList();
+                    break;
+                case "hodem_asc":
+                    hocviens = hocviens.OrderBy(m => m.HocVienDangKy.HocVien_HoDem).ToList();
+                    break;
+
+                case "ten_desc":
+                    hocviens = hocviens.OrderByDescending(m => m.HocVienDangKy.HocVien_Ten).ToList();
+                    break;
+                case "ten_asc":
+                    hocviens = hocviens.OrderBy(m => m.HocVienDangKy.HocVien_Ten).ToList();
+                    break;
+
+                case "tennganh_desc":
+                    hocviens = hocviens.OrderByDescending(m => m.NganhMaster.Nganh_Mt_TenNganh).ToList();
+                    break;
+                case "tennganh_asc":
+                    hocviens = hocviens.OrderBy(m => m.NganhMaster.Nganh_Mt_TenNganh).ToList();
+                    break;
+
+                case "hoSo_asc":
+                    hocviens = hocviens.OrderByDescending(m => m.DuTuyen_TrangThai).ToList();
+                    break;
+                case "hoSo_desc":
+                    hocviens = hocviens.OrderBy(m => m.DuTuyen_TrangThai).ToList();
+                    break;
+
+                case "lePhi_desc":
+                    hocviens = hocviens.OrderByDescending(m => m.HocVien_LePhi_TrangThai).ToList();
+                    break;
+                case "lePhi_asc":
+                    hocviens = hocviens.OrderBy(m => m.HocVien_LePhi_TrangThai).ToList();
+                    break;
+            }
+
             #endregion
             // thực hiện phân trang
             #region Phân trang
@@ -168,6 +233,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.filteriDotxtSort = filteriDotxt;
             ViewBag.LePhiFilteri = filteriLePhi;
             ViewBag.HoSoFilteri = filteriHoSo;
+            ViewBag.CurrentSort = sortOrder;
 
             ViewBag.totalRecod = hocviens.Count();
             ListHvDuTuyenExport = hocviens.ToList();
@@ -175,6 +241,155 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
 
+
+        public ActionResult DsHvDuTuyenKiemTraHoSo(int? duTuyen_ID, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
+        {
+            if (!String.IsNullOrEmpty(duTuyen_ID.ToString()))
+            {
+                ViewBag.NganhFilteri = filteriNganh;
+                ViewBag.LePhiFilteri = filteriLePhi;
+                ViewBag.HoSoFilteri = filteriHoSo;
+                ViewBag.SearchString = searchString;
+                ViewBag.pageCurren = page;
+                ViewBag.DuTuyen_ID = duTuyen_ID;
+                return View();
+
+            }
+            else
+            {
+                return RedirectToAction("DsHvDuTuyen", "HocVienDangKys");
+            }
+        }
+
+        public JsonResult DsHvDuTuyenKiemTraHoSoJson(HocVienDuTuyen entity)
+        {
+            HocVienDuTuyen model = db.HocVienDuTuyens
+                                    .Include(h => h.DotXetTuyen)
+                                    .Include(h => h.HocVienDangKy)
+                                    .Include(h => h.NganhMaster)
+                                    .Where(x => x.DuTuyen_ID == entity.DuTuyen_ID)
+                                    .FirstOrDefault();
+            BangDaiHoc bangDaiHoc = JsonConvert.DeserializeObject<BangDaiHoc>(model.HocVienDangKy.HocVien_BangDaiHoc);
+
+
+            var data_hv = new
+            {
+                HocVien_HoDem = model.HocVienDangKy.HocVien_HoDem,
+                HocVien_Ten = model.HocVienDangKy.HocVien_Ten,
+                HocVien_GioiTinh = model.HocVienDangKy.HocVien_GioiTinh,
+                HocVien_DanToc = model.HocVienDangKy.HocVien_DanToc,
+                HocVien_NgaySinh = model.HocVienDangKy.HocVien_NgaySinh,
+                HocVien_CCCD = model.HocVienDangKy.HocVien_CCCD,
+                HocVien_CCCD_NgayCap = model.HocVienDangKy.HocVien_CCCD_NgayCap,
+                HocVien_DienThoai = model.HocVienDangKy.HocVien_DienThoai,
+                HocVien_Email = model.HocVienDangKy.HocVien_Email,
+
+                HocVien_DoiTuongUuTien = model.HocVienDangKy.HocVien_DoiTuongUuTien,
+                HocVien_BoTucKienThuc = model.HocVienDangKy.HocVien_BoTucKienThuc,
+                HocVien_NoiSinh = model.HocVienDangKy.HocVien_NoiSinh,
+                HocVien_HoKhauThuongTru = model.HocVienDangKy.HocVien_HoKhauThuongTru,
+                HocVien_NoiOHienNay = model.HocVienDangKy.HocVien_NoiOHienNay,
+                HocVien_DiaChiLienHe = model.HocVienDangKy.HocVien_DiaChiLienHe,
+
+                HocVien_TenDonViCongTac = model.HocVienDangKy.HocVien_TenDonViCongTac,
+                HocVien_ChuyenMon = model.HocVienDangKy.HocVien_ChuyenMon,
+                HocVien_ThamNien = model.HocVienDangKy.HocVien_ThamNien,
+                HocVien_ChucVu = model.HocVienDangKy.HocVien_ChucVu,
+                HocVien_NamCT = model.HocVienDangKy.HocVien_NamCT,
+                HocVien_LoaiCB = model.HocVienDangKy.HocVien_LoaiCB,
+
+
+                DuTuyen_ID = model.DuTuyen_ID,
+                HocVien_ID = model.HocVien_ID,
+                DuTuyen_TrangThai = model.DuTuyen_TrangThai,
+                DuTuyen_ThongBaoKiemDuyet = model.DuTuyen_ThongBaoKiemDuyet,
+                DuTuyen_NgayDangKy = model.DuTuyen_NgayDangKy,
+                Dxt_ID = model.Dxt_ID,
+                DuTuyen_MaNghienCuu = model.DuTuyen_MaNghienCuu,
+                Nganh_Mt_ID = model.Nganh_Mt_ID,
+                HocVien_DKDTNgoaiNgu = model.HocVien_DKDTNgoaiNgu,
+                HocVien_VanBangNgoaiNgu = model.HocVien_VanBangNgoaiNgu,
+                HocVien_DoiTuongDuThi = model.HocVien_DoiTuongDuThi,
+
+                HocVien_SoYeuLyLich = model.HocVien_SoYeuLyLich,
+                HocVien_MCBangDaiHoc = model.HocVien_MCBangDaiHoc,
+                HocVien_MCBangDiem = model.HocVien_MCBangDiem,
+                HocVien_MCGiayKhamSucKhoe = model.HocVien_MCGiayKhamSucKhoe,
+                HocVien_Anh46 = model.HocVien_Anh46,
+                HocVien_MCCCNN = model.HocVien_MCCCNN,
+                HocVien_MCKhac = model.HocVien_MCKhac,
+
+                HocVien_LePhi_MaThamChieu = model.HocVien_LePhi_MaThamChieu,
+                HocVien_LePhi_TepMinhChung = model.HocVien_LePhi_TepMinhChung,
+                HocVien_LePhi_NgayNop = model.HocVien_LePhi_NgayNop,
+                HocVien_LePhi_TrangThai = model.HocVien_LePhi_TrangThai,
+
+                Hv_BangDaiHoc_TenTruongTN = bangDaiHoc.HocVien_BangDaiHoc_TenTruongTN,
+                Hv_BangDaiHoc_HeDaoTao = bangDaiHoc.HocVien_BangDaiHoc_HeDaoTao,
+                Hv_BangDaiHoc_TenNganhTN = bangDaiHoc.HocVien_BangDaiHoc_TenNganhTN,
+                Hv_BangDaiHoc_NamTN = bangDaiHoc.HocVien_BangDaiHoc_NamTN,
+                Hv_BangDaiHoc_ThangDiem = bangDaiHoc.HocVien_BangDaiHoc_ThangDiem,
+                Hv_BangDaiHoc_DiemToanKhoa = bangDaiHoc.HocVien_BangDaiHoc_DiemToanKhoa,
+                Hv_BangDaiHoc_LoaiTN = bangDaiHoc.HocVien_BangDaiHoc_LoaiTN,
+
+                Nganh_Mt_MaNganh = model.NganhMaster.Nganh_Mt_MaNganh,
+                Nganh_Mt_TenNganh = model.NganhMaster.Nganh_Mt_TenNganh,
+                Nganh_Mt_NghienCuu_Ten = model.NganhMaster.Nganh_Mt_NghienCuu_Ten,
+
+
+            };
+            return Json(new { success = true, data = data_hv }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DsHvDuTuyenCapNhatThongTinHoso(HocVienDuTuyen entity)
+        {
+            var model = db.HocVienDuTuyens
+                          .Include(h => h.DotXetTuyen)
+                          .Include(h => h.HocVienDangKy)
+                          .Include(h => h.NganhMaster)
+                          .Where(x => x.DuTuyen_ID == entity.DuTuyen_ID).FirstOrDefault();
+
+            model.DuTuyen_TrangThai = entity.DuTuyen_TrangThai;
+            model.DuTuyen_ThongBaoKiemDuyet = entity.DuTuyen_ThongBaoKiemDuyet;
+            model.HocVien_LePhi_TrangThai = entity.HocVien_LePhi_TrangThai;
+            db.SaveChanges();
+
+            #region Gửi mail xác thực         
+            var dotdt = db.DotXetTuyens.Where(x => x.Dxt_Classify == 2 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+
+            SendEmail send = new SendEmail();
+            var subject = "Đăng ký dự tuyển sau đại học";
+            string str_trangthai_hoso = "";
+            string str_trangthai_lephi = "";
+            if (model.DuTuyen_TrangThai == 2)
+            {
+                str_trangthai_hoso = "- Hồ sơ của bạn có thông tin sai, vui lòng đăng nhập hệ thống kiểm tra lại";
+            }
+            if (model.DuTuyen_TrangThai == 9)
+            {
+                str_trangthai_hoso = "- Hồ sơ của bạn đúng và đầy đủ thông tin";
+            }
+
+            if (model.HocVien_LePhi_TrangThai == 2)
+            {
+                str_trangthai_lephi = " Có sai sót, vui lòng đăng nhập và kiểm tra lại";
+            }
+            if (model.HocVien_LePhi_TrangThai == 9)
+            {
+                str_trangthai_lephi = " Đúng, đủ";
+            }
+            var body = "Xin chào " + model.HocVienDangKy.HocVien_HoDem + " " + model.HocVienDangKy.HocVien_Ten + ", <br/> Hệ thống đã kiểm duyệt hồ sơ  đăng ký dự tuyển sau đại học của bạn tại trường Đại học Hồng Đức." +
+                 "<br/> - Chuyên ngành đăng ký:" +
+                 "<br/> + Mã chuyên ngành: " + model.NganhMaster.Nganh_Mt_MaNganh +
+                 "<br/> + Tên chuyên ngành: " + model.NganhMaster.Nganh_Mt_TenNganh +
+                 "<br/> - Đợt tuyển: " + dotdt.Dxt_Ten + ", từ ngày:" + dotdt.Dxt_ThoiGian_BatDau + " đến ngày: " + dotdt.Dxt_ThoiGian_KetThuc +
+                 "<br/> - Thông tin nộp hồ sơ: " + str_trangthai_hoso +
+                 "<br/> - Thông tin nộp lệ phí: " + str_trangthai_lephi + "<br/>";
+            send.Sendemail(model.HocVienDangKy.HocVien_Email, body, subject);
+            #endregion
+
+            return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
+        }
         public void ExportHvDKDuTuyen()
         {
             var ListHvDts = ListHvDuTuyenExport;// db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).ToList();

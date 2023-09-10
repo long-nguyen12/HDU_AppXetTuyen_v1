@@ -485,6 +485,8 @@
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens\MasterEdit.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\testMtDR.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDuTuyenKiemTraHoSo.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDuTuyen_OK.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -753,10 +755,10 @@
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
-    <Content Include="Views\Auth\RegisterMaster.cshtml" />
+    <Content Include="Views\Auth\RegisterMaster_OK.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_master.cshtml" />
-    <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
+    <Content Include="Views\HocVienDangKies\HvThongTin_OK.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen2.cshtml" />
     <Content Include="Views\HocVienDangKies\KqDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\HdSD.cshtml" />
@@ -764,6 +766,11 @@
     <Content Include="Views\HocVienDangKies\DkDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen3.cshtml" />
+    <Content Include="Views\Auth\RegisterMaster.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyen_OK.cshtml" />
+    <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyen_sua0609.cshtml" />
+    <Content Include="Views\HocVienDangKies\DkDuTuyenEdit_OK.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

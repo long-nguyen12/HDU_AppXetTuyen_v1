@@ -13,7 +13,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span> Quản lý danh mục học viên đăng ký tài khoản</span>
+                        <span> Quản lý danh mục thông tin học viên đăng ký</span>
                     </div>
                 </div>
             </div>
@@ -45,20 +45,13 @@
             }
             <script>
                 $(document).ready(function () {
-                    let sp_tieude = document.getElementById('sp_tieude');
-                    if (window.innerWidth <= 1200) {
-                        sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
-                    }
-                    else {
-                        sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
-                    }
-
+                    let sp_tieude = document.getElementById('sp_tieude');                  
                     function reportWindowSize() {
                         if (window.innerWidth <= 1200) {
-                            sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
+                            sp_tieude.innerText = "DS Học viên đăng ký";
                         }
                         else {
-                            sp_tieude.innerText = "Quản lý danh sách học viên đăng ký";
+                            sp_tieude.innerText = "Danh sách học viên đăng ký";
                         }
                     }
                     window.onresize = reportWindowSize;
