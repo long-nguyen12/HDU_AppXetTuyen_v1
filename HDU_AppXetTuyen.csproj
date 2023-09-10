@@ -162,6 +162,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminAccountsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminAuthController.cs" />
     <Compile Include="Areas\Admin\Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\DanhMucDonVisController.cs" />
@@ -485,6 +486,11 @@
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens\MasterEdit.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\testMtDR.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccounts\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccounts\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccounts\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccounts\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAccounts\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

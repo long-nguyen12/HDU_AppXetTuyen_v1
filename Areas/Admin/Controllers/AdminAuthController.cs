@@ -38,24 +38,40 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(AdminAccount admin_login)
+        public ActionResult Login(FormCollection admin_login)
         {
+            string id_hedaotao = admin_login["radioHeDaoTao"];
+            // 1 Sau đại học, 0 Đại học, 3 Năng khiếu
+
             if (Session["admin_login_session"] != null)
             {
                 return RedirectToAction("Index", "HomeAdmin");
             }
-            string admin_password = admin_login.Admin_Pass;
-            string admin_user = admin_login.Admin_Username;
+            string admin_password = admin_login["Admin_Pass"].ToString();
+            string admin_user = admin_login["Admin_Username"].ToString();
 
-            var login_details = db.AdminAccounts.Where(x => x.Admin_Username == admin_login.Admin_Username).FirstOrDefault();
+            var login_details = db.AdminAccounts.Where(x => x.Admin_Username == admin_user).FirstOrDefault();
             if (login_details != null)
             {
                 bool verifiedPassword = Verify(admin_user, admin_password, login_details.Admin_Pass);
                 if (verifiedPassword == true)
                 {
-                    Session["admin_login_session"] = login_details.Admin_Pass;
                     ViewBag.LoginErrorMessager = "";
-                    return RedirectToAction("Index", "HomeAdmin");
+
+                    // 1 Sau đại học, 0 Đại học
+                    if (id_hedaotao == "1" && login_details.Admin_Quyen == "2") {
+                        Session["admin_login_session"] = login_details.Admin_Pass;
+                        return RedirectToAction("DsHvDangKy", "HocVienDangKys");
+                    }
+                    else if (id_hedaotao == "0" && login_details.Admin_Quyen == "1")
+                    {
+                        Session["admin_login_session"] = login_details.Admin_Pass;
+                        return RedirectToAction("Index", "HomeAdmin");
+                    }else
+                    {
+                        ViewBag.LoginErrorMessager = "Không tìm thấy thông tin tài khoản";
+                        return View();
+                    }
                 }
                 else
                 {
