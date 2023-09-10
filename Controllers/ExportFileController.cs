@@ -709,21 +709,6 @@ namespace HDU_AppXetTuyen.Controllers
         {
             System.Diagnostics.Debug.WriteLine("dutuyen_id_export: ", dutuyen_id);
 
-            //var idHocVienInt = 0;
-            //// Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
-            //if (Session["login_session"] == null)
-            //{
-            //    idHocVienInt = 15;
-            //    System.Diagnostics.Debug.WriteLine("login_session is NULL: ");
-            //}
-            //else
-            //{
-            //    string str_hocvien_session = Session["login_session"].ToString();
-            //    var hocvien_session = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_hocvien_session).FirstOrDefault();
-            //    idHocVienInt = (int)hocvien_session.HocVien_ID;
-            //    System.Diagnostics.Debug.WriteLine("idHocVienInt: " + idHocVienInt);
-            //}
-
             int idDuTuyenInt = int.Parse(dutuyen_id);
             var duTuyenInfo = db.HocVienDuTuyens.Find(idDuTuyenInt);
             var hocVienInfo = db.HocVienDangKies.Find(duTuyenInfo.HocVien_ID);   

@@ -48,7 +48,6 @@
 </header>
 
 <div class="container-fluid px-12">
-
     <div id="div_view_data_dutuyen" style="display:none">
         <div class="card card-header-actions">
             <div class="card-header mt-0 mb-0">
@@ -94,7 +93,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-5 col-12 p-1">
+                                            <div class="col-lg-5 col-6 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Năm tốt nghiệp</label>
                                                     <div class="col-md-12">
@@ -102,7 +101,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-7 col-12 p-1">
+                                            <div class="col-lg-7 col-6 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Loại tốt nghiệp</label>
                                                     <div class="col-md-12">
@@ -116,13 +115,12 @@
                                                     <label class="control-label col-md-12">Điểm trung bình toàn khóa</label>
                                                     <div class="col-md-12">
                                                         <input class="form-control" id="View_HocVien_BangDaiHoc_DiemToanKhoa" name="View_HocVien_BangDaiHoc_DiemToanKhoa" type="text" disabled />
-                                                        @*<input class="form-control" id="View_HocVien_BangDaiHoc_Select_ThangDiem" name="View_HocVien_BangDaiHoc_Select_ThangDiem" type="text" disabled />*@
                                                     </div>
                                                 </div>
                                             </div>
 
 
-                                            <div class="col-lg-6 col-6 p-1">
+                                            <div class="col-lg-6 col-5 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Đối tượng ưu tiên</label>
                                                     <div class="col-md-12">
@@ -130,10 +128,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
+                                            <div class="col-lg-6 col-7 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Học BS kiến thức</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="iew_HocVien_BoTucKienThuc" name="HocVien_BoTucKienThuc" type="text" disabled value="Đúng chuyên ngành" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -346,32 +348,7 @@
         <input type="hidden" style="display:none" id="hiden_duongdan_file_xoa" />
         <input type="hidden" style="display:none" id="hiden_loai_minhchung_xoa" />
 
-        <div id="div_view_img" style="display:none">
-            <div class="row">
-                <div class="col-xl-12 mt-2">
-                    <div class="card card-header-actions">
-                        <div class="card-header mt-0 mb-0">
-                            <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
-                            <div>
-                                @*<a class="btn btn-danger btn-sm" id="bt_delete_minhchung" onclick="bt_delete_minhchung_click()">Xóa</a>&ensp;
-                                    <a class="btn btn-primary btn-sm" id="bt_close_div_view_img">Đóng</a>*@
-                                <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
-                            </div>
-                        </div>
-                        <div class="card-body" style="margin: 0px!important">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active" id="div_item_view_minhchung">
-                                        <img class="d-block w-100 img-hide" id="img_view" display:none">
-                                        <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <script>
             $(document).ready(function () {
@@ -410,31 +387,75 @@
                             $('#View_HocVien_BangDaiHoc_LoaiTN').val(data.Hv_BangDaiHoc_LoaiTN);
                             $('#View_HocVien_DoiTuongUuTien').val(data.Hv_DoiTuongUuTien);
 
+                            if (data.Dt_TrangThai == 1) {
+                                $("#txt_infor_hs1").text("- Đã đăng ký thành công, chờ kiểm duyệt của admin.");
+                                $("#txt_infor_hs2").hide();
+                                $("#txt_infor_hs2").text('');
+                                $("#txt_infor_hs3").hide();                              
+                                $("#txt_infor_hs3").text('');
+                            }
+
+                            if (data.Dt_TrangThai == 2) {
+                                $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
+                                $("#txt_infor_hs2").text("=>  Hồ sơ có thông tin sai, học viên cần cập nhật lại các thông tin sau:");
+                                $("#txt_infor_hs3").text("=>  thông tin sai:");
+                            }
+                            if (data.Dt_TrangThai == 9) {
+                                $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
+                                $("#txt_infor_hs2").text("=> Hồ sơ đầy đủ, không sai sót:");                               
+                                $("#txt_infor_hs3").text('');
+                                $("#txt_infor_hs3").hide();
+                            }
+                            
 
                             if (data.Hv_LePhi_TrangThai == 0) {
-                                $("#txt_infor1").text("- Đã đăng ký thành công, chờ kiểm duyệt của admin.");
-                                $("#txt_infor2").text("- Chưa có thông tin đóng phí.");
-                                $("#txt_infor2").css('color', 'red');
+
+                                $("#txt_infor_lp1").text("- Chưa có thông tin đóng phí.");
+                                $("#txt_infor_lp1").css('color', 'red');
                                 $("#bt_update_mc_lephi").show();
+
+                                $("#txt_infor_lp2").hide();
+                                $("#txt_infor_lp2").text('');
+                                $("#txt_infor_lp3").hide();
+                                $("#txt_infor_lp3").text('');
                             }
 
                             if (data.Hv_LePhi_TrangThai == 1) {
-                                $("#txt_infor1").text("- Đã đăng ký thành công, chờ kiểm duyệt của admin.");
-                                $("#txt_infor2").text("- Đã nộp lệ phí, mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
-                                $("#txt_infor2").css('color', 'blue');
+                                
+                                $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, chờ kiểm duyệt của admin.");
+                                $("#txt_infor_lp1").show();
+                                          
+                                $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
+                                $("#txt_infor_lp2").css('color', 'blue');
+                                $("#txt_infor_lp2").show();                  
+
                                 $("#bt_update_mc_lephi").show();
+                                $("#txt_infor_lp3").hide();
+                                $("#txt_infor_lp3").text('');
+                                /* */
+                                
+                                if (data.Hv_LePhi_TepMinhChung) {
+                                    const ArrMCLePhi = data.Hv_LePhi_TepMinhChung.split("#");
+                                    for (i = 0; i < ArrMCLePhi.length; i++) {
+                                        if (ArrMCLePhi[i].length > 0) {
+                                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMCLePhi[i]}', 10,${data.dt_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                            $('#txt_update_mc_lephi').append(str_a);
+                                        }
+                                    }
+                                }
+                                else {
+                                    var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                                    $('#txt_update_mc_lephi').append(str_a);
+                                }
+
                             }
-                            if (data.Hv_LePhi_TrangThai == 2) {
-                                $("#txt_infor1").text("- Đã đăng ký thành công, đã được kiểm duyệt.");
-                                $("#txt_infor2").text("- Đã nộp lệ phí, mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + ", Đã được hệ thống kiểm tra.");
-                                $("#txt_infor2").css('color', 'blue');
+
+                            
+                            if (data.Hv_LePhi_TrangThai == 9) {
+                                $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, admin đã kiểm duyệt.");
+                                $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
+                                $("#txt_infor_lp2").css('color', 'blue');
                                 $("#bt_update_mc_lephi").hide();
-                            }
-                            if (data.Hv_LePhi_TrangThai == 3) {
-                                $("#txt_infor1").text("- Đã đăng ký thành công, đã được kiểm duyệt.");
-                                $("#txt_infor2").text("- Sai thông tin đóng phí, mã tham chiếu " + data.Hv_LePhi_MaThamChieu + ", Cần bổ sung chỉnh sửa.");
-                                $("#txt_infor2").css('color', 'red');
-                                $("#bt_update_mc_lephi").show();
                             }
 
                             $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
@@ -636,6 +657,19 @@
                 if (loaimc == 4) {
                     $('#img_txt_card_hearder').text('Giấy khám sức khỏe');
                 }
+
+                if (loaimc == 5) {
+                    $('#img_txt_card_hearder').text('Minh chứng ảnh 4x6');
+                }
+                if (loaimc == 6) {
+                    $('#img_txt_card_hearder').text('Minh chứng văn bằng chứng chỉ ngoại ngữ');
+                }
+                if (loaimc == 7) {
+                    $('#img_txt_card_hearder').text('Minh chứng khác');
+                }             
+                if (loaimc == 10) {
+                    $('#img_txt_card_hearder').text('Minh chứng nộp lệ phí');
+                }
                 var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 
                 if (lastChar.toLowerCase() != ".pdf") {
@@ -792,6 +826,32 @@
             });
         </script>
     </div>
+    <div id="div_view_img" style="display:none">
+        <div class="row">
+            <div class="col-xl-12 mt-2">
+                <div class="card card-header-actions">
+                    <div class="card-header mt-0 mb-0">
+                        <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
+                        <div>
+                            @*<a class="btn btn-danger btn-sm" id="bt_delete_minhchung" onclick="bt_delete_minhchung_click()">Xóa</a>&ensp;
+                                <a class="btn btn-primary btn-sm" id="bt_close_div_view_img">Đóng</a>*@
+                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin: 0px!important">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" id="div_item_view_minhchung">
+                                    <img class="d-block w-100 img-hide" id="img_view" display:none">
+                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="div_view_notification_server" style="display:none">
         <div class="row">
             <div class="col-xl-12 mt-2">
@@ -802,13 +862,58 @@
                             <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_notification_server"></button>
                         </div>
                     </div>
-                    <div class="card-body" style="margin: 0px!important">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active" id="div_thongbao">
-                                    <p class="mt-0 mb-2"><span id="txt_infor1"></span></p>
-                                    <p class="mt-0 mb-0"><span id="txt_infor2" style="color:blue"></span> <span id="sp_button" style="color:blue">(<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a>)</span>  </p>
-                                </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Trạng thái nộp hồ sơ
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-12 p-1">
+                                                        <p class="mt-0 mb-2" id="txt_infor_hs1"></p>
+                                                        <p class="mt-0 mb-2" id="txt_infor_hs2"></p>
+                                                        <p class="mt-0 mb-2" id="txt_infor_hs3"></p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </div>
+                            <div class="col-lg-6">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Trạng thái nộp lệ phí
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-12 p-1">
+                                                        <p class="mt-0 mb-2" id="txt_infor_lp1"></p>
+                                                        <p class="mt-0 mb-2" id="txt_infor_lp2"></p>
+                                                        <p class="mt-0 mb-2" id="txt_infor_lp3"></p>
+
+                                                        <p class="mt-0 mb-0" id="txt_update_mc_lephi">
+                                                            <a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> | 
+                                                        </p>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -817,7 +922,7 @@
         </div>
     </div>
 
-    <div id="div_add_data_dutuyen"  style="display:none">
+    <div id="div_add_data_dutuyen" style="display:none">
         <div class="card card-header-actions">
             <div class="card-header mt-0 mb-0">
                 <span>Đăng ký dự tuyển mới</span>
@@ -1215,7 +1320,7 @@
                 setInputFilter(document.getElementById("HocVien_BangDaiHoc_DiemToanKhoa"), function (value) {
                     return /^-?\d*[.,]?\d*$/.test(value);
                 });
-            })
+            });
 
             /* Hàm hiển thị thông tin ngành vào dropdownlist */
             function NganhMaster_ViewData() {
@@ -1844,12 +1949,12 @@
             $(document).ready(function () {
                 $('#bt_export_data_dutuyen').click(function () {
                     console.log($("#hiden_dutuyen_id_present").val());
-                  
+
                     let dutuyen_id_export = $("#hiden_dutuyen_id_present").val()
                     window.location.href = `/ExportFile/DownloadFile_XetTuyenSDH?dutuyen_id=${dutuyen_id_export}`;
                 });
             });
-                                                                                        
+
         </script>
     </div>
 </div>

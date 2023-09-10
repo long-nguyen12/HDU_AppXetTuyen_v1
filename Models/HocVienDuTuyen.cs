@@ -11,17 +11,33 @@ namespace HDU_AppXetTuyen.Models
     {
         [Key]
         public int DuTuyen_ID { get; set; }
+
         public int? HocVien_ID { get; set; }
+
+        public int? DuTuyen_TrangThai { get; set; }
+
+        [StringLength(2500)]
+        public string DuTuyen_ThongBaoKiemDuyet { get; set; }
+
+        public int? Dxt_ID { get; set; }
+
         public int? DuTuyen_MaNghienCuu { get; set; }
+
         public int? Nganh_Mt_ID { get; set; }
+
         public int? HocVien_DKDTNgoaiNgu { get; set; }
+
         [StringLength(250)]
         public string HocVien_VanBangNgoaiNgu { get; set; }
+
         public int? HocVien_DoiTuongDuThi { get; set; }
+
         [StringLength(2500)]
         public string HocVien_SoYeuLyLich { get; set; }
+
         [StringLength(2500)]
         public string HocVien_MCBangDaiHoc { get; set; }
+
         [StringLength(2500)]
         public string HocVien_MCBangDiem { get; set; }
 
@@ -41,9 +57,7 @@ namespace HDU_AppXetTuyen.Models
         public string DuTuyen_NgayDangKy { get; set; }
 
         [StringLength(2500)]
-        public string DuTuyen_GhiChu { get; set; }
-        public int? DuTuyen_TrangThai { get; set; }
-
+        public string DuTuyen_GhiChu { get; set; }    
 
         [StringLength(20)]
         public string HocVien_LePhi_MaThamChieu { get; set; }
@@ -55,7 +69,7 @@ namespace HDU_AppXetTuyen.Models
         public string HocVien_LePhi_NgayNop { get; set; }
         public int? HocVien_LePhi_TrangThai { get; set; }
 
-        public int? Dxt_ID { get; set; }
+      
 
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 
