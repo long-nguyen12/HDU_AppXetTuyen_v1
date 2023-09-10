@@ -26,24 +26,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             int pageNumber = (page ?? 1);
             return View(nganhs_master.ToPagedList(pageNumber, pageSize));
         }
-        // GET: Admin/NganhMasters/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NganhMaster nganhMaster = db.NganhMasters.Find(id);
-            if (nganhMaster == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nganhMaster);
-        }
-
-        // GET: Admin/NganhMasters/Create
+      
         public ActionResult Create()
-        {
+        {          
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa");
             return View();
         }
 
@@ -54,6 +40,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Nganh_Mt_ID,Nganh_Mt_MaNganh,Nganh_Mt_TenNganh,Nganh_Mt_NghienCuu_Ten,Nganh_Mt_NghienCuu_Ma,Khoa_ID,Nganh_Mt_TenKhoa,Nganh_Mt_TrangThai,Nganh_Mt_GhiChu")] NganhMaster nganhMaster)
         {
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa");
             if (ModelState.IsValid)
             {
                 db.NganhMasters.Add(nganhMaster);

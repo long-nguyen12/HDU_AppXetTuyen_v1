@@ -75,8 +75,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
 
             #region lọc dữ liệu theo đợt
-            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1 && x.Dxt_Classify == 2).ToList();
-            dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
+            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1 && x.Dxt_Classify == 2).ToList();           
             int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 2).FirstOrDefault().Dxt_ID;
             ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
             // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
@@ -269,6 +268,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                     .Include(h => h.NganhMaster)
                                     .Where(x => x.DuTuyen_ID == entity.DuTuyen_ID)
                                     .FirstOrDefault();
+            string _hv_NoiSinh = db.Tinhs.Where(x => x.Tinh_ID == model.HocVienDangKy.HocVien_NoiSinh).FirstOrDefault().Tinh_Ten;
             BangDaiHoc bangDaiHoc = JsonConvert.DeserializeObject<BangDaiHoc>(model.HocVienDangKy.HocVien_BangDaiHoc);
 
 
@@ -286,7 +286,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
                 HocVien_DoiTuongUuTien = model.HocVienDangKy.HocVien_DoiTuongUuTien,
                 HocVien_BoTucKienThuc = model.HocVienDangKy.HocVien_BoTucKienThuc,
-                HocVien_NoiSinh = model.HocVienDangKy.HocVien_NoiSinh,
+                HocVien_NoiSinh = _hv_NoiSinh,
                 HocVien_HoKhauThuongTru = model.HocVienDangKy.HocVien_HoKhauThuongTru,
                 HocVien_NoiOHienNay = model.HocVienDangKy.HocVien_NoiOHienNay,
                 HocVien_DiaChiLienHe = model.HocVienDangKy.HocVien_DiaChiLienHe,
