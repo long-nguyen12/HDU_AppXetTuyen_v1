@@ -41,7 +41,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Login(FormCollection admin_login)
         {
             string id_hedaotao = admin_login["radioHeDaoTao"];
-            // 1 Sau đại học, 0 Đại học, 3 Năng khiếu
+            // id_hedaotao: 1 Đại học, 2 Sau đại học
 
             if (Session["admin_login_session"] != null)
             {
@@ -57,17 +57,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 if (verifiedPassword == true)
                 {
                     ViewBag.LoginErrorMessager = "";
+                    // id_hedaotao: 1 Đại học, 2 Sau đại học
+                    // Admin Quyen: 1 Đại học, 2: Sau đại học
+                    if (id_hedaotao == "1" && login_details.Admin_Quyen == "1") {
+                        Session["admin_login_session"] = login_details.Admin_Pass;
+                        return RedirectToAction("Index", "HomeAdmin");
 
-                    // 1 Sau đại học, 0 Đại học
-                    if (id_hedaotao == "1" && login_details.Admin_Quyen == "2") {
+                    }
+                    else if (id_hedaotao == "2" && login_details.Admin_Quyen == "2")
+                    {
                         Session["admin_login_session"] = login_details.Admin_Pass;
                         return RedirectToAction("DsHvDangKy", "HocVienDangKys");
                     }
-                    else if (id_hedaotao == "0" && login_details.Admin_Quyen == "1")
-                    {
-                        Session["admin_login_session"] = login_details.Admin_Pass;
-                        return RedirectToAction("Index", "HomeAdmin");
-                    }else
+                    else
                     {
                         ViewBag.LoginErrorMessager = "Không tìm thấy thông tin tài khoản";
                         return View();
@@ -123,7 +125,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         public void init_user()
         {
-            AdminAccount  adminAccount = new AdminAccount();
+
+            // init USER ADMIN
+            AdminAccount adminAccount = new AdminAccount();
             string admin_user= "admin";
             string admin_pass = "Admin123@";
 
@@ -143,6 +147,29 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             else
             {
                 System.Diagnostics.Debug.WriteLine("login_details đã tồn tại.");
+            }
+
+            // Iit USER SDH
+            AdminAccount adminSdhAccount = new AdminAccount();
+
+            string sdh_user = "saudaihoc";
+            string sdh_pass = "Saudaihoc123@";
+            var login_sdh_details = db.AdminAccounts.Where(x => x.Admin_Username == sdh_user).FirstOrDefault();
+            if (login_sdh_details == null)
+            {
+                var password = ComputeHash(sdh_user, sdh_pass);
+                adminSdhAccount.Admin_Pass = password;
+                adminSdhAccount.Admin_Username = sdh_user;
+                adminSdhAccount.Admin_Quyen = "2";
+                adminSdhAccount.Admin_Ho = "SDH";
+                adminSdhAccount.Admin_Ten = "Admin";
+                adminAccount.Khoa_ID = 1;
+                db.AdminAccounts.Add(adminSdhAccount);
+                db.SaveChanges();
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("login_sdh_details đã tồn tại.");
             }
         }
 
