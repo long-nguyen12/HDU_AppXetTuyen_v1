@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using HDU_AppXetTuyen.Models;
+using PagedList;
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
@@ -15,9 +17,14 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/AdminAccounts
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.AdminAccounts.ToList());
+            if (page == null) page = 1;
+            var adminAccounts = (from h in db.AdminAccounts
+                                 select h).OrderBy(x => x.Admin_ID);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(adminAccounts.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Admin/AdminAccounts/Details/5
@@ -38,6 +45,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // GET: Admin/AdminAccounts/Create
         public ActionResult Create()
         {
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa");
             return View();
         }
 
@@ -54,7 +62,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa", adminAccount.Khoa_ID);
             return View(adminAccount);
         }
 
