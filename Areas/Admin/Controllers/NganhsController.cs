@@ -22,7 +22,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             if (page == null) page = 1;
             var nganhs = (from h in db.Nganhs
-                          select h).OrderBy(x => x.Khoa.Khoa_TenKhoa).ThenBy(x => x.NganhTenNganh). Include(n => n.KhoiNganh).Include(n => n.Khoa).Where(x => x.Nganh_ID >0);
+                          select h).OrderBy(x => x.Khoa.Khoa_TenKhoa).ThenBy(x => x.Nganh_TenNganh). Include(n => n.KhoiNganh).Include(n => n.Khoa).Where(x => x.Nganh_ID >0);
             int pageSize = 7;
             int pageNumber = (page ?? 1);
             return View(nganhs.ToPagedList(pageNumber, pageSize));

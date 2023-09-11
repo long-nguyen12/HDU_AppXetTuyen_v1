@@ -26,8 +26,7 @@
             <div class="card card-header-actions mt-1 mb-1 ">
                 <div class="card-header">
                     <span>Thêm đối tượng mới</span>
-                    <a class="btn-close" aria-label="Close" href="@Url.Action("Index","DoiTuongs")"></a>
-             
+                    <a class="btn-close" aria-label="Close" href="@Url.Action("Index","DoiTuongs")"></a>             
                 </div>
                 <div class="card-body">
                     @using (Html.BeginForm())
@@ -37,7 +36,7 @@
                     <div class="row form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group col-md-3 mt-2">
-                            @Html.Label("", htmlAttributes: new { @class = "control-label col-md-12" })
+                            @Html.Label("Tên khu vực", htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
                                 @Html.EditorFor(model => model.DoiTuong_Ten, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.DoiTuong_Ten, "", new { @class = "text-danger" })
@@ -47,7 +46,8 @@
                         <div class="form-group col-md-3 mt-2">
                             @Html.Label("Điểm ưu tiên", htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.DoiTuong_DiemUuTien, new { htmlAttributes = new { @class = "form-control" } })
+                                @*<input id="DoiTuong_DiemUuTien" name="DoiTuong_DiemUuTien" type="number" class="form-control" />*@
+                                @Html.EditorFor(model => model.DoiTuong_DiemUuTien, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" , @step = "0.01", @value = "0" } })
                                 @Html.ValidationMessageFor(model => model.DoiTuong_DiemUuTien, "", new { @class = "text-danger" })
                             </div>
                         </div>

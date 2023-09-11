@@ -1,0 +1,179 @@
+﻿@model IEnumerable<HDU_AppXetTuyen.Models.KinhPhi>
+@{
+    ViewBag.Title = "KpKiemTra";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+<style>
+    th, td {
+        white-space: nowrap;
+    }
+</style>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span>Quản lý thông tin kinh phí thí sinh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid px-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-header-actions mt-1 mb-1 ">
+                <div class="card-header">
+                    <span id="sp_tieude">Danh sách thí sinh nộp kinh phí</span>
+                    <a class="btn btn-outline-primary align-items-center" id="bt_checkexcel" href="@Url.Action("Create", "Tinhs")"> Đối chiếu từ tệp Excel</a>
+                    <script>
+                        $(document).ready(function () {
+                            let sp_tieude = document.getElementById('sp_tieude');
+                            let bt_checkexcel = document.getElementById('bt_checkexcel');
+                            if (window.innerWidth <= 900) {
+                                sp_tieude.innerText = "Danh sách TS nộp KP";
+                                bt_checkexcel.innerText = "Check from Excel";
+                            }
+                            else {
+                                sp_tieude.innerText = "Danh sách thí sinh nộp kinh phí";
+                                bt_checkexcel.innerText = "Đối chiếu từ tệp Excel";
+                            }
+
+                            function reportWindowSize() {
+                                if (window.innerWidth <= 900) {
+                                    sp_tieude.innerText = "Danh sách TS nộp KP";
+                                    bt_checkexcel.innerText = "Check from Excel";
+                                }
+                                else {
+                                    sp_tieude.innerText = "Danh sách thí sinh nộp kinh phí";
+                                    bt_checkexcel.innerText = "Đối chiếu từ tệp Excel";
+                                }
+                            }
+                            window.onresize = reportWindowSize;
+                        })
+                    </script>
+                </div>
+                <div class="card-body">
+                    <div class="row g-1">
+                        <div class="col-lg-12 col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(model => model.ThiSinh_ID) </th>
+                                        <th>@Html.DisplayNameFor(model => model.Dxt_ID)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Ptxt_ID)</th>
+                                        <th>@Html.DisplayNameFor(model => model.KinhPhi_NguyenVong)</th>
+                                        <th>@Html.DisplayNameFor(model => model.KinhPhi_SoTC)</th>
+                                        <th>@Html.DisplayNameFor(model => model.KinhPhi_NgayThang_NopMC)</th>
+                                        <th>@Html.DisplayNameFor(model => model.KinhPhi_NgayThang_CheckMC)</th>
+                                        <th>@Html.DisplayNameFor(model => model.KinhPhi_TrangThai)</th>
+                                        <th>Cập nhật</th>
+                                    </tr>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot) @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PhuongThucXetTuyen.Ptxt_TenPhuongThuc)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.KinhPhi_NguyenVong)
+                                            </td>
+                                            <td>
+                                                @{
+                                                    if (!String.IsNullOrEmpty(item.KinhPhi_SoTC))
+                                                    {
+                                                        @Html.DisplayFor(modelItem => item.KinhPhi_SoTC)
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayName("Chưa có thông tin")
+                                                    }
+                                                }
+                                                @Html.DisplayFor(modelItem => item.KinhPhi_SoTC)
+                                            </td>
+                                            <td>
+                                                @{
+                                                    if (!String.IsNullOrEmpty(item.KinhPhi_NgayThang_NopMC))
+                                                    {
+                                                        @Html.DisplayFor(modelItem => item.KinhPhi_NgayThang_NopMC.ToString())
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayName("Chưa có thông tin")
+                                                    }
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @{
+                                                    if (!String.IsNullOrEmpty(item.KinhPhi_NgayThang_CheckMC))
+                                                    {
+                                                        @Html.DisplayFor(modelItem => item.KinhPhi_NgayThang_CheckMC)
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayName("Chưa kiểm tra")
+                                                    }
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @{
+                                                    if (item.KinhPhi_TrangThai == 0)
+                                                    {
+                                                        @Html.DisplayName("Chưa nộp KP")
+                                                    }
+                                                    if (item.KinhPhi_TrangThai == 1)
+                                                    {
+                                                        @Html.DisplayName("Đã nộp KP")
+                                                    }
+                                                    if (item.KinhPhi_TrangThai == 2)
+                                                    {
+                                                        @Html.DisplayName("MC không khớp mã")
+                                                    }
+                                                    if (item.KinhPhi_TrangThai == 3)
+                                                    {
+                                                        @Html.DisplayName("Thiếu kinh phí")
+                                                    }
+                                                    if (item.KinhPhi_TrangThai == 4)
+                                                    {
+                                                        @Html.DisplayName("Thừa kinh phí")
+                                                    }
+                                                    if (item.KinhPhi_TrangThai == 5)
+                                                    {
+                                                        @Html.DisplayName("Kinh phí đủ")
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Kiểm tra", "Edit", new { id = item.KinhPhi_ID })
+                                                @*@Html.ActionLink("Details", "Details", new { id = item.KinhPhi_ID }) |*@
+                                                @*@Html.ActionLink("Delete", "Delete", new { id = item.KinhPhi_ID })*@
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

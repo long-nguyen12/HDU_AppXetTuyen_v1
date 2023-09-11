@@ -9,7 +9,6 @@
     [Table("DangKyXetTuyenKQTQG")]
     public partial class DangKyXetTuyenKQTQG
     {
-
         [Key]
         public long Dkxt_KQTQG_ID { get; set; }
 
@@ -30,6 +29,7 @@
         public int? Dkxt_KQTQG_NguyenVong { get; set; }
 
         public int? DotXT_ID { get; set; }
+
         public int? Dkxt_KQTQG_NamTotNghiep { get; set; }
 
         [StringLength(500)]
@@ -59,18 +59,23 @@
 
         public int? Dkxt_KQTQG_TrangThai_KetQua { get; set; }
 
+        [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_CNTotNghiep { get; set; }
+        [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_HocBa { get; set; }
+        [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_BangTN { get; set; } // lưu ý đây là minh chứng căn cước công dân
+        [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_UuTien { get; set; }
+
+        public virtual DotXetTuyen DotXetTuyen { get; set; }
 
         public virtual Nganh Nganh { get; set; }
 
+        public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
+
         public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }
 
-        public virtual ToHopMon ToHopMon { get; set; }
-
-        public virtual DotXetTuyen DotXetTuyen { get; set; }
-        public virtual PhuongThucXetTuyen PhuongThucXetTuyen { get; set; }
+        public virtual ToHopMon ToHopMon { get; set; }      
     }
 }

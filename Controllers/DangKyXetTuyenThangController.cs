@@ -56,7 +56,7 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 Nganh_ID = n.Nganh_ID,
                 Nganh_MaNganh = n.Nganh_MaNganh,
-                NganhTenNganh = n.NganhTenNganh
+                NganhTenNganh = n.Nganh_TenNganh
             });
             if (nganhs != null)
                 return Json(new { success = true, data = nganhs.ToList() }, JsonRequestBehavior.AllowGet);
@@ -71,7 +71,10 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 ThiSinh_ID = n.ThiSinh_ID,
                 ThiSinh_HocLucLop12 = n.ThiSinh_HocLucLop12,
-                ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12
+                ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12,
+
+                ThiSinh_UTDT = n.DoiTuong.DoiTuong_Ten + ", Ưu tiên: " + n.DoiTuong.DoiTuong_DiemUuTien,
+                ThiSinh_UTKV = n.KhuVuc.KhuVuc_Ten + ", Ưu tiên: " + n.KhuVuc.KhuVuc_DiemUuTien,
             }).FirstOrDefault();
             var nguyenvongs = db.DangKyXetTuyenThangs.Include(d => d.Nganh).Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).Select(n => new
             {
@@ -148,7 +151,7 @@ namespace HDU_AppXetTuyen.Controllers
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
             var nvs = db.DangKyXetTuyenThangs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).ToList();
-            var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai == 1).FirstOrDefault();
+            var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             if (ts != null)
             {
                 DangKyXetTuyenThang dkxtt = new DangKyXetTuyenThang();
@@ -197,12 +200,14 @@ namespace HDU_AppXetTuyen.Controllers
                      " <br/><b>Thông tin nguyện vọng:</b><br/>" +
                      " <p> Phương thức đăng ký: Phương thức 4 </p>" +
                      " <p> Mã ngành: "  + nganh.Nganh_MaNganh + " </p>" +
-                     " <p> Tên ngành: " + nganh.NganhTenNganh + " </p>" +
+                     " <p> Tên ngành: " + nganh.Nganh_TenNganh + " </p>" +
                      " <p> Môn đạt giải: " + student.Dkxt_MonDatGiai + " </p>" +
                      " <p> Loại giải: " + student.Dkxt_LoaiGiai + " </p>" +
                      " <p> Năm đạt giải: " + student.Dkxt_NamDatGiai + " </p>";
 
-                SendEmail("xettuyen@hdu.edu.vn", body, subject);
+                SendEmail s = new SendEmail();
+                s.Sendemail("xettuyen@hdu.edu.vn", body, subject);
+
                 return Json(new { success = true });
             }
             return Json(new { success = false });
@@ -295,27 +300,6 @@ namespace HDU_AppXetTuyen.Controllers
                 status = false,
                 msg = "Có lỗi xảy ra."
             }, JsonRequestBehavior.AllowGet);
-        }
-
-        private void SendEmail(string email, string body, string subject)
-        {
-            using (MailMessage mm = new MailMessage("xettuyen@hdu.edu.vn", email))
-            {
-                mm.Subject = subject;
-                mm.Body = body;
-
-                mm.IsBodyHtml = true;
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com";
-                smtp.EnableSsl = true;
-
-                NetworkCredential NetworkCred = new NetworkCredential("xettuyen@hdu.edu.vn", "hongduc1");
-                smtp.UseDefaultCredentials = true;
-                smtp.Credentials = NetworkCred;
-                smtp.Port = 587;
-                smtp.Send(mm);
-            }
-        }
-
+        }       
     }
 }

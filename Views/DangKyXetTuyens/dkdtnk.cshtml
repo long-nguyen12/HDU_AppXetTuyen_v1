@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "dkdtnk";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <style>
     .label_tieude {
         white-space: nowrap !important;
@@ -35,7 +33,7 @@
 </header>
 <div class="container-fluid px-12">
     <div id="div_list_registration">
-        <div class="card card-header-actions">
+        <div class="card card-collapsable">
             <div class="card-header">
                 <span>Các nguyện vọng đã đăng ký</span>
             </div>
@@ -96,7 +94,7 @@
                                     <td>
                                         <div class="row g-3 align-items-center">
                                             <div class="col-4">
-                                                <label for="select_namtn" class="col-form-label">Ngành</label>
+                                                <label class="col-form-label">Ngành</label>
                                             </div>
                                             <div class="col-8">
                                                 <select id="select_nganh" class="form-select"></select>
@@ -110,11 +108,23 @@
                                     <td>
                                         <div class="row g-3 align-items-center">
                                             <div class="col-4">
-                                                <label for="select_namtn" class="col-form-label">Tổ hợp môn</label>
+                                                <label class="col-form-label">Tổ hợp môn</label>
                                             </div>
                                             <div class="col-8">
                                                 <select id="select_tohopmon" class="form-select"></select>
                                                 <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-4">
+                                                <label class="col-form-label">Tên môn thi</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input id="txt_dangky_monnangkhieu" type="text" class="form-control input-monhoc" value="Chưa chọn" disabled />
                                             </div>
                                         </div>
                                     </td>
@@ -127,32 +137,46 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th style="vertical-align:middle;">Đăng ký dự thi môn năng khiếu <font color="red">(*)</font></th>
+                                            <th style="vertical-align:middle;">Đợt dự thi môn năng khiếu <font color="red">(*)</font></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_list_diemmonhoc">
                                         <tr>
                                             <td>
-                                                <div class="row g-3 align-items-center">
-                                                    <div class="col-5">
-                                                        <label for="select_namtn" class="col-form-label">Năm tốt nghiệp</label>
+                                                <div class="row  align-items-center">
+                                                    <div class="col-4">
+                                                        <label  class="col-form-label">Đợt thi</label>
                                                     </div>
-                                                    <div class="col-7">
-                                                        <select class="form-select" id="select_namtn"></select>
+                                                    <div class="col-8">
+                                                        <input class="form-control" id="Dxt_Ten" disabled />                                                   
                                                         <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
                                                     </div>
-
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <div class="row g-3 align-items-center">
-                                                    <div class="col-5">
-                                                        <label for="select_namtn" class="col-form-label">Môn thi năng khiếu</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4">
+                                                        <label class="col-form-label">Từ ngày</label>
                                                     </div>
-                                                    <div class="col-7">
-                                                        <input id="txt_dangky_monnangkhieu" type="text" class="form-control input-monhoc" value="Chưa chọn" disabled />
+                                                    <div class="col-8">
+                                                        <input class="form-control" id="Dxt_ThoiGian_BatDau" disabled />                                                      
+                                                        <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                                                    </div>
+                                                </div>                                               
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                
+                                                <div class="row align-items-center">
+                                                    <div class="col-4">
+                                                        <label  class="col-form-label">Đến ngày</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input class="form-control" id="Dxt_ThoiGian_KetThuc" disabled />                                                    
+                                                        <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -283,6 +307,25 @@
     </div>
 </div>
 
+
+<style>
+    #loadingModal {
+        background-color: rgba(0, 0, 0, 0.5);
+        background-color: transparent;
+    }
+</style>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
         ts_dkxt_thptqg_list_all();
@@ -299,7 +342,7 @@
             dataType: 'json',
             success: function (result_all) {
                 console.log(result_all.view_list_dkdt_nangkhieu_ts)
-              // return;
+                // return;
 
                 if (result_all.view_list_dkdt_nangkhieu_ts == 0) {
                     _output = '<tr><td colspan="5"  style="text-align:center">Chưa đăng ký môn thi năng khiếu nào!</td></tr>';
@@ -330,7 +373,9 @@
 
     $(document).ready(function () {
         /* Khai báo dữ liệu cho dropdownlist chọn năm */
-        let currentYear = new Date().getFullYear();
+
+        /*
+           let currentYear = new Date().getFullYear();
         let nam_list = [
             { value: 0, text: "Chọn năm" },
             { value: currentYear, text: currentYear },
@@ -345,22 +390,23 @@
                 text: option.text
             }));
         });
-
-
-
+        */
         $("#select_nganh").change(function () {
             select_tohopmon_view_data($("#select_nganh").val(), 0);
             $('#txt_dangky_monnangkhieu').val("Chưa chọn");
+            //if ($("#select_nganh").val() == 0) {
+              
+            //}           
             reset_fields_controll_disabled_true();
         });
 
         $("#select_tohopmon").change(function () {
-
             $('#MonThiNangKhieu_Error').val("Chưa chọn");
             let dataObj = {
                 Thm_ID: $("#select_tohopmon").val()
             }
             if (dataObj.Thm_ID == 0) {
+                $('#txt_dangky_monnangkhieu').val("Chưa chọn");
                 reset_fields_controll_disabled_true();
             }
             else {
@@ -476,20 +522,48 @@
     // đồng ý đăng ký dự thi
     $('#bt_add_div_list_registration').click(function () {
         select_nganh_view_data(0, 0);
-        document.getElementById('div_list_registration').style.display = "none";
-        document.getElementById('div_exam_registration').style.display = "inline";
+        $('#div_list_registration').css('display', 'none');
+        $('#div_exam_registration').css('display', 'inline');
+
+        //document.getElementById('div_list_registration').style.display = "none";
+        //document.getElementById('div_exam_registration').style.display = "inline";
         reset_fields_controll_disabled_true();
+        DotThiHienTai();
+
     })
-
+    function DotThiHienTai() {
+        $('#Dxt_ThoiGian_KetThuc').val('');
+        $('#Dxt_ThoiGian_BatDau').val('');
+        $('#Dxt_Ten').val('');
+        
+        $.ajax({
+            url: '/DangKyXetTuyens/DotThiHienTai',
+            type: "GET",
+            contentType: false,
+            processData: false,         
+            async: false,
+            success: function (res) {
+                console.log(res)
+                let data = res.data[0];
+                if (res.success) {
+                    $('#Dxt_ThoiGian_KetThuc').val(data.dxt_ThoiGian_KetThuc);
+                    $('#Dxt_ThoiGian_BatDau').val(data.dxt_ThoiGian_BatDau);
+                    $('#Dxt_Ten').val(data.dxt_Ten);
+                }
+            },
+            error: function (err) {
+                console.log(err.statusText);
+            }
+        });
+    }
     function reset_fields_controll_disabled_false() {
-
-        $('#select_namtn').prop('disabled', false);
+       
         $('#files_cancuoccd').val(null);
         $('#files_cancuoccd').prop('disabled', false);
         $("#FilesList_CCCD_View tbody").empty();
     }
-    function reset_fields_controll_disabled_true() {
-        $('#select_namtn').prop('disabled', true);
+    function reset_fields_controll_disabled_true() {      
+     
         $('#files_cancuoccd').val(null);
         $('#files_cancuoccd').prop('disabled', true);
         $("#FilesList_CCCD_View tbody").empty();
@@ -508,7 +582,6 @@
         if (_thm_ID == 0) { var errorMessage = "Vui lòng chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
         if (_dkdt_NK_NamTotNghiep == 0) { var errorMessage = "Vui lòng chọn năm tốt nghiệp"; $('#NamTotNghiep_Error').text(errorMessage); flag = false; }
         if (!check_in_file_cccd_upload) { var errorMessage = "Vui lòng upload tệp CCCD"; $('#CCCD_Error').text(errorMessage); flag = false; }
-
 
 
         if (!flag) return;
@@ -544,8 +617,9 @@
             Dkdt_NK_MinhChung_CCCD: _dkdt_NK_MinhChung_CCCD,
         }
         /*hết phần khai báo đối tượng*/
-        console.log(data_Obj_new);
+        //  console.log(data_Obj_new);
 
+        $("#loadingModal").modal("show");
         $.ajax({
             url: "/DangKyXetTuyens/DangKyDuThi_NangKhieu_Insert",
             data: JSON.stringify(data_Obj_new),
@@ -559,25 +633,28 @@
                     showToast("Thông báo", "Đăng ký thành công!", "bg-success");
                     document.getElementById('div_list_registration').style.display = "inline";
                     document.getElementById('div_exam_registration').style.display = "none";
+                    $("#loadingModal").modal("hide");
                     //reset_fields_controll_disabled_true();
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                    $("#loadingModal").modal("hide");
                 }
             },
             error: function (errormessage) {
                 showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                $("#loadingModal").modal("hide");
             }
         });
     })
-      // button xóa nguyện vọng đã đăng ký:
+    // button xóa nguyện vọng đã đăng ký:
     function delete_registration_on_table_onclick(_dkdt_nk_id) {
         $('#modal_tb_xoa').modal('show');
         $('#key_delete_dkdt_nk_id').val(_dkdt_nk_id);
     }
-  
+
     $('#bt_ok_on_modal_delete').click(function () {
         let data_Obj_new = { Dkdt_NK_ID: $('#key_delete_dkdt_nk_id').val() };
-              $.ajax({
+        $.ajax({
             url: "/DangKyXetTuyens/DangKyDuThiNK_Delete",
             data: JSON.stringify(data_Obj_new),
             type: 'POST',

@@ -17,5 +17,21 @@ namespace HDU_AppXetTuyen
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            Session.Timeout = 30;
+            Session["login_session"] = false;           
+            Session["login_session"] = null;
+            // lưu họ tên, điện thoại, email, đơn vị vào log
+        }
+        protected void Session_End(object sender, EventArgs e)
+        {
+            Session["login_session"] = false;
+            Session["login_session"] = null;          
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             if (filterContext.HttpContext.Session == null || filterContext.HttpContext.Session["login_session"] == null)
             {
-                filterContext.Result = new RedirectResult("~/Auth/Index");
+                filterContext.Result = new RedirectResult("~/Auth/Login");
             }
         }
     }
@@ -46,6 +46,17 @@ namespace HDU_AppXetTuyen.Controllers
     {
         private DbConnecttion db = new DbConnecttion();
 
+        public ActionResult Index2()
+        {
+            var session = Session["login_session"].ToString();
+            if (session != null)
+            {
+                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+                return View(thiSinh);
+            }
+            ThiSinhDangKy ts = new ThiSinhDangKy();
+            return View(ts);
+        }
         // GET: ThiSinhDangKies
         [ThiSinhSessionCheck]
         public ActionResult Index()
@@ -53,7 +64,10 @@ namespace HDU_AppXetTuyen.Controllers
             var session = Session["login_session"].ToString();
             if(session != null)
             {
-                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+
+
+
                 return View(thiSinh);
             }
             ThiSinhDangKy ts = new ThiSinhDangKy();
@@ -98,8 +112,7 @@ namespace HDU_AppXetTuyen.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", thiSinhDangKy.DotXT_ID);
+            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);          
             ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
             return View(thiSinhDangKy);
         }
@@ -117,8 +130,7 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", thiSinhDangKy.DotXT_ID);
+            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);          
             ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
             return View(thiSinhDangKy);
         }
@@ -137,7 +149,7 @@ namespace HDU_AppXetTuyen.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", thiSinhDangKy.DotXT_ID);
+          
             ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
             return View(thiSinhDangKy);
         }
@@ -226,7 +238,7 @@ namespace HDU_AppXetTuyen.Controllers
         public JsonResult UpdateInfo(Update_ThiSinh thiSinh_Update)
         {
             var session = Session["login_session"].ToString();
-            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
             ts.ThiSinh_CCCD = thiSinh_Update.ThiSinh_CCCD;
             ts.ThiSinh_HoLot = thiSinh_Update.ThiSinh_HoLot;

@@ -25,7 +25,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
+                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
                     </div>
                 </div>
 
@@ -33,30 +33,10 @@
         </div>
     </div>
 </header>
-<script>
-    $(document).ready(function () {
-        let sp_tieude = document.getElementById('sp_tieude');    
-        if (window.innerWidth <= 1200) {
-            sp_tieude.innerText = "Sử dụng KQ thi TN THPT Quốc gia";
-        }
-        else {
-            sp_tieude.innerText = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
-        }
 
-        function reportWindowSize() {
-            if (window.innerWidth <= 1200) {
-                sp_tieude.innerText = "Sử dụng KQ thi TN THPT Quốc gia";
-            }
-            else {
-                sp_tieude.innerText = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
-            }
-        }
-        window.onresize = reportWindowSize;
-    })
-</script>
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
-        <div class="card card-header-actions">
+        <div class="card card-collapsable">
             <div class="card-header">
                 <span>Các nguyện vọng đã đăng ký</span>
             </div>
@@ -94,30 +74,28 @@
                                     let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
 
                                     if (window.innerWidth <= 700) {
-                                        sp_tieude.innerHTML = "Sử dụng KQ thi TN THPT Quốc gia";
+                                        sp_tieude.innerText = "ĐKXT bằng KQ thi TN THPT Quốc gia";                                    
                                         bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
                                         bt_them_nguyen_vong.innerHTML = "Thêm NV";
 
                                     }
                                     else {
-                                        sp_tieude.innerHTML = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+                                        sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
                                         bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
                                         bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-
                                     }
 
                                     function reportWindowSize() {
                                         if (window.innerWidth <= 700) {
-                                            sp_tieude.innerHTML = "Sử dụng KQ thi TN THPT Quốc gia";
+                                            sp_tieude.innerText = "ĐKXT bằng KQ thi TN THPT Quốc gia";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
                                             bt_them_nguyen_vong.innerHTML = "Thêm NV";
 
                                         }
                                         else {
-                                            sp_tieude.innerHTML = "Sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+                                            sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
                                             bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-
                                         }
                                     }
                                     window.onresize = reportWindowSize;
@@ -141,7 +119,6 @@
             <div class="card-header">
                 <span>Đăng ký nguyện vọng mới</span>
                 <button class="btn-close" id="bt_close_div_update_aspirations_first" type="button" aria-label="Close"></button>
-
             </div>
             <div class="card-body">
                 <div class="row">
@@ -275,7 +252,6 @@
                                             </td>
                                         </tr>
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -741,7 +717,7 @@
         }
         /*hết phần khai báo đối tượng*/
         console.log(data_Obj_new);
-
+        $("#loadingModal").modal("show");
         $.ajax({
             url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Insert",
             data: JSON.stringify(data_Obj_new),
@@ -756,12 +732,16 @@
                     document.getElementById('div_list_aspirations').style.display = "inline";
                     document.getElementById('div_update_aspirations').style.display = "none";
                     reset_fields_controll_disabled_true();
+                    $("#loadingModal").modal("hide");
                 } else {
+                    $("#loadingModal").modal("hide");
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                   
                 }
             },
             error: function (errormessage) {
-                showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                $("#loadingModal").modal("hide");
+                showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");              
             }
         });
     });

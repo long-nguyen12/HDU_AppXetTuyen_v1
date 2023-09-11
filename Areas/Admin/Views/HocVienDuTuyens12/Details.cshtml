@@ -1,0 +1,155 @@
+﻿@model HDU_AppXetTuyen.Models.HocVienDuTuyen
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout_master.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HocVienDuTuyen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DotXetTuyen.Dxt_Ten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVienDangKy.HocVien_HoDem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVienDangKy.HocVien_HoDem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NganhMaster.Nganh_Mt_MaNganh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NganhMaster.Nganh_Mt_MaNganh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DuTuyen_MaNghienCuu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DuTuyen_MaNghienCuu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_DKDTNgoaiNgu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_DKDTNgoaiNgu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_VanBangNgoaiNgu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_VanBangNgoaiNgu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_DoiTuongDuThi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_DoiTuongDuThi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_SoYeuLyLich)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_SoYeuLyLich)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_MCBangDaiHoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_MCBangDaiHoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_MCBangDiem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_MCBangDiem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_MCGiayKhamSucKhoe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_MCGiayKhamSucKhoe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_Anh46)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_Anh46)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_MCCCNN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_MCCCNN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HocVien_MCKhac)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HocVien_MCKhac)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DuTuyen_NgayDangKy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DuTuyen_NgayDangKy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DuTuyen_GhiChu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DuTuyen_GhiChu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DuTuyen_TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DuTuyen_TrangThai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DuTuyen_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

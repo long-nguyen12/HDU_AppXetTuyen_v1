@@ -1,0 +1,130 @@
+﻿@model IEnumerable<HDU_AppXetTuyen.Models.HocVienDuTuyen>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_master.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DotXetTuyen.Dxt_Ten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVienDangKy.HocVien_HoDem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NganhMaster.Nganh_Mt_MaNganh)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DuTuyen_MaNghienCuu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_DKDTNgoaiNgu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_VanBangNgoaiNgu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_DoiTuongDuThi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_SoYeuLyLich)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_MCBangDaiHoc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_MCBangDiem)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_MCGiayKhamSucKhoe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_Anh46)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_MCCCNN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HocVien_MCKhac)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DuTuyen_NgayDangKy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DuTuyen_GhiChu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DuTuyen_TrangThai)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DotXetTuyen.Dxt_Ten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVienDangKy.HocVien_HoDem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NganhMaster.Nganh_Mt_MaNganh)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DuTuyen_MaNghienCuu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_DKDTNgoaiNgu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_VanBangNgoaiNgu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_DoiTuongDuThi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_SoYeuLyLich)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_MCBangDaiHoc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_MCBangDiem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_MCGiayKhamSucKhoe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_Anh46)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_MCCCNN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HocVien_MCKhac)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DuTuyen_NgayDangKy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DuTuyen_GhiChu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DuTuyen_TrangThai)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DuTuyen_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DuTuyen_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DuTuyen_ID })
+        </td>
+    </tr>
+}
+
+</table>

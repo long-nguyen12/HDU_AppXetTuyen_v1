@@ -1,0 +1,105 @@
+﻿@model HDU_AppXetTuyen.Models.AdminAccount
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span>Quản lý tài khoản</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container-fluid px-12">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-header-actions mt-1 mb-1 ">
+                <div class="card-header">
+                    <span>Sửa thông tin</span>
+                    <a class="btn-close" aria-label="Close" href="@Url.Action("Index","DoiTuongs")"></a>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.Admin_ID)
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Admin_Username">Tên tài khoản</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Admin_Username, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Admin_Username, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Admin_Pass">Mật khẩu</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Admin_Pass, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Admin_Pass, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Admin_Ho">Họ</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Admin_Ho, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Admin_Ho, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Admin_Ten">Tên</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Admin_Ten, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Admin_Ten, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Admin_Quyen">Quyền</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Admin_Quyen, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Admin_Quyen, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Khoa_ID">Khoa</label>
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Khoa_ID, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Khoa_ID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

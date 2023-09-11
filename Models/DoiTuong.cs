@@ -1,4 +1,4 @@
-namespace HDU_AppXetTuyen.Models
+﻿namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -9,11 +9,9 @@ namespace HDU_AppXetTuyen.Models
     [Table("DoiTuong")]
     public partial class DoiTuong
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DoiTuong()
+       public DoiTuong()
         {
-            DangKyXetTuyens = new HashSet<DangKyXetTuyen>();
-            ThiSinhDangKies = new HashSet<ThiSinhDangKy>();          
+            ThiSinhDangKies = new HashSet<ThiSinhDangKy>();
         }
 
         [Key]
@@ -21,17 +19,12 @@ namespace HDU_AppXetTuyen.Models
 
         [StringLength(250)]
         public string DoiTuong_Ten { get; set; }
-
+        [Required(ErrorMessage = "Điểm ưu tiên phải lớn hơn 0")]
         public double? DoiTuong_DiemUuTien { get; set; }
 
         [StringLength(2000)]
         public string DoiTuong_GhiChu { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ThiSinhDangKy> ThiSinhDangKies { get; set; }
-       
+       public virtual ICollection<ThiSinhDangKy> ThiSinhDangKies { get; set; }
     }
 }

@@ -17,34 +17,62 @@
             contentType: "application/json;charset=utf-8",
             success: function (response) {
                 if (response.success) {
-                    let { HocBa, TuyenThang, NgoaiNgu, DanhGia } = response;
+                    let { ThptQg, HocBa, TuyenThang, NgoaiNgu, DanhGia, DtNangKhieu } = response;
+                    if (ThptQg.length > 0) {
+                        $("#list-thptqg").show();
+                        let html = "";
+                        $.each(ThptQg, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = '<span class=\"badge bg-info\">Chờ xét duyệt</span >'
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = '<span class=\"badge bg-danger\">Trượt</span>'
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = '<span class=\"badge bg-success\">Trúng tuyển</span>'
+                            }
+
+                            html += '<tr>';
+                            html += '<td>' + item.DotXT_ID + '</td>';
+                            html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhXet + '</td>';
+                            html += '<td>' + item.Thm_ID.ThmXet + '</td>';
+                            html += '<td>' + item.Dkxt_Diem_Tong_Full + '</td>';
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += '</tr>';
+                        });
+                        $('.tbody-thptqg').html(html);
+                    }
+                    else { $("#list-thptqg").hide(); }
+
                     if (HocBa.length > 0) {
                         $("#list-hocba").show();
                         let html = "";
                         $.each(HocBa, function (key, item) {
                             let trangthai = "";
                             if (item.Dkxt_TrangThai_KetQua == 0) {
-                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                                trangthai = '<span class=\"badge bg-info\">Chờ xét duyệt</span >'
                             }
                             else if (item.Dkxt_TrangThai_KetQua == 1) {
-                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                                trangthai = '<span class=\"badge bg-danger\">Trượt</span>'
                             }
                             else if (item.Dkxt_TrangThai_KetQua == 2) {
-                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                                trangthai = '<span class=\"badge bg-success\">Trúng tuyển</span>'
                             }
-                            html += "<tr>";
-                            html += '<td class="text-center">' + item.DotXT_ID + '</td>';
-                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
-                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
-                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
-                            html += '<td class="text-center">' + item.Thm.ToHopMon + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_NguyenVong + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_Diem_Tong_Full + '</td>';
+
+                            html += '<tr>';
+                            html += '<td>' + item.DotXT_ID + '</td>';
+                            html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhXet + '</td>';
+                            html += '<td>' + item.Thm_ID.ThmXet + '</td>';
+                            html += '<td>' + item.Dkxt_Diem_Tong_Full + '</td>';
                             html += '<td class="text-center">' + trangthai + '</td>';
-                            html += "</tr>";
+                            html += '</tr>';
                         });
-                        $('.tbody').html(html);
+                        $('.tbody-hocba').html(html);
                     }
+                    else { $("#list-hocba").hide(); }
                     if (TuyenThang.length > 0) {
                         $("#list-tuyenthang").show();
                         let html = "";
@@ -59,19 +87,20 @@
                             else if (item.Dkxt_TrangThai_KetQua == 2) {
                                 trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
                             }
-                            html += "<tr>";
-                            html += '<td class="text-center">' + item.DotXT_ID + '</td>';
-                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
-                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
-                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_MonDatGiai + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_LoaiGiai + '</td>';
+                       
+                            html += '<tr>';
+                            html += '<td>' + item.DotXT_ID + '</td>';
+                            html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhXet + '</td>';                           
+                            html += '<td>' + item.Dkxt_NamDatGiai + '</td>';
+                            html += '<td>' + item.Dkxt_MonDatGiai + '</td>';
+                            html += '<td>' + item.Dkxt_LoaiGiai + '</td>';
                             html += '<td class="text-center">' + trangthai + '</td>';
-                            html += "</tr>";
+                            html += '</tr>';
                         });
                         $('.tbody-tuyenthang').html(html);
                     }
+                    else { $("#list-tuyenthang").hide(); }
                     if (NgoaiNgu.length > 0) {
                         $("#list-ngoaingu").show();
                         let html = "";
@@ -85,20 +114,22 @@
                             }
                             else if (item.Dkxt_TrangThai_KetQua == 2) {
                                 trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
-                            }
-                            html += "<tr>";
+                            }                     
+
+                            html += '<tr>';
                             html += '<td class="text-center">' + item.DotXT_ID + '</td>';
-                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
-                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
-                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_DonViToChuc + '</td>';
+                            html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhXet + '</td>';   
+
+                            html += '<td>' + item.Dkxt_DonViToChuc + '</td>';
+                            html += '<td>' + item.ChungChi_ID.chungChi_Ten + '</td>';
                             html += '<td class="text-center">' + item.Dkxt_KetQuaDatDuoc + "/" + item.Dkxt_TongDiem + '</td>';
                             html += '<td class="text-center">' + trangthai + '</td>';
-                            html += "</tr>";
+                            html += '</tr>';
                         });
                         $('.tbody-ngoaingu').html(html);
                     }
+                    else { $("#list-ngoaingu").hide(); }
                     if (DanhGia.length > 0) {
                         $("#list-dgnl").show();
                         let html = "";
@@ -113,20 +144,86 @@
                             else if (item.Dkxt_TrangThai_KetQua == 2) {
                                 trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
                             }
-                            html += "<tr>";
+
+                            html += '<tr>';
                             html += '<td class="text-center">' + item.DotXT_ID + '</td>';
-                            html += '<td class="text-center">' + item.Nganh_ID.Nganh_MaNganh + '</td>';
-                            html += '<td>' + item.Nganh_ID.NganhTenNganh + '</td>';
-                            html += '<td class="text-center"> Phương thức ' + item.Ptxt_ID + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_ToHopXT + '</td>';
-                            html += '<td class="text-center">' + item.Dkxt_DonViToChuc + '</td>';
+                            html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhXet + '</td>';
+
+                            html += '<td>' + item.Dkxt_DonViToChuc + '</td>';
+                            html += '<td>' + item.ChungChi_ID.chungChi_Ten + '</td>';
+
                             html += '<td class="text-center">' + item.Dkxt_KetQuaDatDuoc + "/" + item.Dkxt_TongDiem + '</td>';
                             html += '<td class="text-center">' + trangthai + '</td>';
-                            html += "</tr>";
+                            html += '</tr>';
+                         
                         });
                         $('.tbody-dgnl').html(html);
                     }
-                } else {
+                    else { $("#list-dgnl").hide(); }
+
+                    if (DanhGia.length > 0) {
+                        $("#list-dgnl").show();
+                        let html = "";
+                        $.each(DanhGia, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }
+
+                            html += '<tr>';
+                            html += '<td class="text-center">' + item.DotXT_ID + '</td>';
+                            html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhXet + '</td>';
+
+                            html += '<td>' + item.Dkxt_DonViToChuc + '</td>';
+                            html += '<td>' + item.ChungChi_ID.chungChi_Ten + '</td>';
+
+                            html += '<td class="text-center">' + item.Dkxt_KetQuaDatDuoc + "/" + item.Dkxt_TongDiem + '</td>';
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += '</tr>';
+
+                        });
+                        $('.tbody-dgnl').html(html);
+                    }
+                    else { $("#list-dgnl").hide(); }
+
+                    if (DtNangKhieu.length > 0) {
+                        $("#list-dkdtnk").show();
+                        let html = "";
+                        $.each(DtNangKhieu, function (key, item) {
+                            let trangthai = "";
+                            if (item.Dkxt_TrangThai_KetQua == 0) {
+                                trangthai = "<span class=\"badge bg-info\">Chờ xét duyệt</span >"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 1) {
+                                trangthai = "<span class=\"badge bg-danger\">Trượt</span>"
+                            }
+                            else if (item.Dkxt_TrangThai_KetQua == 2) {
+                                trangthai = "<span class=\"badge bg-success\">Trúng tuyển</span>"
+                            }                   
+
+                            html += '<tr>';
+                            html += '<td>' + item.DotXT_ID.TenDot + '</td>';   
+                            html += '<td>' + item.Dkdt_NK_NgayThi.NgayThi + '</td>';
+                            html += '<td>' + item.Nganh_ID.NganhXet + '</td>';
+                            html += '<td>' + item.Dkxt_MonThi + '</td>';   
+                            html += '<td class="text-center">' + trangthai + '</td>';
+                            html += '</tr>';
+
+                        });
+                        $('.tbody-dkdtnk').html(html);
+                    }
+                    else { $("#list-dgnl").hide(); }
+
+                }
+                else {
                 }
             },
             error: function (xhr, status, error) {
@@ -141,141 +238,151 @@
         -webkit-overflow-scrolling: touch;
     }
 </style>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span id="sp_tieude">Thông tin kết quả xét tuyển của thí sinh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="container-fluid px-12">
-    <div id="fadeInUp">
-        <div class="card card-header-actions mt-3 mb-1" id="list-hocba">
-            <div class="card-header">
-                Theo phương thức sử dụng kết quả học tập ở THPT
-            </div>
-            <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr>
-                            <th class="text-center">Đợt xét tuyển</th>
-                            <th class="text-center">Mã ngành</th>
-                            <th>Tên ngành</th>
-                            <th class="text-center">
-                                Tên phương thức
-                            </th>
-                            <th class="text-center">
-                                Mã tổ hợp
-                            </th>
-                            <th class="text-center">
-                                Thứ tự nguyện vọng
-                            </th>
-                            <th>
-                                Tổng điểm
-                            </th>
-                            <th width="15%" class="text-center">
-                                Trạng thái
-                            </th>
-                        </tr>
-                        <tbody class="tbody">
-                        </tbody>
-                    </table>
-                </div>
+    <div class="card card-collapsable mt-3 mb-1" id="list-thptqg">
+        <div class="card-header">
+            <span> Kết quả xét tuyển sử dụng kết quả học thi THPT Quốc gia</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table">
+                    <tr>
+                        <th>Đợt xét</th>
+                        <th>N.Vọng</th>
+                        <th>Mã, tên ngành</th>
+                        <th>Mã, tên tổ hợp</th>
+                        <th>Tổng điểm</th>
+                        <th class="text-center">Trạng thái</th>
+                    </tr>
+                    <tbody class="tbody-thptqg">
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 
-        <div class="card card-header-actions mt-3 mb-1" id="list-tuyenthang">
-            <div class="card-header">
-                Thuộc diện xét tuyển thẳng học sinh giỏi
-            </div>
-            <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr class="text-center">
-                            <th class="text-center">Đợt xét tuyển</th>
-                            <th class="text-center">Mã ngành</th>
-                            <th>Tên ngành</th>
-                            <th class="text-center">
-                                Tên phương thức
-                            </th>
-                            <th class="text-center">
-                                Mã tổ hợp
-                            </th>
-                            <th class="text-center">
-                                Môn đạt giải
-                            </th>
-                            <th>
-                                Giải
-                            </th>
-                            <th width="15%" class="text-center">
-                                Trạng thái
-                            </th>
-                        </tr>
-                        <tbody class="tbody-tuyenthang">
-                        </tbody>
-                    </table>
-                </div>
+    <div class="card card-collapsable mt-3 mb-1" id="list-hocba">
+        <div class="card-header">
+            <span> Kết quả xét tuyển sử dụng kết quả học tập ở THPT (Xét học bạ)</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table">
+                    <tr>
+                        <th>Đợt xét</th>
+                        <th>N.Vọng</th>
+                        <th>Mã, tên ngành</th>
+                        <th>Mã, tên tổ hợp</th>
+                        <th>Tổng điểm</th>
+                        <th class="text-center">Trạng thái</th>
+                    </tr>
+                    <tbody class="tbody-hocba">
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 
-        <div class="card card-header-actions mt-3 mb-1" id="list-ngoaingu">
-            <div class="card-header">
-                Theo phương thức sử dụng chứng chỉ ngoại ngữ
-            </div>
-            <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr class="text-center">
-                            <th class="text-center">Đợt xét tuyển</th>
-                            <th class="text-center">Mã ngành</th>
-                            <th>Tên ngành</th>
-                            <th class="text-center">
-                                Tên phương thức
-                            </th>
-                            <th class="text-center">
-                                Mã tổ hợp
-                            </th>
-                            <th class="text-center">
-                                Tên chứng chỉ
-                            </th>
-                            <th>
-                                Kết quả
-                            </th>
-                            <th width="15%" class="text-center">
-                                Trạng thái
-                            </th>
-                        </tr>
-                        <tbody class="tbody-ngoaingu">
-                        </tbody>
-                    </table>
-                </div>
+    <div class="card card-collapsable mt-3 mb-1" id="list-tuyenthang">
+        <div class="card-header">
+            <span> Kết quả xét tuyển theo hình thức tuyển thẳng</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table">
+                    <tr>
+                        <th>Đợt xét</th>
+                        <th>N.Vọng</th>
+                        <th>Mã, tên ngành</th>
+                        <th>Năm đạt giải</th>
+                        <th>Môn đạt giải</th>
+                        <th>Giải</th>
+                        <th class="text-center">Trạng thái</th>
+                    </tr>
+                    <tbody class="tbody-tuyenthang">
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 
-        <div class="card card-header-actions mt-3 mb-1" id="list-dgnl">
-            <div class="card-header">
-                Theo phương thức sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy
+    <div class="card card-collapsable mt-3 mb-1" id="list-ngoaingu">
+        <div class="card-header">
+            <span> Kết quả xét tuyển sử dụng chứng chỉ ngoại ngữ</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table">
+                    <tr>
+                        <th>Đợt xét</th>
+                        <th>N.Vọng</th>
+                        <th>Mã, tên ngành</th>
+                        <th>Đơn vị tổ chức </th>
+                        <th>Tên chứng chỉ </th>
+                        <th class="text-center">Kết quả thi</th>
+                        <th width="15%" class="text-center">Trạng thái</th>
+                    </tr>
+                    <tbody class="tbody-ngoaingu">
+                    </tbody>
+                </table>
             </div>
-            <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr class="text-center">
-                            <th class="text-center">Đợt xét tuyển</th>
-                            <th class="text-center">Mã ngành</th>
-                            <th>Tên ngành</th>
-                            <th class="text-center">
-                                Tên phương thức
-                            </th>
-                            <th class="text-center">
-                                Mã tổ hợp
-                            </th>
-                            <th class="text-center">
-                                Tên trường tổ chức
-                            </th>
-                            <th>
-                                Kết quả
-                            </th>
-                            <th width="15%" class="text-center">
-                                Trạng thái
-                            </th>
-                        </tr>
-                        <tbody class="tbody-dgnl">
-                        </tbody>
-                    </table>
-                </div>
+        </div>
+    </div>
+
+    <div class="card card-collapsable mt-3 mb-1" id="list-dkdtnk">
+        <div class="card-header">
+            <span> Kết quả xét tuyển sử dụng sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table">
+                    <tr>
+                        <th>Đợt xét</th>
+                        <th>N.Vọng</th>
+                        <th>Mã, tên ngành</th>
+                        <th>Đơn vị tổ chức </th>
+                        <th>Tên chứng chỉ </th>
+                        <th class="text-center">Kết quả</th>
+                        <th class="text-center">Trạng thái</th>
+                    </tr>
+                    <tbody class="tbody-dgnl">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-collapsable mt-3 mb-1" id="list-dkdtnk">
+        <div class="card-header">
+            <span>Kết quả đăng ký dự thi năng khiếu</span>
+        </div>
+        <div class="card-body">
+            <div class="table-container">
+                <table class="table">
+                    <tr>
+                        <th>Đợt thi</th>
+                        <th>Thời gian thi</th>
+                        <th>Mã, tên ngành thi</th>
+                        <th>Môn thi</th>
+                        <th class="text-center">Trạng thái</th>
+                    </tr>
+                    <tbody class="tbody-dkdtnk">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

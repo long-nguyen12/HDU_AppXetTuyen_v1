@@ -102,18 +102,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == 0)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0,St_Name = "Chưa KT" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 1, st_Name = "MC sai" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "MC sai" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã duyệt" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã duyệt" });
                 }
             }
-            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "St_ID", "St_Name");
 
             if (!String.IsNullOrEmpty(filteriHoSo))
             {
@@ -220,19 +220,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == 0)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 0, st_Name = "Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0,St_Name = "Chưa KT" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 1, st_Name = "MC sai" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1,St_Name = "MC sai" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { st_ID = 2, st_Name = "Đã duyệt" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2,St_Name = "Đã duyệt" });
                 }
             }
            
-            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.st_ID).ToList(), "st_ID", "st_Name");
+            ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
 
             if (!String.IsNullOrEmpty(filteriHoSo))
             {

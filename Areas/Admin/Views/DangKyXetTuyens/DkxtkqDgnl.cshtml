@@ -5,162 +5,204 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>DkxtkqDgnl</h2>
+<h2>
+    <style>
+        th, td {
+            white-space: nowrap;
+        }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nganh.Nganh_MaNganh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ptxt_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DoiTuong_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.KhuVuc_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_TrangThai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_NguyenVong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DotXT_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_GhiChu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_ToHopXT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_DonViToChuc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_KetQuaDatDuoc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_TongDiem)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_NgayDuThi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHocLuc_12)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHanhKiem_12)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_MinhChung_HB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_TrangThai_KetQua)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_MinhChung_CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_MinhChung_Bang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_MinhChung_KetQua)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_MinhChung_UuTien)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dkxt_NgayDangKy)
-        </th>
-        <th></th>
-    </tr>
+        .bt-hs {
+            width: 80px;
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nganh.Nganh_MaNganh)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ptxt_ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DoiTuong_ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KhuVuc_ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_TrangThai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DotXT_ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_GhiChu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_ToHopXT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_DonViToChuc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_KetQuaDatDuoc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_TongDiem)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_NgayDuThi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHocLuc_12)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHanhKiem_12)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_HB)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_TrangThai_KetQua)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_CCCD)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_Bang)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_KetQua)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_UuTien)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dkxt_NgayDangKy)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Dkxt_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Dkxt_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Dkxt_ID })
-        </td>
-    </tr>
-}
+        .bd-rd {
+            border-radius: 3px
+        }
+    </style>
+</h2>
 
-</table>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span> Quản lý Thí sinh đăng ký xét tuyển</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-12">
+    <div class="card card-collapsable mt-1 mb-1">
+        <div class="card-header">
+            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng học bạ</span></div>
+        </div>
+        <div class="card-body">
+
+            <div class="row g-1">
+                <div class="col-lg-12 col-12">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nganh.Nganh_MaNganh)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Ptxt_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DoiTuong_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.KhuVuc_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_TrangThai)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_NguyenVong)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DotXT_ID)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_GhiChu)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_ToHopXT)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_DonViToChuc)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_KetQuaDatDuoc)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_TongDiem)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_NgayDuThi)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHocLuc_12)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHanhKiem_12)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_HB)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_TrangThai_KetQua)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_CCCD)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_Bang)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_KetQua)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_UuTien)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Dkxt_NgayDangKy)
+                                </th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nganh.Nganh_MaNganh)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ptxt_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DoiTuong_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.KhuVuc_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_TrangThai)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DotXT_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_GhiChu)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_ToHopXT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_DonViToChuc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_KetQuaDatDuoc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_TongDiem)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_NgayDuThi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHocLuc_12)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHanhKiem_12)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_HB)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_TrangThai_KetQua)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_CCCD)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_Bang)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_KetQua)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_UuTien)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_NgayDangKy)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Dkxt_ID }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Dkxt_ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Dkxt_ID })
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

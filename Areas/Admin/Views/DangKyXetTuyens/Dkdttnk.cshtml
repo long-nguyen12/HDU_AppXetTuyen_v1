@@ -14,9 +14,9 @@
     .bt-hs {
         width: 80px;
     }
-
+   
     .bd-rd {
-       /* border-radius: 0px !important;*/
+        border-radius: 3px
     }
 </style>
 
@@ -35,7 +35,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-header-actions">
+    <div class="card card-collapsable">
         <div class="card-header">
             <div id="div_tieude"><span>Danh sách thí sinh đăng ký dự thi năng khiếu</span></div>            
         </div>   
@@ -44,28 +44,28 @@
             {
                 <div class="row g-1">                  
                     <div class="col-xxl-1 col-md-12">
-                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select form-select-sm bd-rd" })
+                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-1 col-md-12">
-                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select form-select-sm bd-rd" })
+                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select  bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-md-12">
-                        @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select form-select-sm bd-rd" })
+                        @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-md-12">
-                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select form-select-sm bd-rd" })
+                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-md-12">
-                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select form-select-sm bd-rd" })
+                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select  bd-rd" })
                     </div>
                     <div class="col-xxl-2 col-md-12">
-                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control form-control-sm bd-rd", @placeholder = "Nhập từ khóa..." })
+                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control  bd-rd", @placeholder = "Nhập từ khóa..." })
                     </div>
                     <div class="col-xxl-2 col-xl-12">
                         <div class="d-inline-flex flex-nowrap align-items-center">
-                            <button class="btn btn-outline-primary bd-rd btn-sm" id="bt_search" style="margin-right:4px">Lọc</button>
-                            <a class="btn btn-outline-secondary bd-rd  btn-sm" id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
-                            <a class="btn btn-outline-primary bd-rd  btn-sm" id="bt_reset" href="#" style="padding-right:6px; padding-left:6px">Xuất excel</a>
+                            <button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
+                            <a class="btn btn-outline-secondary bd-rd " id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                            <a class="btn btn-outline-primary bd-rd  " id="bt_reset" href="@Url.Action("ExportTsDKThiNangKhieu", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
                         </div>
                     </div>
                     <hr class="mt-2 mb-2" />
@@ -84,7 +84,7 @@
                                     <th>Tên môn dự thi</th>
                                     <th>Lệ phí</th>
                                     <th>Hồ sơ</th>
-                                    <th style="width:100px">Cập nhật</th>
+                                    <th style="width:100px">Kiểm tra HS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -98,7 +98,7 @@
                                             @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Nganh.NganhTenNganh)
+                                            @Html.DisplayFor(modelItem => item.Nganh.Nganh_TenNganh)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ToHopMon.Thm_TenToHop)
@@ -108,6 +108,56 @@
                                         </td>
 
                                         <td>
+                                            @{
+                                                if (item.Dkdt_NK_TrangThai == 0)
+                                                {
+                                                    @Html.DisplayName("Chưa nộp")
+
+                                                }
+                                                if (item.Dkdt_NK_TrangThai == 1)
+                                                {
+                                                    @Html.DisplayName("Đã nộp")
+
+                                                }
+                                                if (item.Dkdt_NK_TrangThai == 2)
+                                                {
+                                                    @Html.DisplayName("Đã duyệt")
+
+                                                }
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @{
+                                                if (item.Dkdt_NK_TrangThai_KetQua == 0)
+                                                {
+                                                    @Html.DisplayName("Chưa KT")
+                                                }
+                                                if (item.Dkdt_NK_TrangThai_KetQua == 1)
+                                                {
+                                                    @Html.DisplayName("MC sai")
+
+                                                }
+                                                if (item.Dkdt_NK_TrangThai_KetQua == 2)
+                                                {
+                                                    @Html.DisplayName("HS đầy đủ")
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Dkdttnk_hs_view", "DangKyXetTuyens", new {
+                                                                    Dkxt_ID=item.Dkdt_NK_ID,
+                                                                    filteriDotxt =ViewBag.DotxtFilteri,
+                                                                    filteriNvong =ViewBag.NvongFilteri,
+                                                                    filteriNganh =  ViewBag.NganhFilteri,
+                                                                    filteriLePhi = ViewBag.LePhiFilteri,
+                                                                    filteriHoSo =ViewBag.HoSoFilteri,
+                                                                    searchString =ViewBag.SearchString,
+                                                                    page = ViewBag.pageCurren })"
+                                               class="btn btn-light btn-sm bt-hs bd-rd">Kiểm tra</a>
+                                        </td>
+
+                                        @*<td>
                                             @{
                                                 if (item.Dkdt_NK_TrangThai == 0)
                                                 {
@@ -143,7 +193,7 @@
                                             <a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
                                             <a href="@Url.Action("Details","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
                                             <a href="@Url.Action("Delete","DangKyXetTuyens" , new { id = item.Dkdt_NK_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
-                                        </td>
+                                        </td>*@
                                     </tr>
 
                                 }

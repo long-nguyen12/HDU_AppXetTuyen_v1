@@ -9,11 +9,10 @@
     [Table("Tinh")]
     public partial class Tinh
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        
         public Tinh()
         {
             Huyens = new HashSet<Huyen>();
-            TruongCapBas = new HashSet<TruongCapBa>();
         }
 
         [Key]
@@ -35,10 +34,7 @@
         [StringLength(250)]
         public string Tinh_GhiChu { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Huyen> Huyens { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TruongCapBa> TruongCapBas { get; set; }
     }
 }

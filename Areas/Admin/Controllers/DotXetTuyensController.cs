@@ -13,16 +13,14 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
     public class DotXetTuyensController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
-
-        // GET: Admin/DotXetTuyens
+        #region Colleger      
         [AdminSessionCheck]
-        public ActionResult Index()
+        public ActionResult CollegerIndex()
         {
-            var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc);
+            var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc).Where(d => d.Dxt_Classify ==0);
             return View(dotXetTuyens.ToList());
         }
-
-        // GET: Admin/DotXetTuyens/Details/5
+    
         [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
@@ -37,22 +35,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             return View(dotXetTuyen);
         }
-
-        // GET: Admin/DotXetTuyens/Create
+    
         [AdminSessionCheck]
-        public ActionResult Create()
+        public ActionResult CollegerCreate()
         {
             ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten");
             return View();
         }
 
-        // POST: Admin/DotXetTuyens/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+   
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Dxt_ID,Dxt_Ten,Dxt_TrangThai,Dxt_GhiChu,NamHoc_ID")] DotXetTuyen dotXetTuyen)
+        public ActionResult CollegerCreate([Bind(Include = "Dxt_ID,Dxt_Ten,Dxt_TrangThai,Dxt_GhiChu,NamHoc_ID")] DotXetTuyen dotXetTuyen)
         {
             if (ModelState.IsValid)
             {
@@ -64,10 +59,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten", dotXetTuyen.NamHoc_ID);
             return View(dotXetTuyen);
         }
-
-        // GET: Admin/DotXetTuyens/Edit/5
+      
         [AdminSessionCheck]
-        public ActionResult Edit(int? id)
+        public ActionResult CollegerEdit(int? id)
         {
             if (id == null)
             {
@@ -81,14 +75,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten", dotXetTuyen.NamHoc_ID);
             return View(dotXetTuyen);
         }
-
-        // POST: Admin/DotXetTuyens/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Dxt_ID,Dxt_Ten,Dxt_TrangThai,Dxt_GhiChu,NamHoc_ID")] DotXetTuyen dotXetTuyen)
+        public ActionResult CollegerEdit([Bind(Include = "Dxt_ID,Dxt_Ten,Dxt_TrangThai,Dxt_GhiChu,NamHoc_ID")] DotXetTuyen dotXetTuyen)
         {
             if (ModelState.IsValid)
             {
@@ -100,6 +91,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(dotXetTuyen);
         }
 
+       
+        #endregion
+
+        #region Master
+        public ActionResult MasterIndex()
+        {
+            var model = db.DotXetTuyens.OrderByDescending(x => x.Dxt_ID).Where(x => x.Dxt_Classify == 2);
+
+            return View(model.ToList());
+        }
+        #endregion
+        #region Delete
         // GET: Admin/DotXetTuyens/Delete/5
         [AdminSessionCheck]
         public ActionResult Delete(int? id)
@@ -136,5 +139,15 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
+
+        #region exam
+        [AdminSessionCheck]
+        public ActionResult ExamIndex()
+        {
+            var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc).Where(d => d.Dxt_Classify == 1);
+            return View(dotXetTuyens.ToList());
+        }
+        #endregion
     }
 }

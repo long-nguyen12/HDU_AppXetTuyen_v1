@@ -9,28 +9,35 @@ namespace HDU_AppXetTuyen.Models
     [Table("PhuongThucXetTuyen")]
     public partial class PhuongThucXetTuyen
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        
         public PhuongThucXetTuyen()
         {
-            DangKyDuThiNangKhieus = new HashSet<DangKyDuThiNangKhieu>();
+            DangKyXetTuyenHBs = new HashSet<DangKyXetTuyenHB>();
+            DangKyXetTuyenKhacs = new HashSet<DangKyXetTuyenKhac>();
             DangKyXetTuyenKQTQGs = new HashSet<DangKyXetTuyenKQTQG>();
-            DangKyXetTuyens = new HashSet<DangKyXetTuyen>();          
+            DangKyXetTuyenThangs = new HashSet<DangKyXetTuyenThang>();
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Ptxt_ID { get; set; }
 
-        [StringLength(50)]
+        [StringLength(1000)]
         public string Ptxt_TenPhuongThuc { get; set; }
 
         [StringLength(200)]
         public string Ptxt_GhiChu { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyXetTuyen> DangKyXetTuyens { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DangKyDuThiNangKhieu> DangKyDuThiNangKhieus { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
+        public virtual ICollection<DangKyXetTuyenHB> DangKyXetTuyenHBs { get; set; }
+
+        
+        public virtual ICollection<DangKyXetTuyenKhac> DangKyXetTuyenKhacs { get; set; }
+
+        
         public virtual ICollection<DangKyXetTuyenKQTQG> DangKyXetTuyenKQTQGs { get; set; }
+
+        
+        public virtual ICollection<DangKyXetTuyenThang> DangKyXetTuyenThangs { get; set; }
     }
 }

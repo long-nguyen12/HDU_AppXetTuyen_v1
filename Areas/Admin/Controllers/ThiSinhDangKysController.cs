@@ -21,29 +21,21 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Index(string searchString, string currentFilter, string filteriDotxt, int? page)
         {
 
-            var thisinhs = (from ts_tem in db.ThiSinhDangKies select ts_tem).OrderBy(x => x.ThiSinh_ID).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc);
+            var thisinhs = (from ts_tem in db.ThiSinhDangKies select ts_tem).OrderBy(x => x.ThiSinh_ID).Include(t => t.DoiTuong).Include(t => t.KhuVuc);
 
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten; 
             #region lọc dữ liệu theo đợt
             var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1).ToList();
             dotxts.Add(new DotXetTuyen() { Dxt_ID = 0, Dxt_Ten = "Tất cả" });
-            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID;
+            int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 0).FirstOrDefault().Dxt_ID;
             ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
             // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
             if (String.IsNullOrEmpty(filteriDotxt) == true)
             {
-                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai == 1).FirstOrDefault().Dxt_ID.ToString();
+                filteriDotxt = dotxts.Where(x => x.Dxt_TrangThai_Xt == 1).FirstOrDefault().Dxt_ID.ToString();
             } 
             // thực hiện lọc 
-            if (!String.IsNullOrEmpty(filteriDotxt))
-            {                
-                int _Dotxt_ID = Int32.Parse(filteriDotxt);
-                if(_Dotxt_ID != 0)
-                {
-                    thisinhs = thisinhs.Where(x => x.DotXT_ID == _Dotxt_ID);
-                }
-                
-            }
+          
             #endregion
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
@@ -82,7 +74,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             if (id != null)
             {
-                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ID == id).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
+                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ID == id).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
                 return View(thiSinh);
             }
             ThiSinhDangKy ts = new ThiSinhDangKy();
@@ -94,25 +86,25 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             try
             {
-                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ID == id).Include(t => t.DoiTuong).Include(t => t.DotXetTuyen).Include(t => t.KhuVuc).FirstOrDefault();
-                var nguyenvongs = db.DangKyXetTuyens.Include(l => l.Nganh).Include(l => l.ToHopMon).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
+                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ID == id).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+                var nguyenvongs = db.DangKyXetTuyenHBs.Include(l => l.Nganh).Include(l => l.ToHopMon).Include(l => l.DotXetTuyen).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
                 {
                     Ptxt_ID = n.Ptxt_ID,
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Thm = new
                     {
                         ToHopMon = n.ToHopMon.Thm_MaToHop
                     },
-                    Dkxt_TrangThai = n.Dkxt_TrangThai,
-                    Dkxt_NguyenVong = n.Dkxt_NguyenVong,
+                    Dkxt_TrangThai = n.Dkxt_HB_TrangThai,
+                    Dkxt_NguyenVong = n.Dkxt_HB_NguyenVong,
                     DotXT_ID = n.DotXT_ID,
-                    Dkxt_Diem_Tong = n.Dkxt_Diem_Tong,
-                    Dkxt_Diem_Tong_Full = n.Dkxt_Diem_Tong_Full,
-                    Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
+                    Dkxt_Diem_Tong = n.Dkxt_HB_Diem_Tong,
+                    Dkxt_Diem_Tong_Full = n.Dkxt_HB_Diem_Tong_Full,
+                    Dkxt_TrangThai_KetQua = n.Dkxt_HB_TrangThai_KetQua,
                 }).OrderBy(n => n.Dkxt_NguyenVong).ToList();
                 var nguyenVongTuyenThang = db.DangKyXetTuyenThangs.Include(l => l.Nganh).Where(n => n.ThiSinh_ID == thiSinh.ThiSinh_ID).Select(n => new
                 {
@@ -120,7 +112,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
                     Dkxt_NguyenVong = n.Dkxt_NguyenVong,
@@ -137,7 +129,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
@@ -155,7 +147,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Nganh_ID = new
                     {
                         Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
-                        NganhTenNganh = n.Nganh.NganhTenNganh
+                        NganhTenNganh = n.Nganh.Nganh_TenNganh
                     },
                     Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
                     Dkxt_TrangThai = n.Dkxt_TrangThai,
@@ -229,7 +221,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
 
             ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", thiSinhDangKy.DotXT_ID);
+           
             ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
             return View(thiSinhDangKy);
         }
@@ -248,7 +240,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", thiSinhDangKy.DotXT_ID);
+         
             ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
             return View(thiSinhDangKy);
         }
@@ -268,7 +260,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten", thiSinhDangKy.DotXT_ID);
+          
             ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
             return View(thiSinhDangKy);
         }

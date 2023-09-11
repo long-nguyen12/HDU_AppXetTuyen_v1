@@ -9,7 +9,7 @@
     [Table("Huyen")]
     public partial class Huyen
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+
         public Huyen()
         {
             Xas = new HashSet<Xa>();
@@ -33,10 +33,7 @@
 
         [Display(Name = "Tỉnh")]
         public int? Tinh_ID { get; set; }
-
         public virtual Tinh Tinh { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Xa> Xas { get; set; }
     }
 }

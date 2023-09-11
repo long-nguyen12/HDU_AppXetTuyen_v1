@@ -25,7 +25,5 @@ namespace HDU_AppXetTuyen.Models
         public string Truong_GhiChu { get; set; }
 
         public int? Tinh_ID { get; set; }
-
-        public virtual Tinh Tinh { get; set; }
     }
 }
