@@ -268,15 +268,20 @@
                                             </td>
                                             <td>
                                                 @{
-                                                    if (item.HocVien_LePhi_MaThamChieu.Length == 6)
+                                                    if (item.HocVien_LePhi_TrangThai == 0)
                                                     {
-                                                        @Html.DisplayFor(modelItem => item.HocVien_LePhi_MaThamChieu)
-                                                        @Html.DisplayName(" | ")
-                                                        <input type="checkbox" class="form-check-input tm_check" id="mtc_@item.DuTuyen_ID" name="mtc_@item.DuTuyen_ID" onclick="XacNhanNopTienDung(@item.DuTuyen_ID)" value="@item.HocVien_LePhi_MaThamChieu" checked />
+                                                        <label id="lbl_@item.DuTuyen_ID" class="form-label" style="color:red">Chưa nộp </label>
                                                     }
-                                                    else
+                                                    else if (item.HocVien_LePhi_TrangThai == 1 || item.HocVien_LePhi_TrangThai == 9)
                                                     {
-                                                        <label class="form-label" style="color:red">Chưa nộp </label>
+                                                        <label id="lbl_@item.DuTuyen_ID">@item.HocVien_LePhi_MaThamChieu</label>
+                                                        @Html.DisplayName(" | ")
+                                                        bool checkedLePhi = item.HocVien_LePhi_TrangThai == 9 ? true : false;
+                                                        <input type="checkbox" class="form-check-input tm_check" id="mtc_@item.DuTuyen_ID" name="mtc_@item.DuTuyen_ID" onclick="XacNhanNopTienDung(@item.DuTuyen_ID, @item.HocVien_LePhi_TrangThai)" value="@item.HocVien_LePhi_MaThamChieu" checked="@checkedLePhi" />
+                                                    }
+                                                    else if (item.HocVien_LePhi_TrangThai == 2)
+                                                    {
+                                                        <label id="lbl_@item.DuTuyen_ID" style="color:red">Mã tham chiếu sai</label>
                                                     }
                                                 }
                                             </td>
@@ -317,18 +322,51 @@
                             </table>
 
                             <script>
-                                function XacNhanNopTienDung(id_thisinh) {
+                                $('input[type="checkbox"]').on('click', function (event) {
+                                    event.preventDefault();
+                                });
+                                function XacNhanNopTienDung(id_thisinh, trangthai) {
                                     var idpresent = $('#mtc_' + id_thisinh);
-
+                                    $('#hiddenCode').text(id_thisinh);
+                                    $('#hiddenTrangThai').text(trangthai);
                                     if (idpresent.is(":checked")) {
-                                        console.log(idpresent.val())
-                                        console.log("test 0k")
+                                        $('#txt_confirm').text("Bạn có chắc chắn muốn xác nhận thông tin?");
                                     }
-
                                     if (!idpresent.is(":checked")) {
-                                        console.log("test 1");
+                                        $('#txt_confirm').text("Bạn có chắc chắn huỷ xác nhận thông tin?");
                                     }
-                                    //$('#modal_thongtin_lephi').modal('show');
+                                    $('#modal_thongtin_lephi').modal('show');
+                                }
+                                function confirm_action() {
+                                    var id_thisinh = $('#hiddenCode').text();
+                                    var trangthai = $('#hiddenTrangThai').text();
+                                    var idpresent = $('#mtc_' + id_thisinh);
+                                    var data = {
+                                        dutuyenID: id_thisinh,
+                                        trangthai: trangthai == 9 ? 1 : 9,
+                                    }
+                                    $.ajax({
+                                        url: "/HocVienDangKys/UpdateLePhiTrangThai/",
+                                        data: JSON.stringify(data),
+                                        type: "POST",
+                                        contentType: 'application/json;charset=utf-8',
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            var isChecked = idpresent.prop('checked');
+                                            if (!isChecked) {
+                                                idpresent.prop("checked", true);
+                                            }
+                                            else {
+                                                idpresent.prop("checked", false);
+                                            }
+                                            let queryString_back = window.location.search;
+                                            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen" + queryString_back;
+                                        },
+                                        error: function (errormessage) {
+                                            console.log(errormessage.responseText);
+                                        }
+                                    });
+                                    $('#modal_thongtin_lephi').modal('hide');
                                 }
                                 $(document).ready(function () {
                                     $('#bt_cancel_on_modal_first').click(function () {
@@ -357,27 +395,25 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 <div class="modal fade" id="modal_thongtin_lephi" tabindex="-1" role="dialog" aria-labelledby="modal_thongtin_lephi" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tieude_update_mc_lephi">Hủy Xác thực thông tin nộp lệ phí</h5>
+                <h5 class="modal-title" id="tieude_update_mc_lephi">Xác nhận</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_first"></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="txt_sothamchieu" class="form-label">Nhập số tham chiếu</label>
-                    <input type="number" value="" class="form-control" id="txt_sothamchieu" />
-                    <span id="Error_Rgt_txt_sothamchieu" class="small mb-1 text-danger"></span>
-                    <input type="hidden" id="hidden_id_checkbox_click" />
+                    <label id="txt_confirm" class="form-label"></label>
+                    <p id="hiddenCode" hidden></p>
+                    <p id="hiddenTrangThai" hidden></p>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_second">Hủy</button>
-                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_lephi">Đồng ý</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_lephi" onclick="confirm_action()">Đồng ý</button>
             </div>
         </div>
     </div>

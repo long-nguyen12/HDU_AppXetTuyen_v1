@@ -16,6 +16,7 @@ using Xceed.Words.NET;
 using System.Net.Mail;
 using System.Xml.Linq;
 using Microsoft.Ajax.Utilities;
+using System.Web.Script.Serialization;
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
@@ -529,6 +530,21 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             var model = db.DotXetTuyens.OrderByDescending(x => x.Dxt_ID).Where(x => x.Dxt_Classify == 2);
 
             return View(model.ToList());
+        }
+
+        public JsonResult UpdateLePhiTrangThai(string dutuyenID, string trangthai)
+        {
+            int id = int.Parse(dutuyenID);
+            var model = db.HocVienDuTuyens
+                          .Include(h => h.DotXetTuyen)
+                          .Include(h => h.HocVienDangKy)
+                          .Include(h => h.NganhMaster)
+                          .Where(x => x.DuTuyen_ID == id).FirstOrDefault();
+
+            model.HocVien_LePhi_TrangThai = int.Parse(trangthai);
+            db.SaveChanges();
+
+            return Json(new { success = true, data = trangthai }, JsonRequestBehavior.AllowGet);
         }
     }
 }
