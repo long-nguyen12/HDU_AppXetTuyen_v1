@@ -37,8 +37,7 @@ namespace HDU_AppXetTuyen.Models
         public virtual DbSet<Tinh> Tinhs { get; set; }
         public virtual DbSet<ToHopMon> ToHopMons { get; set; }
         public virtual DbSet<TruongCapBa> TruongCapBas { get; set; }
-        public virtual DbSet<Xa> Xas { get; set; }
-       
+        public virtual DbSet<Xa> Xas { get; set; }       
         public virtual DbSet<ToHopMonNganh> ToHopMonNganhs { get; set; }
         public virtual DbSet<NganhMaster> NganhMasters { get; set; }
         public virtual DbSet<HocVienDangKy> HocVienDangKies { get; set; }

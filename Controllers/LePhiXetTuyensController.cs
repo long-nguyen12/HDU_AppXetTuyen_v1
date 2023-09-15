@@ -221,9 +221,11 @@ namespace HDU_AppXetTuyen.Controllers
         {
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
+            
             var Dkxt_ID = int.Parse(kp.key_dkxt_id);
             var Ptxt_ID = int.Parse(kp.key_dkxt_pt);
             var kinhPhi = db.KinhPhis.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Ptxt_ID == Ptxt_ID && n.Dkxt_ID == Dkxt_ID).FirstOrDefault();
+            
             if (kinhPhi != null)
             {
                 kinhPhi.KinhPhi_TepMinhChung = kp.KinhPhi_TepMinhChung;

@@ -67,7 +67,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     else if (id_hedaotao == "2" && login_details.Admin_Quyen == "2")
                     {
                         Session["admin_login_session"] = login_details.Admin_Pass;
-                        return RedirectToAction("DsHvDangKy", "HocVienDangKys");
+                        return RedirectToAction("DsHvDuTuyen", "HocVienDangKys");
                     }
                     else
                     {
