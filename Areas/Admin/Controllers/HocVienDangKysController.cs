@@ -18,6 +18,10 @@ using System.Xml.Linq;
 using Microsoft.Ajax.Utilities;
 using System.Web.Script.Serialization;
 
+using BC = BCrypt.Net.BCrypt;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Validation;
+
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
     public class HocVienDangKysController : Controller
@@ -27,11 +31,69 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult AdCreateHocVienJson()
+        public ActionResult AdCreateHocVienJson(HocVienDangKy entity)
         {
+            HocVienDangKy hv_new = new HocVienDangKy();
+            HocVienDuTuyen dt_new = new HocVienDuTuyen();
+            string activationToken = Guid.NewGuid().ToString();
+
+            var hash_password = ComputeHash(entity.HocVien_CCCD, "123456");
+
+            hv_new.HocVien_HoDem = entity.HocVien_HoDem;
+            hv_new.HocVien_Ten = entity.HocVien_Ten;
+            hv_new.HocVien_GioiTinh = entity.HocVien_GioiTinh;
+            hv_new.HocVien_DanToc = entity.HocVien_DanToc;
+            hv_new.HocVien_NgaySinh = entity.HocVien_NgaySinh;
+
+            hv_new.HocVien_CCCD = entity.HocVien_CCCD;
+            hv_new.HocVien_CCCD_NgayCap = entity.HocVien_CCCD_NgayCap;
+
+            hv_new.HocVien_DienThoai = entity.HocVien_DienThoai;
+            hv_new.HocVien_Email = entity.HocVien_Email;
+            hv_new.HocVien_HoKhauThuongTru = entity.HocVien_HoKhauThuongTru;
+            hv_new.HocVien_NoiOHienNay = entity.HocVien_HoKhauThuongTru;
+            hv_new.HocVien_DiaChiLienHe = entity.HocVien_DiaChiLienHe;
+            hv_new.HocVien_NoiSinh = entity.HocVien_NoiSinh;
+
+            hv_new.HocVien_MatKhau = hash_password;
+            hv_new.HocVien_ResetCode = activationToken;
+            hv_new.HocVien_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            hv_new.HocVien_TrangThai = 0;
+
+            hv_new.HocVien_TenDonViCongTac = entity.HocVien_TenDonViCongTac;
+            hv_new.HocVien_ChuyenMon = entity.HocVien_ChuyenMon;
+            hv_new.HocVien_ThamNien = entity.HocVien_ThamNien;
+            hv_new.HocVien_ChucVu = entity.HocVien_ChucVu;
+            hv_new.HocVien_NamCT = entity.HocVien_NamCT;
+            hv_new.HocVien_LoaiCB = entity.HocVien_LoaiCB;
+
+            hv_new.HocVien_BangDaiHoc = entity.HocVien_BangDaiHoc;
+            hv_new.HocVien_BoTucKienThuc = entity.HocVien_BoTucKienThuc;
+            hv_new.HocVien_DoiTuongUuTien = entity.HocVien_DoiTuongUuTien;
+
+            db.HocVienDangKies.Add(hv_new);           
+
+            HocVienDuTuyen entity_hv = JsonConvert.DeserializeObject<HocVienDuTuyen>(entity.HocVien_Email_Temp);
+            dt_new.HocVien_ID = hv_new.HocVien_ID;
+
+            dt_new.DuTuyen_MaNghienCuu = entity_hv.DuTuyen_MaNghienCuu;
+            dt_new.Nganh_Mt_ID = entity_hv.Nganh_Mt_ID;
+            dt_new.HocVien_DKDTNgoaiNgu = entity_hv.HocVien_DKDTNgoaiNgu;
+            dt_new.HocVien_VanBangNgoaiNgu = entity_hv.HocVien_VanBangNgoaiNgu;
+            dt_new.HocVien_DoiTuongDuThi = entity_hv.HocVien_DoiTuongDuThi;
+            dt_new.HocVien_SoYeuLyLich = entity_hv.HocVien_SoYeuLyLich;
+            dt_new.HocVien_MCBangDaiHoc = entity_hv.HocVien_MCBangDaiHoc;
+            dt_new.HocVien_MCBangDiem = entity_hv.HocVien_MCBangDiem;
+            dt_new.HocVien_MCGiayKhamSucKhoe = entity_hv.HocVien_MCGiayKhamSucKhoe;
+            dt_new.HocVien_Anh46 = entity_hv.HocVien_Anh46;
+            dt_new.HocVien_MCCCNN = entity_hv.HocVien_MCCCNN;
+            dt_new.HocVien_MCKhac = entity_hv.HocVien_MCKhac;
+            db.HocVienDuTuyens.Add(dt_new);
+            db.SaveChanges();
+
             return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
         }
-   
+
         public ActionResult DsHvDangKy(string searchString, string currentFilter, string filteriDotxt, int? page)
         {
             var hocviens = db.HocVienDangKies.ToList();
@@ -66,9 +128,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
 
-   
+
         // GET: Admin/HocVienDangKys
-        public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, 
+        public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
             string filteriDotxt, string sortOrder, int? page)
         {
             var hocviens = db.HocVienDuTuyens
@@ -78,7 +140,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
 
             #region lọc dữ liệu theo đợt
-            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1 && x.Dxt_Classify == 2).ToList();           
+            var dotxts = db.DotXetTuyens.Include(x => x.NamHoc).Where(x => x.NamHoc.NamHoc_TrangThai == 1 && x.Dxt_Classify == 2).ToList();
             int _dotxt_hientai = dotxts.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 2).FirstOrDefault().Dxt_ID;
             ViewBag.filteriDotxt = new SelectList(dotxts.OrderBy(x => x.Dxt_ID).ToList(), "Dxt_ID", "Dxt_Ten", _dotxt_hientai);
             // nếu không có truyền vào thì gán giá trị cho đợt xét tuyển là hiện tại
@@ -238,7 +300,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.CurrentSort = sortOrder;
 
             ViewBag.totalRecod = hocviens.Count();
-          
+
             #endregion
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
@@ -255,7 +317,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ViewBag.pageCurren = page;
                 ViewBag.DuTuyen_ID = duTuyen_ID;
                 return View();
-
             }
             else
             {
@@ -565,6 +626,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             });
             return Json(new { success = true, data = NganhMasterList.ToList() });
         }
+        public string ComputeHash(string input_user, string input_pass)
+        {
+            string input = input_user.Trim() + input_pass.Trim();
+            string hashedPassword = BC.HashPassword(input);
+            return hashedPassword;
+        }
         public JsonResult GetTinhJson()
         {
             var TinhList = db.Tinhs.Select(t => new
@@ -590,6 +657,35 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 nganh_Mt_TrangThai = n.Nganh_Mt_TrangThai
             });
             return Json(new { success = true, data = NganhMasterList_byID.ToList(), JsonRequestBehavior.AllowGet });
+        }
+        [HttpPost]
+        public JsonResult RegisterMasterCheckCCCDAD(HocVienDangKy entity)
+        {
+            var model = db.HocVienDangKies.Where(x => x.HocVien_CCCD == entity.HocVien_CCCD).FirstOrDefault();
+
+            if (model != null)
+            {
+                return Json(new { success = true, message = "Số Căn cước công dân tồn tại." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, message = entity.HocVien_CCCD }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult RegisterMasterCheckEmailAD(HocVienDangKy entity)
+        {
+            var model = db.HocVienDangKies.Where(x => x.HocVien_Email == entity.HocVien_Email).FirstOrDefault();
+
+            if (model != null)
+            {
+                return Json(new { success = true, message = "Email đã tồn tại." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, message = entity.HocVien_Email }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
