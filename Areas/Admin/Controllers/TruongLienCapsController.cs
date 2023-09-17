@@ -278,7 +278,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         // GET: Admin/LienCapTHCS/Details/5
         [AdminSessionCheck]
-        public ActionResult DetailsTh(long? id)
+        public ActionResult DetailsThcs(long? id)
         {
             if (id == null)
             {
@@ -295,7 +295,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         // GET: Admin/LienCapTHCS/Edit/5
         [AdminSessionCheck]
-        public ActionResult Edit(long? id)
+        public ActionResult EditThcs(long? id)
         {
             if (id == null)
             {
@@ -315,7 +315,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AdminSessionCheck]
-        public ActionResult Edit([Bind(Include = "HocSinh_ID,HocSinh_DinhDanh,HocSinh_HoTen,HocSinh_GioiTinh,HocSinh_NgaySinh,HocSinh_NoiSinh,HocSinh_Email,HocSinh_NoiCuTru,HocSinh_TruongTH,HocSinh_UuTien,HocSinh_ThongTinCha,HocSinh_ThongTinMe,HocSinh_DiemHocTap,HocSinh_MucDoNangLuc,HocSinh_MucDoPhamChat,HocSinh_MinhChungHB,HocSinh_MinhChungGiayKS,HocSinh_MinhChungMaDinhDanh,HocSinh_GiayUuTien,HocSinh_XacNhanLePhi,HocSinh_Activation,HocSinh_TrangThai,HocSinh_GhiChu")] LienCapTHCS lienCapTHCS)
+        public ActionResult EditThcs([Bind(Include = "HocSinh_ID,HocSinh_DinhDanh,HocSinh_HoTen,HocSinh_GioiTinh,HocSinh_NgaySinh,HocSinh_NoiSinh,HocSinh_Email,HocSinh_NoiCuTru,HocSinh_TruongTH,HocSinh_UuTien,HocSinh_ThongTinCha,HocSinh_ThongTinMe,HocSinh_DiemHocTap,HocSinh_MucDoNangLuc,HocSinh_MucDoPhamChat,HocSinh_MinhChungHB,HocSinh_MinhChungGiayKS,HocSinh_MinhChungMaDinhDanh,HocSinh_GiayUuTien,HocSinh_XacNhanLePhi,HocSinh_Activation,HocSinh_TrangThai,HocSinh_GhiChu")] LienCapTHCS lienCapTHCS)
         {
             if (ModelState.IsValid)
             {
@@ -328,7 +328,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         // GET: Admin/LienCapTHCS/Delete/5
         [AdminSessionCheck]
-        public ActionResult Delete(long? id)
+        public ActionResult DeleteThcs(long? id)
         {
             if (id == null)
             {
@@ -342,14 +342,93 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(lienCapTHCS);
         }
 
-        // POST: Admin/LienCapTHCS/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Admin/LienCapTHCS/DeleteThcs/5
+        [HttpPost, ActionName("DeleteThcs")]
         [ValidateAntiForgeryToken]
         [AdminSessionCheck]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmedThcs(long id)
         {
             LienCapTHCS lienCapTHCS = db.LienCapTHCSs.Find(id);
             db.LienCapTHCSs.Remove(lienCapTHCS);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+        // GET: Admin/LienCapTieuHocs/Details/5
+        [AdminSessionCheck]
+        public ActionResult DetailsTh(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LienCapTieuHoc lienCapTieuHoc = db.LienCapTieuHocs.Find(id);
+            if (lienCapTieuHoc == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.URL = DEFAULT_URL;
+            return View(lienCapTieuHoc);
+        }
+
+        // GET: Admin/LienCapTieuHocs/Edit/5
+        [AdminSessionCheck]
+        public ActionResult EditTh(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LienCapTieuHoc lienCapTieuHoc = db.LienCapTieuHocs.Find(id);
+            if (lienCapTieuHoc == null)
+            {
+                return HttpNotFound();
+            }
+            return View(lienCapTieuHoc);
+        }
+
+        // POST: Admin/LienCapTieuHocs/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AdminSessionCheck]
+        public ActionResult EditTh([Bind(Include = "HocSinh_ID,HocSinh_DinhDanh,HocSinh_HoTen,HocSinh_GioiTinh,HocSinh_NgaySinh,HocSinh_NoiSinh,HocSinh_Email,HocSinh_NoiCuTru,HocSinh_TruongMN,HocSinh_UuTien,HocSinh_ThongTinCha,HocSinh_NgheNghiepCha,HocSinh_DienThoaiCha,HocSinh_ThongTinMe,HocSinh_NgheNghiepMe,HocSinh_DienThoaiMe,HocSinh_MinhChungMN,HocSinh_MinhChungGiayKS,HocSinh_MinhChungMaDinhDanh,HocSinh_GiayUuTien,HocSinh_XacNhanLePhi,HocSinh_TrangThai,HocSinh_GhiChu,HocSinh_MinhChungLePhi,HocSinh_Activation")] LienCapTieuHoc lienCapTieuHoc)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(lienCapTieuHoc).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(lienCapTieuHoc);
+        }
+
+        // GET: Admin/LienCapTieuHocs/Delete/5
+        [AdminSessionCheck]
+        public ActionResult DeleteTh(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LienCapTieuHoc lienCapTieuHoc = db.LienCapTieuHocs.Find(id);
+            if (lienCapTieuHoc == null)
+            {
+                return HttpNotFound();
+            }
+            return View(lienCapTieuHoc);
+        }
+
+        // POST: Admin/LienCapTieuHocs/Delete/5
+        [HttpPost, ActionName("DeleteTh")]
+        [ValidateAntiForgeryToken]
+        [AdminSessionCheck]
+        public ActionResult DeleteConfirmedTh(long id)
+        {
+            LienCapTieuHoc lienCapTieuHoc = db.LienCapTieuHocs.Find(id);
+            db.LienCapTieuHocs.Remove(lienCapTieuHoc);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

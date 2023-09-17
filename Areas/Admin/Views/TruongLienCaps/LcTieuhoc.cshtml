@@ -148,9 +148,9 @@
                                                     }
                                                 </td>
                                                 <td style="white-space:nowrap; vertical-align:middle">
-                                                    <a href="@Url.Action("Edit", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
-                                                    <a href="@Url.Action("Details", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
-                                                    <a href="@Url.Action("Delete", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                                    <a href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="eye" style="vertical-align: middle !important "></i></a> |
+                                                    <a href="@Url.Action("EditTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                                    <a href="@Url.Action("DeleteTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
                                                 </td>
                                             </tr>
                                         }
