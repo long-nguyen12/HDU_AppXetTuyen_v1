@@ -793,7 +793,7 @@
         let _hocVien_ThamNien = $('#Update_HocVien_ThamNien').val();
         let _hocVien_ChucVu = $('#Update_HocVien_ChucVu').val();
         let _hocVien_NamCT = $('#Update_HocVien_NamCT').val();
-        let _hocVien_LoaiCB = -1;
+      
 
 
         let flag = true;
@@ -809,7 +809,7 @@
 
         if (!_hocVien_HoKhauThuongTru) { var errorMessage = "Nhập hộ khẩu thường trú"; $('#Error_Rgt_HocVien_HoKhauThuongTru').text(errorMessage); flag = false; }     
         if (!_hocVien_DiaChiLienHe) { var errorMessage = "Nhập địa chỉ liên hệ"; $('#Error_Rgt_HocVien_DiaChiLienHe').text(errorMessage); flag = false; }
-
+        let _hocVien_LoaiCB = -1;
         if ($('#Update_HocVien_LoaiCB_BienChe').is(':checked')) {
 
             _hocVien_LoaiCB = 1;

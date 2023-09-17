@@ -132,7 +132,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Học BS kiến thức</label>
                                                     <div class="col-md-12">
-                                                        <input class="form-control" id="iew_HocVien_BoTucKienThuc" name="HocVien_BoTucKienThuc" type="text" disabled value="Đúng chuyên ngành" />
+                                                        <input class="form-control" id="iew_HocVien_BoTucKienThuc" name="HocVien_BoTucKienThuc" type="text" disabled value="Học đúng CN" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -380,7 +380,7 @@
                                 str_diem = "Thang 4: " + data.Hv_BangDaiHoc_DiemToanKhoa + "(điểm)";
                             }
                             if (data.Hv_BangDaiHoc_ThangDiem == 10) {
-                                str_diem = "Thang 10: " + data.Hv_BangDaiHoc_DiemToanKhoa + "(điểm)";
+                                str_diem = "Thang 10: " + data.Hv_BangDaiHoc_DiemToanKhoa + " (điểm)";
                             }
                             $('#View_HocVien_BangDaiHoc_DiemToanKhoa').val(`${str_diem}`);
 
@@ -397,12 +397,13 @@
 
                             if (data.Dt_TrangThai == 2) {
                                 $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
-                                $("#txt_infor_hs2").text("=>  Hồ sơ có thông tin sai, học viên cần cập nhật lại các thông tin sau:");
-                                $("#txt_infor_hs3").text("=>  thông tin sai:");
+                                $("#txt_infor_hs2").text("=> Hồ sơ có thông tin sai, học viên cần cập nhật lại các thông tin sau:");
+                               
+                                $("#txt_infor_hs3").text(" - " + data.Dt_ThongBaoKiemDuyet);
                             }
                             if (data.Dt_TrangThai == 9) {
                                 $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
-                                $("#txt_infor_hs2").text("=> Hồ sơ đầy đủ, không sai sót:");                               
+                                $("#txt_infor_hs2").text("=> Hồ sơ đầy đủ, không sai sót");                               
                                 $("#txt_infor_hs3").text('');
                                 $("#txt_infor_hs3").hide();
                             }
@@ -413,6 +414,7 @@
                                 $("#txt_infor_lp1").text("- Chưa có thông tin đóng phí.");
                                 $("#txt_infor_lp1").css('color', 'red');
                                 $("#bt_update_mc_lephi").show();
+                                $("#_daugach").hide();
 
                                 $("#txt_infor_lp2").hide();
                                 $("#txt_infor_lp2").text('');
@@ -424,12 +426,14 @@
                                 
                                 $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, chờ kiểm duyệt của admin.");
                                 $("#txt_infor_lp1").show();
+
                                           
                                 $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
                                 $("#txt_infor_lp2").css('color', 'blue');
                                 $("#txt_infor_lp2").show();                  
 
                                 $("#bt_update_mc_lephi").show();
+                                $("#_daugach").show();
                                 $("#txt_infor_lp3").hide();
                                 $("#txt_infor_lp3").text('');
                                 /* */
@@ -447,7 +451,6 @@
                                     var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
                                     $('#txt_update_mc_lephi').append(str_a);
                                 }
-
                             }
 
                             
@@ -456,6 +459,7 @@
                                 $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
                                 $("#txt_infor_lp2").css('color', 'blue');
                                 $("#bt_update_mc_lephi").hide();
+                                $("#_daugach").hide();    
                             }
 
                             $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
@@ -806,11 +810,13 @@
                         async: false,
                         success: function (res) {
                             if (res.success) {
-                                console.log("cập nhật mc lp thanh cong", res.data);
+                                //window.location.href = '/HocVienDangKies/DkDuTuyen'
+                                //console.log("cập nhật mc lp thanh cong", res.data);
                                 $("#txt_infor1").text("- Đã đăng ký và nộp minh chứng thành công, chờ kiểm duyệt của admin.");
                                 $("#txt_infor2").text("- Đã nộp lệ phí, mã tham chiếu: " + res.data + " ");
                                 $("#txt_infor2").css('color', 'blue');
                                 $("#bt_update_mc_lephi").show();
+                                $("#_daugach").show();
                             }
                             else {
                                 console.log('Lỗi thêm mc lệ phí', res);
@@ -879,8 +885,8 @@
                                                 <div class="row">
                                                     <div class="col-12 p-1">
                                                         <p class="mt-0 mb-2" id="txt_infor_hs1"></p>
-                                                        <p class="mt-0 mb-2" id="txt_infor_hs2"></p>
-                                                        <p class="mt-0 mb-2" id="txt_infor_hs3"></p>
+                                                        <p class="mt-0 mb-2" id="txt_infor_hs2" style="color:red"></p>
+                                                        <p class="mt-0 mb-2" id="txt_infor_hs3" style="color:red"></p>
                                                     </div>
                                                 </div>
                                             </td>
@@ -906,7 +912,7 @@
                                                         <p class="mt-0 mb-2" id="txt_infor_lp3"></p>
 
                                                         <p class="mt-0 mb-0" id="txt_update_mc_lephi">
-                                                            <a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> | 
+                                                            <a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>
                                                         </p>
                                                         
                                                     </div>
@@ -1905,7 +1911,7 @@
                         }
                     });
 
-
+                    $('#loadingModal').modal('show');
                     // khai báo 1 đối tượng học viên mới
                     var data_hocvien_dutuyen_new = {
                         /*  HocVien_ID: _hocVien_ID,*/
@@ -1932,8 +1938,9 @@
                         success: function (res) {
                             if (res.success) {
                                 /*  console.log('Đăng ký thành công', res.success);*/
+                                $('#loadingModal').modal('show');                             
                                 window.location.href = "/HocVienDangKies/DkDuTuyen";
-                                /*   GetHvDuTuyen();*/
+                               
                             } else {
                                 // không thành công dừng
                             }

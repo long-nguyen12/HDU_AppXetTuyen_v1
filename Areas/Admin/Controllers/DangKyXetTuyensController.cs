@@ -18,8 +18,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
     public class DangKyXetTuyensController : Controller
     {
-        private DbConnecttion db = new DbConnecttion();
-
+        private DbConnecttion db = new DbConnecttion();      
         public ActionResult Dkxtth()
         {
             return View();
@@ -40,7 +39,21 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                             .Include(x => x.ThiSinhDangKy.DoiTuong)
                                             .Include(x => x.ThiSinhDangKy.KhuVuc)
                                             .Include(x => x.PhuongThucXetTuyen);
-
+            //foreach(var item in model)
+            //{             
+            //    var check_item_nopkp = db.KinhPhis.Where(x => x.Dkxt_ID == item.Dkxt_KQTQG_ID && x.Ptxt_ID == item.Ptxt_ID && x.Dxt_ID == item.DotXT_ID).FirstOrDefault();
+            //    var item_NopLePhi = new
+            //    {
+            //        KinhPhi_NgayThang_NopMC = check_item_nopkp.KinhPhi_NgayThang_NopMC,
+            //        KinhPhi_NgayThang_CheckMC = check_item_nopkp.KinhPhi_NgayThang_CheckMC,
+            //        KinhPhi_SoTC = check_item_nopkp.KinhPhi_SoTC,
+            //        KinhPhi_TepMinhChung = check_item_nopkp.KinhPhi_TepMinhChung,
+            //        KinhPhi_TrangThai = check_item_nopkp.KinhPhi_TrangThai,
+            //        KinhPhi_GhiChu = check_item_nopkp.KinhPhi_GhiChu
+            //    };
+               
+            //    item.Dkxt_KQTQG_GhiChu = JsonConvert.SerializeObject(item_NopLePhi);
+            //}
 
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             #region lọc dữ liệu theo đợt xét tuyển
@@ -248,12 +261,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 // lấy ra chuỗi các minh chứng
                 dkxt_KQTQG_MinhChung_CNTotNghiep = s.Dkxt_KQTQG_MinhChung_CNTotNghiep,
                 dkxt_KQTQG_MinhChung_HocBa = s.Dkxt_KQTQG_MinhChung_HocBa,
-                dkxt_KQTQG_MinhChung_CCCD = s.Dkxt_KQTQG_MinhChung_BangTN, // lưu ý là minh chứng căn cước công dân
                 dkxt_KQTQG_MinhChung_UuTien = s.Dkxt_KQTQG_MinhChung_UuTien,
+                dkxt_KQTQG_MinhChung_CCCD = s.Dkxt_KQTQG_MinhChung_BangTN, // lưu ý là minh chứng căn cước công dân              
 
             });
-            return Json(tt_ts_dk, JsonRequestBehavior.AllowGet);
-
+            return Json(new { success = true, data = tt_ts_dk }, JsonRequestBehavior.AllowGet);         
         }
         public JsonResult DkxtKQTthpt_hs_Update_tt_hs(DangKyXetTuyenKQTQG entity)
         {
@@ -500,7 +512,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 dkxt_MinhChung_CCCD = s.Dkxt_HB_MinhChung_CCCD,
                 dkxt_MinhChung_UuTien = s.Dkxt_HB_MinhChung_UuTien,
             });
-            return Json(tt_ts_dk, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, data = tt_ts_dk }, JsonRequestBehavior.AllowGet);          
         }
         #endregion
        

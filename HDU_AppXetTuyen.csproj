@@ -496,6 +496,12 @@
     <Content Include="Areas\Admin\Views\TruongLienCaps\DetailsTh.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\DeleteTh.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\EditTh.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\test.cshtml" />
+    <Content Include="Areas\Admin\Views\test3\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view_OK.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_viewOK.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_viewOK.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -748,7 +754,7 @@
     <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkxthocba.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkxtthptqg.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkxtthptqg.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia2.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
@@ -780,6 +786,9 @@
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen_sua0609.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit_OK.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkdtnkOK.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnktestadd.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnkluu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -68,6 +68,11 @@
         [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_UuTien { get; set; }
 
+        public int? Dkxt_KQTQG_TrangThai_HoSo { get; set; }
+        public int? Dkxt_KQTQG_TrangThai_KinhPhi { get; set; }
+        
+        public int? KinhPhi_ID { get; set; }
+
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 
         public virtual Nganh Nganh { get; set; }
