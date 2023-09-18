@@ -1,0 +1,216 @@
+﻿@model PagedList.IPagedList<HDU_AppXetTuyen.Models.DangKyXetTuyenKhac>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "DkxtkqDgnl";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>
+    <style>
+        th, td {
+            white-space: nowrap;
+        }
+
+        .bt-hs {
+            width: 80px;
+        }
+
+        .bd-rd {
+            border-radius: 3px
+        }
+    </style>
+</h2>
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span> Quản lý Thí sinh đăng ký xét tuyển</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-12">
+    <div class="card card-collapsable mt-1 mb-1">
+        <div class="card-header">
+            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng kết quả chứng chỉ ngoại ngữ</span></div>
+        </div>
+        <div class="card-body">
+
+            @using (Html.BeginForm("DkxtkqCcnn", "DangKyXetTuyens", FormMethod.Get))
+            {
+                <div class="row g-1">
+                    <div class="col-xxl-1 col-md-6">
+                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd", })
+                    </div>
+                    <div class="col-xxl-1 col-md-6">
+                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select  bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control bd-rd", @placeholder = "Nhập từ khóa..." })
+                    </div>
+                    <div class="col-xxl-2 col-xl-12">
+                        <div class="d-inline-flex flex-nowrap align-items-center">
+                            <button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
+                            <a class="btn btn-outline-secondary bd-rd" id="bt_reset" href="@Url.Action("DkxtkqCcnn", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                            <a class="btn btn-outline-primary bd-rd" id="bt_reset" href="@Url.Action("ExportTsDkXetHocBa", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
+                        </div>
+                    </div>
+                    <hr class="mt-3 mb-2" />
+                </div>
+            }
+            <div class="row g-1">
+                <div class="col-lg-12 col-12">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    Họ tên
+                                </th>
+                                <th>
+                                    Điện thoại
+                                </th>
+                                <th>
+                                    N.Vọng
+                                </th>
+                                <th>
+                                    Ngành
+                                </th>
+                                <th>
+                                    Tổ hợp
+                                </th>
+                                <th>
+                                    Tổng điểm
+                                </th>
+                                <th>
+                                    Tên chứng chỉ
+                                </th>
+                                <th>
+                                    Ngày dự thi
+                                </th>
+                                <th>
+                                    Lệ phí
+                                </th>
+                                <th>
+                                    Hồ sơ
+                                </th>
+                                <th>
+                                    Kiểm tra
+                                </th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot)
+                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
+                                    </td>
+                                    <td>
+                                        NV @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nganh.Nganh_TenNganh)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_ToHopXT)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_TongDiem)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_DonViToChuc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_NgayDuThi)
+                                    </td>
+                                    <td>
+                                        @{
+                                            if (item.Dkxt_TrangThai == 0)
+                                            {
+                                                @Html.DisplayName("Chưa nộp")
+
+                                            }
+                                            if (item.Dkxt_TrangThai == 1)
+                                            {
+                                                @Html.DisplayName("Đã nộp")
+
+                                            }
+                                            if (item.Dkxt_TrangThai == 2)
+                                            {
+                                                @Html.DisplayName("Đã duyệt")
+
+                                            }
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @{
+                                            if (item.Dkxt_TrangThai_KetQua == 0)
+                                            {
+                                                @Html.DisplayName("Chưa KT")
+                                            }
+                                            if (item.Dkxt_TrangThai_KetQua == 1)
+                                            {
+                                                @Html.DisplayName("MC sai")
+
+                                            }
+                                            if (item.Dkxt_TrangThai_KetQua == 2)
+                                            {
+                                                @Html.DisplayName("HS đầy đủ")
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("DkxtkqCcnn_hs_view","DangKyXetTuyens" , new {
+                                                                    Dkxt_ID=item.Dkxt_ID,
+                                                                    filteriDotxt =ViewBag.DotxtFilteri,
+                                                                    filteriNvong =ViewBag.NvongFilteri,
+                                                                    filteriNganh =  ViewBag.NganhFilteri,
+                                                                    filteriLePhi = ViewBag.LePhiFilteri,
+                                                                    filteriHoSo =ViewBag.HoSoFilteri,
+                                                                    searchString =ViewBag.SearchString,
+                                                                    page = ViewBag.pageCurren})"
+                                           class="btn btn-light btn-sm bt-hs bd-rd">Kiểm tra</a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                        <!-- Thêm mã phân trang -->
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
+                        @Html.PagedListPager(Model, page => Url.Action("DkxtHocBa", new
+                        {
+                            filteriDotxt = ViewBag.DotxtFilteri,
+                            filteriNvong = ViewBag.NvongFilteri,
+                            filteriNganh = ViewBag.NganhFilteri,
+                            filteriLePhi = ViewBag.LePhiFilteri,
+                            filteriHoSo = ViewBag.HoSoFilteri,
+                            searchString = ViewBag.SearchString,
+                            page
+                        }))
+                        <!-- Kết thúc  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
