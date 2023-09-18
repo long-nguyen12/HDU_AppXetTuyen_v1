@@ -1,4 +1,5 @@
-﻿@model IEnumerable<HDU_AppXetTuyen.Models.DangKyXetTuyenKhac>
+﻿@model PagedList.IPagedList<HDU_AppXetTuyen.Models.DangKyXetTuyenKhac>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "DkxtkqDgnl";
@@ -38,168 +39,175 @@
 <div class="container-fluid px-12">
     <div class="card card-collapsable mt-1 mb-1">
         <div class="card-header">
-            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng học bạ</span></div>
+            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng kết quả đánh giá tư duy/năng lực</span></div>
         </div>
         <div class="card-body">
 
+            @using (Html.BeginForm("DkxtkqDgnl", "DangKyXetTuyens", FormMethod.Get))
+            {
+                <div class="row g-1">
+                    <div class="col-xxl-1 col-md-6">
+                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd", })
+                    </div>
+                    <div class="col-xxl-1 col-md-6">
+                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select  bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriLePhi", null, "Theo dõi lệ phí...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select bd-rd" })
+                    </div>
+                    <div class="col-xxl-2 col-md-12">
+                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control bd-rd", @placeholder = "Nhập từ khóa..." })
+                    </div>
+                    <div class="col-xxl-2 col-xl-12">
+                        <div class="d-inline-flex flex-nowrap align-items-center">
+                            <button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
+                            <a class="btn btn-outline-secondary bd-rd" id="bt_reset" href="@Url.Action("DkxtkqDgnl", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                            <a class="btn btn-outline-primary bd-rd" id="bt_reset" href="@Url.Action("ExportTsDkXetHocBa", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
+                        </div>
+                    </div>
+                    <hr class="mt-3 mb-2" />
+                </div>
+            }
             <div class="row g-1">
                 <div class="col-lg-12 col-12">
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Nganh.Nganh_MaNganh)
+                                    Họ tên
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ThiSinhDangKy.ThiSinh_CCCD)
+                                    Điện thoại
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Ptxt_ID)
+                                    N.Vọng
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DoiTuong_ID)
+                                    Ngành
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.KhuVuc_ID)
+                                    Tổ hợp
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_TrangThai)
+                                    Tổng điểm
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_NguyenVong)
+                                    Đơn vị tổ chức
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DotXT_ID)
+                                    Ngày dự thi
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_GhiChu)
+                                    Lệ phí
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_ToHopXT)
+                                    Hồ sơ
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_DonViToChuc)
+                                    Kiểm tra
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_KetQuaDatDuoc)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_TongDiem)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_NgayDuThi)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHocLuc_12)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_XepLoaiHanhKiem_12)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_HB)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_TrangThai_KetQua)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_CCCD)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_Bang)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_KetQua)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_MinhChung_UuTien)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Dkxt_NgayDangKy)
-                                </th>
-                                <th></th>
                             </tr>
 
                             @foreach (var item in Model)
                             {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Nganh.Nganh_MaNganh)
+                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot)
+                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_CCCD)
+                                        @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Ptxt_ID)
+                                        NV @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.DoiTuong_ID)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.KhuVuc_ID)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_TrangThai)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DotXT_ID)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_GhiChu)
+                                        @Html.DisplayFor(modelItem => item.Nganh.Nganh_TenNganh)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Dkxt_ToHopXT)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_DonViToChuc)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_KetQuaDatDuoc)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.Dkxt_TongDiem)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Dkxt_DonViToChuc)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Dkxt_NgayDuThi)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHocLuc_12)
+                                        @{
+                                            if (item.Dkxt_TrangThai == 0)
+                                            {
+                                                @Html.DisplayName("Chưa nộp")
+
+                                            }
+                                            if (item.Dkxt_TrangThai == 1)
+                                            {
+                                                @Html.DisplayName("Đã nộp")
+
+                                            }
+                                            if (item.Dkxt_TrangThai == 2)
+                                            {
+                                                @Html.DisplayName("Đã duyệt")
+
+                                            }
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @{
+                                            if (item.Dkxt_TrangThai_KetQua == 0)
+                                            {
+                                                @Html.DisplayName("Chưa KT")
+                                            }
+                                            if (item.Dkxt_TrangThai_KetQua == 1)
+                                            {
+                                                @Html.DisplayName("MC sai")
+
+                                            }
+                                            if (item.Dkxt_TrangThai_KetQua == 2)
+                                            {
+                                                @Html.DisplayName("HS đầy đủ")
+                                            }
+                                        }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_XepLoaiHanhKiem_12)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_HB)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_TrangThai_KetQua)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_CCCD)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_Bang)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_KetQua)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_UuTien)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_NgayDangKy)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.Dkxt_ID }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.Dkxt_ID }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.Dkxt_ID })
+                                        <a href="@Url.Action("DkxtkqDgnl_hs_view","DangKyXetTuyens" , new {
+                                                                    Dkxt_ID=item.Dkxt_ID,
+                                                                    filteriDotxt =ViewBag.DotxtFilteri,
+                                                                    filteriNvong =ViewBag.NvongFilteri,
+                                                                    filteriNganh =  ViewBag.NganhFilteri,
+                                                                    filteriLePhi = ViewBag.LePhiFilteri,
+                                                                    filteriHoSo =ViewBag.HoSoFilteri,
+                                                                    searchString =ViewBag.SearchString,
+                                                                    page = ViewBag.pageCurren})"
+                                           class="btn btn-light btn-sm bt-hs bd-rd">Kiểm tra</a>
                                     </td>
                                 </tr>
                             }
 
                         </table>
+                        <!-- Thêm mã phân trang -->
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
+                        @Html.PagedListPager(Model, page => Url.Action("DkxtHocBa", new
+                        {
+                            filteriDotxt = ViewBag.DotxtFilteri,
+                            filteriNvong = ViewBag.NvongFilteri,
+                            filteriNganh = ViewBag.NganhFilteri,
+                            filteriLePhi = ViewBag.LePhiFilteri,
+                            filteriHoSo = ViewBag.HoSoFilteri,
+                            searchString = ViewBag.SearchString,
+                            page
+                        }))
+                        <!-- Kết thúc  -->
                     </div>
                 </div>
             </div>
