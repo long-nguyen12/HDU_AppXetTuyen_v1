@@ -12,7 +12,9 @@
     .span_with_for {
         width: 65px !important
     }
-
+    .btn, .form-select, .form-control {
+        border-radius: 3px;
+    }
     .padding_input_text_number {
         padding-left: 0px !important;
         padding-right: 0px !important;
@@ -47,7 +49,7 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th style="vertical-align:middle;">Nguyện vọng</th>
+                                    <th style="vertical-align:middle;" id="th_ten_ngvong">Nguyện vọng</th>
                                     <th style="vertical-align:middle;">Ngành</th>
                                     <th style="vertical-align:middle;">Tổ hợp môn</th>
                                     <th style="vertical-align:middle;">Tổng điểm</th>
@@ -65,32 +67,26 @@
                             <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
                             <a id="bt_add_aspirations" class="btn btn-outline-primary">Thêm nguyện vọng</a>
                             <script>
-                                $(document).ready(function () {
+                                $(document).ready(function () {                                  
                                     let sp_tieude = document.getElementById('sp_tieude');
                                     let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
                                     let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
 
-                                    if (window.innerWidth <= 1200) {
-                                        sp_tieude.innerHTML = "ĐKXT bằng KQ học tập THPT (Xét học bạ)";
-                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
-                                        bt_them_nguyen_vong.innerHTML = "Thêm NV";
-
-                                    }
-                                    else {
-                                        sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)";
-                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
-                                        bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-
-                                    }
-
                                     function reportWindowSize() {
-                                        if (window.innerWidth <= 1200) {
+                                        if (window.innerWidth <= 700) {
+                                            $('#th_ten_ngvong').attr("style", "width:40px;");
+                                        }
+                                        else {
+                                            $('#th_ten_ngvong').removeAttr("style");
+                                        }
+                                        if (window.innerWidth <= 800) {   
                                             sp_tieude.innerHTML = "ĐKXT bằng KQ học tập THPT (Xét học bạ)";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
                                             bt_them_nguyen_vong.innerHTML = "Thêm NV";
 
                                         }
                                         else {
+                                          
                                             sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
                                             bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
@@ -422,6 +418,7 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (result_all) {
+                console.log(result_all);
 
                 $('#span_Uutien_doituong').html(result_all.Dkxt_doituong_ten_diem);
                 $('#span_Uutien_khuvuc').html(result_all.Dkxt_khuvuv_ten_diem);
@@ -438,8 +435,8 @@
                                 '<td style="vertical-align: middle !important "> NV' + result.dkxt_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" disabled>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" disabled>&#8744;</button>  </td>` +
                                 '<td style="vertical-align: middle !important "> ' + result.dkxt_TenAll.nganh_GhiChu + ' </td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_TenAll.thm_MaTen + '</td>' +
-                                '<td style="vertical-align: middle !important ">' + result.dkxt_Diem_tong_Full + '</td>' +
-                                '<td style="text-align: center; vertical-align: middle !important">' + `<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_ID})"}>Xoá</button>` + '</td>' +
+                                '<td style="vertical-align: middle !important ">' + result.dkxt_Diem_Tong_Full + '</td>' +
+                                '<td style="text-align: center; vertical-align: middle !important"><a class="btn btn-light  btn-sm">Sửa</a> ' + `<button class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_ID})"}>Xoá</button>` + '</td>' +
                                 '</tr>'
                         }
                         else if (result_all.select_list_dkxt_model.length > 1) {
@@ -448,7 +445,7 @@
                                 '<td style="vertical-align: middle !important "> ' + result.dkxt_TenAll.nganh_GhiChu + ' </td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_TenAll.thm_MaTen + '</td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_Diem_Tong_Full + '</td>' +
-                                '<td style="text-align: center; vertical-align: middle !important">' + `<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_ID})"}>Xoá</button>` + '</td>' +
+                                '<td style="text-align: center; vertical-align: middle !important"><a class="btn btn-light  btn-sm">Sửa</a> ' + `<button class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_ID})"}>Xoá</button>` + '</td>' +
                                 '</tr>'
                         }
                     });
@@ -831,6 +828,7 @@
     var formdata_cccd = new FormData(); //FormData object cancuoc cong dan
     var formdata_bang_tn = new FormData(); //FormData object bang TN
     var formdata_giayto_uutien = new FormData(); //FormData object giaytout
+
     $(document).ready(function () {
         $("#files_hocba").on("change", function () {
             var files_hocba = document.getElementById('files_hocba');
@@ -975,6 +973,7 @@
         let _Dkxt_MinhChung_CCCD = "";
         let _Dkxt_MinhChung_Bang = "";
         let _Dkxt_MinhChung_UuTien = "";
+
         if (check_in_file_hoba == false) { var errorMessage = "Vui lòng upload tệp học bạ có điểm lớp 11 và điểm kỳ 1 lớp 12"; $('#SP_HocBa_Error').text(errorMessage); flag = false; }
         else {
             let so_file_hb = 0;
@@ -1033,17 +1032,19 @@
         var formData_dknv_new = {
             Nganh_ID: _nganh_ID,
             Thm_ID: _thm_ID,
-            Dkxt_Diem_M1: JSON.stringify(_dkxt_Diem_M1),
-            Dkxt_Diem_M2: JSON.stringify(_dkxt_Diem_M2),
-            Dkxt_Diem_M3: JSON.stringify(_dkxt_Diem_M3),
-            Dkxt_Diem_Tong: _dkxt_Diem_Tong.toString(),
+            Dkxt_HB_Diem_M1: JSON.stringify(_dkxt_Diem_M1),
+            Dkxt_HB_Diem_M2: JSON.stringify(_dkxt_Diem_M2),
+            Dkxt_HB_Diem_M3: JSON.stringify(_dkxt_Diem_M3),
 
-            Dkxt_MinhChung_HB: _Dkxt_MinhChung_HB,
-            Dkxt_MinhChung_CCCD: _Dkxt_MinhChung_CCCD,
-            Dkxt_MinhChung_Bang: _Dkxt_MinhChung_Bang,
-            Dkxt_MinhChung_UuTien: _Dkxt_MinhChung_UuTien,
+            Dkxt_HB_Diem_Tong: _dkxt_Diem_Tong.toString(),
+
+            Dkxt_HB_MinhChung_HB: _Dkxt_MinhChung_HB,
+            Dkxt_HB_MinhChung_CCCD: _Dkxt_MinhChung_CCCD,
+            Dkxt_HB_MinhChung_Bang: _Dkxt_MinhChung_Bang,
+            Dkxt_HB_MinhChung_UuTien: _Dkxt_MinhChung_UuTien,
         }
-
+        console.log(formData_dknv_new);
+      
        /* console.log(formData_dknv_new.Nganh_ID);*/
         $("#loadingModal").modal("show");
 

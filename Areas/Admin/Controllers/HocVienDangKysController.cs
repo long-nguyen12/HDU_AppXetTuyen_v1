@@ -23,16 +23,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
     public class HocVienDangKysController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
-        public ActionResult testMtDR()
+        public ActionResult AdminCreateHocVien()
         {
             return View();
         }
+        public ActionResult AdCreateHocVienJson()
+        {
+            return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
+        }
+   
         public ActionResult DsHvDangKy(string searchString, string currentFilter, string filteriDotxt, int? page)
         {
             var hocviens = db.HocVienDangKies.ToList();
-
-
-
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
             if (!String.IsNullOrEmpty(searchString))
@@ -64,7 +66,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
 
-        protected IList<HocVienDuTuyen> ListHvDuTuyenExport;
+   
         // GET: Admin/HocVienDangKys
         public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, 
             string filteriDotxt, string sortOrder, int? page)
@@ -236,7 +238,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.CurrentSort = sortOrder;
 
             ViewBag.totalRecod = hocviens.Count();
-            ListHvDuTuyenExport = hocviens.ToList();
+          
             #endregion
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
@@ -391,9 +393,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
         }
+        /*
         public void ExportHvDKDuTuyen()
         {
-            var ListHvDts = ListHvDuTuyenExport;// db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).ToList();
+          var ListHvDts = ListHvDuTuyenExport;// db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).ToList();
             var dxt_hientai = db.DotXetTuyens.FirstOrDefault(d => d.Dxt_Classify == 2 && d.Dxt_TrangThai_Xt == 1);
             try
             {
@@ -513,6 +516,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
 
         }
+        */
         public ActionResult QLDotDuTuyenSDH_Add()
         {
             var model = db.DotXetTuyens.OrderByDescending(x => x.Dxt_ID).Where(x => x.Dxt_Classify == 2);
@@ -545,6 +549,47 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             db.SaveChanges();
 
             return Json(new { success = true, data = trangthai }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult NganhMasterGetDataJson()
+        {
+            var NganhMasterList = db.NganhMasters.Select(n => new
+            {
+                nganh_Mt_ID = n.Nganh_Mt_ID,
+                nganh_Mt_MaNganh = n.Nganh_Mt_MaNganh,
+                nganh_Mt_TenNganh = n.Nganh_Mt_TenNganh,
+                nganh_Mt_DinhHuongNghienCuu_Ten = n.Nganh_Mt_NghienCuu_Ten,
+                nganh_Mt_DinhHuongNghienCuu_Ma = n.Nganh_Mt_NghienCuu_Ma,
+                khoa_ID = n.Khoa_ID,
+
+            });
+            return Json(new { success = true, data = NganhMasterList.ToList() });
+        }
+        public JsonResult GetTinhJson()
+        {
+            var TinhList = db.Tinhs.Select(t => new
+            {
+                tinh_ID = t.Tinh_ID,
+                tinh_Ma = t.Tinh_Ma,
+                tinh_Ten = t.Tinh_Ten
+            });
+            return Json(new { success = true, data = TinhList.ToList() });
+        }
+
+        public JsonResult NganhMasterGetDataByIDJson(int id)
+        {
+            var NganhMasterList_byID = db.NganhMasters.Where(x => x.Nganh_Mt_ID == id).Select(n => new
+            {
+                nganh_Mt_ID = n.Nganh_Mt_ID,
+                nganh_Mt_MaNganh = n.Nganh_Mt_MaNganh,
+                nganh_Mt_TenNganh = n.Nganh_Mt_TenNganh,
+                nganh_Mt_NghienCuu_Ten = n.Nganh_Mt_NghienCuu_Ten,
+                nganh_Mt_NghienCuu_Ma = n.Nganh_Mt_NghienCuu_Ma,
+                nganh_Mt_khoa_ID = n.Khoa_ID,
+                nganh_Mt_TenKhoa = n.Nganh_Mt_TenKhoa,
+                nganh_Mt_TrangThai = n.Nganh_Mt_TrangThai
+            });
+            return Json(new { success = true, data = NganhMasterList_byID.ToList(), JsonRequestBehavior.AllowGet });
         }
     }
 }
