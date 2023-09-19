@@ -91,11 +91,18 @@
                         @*<div class="sidenav-menu-heading mt-0 mb-0">MENU</div>*@
 
                         <!-- Sidenav Accordion (Dashboard)-->
-
-
                         <a class="nav-link" href="@Url.Action("DsHvDuTuyen", "HocVienDangKys")">
                             <div class="nav-link-icon"><i data-feather="monitor"></i></div>
                             Danh sách dự tuyển
+                        </a>
+                        <a class="nav-link " href="@Url.Action("AdminCreateHocVien", "HocVienDangKys")">
+                            <div class="nav-link-icon"><i data-feather="user"></i></div>
+                            Thêm mới học viên
+                        </a>
+
+                        <a class="nav-link" href="@Url.Action("DsHvDangKy", "HocVienDangKys")">
+                            <div class="nav-link-icon"><i data-feather="database"></i></div>
+                            Danh sách học viên
                         </a>
                         <a class="nav-link" href="@Url.Action("Index", "NganhMasters")">
                             <div class="nav-link-icon"><i data-feather="shield"></i></div>
@@ -105,10 +112,7 @@
                             <div class="nav-link-icon"><i data-feather="package"></i></div>
                             Đợt xét tuyển
                         </a>
-                        <a class="nav-link" href="@Url.Action("DsHvDangKy", "HocVienDangKys")">
-                            <div class="nav-link-icon"><i data-feather="database"></i></div>
-                            Danh sách học viên
-                        </a>
+
                         <a class="nav-link " href="#">
                             <div class="nav-link-icon"><i data-feather="globe"></i></div>
                             Hướng dẫn sử dụng

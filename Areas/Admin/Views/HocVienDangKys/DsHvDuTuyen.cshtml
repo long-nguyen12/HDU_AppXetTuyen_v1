@@ -220,8 +220,8 @@
                                                  }, new { @style = "text-decoration:none; color:black", @title = "Bấm để chọn sắp xếp theo trạng thái hồ sơ" })
                                         </th>
                                         <th class="text-nowrap" style="text-align:center; width:120px">
-
-                                            @Html.DisplayName("Cập nhật")
+                                            <a href="@Url.Action("AdminCreateHocVien","HocVienDangKys")" style="text-decoration:none">Thêm mới</a>
+                                            @*@Html.DisplayName("Cập nhật")*@
                                         </th>
                                     </tr>
                                 </thead>

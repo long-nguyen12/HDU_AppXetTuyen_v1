@@ -34,7 +34,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult AdCreateHocVienJson(HocVienDangKy entity)
         {
             HocVienDangKy hv_new = new HocVienDangKy();
-            HocVienDuTuyen dt_new = new HocVienDuTuyen();
+
             string activationToken = Guid.NewGuid().ToString();
 
             var hash_password = ComputeHash(entity.HocVien_CCCD, "123456");
@@ -70,11 +70,17 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             hv_new.HocVien_BangDaiHoc = entity.HocVien_BangDaiHoc;
             hv_new.HocVien_BoTucKienThuc = entity.HocVien_BoTucKienThuc;
             hv_new.HocVien_DoiTuongUuTien = entity.HocVien_DoiTuongUuTien;
+            db.HocVienDangKies.Add(hv_new);
 
-            db.HocVienDangKies.Add(hv_new);           
-
+            HocVienDuTuyen dt_new = new HocVienDuTuyen();
             HocVienDuTuyen entity_hv = JsonConvert.DeserializeObject<HocVienDuTuyen>(entity.HocVien_Email_Temp);
+
             dt_new.HocVien_ID = hv_new.HocVien_ID;
+            dt_new.DuTuyen_TrangThai = 9;
+            dt_new.DuTuyen_ThongBaoKiemDuyet = "Đã kiểm duyệt";
+            dt_new.DuTuyen_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            dt_new.Dxt_ID = db.DotXetTuyens.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 2).FirstOrDefault().Dxt_ID;
+            dt_new.DuTuyen_GhiChu = "Admin Nhập dữ liệu";
 
             dt_new.DuTuyen_MaNghienCuu = entity_hv.DuTuyen_MaNghienCuu;
             dt_new.Nganh_Mt_ID = entity_hv.Nganh_Mt_ID;
@@ -88,10 +94,29 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             dt_new.HocVien_Anh46 = entity_hv.HocVien_Anh46;
             dt_new.HocVien_MCCCNN = entity_hv.HocVien_MCCCNN;
             dt_new.HocVien_MCKhac = entity_hv.HocVien_MCKhac;
+
+            dt_new.HocVien_LePhi_MaThamChieu = "Nộp trực tiếp";
+            dt_new.HocVien_LePhi_NgayNop = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            dt_new.HocVien_LePhi_TrangThai = 9;
+
             db.HocVienDuTuyens.Add(dt_new);
             db.SaveChanges();
 
-            return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
+            #region Gửi mail xác thực
+            SendEmail send = new SendEmail();
+            var subject = "Xác nhận tài khoản";
+            string activationUrl = Url.Action("ActivationAccount", "Auth", new { token = activationToken }, Request.Url.Scheme);
+            var body = "Xin chào " + hv_new.HocVien_HoDem + " " + hv_new.HocVien_Ten + 
+                "<br/> Hệ thống tuyển sinh sau đại học của trường Đại học Hồng Đức đã cập nhật thông tin hồ sơ của bạn." +
+                "<br/> - Vui lòng click vào địa chỉ đính kèm bên dưới:" +
+                "<br/>" + activationUrl + " <br/>" +
+                "<br/> để xác thực tài khoản đồng thời có thể đăng nhập vào hệ thống để kiểm tra thông tin sau khi xác thực " +
+                "<br/> + Tên đăng nhập: " + hv_new.HocVien_CCCD +
+                "<br/> + Mật khẩu: 123456";
+            send.Sendemail(hv_new.HocVien_Email, body, subject);
+            #endregion
+
+            return Json(new { success = true, data = entity_hv }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DsHvDangKy(string searchString, string currentFilter, string filteriDotxt, int? page)
@@ -233,10 +258,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             }
             #endregion
-
-            #region phần sắp xếp theo các cột dữ liệu
+            // thực hiện sắp xếp theo vài cột dữ liệu
+            #region Phần sắp xếp theo các cột dữ liệu
             // 
-            ViewBag.HocVien_HoDem = sortOrder == "hodem_asc" ? "hodem_desc" : "td_asc";
+            ViewBag.HocVien_HoDem = sortOrder == "hodem_asc" ? "hodem_desc" : "hodem_asc";
             ViewBag.HocVien_Ten = sortOrder == "ten_asc" ? "ten_desc" : "ten_asc";
             ViewBag.Nganh_Mt_TenNganh = sortOrder == "tennganh_asc" ? "tennganh_desc" : "tennganh_asc";
             ViewBag.DuTuyen_TrangThai = sortOrder == "hoSo_asc" ? "hoSo_desc" : "hoSo_asc";
