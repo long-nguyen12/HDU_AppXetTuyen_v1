@@ -455,9 +455,9 @@
     <Content Include="Areas\Admin\Views\ToHopMons\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ToHopMons\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\TruongLienCaps\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\TruongLienCaps\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\TruongLienCaps\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DeleteThcs.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DetailsThcs.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\EditThcs.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\LcTieuhoc.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\LcTrunghocCs.cshtml" />
     <Content Include="Areas\Admin\Views\Xas\Create.cshtml" />
@@ -493,6 +493,9 @@
     <Content Include="Areas\Admin\Views\AdminAccounts\Details.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccounts\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccounts\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DetailsTh.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DeleteTh.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\EditTh.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\test.cshtml" />
     <Content Include="Areas\Admin\Views\test3\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view_OK.cshtml" />
