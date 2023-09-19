@@ -658,7 +658,7 @@
                                                         <center>
                                                             <div class="d-inline-flex flex-nowrap  align-items-center ">
                                                                 <div class="form-check align-items-center mt-2 mb-3">
-                                                                    <input class="form-check-input" type="checkbox" id="checkbox_check_mc" name="checkbox_check_mc" checked>
+                                                                    <input class="form-check-input" type="checkbox" id="checkbox_check_mc" name="checkbox_check_mc">
                                                                     <label class="form-check-label" for="checkbox_check_mc" style="color:blue; font-weight:bold">Không bắt buộc đính kèm các tệp minh chứng</label>
                                                                 </div>
                                                             </div>
@@ -667,9 +667,8 @@
                                                     <div class="col-12">
                                                         <center>
                                                             <div class="col-md-12">
-                                                                <input type="submit" value="Lưu và tiếp tục thêm" class="btn btn-primary" id="bt_add_and_continue" />
-                                                                <input type="submit" value="Lưu và đóng" class="btn btn-success" id="bt_add_and_back" />
-                                                                <input type="submit" value="Thoát" class="btn btn-danger" id="bt_cancel_register_hocvien" />
+                                                                <input type="submit" value="Lưu và tiếp tục thêm" class="btn btn-primary" id="bt_admin_add_hocvien" />                                                              
+                                                                <input type="submit" value="Quay lại trang danh sách" class="btn btn-danger" id="bt_backup_to_list_hocvien" />
                                                             </div>
                                                         </center>
                                                     </div>
@@ -945,8 +944,7 @@
     $(document).ready(function () { });
     /* phần xử lý sự kiện thêm dữ liệu  mới*/
     $(document).ready(function () {
-
-        $('#bt_add_and_continue').click(function () {
+        $('#bt_admin_add_hocvien').click(function () {
 
             var flag = true;
 
@@ -956,6 +954,7 @@
             let _hocVien_DanToc = $('#HocVien_DanToc').val();
             let _hocVien_GioiTinh = -1;
             let _hocVien_CCCD = $('#HocVien_CCCD').val();
+
             let _hocVien_CCCD_NgayCap = $('#HocVien_CCCD_NgayCap').val();
             let _hocVien_Email = $('#HocVien_Email').val();
             let _hocVien_DienThoai = $('#HocVien_DienThoai').val();
@@ -977,23 +976,60 @@
             let _hocVien_BangDaiHoc_LoaiTN = $('#HocVien_BangDaiHoc_LoaiTN').val();
             let _hocVien_DoiTuongUuTien = $('#HocVien_DoiTuongUuTien').val();
             let _hocVien_BangDaiHoc_DiemToanKhoa = $('#HocVien_BangDaiHoc_DiemToanKhoa').val();
+
             let _hocVien_ChuyenNganhDuThi = $('#Select_HocVien_ChuyenNganhDuThi').val();
+            let _duTuyen_MaNghienCuu = -1;
+            if ($('#HocVien_ChuyenNganhDuThi_UngDung').is(':checked')) { _duTuyen_MaNghienCuu = 1 }
+            if ($('#HocVien_ChuyenNganhDuThi_NghienCuu').is(':checked')) { _duTuyen_MaNghienCuu = 2; }
+
             let _hocVien_DKDTNgoaiNgu = -1;
             let _hocVien_VanBangNgoaiNgu = $('#HocVien_VanBangNgoaiNgu').val();
             let _hocVien_DoiTuongDuThi = -1;
 
-            if (!_hocVien_HoDem) { $('#Error_Rgt_HocVien_HoDem').text('Nhập họ, tên đệm'); flag = false }          
-            if (!_hocVien_Ten) { $('#Error_Rgt_HocVien_Ten').text('Nhập tên'); flag = false; }        
-            if (!_hocVien_NgaySinh) { $('#Error_Rgt_HocVien_NgaySinh').text('Nhập ngày sinh'); flag = false; }          
-            if (!_hocVien_DanToc) { $('#Error_Rgt_HocVien_DanToc').text('Nhập dân tộc '); flag = false; }            
-             if ($('#radioNam').is(':checked')) { _hocVien_GioiTinh = 1; } if ($('#radioNu').is(':checked')) { _hocVien_GioiTinh = 0; }            
-            if (!_hocVien_CCCD) { $('#Error_Rgt_HocVien_CCCD').text('Nhập CCCD'); flag = false; }           
-            if (!_hocVien_CCCD_NgayCap) { $('#Error_Rgt_HocVien_CCCD_NgayCap').text('Nhập ngày cấp'); flag = false; }           
-            if (!_hocVien_Email) { $('#Error_Rgt_HocVien_Email').text('Nhập email'); flag = false; }          
-            if (!_hocVien_DienThoai) { $('#Error_Rgt_HocVien_DienThoai').text('Nhập điện thoại'); flag = false; }           
-            if (_hocVien_BoTucKienThuc == 0) { $('#Error_Rgt_HocVien_BoTucKienThuc_Select').text('Chọn loại bổ sung kiến thức'); flag = false; }           
-            if (_hocVien_NoiSinh == 0) { $('#Error_Rgt_HocVien_NoiSinh').text('Chọn nơi sinh'); flag = false; }           
-            if (!_hocVien_HoKhauThuongTru) { $('#Error_Rgt_HocVien_HoKhauThuongTru').text('Nhập hộ khẩu thường trú'); flag = false; }          
+            if (!_hocVien_HoDem) { $('#Error_Rgt_HocVien_HoDem').text('Nhập họ, tên đệm'); flag = false }
+            if (!_hocVien_Ten) { $('#Error_Rgt_HocVien_Ten').text('Nhập tên'); flag = false; }
+            if (!_hocVien_NgaySinh) { $('#Error_Rgt_HocVien_NgaySinh').text('Nhập ngày sinh'); flag = false; }
+            if (!_hocVien_DanToc) { $('#Error_Rgt_HocVien_DanToc').text('Nhập dân tộc '); flag = false; }
+            if ($('#radioNam').is(':checked')) { _hocVien_GioiTinh = 1; } if ($('#radioNu').is(':checked')) { _hocVien_GioiTinh = 0; }
+
+            if (!_hocVien_CCCD) { $('#Error_Rgt_HocVien_CCCD').text('Nhập CCCD'); flag = false; }
+
+            let checkCcAd = { HocVien_CCCD: _hocVien_CCCD };
+            $.ajax({
+                url: "/Admin/HocVienDangKys//RegisterMasterCheckCCCDAD/",
+                type: "POST",
+                data: JSON.stringify(checkCcAd),
+                async: false,
+                contentType: 'application/json;charset=utf-8',
+                success: function (res) {
+                    if (res.success == true) {
+                        $('#Error_Rgt_HocVien_CCCD').text("Số CCCD đã tồn tại."); flag = false;
+                    }
+                },
+                error: function () { }
+            });
+            if (!_hocVien_CCCD_NgayCap) { $('#Error_Rgt_HocVien_CCCD_NgayCap').text('Nhập ngày cấp'); flag = false; }
+            if (!_hocVien_Email) { $('#Error_Rgt_HocVien_Email').text('Nhập email'); flag = false; }
+            else {
+                if (!validateEmail(_hocVien_Email)) { $('#Error_Rgt_HocVien_Email').text('Email sai định dạng'); flag = false; }
+                else {
+                    let checkEmailAd = { HocVien_Email: _hocVien_Email };
+                    $.ajax({
+                        url: "/Admin/HocVienDangKys/RegisterMasterCheckEmailAD/",
+                        type: "POST",
+                        contentType: 'application/json;charset=utf-8',
+                        async: false,
+                        data: JSON.stringify(checkEmailAd),
+                        success: function (res) { if (res.success == true) { $('#Error_Rgt_HocVien_Email').text("Email đã tồn tại."); flag = false; } },
+                        error: function () { }
+                    });
+                }
+            }           
+
+            if (!_hocVien_DienThoai) { $('#Error_Rgt_HocVien_DienThoai').text('Nhập điện thoại'); flag = false; }
+            if (_hocVien_BoTucKienThuc == 0) { $('#Error_Rgt_HocVien_BoTucKienThuc_Select').text('Chọn loại bổ sung kiến thức'); flag = false; }
+            if (_hocVien_NoiSinh == 0) { $('#Error_Rgt_HocVien_NoiSinh').text('Chọn nơi sinh'); flag = false; }
+            if (!_hocVien_HoKhauThuongTru) { $('#Error_Rgt_HocVien_HoKhauThuongTru').text('Nhập hộ khẩu thường trú'); flag = false; }
             if (!$('#HocVien_LoaiCB_BienChe').is(':checked') && !$('#HocVien_LoaiCB_HopDong').is(':checked')) {
                 $('#Error_Rgt_HocVien_LoaiCB').text('Chọn loại cán bộ')
             }
@@ -1012,20 +1048,20 @@
 
                 }
             }
-            if (!_hocVien_BangDaiHoc_TenTruongTN) { $('#Error_Rgt_HocVien_BangDaiHoc_TenTruongTN').text('Nhập tên trường tốt nghiệp đại học'); flag = false; }           
-            if (!_hocVien_BangDaiHoc_TenNganhTN) { $('#Error_Rgt_HocVien_BangDaiHoc_TenNganhTN').text('Nhập tên ngành tốt nghiệp đại học'); flag = false; }         
-            if (!_hocVien_BangDaiHoc_HeDaoTao) { $('#Error_Rgt_HocVien_BangDaiHoc_HeDaoTao').text('Nhập hệ đào tạo'); flag = false; }           
-            if (!_hocVien_BangDaiHoc_NamTN) { $('#Error_Rgt_HocVien_BangDaiHoc_NamTN').text('Nhập năm tốt nghiệp'); flag = false; }           
+            if (!_hocVien_BangDaiHoc_TenTruongTN) { $('#Error_Rgt_HocVien_BangDaiHoc_TenTruongTN').text('Nhập tên trường tốt nghiệp đại học'); flag = false; }
+            if (!_hocVien_BangDaiHoc_TenNganhTN) { $('#Error_Rgt_HocVien_BangDaiHoc_TenNganhTN').text('Nhập tên ngành tốt nghiệp đại học'); flag = false; }
+            if (!_hocVien_BangDaiHoc_HeDaoTao) { $('#Error_Rgt_HocVien_BangDaiHoc_HeDaoTao').text('Nhập hệ đào tạo'); flag = false; }
+            if (!_hocVien_BangDaiHoc_NamTN) { $('#Error_Rgt_HocVien_BangDaiHoc_NamTN').text('Nhập năm tốt nghiệp'); flag = false; }
             if (!_hocVien_BangDaiHoc_LoaiTN) { var errorMessage = "Nhập loại tốt nghiệp"; $('#Error_Rgt_HocVien_BangDaiHoc_LoaiTN').text(errorMessage); flag = false; }
             if (!_hocVien_DoiTuongUuTien) { var errorMessage = "Nhập thông tin ưu tiên"; $('#Error_Rgt_HocVien_DoiTuongUuTien').text(errorMessage); flag = false; }
-            let _hocVien_BangDaiHoc_Select_ThangDiem = $('#HocVien_BangDaiHoc_Select_ThangDiem').val();    
+            let _hocVien_BangDaiHoc_Select_ThangDiem = $('#HocVien_BangDaiHoc_Select_ThangDiem').val();
             if (_hocVien_BangDaiHoc_Select_ThangDiem == 0) { $('#Error_Rgt_HocVien_BangDaiHoc_Select_ThangDiem').text('Chọn thang điểm'); flag = false; }
             else if (_hocVien_BangDaiHoc_Select_ThangDiem > 0) {
                 if (!_hocVien_BangDaiHoc_DiemToanKhoa) {
                     var errorMessage = "Nhập điểm toàn khóa"; $('#Error_Rgt_HocVien_BangDaiHoc_DiemToanKhoa').text(errorMessage); flag = false;
                 }
             }
-            if (_hocVien_ChuyenNganhDuThi == 0) { $('#Error_Rgt_HocVien_ChuyenNganhDuThi_TenCN').text('Chọn chuyên ngành'); flag = false; }           
+            if (_hocVien_ChuyenNganhDuThi == 0) { $('#Error_Rgt_HocVien_ChuyenNganhDuThi_TenCN').text('Chọn chuyên ngành'); flag = false; }
             if (!$('#HocVien_DKDTNgoaiNgu_Yes').is(':checked') && !$('#HocVien_DKDTNgoaiNgu_No').is(':checked')) {
                 $('#Error_Rgt_HocVien_DKDTNgoaiNgu').text('Chọn đkdt NN')
             }
@@ -1033,12 +1069,14 @@
                 if ($('#HocVien_DKDTNgoaiNgu_Yes').is(':checked')) { _hocVien_DKDTNgoaiNgu = 1; };
                 if ($('#HocVien_DKDTNgoaiNgu_No').is(':checked')) { _hocVien_DKDTNgoaiNgu = 0; };
             }
+
             if (!$('#radioDTDT_TSTuDo').is(':checked') && !$('#radioDTDT_CuDiHoc').is(':checked')) {
                 $('#Error_Rgt_HocVien_DoiTuongDuThi').text('Chọn loại đối tượng')
             } else {
                 if ($('#radioDTDT_TSTuDo').is(':checked')) { _hocVien_DoiTuongDuThi = 0; }
                 if ($('#radioDTDT_CuDiHoc').is(':checked')) { _hocVien_DoiTuongDuThi = 1; }
             }
+
             // kiểm tra nếu không phải check thì bắt buộc nhập dữ liệu tệp đính kèm
             if (!$('#checkbox_check_mc').is(':checked')) {
 
@@ -1050,7 +1088,161 @@
 
                 if (!check_in_file_giaykhamsuckhoe) { var errorMessage = "Upload tệp giấy khám sức khỏe"; $('#Error_Rgt_File_HocVien_MCGiayKhamSucKhoe').text(errorMessage); flag = false; }
             }
+
+
             if (!flag) return;
+            /* xử lý phần upload file lên server*/
+
+            let _hocVien_SoYeuLyLich_Url = "";
+            let _hocVien_MCBangDaiHoc_Url = "";
+            let _hocVien_MCBangDiem_Url = "";
+            let _hocVien_MCGiayKhamSucKhoe_Url = "";
+            let _hocVien_Anh46_Url = "";
+            let _hocVien_MCCCNN_Url = "";
+            let _hocVien_MCKhac_Url = "";
+
+            let so_file_syll = 0;
+            let so_file_bangdh = 0;
+            let so_file_bangdiem = 0;
+            let so_file_gksk = 0;
+            let so_file_anh4x6 = 0;
+            let so_file_ccnn = 0;
+            let so_file_mckhac = 0;
+
+            let formData_All = new FormData();
+
+            for (const item of formdata_files_soyeulylich) {
+                formData_All.append(item[0], item[1]);
+                so_file_syll++;
+            }
+            for (const item of formdata_files_bangdaihoc) {
+                formData_All.append(item[0], item[1]);
+                so_file_bangdh++;
+            }
+            for (const item of formdata_files_bangdiem) {
+                formData_All.append(item[0], item[1]);
+                so_file_bangdiem++;
+            }
+            for (const item of formdata_files_giaykhamsuckhoe) {
+                formData_All.append(item[0], item[1]);
+                so_file_gksk++;
+            }
+            for (const item of formdata_files_anh4x6) {
+                formData_All.append(item[0], item[1]);
+                so_file_anh4x6++;
+            }
+            for (const item of formdata_files_ccngoaingu) {
+                formData_All.append(item[0], item[1]);
+                so_file_ccnn++;
+            }
+            for (const item of formdata_files_mckhac) {
+                formData_All.append(item[0], item[1]);
+                so_file_mckhac++;
+            }
+
+            formData_All.append('so_file_syll', so_file_syll);
+            formData_All.append('so_file_bangdh', so_file_bangdh);
+            formData_All.append('so_file_bangdiem', so_file_bangdiem);
+            formData_All.append('so_file_gksk', so_file_gksk);
+            formData_All.append('so_file_anh4x6', so_file_anh4x6);
+            formData_All.append('so_file_ccnn', so_file_ccnn);
+            formData_All.append('so_file_mckhac', so_file_mckhac);
+
+            $.ajax({
+                url: '/HocVienDangKies/DangKyDuTuyen_SDH_UploadFile_Multi',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: formData_All,
+                async: false,
+                success: function (res) {
+                    console.log("OK dã upload", res.success);
+                    if (res.success == true) {
+                        _hocVien_SoYeuLyLich_Url = res.HocVien_SoYeuLyLich_url;
+                        _hocVien_MCBangDaiHoc_Url = res.HocVien_MCBangDaiHoc_url;
+                        _hocVien_MCBangDiem_Url = res.HocVien_MCBangDiem_url;
+                        _hocVien_MCGiayKhamSucKhoe_Url = res.HocVien_MCGiayKhamSucKhoe_url;
+                        _hocVien_Anh46_Url = res.HocVien_Anh46_url;
+                        _hocVien_MCCCNN_Url = res.HocVien_MCCCNN_url;
+                        _hocVien_MCKhac_Url = res.HocVien_MCKhac_url;
+                    } else if (res.success == false) { flag = false; }
+
+                },
+                error: function (res) {
+                    console.log("OK dã upload", res);
+                }
+            });          
+
+            var data_hv = {
+                HocVien_HoDem: _hocVien_HoDem,
+                HocVien_Ten: _hocVien_Ten,
+                HocVien_NgaySinh: _hocVien_NgaySinh,
+                HocVien_DanToc: _hocVien_DanToc,
+                HocVien_GioiTinh: _hocVien_GioiTinh,
+                HocVien_CCCD: _hocVien_CCCD,
+                HocVien_CCCD_NgayCap: _hocVien_CCCD_NgayCap,
+                HocVien_Email: _hocVien_Email,
+                HocVien_DienThoai: _hocVien_DienThoai,
+                HocVien_BoTucKienThuc: _hocVien_BoTucKienThuc,
+                HocVien_NoiSinh: _hocVien_NoiSinh,
+                HocVien_HoKhauThuongTru: _hocVien_HoKhauThuongTru,
+                HocVien_NoiOHienNay: _hocVien_NoiOHienNay,
+                HocVien_DiaChiLienHe: _hocVien_DiaChiLienHe,
+                HocVien_TenDonViCongTac: _hocVien_TenDonViCongTac,
+                HocVien_ChuyenMon: _hocVien_ChuyenMon,
+                HocVien_ThamNien: _hocVien_ThamNien,
+                HocVien_ChucVu: _hocVien_ChucVu,
+                HocVien_NamCT: _hocVien_NamCT,
+                HocVien_LoaiCB: _hocVien_LoaiCB,
+                HocVien_DoiTuongUuTien: _hocVien_DoiTuongUuTien,
+
+                HocVien_BangDaiHoc: JSON.stringify({
+                    HocVien_BangDaiHoc_TenTruongTN: _hocVien_BangDaiHoc_TenTruongTN,
+                    HocVien_BangDaiHoc_TenNganhTN: _hocVien_BangDaiHoc_TenNganhTN,
+                    HocVien_BangDaiHoc_HeDaoTao: _hocVien_BangDaiHoc_HeDaoTao,
+                    HocVien_BangDaiHoc_NamTN: _hocVien_BangDaiHoc_NamTN,
+                    HocVien_BangDaiHoc_LoaiTN: _hocVien_BangDaiHoc_LoaiTN,
+                    HocVien_BangDaiHoc_DiemToanKhoa: _hocVien_BangDaiHoc_DiemToanKhoa,
+                }),
+
+                HocVien_Email_Temp: JSON.stringify({
+                    DuTuyen_MaNghienCuu: _duTuyen_MaNghienCuu,
+                    Nganh_Mt_ID: _hocVien_ChuyenNganhDuThi,
+                    HocVien_DKDTNgoaiNgu: _hocVien_DKDTNgoaiNgu,
+                    HocVien_VanBangNgoaiNgu: _hocVien_VanBangNgoaiNgu,
+                    HocVien_DoiTuongDuThi: _hocVien_DoiTuongDuThi,
+                    HocVien_SoYeuLyLich: _hocVien_SoYeuLyLich_Url,
+                    HocVien_MCBangDaiHoc: _hocVien_MCBangDaiHoc_Url,
+                    HocVien_MCBangDiem: _hocVien_MCBangDiem_Url,
+                    HocVien_MCGiayKhamSucKhoe: _hocVien_MCGiayKhamSucKhoe_Url,
+                    HocVien_Anh46: _hocVien_Anh46_Url,
+                    HocVien_MCCCNN: _hocVien_MCCCNN_Url,
+                    HocVien_MCKhac: _hocVien_MCKhac_Url,
+                })
+            }
+
+          
+            console.log(data_hv)
+           // return;
+            $.ajax({
+                url: "/Admin/HocVienDangKys/AdCreateHocVienJson/",
+                type: "POST",
+                contentType: 'application/json;charset=utf-8',
+                async: false,
+                data: JSON.stringify(data_hv),
+                success: function (res) {
+                    if (res.success) {
+                        //let data_rt = res.data;
+                        //console.log(data_rt);
+                        window.location.href = "/Admin/HocVienDangKys/AdminCreateHocVien";
+                    }
+                },
+                error: function () { }
+            });
+        })
+
+        $('#bt_backup_to_list_hocvien').click(function () {
+            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen";
         })
     })
 
@@ -1175,6 +1367,14 @@
                 $("#Error_Rgt_HocVien_ChuyenNganhDuThi_TenCN").text('Chọn chuyên ngành');
             }
         });
+
+        $('#HocVien_NoiSinh').change(function () {
+        
+            if ($("#HocVien_NoiSinh").val() > 0) { $('#Error_Rgt_HocVien_NoiSinh').text(''); flag = true; }
+            else {
+                { $('#Error_Rgt_HocVien_NoiSinh').text('Chọn nơi sinh'); flag = false; }
+            }
+        })
     });
 
     function ShowDataOnSelect_HocVienNoiSinh() {
@@ -1288,5 +1488,9 @@
     function hideErrorMessage(input) {
         var errorContainer = input.next('.text-danger');
         errorContainer.text('');
+    }
+    //hàm kiểm tra email input thông báo lỗi
+    function validateEmail(email) {
+        var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/; var isValid = emailRegex.test(email); return isValid;
     }
 </script>
