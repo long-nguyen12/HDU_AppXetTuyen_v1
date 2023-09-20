@@ -30,7 +30,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult AdminCreateHocVien()
         {
             return View();
-        }
+        }      
+
         public ActionResult AdCreateHocVienJson(HocVienDangKy entity)
         {
             HocVienDangKy hv_new = new HocVienDangKy();
@@ -80,7 +81,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             dt_new.DuTuyen_ThongBaoKiemDuyet = "Đã kiểm duyệt";
             dt_new.DuTuyen_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             dt_new.Dxt_ID = db.DotXetTuyens.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 2).FirstOrDefault().Dxt_ID;
-            dt_new.DuTuyen_GhiChu = "Admin Nhập dữ liệu";
+            dt_new.DuTuyen_GhiChu = "Admin cập nhật dữ liệu";
 
             dt_new.DuTuyen_MaNghienCuu = entity_hv.DuTuyen_MaNghienCuu;
             dt_new.Nganh_Mt_ID = entity_hv.Nganh_Mt_ID;
@@ -119,6 +120,92 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return Json(new { success = true, data = entity_hv }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult AdminUpdateHocVien(int? duTuyen_ID, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
+        {
+            if (!String.IsNullOrEmpty(duTuyen_ID.ToString()))
+            {
+                ViewBag.DuTuyen_ID = duTuyen_ID;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("DsHvDuTuyen", "HocVienDangKys");
+            }
+        }
+        public ActionResult AdUpdateHocVienJson(HocVienDangKy entity)
+        {
+            HocVienDuTuyen entity_hv = JsonConvert.DeserializeObject<HocVienDuTuyen>(entity.HocVien_Email_Temp);
+
+            HocVienDuTuyen dt_update =db.HocVienDuTuyens.Where(x => x.DuTuyen_ID == entity_hv.DuTuyen_ID).FirstOrDefault();
+            HocVienDangKy hv_update = db.HocVienDangKies.Where(x => x.HocVien_ID == dt_update.HocVien_ID).FirstOrDefault();
+
+            hv_update.HocVien_HoDem = entity.HocVien_HoDem;
+            hv_update.HocVien_Ten = entity.HocVien_Ten;
+            hv_update.HocVien_GioiTinh = entity.HocVien_GioiTinh;
+            hv_update.HocVien_DanToc = entity.HocVien_DanToc;
+            hv_update.HocVien_NgaySinh = entity.HocVien_NgaySinh;
+           
+            hv_update.HocVien_CCCD_NgayCap = entity.HocVien_CCCD_NgayCap;
+
+            hv_update.HocVien_DienThoai = entity.HocVien_DienThoai;
+            hv_update.HocVien_Email = entity.HocVien_Email;
+            hv_update.HocVien_HoKhauThuongTru = entity.HocVien_HoKhauThuongTru;
+            hv_update.HocVien_NoiOHienNay = entity.HocVien_HoKhauThuongTru;
+            hv_update.HocVien_DiaChiLienHe = entity.HocVien_DiaChiLienHe;
+            hv_update.HocVien_NoiSinh = entity.HocVien_NoiSinh;
+            
+            hv_update.HocVien_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            hv_update.HocVien_TrangThai = 0;
+
+            hv_update.HocVien_TenDonViCongTac = entity.HocVien_TenDonViCongTac;
+            hv_update.HocVien_ChuyenMon = entity.HocVien_ChuyenMon;
+            hv_update.HocVien_ThamNien = entity.HocVien_ThamNien;
+            hv_update.HocVien_ChucVu = entity.HocVien_ChucVu;
+            hv_update.HocVien_NamCT = entity.HocVien_NamCT;
+            hv_update.HocVien_LoaiCB = entity.HocVien_LoaiCB;
+
+            hv_update.HocVien_BangDaiHoc = entity.HocVien_BangDaiHoc;
+            hv_update.HocVien_BoTucKienThuc = entity.HocVien_BoTucKienThuc;
+            hv_update.HocVien_DoiTuongUuTien = entity.HocVien_DoiTuongUuTien;
+
+            dt_update.DuTuyen_TrangThai = 9;
+            dt_update.DuTuyen_ThongBaoKiemDuyet = "Đã kiểm duyệt";
+            dt_update.DuTuyen_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            dt_update.Dxt_ID = db.DotXetTuyens.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 2).FirstOrDefault().Dxt_ID;
+            dt_update.DuTuyen_GhiChu = "Admin cập nhập dữ liệu";
+
+            dt_update.DuTuyen_MaNghienCuu = entity_hv.DuTuyen_MaNghienCuu;
+            dt_update.Nganh_Mt_ID = entity_hv.Nganh_Mt_ID;
+            dt_update.HocVien_DKDTNgoaiNgu = entity_hv.HocVien_DKDTNgoaiNgu;
+            dt_update.HocVien_VanBangNgoaiNgu = entity_hv.HocVien_VanBangNgoaiNgu;
+            dt_update.HocVien_DoiTuongDuThi = entity_hv.HocVien_DoiTuongDuThi;
+
+            dt_update.HocVien_SoYeuLyLich += entity_hv.HocVien_SoYeuLyLich;
+            dt_update.HocVien_MCBangDaiHoc += entity_hv.HocVien_MCBangDaiHoc;
+            dt_update.HocVien_MCBangDiem += entity_hv.HocVien_MCBangDiem;
+            dt_update.HocVien_MCGiayKhamSucKhoe += entity_hv.HocVien_MCGiayKhamSucKhoe;
+            dt_update.HocVien_Anh46 += entity_hv.HocVien_Anh46;
+            dt_update.HocVien_MCCCNN += entity_hv.HocVien_MCCCNN;
+            dt_update.HocVien_MCKhac += entity_hv.HocVien_MCKhac;
+
+            dt_update.HocVien_LePhi_MaThamChieu = "Nộp trực tiếp";
+            dt_update.HocVien_LePhi_NgayNop = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            dt_update.HocVien_LePhi_TrangThai = 9;
+          
+            db.SaveChanges();
+
+            #region Gửi mail xác thực
+            SendEmail send = new SendEmail();
+            var subject = "Thông báo cập nhật";
+            var body = "Xin chào " + hv_update.HocVien_HoDem + " " + hv_update.HocVien_Ten +
+                "<br/> Hệ thống tuyển sinh sau đại học của trường Đại học Hồng Đức đã cập nhật thông tin hồ sơ của bạn." +
+                "<br/> - Vui lòng đăng nhập vào hệ thống để hệ thống để kiểm tra thông tin sau khi cập nhật";            
+            send.Sendemail(hv_update.HocVien_Email, body, subject);
+            #endregion
+
+            return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult DsHvDangKy(string searchString, string currentFilter, string filteriDotxt, int? page)
         {
             var hocviens = db.HocVienDangKies.ToList();
@@ -153,7 +240,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
 
-
+        public ActionResult DsHvDangKy_Update()
+        {
+            return View();
+        }
         // GET: Admin/HocVienDangKys
         public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
             string filteriDotxt, string sortOrder, int? page)
@@ -376,6 +466,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 HocVien_DoiTuongUuTien = model.HocVienDangKy.HocVien_DoiTuongUuTien,
                 HocVien_BoTucKienThuc = model.HocVienDangKy.HocVien_BoTucKienThuc,
                 HocVien_NoiSinh = _hv_NoiSinh,
+                HocVien_NoiSinh_IDTinh = model.HocVienDangKy.HocVien_NoiSinh,
                 HocVien_HoKhauThuongTru = model.HocVienDangKy.HocVien_HoKhauThuongTru,
                 HocVien_NoiOHienNay = model.HocVienDangKy.HocVien_NoiOHienNay,
                 HocVien_DiaChiLienHe = model.HocVienDangKy.HocVien_DiaChiLienHe,
@@ -618,7 +709,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult QLDotDuTuyenSDH_Delete()
         {
             var model = db.DotXetTuyens.OrderByDescending(x => x.Dxt_ID).Where(x => x.Dxt_Classify == 2);
-
             return View(model.ToList());
         }
 

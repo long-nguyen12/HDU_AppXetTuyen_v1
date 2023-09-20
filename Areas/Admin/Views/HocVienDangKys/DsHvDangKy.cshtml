@@ -128,13 +128,13 @@
                                             }
                                         </td>
                                         <td style="text-align:center; vertical-align:middle">
-                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.HocVien_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.HocVien_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("DetailItem","ThiSinhDangKys" , new { id = item.HocVien_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                            @*<a href="@Url.Action("DsHvDangKy_Update","HocVienDangKys" , new { id = item.HocVien_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |*@
+                                            <a href="@Url.Action("DsHvDangKy_Update","HocVienDangKys" , new { id = item.HocVien_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                            <a href="@Url.Action("DsHvDangKy_Update","HocVienDangKys" , new { id = item.HocVien_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
                                         </td>
 
                                     </tr>
-
+                                                     
                                 }
                             </tbody>
                         </table>

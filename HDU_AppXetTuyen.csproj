@@ -502,6 +502,8 @@
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_viewOK.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_viewOK.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy_Update.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\AdminUpdateHocVien.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

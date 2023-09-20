@@ -34,6 +34,11 @@
 <script>
     $(document).ready(function () {
         HocVienDuTuyenGetByID();
+        $('#hiden_query_url').val(window.location.search);
+        $('#bt_update_hocvien').click(function () {
+            let queryString_toUpdate = window.location.search;
+            window.location.href = "/Admin/HocVienDangKys/AdminUpdateHocVien" + queryString_toUpdate;           
+        })
     });
     function HocVienDuTuyenGetByID() {
         var data_obj = { DuTuyen_ID: $('#hiden_dutuyen_id_present').val() }; /*alert(DuTuyen_ID);   */
@@ -386,9 +391,10 @@
 <input type="hidden" style="display:none" id="hiden_searchString" value="@ViewBag.SearchString" />
 <input type="hidden" style="display:none" id="hiden_page" value="@ViewBag.pageCurren" />
 <input type="hidden" style="display:none" id="hiden_dutuyen_id_present" value="@ViewBag.DuTuyen_ID" />
+<input type="hidden" style="display:none" id="hiden_query_url" />
+
 
 <div class="container-fluid px-12">
-
     <div id="div_view_data_dutuyen">
         <div class="card card-header-actions">
             <div class="card-header mt-0 mb-0">
@@ -927,15 +933,20 @@
                                                                     <label class="form-check-label" for="radioSai">Sai</label>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <center>
                                                             <span id="Error_Rgt_KiemDuyetNopLePhi" class="small mb-1 text-danger"></span>
                                                         </center>
-                                                        <div class="col-md-12 pt-2" id="div_list_view_mclephi">
-                                                            @*<a class="btn btn-light btn-sm" style="color:blue">Tệp 1</a>*@
+                                                        <div class="col-md-12 pt-2" id="div_list_view_mclephi" style="margin-bottom:2px">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <hr class="mt-0 mb-3" />
+                                                <div class="col-lg-12 col-12 p-1 mb-2">
+                                                    <center>
+                                                        <a class="btn btn-sm btn-light" id="bt_update_hocvien">Cập nhật</a>
+                                                        <a class="btn btn-sm btn-light" id="bt_delete_hocvien" style="margin-left:4px">Xóa</a>
+                                                    </center>
                                                 </div>
                                             </div>
                                         </td>
@@ -955,31 +966,29 @@
             </div>
             <div class="card-body">
                 <div class="col-lg-12 col-12">
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-xxl-7 col-lg-12">
                             <input class="form-control" type="text" id="DuTuyen_ThongBaoKiemDuyet" name="DuTuyen_ThongBaoKiemDuyet" placeholder="Nhập thông báo (nếu có)">
                             <span id="Error_Rgt_DuTuyen_ThongBaoKiemDuyet" class="small mb-1 text-danger"></span>
                         </div>
                         <div class="col-xxl-5 col-lg-12">
-                            <div class="row">
+                            <div class="row g-1">
                                 <div class="col-xxl-7 col-lg-12">
                                     <center>
                                         <div class="col-md-12 d-inline-flex flex-nowrap mt-2">
                                             <div class="form-check align-items-center">
-                                                <input class="form-check-input" type="radio" id="radioHoSoDayDu" name="Group_KiemDuyetHoSo">
-                                                <label class="form-check-label text-nowrap">Hồ sơ đầy đủ</label>
-                                            </div>
-                                            <div class="form-check align-items-center" style="margin-left:10px">
                                                 <input class="form-check-input" type="radio" id="radioHoSoThieu" name="Group_KiemDuyetHoSo">
                                                 <label class="form-check-label text-nowrap">Hồ sơ có sai sót</label>
                                             </div>
-
+                                            <div class="form-check align-items-center" style="margin-left:10px">                                              
+                                                <input class="form-check-input" type="radio" id="radioHoSoDayDu" name="Group_KiemDuyetHoSo">
+                                                <label class="form-check-label text-nowrap">Hồ sơ đầy đủ</label>
+                                            </div>
                                         </div>
                                     </center>
                                     <center>
                                         <span id="Error_Rgt_KiemDuyetHoSo" class="small mb-1 text-danger"></span>
                                     </center>
-
                                 </div>
                                 <div class="col-xxl-5 col-lg-12">
                                     <center>
