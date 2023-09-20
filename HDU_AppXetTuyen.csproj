@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -455,9 +455,9 @@
     <Content Include="Areas\Admin\Views\ToHopMons\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ToHopMons\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\TruongLienCaps\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\TruongLienCaps\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\TruongLienCaps\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DeleteThcs.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DetailsThcs.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\EditThcs.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\LcTieuhoc.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\LcTrunghocCs.cshtml" />
     <Content Include="Areas\Admin\Views\Xas\Create.cshtml" />
@@ -493,6 +493,19 @@
     <Content Include="Areas\Admin\Views\AdminAccounts\Details.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccounts\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAccounts\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DetailsTh.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\DeleteTh.cshtml" />
+    <Content Include="Areas\Admin\Views\TruongLienCaps\EditTh.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\test.cshtml" />
+    <Content Include="Areas\Admin\Views\test3\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view_OK.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_viewOK.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_viewOK.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqCcnn.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqCcnn_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy_Update.cshtml" />
+    <Content Include="Areas\Admin\Views\HocVienDangKys\AdminUpdateHocVien.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -745,7 +758,7 @@
     <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkxthocba.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\dkxtthptqg.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkxtthptqg.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Login.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia2.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
@@ -777,6 +790,9 @@
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen_sua0609.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit_OK.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkdtnkOK.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnktestadd.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnkluu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

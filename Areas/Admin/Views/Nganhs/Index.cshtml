@@ -59,7 +59,7 @@
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Khoa.Khoa_TenKhoa)
-                                 
+
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Nganh_MaNganh)
@@ -71,17 +71,16 @@
                                     @Html.DisplayFor(modelItem => item.KhoiNganh.KhoiNganh_Ten)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Sửa", "Edit", new { id = item.Nganh_ID }) |
-                                    @Html.ActionLink("Xoá", "Delete", new { id = item.Nganh_ID })
+                                    <a href="@Url.Action("Edit","Nganhs" , new { id = item.Nganh_ID })" title="Chỉnh sửa thông tin tổ hợp môn"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                    <a href="#" onclick="onDeleteNganh(@item.Nganh_ID)" title="Xóa thông tin tổ hợp môn"><i data-feather="trash-2" style="vertical-align:middle!important"></i></a>
                                 </td>
                             </tr>
                         }
 
                     </table>
                     <!-- Thêm mã phân trang -->
-                 
                     Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-                    @Html.PagedListPager(Model, page => Url.Action("Index",new { page ,@class="mt-1 mb-1"}))
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @class = "mt-1 mb-1" }))
                     <!-- Kết thúc -->
                 </div>
             </div>
@@ -104,17 +103,44 @@
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="modal_tb_xoa_title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="onCancel()"></button>
             </div>
             <div class="modal-body">
-                <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
-                <input id="key_delete_dkxt_id" type="hidden" />
+                <span>Bạn chắc chắn xoá ngành học này?</span>
+                <input id="key_delete_nganh_id" type="hidden" />
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
-                <button class="btn btn-primary" type="button">Đồng ý</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="onCancel()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="onConfirmDelete()">Đồng ý</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function onDeleteNganh(id) {
+        $('#key_delete_nganh_id').val(id);
+        $('#modal_tb_xoa').modal('show')
+    }
+
+    function onCancel() {
+        $('#modal_tb_xoa').modal('hide');
+        $('#key_delete_nganh_id').val('');
+    }
+    function onConfirmDelete() {
+        var nganhId = $('#key_delete_nganh_id').val();
+        $.ajax({
+            url: '/Admin/Nganhs/Delete/' + nganhId,
+            type: 'POST',
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (error) {
+                console.error('Error uploading files:', error);
+            }
+        });
+    }
+    $(document).ready(function () {
+
+    });
+</script>

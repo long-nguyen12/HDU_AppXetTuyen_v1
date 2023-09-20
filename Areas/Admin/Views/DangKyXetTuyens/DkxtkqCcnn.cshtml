@@ -39,11 +39,11 @@
 <div class="container-fluid px-12">
     <div class="card card-collapsable mt-1 mb-1">
         <div class="card-header">
-            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng kết quả đánh giá tư duy/năng lực</span></div>
+            <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng kết quả chứng chỉ ngoại ngữ</span></div>
         </div>
         <div class="card-body">
 
-            @using (Html.BeginForm("DkxtkqDgnl", "DangKyXetTuyens", FormMethod.Get))
+            @using (Html.BeginForm("DkxtkqCcnn", "DangKyXetTuyens", FormMethod.Get))
             {
                 <div class="row g-1">
                     <div class="col-xxl-1 col-md-6">
@@ -67,7 +67,7 @@
                     <div class="col-xxl-2 col-xl-12">
                         <div class="d-inline-flex flex-nowrap align-items-center">
                             <button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
-                            <a class="btn btn-outline-secondary bd-rd" id="bt_reset" href="@Url.Action("DkxtkqDgnl", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                            <a class="btn btn-outline-secondary bd-rd" id="bt_reset" href="@Url.Action("DkxtkqCcnn", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
                             <a class="btn btn-outline-primary bd-rd" id="bt_reset" href="@Url.Action("ExportTsDkXetHocBa", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                                     Tổng điểm
                                 </th>
                                 <th>
-                                    Đơn vị tổ chức
+                                    Tên chứng chỉ
                                 </th>
                                 <th>
                                     Ngày dự thi
@@ -180,7 +180,7 @@
                                         }
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("DkxtkqDgnl_hs_view","DangKyXetTuyens" , new {
+                                        <a href="@Url.Action("DkxtkqCcnn_hs_view","DangKyXetTuyens" , new {
                                                                     Dkxt_ID=item.Dkxt_ID,
                                                                     filteriDotxt =ViewBag.DotxtFilteri,
                                                                     filteriNvong =ViewBag.NvongFilteri,

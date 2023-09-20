@@ -25,14 +25,17 @@
         public int Nganh_ID { get; set; }
 
         [Display(Name = "Mã ngành")]
+        [Required(ErrorMessage = "Mã ngành không được để trống")]
         [StringLength(50)]
         public string Nganh_MaNganh { get; set; }
 
         [Display(Name = "Tên ngành")]
+        [Required(ErrorMessage = "Tên ngành không được để trống")]
         [StringLength(500)]
         public string Nganh_TenNganh { get; set; }
 
         [Display(Name = "Khoa")]
+        [Range(1, int.MaxValue, ErrorMessage = "Khoa không được để trống")]
         public int Khoa_ID { get; set; }
 
         [Display(Name = "Ghi chú")]
@@ -40,6 +43,7 @@
         public string Nganh_GhiChu { get; set; }
 
         [Display(Name = "Khối ngành")]
+        [Range(1, int.MaxValue, ErrorMessage = "Khối ngành không được để trống")]
         public int? KhoiNganh_ID { get; set; }
 
         public int? Nganh_ThiNK { get; set; }

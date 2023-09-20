@@ -34,6 +34,11 @@
 <script>
     $(document).ready(function () {
         HocVienDuTuyenGetByID();
+        $('#hiden_query_url').val(window.location.search);
+        $('#bt_update_hocvien').click(function () {
+            let queryString_toUpdate = window.location.search;
+            window.location.href = "/Admin/HocVienDangKys/AdminUpdateHocVien" + queryString_toUpdate;           
+        })
     });
     function HocVienDuTuyenGetByID() {
         var data_obj = { DuTuyen_ID: $('#hiden_dutuyen_id_present').val() }; /*alert(DuTuyen_ID);   */
@@ -386,148 +391,10 @@
 <input type="hidden" style="display:none" id="hiden_searchString" value="@ViewBag.SearchString" />
 <input type="hidden" style="display:none" id="hiden_page" value="@ViewBag.pageCurren" />
 <input type="hidden" style="display:none" id="hiden_dutuyen_id_present" value="@ViewBag.DuTuyen_ID" />
+<input type="hidden" style="display:none" id="hiden_query_url" />
+
 
 <div class="container-fluid px-12">
-    <div id="div_view_notification_server">
-        <div class="card card-header-actions">
-            <div class="card-header mt-0 mb-0">
-                <span>Kiểm duyệt hồ sơ</span>
-            </div>
-            <div class="card-body">
-                <div class="col-lg-12 col-12">
-                    <div class="row">
-                        <div class="col-xxl-7 col-lg-12">
-                            <input class="form-control" type="text" id="DuTuyen_ThongBaoKiemDuyet" name="DuTuyen_ThongBaoKiemDuyet" placeholder="Nhập thông báo (nếu có)">
-                            <span id="Error_Rgt_DuTuyen_ThongBaoKiemDuyet" class="small mb-1 text-danger"></span>
-                        </div>
-                        <div class="col-xxl-5 col-lg-12">
-                            <div class="row">
-                                <div class="col-xxl-7 col-lg-12">
-                                    <center>
-                                        <div class="col-md-12 d-inline-flex flex-nowrap mt-2">
-                                            <div class="form-check align-items-center">
-                                                <input class="form-check-input" type="radio" id="radioHoSoDayDu" name="Group_KiemDuyetHoSo">
-                                                <label class="form-check-label text-nowrap">Hồ sơ đầy đủ</label>
-                                            </div>
-                                            <div class="form-check align-items-center" style="margin-left:10px">
-                                                <input class="form-check-input" type="radio" id="radioHoSoThieu" name="Group_KiemDuyetHoSo">
-                                                <label class="form-check-label text-nowrap">Hồ sơ có sai sót</label>
-                                            </div>
-
-                                        </div>
-                                    </center>
-                                    <center>
-                                        <span id="Error_Rgt_KiemDuyetHoSo" class="small mb-1 text-danger"></span>
-                                    </center>
-
-                                </div>
-                                <div class="col-xxl-5 col-lg-12">
-                                    <center>
-                                        <div class="col-md-12 d-inline-flex flex-nowrap">
-                                            <a class="btn login-button text-nowrap " id="bt_duyet_ho_so">Duyệt hồ sơ</a>
-                                            <script>
-                                                $(document).ready(function () {
-                                                    $('#bt_duyet_ho_so').click(function () {
-                                                        var flag = true;
-                                                        if (!$('#radioHoSoDayDu').is(':checked') && !$('#radioHoSoThieu').is(':checked')) {
-                                                            var errorMessage = "Chọn kiểm duyệt hồ sơ"; $('#Error_Rgt_KiemDuyetHoSo').text(errorMessage);
-                                                            flag = false;
-                                                        } else {
-                                                            if ($('#radioHoSoThieu').is(':checked') && !$('#DuTuyen_ThongBaoKiemDuyet').val()) {
-                                                                $('#Error_Rgt_DuTuyen_ThongBaoKiemDuyet').text('Nhập thông tin sai của hồ sơ');
-                                                                flag = false;
-                                                            }
-                                                        }
-                                                        let _duTuyen_TrangThai = 0;
-                                                        if ($('#radioHoSoThieu').is(':checked')) {
-                                                            _duTuyen_TrangThai = 2;
-                                                        }
-                                                        if ($('#radioHoSoDayDu').is(':checked')) {
-                                                            _duTuyen_TrangThai = 9;
-                                                        }
-
-                                                        let _hocVien_LePhi_TrangThai = 0
-
-                                                        if ($('#hiden_HocVien_LePhi_TrangThai').val() > 0) {
-                                                            if (!$('#radioDung').is(':checked') && !$('#radioSai').is(':checked')) {
-                                                                $('#Error_Rgt_KiemDuyetNopLePhi').text('Chọn kiểm duyệt lệ phí');
-                                                                flag = false;
-                                                            }
-
-                                                            if ($('#radioSai').is(':checked')) {
-                                                                _hocVien_LePhi_TrangThai = 2;
-                                                            }
-                                                            if ($('#radioDung').is(':checked')) {
-                                                                _hocVien_LePhi_TrangThai = 9;
-                                                            }
-                                                        }  
-
-                                                        if (!flag) return
-
-                                                        $("#loadingModal").modal("show");
-
-                                                                                                             
-                                                        let _duTuyen_ThongBaoKiemDuyet = $('#DuTuyen_ThongBaoKiemDuyet').val(); 
-                                                        let _duTuyen_ID = $('#hiden_dutuyen_id_present').val();
-
-                                                        var data_obj_check_update_hvdt = {
-                                                            DuTuyen_ID: _duTuyen_ID,
-                                                            DuTuyen_TrangThai: _duTuyen_TrangThai,
-                                                            DuTuyen_ThongBaoKiemDuyet: _duTuyen_ThongBaoKiemDuyet,
-                                                            HocVien_LePhi_TrangThai: _hocVien_LePhi_TrangThai,
-                                                        }
-                                                       
-                                                        $.ajax({
-                                                            url: "/HocVienDangKys/DsHvDuTuyenCapNhatThongTinHoso/",
-                                                            type: "POST",
-                                                            data: JSON.stringify(data_obj_check_update_hvdt),
-                                                            contentType: 'application/json;charset=utf-8',
-                                                           
-                                                            success: function (res) {                                                             
-                                                                if (res.success) {
-                                                                    let querystr_back = window.location.search;
-                                                                    window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen" + querystr_back;
-                                                                    $("#loadingModal").modal("show");
-                                                                }
-                                                            },
-                                                            error: function () {
-                                                                console.log("Lỗi");
-                                                            }
-                                                        });
-                                                    });
-                                                  
-                                                    $('#radioHoSoDayDu').click(function () {
-                                                        $('#Error_Rgt_KDHS_GhiChu').text('');
-                                                    });
-                                                    $('#radioDung').click(function () {
-                                                        $('#Error_Rgt_KiemDuyetNopLePhi').text('');
-                                                    });
-                                                    $('#radioSai').click(function () {
-                                                        $('#Error_Rgt_KiemDuyetNopLePhi').text('');
-                                                    });
-                                                    $('input').on('input', function () {
-                                                        hideErrorMessage($(this));
-                                                    });
-                                                });
-
-                                                function hideErrorMessage(input) {
-                                                    var errorContainer = input.next('.text-danger');
-                                                    errorContainer.text('');
-                                                }
-
-                                            </script>
-                                            <a class="btn btn-success text-nowrap" id="bt_backto_DsHvDuTuyen" style="vertical-align: middle !important; border-radius: 3px; margin-left: 10px; font-size: 15px;">Quay lại</a>
-
-                                        </div>
-                                    </center>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="div_view_data_dutuyen">
         <div class="card card-header-actions">
             <div class="card-header mt-0 mb-0">
@@ -539,7 +406,6 @@
             </div>
             <script>
                 $(document).ready(function () {
-
                     $('#bt_collapse_show').click(function () {
                         $('#div_thongtincoban').show();
                         $('#bt_collapse_show').hide();
@@ -1067,15 +933,20 @@
                                                                     <label class="form-check-label" for="radioSai">Sai</label>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <center>
                                                             <span id="Error_Rgt_KiemDuyetNopLePhi" class="small mb-1 text-danger"></span>
                                                         </center>
-                                                        <div class="col-md-12 pt-2" id="div_list_view_mclephi">
-                                                            @*<a class="btn btn-light btn-sm" style="color:blue">Tệp 1</a>*@
+                                                        <div class="col-md-12 pt-2" id="div_list_view_mclephi" style="margin-bottom:2px">
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <hr class="mt-0 mb-3" />
+                                                <div class="col-lg-12 col-12 p-1 mb-2">
+                                                    <center>
+                                                        <a class="btn btn-sm btn-light" id="bt_update_hocvien">Cập nhật</a>
+                                                        <a class="btn btn-sm btn-light" id="bt_delete_hocvien" style="margin-left:4px">Xóa</a>
+                                                    </center>
                                                 </div>
                                             </div>
                                         </td>
@@ -1088,13 +959,151 @@
         </div>
     </div>
 
+    <div id="div_view_notification_server">
+        <div class="card card-collapsable">
+            <div class="card-header mt-0 mb-0">
+                <span>Kiểm duyệt hồ sơ</span>
+            </div>
+            <div class="card-body">
+                <div class="col-lg-12 col-12">
+                    <div class="row ">
+                        <div class="col-xxl-7 col-lg-12">
+                            <input class="form-control" type="text" id="DuTuyen_ThongBaoKiemDuyet" name="DuTuyen_ThongBaoKiemDuyet" placeholder="Nhập thông báo (nếu có)">
+                            <span id="Error_Rgt_DuTuyen_ThongBaoKiemDuyet" class="small mb-1 text-danger"></span>
+                        </div>
+                        <div class="col-xxl-5 col-lg-12">
+                            <div class="row g-1">
+                                <div class="col-xxl-7 col-lg-12">
+                                    <center>
+                                        <div class="col-md-12 d-inline-flex flex-nowrap mt-2">
+                                            <div class="form-check align-items-center">
+                                                <input class="form-check-input" type="radio" id="radioHoSoThieu" name="Group_KiemDuyetHoSo">
+                                                <label class="form-check-label text-nowrap">Hồ sơ có sai sót</label>
+                                            </div>
+                                            <div class="form-check align-items-center" style="margin-left:10px">                                              
+                                                <input class="form-check-input" type="radio" id="radioHoSoDayDu" name="Group_KiemDuyetHoSo">
+                                                <label class="form-check-label text-nowrap">Hồ sơ đầy đủ</label>
+                                            </div>
+                                        </div>
+                                    </center>
+                                    <center>
+                                        <span id="Error_Rgt_KiemDuyetHoSo" class="small mb-1 text-danger"></span>
+                                    </center>
+                                </div>
+                                <div class="col-xxl-5 col-lg-12">
+                                    <center>
+                                        <div class="col-md-12 d-inline-flex flex-nowrap">
+                                            <a class="btn login-button text-nowrap " id="bt_duyet_ho_so">Duyệt hồ sơ</a>
+                                            <script>
+                                                $(document).ready(function () {
+                                                    $('#bt_duyet_ho_so').click(function () {
+                                                        var flag = true;
+                                                        if (!$('#radioHoSoDayDu').is(':checked') && !$('#radioHoSoThieu').is(':checked')) {
+                                                            var errorMessage = "Chọn kiểm duyệt hồ sơ"; $('#Error_Rgt_KiemDuyetHoSo').text(errorMessage);
+                                                            flag = false;
+                                                        } else {
+                                                            if ($('#radioHoSoThieu').is(':checked') && !$('#DuTuyen_ThongBaoKiemDuyet').val()) {
+                                                                $('#Error_Rgt_DuTuyen_ThongBaoKiemDuyet').text('Nhập thông tin sai của hồ sơ');
+                                                                flag = false;
+                                                            }
+                                                        }
+                                                        let _duTuyen_TrangThai = 0;
+                                                        if ($('#radioHoSoThieu').is(':checked')) {
+                                                            _duTuyen_TrangThai = 2;
+                                                        }
+                                                        if ($('#radioHoSoDayDu').is(':checked')) {
+                                                            _duTuyen_TrangThai = 9;
+                                                        }
+
+                                                        let _hocVien_LePhi_TrangThai = 0
+
+                                                        if ($('#hiden_HocVien_LePhi_TrangThai').val() > 0) {
+                                                            if (!$('#radioDung').is(':checked') && !$('#radioSai').is(':checked')) {
+                                                                $('#Error_Rgt_KiemDuyetNopLePhi').text('Chọn kiểm duyệt lệ phí');
+                                                                flag = false;
+                                                            }
+
+                                                            if ($('#radioSai').is(':checked')) {
+                                                                _hocVien_LePhi_TrangThai = 2;
+                                                            }
+                                                            if ($('#radioDung').is(':checked')) {
+                                                                _hocVien_LePhi_TrangThai = 9;
+                                                            }
+                                                        }
+
+                                                        if (!flag) return
+
+                                                        $("#loadingModal").modal("show");
+
+
+                                                        let _duTuyen_ThongBaoKiemDuyet = $('#DuTuyen_ThongBaoKiemDuyet').val();
+                                                        let _duTuyen_ID = $('#hiden_dutuyen_id_present').val();
+
+                                                        var data_obj_check_update_hvdt = {
+                                                            DuTuyen_ID: _duTuyen_ID,
+                                                            DuTuyen_TrangThai: _duTuyen_TrangThai,
+                                                            DuTuyen_ThongBaoKiemDuyet: _duTuyen_ThongBaoKiemDuyet,
+                                                            HocVien_LePhi_TrangThai: _hocVien_LePhi_TrangThai,
+                                                        }
+
+                                                        $.ajax({
+                                                            url: "/HocVienDangKys/DsHvDuTuyenCapNhatThongTinHoso/",
+                                                            type: "POST",
+                                                            data: JSON.stringify(data_obj_check_update_hvdt),
+                                                            contentType: 'application/json;charset=utf-8',
+
+                                                            success: function (res) {
+                                                                if (res.success) {
+                                                                    let querystr_back = window.location.search;
+                                                                    window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen" + querystr_back;
+                                                                    $("#loadingModal").modal("show");
+                                                                }
+                                                            },
+                                                            error: function () {
+                                                                console.log("Lỗi");
+                                                            }
+                                                        });
+                                                    });
+
+                                                    $('#radioHoSoDayDu').click(function () {
+                                                        $('#Error_Rgt_KDHS_GhiChu').text('');
+                                                    });
+                                                    $('#radioDung').click(function () {
+                                                        $('#Error_Rgt_KiemDuyetNopLePhi').text('');
+                                                    });
+                                                    $('#radioSai').click(function () {
+                                                        $('#Error_Rgt_KiemDuyetNopLePhi').text('');
+                                                    });
+                                                    $('input').on('input', function () {
+                                                        hideErrorMessage($(this));
+                                                    });
+                                                });
+
+                                                function hideErrorMessage(input) {
+                                                    var errorContainer = input.next('.text-danger');
+                                                    errorContainer.text('');
+                                                }
+
+                                            </script>
+                                            <a class="btn btn-success text-nowrap" id="bt_backto_DsHvDuTuyen" style="vertical-align: middle !important; border-radius: 3px; margin-left: 10px; font-size: 15px;">Quay lại</a>
+
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="div_view_img" style="display:none">
         <div class="row">
             <div class="col-xl-12 mt-2">
                 <div class="card card-header-actions">
                     <div class="card-header mt-0 mb-0">
                         <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
-                        <div>                         
+                        <div>
                             <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
                         </div>
                     </div>
@@ -1112,6 +1121,8 @@
             </div>
         </div>
     </div>
+
+
 </div>
 <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

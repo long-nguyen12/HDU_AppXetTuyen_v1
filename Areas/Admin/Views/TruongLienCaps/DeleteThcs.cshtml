@@ -1,0 +1,219 @@
+﻿@model HDU_AppXetTuyen.Models.LienCapTHCS
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title  mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span>Quản lý học sinh đăng ký dự tuyển trường liên cấp THCS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid px-12">
+    <div class="card card-collapsable mt-1 mb-1">
+        <div class="card-header">
+            <div><span class="text-danger" id="sp_tieude">Xoá học sinh đăng ký</span></div>
+        </div>
+        <div class="card-body">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_DinhDanh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_DinhDanh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_HoTen)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_HoTen)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_GioiTinh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_GioiTinh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_NgaySinh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_NgaySinh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_NoiSinh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_NoiSinh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_NoiCuTru)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_NoiCuTru)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_TruongTH)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_TruongTH)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_UuTien)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_UuTien)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_ThongTinCha)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_ThongTinCha)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_ThongTinMe)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_ThongTinMe)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_DiemHocTap)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_DiemHocTap)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_MucDoNangLuc)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_MucDoNangLuc)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_MucDoPhamChat)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_MucDoPhamChat)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_MinhChungHB)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_MinhChungHB)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_MinhChungGiayKS)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_MinhChungGiayKS)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_MinhChungMaDinhDanh)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_MinhChungMaDinhDanh)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_GiayUuTien)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_GiayUuTien)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_XacNhanLePhi)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_XacNhanLePhi)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_Activation)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_Activation)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_TrangThai)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_TrangThai)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.HocSinh_GhiChu)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.HocSinh_GhiChu)
+                    </dd>
+
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xoá học sinh" class="btn btn-danger" />
+            </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

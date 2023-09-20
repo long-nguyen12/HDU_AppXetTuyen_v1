@@ -69,10 +69,10 @@
             </div>
             <div class="card-body">
                 <div class="row g-1" id="div_thongtin_them" style="display:none">
-                    <div class="col-xl-3 col-12"><span>- Ngành khoa học máy tính: 10 học viên</span></div>
-                    <div class="col-xl-3 col-12"><span>- Ngành Địa lý: 10 học viên</span></div>
-                    <div class="col-xl-3 col-12"><span>- Ngành Khoa học cây trồng: 10 học viên</span></div>
-                    <div class="col-xl-3 col-12"><span>- Ngành Khoa học cây trồng: 10 học viên</span></div>
+                    <div class="col-xl-3 col-12"><span>- Ngành khoa học máy tính: 1 học viên</span></div>
+                    <div class="col-xl-3 col-12"><span>- Ngành Địa lý: 1 học viên</span></div>
+                    @*<div class="col-xl-3 col-12"><span>- Ngành Khoa học cây trồng: 10 học viên</span></div>
+                    <div class="col-xl-3 col-12"><span>- Ngành Khoa học cây trồng: 10 học viên</span></div>*@
                     <hr class="mt-2 mb2" />
                 </div>
                 @using (Html.BeginForm("DsHvDuTuyen", "HocVienDangKys", FormMethod.Get))
@@ -220,8 +220,8 @@
                                                  }, new { @style = "text-decoration:none; color:black", @title = "Bấm để chọn sắp xếp theo trạng thái hồ sơ" })
                                         </th>
                                         <th class="text-nowrap" style="text-align:center; width:120px">
-
-                                            @Html.DisplayName("Cập nhật")
+                                            <a href="@Url.Action("AdminCreateHocVien","HocVienDangKys")" style="text-decoration:none">Thêm mới</a>
+                                            @*@Html.DisplayName("Cập nhật")*@
                                         </th>
                                     </tr>
                                 </thead>
@@ -281,7 +281,7 @@
                                                     }
                                                     else if (item.HocVien_LePhi_TrangThai == 2)
                                                     {
-                                                        <label id="lbl_@item.DuTuyen_ID" style="color:red">Mã tham chiếu sai</label>
+                                                        <label id="lbl_@item.DuTuyen_ID" style="color:red">Mã TC sai</label>
                                                     }
                                                 }
                                             </td>
@@ -333,7 +333,7 @@
                                         $('#txt_confirm').text("Bạn có chắc chắn muốn xác nhận thông tin?");
                                     }
                                     if (!idpresent.is(":checked")) {
-                                        $('#txt_confirm').text("Bạn có chắc chắn huỷ xác nhận thông tin?");
+                                        $('#txt_confirm').text("Bạn có chắc chắn huỷ xác nhận thông tin nộp lệ phí?");
                                     }
                                     $('#modal_thongtin_lephi').modal('show');
                                 }
@@ -401,7 +401,7 @@
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tieude_update_mc_lephi">Xác nhận</h5>
+                <h5 class="modal-title" id="tieude_update_mc_lephi">Thông báo</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_first"></button>
             </div>
             <div class="modal-body">
