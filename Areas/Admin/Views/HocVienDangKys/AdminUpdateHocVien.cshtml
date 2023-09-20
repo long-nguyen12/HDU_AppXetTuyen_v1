@@ -16,13 +16,128 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Thêm mới thông tin học viên</span>
+                        <span id="sp_tieude">Cập nhật thông tin học viên</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </header>
+<input type="hidden" id="txt_dutuyen_id_hiden" style="display:none!important" value="@ViewBag.DuTuyen_ID" />
+<script>
+    $(document).ready(function () {
+        ShowDataOnSelect_HocVienNoiSinh();
+        ShowDataOnSelect_Nganh();
+        HocVienDuTuyenGetByID();
+    })
+    function HocVienDuTuyenGetByID() {
+        var data_get = { DuTuyen_ID: $('#txt_dutuyen_id_hiden').val() }; /*alert(DuTuyen_ID);   */
+
+        $.ajax({
+            url: "/HocVienDangKys/DsHvDuTuyenKiemTraHoSoJson/",
+            type: "POST",
+            data: JSON.stringify(data_get),
+            contentType: 'application/json;charset=utf-8',
+            async: false,
+            success: function (res) {
+                var data = res.data;
+                console.log(data);
+              
+                $('#HocVien_HoDem').val(data.HocVien_HoDem);
+                $('#HocVien_Ten').val(data.HocVien_Ten);
+
+                if (data.HocVien_GioiTinh == 1) {
+                    $('#radioNam').attr('checked', 'checked');                  
+                } else if (data.HocVien_GioiTinh == 0) {
+                    $('#radioNu').attr('checked', 'checked');                   
+                }
+                $('#HocVien_DanToc').val(data.HocVien_DanToc);
+                $('#HocVien_NgaySinh').val(data.HocVien_NgaySinh);
+                $('#HocVien_CCCD').val(data.HocVien_CCCD);
+                $('#HocVien_CCCD_NgayCap').val(data.HocVien_CCCD_NgayCap);
+                $('#HocVien_DienThoai').val(data.HocVien_DienThoai);
+                $('#HocVien_Email').val(data.HocVien_Email);
+
+                $('#HocVien_NoiSinh').val(data.HocVien_NoiSinh_IDTinh);
+
+                $('#HocVien_HoKhauThuongTru').val(data.HocVien_HoKhauThuongTru);
+                $('#HocVien_NoiOHienNay').val(data.HocVien_NoiOHienNay);
+                $('#HocVien_DiaChiLienHe').val(data.HocVien_DiaChiLienHe);
+
+                if (data.HocVien_LoaiCB == 1) {
+                    $('#HocVien_LoaiCB_BienChe').attr('checked', 'checked');                 
+                } else if (data.HocVien_LoaiCB == 0) {
+                    $('#HocVien_LoaiCB_HopDong').attr('checked', 'checked');                   
+                }
+
+                $('#HocVien_TenDonViCongTac').val(data.HocVien_TenDonViCongTac);
+                $('#HocVien_ChuyenMon').val(data.HocVien_ChuyenMon);
+                $('#HocVien_ThamNien').val(data.HocVien_ThamNien);
+                $('#HocVien_ChucVu').val(data.HocVien_ChucVu);
+                $('#HocVien_NamCT').val(data.HocVien_NamCT);
+
+                $('#HocVien_DoiTuongUuTien').val(data.HocVien_DoiTuongUuTien);
+
+                if (data.HocVien_BoTucKienThuc == 1) { $('#HocVien_BoTucKienThuc').val("Chưa học"); }
+                if (data.HocVien_BoTucKienThuc == 2) { $('#HocVien_BoTucKienThuc').val("Đã học"); }
+                if (data.HocVien_BoTucKienThuc == 3) { $('#HocVien_BoTucKienThuc').val("Đúng CN"); }
+
+                $('#HocVien_BangDaiHoc_TenTruongTN').val(data.Hv_BangDaiHoc_TenTruongTN);
+                $('#HocVien_BangDaiHoc_TenNganhTN').val(data.Hv_BangDaiHoc_TenNganhTN);
+                $('#HocVien_BangDaiHoc_HeDaoTao').val(data.Hv_BangDaiHoc_HeDaoTao);
+                $('#HocVien_BangDaiHoc_NamTN').val(data.Hv_BangDaiHoc_NamTN);
+
+
+                if (data.Hv_BangDaiHoc_DiemToanKhoa < 5) {
+                    $('#HocVien_BangDaiHoc_Select_ThangDiem').val(4)
+                } else {
+                    $('#HocVien_BangDaiHoc_Select_ThangDiem').val(10)
+                }
+                $('#HocVien_BangDaiHoc_DiemToanKhoa').val(data.Hv_BangDaiHoc_DiemToanKhoa);
+
+                $('#HocVien_BangDaiHoc_LoaiTN').val(data.Hv_BangDaiHoc_LoaiTN);
+
+                $('#Select_HocVien_ChuyenNganhDuThi').val(data.Nganh_Mt_ID);
+
+                $('#HocVien_ChuyenNganhDuThi_Ten').val(data.Nganh_Mt_TenNganh);
+                $('#HocVien_ChuyenNganhDuThi_MaCN').val(data.Nganh_Mt_MaNganh);
+
+                if (data.DuTuyen_MaNghienCuu == 1) {
+                    $('#HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
+                }
+                if (data.DuTuyen_MaNghienCuu == 2) {
+                    $('#HocVien_ChuyenNganhDuThi_NghienCuu').attr('checked', 'checked');
+                }
+
+                if (data.HocVien_DKDTNgoaiNgu == 1) {
+                    $('#HocVien_DKDTNgoaiNgu_Yes').attr('checked', 'checked');
+
+                }
+                if (data.HocVien_DKDTNgoaiNgu == 0) {
+                    $('#HocVien_DKDTNgoaiNgu_No').attr('checked', 'checked');
+                }
+                if (data.HocVien_VanBangNgoaiNgu) {
+                    $('#HocVien_VanBangNgoaiNgu').val(data.HocVien_VanBangNgoaiNgu);
+                } else {
+                    $('#HocVien_VanBangNgoaiNgu').val("Không có");
+                }
+
+
+                if (data.HocVien_DoiTuongDuThi == 1) {
+                    $('#radioDTDT_CuDiHoc').attr('checked', 'checked');
+                }
+
+                if (data.HocVien_DoiTuongDuThi == 0) {
+                    $('#radioDTDT_TSTuDo').attr('checked', 'checked');
+                }
+                $('#Select_HocVien_BoTucKienThuc').val(data.HocVien_BoTucKienThuc);
+            },
+            error: function () {
+                console.log("Lỗi");
+            }
+        });
+    }
+</script>
 <div class="container-fluid px-12">
     <div class="card card-header-actions mt-0">
         <div class="card card-header-actions mt-0">
@@ -373,7 +488,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12" style="visibility:hidden">a</label>
                                                     <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_BangDaiHoc_DiemToanKhoa" name="HocVien_BangDaiHoc_DiemToanKhoa" type="number" disabled />
+                                                        <input class="form-control text-box single-line" id="HocVien_BangDaiHoc_DiemToanKhoa" name="HocVien_BangDaiHoc_DiemToanKhoa" type="number" />
                                                         <span id="Error_Rgt_HocVien_BangDaiHoc_DiemToanKhoa" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
@@ -667,8 +782,8 @@
                                                     <div class="col-12">
                                                         <center>
                                                             <div class="col-md-12">
-                                                                <input type="submit" value="Lưu và tiếp tục thêm" class="btn btn-primary" id="bt_admin_add_hocvien" />                                                              
-                                                                <input type="submit" value="Quay lại trang danh sách" class="btn btn-danger" id="bt_backup_to_list_hocvien" />
+                                                                <input type="submit" value="Đồng ý" class="btn btn-primary" id="bt_admin_update_hocvien" />
+                                                                <input type="submit" value="Hủy bỏ" class="btn btn-danger" id="bt_backup_to_list_hocvien" />
                                                             </div>
                                                         </center>
                                                     </div>
@@ -687,7 +802,6 @@
 </div>
 <script>
     /* bắt đầu phần upload file client */
-
     var check_in_file_soyeulilich = false;
     var check_in_file_bangdaihoc = false;
     var check_in_file_bangdiem = false;
@@ -940,10 +1054,9 @@
     $(document).ready(function () { });
     /* phần xử lý sự kiện thêm dữ liệu  mới*/
     $(document).ready(function () {
-        $('#bt_admin_add_hocvien').click(function () {
-
+        $('#bt_admin_update_hocvien').click(function () {
+            
             var flag = true;
-
             let _hocVien_HoDem = $('#HocVien_HoDem').val();
             let _hocVien_Ten = $('#HocVien_Ten').val();
             let _hocVien_NgaySinh = $('#HocVien_NgaySinh').val();
@@ -988,39 +1101,11 @@
             if (!_hocVien_DanToc) { $('#Error_Rgt_HocVien_DanToc').text('Nhập dân tộc '); flag = false; }
             if ($('#radioNam').is(':checked')) { _hocVien_GioiTinh = 1; } if ($('#radioNu').is(':checked')) { _hocVien_GioiTinh = 0; }
 
-            if (!_hocVien_CCCD) { $('#Error_Rgt_HocVien_CCCD').text('Nhập CCCD'); flag = false; }
-
-            let checkCcAd = { HocVien_CCCD: _hocVien_CCCD };
-            $.ajax({
-                url: "/Admin/HocVienDangKys//RegisterMasterCheckCCCDAD/",
-                type: "POST",
-                data: JSON.stringify(checkCcAd),
-                async: false,
-                contentType: 'application/json;charset=utf-8',
-                success: function (res) {
-                    if (res.success == true) {
-                        $('#Error_Rgt_HocVien_CCCD').text("Số CCCD đã tồn tại."); flag = false;
-                    }
-                },
-                error: function () { }
-            });
             if (!_hocVien_CCCD_NgayCap) { $('#Error_Rgt_HocVien_CCCD_NgayCap').text('Nhập ngày cấp'); flag = false; }
             if (!_hocVien_Email) { $('#Error_Rgt_HocVien_Email').text('Nhập email'); flag = false; }
             else {
                 if (!validateEmail(_hocVien_Email)) { $('#Error_Rgt_HocVien_Email').text('Email sai định dạng'); flag = false; }
-                else {
-                    let checkEmailAd = { HocVien_Email: _hocVien_Email };
-                    $.ajax({
-                        url: "/Admin/HocVienDangKys/RegisterMasterCheckEmailAD/",
-                        type: "POST",
-                        contentType: 'application/json;charset=utf-8',
-                        async: false,
-                        data: JSON.stringify(checkEmailAd),
-                        success: function (res) { if (res.success == true) { $('#Error_Rgt_HocVien_Email').text("Email đã tồn tại."); flag = false; } },
-                        error: function () { }
-                    });
-                }
-            }           
+            }
 
             if (!_hocVien_DienThoai) { $('#Error_Rgt_HocVien_DienThoai').text('Nhập điện thoại'); flag = false; }
             if (_hocVien_BoTucKienThuc == 0) { $('#Error_Rgt_HocVien_BoTucKienThuc_Select').text('Chọn loại bổ sung kiến thức'); flag = false; }
@@ -1167,9 +1252,10 @@
                 error: function (res) {
                     console.log("OK dã upload", res);
                 }
-            });          
+            });
 
             var data_hv = {
+                HocVien_ID: _hocVien_HoDem,
                 HocVien_HoDem: _hocVien_HoDem,
                 HocVien_Ten: _hocVien_Ten,
                 HocVien_NgaySinh: _hocVien_NgaySinh,
@@ -1202,6 +1288,7 @@
                 }),
 
                 HocVien_Email_Temp: JSON.stringify({
+                    DuTuyen_ID: $('#txt_dutuyen_id_hiden').val(),
                     DuTuyen_MaNghienCuu: _duTuyen_MaNghienCuu,
                     Nganh_Mt_ID: _hocVien_ChuyenNganhDuThi,
                     HocVien_DKDTNgoaiNgu: _hocVien_DKDTNgoaiNgu,
@@ -1217,11 +1304,11 @@
                 })
             }
 
-          
+
             console.log(data_hv)
-           // return;
+            // return;
             $.ajax({
-                url: "/Admin/HocVienDangKys/AdCreateHocVienJson/",
+                url: "/Admin/HocVienDangKys/AdUpdateHocVienJson/",
                 type: "POST",
                 contentType: 'application/json;charset=utf-8',
                 async: false,
@@ -1238,7 +1325,8 @@
         })
 
         $('#bt_backup_to_list_hocvien').click(function () {
-            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen";
+            let queryString_toUpdate = window.location.search;
+            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen" + queryString_toUpdate;
         })
     })
 
@@ -1304,9 +1392,7 @@
     })
 
     /* Hàm hiển thị thông tin ngành vào dropdownlist */
-    $(document).ready(function () {
-        ShowDataOnSelect_HocVienNoiSinh();
-        ShowDataOnSelect_Nganh();
+    $(document).ready(function () {       
         $("#Select_HocVien_ChuyenNganhDuThi").change(function () {
             let id = $("#Select_HocVien_ChuyenNganhDuThi").val();
             if (id > 0) {
@@ -1365,7 +1451,7 @@
         });
 
         $('#HocVien_NoiSinh').change(function () {
-        
+
             if ($("#HocVien_NoiSinh").val() > 0) { $('#Error_Rgt_HocVien_NoiSinh').text(''); flag = true; }
             else {
                 { $('#Error_Rgt_HocVien_NoiSinh').text('Chọn nơi sinh'); flag = false; }
@@ -1373,8 +1459,7 @@
         })
     });
 
-    function ShowDataOnSelect_HocVienNoiSinh() {
-        var key_ns = $('#Update_HocVien_NoiSinh_Key').val();
+    function ShowDataOnSelect_HocVienNoiSinh() {       
         $.ajax({
             url: "/Admin/HocVienDangKys/GetTinhJson",
             type: "POST",
@@ -1386,6 +1471,7 @@
                 hocVien_noiSinh_tinh.empty();
                 if (response.success) {
                     let data = response.data;
+
                     hocVien_noiSinh_tinh.append($('<option></option>').val("0").text("Chọn tỉnh..."));
                     $.each(data, function (index, item) {
                         hocVien_noiSinh_tinh.append($('<option></option>').val(item.tinh_ID).text(item.tinh_Ten));
@@ -1404,6 +1490,7 @@
             type: "POST",
             contentType: "application/json;charset=utf-8",
             dataType: "json",
+            async: false,
             success: function (response) {
                 let Select_HocVien_ChuyenNganhDuThi = $('#Select_HocVien_ChuyenNganhDuThi');
                 Select_HocVien_ChuyenNganhDuThi.empty();
@@ -1468,7 +1555,6 @@
         $('#HocVien_ChucVu').val('');
         $('#HocVien_NamCT').val('');
         $('#HocVien_LoaiCB').val('');
-
     }
 
     /* hàm ẩn các thông báo lỗi checkin */
