@@ -46,7 +46,311 @@
         </div>
     </div>
 </header>
+<script>
+    $(document).ready(function () {
+        GetHvDuTuyen();
+    });
+    function GetHvDuTuyen() {
+        $.ajax({
+            url: "/HocVienDangKies/DkDuTuyenGetByID",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+           /* async: false,*/
+            success: function (res) {
+                if (res.success) {
+                    let data = res.data[0];
 
+                    $('#txt_update_mc_lephi').empty();
+                    $('#div_list_view_soyeulylich').empty();
+                    $('#div_list_view_bangdaihoc').empty();
+                    $('#div_list_view_bangdiem').empty();
+                    $('#div_list_view_giaykhamsuckhoe').empty();
+                    $('#div_list_view_anh4x6').empty();
+                    $('#div_list_view_cc_bang_ngoaingu').empty();
+                    $('#div_list_view_mckhac').empty();
+
+                    $("#hiden_dutuyen_id_present").val(data.DuTuyen_ID_Present);
+
+                    $("#div_view_data_dutuyen").show();
+                    $("#div_add_data_dutuyen").hide();
+                    $('#div_view_notification_server').show();
+
+                    $('#View_HocVien_BangDaiHoc_TenTruongTN').val(data.Hv_BangDaiHoc_TenTruongTN);
+                    $('#View_HocVien_BangDaiHoc_TenNganhTN').val(data.Hv_BangDaiHoc_TenNganhTN);
+                    $('#View_HocVien_BangDaiHoc_HeDaoTao').val(data.Hv_BangDaiHoc_HeDaoTao);
+                    $('#View_HocVien_BangDaiHoc_NamTN').val(data.Hv_BangDaiHoc_NamTN);
+                    var str_diem = "";
+                    if (data.Hv_BangDaiHoc_ThangDiem == 4) {
+                        str_diem = "Thang 4: " + data.Hv_BangDaiHoc_DiemToanKhoa + " (điểm)";
+                    }
+                    if (data.Hv_BangDaiHoc_ThangDiem == 10) {
+                        str_diem = "Thang 10: " + data.Hv_BangDaiHoc_DiemToanKhoa + " (điểm)";
+                    }
+                    $('#View_HocVien_BangDaiHoc_DiemToanKhoa').val(`${str_diem}`);
+
+                    $('#View_HocVien_BangDaiHoc_LoaiTN').val(data.Hv_BangDaiHoc_LoaiTN);
+                    $('#View_HocVien_DoiTuongUuTien').val(data.Hv_DoiTuongUuTien);
+
+                    if (data.Dt_TrangThai == 1) {
+                        $("#txt_infor_hs1").text("- Đã đăng ký thành công, chờ kiểm duyệt của admin.");
+                        $("#txt_infor_hs2").hide();
+                        $("#txt_infor_hs2").text('');
+                        $("#txt_infor_hs3").hide();
+                        $("#txt_infor_hs3").text('');
+                    }
+
+                    if (data.Dt_TrangThai == 2) {
+                        $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
+                        $("#txt_infor_hs2").text("=> Hồ sơ có thông tin sai, học viên cần cập nhật lại các thông tin sau:");
+
+                        $("#txt_infor_hs3").text(" - " + data.Dt_ThongBaoKiemDuyet);
+                    }
+                    if (data.Dt_TrangThai == 9) {
+                        $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
+                        $("#txt_infor_hs2").text("=> Hồ sơ đầy đủ, không sai sót");
+                        $("#txt_infor_hs3").text('');
+                        $("#txt_infor_hs3").hide();
+                    }
+
+
+                    if (data.Hv_LePhi_TrangThai == 0) {
+                        var str_bt_update = `<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>`;
+                        $('#txt_update_mc_lephi').append(str_bt_update);
+                        $("#txt_infor_lp1").text("- Chưa có thông tin đóng phí.");
+                        $("#txt_infor_lp1").css('color', 'red');
+                        $("#bt_update_mc_lephi").show();
+                        $("#_daugach").hide();
+
+                        $("#txt_infor_lp2").hide();
+                        $("#txt_infor_lp2").text('');
+                        $("#txt_infor_lp3").hide();
+                        $("#txt_infor_lp3").text('');
+                    }
+
+                    if (data.Hv_LePhi_TrangThai == 1) {
+
+                        $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, chờ kiểm duyệt của admin.");
+                        $("#txt_infor_lp1").show();
+
+
+                        $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
+                        $("#txt_infor_lp2").css('color', 'blue');
+                        $("#txt_infor_lp2").show();
+
+                        $("#bt_update_mc_lephi").show();
+                        $("#_daugach").show();
+                        $("#txt_infor_lp3").hide();
+                        $("#txt_infor_lp3").text('');
+                        /* */
+
+
+                        if (data.Hv_LePhi_TepMinhChung) {
+                            const ArrMCLePhi = data.Hv_LePhi_TepMinhChung.split("#");
+                            var str_bt_update = `<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>`;
+                            $('#txt_update_mc_lephi').append(str_bt_update);
+
+                            for (i = 0; i < ArrMCLePhi.length; i++) {
+                                if (ArrMCLePhi[i].length > 0) {
+                                    var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMCLePhi[i]}', 10,${data.dt_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                    $('#txt_update_mc_lephi').append(str_a);
+
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                            $('#txt_update_mc_lephi').append(str_a);
+                            var str_bt_update = `<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>`;
+                            $('#txt_update_mc_lephi').append(str_bt_update);
+                        }
+                    }
+
+
+                    if (data.Hv_LePhi_TrangThai == 9) {
+                        $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, admin đã kiểm duyệt.");
+                        $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
+                        $("#txt_infor_lp2").css('color', 'blue');
+                        //$("#bt_update_mc_lephi").hide();
+                        //$("#_daugach").hide();
+                    }
+
+                    $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
+                    $('#View_HocVien_ChuyenNganhDuThi_MaCN').val(data.nmt_MaNganh);
+
+                    if (data.Dt_MaNghienCuu == 1) {
+                        $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
+                        $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
+                    }
+                    if (data.Dt_MaNghienCuu == 2) {
+                        $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
+                        $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
+                    }
+
+                    if (data.Hv_DKDTNgoaiNgu == 1) {
+                        $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('checked', 'checked');
+                        $('#View_HocVien_DKDTNgoaiNgu_No').attr('disabled', 'disabled');
+                    }
+                    if (data.Hv_DKDTNgoaiNgu == 0) {
+                        $('#View_HocVien_DKDTNgoaiNgu_No').attr('checked', 'checked');
+                        $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('disabled', 'disabled');
+                    }
+                    $('#View_HocVien_VanBangNgoaiNgu').val(data.Hv_VanBangNgoaiNgu);
+
+                    if (data.Hv_DoiTuongDuThi == 1) {
+                        $('#View_radioDTDT_CuDiHoc').attr('checked', 'checked');
+                        $('#View_radioDTDT_TSTuDo').attr('disabled', 'disabled');
+                    }
+                    if (data.Hv_DoiTuongDuThi == 0) {
+                        $('#View_radioDTDT_TSTuDo').attr('checked', 'checked');
+                        $('#View_radioDTDT_CuDiHoc').attr('disabled', 'disabled');
+                    }
+
+
+                    if (data.Hv_SoYeuLyLich) {
+                        const ArrSoYeuLyLich = data.Hv_SoYeuLyLich.split("#");
+                        for (i = 0; i < ArrSoYeuLyLich.length; i++) {
+                            if (ArrSoYeuLyLich[i].length > 0) {
+                                var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrSoYeuLyLich[i]}', 1,${data.dt_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                $('#div_list_view_soyeulylich').append(str_a);
+                            }
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_soyeulylich').append(str_a);
+                    }
+
+                    if (data.Hv_MCBangDaiHoc) {
+                        const ArrBangDaiHoc = data.Hv_MCBangDaiHoc.split("#");
+                        for (i = 0; i < ArrBangDaiHoc.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDaiHoc[i]}', 2,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_bangdaihoc').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_bangdaihoc').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCBangDiem) {
+                        const ArrBangDiem = data.Hv_MCBangDiem.split("#");
+                        for (i = 0; i < ArrBangDiem.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDiem[i]}', 3,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_bangdiem').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_bangdiem').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCGiayKhamSucKhoe) {
+                        const ArrGiayKhamSK = data.Hv_MCGiayKhamSucKhoe.split("#");
+                        for (i = 0; i < ArrGiayKhamSK.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrGiayKhamSK[i]}', 4,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_giaykhamsuckhoe').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_giaykhamsuckhoe').append(str_a);
+                    }
+
+
+                    if (data.Hv_Anh46) {
+                        const ArrAnh4x6 = data.Hv_Anh46.split("#");
+                        for (i = 0; i < ArrAnh4x6.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrAnh4x6[i]}', 5,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_anh4x6').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_anh4x6').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCCCNN) {
+                        const ArrChungChiVBNN = data.Hv_MCCCNN.split("#");
+                        for (i = 0; i < ArrChungChiVBNN.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrChungChiVBNN[i]}', 6,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_cc_bang_ngoaingu').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_cc_bang_ngoaingu').append(str_a);
+                    }
+
+
+                    if (data.Hv_MCKhac) {
+                        const ArrMinhChungKhac = data.Hv_MCKhac.split("#");
+                        for (i = 0; i < ArrMinhChungKhac.length - 1; i++) {
+                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMinhChungKhac[i]}', 7,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
+                            $('#div_list_view_mckhac').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
+                        $('#div_list_view_mckhac').append(str_a);
+                    }
+
+                }
+                else {
+                    $("#div_add_data_dutuyen").show();
+                    $("#div_view_data_dutuyen").hide();
+                    $('#div_view_notification_server').hide();
+                    $('#div_view_img').hide();                   
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#bt_delete_data_dutuyen').click(function () {
+            $('#modal_tb_xoa').modal('show');
+        });
+
+        $('#bt_cancel_on_modal_delete_first').click(function () {
+            $('#modal_tb_xoa').modal('hide');
+        })
+        $('#bt_cancel_on_modal_delete_second').click(function () {
+            $('#modal_tb_xoa').modal('hide');
+        })
+        $('#bt_ok_on_modal_delete').click(function () {
+            var data_delete = {
+                DuTuyen_ID: $('#hiden_dutuyen_id_present').val()
+            }
+
+            $.ajax({
+                url: "/HocVienDangKies/DkDuTuyenDelete",
+                type: "POST",
+                data: JSON.stringify(data_delete),
+                contentType: "application/json;charset=utf-8",
+                async: false,
+                success: function (res) {
+                    if (res.success == true) {
+                        $('#modal_tb_xoa').modal('hide');
+                        $('#div_view_notification_server').hide();
+                        $('#div_view_img').hide();
+                        GetHvDuTuyen();     
+                    } else {
+                        // thông báo lỗi
+                    }
+                },
+                error: function (res) {
+                    console.log("Lỗi", res);
+                }
+            });
+        })
+    })
+</script>
 <div class="container-fluid px-12">
     <div id="div_view_data_dutuyen" style="display:none">
         <div class="card card-header-actions">
@@ -351,292 +655,6 @@
 
 
         <script>
-            $(document).ready(function () {
-                GetHvDuTuyen();
-            });
-            function GetHvDuTuyen() {
-                $.ajax({
-                    url: "/HocVienDangKies/DkDuTuyenGetByID",
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    async: false,
-                    success: function (res) {
-                        if (res.success) {
-                            let data = res.data[0];
-
-                            $("#hiden_dutuyen_id_present").val(data.DuTuyen_ID_Present);
-
-                            $("#div_view_data_dutuyen").show();
-                            $("#div_add_data_dutuyen").hide();
-                            $('#div_view_notification_server').show();
-
-                            $('#View_HocVien_BangDaiHoc_TenTruongTN').val(data.Hv_BangDaiHoc_TenTruongTN);
-                            $('#View_HocVien_BangDaiHoc_TenNganhTN').val(data.Hv_BangDaiHoc_TenNganhTN);
-                            $('#View_HocVien_BangDaiHoc_HeDaoTao').val(data.Hv_BangDaiHoc_HeDaoTao);
-                            $('#View_HocVien_BangDaiHoc_NamTN').val(data.Hv_BangDaiHoc_NamTN);
-                            var str_diem = "";
-                            if (data.Hv_BangDaiHoc_ThangDiem == 4) {
-                                str_diem = "Thang 4: " + data.Hv_BangDaiHoc_DiemToanKhoa + "(điểm)";
-                            }
-                            if (data.Hv_BangDaiHoc_ThangDiem == 10) {
-                                str_diem = "Thang 10: " + data.Hv_BangDaiHoc_DiemToanKhoa + " (điểm)";
-                            }
-                            $('#View_HocVien_BangDaiHoc_DiemToanKhoa').val(`${str_diem}`);
-
-                            $('#View_HocVien_BangDaiHoc_LoaiTN').val(data.Hv_BangDaiHoc_LoaiTN);
-                            $('#View_HocVien_DoiTuongUuTien').val(data.Hv_DoiTuongUuTien);
-
-                            if (data.Dt_TrangThai == 1) {
-                                $("#txt_infor_hs1").text("- Đã đăng ký thành công, chờ kiểm duyệt của admin.");
-                                $("#txt_infor_hs2").hide();
-                                $("#txt_infor_hs2").text('');
-                                $("#txt_infor_hs3").hide();                              
-                                $("#txt_infor_hs3").text('');
-                            }
-
-                            if (data.Dt_TrangThai == 2) {
-                                $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
-                                $("#txt_infor_hs2").text("=> Hồ sơ có thông tin sai, học viên cần cập nhật lại các thông tin sau:");
-                               
-                                $("#txt_infor_hs3").text(" - " + data.Dt_ThongBaoKiemDuyet);
-                            }
-                            if (data.Dt_TrangThai == 9) {
-                                $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
-                                $("#txt_infor_hs2").text("=> Hồ sơ đầy đủ, không sai sót");                               
-                                $("#txt_infor_hs3").text('');
-                                $("#txt_infor_hs3").hide();
-                            }
-                            
-
-                            if (data.Hv_LePhi_TrangThai == 0) {
-
-                                $("#txt_infor_lp1").text("- Chưa có thông tin đóng phí.");
-                                $("#txt_infor_lp1").css('color', 'red');
-                                $("#bt_update_mc_lephi").show();
-                                $("#_daugach").hide();
-
-                                $("#txt_infor_lp2").hide();
-                                $("#txt_infor_lp2").text('');
-                                $("#txt_infor_lp3").hide();
-                                $("#txt_infor_lp3").text('');
-                            }
-
-                            if (data.Hv_LePhi_TrangThai == 1) {
-                                
-                                $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, chờ kiểm duyệt của admin.");
-                                $("#txt_infor_lp1").show();
-
-                                          
-                                $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
-                                $("#txt_infor_lp2").css('color', 'blue');
-                                $("#txt_infor_lp2").show();                  
-
-                                $("#bt_update_mc_lephi").show();
-                                $("#_daugach").show();
-                                $("#txt_infor_lp3").hide();
-                                $("#txt_infor_lp3").text('');
-                                /* */
-                                
-                                if (data.Hv_LePhi_TepMinhChung) {
-                                    const ArrMCLePhi = data.Hv_LePhi_TepMinhChung.split("#");
-                                    for (i = 0; i < ArrMCLePhi.length; i++) {
-                                        if (ArrMCLePhi[i].length > 0) {
-                                            var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMCLePhi[i]}', 10,${data.dt_ID} )">Tệp ${i + 1}</a> &ensp;`;
-                                            $('#txt_update_mc_lephi').append(str_a);
-                                        }
-                                    }
-                                }
-                                else {
-                                    var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                    $('#txt_update_mc_lephi').append(str_a);
-                                }
-                            }
-
-                            
-                            if (data.Hv_LePhi_TrangThai == 9) {
-                                $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, admin đã kiểm duyệt.");
-                                $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
-                                $("#txt_infor_lp2").css('color', 'blue');
-                                $("#bt_update_mc_lephi").hide();
-                                $("#_daugach").hide();    
-                            }
-
-                            $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
-                            $('#View_HocVien_ChuyenNganhDuThi_MaCN').val(data.nmt_MaNganh);
-
-                            if (data.Dt_MaNghienCuu == 1) {
-                                $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
-                                $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
-                            }
-                            if (data.Dt_MaNghienCuu == 2) {
-                                $('#View_HocVien_ChuyenNganhDuThi_UngDung').attr('checked', 'checked');
-                                $('#View_HocVien_ChuyenNganhDuThi_NghienCuu').attr('disabled', 'disabled');
-                            }
-
-                            if (data.Hv_DKDTNgoaiNgu == 1) {
-                                $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('checked', 'checked');
-                                $('#View_HocVien_DKDTNgoaiNgu_No').attr('disabled', 'disabled');
-                            }
-                            if (data.Hv_DKDTNgoaiNgu == 0) {
-                                $('#View_HocVien_DKDTNgoaiNgu_No').attr('checked', 'checked');
-                                $('#View_HocVien_DKDTNgoaiNgu_Yes').attr('disabled', 'disabled');
-                            }
-                            $('#View_HocVien_VanBangNgoaiNgu').val(data.Hv_VanBangNgoaiNgu);
-
-                            if (data.Hv_DoiTuongDuThi == 1) {
-                                $('#View_radioDTDT_CuDiHoc').attr('checked', 'checked');
-                                $('#View_radioDTDT_TSTuDo').attr('disabled', 'disabled');
-                            }
-                            if (data.Hv_DoiTuongDuThi == 0) {
-                                $('#View_radioDTDT_TSTuDo').attr('checked', 'checked');
-                                $('#View_radioDTDT_CuDiHoc').attr('disabled', 'disabled');
-                            }
-
-
-                            if (data.Hv_SoYeuLyLich) {
-                                const ArrSoYeuLyLich = data.Hv_SoYeuLyLich.split("#");
-                                for (i = 0; i < ArrSoYeuLyLich.length; i++) {
-                                    if (ArrSoYeuLyLich[i].length > 0) {
-                                        var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrSoYeuLyLich[i]}', 1,${data.dt_ID} )">Tệp ${i + 1}</a> &ensp;`;
-                                        $('#div_list_view_soyeulylich').append(str_a);
-                                    }
-                                }
-                            }
-                            else {
-                                var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                $('#div_list_view_soyeulylich').append(str_a);
-                            }
-
-                            if (data.Hv_MCBangDaiHoc) {
-                                const ArrBangDaiHoc = data.Hv_MCBangDaiHoc.split("#");
-                                for (i = 0; i < ArrBangDaiHoc.length - 1; i++) {
-                                    var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDaiHoc[i]}', 2,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
-                                    $('#div_list_view_bangdaihoc').append(str_a);
-                                }
-                            }
-                            else {
-                                var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                $('#div_list_view_bangdaihoc').append(str_a);
-                            }
-
-
-                            if (data.Hv_MCBangDiem) {
-                                const ArrBangDiem = data.Hv_MCBangDiem.split("#");
-                                for (i = 0; i < ArrBangDiem.length - 1; i++) {
-                                    var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrBangDiem[i]}', 3,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
-                                    $('#div_list_view_bangdiem').append(str_a);
-                                }
-                            }
-                            else {
-                                var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                $('#div_list_view_bangdiem').append(str_a);
-                            }
-
-
-                            if (data.Hv_MCGiayKhamSucKhoe) {
-                                const ArrGiayKhamSK = data.Hv_MCGiayKhamSucKhoe.split("#");
-                                for (i = 0; i < ArrGiayKhamSK.length - 1; i++) {
-                                    var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrGiayKhamSK[i]}', 4,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
-                                    $('#div_list_view_giaykhamsuckhoe').append(str_a);
-                                }
-                            }
-                            else {
-                                var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                $('#div_list_view_giaykhamsuckhoe').append(str_a);
-                            }
-
-
-                            if (data.Hv_Anh46) {
-                                const ArrAnh4x6 = data.Hv_Anh46.split("#");
-                                for (i = 0; i < ArrAnh4x6.length - 1; i++) {
-                                    var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrAnh4x6[i]}', 5,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
-                                    $('#div_list_view_anh4x6').append(str_a);
-                                }
-                            }
-                            else {
-                                var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                $('#div_list_view_anh4x6').append(str_a);
-                            }
-
-
-                            if (data.Hv_MCCCNN) {
-                                const ArrChungChiVBNN = data.Hv_MCCCNN.split("#");
-                                for (i = 0; i < ArrChungChiVBNN.length - 1; i++) {
-                                    var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrChungChiVBNN[i]}', 6,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
-                                    $('#div_list_view_cc_bang_ngoaingu').append(str_a);
-                                }
-                            }
-                            else {
-                                var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                $('#div_list_view_cc_bang_ngoaingu').append(str_a);
-                            }
-
-
-                            if (data.Hv_MCKhac) {
-                                const ArrMinhChungKhac = data.Hv_MCKhac.split("#");
-                                for (i = 0; i < ArrMinhChungKhac.length - 1; i++) {
-                                    var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMinhChungKhac[i]}', 7,${data.dt_ID})">Tệp ${i + 1}</a> &ensp;`;
-                                    $('#div_list_view_mckhac').append(str_a);
-                                }
-                            }
-                            else {
-                                var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
-                                $('#div_list_view_mckhac').append(str_a);
-                            }
-
-                        }
-                        else {
-                            $("#div_view_data_dutuyen").hide();
-                            $('#div_view_notification_server').hide();
-                            $("#div_add_data_dutuyen").show();
-                        }
-                    },
-                    error: function (errormessage) {
-                        console.log(errormessage.responseText);
-                    }
-                });
-            }
-
-            $(document).ready(function () {
-                $('#bt_delete_data_dutuyen').click(function () {
-                    $('#modal_tb_xoa').modal('show');
-                });
-
-                $('#bt_cancel_on_modal_delete_first').click(function () {
-                    $('#modal_tb_xoa').modal('hide');
-                })
-                $('#bt_cancel_on_modal_delete_second').click(function () {
-                    $('#modal_tb_xoa').modal('hide');
-                })
-                $('#bt_ok_on_modal_delete').click(function () {
-                    var data_delete = {
-                        DuTuyen_ID: $('#hiden_dutuyen_id_present').val()
-                    }
-
-                    $.ajax({
-                        url: "/HocVienDangKies/DkDuTuyenDelete",
-                        type: "POST",
-                        data: JSON.stringify(data_delete),
-                        contentType: "application/json;charset=utf-8",
-                        async: false,
-                        success: function (res) {
-                            if (res.success == true) {
-                                $('#modal_tb_xoa').modal('hide');
-                                GetHvDuTuyen();
-                            } else {
-                                // thông báo lỗi
-                            }
-                        },
-                        error: function (res) {
-                            console.log("Lỗi", res);
-                        }
-                    });
-                })
-            })
-        </script>
-
-        <script>
             function showimg(url, loaimc, id_key_hv_dutuyen) {
 
                 $("#hiden_duongdan_file_xoa").val(url);
@@ -670,7 +688,7 @@
                 }
                 if (loaimc == 7) {
                     $('#img_txt_card_hearder').text('Minh chứng khác');
-                }             
+                }
                 if (loaimc == 10) {
                     $('#img_txt_card_hearder').text('Minh chứng nộp lệ phí');
                 }
@@ -712,7 +730,6 @@
                     formdata_files_noplephi = new FormData();
                     check_in_file_noplephi = false;
                     $("#FilesList_MC_NopLePhi_View tbody").empty();
-
                     var file_upload_minhchung_noplephi = document.getElementById('file_upload_minhchung_noplephi');
                     for (i = 0; i < file_upload_minhchung_noplephi.files.length; i++) {
                         var filename_item = file_upload_minhchung_noplephi.files[i].name;
@@ -758,13 +775,14 @@
                 $('#bt_cancel_on_modal_update_mc_lephi_second').click(function () {
                     $('#modal_update_mc_lephi').modal('hide');
                 });
+
                 $('#bt_ok_on_modal_update_mc_lephi').click(function () {
                     var flag_mc_lephi = true;
 
                     var _txt_sothamchieu = $('#txt_sothamchieu').val();
-                    if (!_txt_sothamchieu) { var errorMessage = "Nhập mã tham chiếu"; $('#Error_Rgt_txt_sothamchieu').text(errorMessage); flag_mc_lephi = false; }
+                    if (!_txt_sothamchieu) { $('#Error_Rgt_txt_sothamchieu').text('Nhập mã tham chiếu'); flag_mc_lephi = false; }
 
-                    if (!check_in_file_noplephi) { var errorMessage = "Upload tệp minh chứng nộp lệ phí"; $('#Error_Rgt_upload_minhchung_noplephi').text(errorMessage); flag_mc_lephi = false; }
+                    if (!check_in_file_noplephi) { $('#Error_Rgt_upload_minhchung_noplephi').text('Upload tệp minh chứng nộp lệ phí'); flag_mc_lephi = false; }
 
                     if (!flag_mc_lephi) return;
 
@@ -793,6 +811,8 @@
 
                     if (!flag_mc_lephi) return;
 
+               
+                  
                     /*hết phần upload file*/
 
                     var data_update_lephi = {
@@ -800,23 +820,26 @@
                         HocVien_LePhi_MaThamChieu: _txt_sothamchieu,
                         HocVien_LePhi_TepMinhChung: _hocVien_LePhi_TepMinhChung,
                     };
-                    console.log(data_update_lephi)
-
+                    /*  console.log(data_update_lephi)*/
+                    $('#loadingModal').modal('show');
+                    $('#modal_update_mc_lephi').modal('hide');
                     $.ajax({
                         url: "/HocVienDangKies/DkDuTuyenEdit_MCLePhi",
                         type: "POST",
                         data: JSON.stringify(data_update_lephi),
                         contentType: "application/json;charset=utf-8",
-                        async: false,
+                        /* async: false,*/
                         success: function (res) {
                             if (res.success) {
-                                //window.location.href = '/HocVienDangKies/DkDuTuyen'
+                               
+                                window.location.href = '/HocVienDangKies/DkDuTuyen';
+                                $('#loadingModal').modal('hide');
                                 //console.log("cập nhật mc lp thanh cong", res.data);
-                                $("#txt_infor1").text("- Đã đăng ký và nộp minh chứng thành công, chờ kiểm duyệt của admin.");
-                                $("#txt_infor2").text("- Đã nộp lệ phí, mã tham chiếu: " + res.data + " ");
-                                $("#txt_infor2").css('color', 'blue');
-                                $("#bt_update_mc_lephi").show();
-                                $("#_daugach").show();
+                                //$("#txt_infor1").text("- Đã đăng ký và nộp minh chứng thành công, chờ kiểm duyệt của admin.");
+                                //$("#txt_infor2").text("- Đã nộp lệ phí, mã tham chiếu: " + res.data + " ");
+                                //$("#txt_infor2").css('color', 'blue');
+                                //$("#bt_update_mc_lephi").show();
+                                //$("#_daugach").show();
                             }
                             else {
                                 console.log('Lỗi thêm mc lệ phí', res);
@@ -826,44 +849,21 @@
                             console.log(errormessage.responseText);
                         }
                     });
+
+                    
                     $('#modal_update_mc_lephi').modal('hide');
                     $("#FilesList_MC_NopLePhi_View tbody").empty();
                 });
             });
         </script>
     </div>
-    <div id="div_view_img" style="display:none">
+
+    <div id="div_view_notification_server">
         <div class="row">
             <div class="col-xl-12 mt-2">
                 <div class="card card-header-actions">
                     <div class="card-header mt-0 mb-0">
-                        <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
-                        <div>
-                            @*<a class="btn btn-danger btn-sm" id="bt_delete_minhchung" onclick="bt_delete_minhchung_click()">Xóa</a>&ensp;
-                                <a class="btn btn-primary btn-sm" id="bt_close_div_view_img">Đóng</a>*@
-                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
-                        </div>
-                    </div>
-                    <div class="card-body" style="margin: 0px!important">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active" id="div_item_view_minhchung">
-                                    <img class="d-block w-100 img-hide" id="img_view" display:none">
-                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="div_view_notification_server" style="display:none">
-        <div class="row">
-            <div class="col-xl-12 mt-2">
-                <div class="card card-header-actions">
-                    <div class="card-header mt-0 mb-0">
-                        <span id="img_txt_card_hearder">Thông báo từ hệ thống</span>
+                        <span>Thông báo từ hệ thống</span>
                         <div>
                             <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_notification_server"></button>
                         </div>
@@ -912,14 +912,41 @@
                                                         <p class="mt-0 mb-2" id="txt_infor_lp3"></p>
 
                                                         <p class="mt-0 mb-0" id="txt_update_mc_lephi">
-                                                            <a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>
+                                                            @*<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>*@
                                                         </p>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_view_img" style="display:none">
+        <div class="row">
+            <div class="col-xl-12 mt-2">
+                <div class="card card-header-actions">
+                    <div class="card-header mt-0 mb-0">
+                        <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
+                        <div>
+                            @*<a class="btn btn-danger btn-sm" id="bt_delete_minhchung" onclick="bt_delete_minhchung_click()">Xóa</a>&ensp;
+                                <a class="btn btn-primary btn-sm" id="bt_close_div_view_img">Đóng</a>*@
+                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin: 0px!important">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" id="div_item_view_minhchung">
+                                    <img class="d-block w-100 img-hide" id="img_view" display:none">
+                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1239,7 +1266,7 @@
                                             <div class="row">
                                                 <div class="col-lg-4 col-12 pl-2 pr-2">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12" for="File_HocVien_Anh46">Ảnh 4 x 6 <a style="color:red">(*)</a></label>
+                                                        <label class="control-label col-md-12" for="File_HocVien_Anh46">Ảnh 4 x 6</label>
                                                         <div class="col-md-12">
                                                             <input class="form-control text-box single-line" id="File_HocVien_Anh46" name="File_HocVien_Anh46" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             <span id="Error_Rgt_File_HocVien_Anh46" class="small mb-1 text-danger"></span>
@@ -1564,12 +1591,10 @@
             function chkatchtbl_anh4x6() {
                 if ($('#FilesList_HocVien_Anh46_View tbody tr').length >= 1) {
                     $("#FilesList_HocVien_Anh46_View").css("visibility", "visible");
-                    check_in_file_anh4x6 = true;
+                   
                 }
                 else {
-                    $("#FilesList_HocVien_Anh46_View").css("visibility", "hidden");
-                    check_in_file_anh4x6 = false;
-                    if (!check_in_file_anh4x6) { var errorMessage = "Upload tệp ảnh 4x6"; $('#Error_Rgt_File_HocVien_Anh46').text(errorMessage); flag = false; }
+                    $("#FilesList_HocVien_Anh46_View").css("visibility", "hidden");                 
                 }
             }
             function DeleteFile_CCNN_Upload(Fileid, FileName) {
@@ -1789,7 +1814,7 @@
 
                     if (!check_in_file_giaykhamsuckhoe) { var errorMessage = "Upload tệp giấy khám sức khỏe"; $('#Error_Rgt_File_HocVien_MCGiayKhamSucKhoe').text(errorMessage); flag = false; }
 
-                    if (!check_in_file_anh4x6) { var errorMessage = "Upload tệp ảnh 4x6"; $('#Error_Rgt_File_HocVien_Anh46').text(errorMessage); flag = false; }
+                 /*   if (!check_in_file_anh4x6) { var errorMessage = "Upload tệp ảnh 4x6"; $('#Error_Rgt_File_HocVien_Anh46').text(errorMessage); flag = false; }*/
 
                     if (!flag) return;
                     /* xử lý phần upload file lên server*/
@@ -1938,9 +1963,9 @@
                         success: function (res) {
                             if (res.success) {
                                 /*  console.log('Đăng ký thành công', res.success);*/
-                                $('#loadingModal').modal('show');                             
+                                $('#loadingModal').modal('show');
                                 window.location.href = "/HocVienDangKies/DkDuTuyen";
-                               
+
                             } else {
                                 // không thành công dừng
                             }

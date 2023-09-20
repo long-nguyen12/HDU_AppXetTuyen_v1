@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -311,6 +311,7 @@
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\StylesAdminLogin.css" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -394,7 +395,7 @@
     <Content Include="Scripts\bundle.min.js" />
     <Content Include="Scripts\feather.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAuth\Login2.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAuth\Register.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa.cshtml" />
@@ -468,7 +469,7 @@
     <Content Include="Areas\Admin\Views\KinhPhis\KpKiemTra.cshtml" />
     <Content Include="Areas\Admin\Views\KinhPhis\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminAuth\Login2.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout_Admin_Master.cshtml" />
     <Content Include="Areas\Admin\Views\NganhMasters\Create.cshtml" />
     <Content Include="Areas\Admin\Views\NganhMasters\Delete.cshtml" />
@@ -777,19 +778,13 @@
     <Content Include="Views\Auth\RegisterMaster_OK.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_master.cshtml" />
-    <Content Include="Views\HocVienDangKies\HvThongTin_OK.cshtml" />
-    <Content Include="Views\HocVienDangKies\DkDuTuyen2.cshtml" />
     <Content Include="Views\HocVienDangKies\KqDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\HdSD.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenDetail.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit.cshtml" />
-    <Content Include="Views\HocVienDangKies\DkDuTuyen3.cshtml" />
     <Content Include="Views\Auth\RegisterMaster.cshtml" />
-    <Content Include="Views\HocVienDangKies\DkDuTuyen_OK.cshtml" />
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
-    <Content Include="Views\HocVienDangKies\DkDuTuyen_sua0609.cshtml" />
-    <Content Include="Views\HocVienDangKies\DkDuTuyenEdit_OK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkdtnkOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnktestadd.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnkluu.cshtml" />

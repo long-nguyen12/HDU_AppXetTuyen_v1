@@ -14,37 +14,56 @@
             $('#login_password_Error').text("");
         });
 
-        //$("#login_CCCD").val('1');
-        //$("#login_password").val('123456');
-
         function rearrangePanels() {
             var windowWidth = $(window).width();
-        
             if (windowWidth < 992) {
                 $("#panelContainer").prepend($("#rightPanel"));
                 $("#leftPanel").addClass("mt-3");
-                $("#h_tieude_trai").addClass("letterspacing");              
+                $("#h_tieude_trai").addClass("letterspacing");
             } else {
                 $("#panelContainer").prepend($("#leftPanel"));
-                $("#leftPanel").removeClass("mt-3");       
+                $("#leftPanel").removeClass("mt-3");
                 $("#h_tieude_trai").removeClass("letterspacing");
             }
         }
-
-        // Call the function on page load and window resize
         rearrangePanels();
         $(window).resize(rearrangePanels);
     })
-    function submitForm() {
-        //showToast("Thông báo", "Hệ thống dừng tiếp nhận hồ sơ đăng ký!", "bg-info");
-        //return;
-        //$("#login_CCCD").val('2');
-        //$("#login_password").val('123456');
 
-        $(".text-danger").text("");
+    $(document).ready(function () {
+        $('#showSignupColleger').click(function () {
+            $('#bt_cancel_modal_tb_second').hide();
+            $('#bt_ok_modal_tb').text('Đóng');
+            $('#span_noidung_thongbao').text('Đã hết thời gian, hệ thống tạm dừng đăng ký dự tuyển đại học');
+            $('#modal_tb').modal('show');
+            /*window.location.href = '/Auth/RegisterColleger/';  */
+        })
+
+        $('#showSignupMaster').click(function () {
+            window.location.href = '/Auth/RegisterMaster/';
+        })
+
+        $('#bt_ok_modal_tb').click(function () {
+            $('#modal_tb').modal('hide');
+        })
+        $('#bt_cancel_modal_tb_first').click(function () {
+            $('#modal_tb').modal('hide');
+        })
+        $('#showSignupLienCap').click(function () {
+            $('#bt_cancel_modal_tb_second').hide();
+            $('#bt_ok_modal_tb').text('Đóng');
+            $('#span_noidung_thongbao').text('Đã hết thời gian, trường liên cấp tạm dừng đăng ký dự tuyển');
+            $('#modal_tb').modal('show');
+            /* window.location.href = '/LienCapTHCS/index/';*/
+        })
+    })
+
+    function submitForm() {
+
+        $(".text-danger").text('');
         let cccd = $("#login_CCCD").val();
         let password = $("#login_password").val();
-      
+
         if (!cccd) {
             var errorMessage = "Vui lòng nhập CCCD";
             $('#login_CCCD_Error').text(errorMessage);
@@ -54,58 +73,63 @@
             $('#login_password_Error').text(errorMessage);
         }
         if (!cccd || !password) return;
+
         let formData = {
             cccd: cccd,
             password: password
         }
-        // đăng nhập khi là thí sinh đăng ký xét tuyển đại học
-        if ($('#radioDaiHoc').is(':checked')) {
-            $.ajax({
-                url: "/Auth/LoginColleger",
-                type: "POST",
-                data: JSON.stringify(formData),
-                contentType: "application/json;charset=utf-8",
-                success: function (response) {
-                  
-                    if (response.success) {
-                        window.location.href = '/ThiSinhDangKies/Index';
-                    } else {
-                        $('#errorMessage').text(response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    // Handle any errors
-                    console.error(error);
-                }
-            });
+        if (!$('#radioDaiHoc').is(':checked') && !$('#radioSauDaiHoc').is(':checked')) {
+            $('#errorMessage').text('Chọn hệ dự tuyển đăng nhập');
+            return;
         }
-        // đăng nhập khi là học viên đăng ký sau đại học
-        else if ($('#radioSauDaiHoc').is(':checked')) {
-            $.ajax({
-                url: "/Auth/LoginMaster",
-                type: "POST",
-                data: JSON.stringify(formData),
-                contentType: "application/json;charset=utf-8",
-                success: function (response) {  
-                    if (response.success) {
-                        window.location.href = '/HocVienDangKies/HvThongTin';
-                    } else {
-                        $('#errorMessage').text(response.message);
+        else {
+            // đăng nhập khi là thí sinh đăng ký xét tuyển đại học
+            if ($('#radioDaiHoc').is(':checked')) {
+                $.ajax({
+                    url: "/Auth/LoginColleger",
+                    type: "POST",
+                    data: JSON.stringify(formData),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.href = '/ThiSinhDangKies/Index';
+                        } else {
+                            $('#errorMessage').text(res.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    // Handle any errors
-                    console.error(error);
-                }
-            });
-        }       
+                });
+            }
+            // đăng nhập khi là học viên đăng ký sau đại học
+            else if ($('#radioSauDaiHoc').is(':checked')) {
+                $.ajax({
+                    url: "/Auth/LoginMaster",
+                    type: "POST",
+                    data: JSON.stringify(formData),
+                    contentType: "application/json;charset=utf-8",
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.href = '/HocVienDangKies/HvThongTin';
+                        } else {
+                            $('#errorMessage').text(res.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+       
     }
+
 
     function hideErrorMessage(input) {
         var errorContainer = input.next('.text-danger');
         errorContainer.text('');
     }
-    
     function showToast(title, message, bgColor) {
         $("#myToast .toast-header .me-auto").text(title);
         $("#myToast .toast-body").text(message);
@@ -117,12 +141,15 @@
     .colorlogin {
         color: #ff6a00 !important;
     }
+
     .letterspacing {
         letter-spacing: -1.2px;
     }
+
     .form-control {
         border-radius: 3px
     }
+
     .login-button {
         padding: 8px 18px;
         border-radius: 3px !important;
@@ -193,43 +220,47 @@
                             <hr />
                             <div>
                                 <label class="small mb-1" for="login_CCCD">Căn cước công dân</label>
-                                <input name="login_CCCD" id="login_CCCD" class="form-control" , placeholder="Nhập CCCD" value="1" />
+                                <input name="login_CCCD" id="login_CCCD" class="form-control" placeholder="Nhập CCCD" />
                                 <span id="login_CCCD_Error" class="small mb-1 text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="inputPassword">Mật khẩu</label>
-                                <input name="login_password" id="login_password" class="form-control" , placeholder="Nhập mk" value="123456" />
+                                <input type="password" name="login_password" id="login_password" class="form-control" placeholder="Nhập mật khẩu"/>
                                 <span id="login_password_Error" class="small mb-1 text-danger"></span>
                             </div>
-
-                            <div class="d-inline-flex flex-nowrap align-items-center justify-content-center">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="radioDaiHoc" name="radioHeDaoTao" checked value="0">
-                                    <label class="form-check-label" for="radioDaiHoc">Hệ đại học</label>
+                            <center>
+                                <div class="d-inline-flex flex-nowrap align-items-center justify-content-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="radioDaiHoc" name="radioHeDaoTao" value="0">
+                                        <label class="form-check-label" for="radioDaiHoc">Hệ đại học</label>
+                                    </div>
+                                    <div class="form-check" style="margin-left:15px">
+                                        <input class="form-check-input" type="radio" id="radioSauDaiHoc" name="radioHeDaoTao" value="1">
+                                        <label class="form-check-label" for="radioSauDaiHoc">
+                                            Hệ sau đại học
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="form-check" style="margin-left:15px">
-                                    <input class="form-check-input" type="radio" id="radioSauDaiHoc" name="radioHeDaoTao" value="1">
-                                    <label class="form-check-label" for="radioSauDaiHoc">
-                                        Hệ sau đại học
-                                    </label>
-                                </div>                               
-                            </div>
+                            </center>
+
 
                             <div>
-                                <span id="errorMessage" class="small mb-1 text-danger"></span>
+                                <center>
+                                    <span id="errorMessage" class="small mb-1 text-danger"></span>
+                                </center>
                             </div>
-                            <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+                            <div class="d-flex align-items-center justify-content-center mt-3 mb-0">
                                 @*<input class="login-button" type="submit" value="Đăng nhập" style="width: 100%" />*@
                                 <input class="login-button" type="submit" onclick="submitForm()" value="Đăng nhập" style="width: 100%" />
                             </div>
                             <hr class="mt-3 mb-2" />
                             <div class="text-center mt-2">
-                                <div class="small"><a id="showSignup" style="text-decoration: none; color: #ff6a00; letter-spacing: -0.5px; " href="@Url.Action("RegisterColleger", "Auth")">Đăng ký thông tin xét tuyển đại học <b>tại đây</b></a></div>
-                                <div class="small mt-1"><a id="showSignupSDH" style="text-decoration: none; color: #ff6a00; letter-spacing: -0.5px; " href="@Url.Action("RegisterMaster", "Auth")">Đăng ký  thông tin tuyển sinh sau đại học <b>tại đây</b></a></div>
-                                <div class="small mt-1"><a style="text-decoration: none; color: #ff6a00;" href="#" >Quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>
+                                <div class="small"><a id="showSignupColleger" style="text-decoration: none; color: #ff6a00; letter-spacing: -0.5px; " href="#">Đăng ký thông tin xét tuyển đại học <b>tại đây</b></a></div>
+                                <div class="small mt-1"><a id="showSignupMaster" style="text-decoration: none; color: #ff6a00; letter-spacing: -0.5px; " href="#">Đăng ký  thông tin tuyển sinh sau đại học <b>tại đây</b></a></div>
+                                <div class="small mt-1"><a style="text-decoration: none; color: #ff6a00;" href="#">Quên mật khẩu? <b>Đặt lại mật khẩu</b></a></div>                              
                             </div>
-                            <hr class="mt-1 mb-1" />
-                            <div class="small text-center mt-2 mb-2"><a style="text-decoration: none; color: #ff6a00; word-spacing: -2px !important" href="@Url.Action("Index", "LienCapTHCS")">Đăng ký xét tuyển Trường TH, THCS, THPT Hồng Đức? <b>Tại đây</b></a></div>
+                            <hr class="mt-2 mb-2" />
+                            <div class="small text-center mt-3 mb-2"><a style="text-decoration: none; color: #ff6a00; word-spacing: -2px !important; " href="#" id="showSignupLienCap">Đăng ký xét tuyển Trường TH, THCS, THPT Hồng Đức? <b>Tại đây</b></a></div>
                         </div>
                     </div>
                 </div>
@@ -275,6 +306,23 @@
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_tb" tabindex="-1" role="dialog" aria-labelledby="modal_tb" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="h5_tieude_thongbao">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_modal_tb_first"></button>
+            </div>
+            <div class="modal-body">
+                <span id="span_noidung_thongbao"></span>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_modal_tb_second"></button>
+                <button class="btn login-button" type="button" id="bt_ok_modal_tb"></button>
             </div>
         </div>
     </div>
