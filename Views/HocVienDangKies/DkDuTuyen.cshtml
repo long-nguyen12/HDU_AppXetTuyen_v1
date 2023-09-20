@@ -61,7 +61,7 @@
                 if (res.success) {
                     let data = res.data[0];
 
-                    $('#txt_update_mc_lephi').empty();
+                 /*   $('#txt_update_mc_lephi').empty();*/
                     $('#div_list_view_soyeulylich').empty();
                     $('#div_list_view_bangdaihoc').empty();
                     $('#div_list_view_bangdiem').empty();
@@ -103,7 +103,6 @@
                     if (data.Dt_TrangThai == 2) {
                         $("#txt_infor_hs1").text("- Đã đăng ký thành công, admin đã kiểm duyệt.");
                         $("#txt_infor_hs2").text("=> Hồ sơ có thông tin sai, học viên cần cập nhật lại các thông tin sau:");
-
                         $("#txt_infor_hs3").text(" - " + data.Dt_ThongBaoKiemDuyet);
                     }
                     if (data.Dt_TrangThai == 9) {
@@ -115,8 +114,7 @@
 
 
                     if (data.Hv_LePhi_TrangThai == 0) {
-                        var str_bt_update = `<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>`;
-                        $('#txt_update_mc_lephi').append(str_bt_update);
+                     
                         $("#txt_infor_lp1").text("- Chưa có thông tin đóng phí.");
                         $("#txt_infor_lp1").css('color', 'red');
                         $("#bt_update_mc_lephi").show();
@@ -129,11 +127,8 @@
                     }
 
                     if (data.Hv_LePhi_TrangThai == 1) {
-
                         $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, chờ kiểm duyệt của admin.");
                         $("#txt_infor_lp1").show();
-
-
                         $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
                         $("#txt_infor_lp2").css('color', 'blue');
                         $("#txt_infor_lp2").show();
@@ -146,10 +141,7 @@
 
 
                         if (data.Hv_LePhi_TepMinhChung) {
-                            const ArrMCLePhi = data.Hv_LePhi_TepMinhChung.split("#");
-                            var str_bt_update = `<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>`;
-                            $('#txt_update_mc_lephi').append(str_bt_update);
-
+                            const ArrMCLePhi = data.Hv_LePhi_TepMinhChung.split("#");  
                             for (i = 0; i < ArrMCLePhi.length; i++) {
                                 if (ArrMCLePhi[i].length > 0) {
                                     var str_a = `<a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrMCLePhi[i]}', 10,${data.dt_ID} )">Tệp ${i + 1}</a> &ensp;`;
@@ -161,8 +153,7 @@
                         else {
                             var str_a = `<a style="color:blue">Không có dữ liệu</a> &ensp;`;
                             $('#txt_update_mc_lephi').append(str_a);
-                            var str_bt_update = `<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>`;
-                            $('#txt_update_mc_lephi').append(str_bt_update);
+                          ;
                         }
                     }
 
@@ -171,8 +162,8 @@
                         $("#txt_infor_lp1").text("- Đã gửi thông tin nộp lệ phí, admin đã kiểm duyệt.");
                         $("#txt_infor_lp2").text("- Mã tham chiếu: " + data.Hv_LePhi_MaThamChieu + " ");
                         $("#txt_infor_lp2").css('color', 'blue');
-                        //$("#bt_update_mc_lephi").hide();
-                        //$("#_daugach").hide();
+                        $("#bt_update_mc_lephi").hide();
+                        $("#_daugach").hide();
                     }
 
                     $('#View_HocVien_ChuyenNganhDuThi_Ten').val(data.nmt_TenNganh);
@@ -650,7 +641,7 @@
         <input type="hidden" style="display:none" id="hiden_hocvien_id_present" value="@ViewBag.HocVien_ID" />
         <input type="hidden" style="display:none" id="hiden_dutuyen_id_present" />
         <input type="hidden" style="display:none" id="hiden_duongdan_file_xoa" />
-        <input type="hidden" style="display:none" id="hiden_loai_minhchung_xoa" />
+        <input type="hidden" style="display:none" id="hiden_loai_minhchung_xoa"  /> 
 
 
 
@@ -912,7 +903,7 @@
                                                         <p class="mt-0 mb-2" id="txt_infor_lp3"></p>
 
                                                         <p class="mt-0 mb-0" id="txt_update_mc_lephi">
-                                                            @*<a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>*@
+                                                            <a class="btn btn-sm btn-light " style="color:blue;" id="bt_update_mc_lephi">Cập nhật</a> <a id="_daugach"> | </a>
                                                         </p>
 
                                                     </div>

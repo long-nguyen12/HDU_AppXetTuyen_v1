@@ -167,6 +167,7 @@
     <Compile Include="Areas\Admin\Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\DanhMucDonVisController.cs" />
     <Compile Include="Areas\Admin\Controllers\DoiTuongsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DotXetTuyens1Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExportDatasController.cs" />
     <Compile Include="Areas\Admin\Controllers\HocVienDangKysController.cs" />
@@ -507,6 +508,11 @@
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqCcnn_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy_Update.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminUpdateHocVien.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens1\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens1\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens1\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens1\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DotXetTuyens1\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
