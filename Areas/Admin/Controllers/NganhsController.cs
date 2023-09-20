@@ -59,10 +59,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Nganh_ID,Nganh_MaNganh,NganhTenNganh,Khoa_ID,Nganh_GhiChu,KhoiNganh_ID")] Nganh nganh)
+        public ActionResult Create([Bind(Include = "Nganh_ID,Nganh_MaNganh,Nganh_TenNganh,Khoa_ID,Nganh_GhiChu,KhoiNganh_ID")] Nganh nganh)
         {
             if (ModelState.IsValid)
             {
+                nganh.Nganh_GhiChu = nganh.Nganh_MaNganh + " " + nganh.Nganh_TenNganh;
                 db.Nganhs.Add(nganh);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -98,7 +99,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Nganh_ID,Nganh_MaNganh,NganhTenNganh,Khoa_ID,Nganh_GhiChu,KhoiNganh_ID")] Nganh nganh)
+        public ActionResult Edit([Bind(Include = "Nganh_ID,Nganh_MaNganh,Nganh_TenNganh,Khoa_ID,Nganh_GhiChu,KhoiNganh_ID")] Nganh nganh)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +131,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // POST: Admin/Nganhs/Delete/5
         [AdminSessionCheck]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Nganh nganh = db.Nganhs.Find(id);
