@@ -491,12 +491,12 @@ namespace HDU_AppXetTuyen.Controllers
         #region RegisterMaster
         public ActionResult RegisterMaster()
         {
-            if (Session["login_session"] != null)
-            {
-                Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                Response.Cache.SetNoStore();
-                return RedirectToAction("Index", "ThiSinhDangKies");
-            }
+        //    if (Session["login_session"] != null)
+        //    {
+        //        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+        //        Response.Cache.SetNoStore();
+        //        return RedirectToAction("Index", "HocVienDangKies");
+        //    }
 
             return View();
         }

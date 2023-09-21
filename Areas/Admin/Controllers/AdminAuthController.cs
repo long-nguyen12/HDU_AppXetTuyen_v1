@@ -23,9 +23,59 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             return RedirectToAction("Login", "AdminAuth");
         }
+        public ActionResult Login()
+        {
+            Session["admin_login_session"] = null;
+            Session.Clear();
+            Session.RemoveAll();
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult LoginCheck(AdminAccount entity)
+        {
+            string admin_user = entity.Admin_Username;
+            string admin_password = entity.Admin_Pass;
+            string admin_note = entity.Admin_Note;
+
+            var admin_user_login = db.AdminAccounts.Where(x => x.Admin_Username == admin_user).FirstOrDefault();
+
+            if (admin_user_login != null)
+            {
+                bool verifiedPassword = Verify(admin_user, admin_password, admin_user_login.Admin_Pass);
+                if (verifiedPassword == true)
+                {   
+                    if (admin_note == "1" && admin_user_login.Admin_Quyen == "1")
+                    {
+                        Session["admin_login_session"] = admin_user_login.Admin_Pass;
+                        return Json(new { success = true, data = "CollegerLogin" }, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else if (admin_note == "2" && admin_user_login.Admin_Quyen == "2")
+                    {
+                        Session["admin_login_session"] = admin_user_login.Admin_Pass;
+                        return Json(new { success = true, data = "MasterLogin" }, JsonRequestBehavior.AllowGet);
+                      
+                    }
+                    else
+                    {
+                        return Json(new { success = false, data = "Không tìm thấy tài khoản" }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json(new { success = false, data = "Sai tên đăng nhập hoặc mật khẩu" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(new { success = false, data = "Không tìm thấy thông tin tài khoản" }, JsonRequestBehavior.AllowGet);               
+            }
+        }
+
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public ActionResult Login()
+        public ActionResult Login2()
         {
             init_user();
             if (Session["admin_login_session"] != null)
@@ -38,7 +88,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(FormCollection admin_login)
+        public ActionResult Login2(FormCollection admin_login)
         {
             string id_hedaotao = admin_login["radioHeDaoTao"];
             // id_hedaotao: 1 Đại học, 2 Sau đại học
@@ -59,7 +109,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     ViewBag.LoginErrorMessager = "";
                     // id_hedaotao: 1 Đại học, 2 Sau đại học
                     // Admin Quyen: 1 Đại học, 2: Sau đại học
-                    if (id_hedaotao == "1" && login_details.Admin_Quyen == "1") {
+                    if (id_hedaotao == "1" && login_details.Admin_Quyen == "1")
+                    {
                         Session["admin_login_session"] = login_details.Admin_Pass;
                         return RedirectToAction("Index", "HomeAdmin");
 
@@ -128,7 +179,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             // init USER ADMIN
             AdminAccount adminAccount = new AdminAccount();
-            string admin_user= "admin";
+            string admin_user = "admin";
             string admin_pass = "Admin123@";
 
             var login_details = db.AdminAccounts.Where(x => x.Admin_Username == admin_user).FirstOrDefault();

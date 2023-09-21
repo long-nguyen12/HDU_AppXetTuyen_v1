@@ -101,6 +101,13 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             return View(model.ToList());
         }
+
+        [AdminSessionCheck]
+        public ActionResult MasterCreate()
+        {
+            ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten");
+            return View();
+        }
         #endregion
         #region Delete
         // GET: Admin/DotXetTuyens/Delete/5
