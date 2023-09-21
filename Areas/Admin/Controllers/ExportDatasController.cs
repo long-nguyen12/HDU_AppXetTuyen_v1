@@ -24,7 +24,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
     public class ExportFilteriData
     {
-        public string FilteriDotxt { get; set; }
+        public string FilteriNganh { get; set; }
+        public string FilteriLePhi { get; set; }
+        public string FilteriHoSo { get; set; }
         public string SearchString { get; set; }
     }
     public class ExportDatasController : Controller
@@ -282,272 +284,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-        public void ExportHvDKDuTuyen()
-        {
-            var ListHvDts = db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).ToList();
-            var dxt_hientai = db.DotXetTuyens.FirstOrDefault(d => d.Dxt_Classify == 2 && d.Dxt_TrangThai_Xt == 1);
-            try
-            {
-                using (ExcelPackage _excelpackage = new ExcelPackage())
-                {
-                    _excelpackage.Workbook.Properties.Author = "208Team";  // đặt tên người tạo file                       
-                    _excelpackage.Workbook.Properties.Title = "TKHVDKDuTuyen"; // đặt tiêu đề cho file                    
-
-                    //Tạo sheet để làm việc 
-                    _excelpackage.Workbook.Worksheets.Add("ThongKeHVDKDuTuyen");
-                    string[] arr_col_number = { "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành",
-                        "Tên ngành đăng ký", "ĐKDT Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" ,"Nơi ở hiện nay", "Địa chỉ liên hệ"};
-
-                    ExcelWorksheet ws = null; // khai báo để thao tác với ws
-
-                    // lấy sheet vừa add ra để thao tác 
-
-                    if (ListHvDts.Count > 0)
-                    {
-                        ws = _excelpackage.Workbook.Worksheets[1];
-
-                        ws.Name = "ThongKeHVDKDuTuyen";  // đặt tên cho sheet                       
-                        ws.Cells.Style.Font.Size = 12;  // fontsize mặc định cho cả sheet                       
-                        ws.Cells.Style.Font.Name = "Times New Roman"; // font family mặc định cho cả sheet
-
-                        ws.Cells[1, 1].Value = "DANH SÁCH HỌC VIÊN DỰ TUYỂN SAU ĐẠI HỌC";
-                        ws.Cells[1, 1, 1, 12].Merge = true;
-                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
-                        ws.Cells[2, 1].Value = "Số liệu thống kê dự tuyển " + dxt_hientai.Dxt_Ten + ", Từ ngày " + dxt_hientai.Dxt_ThoiGian_BatDau + " đến ngày " + dxt_hientai.Dxt_ThoiGian_KetThuc;
-                        ws.Cells[2, 1, 2, 12].Merge = true;
-                        //ws.Cells["A1:F1"].Merge = true;
-
-                        // Tạo danh sách các tiêu đề cho cột (column header)                         
-                        int colIndex = 1, rowIndex = 3;
-                        //tạo các header từ column header đã tạo từ bên trên
-                        foreach (var item in arr_col_number)
-                        {
-                            var cell = ws.Cells[rowIndex, colIndex];
-                            cell.Value = item;
-                            colIndex++;
-                        }
-
-                        rowIndex = 3;
-                        // với mỗi item trong danh sách sẽ ghi trên 1 dòng
-                        foreach (var item in ListHvDts)
-                        {
-                            colIndex = 1; // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
-                            rowIndex++;  // rowIndex tương ứng từng dòng dữ liệu
-                            //gán giá trị cho từng cell                      
-                            ws.Cells.Style.Font.Bold = false;
-                            ws.Cells.Style.WrapText = true;
-                            ws.Cells[rowIndex, colIndex++].Value = (rowIndex - 3);                          //  1 số thư tự 
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_HoDem;        //  2 
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Ten;          //  3
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_NgaySinh;     //  4
-
-                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_MaNganh;       //  5
-                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_TenNganh;      //  6
-                            if (item.HocVien_DKDTNgoaiNgu == 1)                                              //  7
-                            {
-                                ws.Cells[rowIndex, colIndex++].Value = "ĐK dự thi";
-                            }
-                            if (item.HocVien_DKDTNgoaiNgu == 0)
-                            {
-                                ws.Cells[rowIndex, colIndex++].Value = "Không DTNN";
-                            }
-                            ws.Cells[rowIndex, colIndex++].Value = db.Tinhs.FirstOrDefault(x => x.Tinh_ID == item.HocVienDangKy.HocVien_NoiSinh).Tinh_Ten;  // nơi sinh = tên tỉnh         //8
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DienThoai;        //  9
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Email;            //  10
-
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_NoiOHienNay;      //  11
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DiaChiLienHe;     //  12
-
-                            ws.Cells[rowIndex, colIndex++].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        }
-                        //{
-                        //    "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành đăng ký",
-                        //"Tên ngành đăng ký", "ĐK Dự thi Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" };
-                        for (int indexCol = 1; indexCol <= arr_col_number.Count(); indexCol++)
-                        {
-                            if (indexCol == 1) { ws.Column(indexCol).Width = 6; }       //1
-                            if (indexCol == 2) { ws.Column(indexCol).Width = 15; }      //2
-                            if (indexCol == 3) { ws.Column(indexCol).Width = 7.3; }     //3
-                            if (indexCol == 4) { ws.Column(indexCol).Width = 14.3; }    //4
-                            if (indexCol == 5) { ws.Column(indexCol).Width = 13; }      //5
-                            if (indexCol == 6) { ws.Column(indexCol).Width = 30; }      //6 
-                            if (indexCol == 7) { ws.Column(indexCol).Width = 20; }      //7 
-                            if (indexCol == 8) { ws.Column(indexCol).Width = 15; }      //8 
-                            if (indexCol == 9) { ws.Column(indexCol).Width = 15; }      //9  
-                            if (indexCol == 10) { ws.Column(indexCol).Width = 25; }     //10  
-                            if (indexCol == 11) { ws.Column(indexCol).Width = 40; }     //11  
-                            if (indexCol == 12) { ws.Column(indexCol).Width = 40; }     //12  
-                            ws.Cells[3, 1, 3, indexCol].Style.Font.Bold = true;         // đặt tiêu đề cho bảng có kiểu chữ đậm
-                        }
-                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
-                        ws.Cells[1, 1].Style.Font.Bold = true;
-                        ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        ws.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-
-                    }
-                    //Lưu file lại   //string excelName = "ThongKeHVDKDuTuyen";
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + ws.Name + ".xlsx"); // tên file lưu
-                        _excelpackage.SaveAs(memoryStream);
-                        memoryStream.WriteTo(Response.OutputStream);
-                        Response.Flush();
-                        Response.End();
-                    }
-                }
-                //return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-            }
-
-        }
-        public JsonResult ExportHvDKDuTuyen2(ExportFilteriData entity)
-        {
-
-            string _FilteriDotxt = entity.FilteriDotxt;
-            string _SearchString = entity.SearchString;
-            DotXetTuyen dxt_hientai = null;
-
-
-            var ListHvDts = db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).ToList();
-            if (!String.IsNullOrEmpty(_SearchString))
-            {
-                ListHvDts = ListHvDts.Where(h => h.HocVienDangKy.HocVien_Ten.ToUpper().Contains(_SearchString.ToUpper())
-                                   || h.HocVienDangKy.HocVien_HoDem.ToUpper().Contains(_SearchString.ToUpper())
-                                   || h.HocVienDangKy.HocVien_CCCD.Contains(_SearchString)
-                                   || h.HocVienDangKy.HocVien_DienThoai.Contains(_SearchString)).ToList();
-            }
-            if (!String.IsNullOrEmpty(_FilteriDotxt.ToString()))
-            {
-                ListHvDts = ListHvDts.Where(x => x.Dxt_ID == int.Parse(_FilteriDotxt)).ToList();
-
-                dxt_hientai = db.DotXetTuyens.FirstOrDefault(d => d.Dxt_ID == int.Parse(_FilteriDotxt));
-            }
-            else
-            {
-                dxt_hientai = db.DotXetTuyens.FirstOrDefault(d => d.Dxt_Classify == 2 && d.Dxt_TrangThai_Xt == 1);
-            }
-
-            try
-            {
-                using (ExcelPackage _excelpackage = new ExcelPackage())
-                {
-                    _excelpackage.Workbook.Properties.Author = "208Team";  // đặt tên người tạo file                       
-                    _excelpackage.Workbook.Properties.Title = "TKHVDKDuTuyen"; // đặt tiêu đề cho file                    
-
-                    //Tạo sheet để làm việc 
-                    _excelpackage.Workbook.Worksheets.Add("ThongKeHVDKDuTuyen");
-                    string[] arr_col_number = { "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành",
-                        "Tên ngành đăng ký", "ĐKDT Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" ,"Nơi ở hiện nay", "Địa chỉ liên hệ"};
-
-                    ExcelWorksheet ws = null; // khai báo để thao tác với ws
-
-                    // lấy sheet vừa add ra để thao tác 
-
-                    if (ListHvDts.Count > 0)
-                    {
-                        ws = _excelpackage.Workbook.Worksheets[1];
-
-                        ws.Name = "ThongKeHVDKDuTuyen";  // đặt tên cho sheet                       
-                        ws.Cells.Style.Font.Size = 12;  // fontsize mặc định cho cả sheet                       
-                        ws.Cells.Style.Font.Name = "Times New Roman"; // font family mặc định cho cả sheet
-
-                        ws.Cells[1, 1].Value = "DANH SÁCH HỌC VIÊN DỰ TUYỂN SAU ĐẠI HỌC";
-                        ws.Cells[1, 1, 1, 12].Merge = true;
-                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
-                        ws.Cells[2, 1].Value = "Số liệu thống kê dự tuyển " + dxt_hientai.Dxt_Ten + ", Từ ngày " + dxt_hientai.Dxt_ThoiGian_BatDau + " đến ngày " + dxt_hientai.Dxt_ThoiGian_KetThuc;
-                        ws.Cells[2, 1, 2, 12].Merge = true;
-                        //ws.Cells["A1:F1"].Merge = true;
-
-                        // Tạo danh sách các tiêu đề cho cột (column header)                         
-                        int colIndex = 1, rowIndex = 3;
-                        //tạo các header từ column header đã tạo từ bên trên
-                        foreach (var item in arr_col_number)
-                        {
-                            var cell = ws.Cells[rowIndex, colIndex];
-                            cell.Value = item;
-                            colIndex++;
-                        }
-
-                        rowIndex = 3;
-                        // với mỗi item trong danh sách sẽ ghi trên 1 dòng
-                        foreach (var item in ListHvDts)
-                        {
-                            colIndex = 1; // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
-                            rowIndex++;  // rowIndex tương ứng từng dòng dữ liệu
-                            //gán giá trị cho từng cell                      
-                            ws.Cells.Style.Font.Bold = false;
-                            ws.Cells.Style.WrapText = true;
-                            ws.Cells[rowIndex, colIndex++].Value = (rowIndex - 3);                          //  1 số thư tự 
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_HoDem;        //  2 
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Ten;          //  3
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_NgaySinh;     //  4
-
-                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_MaNganh;       //  5
-                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_TenNganh;      //  6
-                            if (item.HocVien_DKDTNgoaiNgu == 1)                                              //  7
-                            {
-                                ws.Cells[rowIndex, colIndex++].Value = "ĐK dự thi";
-                            }
-                            if (item.HocVien_DKDTNgoaiNgu == 0)
-                            {
-                                ws.Cells[rowIndex, colIndex++].Value = "Không DTNN";
-                            }
-                            ws.Cells[rowIndex, colIndex++].Value = db.Tinhs.FirstOrDefault(x => x.Tinh_ID == item.HocVienDangKy.HocVien_NoiSinh).Tinh_Ten;  // nơi sinh = tên tỉnh         //8
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DienThoai;        //  9
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Email;            //  10
-
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_NoiOHienNay;      //  11
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DiaChiLienHe;     //  12
-
-                            ws.Cells[rowIndex, colIndex++].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        }
-                        //{
-                        //    "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành đăng ký",
-                        //"Tên ngành đăng ký", "ĐK Dự thi Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" };
-                        for (int indexCol = 1; indexCol <= arr_col_number.Count(); indexCol++)
-                        {
-                            if (indexCol == 1) { ws.Column(indexCol).Width = 6; }       //1
-                            if (indexCol == 2) { ws.Column(indexCol).Width = 15; }      //2
-                            if (indexCol == 3) { ws.Column(indexCol).Width = 7.3; }     //3
-                            if (indexCol == 4) { ws.Column(indexCol).Width = 14.3; }    //4
-                            if (indexCol == 5) { ws.Column(indexCol).Width = 13; }      //5
-                            if (indexCol == 6) { ws.Column(indexCol).Width = 30; }      //6 
-                            if (indexCol == 7) { ws.Column(indexCol).Width = 20; }      //7 
-                            if (indexCol == 8) { ws.Column(indexCol).Width = 15; }      //8 
-                            if (indexCol == 9) { ws.Column(indexCol).Width = 15; }      //9  
-                            if (indexCol == 10) { ws.Column(indexCol).Width = 25; }     //10  
-                            if (indexCol == 11) { ws.Column(indexCol).Width = 40; }     //11  
-                            if (indexCol == 12) { ws.Column(indexCol).Width = 40; }     //12  
-                            ws.Cells[3, 1, 3, indexCol].Style.Font.Bold = true;         // đặt tiêu đề cho bảng có kiểu chữ đậm
-                        }
-                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
-                        ws.Cells[1, 1].Style.Font.Bold = true;
-                        ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        ws.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-
-                    }
-                    //Lưu file lại   //string excelName = "ThongKeHVDKDuTuyen";
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + ws.Name + ".xlsx"); // tên file lưu
-                        _excelpackage.SaveAs(memoryStream);
-                        memoryStream.WriteTo(Response.OutputStream);
-                        Response.Flush();
-                        Response.End();
-                    }
-                }
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
-            }
-        }
         public void ExportTsDkxtKQTthpt()
         {
             var model = (from item in db.DangKyXetTuyenKQTQGs select item)
@@ -684,7 +420,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
         }
         public void ExportTsTuyenThang()
-        {		
+        {
 
             var model = (from item in db.DangKyXetTuyenThangs select item)
                                                 .OrderBy(x => x.ThiSinh_ID)
@@ -812,6 +548,315 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             catch
             {
                 //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public void ExportHocVienDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, string filteriDotxt, string sortOrder, int? page)
+        {
+            var dxt_hientai = db.DotXetTuyens.FirstOrDefault(d => d.Dxt_Classify == 2 && d.Dxt_TrangThai_Xt == 1);
+
+            var ListHvDts = db.HocVienDuTuyens
+                              .Include(h => h.DotXetTuyen)
+                              .Include(h => h.HocVienDangKy)
+                              .Include(h => h.NganhMaster)
+                              .Where(x => x.Dxt_ID == dxt_hientai.Dxt_ID).ToList();
+
+            // lọc theo ngành
+            if (!String.IsNullOrEmpty(filteriNganhHoc))
+            {
+                int FilteriNganh = Int32.Parse(filteriNganhHoc);
+                ListHvDts = ListHvDts.Where(x => x.Nganh_Mt_ID == FilteriNganh).ToList();
+            }
+            // lọc theo trạng thái lệ phí
+            if (!String.IsNullOrEmpty(filteriLePhi))
+            {
+                int FilteriLePhi = Int32.Parse(filteriLePhi);
+                ListHvDts = ListHvDts.Where(x => x.HocVien_LePhi_TrangThai == FilteriLePhi).ToList();
+            }
+            // lọc theo trạng thái lệ hồ sơ
+            if (!String.IsNullOrEmpty(filteriHoSo))
+            {
+                int FilteriHoSo = Int32.Parse(filteriHoSo);
+                ListHvDts = ListHvDts.Where(x => x.DuTuyen_TrangThai == FilteriHoSo).ToList();
+            }
+
+            // lọc theo tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ListHvDts = ListHvDts.Where(h => h.HocVienDangKy.HocVien_Ten.ToUpper().Contains(searchString.ToUpper())
+                                  || h.HocVienDangKy.HocVien_HoDem.ToUpper().Contains(searchString.ToUpper())
+                                  || h.HocVienDangKy.HocVien_CCCD.Contains(searchString)
+                                  || h.HocVienDangKy.HocVien_DienThoai.Contains(searchString)).ToList();
+            }
+
+            try
+            {
+                using (ExcelPackage _excelpackage = new ExcelPackage())
+                {
+                    _excelpackage.Workbook.Properties.Author = "208Team";  // đặt tên người tạo file                       
+                    _excelpackage.Workbook.Properties.Title = "TKHVDKDuTuyen"; // đặt tiêu đề cho file                    
+
+                    //Tạo sheet để làm việc 
+                    _excelpackage.Workbook.Worksheets.Add("ThongKeHVDKDuTuyen");
+                    string[] arr_col_number = { "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành",
+                        "Tên ngành đăng ký", "ĐKDT Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" ,"Nơi ở hiện nay", "Địa chỉ liên hệ"};
+
+                    ExcelWorksheet ws = null; // khai báo để thao tác với ws
+
+                    // lấy sheet vừa add ra để thao tác 
+
+                    if (ListHvDts.Count > 0)
+                    {
+                        ws = _excelpackage.Workbook.Worksheets[1];
+
+                        ws.Name = "ThongKeHVDKDuTuyen";  // đặt tên cho sheet                       
+                        ws.Cells.Style.Font.Size = 12;  // fontsize mặc định cho cả sheet                       
+                        ws.Cells.Style.Font.Name = "Times New Roman"; // font family mặc định cho cả sheet
+
+                        ws.Cells[1, 1].Value = "DANH SÁCH HỌC VIÊN DỰ TUYỂN SAU ĐẠI HỌC";
+                        ws.Cells[1, 1, 1, 12].Merge = true;
+                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
+                        ws.Cells[2, 1].Value = "Số liệu thống kê dự tuyển " + dxt_hientai.Dxt_Ten + ", Từ ngày " + dxt_hientai.Dxt_ThoiGian_BatDau + " đến ngày " + dxt_hientai.Dxt_ThoiGian_KetThuc;
+                        ws.Cells[2, 1, 2, 12].Merge = true;
+                        //ws.Cells["A1:F1"].Merge = true;
+
+                        // Tạo danh sách các tiêu đề cho cột (column header)                         
+                        int colIndex = 1, rowIndex = 3;
+                        //tạo các header từ column header đã tạo từ bên trên
+                        foreach (var item in arr_col_number)
+                        {
+                            var cell = ws.Cells[rowIndex, colIndex];
+                            cell.Value = item;
+                            colIndex++;
+                        }
+
+                        rowIndex = 3;
+                        // với mỗi item trong danh sách sẽ ghi trên 1 dòng
+                        foreach (var item in ListHvDts)
+                        {
+                            colIndex = 1; // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
+                            rowIndex++;  // rowIndex tương ứng từng dòng dữ liệu
+                            //gán giá trị cho từng cell                      
+                            ws.Cells.Style.Font.Bold = false;
+                            ws.Cells.Style.WrapText = true;
+                            ws.Cells[rowIndex, colIndex++].Value = (rowIndex - 3);                          //  1 số thư tự 
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_HoDem;        //  2 
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Ten;          //  3
+                            ws.Cells[rowIndex, colIndex++].Value = DateTime.Parse(item.HocVienDangKy.HocVien_NgaySinh).ToString("dd.MM.yyyy");     //  4
+
+                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_MaNganh;       //  5
+                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_TenNganh;      //  6
+                            if (item.HocVien_DKDTNgoaiNgu == 1)                                              //  7
+                            {
+                                ws.Cells[rowIndex, colIndex++].Value = "ĐK dự thi";
+                            }
+                            if (item.HocVien_DKDTNgoaiNgu == 0)
+                            {
+                                ws.Cells[rowIndex, colIndex++].Value = "Không DTNN";
+                            }
+                            ws.Cells[rowIndex, colIndex++].Value = db.Tinhs.FirstOrDefault(x => x.Tinh_ID == item.HocVienDangKy.HocVien_NoiSinh).Tinh_Ten;  // nơi sinh = tên tỉnh         //8
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DienThoai;        //  9
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Email;            //  10
+
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_NoiOHienNay;      //  11
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DiaChiLienHe;     //  12
+
+                            ws.Cells[rowIndex, colIndex++].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        }
+                        //{
+                        //    "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành đăng ký",
+                        //"Tên ngành đăng ký", "ĐK Dự thi Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" };
+                        for (int indexCol = 1; indexCol <= arr_col_number.Count(); indexCol++)
+                        {
+                            if (indexCol == 1) { ws.Column(indexCol).Width = 6; }       //1
+                            if (indexCol == 2) { ws.Column(indexCol).Width = 15; }      //2
+                            if (indexCol == 3) { ws.Column(indexCol).Width = 7.3; }     //3
+                            if (indexCol == 4) { ws.Column(indexCol).Width = 14.3; }    //4
+                            if (indexCol == 5) { ws.Column(indexCol).Width = 13; }      //5
+                            if (indexCol == 6) { ws.Column(indexCol).Width = 30; }      //6 
+                            if (indexCol == 7) { ws.Column(indexCol).Width = 20; }      //7 
+                            if (indexCol == 8) { ws.Column(indexCol).Width = 15; }      //8 
+                            if (indexCol == 9) { ws.Column(indexCol).Width = 15; }      //9  
+                            if (indexCol == 10) { ws.Column(indexCol).Width = 25; }     //10  
+                            if (indexCol == 11) { ws.Column(indexCol).Width = 40; }     //11  
+                            if (indexCol == 12) { ws.Column(indexCol).Width = 40; }     //12  
+                            ws.Cells[3, 1, 3, indexCol].Style.Font.Bold = true;         // đặt tiêu đề cho bảng có kiểu chữ đậm
+                        }
+                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
+                        ws.Cells[1, 1].Style.Font.Bold = true;
+                        ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                    }
+                    //Lưu file lại   //string excelName = "ThongKeHVDKDuTuyen";
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + ws.Name + ".xlsx"); // tên file lưu
+                        _excelpackage.SaveAs(memoryStream);
+                        memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+            }
+            catch { }
+
+        }
+        public void ExportHocVienDuTuyenJson(ExportFilteriData entity)
+        {
+            var dxt_hientai = db.DotXetTuyens.FirstOrDefault(d => d.Dxt_Classify == 2 && d.Dxt_TrangThai_Xt == 1);
+
+            var ListHvDts = db.HocVienDuTuyens
+                              .Include(h => h.DotXetTuyen)
+                              .Include(h => h.HocVienDangKy)
+                              .Include(h => h.NganhMaster)
+                              .Where(x => x.Dxt_ID == dxt_hientai.Dxt_ID).ToList();
+
+            // lọc theo ngành
+            if (!String.IsNullOrEmpty(entity.FilteriNganh))
+            {
+                int _FilteriNganh = Int32.Parse(entity.FilteriNganh);
+                ListHvDts = ListHvDts.Where(x => x.Nganh_Mt_ID == _FilteriNganh).ToList();
+            }
+            // lọc theo trạng thái lệ phí
+            if (!String.IsNullOrEmpty(entity.FilteriLePhi))
+            {
+                int _FilteriLePhi = Int32.Parse(entity.FilteriLePhi);
+                ListHvDts = ListHvDts.Where(x => x.HocVien_LePhi_TrangThai == _FilteriLePhi).ToList();
+            }
+            // lọc theo trạng thái lệ hồ sơ
+            if (!String.IsNullOrEmpty(entity.FilteriHoSo))
+            {
+                int _FilteriHoSo = Int32.Parse(entity.FilteriHoSo);
+                ListHvDts = ListHvDts.Where(x => x.DuTuyen_TrangThai == _FilteriHoSo).ToList();
+            }
+
+            // lọc theo tìm kiếm
+            if (!String.IsNullOrEmpty(entity.SearchString))
+            {
+                ListHvDts = ListHvDts.Where(h => h.HocVienDangKy.HocVien_Ten.ToUpper().Contains(entity.SearchString.ToUpper())
+                                  || h.HocVienDangKy.HocVien_HoDem.ToUpper().Contains(entity.SearchString.ToUpper())
+                                  || h.HocVienDangKy.HocVien_CCCD.Contains(entity.SearchString)
+                                  || h.HocVienDangKy.HocVien_DienThoai.Contains(entity.SearchString)).ToList();
+            }
+
+            //return Json(new { success = true, data = model }, JsonRequestBehavior.AllowGet);
+
+            try
+            {
+                using (ExcelPackage _excelpackage = new ExcelPackage())
+                {
+                    _excelpackage.Workbook.Properties.Author = "208Team";  // đặt tên người tạo file                       
+                    _excelpackage.Workbook.Properties.Title = "TKHVDKDuTuyen"; // đặt tiêu đề cho file                    
+
+                    //Tạo sheet để làm việc 
+                    _excelpackage.Workbook.Worksheets.Add("ThongKeHVDKDuTuyen");
+                    string[] arr_col_number = { "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành",
+                        "Tên ngành đăng ký", "ĐKDT Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" ,"Nơi ở hiện nay", "Địa chỉ liên hệ"};
+
+                    ExcelWorksheet ws = null; // khai báo để thao tác với ws
+
+                    // lấy sheet vừa add ra để thao tác 
+
+                    if (ListHvDts.Count > 0)
+                    {
+                        ws = _excelpackage.Workbook.Worksheets[1];
+
+                        ws.Name = "ThongKeHVDKDuTuyen";  // đặt tên cho sheet                       
+                        ws.Cells.Style.Font.Size = 12;  // fontsize mặc định cho cả sheet                       
+                        ws.Cells.Style.Font.Name = "Times New Roman"; // font family mặc định cho cả sheet
+
+                        ws.Cells[1, 1].Value = "DANH SÁCH HỌC VIÊN DỰ TUYỂN SAU ĐẠI HỌC";
+                        ws.Cells[1, 1, 1, 12].Merge = true;
+                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
+                        ws.Cells[2, 1].Value = "Số liệu thống kê dự tuyển " + dxt_hientai.Dxt_Ten + ", Từ ngày " + dxt_hientai.Dxt_ThoiGian_BatDau + " đến ngày " + dxt_hientai.Dxt_ThoiGian_KetThuc;
+                        ws.Cells[2, 1, 2, 12].Merge = true;
+                        //ws.Cells["A1:F1"].Merge = true;
+
+                        // Tạo danh sách các tiêu đề cho cột (column header)                         
+                        int colIndex = 1, rowIndex = 3;
+                        //tạo các header từ column header đã tạo từ bên trên
+                        foreach (var item in arr_col_number)
+                        {
+                            var cell = ws.Cells[rowIndex, colIndex];
+                            cell.Value = item;
+                            colIndex++;
+                        }
+
+                        rowIndex = 3;
+                        // với mỗi item trong danh sách sẽ ghi trên 1 dòng
+                        foreach (var item in ListHvDts)
+                        {
+                            colIndex = 1; // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
+                            rowIndex++;  // rowIndex tương ứng từng dòng dữ liệu
+                            //gán giá trị cho từng cell                      
+                            ws.Cells.Style.Font.Bold = false;
+                            ws.Cells.Style.WrapText = true;
+                            ws.Cells[rowIndex, colIndex++].Value = (rowIndex - 3);                          //  1 số thư tự 
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_HoDem;        //  2 
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Ten;          //  3
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_NgaySinh;     //  4
+
+                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_MaNganh;       //  5
+                            ws.Cells[rowIndex, colIndex++].Value = item.NganhMaster.Nganh_Mt_TenNganh;      //  6
+                            if (item.HocVien_DKDTNgoaiNgu == 1)                                              //  7
+                            {
+                                ws.Cells[rowIndex, colIndex++].Value = "ĐK dự thi";
+                            }
+                            if (item.HocVien_DKDTNgoaiNgu == 0)
+                            {
+                                ws.Cells[rowIndex, colIndex++].Value = "Không DTNN";
+                            }
+                            ws.Cells[rowIndex, colIndex++].Value = db.Tinhs.FirstOrDefault(x => x.Tinh_ID == item.HocVienDangKy.HocVien_NoiSinh).Tinh_Ten;  // nơi sinh = tên tỉnh         //8
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DienThoai;        //  9
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_Email;            //  10
+
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_NoiOHienNay;      //  11
+                            ws.Cells[rowIndex, colIndex++].Value = item.HocVienDangKy.HocVien_DiaChiLienHe;     //  12
+
+                            ws.Cells[rowIndex, colIndex++].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        }
+                        //{
+                        //    "TT", "Họ, tên đệm", "Tên", "Ngày sinh", "Mã ngành đăng ký",
+                        //"Tên ngành đăng ký", "ĐK Dự thi Ngoại ngữ", "Nơi sinh", "Điện thoại","Email" };
+                        for (int indexCol = 1; indexCol <= arr_col_number.Count(); indexCol++)
+                        {
+                            if (indexCol == 1) { ws.Column(indexCol).Width = 6; }       //1
+                            if (indexCol == 2) { ws.Column(indexCol).Width = 15; }      //2
+                            if (indexCol == 3) { ws.Column(indexCol).Width = 7.3; }     //3
+                            if (indexCol == 4) { ws.Column(indexCol).Width = 14.3; }    //4
+                            if (indexCol == 5) { ws.Column(indexCol).Width = 13; }      //5
+                            if (indexCol == 6) { ws.Column(indexCol).Width = 30; }      //6 
+                            if (indexCol == 7) { ws.Column(indexCol).Width = 20; }      //7 
+                            if (indexCol == 8) { ws.Column(indexCol).Width = 15; }      //8 
+                            if (indexCol == 9) { ws.Column(indexCol).Width = 15; }      //9  
+                            if (indexCol == 10) { ws.Column(indexCol).Width = 25; }     //10  
+                            if (indexCol == 11) { ws.Column(indexCol).Width = 40; }     //11  
+                            if (indexCol == 12) { ws.Column(indexCol).Width = 40; }     //12  
+                            ws.Cells[3, 1, 3, indexCol].Style.Font.Bold = true;         // đặt tiêu đề cho bảng có kiểu chữ đậm
+                        }
+                        //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
+                        ws.Cells[1, 1].Style.Font.Bold = true;
+                        ws.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                    }
+                    //Lưu file lại   //string excelName = "ThongKeHVDKDuTuyen";
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + "-" + ws.Name + ".xlsx"); // tên file lưu
+                        _excelpackage.SaveAs(memoryStream);
+                        memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+                //return Json(new { success = true, data = model }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                //return Json(new { success = false, data = model }, JsonRequestBehavior.AllowGet);
             }
         }
     }

@@ -120,10 +120,12 @@
                     $('#HocVien_BangDaiHoc_NamTN').val(data.Hv_BangDaiHoc_NamTN);
 
                     var str_diem = "";
+                    console.log(data.Hv_BangDaiHoc_ThangDiem);
                     if (data.Hv_BangDaiHoc_ThangDiem == 4) { str_diem = "Thang 4: " + data.Hv_BangDaiHoc_DiemToanKhoa + " (điểm)"; }
                     if (data.Hv_BangDaiHoc_ThangDiem == 10) { str_diem = "Thang 10: " + data.Hv_BangDaiHoc_DiemToanKhoa + " (điểm)"; }
-
-                    $('#HocVien_BangDaiHoc_DiemToanKhoa').val(`${str_diem}`);
+                    console.log(str_diem);
+                    $('#HocVien_BangDaiHoc_DiemToanKhoa').val(str_diem);
+                  /*  $('#HocVien_BangDaiHoc_DiemToanKhoa').val(`${str_diem}`);*/
 
                     $('#HocVien_BangDaiHoc_LoaiTN').val(data.Hv_BangDaiHoc_LoaiTN);
 

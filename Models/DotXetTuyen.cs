@@ -30,6 +30,7 @@
         [StringLength(250)]
         [Display(Name = "Tên đợt dự tuyển")]
         public string Dxt_Ten { get; set; }
+
         [Display(Name = "Trạng thái")]
         public int? Dxt_TrangThai_Xt { get; set; } // biểu thị cho việc thiết lập đợt xét tuyển là hiện tại
         [Display(Name = "Trạng thái")]

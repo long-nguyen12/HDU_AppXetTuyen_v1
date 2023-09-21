@@ -42,14 +42,14 @@
             success: function (res) {
                 var data = res.data;
                 console.log(data);
-              
+
                 $('#HocVien_HoDem').val(data.HocVien_HoDem);
                 $('#HocVien_Ten').val(data.HocVien_Ten);
 
                 if (data.HocVien_GioiTinh == 1) {
-                    $('#radioNam').attr('checked', 'checked');                  
+                    $('#radioNam').attr('checked', 'checked');
                 } else if (data.HocVien_GioiTinh == 0) {
-                    $('#radioNu').attr('checked', 'checked');                   
+                    $('#radioNu').attr('checked', 'checked');
                 }
                 $('#HocVien_DanToc').val(data.HocVien_DanToc);
                 $('#HocVien_NgaySinh').val(data.HocVien_NgaySinh);
@@ -65,9 +65,9 @@
                 $('#HocVien_DiaChiLienHe').val(data.HocVien_DiaChiLienHe);
 
                 if (data.HocVien_LoaiCB == 1) {
-                    $('#HocVien_LoaiCB_BienChe').attr('checked', 'checked');                 
+                    $('#HocVien_LoaiCB_BienChe').attr('checked', 'checked');
                 } else if (data.HocVien_LoaiCB == 0) {
-                    $('#HocVien_LoaiCB_HopDong').attr('checked', 'checked');                   
+                    $('#HocVien_LoaiCB_HopDong').attr('checked', 'checked');
                 }
 
                 $('#HocVien_TenDonViCongTac').val(data.HocVien_TenDonViCongTac);
@@ -800,6 +800,18 @@
         </div>
     </div>
 </div>
+<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     /* bắt đầu phần upload file client */
     var check_in_file_soyeulilich = false;
@@ -1055,7 +1067,7 @@
     /* phần xử lý sự kiện thêm dữ liệu  mới*/
     $(document).ready(function () {
         $('#bt_admin_update_hocvien').click(function () {
-            
+
             var flag = true;
             let _hocVien_HoDem = $('#HocVien_HoDem').val();
             let _hocVien_Ten = $('#HocVien_Ten').val();
@@ -1228,9 +1240,10 @@
             formData_All.append('so_file_anh4x6', so_file_anh4x6);
             formData_All.append('so_file_ccnn', so_file_ccnn);
             formData_All.append('so_file_mckhac', so_file_mckhac);
-
+            formData_All.append('_hocVien_CCCD', _hocVien_CCCD);
+           
             $.ajax({
-                url: '/HocVienDangKies/DangKyDuTuyen_SDH_UploadFile_Multi',
+                url: '/Admin/HocVienDangKys/DangKyDuTuyen_SDH_UploadFile_Multi',
                 type: "POST",
                 contentType: false,
                 processData: false,
@@ -1239,13 +1252,14 @@
                 success: function (res) {
                     console.log("OK dã upload", res.success);
                     if (res.success == true) {
-                        _hocVien_SoYeuLyLich_Url = res.HocVien_SoYeuLyLich_url;
-                        _hocVien_MCBangDaiHoc_Url = res.HocVien_MCBangDaiHoc_url;
-                        _hocVien_MCBangDiem_Url = res.HocVien_MCBangDiem_url;
-                        _hocVien_MCGiayKhamSucKhoe_Url = res.HocVien_MCGiayKhamSucKhoe_url;
-                        _hocVien_Anh46_Url = res.HocVien_Anh46_url;
-                        _hocVien_MCCCNN_Url = res.HocVien_MCCCNN_url;
-                        _hocVien_MCKhac_Url = res.HocVien_MCKhac_url;
+                        var data_url = res.data;
+                        _hocVien_SoYeuLyLich_Url = data_url.HocVien_SoYeuLyLich_url;
+                        _hocVien_MCBangDaiHoc_Url = data_url.HocVien_MCBangDaiHoc_url;
+                        _hocVien_MCBangDiem_Url = data_url.HocVien_MCBangDiem_url;
+                        _hocVien_MCGiayKhamSucKhoe_Url = data_url.HocVien_MCGiayKhamSucKhoe_url;
+                        _hocVien_Anh46_Url = data_url.HocVien_Anh46_url;
+                        _hocVien_MCCCNN_Url = data_url.HocVien_MCCCNN_url;
+                        _hocVien_MCKhac_Url = data_url.HocVien_MCKhac_url;
                     } else if (res.success == false) { flag = false; }
 
                 },
@@ -1254,6 +1268,7 @@
                 }
             });
 
+            $("#loadingModal").modal("show");
             var data_hv = {
                 HocVien_ID: _hocVien_HoDem,
                 HocVien_HoDem: _hocVien_HoDem,
@@ -1306,18 +1321,18 @@
 
 
             console.log(data_hv)
-            // return;
+            let queryString_toUpdate = window.location.search;
             $.ajax({
                 url: "/Admin/HocVienDangKys/AdUpdateHocVienJson/",
                 type: "POST",
                 contentType: 'application/json;charset=utf-8',
-                async: false,
+              /*  async: false,*/
                 data: JSON.stringify(data_hv),
                 success: function (res) {
                     if (res.success) {
                         //let data_rt = res.data;
                         //console.log(data_rt);
-                        window.location.href = "/Admin/HocVienDangKys/AdminCreateHocVien";
+                        window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyenKiemTraHoSo" + queryString_toUpdate;
                     }
                 },
                 error: function () { }
@@ -1326,7 +1341,7 @@
 
         $('#bt_backup_to_list_hocvien').click(function () {
             let queryString_toUpdate = window.location.search;
-            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen" + queryString_toUpdate;
+            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyenKiemTraHoSo" + queryString_toUpdate;
         })
     })
 
@@ -1392,7 +1407,7 @@
     })
 
     /* Hàm hiển thị thông tin ngành vào dropdownlist */
-    $(document).ready(function () {       
+    $(document).ready(function () {
         $("#Select_HocVien_ChuyenNganhDuThi").change(function () {
             let id = $("#Select_HocVien_ChuyenNganhDuThi").val();
             if (id > 0) {
@@ -1459,7 +1474,7 @@
         })
     });
 
-    function ShowDataOnSelect_HocVienNoiSinh() {       
+    function ShowDataOnSelect_HocVienNoiSinh() {
         $.ajax({
             url: "/Admin/HocVienDangKys/GetTinhJson",
             type: "POST",

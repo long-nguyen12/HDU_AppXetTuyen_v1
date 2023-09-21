@@ -26,6 +26,7 @@
     <WebStackScaffolding_DbContextTypeFullName>HDU_AppXetTuyen.Models.DbConnecttion</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <NameOfLastUsedPublishProfile>D:\DuAn\HDUTuyenSinh\HDU_AppXetTuyen_v1\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

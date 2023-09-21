@@ -288,6 +288,7 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.rtl.css" />
     <Content Include="Content\css\bootstrap.rtl.min.css" />
+    <Content Include="Content\font_bootstrap-icons.css" />
     <Content Include="Content\icon\edit.svg" />
     <Content Include="Content\images\cntt.jpg" />
     <Content Include="Content\images\liencaphdu.png" />
@@ -513,6 +514,8 @@
     <Content Include="Areas\Admin\Views\DotXetTuyens1\Details.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens1\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens1\Index.cshtml" />
+    <Content Include="Content\fonts\bootstrap-icons.woff" />
+    <Content Include="Content\fonts\bootstrap-icons.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
