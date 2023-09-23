@@ -109,4 +109,16 @@ namespace HDU_AppXetTuyen.Models
         public string HocVien_BangDaiHoc_DiemToanKhoa { get; set; }       
         public string HocVien_BangDaiHoc_LoaiTN { get; set; }
     }   
+    public class ThongTinHoSoMinhChung
+    {
+        public string PhieuDangKyDuThi { get; set; }
+        public string SoYeuLyLich { get; set; }
+        public string BangDH { get; set; }
+        public string BangDiemDH { get; set; }
+        public string GiayKhamSucKhoe { get; set; }
+        public string Anh4x6 { get; set; }
+        public string GiayMienNgoaiNgu { get; set; }
+        public string GiayToKhac { get; set; }
+      
+    }
 }

@@ -821,8 +821,6 @@ namespace HDU_AppXetTuyen.Controllers
                     return " ";
             }
         }
-
-
         public string getHocLucById(int id)
         {
             switch (id)
@@ -839,7 +837,6 @@ namespace HDU_AppXetTuyen.Controllers
                     return " ";
             }
         }
-
         public string getHanhKiemById(int id)
         {
             switch (id)

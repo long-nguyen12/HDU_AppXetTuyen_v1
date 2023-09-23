@@ -167,6 +167,8 @@
                         $('#radioDTDT_CuDiHoc').attr('disabled', 'disabled');
                     }
 
+                    $('#HocVien_SoHoSo').val(data.HocVien_SoHoSo);
+
                     if (data.HocVien_LePhi_TrangThai == 0) {
 
                     }
@@ -587,7 +589,25 @@
                                 <tr>
                                     <td>
                                         <div class="row">
-                                            <div class="col-lg-12 col-12 p-1">
+                                            <div class="col-lg-6 col-12 p-1">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12">Đối tượng dự thi</label>
+                                                    <div class="col-md-12 mt-2">
+                                                        <div class="d-inline-flex flex-nowrap">
+                                                            <div class="form-check align-items-center">
+                                                                <input class="form-check-input" type="radio" id="radioDTDT_CuDiHoc" name="View_HocVien_DoiTuongDuThi">
+                                                                <label class="form-check-label" for="radioDTDT_CuDiHoc">CQ cử đi học</label>
+                                                            </div>
+                                                            <div class="form-check align-items-center" style="margin-left:10px">
+                                                                <input class="form-check-input" type="radio" id="radioDTDT_TSTuDo" name="View_HocVien_DoiTuongDuThi">
+                                                                <label class="form-check-label" for="radioDTDT_TSTuDo">TS tự do</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-12 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Hiện là cán bộ</label>
                                                     <div class="col-md-12 mt-2">
@@ -750,7 +770,7 @@
                                 <tr>
                                     <td>
                                         <div class="row">
-                                            <div class="col-lg-8 col-12 p-1">
+                                            <div class="col-lg-12 col-12 p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12" id="lb_tencn_dt">Tên CN dự tuyển</label>
                                                     <div class="col-md-12"><input id="HocVien_ChuyenNganhDuThi_Ten" class="form-control" disabled /></div>
@@ -764,16 +784,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 col-12  p-1">
+                                            <div class="col-lg-8 col-12  p-1">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Định hướng chương trình đào tạo</label>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12 mt-2">
                                                         <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center mt-1  mb-2">
+                                                            <div class="form-check align-items-center">
                                                                 <input class="form-check-input" type="radio" id="HocVien_ChuyenNganhDuThi_UngDung" name="View_HocVien_ChuyenNganhDuThi_DHCTDT_Rd">
                                                                 <label class="form-check-label" for="HocVien_ChuyenNganhDuThi_UngDung">Ứng dụng</label>
                                                             </div>
-                                                            <div class="form-check align-items-center  mt-1 mb-2" style="margin-left:8px">
+                                                            <div class="form-check align-items-center" style="margin-left:8px">
                                                                 <input class="form-check-input" type="radio" id="HocVien_ChuyenNganhDuThi_NghienCuu" name="View_HocVien_ChuyenNganhDuThi_DHCTDT_Rd">
                                                                 <label class="form-check-label" for="HocVien_ChuyenNganhDuThi_NghienCuu">Nghiên cứu</label>
                                                             </div>
@@ -806,20 +826,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 p-1">
+                                            <div class="col-lg-6 col-6 p-1">
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-12 mt-1 mb-2">Đối tượng dự thi</label>
+                                                    <label class="control-label col-md-12">Số hồ sơ</label>
                                                     <div class="col-md-12">
-                                                        <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center">
-                                                                <input class="form-check-input" type="radio" id="radioDTDT_CuDiHoc" name="View_HocVien_DoiTuongDuThi">
-                                                                <label class="form-check-label" for="radioDTDT_CuDiHoc">Cơ quan cử đi học</label>
-                                                            </div>
-                                                            <div class="form-check align-items-center" style="margin-left:10px">
-                                                                <input class="form-check-input" type="radio" id="radioDTDT_TSTuDo" name="View_HocVien_DoiTuongDuThi">
-                                                                <label class="form-check-label" for="radioDTDT_TSTuDo">Thí sinh tự do</label>
-                                                            </div>
-                                                        </div>
+                                                        <input class="form-control" id="HocVien_SoHoSo" name="HocVien_SoHoSo" type="text" disabled />
                                                     </div>
                                                 </div>
                                             </div>

@@ -57,7 +57,7 @@ namespace HDU_AppXetTuyen.Models
         public string DuTuyen_NgayDangKy { get; set; }
 
         [StringLength(2500)]
-        public string DuTuyen_GhiChu { get; set; }    
+        public string DuTuyen_GhiChu { get; set; }
 
         [StringLength(20)]
         public string HocVien_LePhi_MaThamChieu { get; set; }
@@ -69,8 +69,8 @@ namespace HDU_AppXetTuyen.Models
         public string HocVien_LePhi_NgayNop { get; set; }
         public int? HocVien_LePhi_TrangThai { get; set; }
 
-      
-
+        public int? HocVien_SoHoSo { get; set; }
+        public string DuTuyen_ThongTinHoSoMinhChung { get; set; }
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 
         public virtual HocVienDangKy HocVienDangKy { get; set; }
