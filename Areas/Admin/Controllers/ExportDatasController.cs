@@ -682,6 +682,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                             }
                            
                             string str_add = "A8:Q" + (ListHvDts_Customs.ToList().Count + 9).ToString();
+                           
                             ews.Cells[str_add].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                             ews.Cells[str_add].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                             ews.Cells[str_add].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
@@ -708,19 +709,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                             ews.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                             ews.Cells[2, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
-                            ews.Cells[1, 8].Value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM";
-                            ews.Cells[1, 8, 1, 14].Merge = true;
+                            ews.Cells[1, 7].Value = "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM";
+                            ews.Cells[1, 7, 1, 17].Merge = true;
                             //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
-                            ews.Cells[1, 8].Style.Font.Bold = true;
-                            ews.Cells[1, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                            ews.Cells[1, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                            ews.Cells[1, 7].Style.Font.Bold = true;
+                            ews.Cells[1, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            ews.Cells[1, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
-                            ews.Cells[2, 8].Value = "Độc lập - Tự do - Hạnh phúc";
-                            ews.Cells[2, 8, 2, 14].Merge = true;
+                            ews.Cells[2, 7].Value = "Độc lập - Tự do - Hạnh phúc";
+                            ews.Cells[2, 7, 2, 17].Merge = true;
                             //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
-                            ews.Cells[2, 8].Style.Font.Bold = true;
-                            ews.Cells[2, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                            ews.Cells[2, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                            ews.Cells[2, 7].Style.Font.Bold = true;
+                            ews.Cells[2, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            ews.Cells[2, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
                             ews.Cells[5, 1].Value =("RÀ SOÁT HỒ SƠ THÍ SINH ĐĂNG KÝ DỰ THI ĐÀO TẠO TRÌNH ĐỘ THẠC SĨ " + dxt_hientai.Dxt_Ten).ToUpper(); 
                             ews.Cells[5, 1, 5, 17].Merge = true;
@@ -736,12 +737,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                             ews.Cells[7, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                             ews.Cells[7, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
-                            ews.Cells[7, 10].Value = "Định hướng chương trình: " + item.Nganh_Mt_NghienCuu_Ten;
-                            ews.Cells[7, 10, 7, 14].Merge = true;
+                            ews.Cells[7,7].Value = "Định hướng chương trình: " + item.Nganh_Mt_NghienCuu_Ten;
+                            ews.Cells[7, 7, 7, 17].Merge = true;
                             //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
-                            ews.Cells[7, 10].Style.Font.Bold = true;
-                            ews.Cells[7, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                            ews.Cells[7, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                            ews.Cells[7, 7].Style.Font.Bold = true;
+                            ews.Cells[7, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            ews.Cells[7, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
                             ews.Cells[8, 9].Value = "Điểm TBC đại học";
                             ews.Cells[8, 9, 8, 10].Merge = true;
@@ -783,29 +784,41 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                 }
                                 colIndex++;
                             }
+                            ews.Cells["I9:Q9"].Style.Font.Size = 9;
+                            ews.Cells["A8:H8"].Style.Font.Size = 11;
 
                             for (int index_col = 1; index_col <= arr_col_number.Count(); index_col++)
                             {
                                 if (index_col == 1) { ews.Column(index_col).Width = 6; }       //1
                                 if (index_col == 2) { ews.Column(index_col).Width = 18; }      //2
-                                if (index_col == 3) { ews.Column(index_col).Width = 14.3; }     //3
+                                if (index_col == 3) { ews.Column(index_col).Width = 9; }     //3
                                 if (index_col == 4) { ews.Column(index_col).Width = 13; }    //4
                                 if (index_col == 5) { ews.Column(index_col).Width = 17; }      //5
-                                if (index_col == 6) { ews.Column(index_col).Width = 35; }      //6 
-                                if (index_col == 7) { ews.Column(index_col).Width = 12; }      //7 
-                                if (index_col == 8) { ews.Column(index_col).Width = 9; }      //8 
-                                if (index_col == 9) { ews.Column(index_col).Width = 10; }      //9  
-                                if (index_col == 10) { ews.Column(index_col).Width = 10; }     //10  
-                                if (index_col == 11) { ews.Column(index_col).Width = 9; }     //11  
-                                if (index_col == 12) { ews.Column(index_col).Width = 9; }     //12  
-                                if (index_col == 13) { ews.Column(index_col).Width = 9; }     //13
-                                if (index_col == 14) { ews.Column(index_col).Width = 9; }     //14
-                                if (index_col == 15) { ews.Column(index_col).Width = 9; }     //15
-                                if (index_col == 16) { ews.Column(index_col).Width = 9; }     //16
-                                if (index_col == 17) { ews.Column(index_col).Width = 9; }     //17
+                                if (index_col == 6) { ews.Column(index_col).Width = 25; }      //6 
+                                if (index_col == 7) { ews.Column(index_col).Width = 9.7; }      //7 
+                                if (index_col == 8) { ews.Column(index_col).Width = 7; }      //8 
+                                if (index_col == 9) { ews.Column(index_col).Width = 6; }      //9  
+                                if (index_col == 10) { ews.Column(index_col).Width = 6; }     //10  
+                                if (index_col == 11) { ews.Column(index_col).Width = 5; }     //11  
+                                if (index_col == 12) { ews.Column(index_col).Width = 5; }     //12  
+                                if (index_col == 13) { ews.Column(index_col).Width = 5; }     //13
+                                if (index_col == 14) { ews.Column(index_col).Width = 5; }     //14
+                                if (index_col == 15) { ews.Column(index_col).Width = 5; }     //15
+                                if (index_col == 16) { ews.Column(index_col).Width = 5; }     //16
+                                if (index_col == 17) { ews.Column(index_col).Width = 5; }     //17
                             }
-                            ews.Row(8).Height = 29;
+                            ews.Row(8).Height = 45;
                             ews.Row(9).Height = 90;
+                            ews.PrinterSettings.PaperSize = ePaperSize.A4;
+                            ews.PrinterSettings.Orientation = eOrientation.Landscape;
+                            
+                            ews.PrinterSettings.TopMargin = 0.3M;
+                            ews.PrinterSettings.RightMargin = 0.1M;
+                            ews.PrinterSettings.BottomMargin = 0.3M;
+                            ews.PrinterSettings.LeftMargin = 0.1M;
+                            ews.PrinterSettings.HeaderMargin = 0;
+                            ews.PrinterSettings.FooterMargin = 0;
+
                         }
                     }
                     using (var memoryStream = new MemoryStream())

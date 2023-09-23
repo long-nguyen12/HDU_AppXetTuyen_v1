@@ -173,8 +173,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             hv_update.HocVien_BoTucKienThuc = entity.HocVien_BoTucKienThuc;
             hv_update.HocVien_DoiTuongUuTien = entity.HocVien_DoiTuongUuTien;
 
-            dt_update.DuTuyen_TrangThai = 9;
-            dt_update.DuTuyen_ThongBaoKiemDuyet = "Đã kiểm duyệt";
+            dt_update.DuTuyen_TrangThai = entity_hv.DuTuyen_TrangThai;
+            dt_update.DuTuyen_ThongBaoKiemDuyet = "Đã kiểm duyệt. " + entity_hv.DuTuyen_ThongBaoKiemDuyet;
+
             dt_update.DuTuyen_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             dt_update.Dxt_ID = db.DotXetTuyens.Where(x => x.Dxt_TrangThai_Xt == 1 && x.Dxt_Classify == 2).FirstOrDefault().Dxt_ID;
             dt_update.DuTuyen_GhiChu = "Admin cập nhập dữ liệu";
@@ -193,7 +194,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             dt_update.HocVien_MCCCNN += entity_hv.HocVien_MCCCNN;
             dt_update.HocVien_MCKhac += entity_hv.HocVien_MCKhac;
             dt_update.HocVien_SoHoSo = entity_hv.HocVien_SoHoSo;
-
+            dt_update.DuTuyen_ThongTinHoSoMinhChung = entity_hv.DuTuyen_ThongTinHoSoMinhChung;
 
             dt_update.HocVien_LePhi_MaThamChieu = "Nộp trực tiếp";
             dt_update.HocVien_LePhi_NgayNop = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -253,7 +254,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             return View();
         }
-        [AdminSessionCheck]
+        //[AdminSessionCheck]
         public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
             string filteriDotxt, string sortOrder, int? page)
         {
@@ -428,7 +429,27 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(hocviens.ToPagedList(pageNumber, pageSize));
         }
+        public JsonResult HocVienDuTuyen_ThongKe()
+        {
+            var dxt_hientai = db.DotXetTuyens.FirstOrDefault(d => d.Dxt_Classify == 2 && d.Dxt_TrangThai_Xt == 1);
+            var ListHvDts = db.HocVienDuTuyens
+                           .Include(h => h.DotXetTuyen)
+                           .Include(h => h.HocVienDangKy)
+                           .Include(h => h.NganhMaster)
+                           .Where(x => x.Dxt_ID == dxt_hientai.Dxt_ID).ToList();
 
+            var ListNganhHocVienDuTuyen = (from item in ListHvDts
+                                           select new { item.NganhMaster.Nganh_Mt_ID, item.NganhMaster.Nganh_Mt_MaNganh, item.NganhMaster.Nganh_Mt_TenNganh, item.NganhMaster.Nganh_Mt_NghienCuu_Ten })
+                                                       .Distinct().ToList();
+            var ListThongKe = from item in ListNganhHocVienDuTuyen
+                              select new
+                              {
+                                  ThongKe_TenNganh = item.Nganh_Mt_TenNganh,
+                                  ThongKe_SoLuong = ListHvDts.Where(x => x.Nganh_Mt_ID == item.Nganh_Mt_ID).ToList().Count()
+                              };
+           
+            return Json(new { success = true, data = ListThongKe }, JsonRequestBehavior.AllowGet);
+        }
         [AdminSessionCheck]
         public ActionResult DsHvDuTuyenKiemTraHoSo(int? duTuyen_ID, string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
@@ -459,7 +480,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                     .FirstOrDefault();
             string _hv_NoiSinh = db.Tinhs.Where(x => x.Tinh_ID == model.HocVienDangKy.HocVien_NoiSinh).FirstOrDefault().Tinh_Ten;
             BangDaiHoc bangDaiHoc = JsonConvert.DeserializeObject<BangDaiHoc>(model.HocVienDangKy.HocVien_BangDaiHoc);
-
+            ThongTinHoSoMinhChung thongtinHoSoMinhChung = JsonConvert.DeserializeObject<ThongTinHoSoMinhChung>(model.DuTuyen_ThongTinHoSoMinhChung);
 
             var data_hv = new
             {
@@ -522,6 +543,15 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 Hv_BangDaiHoc_ThangDiem = bangDaiHoc.HocVien_BangDaiHoc_ThangDiem,
                 Hv_BangDaiHoc_DiemToanKhoa = bangDaiHoc.HocVien_BangDaiHoc_DiemToanKhoa,
                 Hv_BangDaiHoc_LoaiTN = bangDaiHoc.HocVien_BangDaiHoc_LoaiTN,
+
+                Hv_PhieuDangKyDuThi = thongtinHoSoMinhChung.PhieuDangKyDuThi,
+                Hv_SoYeuLyLich = thongtinHoSoMinhChung.SoYeuLyLich,
+                Hv_BangDH = thongtinHoSoMinhChung.BangDH,
+                Hv_BangDiemDH = thongtinHoSoMinhChung.BangDiemDH,
+                Hv_GiayKhamSucKhoe = thongtinHoSoMinhChung.GiayKhamSucKhoe,
+                Hv_TuiAnh4x6 = thongtinHoSoMinhChung.TuiAnh4x6,
+                Hv_GiayMienNgoaiNgu = thongtinHoSoMinhChung.GiayMienNgoaiNgu,
+                Hv_GiayToKhac = thongtinHoSoMinhChung.GiayToKhac,
 
                 Nganh_Mt_MaNganh = model.NganhMaster.Nganh_Mt_MaNganh,
                 Nganh_Mt_TenNganh = model.NganhMaster.Nganh_Mt_TenNganh,

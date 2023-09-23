@@ -116,7 +116,7 @@ namespace HDU_AppXetTuyen.Models
         public string BangDH { get; set; }
         public string BangDiemDH { get; set; }
         public string GiayKhamSucKhoe { get; set; }
-        public string Anh4x6 { get; set; }
+        public string TuiAnh4x6 { get; set; }
         public string GiayMienNgoaiNgu { get; set; }
         public string GiayToKhac { get; set; }
       
