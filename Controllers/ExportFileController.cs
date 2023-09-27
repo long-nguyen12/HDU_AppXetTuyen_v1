@@ -78,8 +78,9 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_DCNhanGiayBao>>", thiSinhInfo.ThiSinh_DCNhanGiayBao);
 
                 // Xử lý học lực và hạnh kiểm
-                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_HB_XepLoaiHocLuc_12);
-                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_HB_XepLoaiHanhKiem_12);
+                //Minh cần sửa
+                string hocluc =  getHocLucById((int)thiSinhInfo.ThiSinh_HocLucLop12);
+                string hanhkiem =  getHanhKiemById((int)thiSinhInfo.ThiSinh_HanhKiemLop12);
                 document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
                 document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
 
@@ -234,8 +235,9 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_DCNhanGiayBao>>", thiSinhInfo.ThiSinh_DCNhanGiayBao);
 
                 // Xử lý học lực và hạnh kiểm
-                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
-                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                string hocluc = getHocLucById((int)thiSinhInfo.ThiSinh_HocLucLop12);
+                string hanhkiem = getHanhKiemById((int)thiSinhInfo.ThiSinh_HanhKiemLop12);
+               
                 document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
                 document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
 
@@ -334,8 +336,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_DCNhanGiayBao>>", thiSinhInfo.ThiSinh_DCNhanGiayBao);
 
                 // Xử lý học lực và hạnh kiểm
-                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
-                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                string hocluc = getHocLucById((int)thiSinhInfo.ThiSinh_HocLucLop12);
+                string hanhkiem = getHanhKiemById((int)thiSinhInfo.ThiSinh_HanhKiemLop12);
                 document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
                 document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
 
@@ -434,8 +436,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_DCNhanGiayBao>>", thiSinhInfo.ThiSinh_DCNhanGiayBao);
 
                 // Xử lý học lực và hạnh kiểm
-                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_XepLoaiHocLuc_12);
-                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_XepLoaiHanhKiem_12);
+                string hocluc = getHocLucById((int)thiSinhInfo.ThiSinh_HocLucLop12);
+                string hanhkiem = getHanhKiemById((int)thiSinhInfo.ThiSinh_HanhKiemLop12);
                 document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
                 document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
 
@@ -503,7 +505,7 @@ namespace HDU_AppXetTuyen.Controllers
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
             // Từ id thí sinh lấy ra tất cả nguyện vọng đăng ký xét tuyển của thí sinh
             var listDkxt = db.DangKyXetTuyenKQTQGs.Where(x => x.ThiSinh_ID == idThiSinhInt).OrderBy(x => x.Dkxt_KQTQG_NguyenVong).ToArray();
-
+           
             int idKhuVucTS = (int)thiSinhInfo.KhuVuc_ID;
             // Từ khu vực id lấy ra tên khu vực
             var tenKhuVuc = db.KhuVucs.Find(idKhuVucTS).KhuVuc_Ten;
@@ -532,8 +534,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_DCNhanGiayBao>>", thiSinhInfo.ThiSinh_DCNhanGiayBao);
 
                 // Xử lý học lực và hạnh kiểm
-                string hocluc = getHocLucById((int)listDkxt[0].Dkxt_KQTQG_XepLoaiHocLuc_12);
-                string hanhkiem = getHanhKiemById((int)listDkxt[0].Dkxt_KQTQG_XepLoaiHanhKiem_12);
+                string hocluc = getHocLucById((int)thiSinhInfo.ThiSinh_HocLucLop12);
+                string hanhkiem = getHanhKiemById((int)thiSinhInfo.ThiSinh_HanhKiemLop12);
                 document.ReplaceText("<<ThiSinh_HocLuc12>>", hocluc);
                 document.ReplaceText("<<ThiSinh_HanhKiem12>>", hanhkiem);
 
@@ -639,7 +641,7 @@ namespace HDU_AppXetTuyen.Controllers
             // Từ idDkxt lấy ra thông tin thí sinh
             var thiSinhInfo = db.ThiSinhDangKies.Find(idThiSinhInt);
             // Từ id thí sinh lấy ra nguyện vọng 1 của thí sinh
-            var nv1_dkxt = db.DangKyDuThiNangKhieus.Where(x => x.ThiSinh_ID == idThiSinhInt && x.Dkdt_NK_NguyenVong == 1);
+            var nv1_dkxt = db.DangKyDuThiNangKhieus.Where(x => x.ThiSinh_ID == idThiSinhInt);
 
             // từ id ngành lấy ra mã ngành và tên ngành
             var maNganh = db.Nganhs.Where(x => x.Nganh_ID == nv1_dkxt.FirstOrDefault().Nganh_ID).FirstOrDefault().Nganh_MaNganh;
@@ -821,8 +823,6 @@ namespace HDU_AppXetTuyen.Controllers
                     return " ";
             }
         }
-
-
         public string getHocLucById(int id)
         {
             switch (id)
@@ -839,7 +839,6 @@ namespace HDU_AppXetTuyen.Controllers
                     return " ";
             }
         }
-
         public string getHanhKiemById(int id)
         {
             switch (id)

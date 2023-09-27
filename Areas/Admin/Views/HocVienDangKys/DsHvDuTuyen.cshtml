@@ -4,7 +4,6 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin_Master.cshtml";
 }
-
 <style>
     th, td {
         white-space: nowrap;
@@ -22,6 +21,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <i class=""></i>
                         <span>Quản lý danh mục dự tuyển</span>
                     </div>
                 </div>
@@ -49,8 +49,8 @@
                     })
                 </script>
                 <div>
-                    <a class="btn btn-light btn-sm" id="bt_collapse_show" style=" border-radius:3px; color:blue">Xem thêm</a>
-                    <a class="btn btn-light btn-sm" id="bt_collapse_hide" style="display: none; border-radius: 3px; color: blue">Thu gọn</a>
+                    <a class="btn btn-light btn-sm" id="bt_collapse_show" style=" border-radius:3px; color:blue"><i data-feather="chevron-down" style="vertical-align:middle!important"></i></a>
+                    <a class="btn btn-light btn-sm" id="bt_collapse_hide" style="display: none; border-radius: 3px; color: blue"><i data-feather="chevron-up" style="vertical-align:middle!important"></i></a>
                     <script>
                         $(document).ready(function () {
                             $('#bt_collapse_show').click(function () {
@@ -68,13 +68,37 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row g-1" id="div_thongtin_them" style="display:none">
-                    <div class="col-xl-3 col-12"><span>- Ngành khoa học máy tính: 1 học viên</span></div>
-                    <div class="col-xl-3 col-12"><span>- Ngành Địa lý: 1 học viên</span></div>
-                    @*<div class="col-xl-3 col-12"><span>- Ngành Khoa học cây trồng: 10 học viên</span></div>
-                    <div class="col-xl-3 col-12"><span>- Ngành Khoa học cây trồng: 10 học viên</span></div>*@
+                <div class="row g-1 col-12" id="div_thongtin_them" style="display:none">
+                    <div id="div_data_thongke" class="row col-12"></div>
                     <hr class="mt-2 mb2" />
                 </div>
+
+                <script>
+                    $(document).ready(function () {
+                        ShowData_ThongKe();
+                    });
+                    function ShowData_ThongKe() {
+                        $.ajax({
+                            url: "/HocVienDangKys/HocVienDuTuyen_ThongKe/",
+                            type: "GET",
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (res) {
+                                console.log(res);
+                                if (res.success) {
+                                    var data_thongke = res.data;
+                                    for (index_data = 0; index_data < data_thongke.length; index_data++) {
+                                        var str_div = `<div class="col-lg-3 col-12"><span>Ngành: ${data_thongke[index_data].ThongKe_TenNganh}/ ${data_thongke[index_data].ThongKe_SoLuong} hv</span></div>`;
+                                        $('#div_data_thongke').append(str_div);
+                                    }
+                                }
+                            },
+                            error: function () {
+                                console.log("Lỗi");
+                            }
+                        });
+                    }
+                </script>
+
                 @using (Html.BeginForm("DsHvDuTuyen", "HocVienDangKys", FormMethod.Get))
                 {
                     <div class="row g-1">
@@ -96,36 +120,20 @@
 
                         <div class="col-xxl-2 col-xl-12">
                             <div class="d-inline-flex flex-nowrap align-items-center">
-                                <button class="btn btn-outline-primary bd-rd text-nowrap" id="bt_search" style="margin-right:4px">Lọc</button>
-                                <a class="btn btn-outline-secondary bd-rd text-nowrap " id="bt_reset" href="@Url.Action("DsHvDuTuyen", "HocVienDangKys")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
-                                <a class="btn btn-outline-primary bd-rd  text-nowrap" id="bt_export_excel2" href="@Url.Action("ExportHvDKDuTuyen", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
+                                <button class="btn btn-outline-primary bd-rd text-nowrap" id="bt_search" style="margin-right:4px" title="Lọc dữ liệu"><i data-feather="filter" style="vertical-align:middle!important"></i></button>
+                                <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_reset" href="@Url.Action("DsHvDuTuyen", "HocVienDangKys")" style="margin-right:4px;" title="Tải lại dữ liệu"><i data-feather="rotate-ccw" style="vertical-align:middle!important"></i></a>
+                                <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_extend" style="margin-right:4px; display:none"><i data-feather="chevron-down" style="vertical-align:middle!important"></i></a>
+                                <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_collapse" style="margin-right: 4px; display: none"><i data-feather="chevron-up" style="vertical-align:middle!important"></i></a>
+                                <a class="btn btn-outline-primary bd-rd  text-nowrap" id="bt_export_excel" style="padding-right:6px; padding-left:6px" title="Xuất dữ liệu ra tệp excel"><i data-feather="download" style="vertical-align:middle!important"></i> Excel</a>
+
                                 <script>
                                     $(document).ready(function () {
                                         $('#bt_export_excel').click(function () {
-                                            var _filteriDotxt = $('#filteriDotxt').val();
-                                            var _searchString = $('#searchString').val();
-                                            var data = {
-                                                FilteriDotxt: _filteriDotxt,
-                                                SearchString: _searchString,
-                                            }
-                                            console.log(data)
-                                            $.ajax({
-                                                url: "/ExportHvDKDuTuyen/ExportHvDKDuTuyen/",
-                                                data: JSON.stringify(data),
-                                                type: "GET",
-                                                contentType: 'application/json;charset=utf-8',
-                                                dataType: 'json',
-                                                async: false,
-                                                success: function (response) {
-                                                    console.log(response)
-
-                                                },
-                                                error: function (errormessage) {
-                                                    console.log(errormessage.responseText);
-                                                }
-                                            });
+                                            let queryString_export = window.location.search;
+                                            window.location.href = "/Admin/ExportDatas/ExportHocVienDuTuyen" + queryString_export;
                                         });
                                     });
+
                                 </script>
                             </div>
                         </div>
@@ -142,8 +150,7 @@
                                             @Html.ActionLink("Họ, tên đệm", "DsHvDuTuyen", "HocVienDangKys",
                                                     new
                                                     {
-
-                                                        filteriNganh = ViewBag.NganhFilteri,
+                                                        filteriNganhHoc = ViewBag.NganhFilteri,
                                                         filteriLePhi = ViewBag.LePhiFilteri,
                                                         filteriHoSo = ViewBag.HoSoFilteri,
                                                         searchString = ViewBag.SearchString,
@@ -156,7 +163,7 @@
                                             @Html.ActionLink("Tên", "DsHvDuTuyen", "HocVienDangKys",
                                                    new
                                                    {
-                                                       filteriNganh = ViewBag.NganhFilteri,
+                                                       filteriNganhHoc = ViewBag.NganhFilteri,
                                                        filteriLePhi = ViewBag.LePhiFilteri,
                                                        filteriHoSo = ViewBag.HoSoFilteri,
                                                        searchString = ViewBag.SearchString,
@@ -172,7 +179,7 @@
                                             @Html.ActionLink("Mã, Ngành học", "DsHvDuTuyen", "HocVienDangKys",
                                                  new
                                                  {
-                                                     filteriNganh = ViewBag.NganhFilteri,
+                                                     filteriNganhHoc = ViewBag.NganhFilteri,
                                                      filteriLePhi = ViewBag.LePhiFilteri,
                                                      filteriHoSo = ViewBag.HoSoFilteri,
                                                      searchString = ViewBag.SearchString,
@@ -192,10 +199,10 @@
                                             @Html.DisplayName("Ngày đăng ký")
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Số tham chiếu", "DsHvDuTuyen", "HocVienDangKys",
+                                            @Html.ActionLink("Theo dõi nộp phí", "DsHvDuTuyen", "HocVienDangKys",
                                                  new
                                                  {
-                                                     filteriNganh = ViewBag.NganhFilteri,
+                                                     filteriNganhHoc = ViewBag.NganhFilteri,
                                                      filteriLePhi = ViewBag.LePhiFilteri,
                                                      filteriHoSo = ViewBag.HoSoFilteri,
                                                      searchString = ViewBag.SearchString,
@@ -206,11 +213,10 @@
 
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Hồ sơ hv", "DsHvDuTuyen", "HocVienDangKys",
+                                            @Html.ActionLink("Theo dõi hồ sơ HV", "DsHvDuTuyen", "HocVienDangKys",
                                                  new
                                                  {
-
-                                                     filteriNganh = ViewBag.NganhFilteri,
+                                                     filteriNganhHoc = ViewBag.NganhFilteri,
                                                      filteriLePhi = ViewBag.LePhiFilteri,
                                                      filteriHoSo = ViewBag.HoSoFilteri,
                                                      searchString = ViewBag.SearchString,
@@ -258,7 +264,21 @@
                                                 }
                                             </td>
                                             <td>
-                                                @Html.DisplayName("Đúng CN")
+                                                @{
+                                                    if (item.HocVienDangKy.HocVien_BoTucKienThuc == 1)
+                                                    {
+                                                        @Html.DisplayName("Chưa học")
+                                                    }
+                                                    if (item.HocVienDangKy.HocVien_BoTucKienThuc == 2)
+                                                    {
+                                                        @Html.DisplayName("Đã học")
+                                                    }
+                                                    if (item.HocVienDangKy.HocVien_BoTucKienThuc == 3)
+                                                    {
+                                                        @Html.DisplayName("CN đúng")
+                                                    }
+                                                }
+
                                             </td>
                                             <td>
                                                 @{DateTime dateTime = DateTime.Parse(item.DuTuyen_NgayDangKy);
@@ -303,8 +323,7 @@
                                             <td style="text-align:center; vertical-align:middle" class="text-nowrap">
                                                 <a href="@Url.Action("DsHvDuTuyenKiemTraHoSo", "HocVienDangKys", new
                                                  {
-
-                                                      filteriNganh = ViewBag.NganhFilteri,
+                                                      filteriNganhHoc = ViewBag.NganhFilteri,
                                                       filteriLePhi = ViewBag.LePhiFilteri,
                                                       filteriHoSo = ViewBag.HoSoFilteri,
                                                       searchString = ViewBag.SearchString,
@@ -381,7 +400,7 @@
                             Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
                             @Html.PagedListPager(Model, page => Url.Action("DsHvDuTuyen", new
                                {
-                                   filteriNganh = ViewBag.NganhFilteri,
+                                   filteriNganhHoc = ViewBag.NganhFilteri,
                                    filteriLePhi = ViewBag.LePhiFilteri,
                                    filteriHoSo = ViewBag.HoSoFilteri,
                                    searchString = ViewBag.SearchString,

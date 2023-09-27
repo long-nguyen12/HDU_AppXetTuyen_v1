@@ -42,14 +42,14 @@
             success: function (res) {
                 var data = res.data;
                 console.log(data);
-              
+
                 $('#HocVien_HoDem').val(data.HocVien_HoDem);
                 $('#HocVien_Ten').val(data.HocVien_Ten);
 
                 if (data.HocVien_GioiTinh == 1) {
-                    $('#radioNam').attr('checked', 'checked');                  
+                    $('#radioNam').attr('checked', 'checked');
                 } else if (data.HocVien_GioiTinh == 0) {
-                    $('#radioNu').attr('checked', 'checked');                   
+                    $('#radioNu').attr('checked', 'checked');
                 }
                 $('#HocVien_DanToc').val(data.HocVien_DanToc);
                 $('#HocVien_NgaySinh').val(data.HocVien_NgaySinh);
@@ -65,9 +65,9 @@
                 $('#HocVien_DiaChiLienHe').val(data.HocVien_DiaChiLienHe);
 
                 if (data.HocVien_LoaiCB == 1) {
-                    $('#HocVien_LoaiCB_BienChe').attr('checked', 'checked');                 
+                    $('#HocVien_LoaiCB_BienChe').attr('checked', 'checked');
                 } else if (data.HocVien_LoaiCB == 0) {
-                    $('#HocVien_LoaiCB_HopDong').attr('checked', 'checked');                   
+                    $('#HocVien_LoaiCB_HopDong').attr('checked', 'checked');
                 }
 
                 $('#HocVien_TenDonViCongTac').val(data.HocVien_TenDonViCongTac);
@@ -131,6 +131,16 @@
                     $('#radioDTDT_TSTuDo').attr('checked', 'checked');
                 }
                 $('#Select_HocVien_BoTucKienThuc').val(data.HocVien_BoTucKienThuc);
+                $('#HocVien_SoHoSo').val(data.HocVien_SoHoSo);
+
+                if (data.Hv_PhieuDangKyDuThi.trim() === '') { $('#checkbox_check_phieudangky').removeAttr('checked', 'checked'); }              
+                if (data.Hv_SoYeuLyLich.trim() === '') { $('#checkbox_check_syll').removeAttr('checked', 'checked'); }                
+                if (data.Hv_BangDH.trim() === '') { $('#checkbox_check_bangdaihoc').removeAttr('checked', 'checked'); }               
+                if (data.Hv_BangDiemDH.trim() === '') { $('#checkbox_check_bangdiem').removeAttr('checked', 'checked'); }             
+                if (data.Hv_GiayKhamSucKhoe.trim() === '') { $('#checkbox_check_giaykhamsk').removeAttr('checked', 'checked'); }
+                if (data.Hv_TuiAnh4x6.trim() === '') { $('#checkbox_check_anh4x6').removeAttr('checked', 'checked'); }
+                if (data.Hv_GiayMienNgoaiNgu.trim() === '') { $('#checkbox_check_ccvanbangnn').removeAttr('checked', 'checked'); }
+                if (data.Hv_GiayToKhac.trim() === '') { $('#checkbox_check_mckhac').removeAttr('checked', 'checked'); }                     
             },
             error: function () {
                 console.log("Lỗi");
@@ -324,7 +334,25 @@
                                 <tr>
                                     <td>
                                         <div class="row g-1">
-                                            <div class="col-lg-12 col-12 ">
+                                            <div class="col-lg-6 col-12 ">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12 mt-1 mb-2">Đối tượng dự thi</label>
+                                                    <div class="col-md-12">
+                                                        <div class="d-inline-flex flex-nowrap">
+                                                            <div class="form-check align-items-center">
+                                                                <input class="form-check-input" type="radio" id="radioDTDT_CuDiHoc" name="HocVien_DoiTuongDuThi">
+                                                                <label class="form-check-label" for="radioDTDT_CuDiHoc">CQ cử đi học</label>
+                                                            </div>
+                                                            <div class="form-check align-items-center" style="margin-left:10px">
+                                                                <input class="form-check-input" type="radio" id="radioDTDT_TSTuDo" name="HocVien_DoiTuongDuThi">
+                                                                <label class="form-check-label" for="radioDTDT_TSTuDo">TS tự do</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span id="Error_Rgt_HocVien_DoiTuongDuThi" class="small mb-1 text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-12 ">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Hiện là cán bộ</label>
                                                     <div class="col-md-12 mt-2">
@@ -530,7 +558,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 col-12">
+                                            <div class="col-lg-7 col-12">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12">Định hướng CTĐT</label>
                                                     <div class="col-md-12  mb-1 mt-1">
@@ -566,7 +594,7 @@
                                                     <span id="Error_Rgt_HocVien_DKDTNgoaiNgu" class="small mb-1 text-danger"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-7 col-12 mt-2">
+                                            <div class="col-lg-12 col-12 mt-2">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12" for="HocVien_VanBangNgoaiNgu">Tên CC/VB ngoại ngữ đã học</label>
                                                     <div class="col-md-12">
@@ -575,25 +603,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-7 col-12 ">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12 mt-1 mb-2">Đối tượng dự thi</label>
-                                                    <div class="col-md-12">
-                                                        <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center">
-                                                                <input class="form-check-input" type="radio" id="radioDTDT_CuDiHoc" name="HocVien_DoiTuongDuThi">
-                                                                <label class="form-check-label" for="radioDTDT_CuDiHoc">CQ cử đi học</label>
-                                                            </div>
-                                                            <div class="form-check align-items-center" style="margin-left:10px">
-                                                                <input class="form-check-input" type="radio" id="radioDTDT_TSTuDo" name="HocVien_DoiTuongDuThi">
-                                                                <label class="form-check-label" for="radioDTDT_TSTuDo">TS tự do</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <span id="Error_Rgt_HocVien_DoiTuongDuThi" class="small mb-1 text-danger"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5 col-12 ">
+
+                                            <div class="col-lg-7 col-7 ">
                                                 <div class="form-group">
                                                     <label class="control-label col-md-12" for="Select_HocVien_BoTucKienThuc">Học BS kiến thức</label>
                                                     <div class="col-md-12">
@@ -604,6 +615,15 @@
                                                             <option value="3">CN đúng</option>
                                                         </select>
                                                         <span id="Error_Rgt_HocVien_BoTucKienThuc_Select" class="small mb-1 text-danger"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-5">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-12" for="HocVien_SoHoSo">Số hồ sơ</label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control text-box single-line" id="HocVien_SoHoSo" name="HocVien_SoHoSo" type="text" />
+                                                        <span id="Error_Rgt_HocVien_SoHoSo" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -626,7 +646,14 @@
                                             <div class="row g-1">
                                                 <div class="col-lg-12 col-12">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12" for="File_HocVien_SoYeuLyLich">Sơ yếu lý lịch</label>
+                                                        <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                            <div class="form-check align-items-center col-md-12">
+                                                                <input class="form-check-input" type="checkbox" id="checkbox_check_syll" name="checkbox_check_syll" checked>
+                                                                <label class="form-check-label" for="checkbox_check_syll" style="color:blue;">Sơ yếu lý lịch</label>
+                                                            </div>
+                                                        </div>
+
+                                                        @*<label class="control-label col-md-12" for="File_HocVien_SoYeuLyLich">Sơ yếu lý lịch</label>*@
                                                         <div class="col-md-12">
                                                             <input class="form-control text-box single-line" id="File_HocVien_SoYeuLyLich" name="File_HocVien_SoYeuLyLich" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             <span id="Error_Rgt_File_HocVien_SoYeuLyLich" class="small mb-1 text-danger"></span>
@@ -641,7 +668,13 @@
 
                                                 <div class="col-lg-12 col-12">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12" for="File_HocVien_MCBangDaiHoc">Minh chứng bằng đại học</label>
+                                                        <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                            <div class="form-check align-items-center col-md-12">
+                                                                <input class="form-check-input" type="checkbox" id="checkbox_check_bangdaihoc" name="checkbox_check_bangdaihoc" checked>
+                                                                <label class="form-check-label" for="checkbox_check_bangdaihoc" style="color:blue;">Minh chứng bằng đại học</label>
+                                                            </div>
+                                                        </div>
+                                                        @*<label class="control-label col-md-12" for="File_HocVien_MCBangDaiHoc">Minh chứng bằng đại học</label>*@
                                                         <div class="col-md-12">
                                                             <input class="form-control text-box single-line" id="File_HocVien_MCBangDaiHoc" name="File_HocVien_MCBangDaiHoc" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             <span id="Error_Rgt_File_HocVien_MCBangDaiHoc" class="small mb-1 text-danger"></span>
@@ -655,7 +688,13 @@
                                                 </div>
                                                 <div class="col-lg-12 col-12">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12" for="File_HocVien_MCBangDiem">Minh chứng bảng điểm</label>
+                                                        <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                            <div class="form-check align-items-center col-md-12">
+                                                                <input class="form-check-input" type="checkbox" id="checkbox_check_bangdiem" name="checkbox_check_bangdiem" checked>
+                                                                <label class="form-check-label" for="checkbox_check_bangdiem" style="color:blue;">Minh chứng bảng điểm</label>
+                                                            </div>
+                                                        </div>
+                                                        @*<label class="control-label col-md-12" for="File_HocVien_MCBangDiem">Minh chứng bảng điểm</label>*@
                                                         <div class="col-md-12">
                                                             <input class="form-control text-box single-line" id="File_HocVien_MCBangDiem" name="File_HocVien_MCBangDiem" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             <span id="Error_Rgt_File_HocVien_MCBangDiem" class="small mb-1 text-danger"></span>
@@ -669,7 +708,13 @@
                                                 </div>
                                                 <div class="col-lg-12 col-12">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12" for="File_HocVien_MCGiayKhamSucKhoe">Giấy khám sức khỏe</label>
+                                                        <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                            <div class="form-check align-items-center col-md-12">
+                                                                <input class="form-check-input" type="checkbox" id="checkbox_check_giaykhamsk" name="checkbox_check_giaykhamsk" checked>
+                                                                <label class="form-check-label" for="checkbox_check_giaykhamsk" style="color:blue;">Giấy khám sức khỏe</label>
+                                                            </div>
+                                                        </div>
+                                                        @*<label class="control-label col-md-12" for="File_HocVien_MCGiayKhamSucKhoe">Giấy khám sức khỏe</label>*@
                                                         <div class="col-md-12">
                                                             <input class="form-control" data-val="true" id="File_HocVien_MCGiayKhamSucKhoe" name="File_HocVien_MCGiayKhamSucKhoe" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             <span id="Error_Rgt_File_HocVien_MCGiayKhamSucKhoe" class="small mb-1 text-danger"></span>
@@ -701,7 +746,13 @@
                                             <div class="row mt-1">
                                                 <div class="col-lg-4 col-12">
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-12" for="File_HocVien_Anh46">Ảnh 4 x 6</label>
+                                                        <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                            <div class="form-check align-items-center col-md-12">
+                                                                <input class="form-check-input" type="checkbox" id="checkbox_check_anh4x6" name="checkbox_check_anh4x6" checked>
+                                                                <label class="form-check-label" for="checkbox_check_anh4x6" style="color:blue;">Ảnh 4 x 6</label>
+                                                            </div>
+                                                        </div>
+                                                        @*<label class="control-label col-md-12" for="File_HocVien_Anh46">Ảnh 4 x 6</label>*@
                                                         <div class="col-md-12">
                                                             <input class="form-control text-box single-line" id="File_HocVien_Anh46" name="File_HocVien_Anh46" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             <span id="Error_Rgt_File_HocVien_Anh46" class="small mb-1 text-danger"></span>
@@ -712,35 +763,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group mt-3">
-                                                        <label class="control-label col-md-12" for="File_HocVien_MCCCNN">Chứng chỉ/văn bằng ngoại ngữ</label>
-                                                        <div class="col-md-12">
-                                                            <input class="form-control text-box single-line" id="File_HocVien_MCCCNN" name="File_HocVien_MCCCNN" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                            <span id="Error_Rgt_File_HocVien_MCCCNN" class="small mb-1 text-danger"></span>
-                                                        </div>
-                                                        <div class="col-md-12 mt-0 mb-0">
-                                                            <div class="table-responsive">
-                                                                <table class="table mt-0 mb-0" id="FilesList_HocVien_MCCCNN_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_chungchingoaingu" /></th></tr></table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 col-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-12" for="File_HocVien_MCKhac">Minh chứng khác (nếu có)</label>
-                                                        <div class="col-md-12">
-                                                            <input class="form-control text-box single-line" id="File_HocVien_MCKhac" name="File_HocVien_MCKhac" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                            <span id="Error_Rgt_File_HocVien_MCKhac" class="small mb-1 text-danger"></span>
-                                                        </div>
-                                                        <div class="col-md-12 mt-0 mb-0">
-                                                            <div class="table-responsive">
-                                                                <table class="table mt-0 mb-0" id="FilesList_HocVien_MCKhac_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_minhchungkhac" /></th></tr></table>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-2">
+                                                    <div class="form-group mt-1">
                                                         <div class="col-md-12">
                                                             <div class="d-inline-flex flex-nowrap  align-items-center " style="color:blue; font-weight:bold">
                                                                 <label class="control-label" for="File_HocVien_MCKhac">Nộp lệ phí: </label>
@@ -766,40 +789,286 @@
 
                                                         </div>
                                                     </div>
+
                                                 </div>
 
                                                 <div class="col-lg-4 col-12">
-                                                    <div class="col-md-12 mt-3">
-                                                        <center>
-                                                            <div class="d-inline-flex flex-nowrap  align-items-center ">
-                                                                <div class="form-check align-items-center mt-2 mb-3">
-                                                                    <input class="form-check-input" type="checkbox" id="checkbox_check_mc" name="checkbox_check_mc">
-                                                                    <label class="form-check-label" for="checkbox_check_mc" style="color:blue; font-weight:bold">Không bắt buộc đính kèm các tệp minh chứng</label>
-                                                                </div>
+                                                    <div class="form-group">
+                                                        <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                            <div class="form-check align-items-center col-md-12">
+                                                                <input class="form-check-input" type="checkbox" id="checkbox_check_mckhac" name="checkbox_check_mckhac" checked>
+                                                                <label class="form-check-label" for="checkbox_check_mckhac" style="color:blue;">Minh chứng khác</label>
                                                             </div>
-                                                        </center>
+                                                        </div>
+                                                        @*<label class="control-label col-md-12" for="File_HocVien_MCKhac">Minh chứng khác (nếu có)</label>*@
+                                                        <div class="col-md-12">
+                                                            <input class="form-control text-box single-line" id="File_HocVien_MCKhac" name="File_HocVien_MCKhac" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                            <span id="Error_Rgt_File_HocVien_MCKhac" class="small mb-1 text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-12 mt-0 mb-0">
+                                                            <div class="table-responsive">
+                                                                <table class="table mt-0 mb-0" id="FilesList_HocVien_MCKhac_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_minhchungkhac" /></th></tr></table>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <center>
-                                                            <div class="col-md-12">
-                                                                <input type="submit" value="Đồng ý" class="btn btn-primary" id="bt_admin_update_hocvien" />
-                                                                <input type="submit" value="Hủy bỏ" class="btn btn-danger" id="bt_backup_to_list_hocvien" />
+                                                    <div class="form-group mt-2">
+                                                        <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                            <div class="form-check align-items-center col-md-12">
+                                                                <input class="form-check-input" type="checkbox" id="checkbox_check_ccvanbangnn" name="checkbox_check_ccvanbangnn" checked>
+                                                                <label class="form-check-label" for="checkbox_check_ccvanbangnn" style="color:blue;">Chứng chỉ/văn bằng ngoại ngữ</label>
                                                             </div>
-                                                        </center>
+                                                        </div>
+                                                        @*<label class="control-label col-md-12" for="File_HocVien_MCCCNN">Chứng chỉ/văn bằng ngoại ngữ</label>*@
+                                                        <div class="col-md-12">
+                                                            <input class="form-control text-box single-line" id="File_HocVien_MCCCNN" name="File_HocVien_MCCCNN" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                            <span id="Error_Rgt_File_HocVien_MCCCNN" class="small mb-1 text-danger"></span>
+                                                        </div>
+                                                        <div class="col-md-12 mt-0 mb-0">
+                                                            <div class="table-responsive">
+                                                                <table class="table mt-0 mb-0" id="FilesList_HocVien_MCCCNN_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_chungchingoaingu" /></th></tr></table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
+                                                <div class="col-lg-4 col-12">
+                                                    <center>
+                                                        <div class="col-12 mt-3">
+                                                            <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                                <div class="form-check align-items-center col-md-12">
+                                                                    <input class="form-check-input" type="checkbox" id="checkbox_check_phieudangky" name="checkbox_check_phieudangky" checked>
+                                                                    <label class="form-check-label" for="checkbox_check_phieudangky" style="color:blue;">Phiếu đăng ký</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </center>
+
+                                                    <center>
+                                                        <div class="col-12">
+                                                            <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                                <div class="form-check align-items-center mt-2 mb-3">
+                                                                    <input class="form-check-input" type="checkbox" id="checkbox_check_mc" name="checkbox_check_mc" checked>
+                                                                    <label class="form-check-label" for="checkbox_check_mc" style="color:red; font-weight:bold">Không bắt buộc đính kèm các tệp minh chứng</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </center>
+                                                    <center>
+                                                        <div class="col-md-12">
+                                                            <input type="submit" value="Đồng ý" class="btn btn-primary" id="bt_admin_update_hocvien" />
+                                                            <input type="submit" value="Hủy bỏ" class="btn btn-danger" id="bt_backup_to_list_hocvien" />
+                                                            @*<input type="submit" value="Lưu và tiếp tục thêm" class="btn btn-primary" id="bt_admin_add_hocvien" />
+                                                                <input type="submit" value="Quay lại trang danh sách" class="btn btn-secondary" id="bt_backup_to_list_hocvien" />*@
+                                                        </div>
+                                                    </center>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
                             </table>
                         </div>
                     </div>
+                    @*<div class="col-lg-4">
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th style="letter-spacing: -0.3px;">Hình ảnh các minh chứng giấy tờ <font color="red">(*)</font></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row g-1">
+                                                    <div class="col-lg-12 col-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-12" for="File_HocVien_SoYeuLyLich">Sơ yếu lý lịch</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control text-box single-line" id="File_HocVien_SoYeuLyLich" name="File_HocVien_SoYeuLyLich" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_SoYeuLyLich" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_SoYeuLyLich_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_soyeulylich" /></th></tr></table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12 col-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-12" for="File_HocVien_MCBangDaiHoc">Minh chứng bằng đại học</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control text-box single-line" id="File_HocVien_MCBangDaiHoc" name="File_HocVien_MCBangDaiHoc" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_MCBangDaiHoc" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_MCBangDaiHoc_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangdaihoc" /></th></tr></table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-12" for="File_HocVien_MCBangDiem">Minh chứng bảng điểm</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control text-box single-line" id="File_HocVien_MCBangDiem" name="File_HocVien_MCBangDiem" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_MCBangDiem" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_MCBangDiem_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangdiem" /></th></tr></table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-12" for="File_HocVien_MCGiayKhamSucKhoe">Giấy khám sức khỏe</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" data-val="true" id="File_HocVien_MCGiayKhamSucKhoe" name="File_HocVien_MCGiayKhamSucKhoe" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_MCGiayKhamSucKhoe" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_MCGiayKhamSucKhoe_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_giaykhamsuckhoe" /></th></tr></table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </div>
+                        </div>*@
+                    @*<div class="col-lg-12 mt-0">
+                            <div class="table-responsive">
+                                <table class="table  table-sm" style="width:98%" align="center">
+                                    <thead>
+                                        <tr>
+                                            <th><a style="display:none">a</a></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="row mt-1">
+                                                    <div class="col-lg-4 col-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-12" for="File_HocVien_Anh46">Ảnh 4 x 6</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control text-box single-line" id="File_HocVien_Anh46" name="File_HocVien_Anh46" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_Anh46" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_Anh46_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_anh4x6" /></th></tr></table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mt-3">
+                                                            <label class="control-label col-md-12" for="File_HocVien_MCCCNN">Chứng chỉ/văn bằng ngoại ngữ</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control text-box single-line" id="File_HocVien_MCCCNN" name="File_HocVien_MCCCNN" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_MCCCNN" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_MCCCNN_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_chungchingoaingu" /></th></tr></table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-12" for="File_HocVien_MCKhac">Minh chứng khác (nếu có)</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control text-box single-line" id="File_HocVien_MCKhac" name="File_HocVien_MCKhac" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_MCKhac" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_MCKhac_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_minhchungkhac" /></th></tr></table>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group mt-2">
+                                                            <div class="col-md-12">
+                                                                <div class="d-inline-flex flex-nowrap  align-items-center " style="color:blue; font-weight:bold">
+                                                                    <label class="control-label" for="File_HocVien_MCKhac">Nộp lệ phí: </label>
+                                                                    <div class="form-check align-items-center mt-1" id="div_gt_nam" style="margin-left:12px">
+                                                                        <input class="form-check-input" type="radio" id="radioDaNop" name="HocVien_NopLePhi" checked>
+                                                                        <label class="form-check-label" for="radioDaNop">Đã nộp</label>
+                                                                    </div>
+                                                                    <div class="form-check  align-items-center mt-1" id="div_gt_nu" style="margin-left:12px">
+                                                                        <input class="form-check-input" type="radio" id="radioChuaNop" name="HocVien_NopLePhi">
+                                                                        <label class="form-check-label" for="radioChuaNop">Chưa nộp</label>
+                                                                    </div>
+                                                                </div>
+                                                                <span id="Error_Rgt_HocVien_GioiTinh" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control text-box single-line" id="File_HocVien_MCKhac" name="File_HocVien_MCKhac" type="file" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span id="Error_Rgt_File_HocVien_MCKhac" class="small mb-1 text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-12 mt-0 mb-0">
+                                                                <div class="table-responsive">
+                                                                    <table class="table mt-0 mb-0" id="FilesList_HocVien_MCKhac_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_minhchungkhac" /></th></tr></table>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-12">
+                                                        <div class="col-md-12 mt-3">
+                                                            <center>
+                                                                <div class="d-inline-flex flex-nowrap  align-items-center ">
+                                                                    <div class="form-check align-items-center mt-2 mb-3">
+                                                                        <input class="form-check-input" type="checkbox" id="checkbox_check_mc" name="checkbox_check_mc">
+                                                                        <label class="form-check-label" for="checkbox_check_mc" style="color:blue; font-weight:bold">Không bắt buộc đính kèm các tệp minh chứng</label>
+                                                                    </div>
+                                                                </div>
+                                                            </center>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <center>
+                                                                <div class="col-md-12">
+                                                                    <input type="submit" value="Đồng ý" class="btn btn-primary" id="bt_admin_update_hocvien" />
+                                                                    <input type="submit" value="Hủy bỏ" class="btn btn-danger" id="bt_backup_to_list_hocvien" />
+                                                                </div>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </div>
+                        </div>*@
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     /* bắt đầu phần upload file client */
     var check_in_file_soyeulilich = false;
@@ -1055,7 +1324,7 @@
     /* phần xử lý sự kiện thêm dữ liệu  mới*/
     $(document).ready(function () {
         $('#bt_admin_update_hocvien').click(function () {
-            
+
             var flag = true;
             let _hocVien_HoDem = $('#HocVien_HoDem').val();
             let _hocVien_Ten = $('#HocVien_Ten').val();
@@ -1095,18 +1364,21 @@
             let _hocVien_VanBangNgoaiNgu = $('#HocVien_VanBangNgoaiNgu').val();
             let _hocVien_DoiTuongDuThi = -1;
 
+            let _hocVien_SoHoSo = $('#HocVien_SoHoSo').val();
+            if (!_hocVien_SoHoSo) { $('#Error_Rgt_HocVien_SoHoSo').text('Nhập số hồ sơ'); flag = false }
+
             if (!_hocVien_HoDem) { $('#Error_Rgt_HocVien_HoDem').text('Nhập họ, tên đệm'); flag = false }
             if (!_hocVien_Ten) { $('#Error_Rgt_HocVien_Ten').text('Nhập tên'); flag = false; }
             if (!_hocVien_NgaySinh) { $('#Error_Rgt_HocVien_NgaySinh').text('Nhập ngày sinh'); flag = false; }
             if (!_hocVien_DanToc) { $('#Error_Rgt_HocVien_DanToc').text('Nhập dân tộc '); flag = false; }
             if ($('#radioNam').is(':checked')) { _hocVien_GioiTinh = 1; } if ($('#radioNu').is(':checked')) { _hocVien_GioiTinh = 0; }
-
+            /*
             if (!_hocVien_CCCD_NgayCap) { $('#Error_Rgt_HocVien_CCCD_NgayCap').text('Nhập ngày cấp'); flag = false; }
             if (!_hocVien_Email) { $('#Error_Rgt_HocVien_Email').text('Nhập email'); flag = false; }
             else {
                 if (!validateEmail(_hocVien_Email)) { $('#Error_Rgt_HocVien_Email').text('Email sai định dạng'); flag = false; }
             }
-
+            */
             if (!_hocVien_DienThoai) { $('#Error_Rgt_HocVien_DienThoai').text('Nhập điện thoại'); flag = false; }
             if (_hocVien_BoTucKienThuc == 0) { $('#Error_Rgt_HocVien_BoTucKienThuc_Select').text('Chọn loại bổ sung kiến thức'); flag = false; }
             if (_hocVien_NoiSinh == 0) { $('#Error_Rgt_HocVien_NoiSinh').text('Chọn nơi sinh'); flag = false; }
@@ -1228,9 +1500,10 @@
             formData_All.append('so_file_anh4x6', so_file_anh4x6);
             formData_All.append('so_file_ccnn', so_file_ccnn);
             formData_All.append('so_file_mckhac', so_file_mckhac);
+            formData_All.append('_hocVien_CCCD', _hocVien_CCCD);
 
             $.ajax({
-                url: '/HocVienDangKies/DangKyDuTuyen_SDH_UploadFile_Multi',
+                url: '/Admin/HocVienDangKys/DangKyDuTuyen_SDH_UploadFile_Multi',
                 type: "POST",
                 contentType: false,
                 processData: false,
@@ -1239,13 +1512,14 @@
                 success: function (res) {
                     console.log("OK dã upload", res.success);
                     if (res.success == true) {
-                        _hocVien_SoYeuLyLich_Url = res.HocVien_SoYeuLyLich_url;
-                        _hocVien_MCBangDaiHoc_Url = res.HocVien_MCBangDaiHoc_url;
-                        _hocVien_MCBangDiem_Url = res.HocVien_MCBangDiem_url;
-                        _hocVien_MCGiayKhamSucKhoe_Url = res.HocVien_MCGiayKhamSucKhoe_url;
-                        _hocVien_Anh46_Url = res.HocVien_Anh46_url;
-                        _hocVien_MCCCNN_Url = res.HocVien_MCCCNN_url;
-                        _hocVien_MCKhac_Url = res.HocVien_MCKhac_url;
+                        var data_url = res.data;
+                        _hocVien_SoYeuLyLich_Url = data_url.HocVien_SoYeuLyLich_url;
+                        _hocVien_MCBangDaiHoc_Url = data_url.HocVien_MCBangDaiHoc_url;
+                        _hocVien_MCBangDiem_Url = data_url.HocVien_MCBangDiem_url;
+                        _hocVien_MCGiayKhamSucKhoe_Url = data_url.HocVien_MCGiayKhamSucKhoe_url;
+                        _hocVien_Anh46_Url = data_url.HocVien_Anh46_url;
+                        _hocVien_MCCCNN_Url = data_url.HocVien_MCCCNN_url;
+                        _hocVien_MCKhac_Url = data_url.HocVien_MCKhac_url;
                     } else if (res.success == false) { flag = false; }
 
                 },
@@ -1253,7 +1527,28 @@
                     console.log("OK dã upload", res);
                 }
             });
+            let _soyeuLyLich = 'x';
+            let _bangDH = 'x';
+            let _bangDiemDH = 'x';
+            let _giayKhamSucKhoe = 'x';
+            let _tuiAnh4x6 = 'x';
+            let _giayMienNgoaiNgu = 'x';
+            let _giayToKhac = 'x';
+            let _phieudangKyDuThi = 'x';
 
+            let _duTuyen_TrangThai = 9
+            let str_kiemduyet = '';
+            if (!$('#checkbox_check_phieudangky').is(':checked')) { _phieudangKyDuThi = ''; _duTuyen_TrangThai = 2; str_kiemduyet += '/ Thiếu ĐKDT' }
+            if (!$('#checkbox_check_syll').is(':checked')) { _soyeuLyLich = ''; _duTuyen_TrangThai = 2; str_kiemduyet += '/ Thiếu SYLL' }
+            if (!$('#checkbox_check_bangdaihoc').is(':checked')) { _bangDH = ''; _duTuyen_TrangThai = 2; str_kiemduyet += '/ Thiếu BĐH' }
+            if (!$('#checkbox_check_bangdiem').is(':checked')) { _bangDiemDH = ''; _duTuyen_TrangThai = 2; str_kiemduyet += '/ Thiếu BĐ' }
+            if (!$('#checkbox_check_giaykhamsk').is(':checked')) { _giayKhamSucKhoe = ''; _duTuyen_TrangThai = 2; str_kiemduyet += '/ Thiếu GKSK' }
+            if (!$('#checkbox_check_anh4x6').is(':checked')) { _tuiAnh4x6 = ''; _duTuyen_TrangThai = 2; str_kiemduyet += '/ Thiếu ảnh' }
+
+            if (!$('#checkbox_check_ccvanbangnn').is(':checked')) { _giayMienNgoaiNgu = ''; }
+            if (!$('#checkbox_check_mckhac').is(':checked')) { _giayToKhac = ''; }
+
+            $("#loadingModal").modal("show");
             var data_hv = {
                 HocVien_ID: _hocVien_HoDem,
                 HocVien_HoDem: _hocVien_HoDem,
@@ -1284,6 +1579,7 @@
                     HocVien_BangDaiHoc_HeDaoTao: _hocVien_BangDaiHoc_HeDaoTao,
                     HocVien_BangDaiHoc_NamTN: _hocVien_BangDaiHoc_NamTN,
                     HocVien_BangDaiHoc_LoaiTN: _hocVien_BangDaiHoc_LoaiTN,
+                    HocVien_BangDaiHoc_ThangDiem: _hocVien_BangDaiHoc_Select_ThangDiem,
                     HocVien_BangDaiHoc_DiemToanKhoa: _hocVien_BangDaiHoc_DiemToanKhoa,
                 }),
 
@@ -1301,23 +1597,40 @@
                     HocVien_Anh46: _hocVien_Anh46_Url,
                     HocVien_MCCCNN: _hocVien_MCCCNN_Url,
                     HocVien_MCKhac: _hocVien_MCKhac_Url,
+                    HocVien_SoHoSo: _hocVien_SoHoSo,
+                    DuTuyen_TrangThai: _duTuyen_TrangThai,
+                    DuTuyen_ThongBaoKiemDuyet: str_kiemduyet,
+                    DuTuyen_ThongTinHoSoMinhChung: JSON.stringify({
+                        PhieuDangKyDuThi: _phieudangKyDuThi,
+                        SoYeuLyLich: _soyeuLyLich,
+                        BangDH: _bangDH,
+                        BangDiemDH: _bangDiemDH,
+                        GiayKhamSucKhoe: _giayKhamSucKhoe,
+                        TuiAnh4x6: _tuiAnh4x6,
+                        GiayMienNgoaiNgu: _giayMienNgoaiNgu,
+                        GiayToKhac: _giayToKhac,
+                    }),
                 })
             }
 
 
             console.log(data_hv)
-            // return;
+            let queryString_toUpdate = window.location.search;
             $.ajax({
                 url: "/Admin/HocVienDangKys/AdUpdateHocVienJson/",
                 type: "POST",
                 contentType: 'application/json;charset=utf-8',
-                async: false,
+                /*  async: false,*/
                 data: JSON.stringify(data_hv),
                 success: function (res) {
                     if (res.success) {
+                        window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyenKiemTraHoSo" + queryString_toUpdate;
                         //let data_rt = res.data;
                         //console.log(data_rt);
-                        window.location.href = "/Admin/HocVienDangKys/AdminCreateHocVien";
+
+                    }
+                    else {
+                        $("#loadingModal").modal("hide");
                     }
                 },
                 error: function () { }
@@ -1326,7 +1639,7 @@
 
         $('#bt_backup_to_list_hocvien').click(function () {
             let queryString_toUpdate = window.location.search;
-            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen" + queryString_toUpdate;
+            window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyenKiemTraHoSo" + queryString_toUpdate;
         })
     })
 
@@ -1392,7 +1705,7 @@
     })
 
     /* Hàm hiển thị thông tin ngành vào dropdownlist */
-    $(document).ready(function () {       
+    $(document).ready(function () {
         $("#Select_HocVien_ChuyenNganhDuThi").change(function () {
             let id = $("#Select_HocVien_ChuyenNganhDuThi").val();
             if (id > 0) {
@@ -1459,7 +1772,7 @@
         })
     });
 
-    function ShowDataOnSelect_HocVienNoiSinh() {       
+    function ShowDataOnSelect_HocVienNoiSinh() {
         $.ajax({
             url: "/Admin/HocVienDangKys/GetTinhJson",
             type: "POST",

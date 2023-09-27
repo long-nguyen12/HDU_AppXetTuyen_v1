@@ -15,8 +15,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
     {
         private DbConnecttion db = new DbConnecttion();
 
-        // GET: Admin/NganhMasters
-      
         public ActionResult Index(int? page)
         {
             if (page == null) page = 1;
@@ -31,27 +29,50 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {          
             ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa");
             return View();
-        }
-
-        // POST: Admin/NganhMasters/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        }        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Nganh_Mt_ID,Nganh_Mt_MaNganh,Nganh_Mt_TenNganh,Nganh_Mt_NghienCuu_Ten,Nganh_Mt_NghienCuu_Ma,Khoa_ID,Nganh_Mt_TenKhoa,Nganh_Mt_TrangThai,Nganh_Mt_GhiChu")] NganhMaster nganhMaster)
         {
-            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa");
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa");      
+
             if (ModelState.IsValid)
             {
+                nganhMaster.Nganh_Mt_TenKhoa = db.Khoas.Where(x => x.Khoa_ID == nganhMaster.Khoa_ID).FirstOrDefault().Khoa_TenKhoa;
+
+                if (nganhMaster.Nganh_Mt_NghienCuu_Ma == 1)
+                {
+                    nganhMaster.Nganh_Mt_NghienCuu_Ten = "Ứng dụng";
+                }
+
+                if (nganhMaster.Nganh_Mt_NghienCuu_Ma == 2)
+                {
+                    nganhMaster.Nganh_Mt_NghienCuu_Ten = "Nghiên cứu";
+                }
+
+                if (nganhMaster.Nganh_Mt_NghienCuu_Ma == 3)
+                {
+                    nganhMaster.Nganh_Mt_NghienCuu_Ten = "Ứng dụng, Nghiên cứu";
+                }
+
                 db.NganhMasters.Add(nganhMaster);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+
+            //if (ModelState.IsValid)
+            //{
+
+            //    db.NganhMasters.Add(nganhMaster);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+
             return View(nganhMaster);
         }
 
-        // GET: Admin/NganhMasters/Edit/5
+     
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -63,12 +84,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa", nganhMaster.Khoa_ID);
             return View(nganhMaster);
         }
 
-        // POST: Admin/NganhMasters/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Nganh_Mt_ID,Nganh_Mt_MaNganh,Nganh_Mt_TenNganh,Nganh_Mt_NghienCuu_Ten,Nganh_Mt_NghienCuu_Ma,Khoa_ID,Nganh_Mt_TenKhoa,Nganh_Mt_TrangThai,Nganh_Mt_GhiChu")] NganhMaster nganhMaster)

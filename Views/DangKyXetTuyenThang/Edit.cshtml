@@ -24,7 +24,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Đăng ký tuyển thẳng theo quy định của trường (áp dụng cho học sinh đạt giải các môn học từ giải Ba trở lên)</span>                        
+                        <span id="sp_tieude">Đăng ký tuyển thẳng theo quy định của trường (áp dụng cho học sinh đạt giải các môn học từ giải Ba trở lên)</span>
                     </div>
                 </div>
 
@@ -32,91 +32,27 @@
         </div>
     </div>
 </header>
+<script>
+    $(document).ready(function () {
+        let sp_tieude = document.getElementById('sp_tieude');
+        function reportWindowSize() {
+            if (window.innerWidth <= 1200) {
+                sp_tieude.innerText = "Đăng ký tuyển thẳng (HS có giải trở lên)";
+            }
+            else {
+                sp_tieude.innerText = "Đăng ký tuyển thẳng theo quy định của trường (áp dụng cho học sinh giỏi đạt giải  các môn học từ giải Ba trở lên)";
+            }
+        }
+        window.onresize = reportWindowSize;
+    })
+</script>
 <div class="container-fluid px-12">
-    <div id="div_list_nguyenvong">
+ 
+    <div id="div_update_dk_nguyenvong">
         <div class="card card-header-actions">
             <div class="card-header">
-                Các nguyện vọng đã đăng ký
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-xxl-12">
-                        <div class="table-container">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style="vertical-align:middle;">Nguyện vọng</th>
-                                        <th style="vertical-align:middle;">Mã ngành - Ngành</th>
-                                        <th style="vertical-align: middle; text-align: center;">Môn đạt gải</th>
-                                        <th style="vertical-align: middle; text-align: center;">Loại giải</th>
-                                        <th style="vertical-align: middle; text-align: center;">Năm đạt giải</th>
-                                        @*<th style="vertical-align:middle;">Trạng thái</th>*@
-                                        <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody_list_nguyenvong">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xxl-12">
-                        <center>
-                            <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
-                            <a class="btn btn-outline-primary" id="bt_add_aspirations" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>
-                            <script>
-                                $(document).ready(function () {
-                                    let sp_tieude = document.getElementById('sp_tieude');
-                                    let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
-                                    let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
-
-                                    if (window.innerWidth <= 1200) {
-                                        sp_tieude.innerText = "Đăng ký tuyển thẳng (HS có giải trở lên)";
-                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
-                                        bt_them_nguyen_vong.innerHTML = "Thêm NV";
-
-                                    }
-                                    else {
-                                        sp_tieude.innerText = "Đăng ký tuyển thẳng theo quy định của trường (áp dụng cho học sinh giỏi đạt giải  các môn học từ giải Ba trở lên)";
-                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
-                                        bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-                                    }
-
-                                    function reportWindowSize() {
-                                        if (window.innerWidth <= 1200) {
-                                            sp_tieude.innerText = "Đăng ký tuyển thẳng (HS có giải trở lên)";
-                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
-                                            bt_them_nguyen_vong.innerHTML = "Thêm NV";
-
-                                        }
-                                        else {
-                                            sp_tieude.innerText = "Đăng ký tuyển thẳng theo quy định của trường (áp dụng cho học sinh giỏi đạt giải  các môn học từ giải Ba trở lên)";
-                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
-                                            bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-                                        }
-                                    }
-                                    window.onresize = reportWindowSize;
-                                })
-                            </script>
-                        </center>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xxl-12">
-                        <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
-                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
-                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="div_update_dk_nguyenvong" style="display: none">
-        <div class="card card-header-actions">
-            <div class="card-header">
-                Đăng ký nguyện vọng mới
-                <button class="btn-close" type="button" aria-label="Close" onclick="_bt_HuyBo_Dkxt_NVM_OnClick(0,0,0)"></button>
+               <span>Chỉnh sửa thông tin nguyện vọng đã đăng ký</span>
+                <button class="btn-close" type="button" aria-label="Close" onclick="bt_HuyBo_Dkxt_NVM_OnClick()"></button>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -173,7 +109,7 @@
                                         </div>
                                     </td>
                                 </tr>
-</table>
+                        </table>
                     </div>
                     <div class="col-xxl-4">
                         <div class="row mt-0 mb-1">
@@ -316,7 +252,7 @@
                                                                 </table>
                                                             </div>
                                                         </div>
-                                                    </div>                                                  
+                                                    </div>
                                                 </div>
 
                                                 <div class="row mt-0 md-0">
@@ -334,16 +270,16 @@
                                                                 </table>
                                                             </div>
                                                         </div>
-                                                    </div>                                                 
+                                                    </div>
                                                 </div>
 
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
                                                         <div class="col-xxl-12" style="text-align:center">
                                                             <input class="btn btn-primary" type="button" value="Đồng ý" onclick="SubmitData()" />
-                                                            <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="_bt_HuyBo_Dkxt_NVM_OnClick(0,0,0)" />
+                                                            <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="bt_HuyBo_Dkxt_NVM_OnClick()" />
                                                         </div>
-                                                    </div>                                                  
+                                                    </div>
                                                 </div>
 
                                             </td>
@@ -629,63 +565,9 @@
             }));
         });
     }
-    function ListAllNguyenVong() {
-        let _output = "";
-        $.ajax({
-            url: "/DangKyXetTuyenThang/GetAllNguyenVongs/",
-            type: 'GET',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                let result_all = response.data;
-                let thiSinh = response.thisinh;
-                if (thiSinh) {
-                    let hocLuc = thiSinh.ThiSinh_HocLucLop12;
-                    let hanhKiem = thiSinh.ThiSinh_HanhKiemLop12;
-                    let hocLucName = "";
-                    let hanhKiemName = "";
-                    if (hocLuc == 1) hocLucName = "Trung bình";
-                    else if (hocLuc == 2) hocLucName = "Khá";
-                    else if (hocLuc == 3) hocLucName = "Giỏi";
-                    else if (hocLuc == 4) hocLucName = "Xuất sắc";
-                    $('#Dkxt_XepLoaiHocLuc_12').val(hocLucName);
-
-                    if (hanhKiem == 1) hanhKiemName = "Yếu";
-                    else if (hanhKiem == 2) hanhKiemName = "Trung bình";
-                    else if (hanhKiem == 3) hanhKiemName = "Khá";
-                    else if (hanhKiem == 4) hanhKiemName = "Tốt";
-                    $('#Dkxt_XepLoaiHanhKiem_12').val(hanhKiemName);
-
-                    $('#span_Uutien_khuvuc').text(thiSinh.ThiSinh_UTKV);
-                    $('#span_Uutien_doituong').text(thiSinh.ThiSinh_UTDT);
-                }
-                if (!result_all || result_all.length == 0) {
-                    _output += '<tr><td colspan="7"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
-                }
-                else {
-                    $.each(result_all, function (i, result) {
-                       /* console.log(result)*/
-                        _output += '<tr>' +
-                            '<td style="vertical-align: middle !important "> NV' + result.Dkxt_NguyenVong + "&nbsp;"+`<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID})" ${i == 0 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID})" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
-                            '<td style="vertical-align: middle !important "> ' + result.Nganh_All.Nganh_GhiChu + ' </td>' +
-                            '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_MonDatGiai + '</td>' +
-                            '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_LoaiGiai + '</td>' +
-                            '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_NamDatGiai + '</td>' +
-                            /*'<td>' + '<a href="#" class="btn btn-outline-primary btn-sm" style="vertical-align: middle !important " title="Bấm chuột để xác nhận đăng ký nguyện vọng này"> <input type="checkbox" disabled /> Chưa xác nhận</a>' + '</td>' +*/
-                            '<td style="text-align: center; vertical-align: middle !important ">' + `<button class="btn btn-light btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID})"}>Sửa</button>&nbsp; <button class="btn btn-light btn-sm" onclick="deleteRecord(${result.Dkxt_ID})"}>Xoá</button>`  + '</td>' +
-                            '</tr>'
-                    });
-                }
-                document.getElementById('tbody_list_nguyenvong').innerHTML = _output;
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-    }
-    function UpdateRecordOnclick(Dkxt_ID) {
-        let str_url = '?dkxt_id=' + Dkxt_ID;
-        window.location.href = "/DangKyXetTuyenThang/Edit" + str_url;
+  
+    function bt_HuyBo_Dkxt_NVM_OnClick() {
+        window.location.href = "/DangKyXetTuyenThang/Index";
     }
     function GetAllKhoiNganh() {
         $.ajax({
@@ -724,7 +606,7 @@
                     let data = response.data
                     $.each(data, function (i, result) {
                         $('#Nganh_ID').append('<option value="' + result.Nganh_ID + '">' + result.NganhTenNganh + '</option>');
-                     });                  
+                     });
                 }
             },
             error: function (errormessage) {
@@ -816,136 +698,9 @@
         });
     }
 
-    function deleteRecord(_dkxt_id) {
-        $('#modal_tb_xoa').modal('show');
-        $('#key_delete_dkxt_id').val(_dkxt_id);
-    }
-
-    function deleteRecordConfirmed() {
-        let data = {
-            idDkxt: $('#key_delete_dkxt_id').val(),
-        };
-        $.ajax({
-            url: "/DangKyXetTuyenThang/Delete",
-            data: JSON.stringify(data),
-            type: 'POST',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (res) {
-                if (res.status == true) {
-                    ListAllNguyenVong();
-                    $('#modal_tb_xoa').modal('hide');
-                    showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
-                }
-                else {
-                    showToast("Lỗi", res.msg, "bg-success");
-                }
-
-            },
-            error: function (errormessage) {
-                showToast("Thông báo", "Lỗi! Chưa thể xóa theo yêu cầu!", "bg-success");
-            }
-        });
-    }
-
-    function deleteRecordCancel() {
-        $('#modal_tb_xoa').modal('hide');
-        $('#key_delete_dkxt_id').val('');
-    }
-
-    function bt_Update_on_table_Click(_dkxt_id) {
-        $('#key_delete_dkxt_id').val(_dkxt_id);
-        get_data_for_update_dkvn(_dkxt_id)
-
-    }
-
-    function bt_Insert_Dknv_on_divView_Click(khoinganh_key, nganh_key, tohopmon_key) {
-        document.getElementById('div_list_nguyenvong').style.display = "none";
-        document.getElementById('div_update_dk_nguyenvong').style.display = "inline";
-        key_dkxt_id_post = -1;
-    }
-
-    function _bt_HuyBo_Dkxt_NVM_OnClick(khoinganh_key, nganh_key, tohopmon_key) {
-        document.getElementById('div_list_nguyenvong').style.display = "inline";
-        document.getElementById('div_update_dk_nguyenvong').style.display = "none";
-        get_data_forselect_khoinganh_all(0, 0, 0);
-        key_dkxt_id_post = -1;
-    }
-
 
     function hideErrorMessage(input) {
         var errorContainer = input.next('.text-danger');
         errorContainer.text('');
-    }
-
-    $(document).ready(function () {
-        $('#bt_xuat_phieu_tong_hop_kq').click(function () {
-            window.location.href = '/ExportFile/DownloadFile_XetTuyenThang';
-        });
-    });
-
-    function upData(value) {
-        var obj = { idDkxt: value };
-        $.ajax({
-            url: '/DangKyXetTuyenThang/upData',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(obj),
-            contentType: 'application/json; charset=utf-8'
-        }).done(function (response) {
-            if (response.status == true) {
-                showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thành công!", "bg-success");
-                ListAllNguyenVong();
-            }
-            else {
-                showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thất bại!", "bg-error");
-            }
-        }).fail(function (error) {
-            showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thất bại!", "bg-error");
-        });
-    }
-
-    function downData(value) {
-        var obj = { idDkxt: value };
-        $.ajax({
-            url: '/DangKyXetTuyenThang/downData',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(obj),
-            contentType: 'application/json; charset=utf-8'
-        }).done(function (response) {
-            if (response.status == true) {
-                showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thành công!", "bg-success");
-                ListAllNguyenVong();
-            }
-            else {
-                showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thất bại!", "bg-error");
-            }
-        }).fail(function (error) {
-            showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thất bại!", "bg-error");
-        });
-    }
-
-    function deleteData_cuong(value) {
-        var obj = { idDkxt: value };
-        var result = confirm("Bạn chắc chắn xóa dữ liệu này?");
-        if (result) {
-            $.ajax({
-            url: '@Url.Action("Delete", "DangKyXetTuyenThang")',
-            type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(obj),
-            contentType: 'application/json; charset=utf-8'
-        }).done(function (response) {
-            if (response.status == true) {
-                showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
-                ListAllNguyenVong()
-            }
-            else {
-                showToast("Lỗi", "Chưa thể xóa theo yêu cầu!", "bg-success");
-                alert(response.msg);
-            }
-        }).fail(function (error) { alert(error.StatusText);});
-        }
     }
 </script>
