@@ -17,6 +17,9 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+    .btn, .form-select, .form-control {
+        border-radius: 3px;
+    }
 </style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
@@ -49,7 +52,7 @@
                                         <th style="vertical-align:middle;">Nguyện vọng</th>
                                         <th style="vertical-align:middle;">Mã ngành, Ngành</th>
                                         <th style="vertical-align:middle;">KQ nộp xét tuyển</th>
-                                        <th style="vertical-align:middle;">Đơn vị tổ chức thi</th>                                    
+                                        <th style="vertical-align:middle;">Đơn vị tổ chức thi</th>
                                         <th style="vertical-align:middle;">Kết quả</th>
                                         <th style="vertical-align:middle; text-align: center;">Ngày dự thi</th>
                                         <th style="vertical-align:middle; text-align:center; width:120px">Cập nhật</th>
@@ -157,19 +160,19 @@
                                         <div class="row" style="margin-top:15px">
                                             <div class="col-6 ">
                                                 <span id="span_Uutien_doituong"></span>
-                                              
+
                                             </div>
                                             <div class="col-6  ">
                                                 <span id="span_Uutien_khuvuc"></span>
-                                               
+
                                             </div>
                                         </div>
-                                       
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                       
+
                                         <div class="row">
                                             <div class="col-6">
                                                 <span> Học lực lớp 12</span>
@@ -214,7 +217,7 @@
                                             <td colspan="4">
                                                 <div class="row g-3 align-items-center">
                                                     <div class="col-4">
-                                                        <label  class="col-form-label">Kết quả:</label>
+                                                        <label class="col-form-label">Kết quả:</label>
                                                     </div>
                                                     <div class="col-8">
                                                         <input id="Dkxt_KetQuaDatDuoc" type="number" class="form-control" placeholder="Kết quả" value="" />
@@ -227,7 +230,7 @@
                                             <td colspan="4">
                                                 <div class="row g-3 align-items-center">
                                                     <div class="col-4">
-                                                        <label  class="col-form-label">Thang điểm:</label>
+                                                        <label class="col-form-label">Thang điểm:</label>
                                                     </div>
                                                     <div class="col-8">
                                                         <input id="Dkxt_TongDiem" type="number" class="form-control" placeholder="Thang điểm" value="" disabled />
@@ -260,7 +263,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-xxl-12">
-                                <div class="form-group mb-2">formFileMultiple
+                                <div class="form-group mb-2">                                  
                                     <label class="form-label">Chứng nhận</label>
                                     <div class="col-md-12">
                                         <input class="form-control" id="files_chungnhan" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
@@ -293,7 +296,7 @@
                                                 <div class="row mb-3">
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-2">
-                                                            <label  class="form-label">Học bạ </label>
+                                                            <label class="form-label">Học bạ </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
@@ -308,7 +311,7 @@
                                                     </div>
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-2">
-                                                            <label  class="form-label">Căn cước công dân</label>
+                                                            <label class="form-label">Căn cước công dân</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
@@ -338,7 +341,7 @@
                                                     </div>
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-2">
-                                                            <label  class="form-label">Minh chứng ưu tiên (Nếu có)</label>
+                                                            <label class="form-label">Minh chứng ưu tiên (Nếu có)</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
@@ -666,18 +669,18 @@
                 if (!result_all || result_all.length == 0) {
                     _output += '<tr><td colspan="7"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
-                 
+
                 else {
                     $.each(result_all, function (i, result) {
 
-                      _output += '<tr>' +
-                          '<td style="vertical-align: middle !important "> NV' + result.Dkxt_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
+                        _output += '<tr>' +
+                            '<td style="vertical-align: middle !important "> NV' + result.Dkxt_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
                             '<td style="vertical-align: middle !important "> ' + result.Nganh_All.Nganh_GhiChu + ' </td>' +
                             '<td style="vertical-align: middle !important; ">' + result.Dkxt_ChungChi_Ten.LoaiCC + '</td>' +
-                            '<td style="vertical-align: middle !important;  ">' + result.Dkxt_DonViToChuc + '</td>' +                            
+                            '<td style="vertical-align: middle !important;  ">' + result.Dkxt_DonViToChuc + '</td>' +
                             '<td style="vertical-align: middle !important;">' + result.Dkxt_KetQuaDatDuoc.toFixed(2) + "/" + result.Dkxt_TongDiem.toFixed(2) + '</td>' +
                             '<td style="vertical-align: middle !important; text-align:center; ">' + result.Dkxt_NgayDuThi + '</td>' +
-                            '<td style="text-align: center; vertical-align: middle !important ">' + `<button class="btn btn-outline-danger btn-sm" onclick="deleteRecord(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')"}>Xoá</button>` + '</td>' +
+                            '<td style="text-align: center; vertical-align: middle !important ">' + `<button class="btn btn-light btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID})"}>Sửa</button>&nbsp; <button class="btn btn-light btn-sm" onclick="deleteRecord(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')"}>Xoá</button>` + '</td>' +
                             '</tr>'
                     });
                 }
@@ -688,7 +691,10 @@
             }
         });
     }
-
+    function UpdateRecordOnclick(Dkxt_ID) {
+        let str_url = '?dkxt_id=' + Dkxt_ID;
+        window.location.href = "/DangKyXetTuyenKhac/DanhGiaEdit" + str_url;
+    }
     function GetAllKhoiNganh() {
         $.ajax({
             url: "/DangKyXetTuyenThang/GetAllKhoiNganh/",
@@ -858,8 +864,6 @@
             Dkxt_KetQuaDatDuoc: Dkxt_KetQuaDatDuoc,
             Dkxt_TongDiem: Dkxt_TongDiem,
             Dkxt_NgayDuThi: Dkxt_NgayDuThi,
-            Dkxt_XepLoaiHocLuc_12: Dkxt_XepLoaiHocLuc_12,
-            Dkxt_XepLoaiHanhKiem_12: Dkxt_XepLoaiHanhKiem_12,
             Dkxt_ToHopXT: Dkxt_ToHopXT,
             Dkxt_MinhChung_HB: fileData[0].savePath,
             Dkxt_MinhChung_CCCD: fileData[1].savePath,
@@ -868,7 +872,7 @@
             Dkxt_MinhChung_UuTien: fileData[4].savePath,
         }
         console.log(formData);
-      
+
         $.ajax({
             url: "/DangKyXetTuyenKhac/DanhGia",
             data: JSON.stringify(formData),

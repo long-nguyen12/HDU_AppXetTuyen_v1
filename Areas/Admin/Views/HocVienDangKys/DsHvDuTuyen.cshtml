@@ -264,7 +264,21 @@
                                                 }
                                             </td>
                                             <td>
-                                                @Html.DisplayName("Đúng CN")
+                                                @{
+                                                    if (item.HocVienDangKy.HocVien_BoTucKienThuc == 1)
+                                                    {
+                                                        @Html.DisplayName("Chưa học")
+                                                    }
+                                                    if (item.HocVienDangKy.HocVien_BoTucKienThuc == 2)
+                                                    {
+                                                        @Html.DisplayName("Đã học")
+                                                    }
+                                                    if (item.HocVienDangKy.HocVien_BoTucKienThuc == 3)
+                                                    {
+                                                        @Html.DisplayName("CN đúng")
+                                                    }
+                                                }
+
                                             </td>
                                             <td>
                                                 @{DateTime dateTime = DateTime.Parse(item.DuTuyen_NgayDangKy);

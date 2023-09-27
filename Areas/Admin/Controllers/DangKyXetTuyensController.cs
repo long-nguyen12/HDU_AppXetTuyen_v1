@@ -26,7 +26,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi tn thpt qg
         [AdminSessionCheck]
-        public ActionResult DkxtKQTthpt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
+        public ActionResult DkxtKQTthpt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi,
+            string filteriHoSo, string currentFilter, string searchString, int? page)
         {
             var model = (from ts in db.DangKyXetTuyenKQTQGs select ts)
                                             .OrderBy(x => x.ThiSinh_ID)
@@ -96,7 +97,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi lệ phí
-            var list_items_lephi = (from item in model select item.Dkxt_KQTQG_TrangThai).Distinct().ToList();
+            var list_items_lephi = (from item in model select item.Dkxt_KQTQG_TrangThai_KinhPhi).Distinct().ToList();
             List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
 
             foreach (var _item in list_items_lephi)
@@ -118,8 +119,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             if (!String.IsNullOrEmpty(filteriLePhi))
             {
-                int _dkxt_KQTQG_TrangThai = Int32.Parse(filteriLePhi);
-                model = model.Where(x => x.Dkxt_KQTQG_TrangThai == _dkxt_KQTQG_TrangThai);
+                int trangThai_LePhi = Int32.Parse(filteriLePhi);
+                model = model.Where(x => x.Dkxt_KQTQG_TrangThai_KinhPhi == trangThai_LePhi);
             }
             #endregion
 
@@ -209,18 +210,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             long dkxt_KQTQG_ID = entity.Dkxt_KQTQG_ID;
 
-            DangKyXetTuyenKQTQG model_diem = db.DangKyXetTuyenKQTQGs.Find(dkxt_KQTQG_ID);
+            DangKyXetTuyenKQTQG model_diem = db.DangKyXetTuyenKQTQGs.Include(x => x.ThiSinhDangKy).Where(x => x.Dkxt_KQTQG_ID == dkxt_KQTQG_ID).FirstOrDefault();
             string _xeploai_hocluc_12 = "";
-            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
-            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
-            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
-            if (model_diem.Dkxt_KQTQG_XepLoaiHocLuc_12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HocLucLop12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HocLucLop12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
 
             string _xeploai_hanhkiem_12 = "";
-            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
-            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
-            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
-            if (model_diem.Dkxt_KQTQG_XepLoaiHanhKiem_12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
+            if (model_diem.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
 
             // DiemThiGQMon khai báo trong  Model.LibraryUsers
             DiemThiGQMon _mondiem1 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M1);
@@ -334,7 +335,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi lệ phí
-            var list_items_lephi = (from item in model select item.Dkxt_HB_TrangThai).Distinct().ToList();
+            var list_items_lephi = (from item in model select item.Dkxt_HB_TrangThai_KinhPhi).Distinct().ToList();
             List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
 
             foreach (var _item in list_items_lephi)
@@ -357,7 +358,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (!String.IsNullOrEmpty(filteriLePhi))
             {
                 int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
-                model = model.Where(x => x.Dkxt_HB_TrangThai == _dkxt_TrangThai);
+                model = model.Where(x => x.Dkxt_HB_TrangThai_KinhPhi == _dkxt_TrangThai);
             }
             #endregion
 
@@ -446,18 +447,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             long dkxt_id = entity.Dkxt_HB_ID;
 
-            DangKyXetTuyenHB model_01 = db.DangKyXetTuyenHBs.Find(dkxt_id);
+            DangKyXetTuyenHB model_01 = db.DangKyXetTuyenHBs.Include(x => x.ThiSinhDangKy).Where(x => x.Dkxt_HB_ID == dkxt_id).FirstOrDefault();
             string _xeploai_hocluc_12 = "";
-            if (model_01.Dkxt_HB_XepLoaiHocLuc_12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
-            if (model_01.Dkxt_HB_XepLoaiHocLuc_12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
-            if (model_01.Dkxt_HB_XepLoaiHocLuc_12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
-            if (model_01.Dkxt_HB_XepLoaiHocLuc_12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
 
             string _xeploai_hanhkiem_12 = "";
-            if (model_01.Dkxt_HB_XepLoaiHanhKiem_12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
-            if (model_01.Dkxt_HB_XepLoaiHanhKiem_12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
-            if (model_01.Dkxt_HB_XepLoaiHanhKiem_12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
-            if (model_01.Dkxt_HB_XepLoaiHanhKiem_12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
 
             // DiemThiGQMon khai báo trong  Model.LibraryUsers
 
@@ -574,7 +575,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi lệ phí
-            var list_items_lephi = (from item in model select item.Dkxt_TrangThai).Distinct().ToList();
+            var list_items_lephi = (from item in model select item.Dkxt_TrangThai_KinhPhi).Distinct().ToList();
             List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
 
             foreach (var _item in list_items_lephi)
@@ -597,7 +598,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (!String.IsNullOrEmpty(filteriLePhi))
             {
                 int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
-                model = model.Where(x => x.Dkxt_TrangThai == _dkxt_TrangThai);
+                model = model.Where(x => x.Dkxt_TrangThai_KinhPhi == _dkxt_TrangThai);
             }
             #endregion
 
@@ -738,7 +739,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi lệ phí
-            var list_items_lephi = (from item in model select item.Dkxt_TrangThai).Distinct().ToList();
+            var list_items_lephi = (from item in model select item.Dkxt_TrangThai_KinhPhi).Distinct().ToList();
             List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
 
             foreach (var _item in list_items_lephi)
@@ -761,7 +762,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (!String.IsNullOrEmpty(filteriLePhi))
             {
                 int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
-                model = model.Where(x => x.Dkxt_TrangThai == _dkxt_TrangThai);
+                model = model.Where(x => x.Dkxt_TrangThai_KinhPhi == _dkxt_TrangThai);
             }
             #endregion
 
@@ -850,18 +851,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             long dkxt_id = entity.Dkxt_ID;
 
-            DangKyXetTuyenKhac model_01 = db.DangKyXetTuyenKhacs.Find(dkxt_id);
+            DangKyXetTuyenKhac model_01 = db.DangKyXetTuyenKhacs.Include(x =>x.ThiSinhDangKy).Where(x => x.Dkxt_ID == dkxt_id).FirstOrDefault();
             string _xeploai_hocluc_12 = "";
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
 
             string _xeploai_hanhkiem_12 = "";
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
 
             DbConnecttion dbhb = new DbConnecttion();
             var model_item = dbhb.DangKyXetTuyenKhacs.Where(x => x.Dkxt_ID == dkxt_id).ToList();
@@ -947,7 +948,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi lệ phí
-            var list_items_lephi = (from item in model select item.Dkxt_TrangThai).Distinct().ToList();
+            var list_items_lephi = (from item in model select item.Dkxt_TrangThai_KinhPhi).Distinct().ToList();
             List<StatusTracking> filteri_items_lephi = new List<StatusTracking>();
 
             foreach (var _item in list_items_lephi)
@@ -970,7 +971,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (!String.IsNullOrEmpty(filteriLePhi))
             {
                 int _dkxt_TrangThai = Int32.Parse(filteriLePhi);
-                model = model.Where(x => x.Dkxt_TrangThai == _dkxt_TrangThai);
+                model = model.Where(x => x.Dkxt_TrangThai_KinhPhi == _dkxt_TrangThai);
             }
             #endregion
 
@@ -1061,18 +1062,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             long dkxt_id = entity.Dkxt_ID;
 
-            DangKyXetTuyenKhac model_01 = db.DangKyXetTuyenKhacs.Find(dkxt_id);
+            DangKyXetTuyenKhac model_01 = db.DangKyXetTuyenKhacs.Include(x => x.ThiSinhDangKy).Where(x =>x.Dkxt_ID == dkxt_id).FirstOrDefault();
             string _xeploai_hocluc_12 = "";
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
-            if (model_01.Dkxt_XepLoaiHocLuc_12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Học lực 12: Xuất sắc"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 3) { _xeploai_hocluc_12 = "Học lực 12: Giỏi"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 2) { _xeploai_hocluc_12 = "Học lực 12: Khá"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hocluc_12 = "Học lực 12: Trung bình"; }
 
             string _xeploai_hanhkiem_12 = "";
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
-            if (model_01.Dkxt_XepLoaiHanhKiem_12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 4) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Tốt"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 3) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Khá"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 2) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Trung bình"; }
+            if (model_01.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
 
             DbConnecttion dbhb = new DbConnecttion();
             var model_item = dbhb.DangKyXetTuyenKhacs.Where(x => x.Dkxt_ID == dkxt_id).ToList();
@@ -1113,8 +1114,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
 
             var model = (from item in db.DangKyDuThiNangKhieus select item)
-                                        .OrderBy(x => x.ThiSinh_ID)
-                                        .ThenBy(x => x.Dkdt_NK_NguyenVong)
+                                        .OrderBy(x => x.ThiSinh_ID)                                       
                                         .ThenBy(x => x.Nganh.Nganh_TenNganh)
                                         .Include(x => x.ThiSinhDangKy)
                                         .Include(x => x.Nganh)
@@ -1138,17 +1138,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 {
                     model = model.Where(x => x.DotXT_ID == _Dotxt_ID);
                 }
-            }
-            #endregion
-
-            #region lọc dữ liệu theo nguyện vọng
-            var list_items_nv = (from item in model select (new { value_item = item.Dkdt_NK_NguyenVong.ToString(), text_item = "NV " + item.Dkdt_NK_NguyenVong.ToString() })).Distinct().ToList();
-            ViewBag.filteriNvong = new SelectList(list_items_nv.OrderBy(x => x.value_item).ToList(), "value_item", "text_item");
-            // thực hiện lọc theo nguyện vọng
-            if (!String.IsNullOrEmpty(filteriNvong))
-            {
-                int dkdt_NK_NguyenVong = Int32.Parse(filteriNvong);
-                model = model.Where(x => x.Dkdt_NK_NguyenVong == dkdt_NK_NguyenVong);
             }
             #endregion
 

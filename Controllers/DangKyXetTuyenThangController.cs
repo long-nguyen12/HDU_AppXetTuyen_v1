@@ -12,21 +12,7 @@ using System.Web.Mvc;
 
 namespace HDU_AppXetTuyen.Controllers
 {
-    public class Student
-    {
-        public string Nganh_ID { get; set; }
-        public string Dkxt_MonDatGiai { get; set; }
-        public string Dkxt_LoaiGiai { get; set; }
-        public string Dkxt_NamDatGiai { get; set; }
-        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
-        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
-        public string Dkxt_ToHopXT { get; set; }
-        public string Dkxt_MinhChung_HB { get; set; }
-        public string Dkxt_MinhChung_CCCD { get; set; }
-        public string Dkxt_MinhChung_Bang { get; set; }
-        public string Dkxt_MinhChung_Giai { get; set; }
-        public string Dkxt_MinhChung_UuTien { get; set; }
-    }
+  
     public class DangKyXetTuyenThangController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
@@ -37,7 +23,10 @@ namespace HDU_AppXetTuyen.Controllers
         {
             return View();
         }
-
+        public ActionResult Edit()
+        {
+            return View();
+        }
         public JsonResult GetAllKhoiNganh()
         {
             var khoinganhs = db.KhoiNganhs.Select(n => new
@@ -85,25 +74,24 @@ namespace HDU_AppXetTuyen.Controllers
                 {
                     KhoiNganh_Ten = n.Nganh.KhoiNganh.KhoiNganh_Ten,
                     Nganh_GhiChu = n.Nganh.Nganh_GhiChu,
-                },
-                DoiTuong_ID = n.DoiTuong_ID,
-                KhuVuc_ID = n.KhuVuc_ID,
-                Dkxt_TrangThai = n.Dkxt_TrangThai,
+                },             
+             
                 Dkxt_NguyenVong = n.Dkxt_NguyenVong,
                 DotXT_ID = n.DotXT_ID,
                 Dkxt_GhiChu = n.Dkxt_GhiChu,
                 Dkxt_ToHopXT = n.Dkxt_ToHopXT,
                 Dkxt_MonDatGiai = n.Dkxt_MonDatGiai,
                 Dkxt_NamDatGiai = n.Dkxt_NamDatGiai,
-                Dkxt_LoaiGiai = n.Dkxt_LoaiGiai,
-                Dkxt_XepLoaiHocLuc_12 = n.Dkxt_XepLoaiHocLuc_12,
-                Dkxt_XepLoaiHanhKiem_12 = n.Dkxt_XepLoaiHanhKiem_12,
-                Dkxt_MinhChung_HB = n.Dkxt_MinhChung_HB,
-                Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
+                Dkxt_LoaiGiai = n.Dkxt_LoaiGiai,               
+                Dkxt_MinhChung_HB = n.Dkxt_MinhChung_HB,               
                 Dkxt_MinhChung_CCCD = n.Dkxt_MinhChung_CCCD,
                 Dkxt_MinhChung_Bang = n.Dkxt_MinhChung_Bang,
                 Dkxt_MinhChung_Giai = n.Dkxt_MinhChung_Giai,
                 Dkxt_MinhChung_UuTien = n.Dkxt_MinhChung_UuTien,
+
+                Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
+                Dkxt_TrangThai_HoSo = n.Dkxt_TrangThai_HoSo,
+
             }).ToList();
             return Json(new
             {
@@ -146,7 +134,7 @@ namespace HDU_AppXetTuyen.Controllers
             return Json(new { success = false, message = "No files were uploaded." });
         }
 
-        public JsonResult Create(Student student)
+        public JsonResult Create(DangKyXetTuyenThang student)
         {
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
@@ -156,13 +144,12 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 DangKyXetTuyenThang dkxtt = new DangKyXetTuyenThang();
                 dkxtt.ThiSinh_ID = ts.ThiSinh_ID;
-                dkxtt.Nganh_ID = int.Parse(student.Nganh_ID);
+                dkxtt.Nganh_ID = int.Parse(student.Nganh_ID.ToString());
                 dkxtt.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
                 dkxtt.Dkxt_MonDatGiai = student.Dkxt_MonDatGiai;
                 dkxtt.Dkxt_LoaiGiai = student.Dkxt_LoaiGiai;
                 dkxtt.Dkxt_NamDatGiai = student.Dkxt_NamDatGiai;
-                dkxtt.Dkxt_XepLoaiHocLuc_12 = ts.ThiSinh_HocLucLop12;
-                dkxtt.Dkxt_XepLoaiHanhKiem_12 = ts.ThiSinh_HanhKiemLop12;
+              
                 dkxtt.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
                 dkxtt.Dkxt_MinhChung_HB = student.Dkxt_MinhChung_HB;
                 dkxtt.Dkxt_MinhChung_CCCD = student.Dkxt_MinhChung_CCCD;
@@ -171,27 +158,16 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
                 dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("dd/MM/yyyy");
                 dkxtt.Ptxt_ID = 4;
-                dkxtt.DoiTuong_ID = ts.DoiTuong_ID;
-                dkxtt.KhuVuc_ID = ts.KhuVuc_ID;
-                dkxtt.Dkxt_TrangThai = 0;
+                
+                dkxtt.Dkxt_TrangThai_HoSo = 0;
                 dkxtt.Dkxt_TrangThai_KetQua = 0;
+
                 dkxtt.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
                 dkxtt.DotXT_ID = dotXT.Dxt_ID;
                 db.DangKyXetTuyenThangs.Add(dkxtt);
-                db.SaveChanges();
-
-                #region Kinh phí
-                KinhPhi kp = new KinhPhi();
-                kp.ThiSinh_ID = ts.ThiSinh_ID;
-                kp.Dkxt_ID = dkxtt.Dkxt_ID;
-                kp.Ptxt_ID = 4;
-                kp.Dxt_ID = dotXT.Dxt_ID;
-                kp.KinhPhi_TrangThai = 0;
-                db.KinhPhis.Add(kp);
-                db.SaveChanges();
-                #endregion
-
-                int nganh_id = int.Parse(student.Nganh_ID);
+                db.SaveChanges();           
+              
+                int nganh_id = int.Parse(student.Nganh_ID.ToString());
                 var nganh = db.Nganhs.Where(n => n.Nganh_ID == nganh_id).FirstOrDefault();
 
                 var subject = "Đăng ký nguyện vọng";
@@ -302,4 +278,21 @@ namespace HDU_AppXetTuyen.Controllers
             }, JsonRequestBehavior.AllowGet);
         }       
     }
+    /*
+       public class Student
+    {
+        public string Nganh_ID { get; set; }
+        public string Dkxt_MonDatGiai { get; set; }
+        public string Dkxt_LoaiGiai { get; set; }
+        public string Dkxt_NamDatGiai { get; set; }
+        public string Dkxt_XepLoaiHocLuc_12 { get; set; }
+        public string Dkxt_XepLoaiHanhKiem_12 { get; set; }
+        public string Dkxt_ToHopXT { get; set; }
+        public string Dkxt_MinhChung_HB { get; set; }
+        public string Dkxt_MinhChung_CCCD { get; set; }
+        public string Dkxt_MinhChung_Bang { get; set; }
+        public string Dkxt_MinhChung_Giai { get; set; }
+        public string Dkxt_MinhChung_UuTien { get; set; }
+    }
+     */
 }

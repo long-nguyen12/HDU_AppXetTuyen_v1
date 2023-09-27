@@ -168,8 +168,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
 
             var ListTsDTNangKhieu = (from item in db.DangKyDuThiNangKhieus select item)
-                                        .OrderBy(x => x.ThiSinh_ID)
-                                        .ThenBy(x => x.Dkdt_NK_NguyenVong)
+                                        .OrderBy(x => x.ThiSinh_ID)                                       
                                         .ThenBy(x => x.Nganh.Nganh_TenNganh)
                                         .Include(x => x.ThiSinhDangKy)
                                         .Include(x => x.Nganh)

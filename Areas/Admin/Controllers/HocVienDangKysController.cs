@@ -254,7 +254,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             return View();
         }
-        //[AdminSessionCheck]
+        [AdminSessionCheck]
         public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
             string filteriDotxt, string sortOrder, int? page)
         {

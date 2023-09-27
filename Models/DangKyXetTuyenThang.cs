@@ -11,62 +11,40 @@ namespace HDU_AppXetTuyen.Models
     {
         [Key]
         public long Dkxt_ID { get; set; }
-
         public long? ThiSinh_ID { get; set; }
-
-        public int? Ptxt_ID { get; set; }
-
-        public int? Nganh_ID { get; set; }
-
-        public int? DoiTuong_ID { get; set; }
-
-        public int? KhuVuc_ID { get; set; }
-
-        public int? Dkxt_TrangThai { get; set; }
-
-        public int? Dkxt_NguyenVong { get; set; }
-
         public int? DotXT_ID { get; set; }
-
+        public int? Ptxt_ID { get; set; }
+        public int? Nganh_ID { get; set; }   
+        public int? Dkxt_NguyenVong { get; set; }  
         [StringLength(500)]
         public string Dkxt_GhiChu { get; set; }
-
         [StringLength(50)]
         public string Dkxt_ToHopXT { get; set; }
-
         [StringLength(1000)]
         public string Dkxt_MonDatGiai { get; set; }
-
         [StringLength(1000)]
         public string Dkxt_NamDatGiai { get; set; }
-
         [StringLength(1000)]
-        public string Dkxt_LoaiGiai { get; set; }
-
-        public int? Dkxt_XepLoaiHocLuc_12 { get; set; }
-
-        public int? Dkxt_XepLoaiHanhKiem_12 { get; set; }
-
+        public string Dkxt_LoaiGiai { get; set; }    
         [StringLength(4000)]
-        public string Dkxt_MinhChung_HB { get; set; }
-
-        public int? Dkxt_TrangThai_KetQua { get; set; }
-
+        public string Dkxt_MinhChung_HB { get; set; }       
         [StringLength(4000)]
         public string Dkxt_MinhChung_CCCD { get; set; }
-
         [StringLength(4000)]
         public string Dkxt_MinhChung_Bang { get; set; }
-
         [StringLength(4000)]
         public string Dkxt_MinhChung_Giai { get; set; }
-
         [StringLength(4000)]
         public string Dkxt_MinhChung_UuTien { get; set; }
-
         [StringLength(200)]
         public string Dkxt_NgayDangKy { get; set; }
-
+        public string Dkxt_KinhPhi_SoThamChieu { get; set; }
+        public string Dkxt_KinhPhi_TepMinhChung { get; set; }
+        public string Dkxt_KinhPhi_NgayThang_NopMC { get; set; }
+        public string Dkxt_KinhPhi_NgayThang_CheckMC { get; set; }
+        public int? Dkxt_TrangThai_KinhPhi { get; set; }
+        public int? Dkxt_TrangThai_HoSo { get; set; }
+        public int? Dkxt_TrangThai_KetQua { get; set; }
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 
         public virtual Nganh Nganh { get; set; }
