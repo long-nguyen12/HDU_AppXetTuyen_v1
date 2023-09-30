@@ -1,244 +1,704 @@
 ﻿@model HDU_AppXetTuyen.Models.LienCapTieuHoc
-
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
-    <div class="container-fluid px-4">
-        <div class="page-header-content">
-            <div class="row align-items-center justify-content-between pt-3">
-                <div class="col-auto mb-1">
-                    <div class="page-header-title  mb-2">
-                        <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span>Quản lý học sinh đăng ký dự tuyển trường liên cấp THCS</span>
+@using (Html.BeginForm("EditTh", "TruongLienCaps", FormMethod.Post, new { id = "dangkyForm", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid px-12">
+        <div class="card card-collapsable mt-3 mb-1">
+            <div class="card-header">
+                <div id="div_tieude"><span> Thông tin học sinh đăng ký xét tuyển vào lớp 1</span></div>
+            </div>
+            <div class="card-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row g-1">
+                    <div class="col-xl-4 col-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Thông tin học sinh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>  <label class="form-label mb-1" for="HocSinh_DinhDanh">Mã định danh <a style="color:red; text-decoration:none">(*)</a> </label></td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_DinhDanh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mã định danh" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_DinhDanh, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_HoTen">Họ và tên <a style="color:red; text-decoration:none">(*)</a> </label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_HoTen, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ và tên" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_HoTen, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a> </label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", id = "datepicker", @placeholder = "dd/mm/yyyy" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_NgaySinh, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>  <label class="form-label mb-1" for="HocSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a> </label></td>
+                                    <td>
+                                        <div class="d-inline-flex flex-nowrap" style="margin-bottom:12px">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" id="radioNam" name="HocSinh_GioiTinh" checked value="0">
+                                                <label class="form-check-label" for="radioNam">
+                                                    Nam
+                                                </label>
+                                            </div>
+                                            <div class="form-check" style="margin-left:10px">
+                                                <input class="form-check-input" type="radio" id="radioNu" name="HocSinh_GioiTinh" value="1">
+                                                <label class="form-check-label" for="radioNu">
+                                                    Nữ
+                                                </label>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.HocSinh_GioiTinh, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label class="form-label mb-1" for="HocSinh_NoiSinh">Nơi sinh <a style="color:red; text-decoration:none">(*)</a> </label></td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_NoiSinh, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nơi sinh" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_NoiSinh, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_NoiCuTru">Nơi cứ trú <a style="color:red; text-decoration:none">(*)</a> </label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_NoiCuTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nơi cư trú" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_NoiCuTru, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-xl-4 col-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Thông tin phụ huynh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_HoTenCha">Họ, tên bố <a style="color:red; text-decoration:none">(*)</a> </label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_ThongTinCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ tên cha" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_ThongTinCha, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_SDTCha">Điện thoại  <a style="color:red; text-decoration:none">(*)</a></label>
+                                    </td>
+
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_DienThoaiCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Điện thoại cha" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiCha, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_NNCha">Nghề nghiệp</label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_NgheNghiepCha, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nghề nghiệp cha" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepCha, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_HoTenMe">Họ, tên mẹ <a style="color:red; text-decoration:none">(*)</a> </label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_ThongTinMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Họ tên mẹ" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_ThongTinMe, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_SDTMe">Điện thoại <a style="color:red; text-decoration:none">(*)</a></label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_DienThoaiMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Điện thoại mẹ" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiMe, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_NNMe">Nghề nghiệp</label>
+                                    </td>
+                                    <td>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_NgheNghiepMe, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nghề nghiệp mẹ" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepMe, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                    <div class="col-xl-4 col-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Thông tin về hoàn thành GDMN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-inline-flex" style="width:100%">
+                                            <label class="form-label col-2" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a> </label>
+                                            @Html.EditorFor(model => model.HocSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_UuTien">Thuộc diện ưu tiên </label>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_UuTien, new { htmlAttributes = new { @class = "form-control", @placeholder = "Diện ưu tiên" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_UuTien, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label class="form-label mb-1" for="HocSinh_TruongMN" style="margin-top:5px">Trường mầm non đã học </label>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.HocSinh_TruongMN, new { htmlAttributes = new { @class = "form-control", @placeholder = "Trường mầm non" } })
+                                            @Html.ValidationMessageFor(model => model.HocSinh_TruongMN, "", new { @class = "text-danger" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="formFileMultiple" class="form-label">Chứng nhận hoàn thành GDMN </label>
+                                        <div class="col-md-12">
+                                            <input class="form-control" id="HocSinh_MinhChungMN" name="HocSinh_MinhChungMN" placeholder="Chọn giấy chứng nhận" class="hidden" value="Chọn giấy chứng nhận" multiple="multiple" type="file" data-val="false" data-val-required="Vui lòng chọn file hoàn thành GDMN"
+                                                   accept="application/pdf,.png, .jpeg, .jpg" />
+                                            <div class="col-12 table-responsive">
+                                                <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungMN">
+                                                    <tr style="display:none">
+                                                        <th>
+                                                            Attachment(s)
+                                                        </th>
+                                                        <th>
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row g-1">
+                    <div class="col-xl-12 col-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Hình ảnh minh chứng giấy tờ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+
+                                            <div class="col-xl-3 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="formFileMultiple" class="form-label">Giấy khai sinh </label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="HocSinh_MinhChungGiayKS" name="HocSinh_MinhChungGiayKS" multiple="multiple" type="file" data-val="false" data-val-required="Vui lòng chọn file giấy khai sinh"
+                                                               accept="application/pdf,.png, .jpeg, .jpg" />
+                                                        <div class="col-12 table-responsive">
+                                                            <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungGiayKS">
+                                                                <tr style="display:none">
+                                                                    <th>
+                                                                        Attachment(s)
+                                                                    </th>
+                                                                    <th>
+                                                                        Action
+                                                                    </th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-3 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="formFileMultiple" class="form-label">Định danh cá nhân </label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="HocSinh_MinhChungMaDinhDanh" multiple="multiple" name="HocSinh_MinhChungMaDinhDanh" type="file" data-val="false" data-val-required="Vui lòng chọn file định danh cá nhân"
+                                                               accept="application/pdf,.png, .jpeg, .jpg" />
+                                                        @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                                        <div class="col-12 table-responsive">
+                                                            <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungMaDinhDanh">
+                                                                <tr style="display:none">
+                                                                    <th>
+                                                                        Attachment(s)
+                                                                    </th>
+                                                                    <th>
+                                                                        Action
+                                                                    </th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-3 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="formFileMultiple" class="form-label">Giấy chứng nhận ưu tiên </label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="HocSinh_GiayUuTien" multiple="multiple" name="HocSinh_GiayUuTien" type="file" data-val="false" data-val-required="Vui lòng chọn file chứng nhận ưu tiên"
+                                                               accept="application/pdf,.png, .jpeg, .jpg" />
+                                                        @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                                        <div class="col-12 table-responsive">
+                                                            <table class="table table-responsive-md" id="FilesList_HocSinh_GiayUuTien">
+                                                                <tr style="display:none">
+                                                                    <th>
+                                                                        Attachment(s)
+                                                                    </th>
+                                                                    <th>
+                                                                        Action
+                                                                    </th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-xl-3 col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="formFileMultiple" class="form-label">Xác nhận đóng lệ phí </label>
+                                                    <div class="col-md-12">
+                                                        <input class="form-control" id="HocSinh_MinhChungLePhi" multiple="multiple" name="HocSinh_MinhChungLePhi" type="file" data-val="false" data-val-required="Vui lòng chọn file xác nhận đóng lệ phí"
+                                                               accept="application/pdf,.png, .jpeg, .jpg" />
+                                                        @*<span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>*@
+                                                        <div class="col-12 table-responsive">
+                                                            <table class="table table-responsive-md" id="FilesList_HocSinh_MinhChungLePhi">
+                                                                <tr style="display:none">
+                                                                    <th>
+                                                                        Attachment(s)
+                                                                    </th>
+                                                                    <th>
+                                                                        Action
+                                                                    </th>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <center><button onclick="createData()" value="Lưu dữ liệu" class="btn btn-primary"> Lưu dữ liệu</button></center>
+                    </div>
+                </div>
+                <div class="row g-1">
+                    <div class="col-xl-12 col-12">
+                        <p style="color: red; font-style: italic; font-weight:bold" class="mb-1">Lưu ý</p>
+                        <p style="color: red; font-style: italic" class="mb-1">
+                            - Những trường có dấu sao là trường bắt buộc nhập
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</header>
-<div class="container-fluid px-12">
-    <div class="card card-collapsable mt-1 mb-1">
-        <div class="card-header">
-            <div><span id="sp_tieude">Chỉnh sửa học sinh đăng ký</span></div>
+}
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="card-body">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="form-horizontal">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.HocSinh_ID)
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_DinhDanh, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_DinhDanh, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_DinhDanh, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_HoTen, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_HoTen, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_HoTen, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_GioiTinh, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_GioiTinh, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_GioiTinh, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_NgaySinh, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_NoiSinh, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_NoiSinh, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_NoiSinh, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_Email, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_Email, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_NoiCuTru, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_NoiCuTru, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_NoiCuTru, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_TruongMN, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_TruongMN, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_TruongMN, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_UuTien, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_UuTien, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_UuTien, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_ThongTinCha, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_ThongTinCha, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_ThongTinCha, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_NgheNghiepCha, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_NgheNghiepCha, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepCha, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_DienThoaiCha, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_DienThoaiCha, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiCha, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_ThongTinMe, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_ThongTinMe, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_ThongTinMe, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_NgheNghiepMe, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_NgheNghiepMe, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_NgheNghiepMe, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_DienThoaiMe, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_DienThoaiMe, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_DienThoaiMe, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_MinhChungMN, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_MinhChungMN, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_MinhChungMN, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_MinhChungGiayKS, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_MinhChungGiayKS, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_MinhChungGiayKS, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_MinhChungMaDinhDanh, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_MinhChungMaDinhDanh, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_MinhChungMaDinhDanh, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_GiayUuTien, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_GiayUuTien, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_GiayUuTien, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_XacNhanLePhi, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_XacNhanLePhi, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_XacNhanLePhi, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_TrangThai, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_TrangThai, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_GhiChu, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_MinhChungLePhi, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_MinhChungLePhi, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_MinhChungLePhi, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.HocSinh_Activation, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.HocSinh_Activation, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.HocSinh_Activation, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Lưu dữ liệu" class="btn btn-primary" />
-                        </div>
-                    </div>
-                </div>
-            }
-
-
+        <div class="toast-body">
         </div>
     </div>
 </div>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        if ('@TempData["Result"]' == "THANHCONG") {
+                showToast("Thành công", "Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email", "bg-success");
+            //toastr.success('Thành công, Đăng ký thông tin thành công! Vui lòng xác thực lại thông tin đã gửi đến email');
+            resetForm();
+        } else if ('@TempData["Result"]' == "THATBAI") {
+            showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+        //    toastr.error('Thất bại, Đăng ký thông tin thất bại! Vui lòng kiểm tra lại thông tin và liên hệ với quản trị viên!');
+        }           
+    });
+
+    var formdataHocSinh_MinhChungMN = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungMaDinhDanh = new FormData(); //FormData object
+    var formdataHocSinh_GiayUuTien = new FormData(); //FormData object
+    var formdataHocSinh_MinhChungLePhi = new FormData(); //FormData object
+
+    function resetForm() {
+        formdataHocSinh_MinhChungMN = new FormData(); //FormData object
+        formdataHocSinh_MinhChungGiayKS = new FormData(); //FormData object
+        formdataHocSinh_MinhChungMaDinhDanh = new FormData(); //FormData object
+        formdataHocSinh_GiayUuTien = new FormData(); //FormData object
+        formdataHocSinh_MinhChungLePhi = new FormData(); //FormData object
+
+        $('#HocSinh_DinhDanh').val("");
+        $('#HocSinh_HoTen').val("");
+        $('#HocSinh_GioiTinh').val("0");
+        $('#datepicker').val("");
+        $('#HocSinh_NoiSinh').val("");
+        $('#HocSinh_Email').val("");
+        $('#HocSinh_NoiCuTru').val("");
+        $('#HocSinh_TruongMN').val("");
+        $('#HocSinh_UuTien').val("");
+        $('#HocSinh_ThongTinCha').val("");
+        $('#HocSinh_DienThoaiCha').val("");
+        $('#HocSinh_NgheNghiepCha').val("");
+        $('#HocSinh_ThongTinMe').val("");
+        $('#HocSinh_DienThoaiMe').val("");
+        $('#HocSinh_NgheNghiepMe').val("");
 
 
+        $('#FilesList_HocSinh_MinhChungMN tbody').empty();
+        $('#FilesList_HocSinh_MinhChungGiayKS tbody').empty();
+        $('#FilesList_HocSinh_MinhChungMaDinhDanh tbody').empty();
+        $('#FilesList_HocSinh_GiayUuTien tbody').empty();
+        $('#FilesList_HocSinh_MinhChungLePhi tbody').empty();
+
+        $("#HocSinh_MinhChungMN").val = '';
+        $("#HocSinh_MinhChungGiayKS").val = '';
+        $("#HocSinh_MinhChungMaDinhDanh").val = '';
+        $("#HocSinh_GiayUuTien").val = '';
+        $("#HocSinh_MinhChungLePhi").val = '';
+
+    }
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+    // custom data submit dangkyForm
+    function createData() {
+        console.log("submit form");
+        $("#dangkyForm").submit();
+    }
+    function convertFormDataToDataTransfer(formData) {
+        var dataTransfer = new DataTransfer();
+        for (var pair of formData.entries()) {
+            var inputName = pair[0];
+            var inputValue = pair[1];
+            if (inputValue instanceof File) {
+                dataTransfer.items.add(inputValue);
+            }
+        }
+        return dataTransfer;
+    }
+
+    $(document).ready(function () {
+
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+
+
+        $("#HocSinh_MinhChungMN").on("change", function () {
+            let type = "HocSinh_MinhChungMN";
+            var fileInput = document.getElementById('HocSinh_MinhChungMN');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+                if (!formdataHocSinh_MinhChungMN.has(sfilename)) {
+                    formdataHocSinh_MinhChungMN.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungMN tbody").append(markup)
+                }
+            }
+
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungMN);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungMN").files = fileConvert.files;
+            //$('#HocSinh_MinhChungMN').val('');
+        });
+
+        $("#HocSinh_MinhChungGiayKS").on("change", function () {
+            let type = "HocSinh_MinhChungGiayKS";
+            var fileInput = document.getElementById('HocSinh_MinhChungGiayKS');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+                if (!formdataHocSinh_MinhChungGiayKS.has(sfilename)) {
+                    formdataHocSinh_MinhChungGiayKS.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungGiayKS tbody").append(markup)
+                }
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungGiayKS);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungGiayKS").files = fileConvert.files;
+        });
+
+        $("#HocSinh_MinhChungMaDinhDanh").on("change", function () {
+            let type = "HocSinh_MinhChungMaDinhDanh";
+            var fileInput = document.getElementById('HocSinh_MinhChungMaDinhDanh');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+                if (!formdataHocSinh_MinhChungMaDinhDanh.has(sfilename)) {
+                    formdataHocSinh_MinhChungMaDinhDanh.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungMaDinhDanh tbody").append(markup)
+                }
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungMaDinhDanh);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungMaDinhDanh").files = fileConvert.files;
+        });
+
+        $("#HocSinh_GiayUuTien").on("change", function () {
+            let type = "HocSinh_GiayUuTien";
+            var fileInput = document.getElementById('HocSinh_GiayUuTien');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+                if (!formdataHocSinh_GiayUuTien.has(sfilename)) {
+                    formdataHocSinh_GiayUuTien.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_GiayUuTien tbody").append(markup)
+                }
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_GiayUuTien);
+            chkatchtbl();
+            document.getElementById("HocSinh_GiayUuTien").files = fileConvert.files;
+        });
+
+        $("#HocSinh_MinhChungLePhi").on("change", function () {
+            let type = "HocSinh_MinhChungLePhi";
+            var fileInput = document.getElementById('HocSinh_MinhChungLePhi');
+            //Iterating through each files selected in fileInput
+            for (i = 0; i < fileInput.files.length; i++) {
+                var sfilename = fileInput.files[i].name;
+                let srandomid = Math.random().toString(36).substring(7);
+                if (!formdataHocSinh_MinhChungLePhi.has(sfilename)) {
+                    formdataHocSinh_MinhChungLePhi.append(sfilename, fileInput.files[i]);
+                    var markup = "<tr id='" + srandomid + "'>  <td>" + sfilename + " </td> <td> <button class='btn btn-outline-danger btn-sm' onclick='DeleteFile(\"" + type + "\",\"" + i + "\",\"" + srandomid + "\",\"" + sfilename +
+                        "\")' >  Xoá </button> </td>  </tr>"; // Binding the file name
+                    $("#FilesList_HocSinh_MinhChungLePhi tbody").append(markup)
+                }
+            }
+            var fileConvert = convertFormDataToDataTransfer(formdataHocSinh_MinhChungLePhi);
+            chkatchtbl();
+            document.getElementById("HocSinh_MinhChungLePhi").files = fileConvert.files;
+        });
+    });
+    function DeleteFile(type, indexFormdata, Fileid, FileName) {
+        if (type == "HocSinh_MinhChungMN") {
+            formdataHocSinh_MinhChungMN.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungMN').files;
+            var fileBuffer = new DataTransfer();
+            for (let i = 0; i < fileInput.length; i++) {
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungMN").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        }
+        if (type == "HocSinh_MinhChungGiayKS") {
+            formdataHocSinh_MinhChungGiayKS.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungGiayKS').files;
+            var fileBuffer = new DataTransfer();
+            for (let i = 0; i < fileInput.length; i++) {
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungGiayKS").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        }
+        if (type == "HocSinh_MinhChungMaDinhDanh") {
+            formdataHocSinh_MinhChungMaDinhDanh.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungMaDinhDanh').files;
+            var fileBuffer = new DataTransfer();
+            for (let i = 0; i < fileInput.length; i++) {
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungMaDinhDanh").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+
+        }
+        if (type == "HocSinh_GiayUuTien") {
+            formdataHocSinh_GiayUuTien.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_GiayUuTien').files;
+            var fileBuffer = new DataTransfer();
+            for (let i = 0; i < fileInput.length; i++) {
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_GiayUuTien").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        }
+        if (type == "HocSinh_MinhChungLePhi") {
+            formdataHocSinh_MinhChungLePhi.delete(FileName)
+            $("#" + Fileid).remove();
+            var fileInput = document.getElementById('HocSinh_MinhChungLePhi').files;
+            var fileBuffer = new DataTransfer();
+            for (let i = 0; i < fileInput.length; i++) {
+                if (FileName !== fileInput[i].name)
+                    fileBuffer.items.add(fileInput[i]);
+            }
+            document.getElementById("HocSinh_MinhChungLePhi").files = fileBuffer.files; // <-- according to your file input reference
+            chkatchtbl();
+        }
+    }
+
+    function chkatchtbl() {
+        if ($('#FilesList_HocSinh_MinhChungMN tr').length > 0) {
+            $("#FilesList_HocSinh_MinhChungMN").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungMN").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungGiayKS tr').length > 0) {
+            $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungGiayKS").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungMaDinhDanh tr').length > 0) {
+            $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungMaDinhDanh").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_GiayUuTien tr').length > 0) {
+            $("#FilesList_HocSinh_GiayUuTien").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_GiayUuTien").css("visibility", "hidden");
+        }
+        if ($('#FilesList_HocSinh_MinhChungLePhi tr').length > 0) {
+            $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "visible");
+        } else {
+            $("#FilesList_HocSinh_MinhChungLePhi").css("visibility", "hidden");
+        }
+    }
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+    // Kiểm tra nếu biểu mẫu đã được gửi
+    //if (window.history && window.history.pushState) {
+    //    window.addEventListener('load', function () {
+    //        // Lưu trạng thái hiện tại của trang vào trong history state
+    //        window.history.pushState({ isFormSubmitted: true }, '');
+    //    });
+
+    //    window.addEventListener('popstate', function (event) {
+    //        // Kiểm tra nếu trạng thái popstate là biểu mẫu đã được gửi
+    //        if (event.state && event.state.isFormSubmitted) {
+    //            // Không làm gì nếu biểu mẫu đã được gửi
+    //            return;
+    //        }
+    //    });
+    //}
+
+
+</script>
+@*<link href="~/Content/toastr.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>*@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
