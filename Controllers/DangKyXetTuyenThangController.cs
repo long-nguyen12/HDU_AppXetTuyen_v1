@@ -156,7 +156,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_Bang = student.Dkxt_MinhChung_Bang;
                 dkxtt.Dkxt_MinhChung_Giai = student.Dkxt_MinhChung_Giai;
                 dkxtt.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
-                dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("dd/MM/yyyy");
+                dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 dkxtt.Ptxt_ID = 4;
                 
                 dkxtt.Dkxt_TrangThai_HoSo = 0;

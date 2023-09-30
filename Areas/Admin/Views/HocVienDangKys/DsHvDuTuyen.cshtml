@@ -267,15 +267,16 @@
                                                 @{
                                                     if (item.HocVienDangKy.HocVien_BoTucKienThuc == 1)
                                                     {
-                                                        @Html.DisplayName("Chưa học")
+                                                        <span style="color:red">Chưa học</span>
                                                     }
                                                     if (item.HocVienDangKy.HocVien_BoTucKienThuc == 2)
                                                     {
-                                                        @Html.DisplayName("Đã học")
+                                                        <span style="color: darkorchid">Đã học</span>
+
                                                     }
                                                     if (item.HocVienDangKy.HocVien_BoTucKienThuc == 3)
                                                     {
-                                                        @Html.DisplayName("CN đúng")
+                                                        <span style="color:blue">CN đúng</span>
                                                     }
                                                 }
 

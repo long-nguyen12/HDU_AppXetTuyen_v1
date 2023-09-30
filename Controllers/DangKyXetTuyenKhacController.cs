@@ -271,7 +271,7 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_KetQua = entity.Dkxt_MinhChung_KetQua;
                 dkxtt.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien;
 
-                dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("dd/MM/yyyy");
+                dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 dkxtt.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
 
                 dkxtt.Dkxt_TrangThai_HoSo = 0;
