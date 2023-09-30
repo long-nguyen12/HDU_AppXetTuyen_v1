@@ -296,7 +296,7 @@ namespace HDU_AppXetTuyen.Controllers
         {           
             HocVienDuTuyen model = db.HocVienDuTuyens.Where(x => x.DuTuyen_ID == entity.DuTuyen_ID).FirstOrDefault();         
 
-            model.DuTuyen_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");// DateTime.Now.ToString("yyyy-MM-dd").ToString();
+            model.DuTuyen_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
             model.DuTuyen_MaNghienCuu = entity.DuTuyen_MaNghienCuu;
 
             model.Nganh_Mt_ID = entity.Nganh_Mt_ID;
@@ -338,7 +338,7 @@ namespace HDU_AppXetTuyen.Controllers
             {
                 HocVienDuTuyen model = db.HocVienDuTuyens.Find(entity.DuTuyen_ID);
 
-                model.HocVien_LePhi_NgayNop = DateTime.Now.ToString("yyyy-MM-dd").ToString();
+                model.HocVien_LePhi_NgayNop = (DateTime.Now.ToString("yyyy-MM-dd")).ToString();
                 model.HocVien_LePhi_MaThamChieu = entity.HocVien_LePhi_MaThamChieu;
                 model.HocVien_LePhi_TepMinhChung = entity.HocVien_LePhi_TepMinhChung;
                 model.HocVien_LePhi_TrangThai = 1;

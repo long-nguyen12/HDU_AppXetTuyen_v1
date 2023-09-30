@@ -170,13 +170,11 @@
     <Compile Include="Areas\Admin\Controllers\DotXetTuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExportDatasController.cs" />
     <Compile Include="Areas\Admin\Controllers\HocVienDangKysController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HocVienDuTuyens12Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\KinhPhis2Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\KinhPhisController.cs" />
     <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
@@ -472,11 +470,6 @@
     <Content Include="Areas\Admin\Views\NganhMasters\Index.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDuTuyen.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens\MasterIndex.cshtml" />
-    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\HocVienDuTuyens12\Index.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\testMtDR.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDuTuyenKiemTraHoSo.cshtml" />
@@ -488,7 +481,6 @@
     <Content Include="Areas\Admin\Views\TruongLienCaps\DetailsTh.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\DeleteTh.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\EditTh.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\test.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view_OK.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_viewOK.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_viewOK.cshtml" />
@@ -689,20 +681,6 @@
     <Content Include="Uploads\LienCapTieuHoc\MinhChungMN\1234567890_133330921359519443_sptin.jpg" />
     <Content Include="Uploads\LienCapTieuHoc\MinhChungMN\2_133330916848973918_cntt.jpg" />
     <Content Include="Uploads\LienCap\HocBa\4_202307231119124101_cntt.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061542071462_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061542071531_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061542116503_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061542116549_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061543157335_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061543157395_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061544444257_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061545104725_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061546049922_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061604198414_25acddb3da54207bc6beb5838f65f022feaa81d7.jpeg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061605053556_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061608168739_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061608554756_smile-small.jpg" />
-    <Content Include="Uploads\UploadMinhChungs\1_202307061610417626_smile-small.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -779,6 +757,7 @@
     <Content Include="Views\DangKyXetTuyenKhac\DanhGiaEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
+    <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -786,11 +765,13 @@
     <Folder Include="Areas\Admin\Views\ExportDatas\" />
     <Folder Include="Uploads\DkSauDaiHocFile\" />
     <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
+    <Folder Include="Uploads\FileMinhChungKinhPhis\" />
     <Folder Include="Uploads\LienCapTieuHoc\MaDinhDanh\" />
     <Folder Include="Uploads\LienCap\DinhDanh\" />
     <Folder Include="Uploads\LienCap\GiayKhaiSinh\" />
     <Folder Include="Uploads\LienCap\GiayUuTien\" />
     <Folder Include="Uploads\LienCap\LePhi\" />
+    <Folder Include="Uploads\UploadMinhChungs\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

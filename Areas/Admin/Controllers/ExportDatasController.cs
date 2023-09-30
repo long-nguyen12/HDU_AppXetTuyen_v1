@@ -591,7 +591,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 using (ExcelPackage _excelpackage = new ExcelPackage())
                 {
                     _excelpackage.Workbook.Properties.Author = "208Team";  // đặt tên người tạo file                       
-                    _excelpackage.Workbook.Properties.Title = "TKHVDKDuTuyen"; // đặt tiêu đề cho file                  
+                    _excelpackage.Workbook.Properties.Title = "HvDkDuTuyen"; // đặt tiêu đề cho file                  
                                                                                // khai báo đối tượng ExcelWorksheet để thao tác với sheet
                     ExcelWorksheet ews = null;
                     /*
@@ -611,8 +611,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
                         // tạo ra tên các cột của 1 sheet excel
                         string[] arr_col_number = { "TT"," Họ lót","Tên","Ngày sinh","Nơi sinh","Ngành đại học","Hoàn thành học bổ sung kiến thức",
-                                "Xếp loại tốt nghiệp đại học","Hệ 10","Hệ 4","Phiếu đăng ký dự thi","Sơ yếu lý lịch","Bằng ĐH (công chứng)",
-                                "Bảng điểm ĐH  (công chứng)","Giấy khám sức khỏe","Giấy tờ xét miễn ngoại ngữ","Giấy tờ khác"};
+                                "Xếp loại tốt nghiệp đại học","Hệ 10","Hệ 4","Phiếu đăng ký dự thi","Sơ yếu lý lịch","Bằng ĐH",
+                                "Bảng điểm ĐH","Giấy khám sức khỏe","Giấy tờ xét miễn ngoại ngữ","Giấy tờ khác"};
 
                         // khai báo chỉ số của sheet
                         int index_sheet = 0;
@@ -653,29 +653,43 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
                                 ews.Cells.Style.Font.Bold = false;
                                 ews.Cells.Style.WrapText = true;
-                                ews.Cells[row_item, col_item++].Value = (row_item-9);                                 //  1 số thư tự 
-                                ews.Cells[row_item, col_item++].Value = item_master.HocVienDangKy.HocVien_HoDem;        //  2 
-                                ews.Cells[row_item, col_item++].Value = item_master.HocVienDangKy.HocVien_Ten;          //  3
-                                ews.Cells[row_item, col_item++].Value = (DateTime.Parse(item_master.HocVienDangKy.HocVien_NgaySinh)).ToString("dd.MM.yyyy");     //  4
-                                ews.Cells[row_item, col_item++].Value = db.Tinhs.Where(x => x.Tinh_ID == item_master.HocVienDangKy.HocVien_NoiSinh).FirstOrDefault().Tinh_Ten;                 // 5
-
-                                ews.Cells[row_item, col_item++].Value = bangDaiHoc_Item.HocVien_BangDaiHoc_TenNganhTN;                //  6
-                                ews.Cells[row_item, col_item++].Value = bskienthuc;          //  7
-                                ews.Cells[row_item, col_item++].Value = bangDaiHoc_Item.HocVien_BangDaiHoc_LoaiTN;     //  8
-
+                                //1 số thư tự 
+                                ews.Cells[row_item, col_item++].Value = (row_item-9);
+                                //2 
+                                ews.Cells[row_item, col_item++].Value = item_master.HocVienDangKy.HocVien_HoDem;  
+                                //3
+                                ews.Cells[row_item, col_item++].Value = item_master.HocVienDangKy.HocVien_Ten;                                                                                   
+                                //4
+                                ews.Cells[row_item, col_item++].Value = (DateTime.Parse(item_master.HocVienDangKy.HocVien_NgaySinh)).ToString("dd.MM.yyyy");                                      
+                                //5
+                                ews.Cells[row_item, col_item++].Value = db.Tinhs.Where(x => x.Tinh_ID == item_master.HocVienDangKy.HocVien_NoiSinh).FirstOrDefault().Tinh_Ten;    
+                                //6
+                                ews.Cells[row_item, col_item++].Value = bangDaiHoc_Item.HocVien_BangDaiHoc_TenNganhTN;                
+                                //7
+                                ews.Cells[row_item, col_item++].Value = bskienthuc;         
+                                //8
+                                ews.Cells[row_item, col_item++].Value = bangDaiHoc_Item.HocVien_BangDaiHoc_LoaiTN;
+                                //9
                                 string diem10 = "", diem4 = "";
                                 if (bangDaiHoc_Item.HocVien_BangDaiHoc_ThangDiem == "10") { diem10 = bangDaiHoc_Item.HocVien_BangDaiHoc_DiemToanKhoa; }
                                 if (bangDaiHoc_Item.HocVien_BangDaiHoc_ThangDiem == "4") { diem4 = bangDaiHoc_Item.HocVien_BangDaiHoc_DiemToanKhoa; }
-
-                                ews.Cells[row_item, col_item++].Value = diem10;          // 9
-                                ews.Cells[row_item, col_item++].Value = diem4;     // 10
-
-                                ews.Cells[row_item, col_item++].Value = minhChung_Item.PhieuDangKyDuThi;        //  11
+                                //10
+                                ews.Cells[row_item, col_item++].Value = diem10;         
+                                //11
+                                ews.Cells[row_item, col_item++].Value = diem4;    
+                                //12
+                                ews.Cells[row_item, col_item++].Value = minhChung_Item.PhieuDangKyDuThi;       
+                                //13
                                 ews.Cells[row_item, col_item++].Value = minhChung_Item.SoYeuLyLich;
+                                //14
                                 ews.Cells[row_item, col_item++].Value = minhChung_Item.BangDH;
+                                //15
                                 ews.Cells[row_item, col_item++].Value = minhChung_Item.BangDiemDH;
+                                //16
                                 ews.Cells[row_item, col_item++].Value = minhChung_Item.GiayKhamSucKhoe;
+                                //17
                                 ews.Cells[row_item, col_item++].Value = minhChung_Item.GiayMienNgoaiNgu;
+                                //18
                                 ews.Cells[row_item, col_item++].Value = minhChung_Item.GiayToKhac;
                                 //ews.Cells[row_item, col_item++].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                             }
