@@ -366,6 +366,9 @@ namespace HDU_AppXetTuyen.Controllers
                 model_edit.Dkxt_MinhChung_Bang += entity.Dkxt_MinhChung_Bang;
                 model_edit.Dkxt_MinhChung_UuTien += entity.Dkxt_MinhChung_UuTien;
                 model_edit.Dkxt_MinhChung_Giai += entity.Dkxt_MinhChung_Giai;
+                model_edit.Dkxt_NamDatGiai = entity.Dkxt_NamDatGiai;
+                model_edit.Dkxt_MonDatGiai = entity.Dkxt_MonDatGiai;
+                model_edit.Dkxt_LoaiGiai = entity.Dkxt_LoaiGiai;
 
                 model_edit.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
