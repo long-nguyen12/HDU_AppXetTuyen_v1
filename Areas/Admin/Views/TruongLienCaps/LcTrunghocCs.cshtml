@@ -197,13 +197,13 @@
                                                 <td style="vertical-align:middle">
                                                     @{
                                                         if (item.HocSinh_TrangThai == 0)
-                                                        { <a class="btn  btn-danger btn-sm" style="width:110px" href="@Url.Action("Details", "TruongLienCaps", new { id = item.HocSinh_ID })">Đăng ký</a> }
+                                                        { <a class="btn  btn-danger btn-sm" style="width:110px" href="@Url.Action("DetailsThcs", "TruongLienCaps", new { id = item.HocSinh_ID })">Đăng ký</a> }
                                                         if (item.HocSinh_TrangThai == 1)
-                                                        { <a class="btn  btn-success btn-sm" style="width:110px" href="@Url.Action("Details", "TruongLienCaps", new { id = item.HocSinh_ID })">Đã xác thực</a> }
+                                                        { <a class="btn  btn-success btn-sm" style="width:110px" href="@Url.Action("DetailsThcs", "TruongLienCaps", new { id = item.HocSinh_ID })">Đã xác thực</a> }
                                                         if (item.HocSinh_TrangThai == 2)
-                                                        { <a class="btn  btn-warning btn-sm" style="width:110px" href="@Url.Action("Details", "TruongLienCaps", new { id = item.HocSinh_ID })">MC sai</a> }
+                                                        { <a class="btn  btn-warning btn-sm" style="width:110px" href="@Url.Action("DetailsThcs", "TruongLienCaps", new { id = item.HocSinh_ID })">MC sai</a> }
                                                         if (item.HocSinh_TrangThai == 3)
-                                                        { <a class="btn  btn-primary btn-sm" style="width:110px" href="@Url.Action("Details", "TruongLienCaps", new { id = item.HocSinh_ID })">HS Đầy đủ</a> }
+                                                        { <a class="btn  btn-primary btn-sm" style="width:110px" href="@Url.Action("DetailsThcs", "TruongLienCaps", new { id = item.HocSinh_ID })">HS Đầy đủ</a> }
                                                     }
 
                                                 </td>
