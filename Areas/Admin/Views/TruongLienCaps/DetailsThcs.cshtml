@@ -113,7 +113,7 @@
                                     <label class="form-label mb-1" for="HocSinh_HoTenCha">Họ, tên bố <a style="color:red; text-decoration:none">(*)</a> </label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_HoTenCha" name="HocSinh_HoTenCha" type="text" placeholder="Họ và tên bố" value="" />
+                                    <input class="form-control" id="HocSinh_HoTenCha" name="HocSinh_HoTenCha" type="text" placeholder="Họ và tên bố" value="@Model.PhBo.HoTen" />
                                     <span id="HocSinh_HoTenCha_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -123,7 +123,7 @@
                                 </td>
 
                                 <td>
-                                    <input class="form-control" id="HocSinh_SDTCha" name="HocSinh_SDTCha" type="text" placeholder="Số điện thoại bố" value="" />
+                                    <input class="form-control" id="HocSinh_SDTCha" name="HocSinh_SDTCha" type="text" placeholder="Số điện thoại bố" value="@Model.PhBo.SoDienThoai" />
                                     <span id="HocSinh_SDTCha_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -132,7 +132,7 @@
                                     <label class="form-label mb-1" for="HocSinh_NNCha">Nghề nghiệp</label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_NNCha" name="HocSinh_NNCha" type="text" placeholder="Nghề nghiệp bố" value="" />
+                                    <input class="form-control" id="HocSinh_NNCha" name="HocSinh_NNCha" type="text" placeholder="Nghề nghiệp bố" value="@Model.PhBo.NgheNghiep" />
                                     <span id="HocSinh_NNCha_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -141,7 +141,7 @@
                                     <label class="form-label mb-1" for="HocSinh_HoTenMe">Họ, tên mẹ <a style="color:red; text-decoration:none">(*)</a> </label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_HoTenMe" name="HocSinh_HoTenMe" type="text" placeholder="Họ  và tên mẹ" value="" />
+                                    <input class="form-control" id="HocSinh_HoTenMe" name="HocSinh_HoTenMe" type="text" placeholder="Họ  và tên mẹ" value="@Model.PhMe.HoTen" />
                                     <span id="HocSinh_HoTenMe_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -151,7 +151,7 @@
                                     <label class="form-label mb-1" for="HocSinh_SDTMe">Điện thoại <a style="color:red; text-decoration:none">(*)</a></label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_SDTMe" name="HocSinh_SDTMe" type="text" placeholder="Số điện thoại mẹ" value="" />
+                                    <input class="form-control" id="HocSinh_SDTMe" name="HocSinh_SDTMe" type="text" placeholder="Số điện thoại mẹ" value="@Model.PhMe.SoDienThoai" />
                                     <span id="HocSinh_SDTMe_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -160,7 +160,7 @@
                                     <label class="form-label mb-1" for="HocSinh_NNMe">Nghề nghiệp</label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_NNMe" name="HocSinh_NNMe" type="text" placeholder="Nghề nghiệp mẹ" value="" />
+                                    <input class="form-control" id="HocSinh_NNMe" name="HocSinh_NNMe" type="text" placeholder="Nghề nghiệp mẹ" value="@Model.PhMe.SoDienThoai" />
                                     <span id="HocSinh_NNMe_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -169,7 +169,7 @@
                                     <label class="form-label mb-1" for="HocSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a> </label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_Email" name="HocSinh_NoiSinh" type="text" placeholder="Email" value="" />
+                                    <input class="form-control" id="HocSinh_Email" name="HocSinh_Email" type="text" placeholder="Email" value="@Model.HocSinh_Email" />
                                     <span id="HocSinh_Email_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -192,7 +192,7 @@
                                     <label class="form-label mb-1" for="HocSinh_TruongTH">Trường tiểu học </label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_TruongTH" name="HocSinh_TruongTH" type="text" placeholder="Tên trường tiểu học" value="" />
+                                    <input class="form-control" id="HocSinh_TruongTH" name="HocSinh_TruongTH" type="text" placeholder="Tên trường tiểu học" value="@Model.HocSinh_TruongTH" />
                                     <span id="HocSinh_TruongTH_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -201,12 +201,12 @@
                                     <div class="row g-1">
                                         <div class="col-6">
                                             <label class="form-label mb-1" for="HocSinh_DiemToan">Toán <a style="color:red; text-decoration:none">(*)</a> </label>
-                                            <input class="form-control" id="HocSinh_DiemToan" name="HocSinh_DiemToan" type="number" placeholder="Điểm Toán" value="" />
+                                            <input class="form-control" id="HocSinh_DiemToan" name="HocSinh_DiemToan" type="number" placeholder="Điểm Toán" value="@Model.Monhocs.Toan" />
                                             <span id="HocSinh_DiemToan_Error" class="small mb-1 text-danger"></span>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label mb-1" for="HocSinh_DiemTiengViet">Tiếng Việt <a style="color:red; text-decoration:none">(*)</a> </label>
-                                            <input class="form-control" id="HocSinh_DiemTiengViet" name="HocSinh_DiemTiengViet" type="number" placeholder="Điểm Tiếng Việt" value="" />
+                                            <input class="form-control" id="HocSinh_DiemTiengViet" name="HocSinh_DiemTiengViet" type="number" placeholder="Điểm Tiếng Việt" value="@Model.Monhocs.TiengViet" />
                                             <span id="HocSinh_DiemTiengViet_Error" class="small mb-1 text-danger"></span>
                                         </div>
                                     </div>
@@ -217,12 +217,12 @@
                                     <div class="row g-1">
                                         <div class="col-6">
                                             <label class="form-label mb-1" for="HocSinh_DiemTN">TN & KH/XH <a style="color:red; text-decoration:none">(*)</a> </label>
-                                            <input class="form-control" id="HocSinh_DiemTN" name="HocSinh_DiemTN" type="number" placeholder="TN & KH/XH" value="" />
+                                            <input class="form-control" id="HocSinh_DiemTN" name="HocSinh_DiemTN" type="number" placeholder="TN & KH/XH" value="@Model.Monhocs.TuNhien" />
                                             <span id="HocSinh_DiemTN_Error" class="small mb-1 text-danger"></span>
                                         </div>
                                         <div class="col-6">
                                             <label class="form-label mb-1" for="HocSinh_DiemLSDL">Lịch sử & Địa lý <a style="color:red; text-decoration:none">(*)</a> </label>
-                                            <input class="form-control" id="HocSinh_DiemLSDL" name="HocSinh_DiemLSDL" type="number" placeholder="L.Sử & Địa lý" value="" />
+                                            <input class="form-control" id="HocSinh_DiemLSDL" name="HocSinh_DiemLSDL" type="number" placeholder="L.Sử & Địa lý" value="@Model.Monhocs.LichSuDiaLy" />
                                             <span id="HocSinh_DiemLSDL_Error" class="small mb-1 text-danger"></span>
                                         </div>
                                     </div>
@@ -233,7 +233,7 @@
                                     <label class="form-label mb-1" for="HocSinh_DiemTA">Tiếng Anh <a style="color:red; text-decoration:none">(*)</a> </label>
                                 </td>
                                 <td>
-                                    <input class="form-control" id="HocSinh_DiemTA" name="HocSinh_DiemTA" type="number" placeholder="Điểm Tiếng Anh" value="" />
+                                    <input class="form-control" id="HocSinh_DiemTA" name="HocSinh_DiemTA" type="number" placeholder="Điểm Tiếng Anh" value="@Model.Monhocs.TiengAnh" />
                                     <span id="HocSinh_DiemTA_Error" class="small mb-1 text-danger"></span>
                                 </td>
                             </tr>
@@ -242,12 +242,12 @@
                                     <div class="row g-1 mt-1">
                                         <div class="col-md-6">
                                             <label class="form-label mb-1" for="HocSinh_MucDoNangLuc">Mức độ năng lực </label>
-                                            <input class="form-control" id="HocSinh_MucDoNangLuc" name="HocSinh_MucDoNangLuc" placeholder="Mức độ năng lực" value="" />
+                                            <input class="form-control" id="HocSinh_MucDoNangLuc" name="HocSinh_MucDoNangLuc" placeholder="Mức độ năng lực" value="@Model.HocSinh_MucDoNangLuc" />
                                             <span id="HocSinh_MucDoNangLuc_Error" class="small mb-1 text-danger"></span>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label mb-1" for="HocSinh_MucDoPhamChat">Mức độ phẩm chất </label>
-                                            <input class="form-control" id="HocSinh_MucDoPhamChat" name="HocSinh_MucDoPhamChat" placeholder="Mức độ phẩm chất" value="" />
+                                            <input class="form-control" id="HocSinh_MucDoPhamChat" name="HocSinh_MucDoPhamChat" placeholder="Mức độ phẩm chất" value="@Model.HocSinh_MucDoPhamChat" />
                                             <span id="HocSinh_MucDoPhamChat" class="small mb-1 text-danger"></span>
                                         </div>
                                     </div>
@@ -273,53 +273,109 @@
                                         <div class="col-md-3">
                                             <label class="form-label mb-1" for="HocSinh_NoiCuTru">Mã định danh </label>
                                             <div class="col-md-12">
-                                                <input class="form-control" id="files_madinhdanh" multiple="multiple" name="files" type="file"
-                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                                <table class="table" id="FilesList_MaDinhDanh_View" style="visibility:hidden">
-                                                    <tr style="display:none">
-                                                        <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
-                                                    </tr>
-                                                </table>
+                                                @{
+                                                    if (Model.HocSinh_MinhChungMaDinhDanh != null)
+                                                    {
+                                                        string[] strArr = Model.HocSinh_MinhChungMaDinhDanh.Split(new Char[] { '#' });
+                                                        int i = 0;
+                                                        foreach (string _item in strArr)
+                                                        {
+                                                            i++;
+                                                            if (_item.Trim().Length > 0)
+                                                            {
+
+                                                                string str_url = ViewBag.URL + _item;
+                                                                <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-warning"> Không có tệp đính kèm!</p>
+                                                    }
+
+                                                }
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label mb-1" for="HocSinh_NoiCuTru">Học bạ </label>
                                             <div class="col-md-12">
-                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file"
-                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                                <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
-                                                    <tr style="display:none">
-                                                        <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
-                                                    </tr>
-                                                </table>
+                                                @{
+                                                    if (Model.HocSinh_MinhChungHB != null)
+                                                    {
+                                                        string[] strArr = Model.HocSinh_MinhChungHB.Split(new Char[] { '#' });
+                                                        int i = 0;
+                                                        foreach (string _item in strArr)
+                                                        {
+                                                            i++;
+                                                            if (_item.Trim().Length > 0)
+                                                            {
+
+                                                                string str_url = ViewBag.URL + _item;
+                                                                <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-warning"> Không có tệp đính kèm!</p>
+                                                    }
+
+                                                }
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label mb-1" for="HocSinh_NoiCuTru">Giấy khai sinh </label>
                                             <div class="col-md-12">
-                                                <input class="form-control" id="files_giayks" multiple="multiple" name="files" type="file"
-                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                                <table class="table" id="FilesList_GiayKS_View" style="visibility:hidden">
-                                                    <tr style="display:none">
-                                                        <th colspan="3"><input type="hidden" id="GiayKS_Files" /></th>
-                                                    </tr>
-                                                </table>
+                                                @{
+                                                    if (Model.HocSinh_MinhChungGiayKS != null)
+                                                    {
+                                                        string[] strArr = Model.HocSinh_MinhChungGiayKS.Split(new Char[] { '#' });
+                                                        int i = 0;
+                                                        foreach (string _item in strArr)
+                                                        {
+                                                            i++;
+                                                            if (_item.Trim().Length > 0)
+                                                            {
+
+                                                                string str_url = ViewBag.URL + _item;
+                                                                <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-warning"> Không có tệp đính kèm!</p>
+                                                    }
+
+                                                }
                                             </div>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="form-label mb-1" for="HocSinh_NoiCuTru">Chứng nhận ưu tiên</label>
+                                            <label class="form-label mb-1" for="HocSinh_GiayUuTien">Chứng nhận ưu tiên</label>
                                             <div class="col-md-12">
-                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file"
-                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                                <table class="table" id="FilesList_UuTien_View" style="visibility:hidden">
-                                                    <tr style="display:none">
-                                                        <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
-                                                    </tr>
-                                                </table>
+                                                @{
+                                                    if (Model.HocSinh_GiayUuTien != null)
+                                                    {
+                                                        string[] strArr = Model.HocSinh_GiayUuTien.Split(new Char[] { '#' });
+                                                        int i = 0;
+                                                        foreach (string _item in strArr)
+                                                        {
+                                                            i++;
+                                                            if (_item.Trim().Length > 0)
+                                                            {
+
+                                                                string str_url = ViewBag.URL + _item;
+                                                                <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="text-warning"> Không có tệp đính kèm!</p>
+                                                    }
+
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -347,14 +403,27 @@
                                                 <label class="col-2 form-label align-items-center" for="HocSinh_NoiCuTru">Lệ phí</label>
                                                 <div class="col-10">
                                                     <div class="row col-12">
-                                                        <input class="form-control" id="files_lephi" multiple="multiple" name="files" type="file"
-                                                               accept="application/pdf,.png, .jpeg, .jpg" />
-                                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
-                                                        <table class="table" id="FilesList_LePhi_View" style="visibility:hidden">
-                                                            <tr style="display:none">
-                                                                <th colspan="3"><input type="hidden" id="LePhi_Files" /></th>
-                                                            </tr>
-                                                        </table>
+                                                        @{
+                                                            if (Model.HocSinh_XacNhanLePhi != null)
+                                                            {
+                                                                string[] strArr = Model.HocSinh_XacNhanLePhi.Split(new Char[] { '#' });
+                                                                int i = 0;
+                                                                foreach (string _item in strArr)
+                                                                {
+                                                                    i++;
+                                                                    if (_item.Trim().Length > 0)
+                                                                    {
+
+                                                                        string str_url = ViewBag.URL + _item;
+                                                                        <a href="@str_url" target="_blank" style="text-decoration:none" title="bấm chuột để xem thông tin">Tệp @i</a> <label>  </label>
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="text-warning mt-2"> Không có tệp đính kèm!</p>
+                                                            }
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -366,7 +435,43 @@
                     </table>
                 </div>
             </div>
-    </div>
+            <div class="row g-1">
+                <div class="col-xl-12 col-12">
+
+                    <label for="formFileMultiple" class="form-label"> <b>Trạng thái hồ sơ</b></label>
+                    <br />
+                    <div class="d-inline-flex flex-nowrap" style="margin-bottom:12px">
+                        <div class="form-check" id="radio-trangthai">
+                            <input class="form-check-input" type="radio" id="radioDK" name="HocSinh_TrangThai" value=0>
+                            <label class="form-check-label" for="radioDK">
+                                Đăng ký
+                            </label>
+                        </div>
+                        <div class="form-check" id="radio-trangthai" style="margin-left:10px">
+                            <input class="form-check-input" type="radio" id="radioXT" name="HocSinh_TrangThai" value=1>
+                            <label class="form-check-label" for="radioXT">
+                                Đã xác thực
+                            </label>
+                        </div>
+                        <div class="form-check" id="radio-trangthai" style="margin-left:10px">
+                            <input class="form-check-input" type="radio" id="radioMCS" name="HocSinh_TrangThai" value=2>
+                            <label class="form-check-label" for="radioMCS">
+                                MC sai
+                            </label>
+                        </div>
+                        <div class="form-check" id="radio-trangthai" style="margin-left:10px">
+                            <input class="form-check-input" type="radio" id="radioDD" name="HocSinh_TrangThai" value=3>
+                            <label class="form-check-label" for="radioDD">
+                                HS Đầy đủ
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" onclick="updateStatus()" style="margin-left:10px"> Cập nhật trạng thái</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -389,3 +494,68 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('input').attr("disabled", true);
+        $('#radio-trangthai input ').attr("disabled", false);
+        loadData();
+    });
+        function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+    function loadData() {
+        if (@Model.HocSinh_TrangThai == 0) {
+            $('#radioDK').attr('checked', 'checked');
+                }
+                else if (@Model.HocSinh_TrangThai == 1) {
+            $('#radioXT').attr('checked', 'checked');
+                }
+                else if (@Model.HocSinh_TrangThai == 2) {
+            $('#radioMCS').attr('checked', 'checked');
+                }
+                else if (@Model.HocSinh_TrangThai == 3) {
+            $('#radioDD').attr('checked', 'checked');
+          }
+    }
+    function updateStatus() {
+        let _hocsinh_trangthai = -1;
+        if ($('#radioDK').is(':checked')) {
+            _hocsinh_trangthai = 0;
+        }
+        else if ($('#radioXT').is(':checked')) {
+            _hocsinh_trangthai = 1;
+        }
+        else if ($('#radioMCS').is(':checked')) {
+            _hocsinh_trangthai = 2;
+        }
+        else if ($('#radioDD').is(':checked')) {
+            _hocsinh_trangthai = 3;
+        }
+        let dataForm = {
+            HocSinh_ID: @Model.HocSinh_ID,
+            HocSinh_TrangThai: _hocsinh_trangthai,
+            }
+        $.ajax({
+            url: '/Admin/TruongLienCaps/UpdateStatusLCTHCS',
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(dataForm),
+            success: function (res) {
+                if (res.success == true) {
+                    showToast("Thành công", res.message, "bg-success");
+                    window.location.href = '/Admin/TruongLienCaps/LcTrunghocCs';
+                } else if (res.success == false) {
+                    showToast("Lỗi", res.message, "bg-error");
+                }
+            },
+            error: function (res) {
+                showToast("Lỗi", res.message, "bg-error");
+            }
+        });
+    }
+
+</script>

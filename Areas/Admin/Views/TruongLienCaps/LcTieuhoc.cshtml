@@ -55,11 +55,11 @@
                         </select>
                         @*@Html.DropDownList("filteriDotxt", null, new { @class = "form-select form-select-sm bd-rd" })*@
                     </div>
-                
+
                     <div class="col-xxl-2 col-md-12">
 
                         @Html.DropDownList("filteriHoSo", null, "Theo dõi hồ sơ...", new { @class = "form-select" })
-                    </div>                  
+                    </div>
                     <div class="col-xxl-2 col-md-12">
                         @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })
                     </div>
@@ -69,32 +69,32 @@
                             <a class="btn btn-outline-secondary " id="bt_reset" href="@Url.Action("LcTieuhoc", "TruongLienCaps")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
                             <a class="btn btn-outline-primary bd-rd  text-nowrap" id="bt_export_excel" href="@Url.Action("ExportHocSinhTH", "TruongLienCaps")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
                             <script>
-                                    $(document).ready(function () {
-                                        $('#bt_export_excel').click(function () {
-                                            var _filteriDotxt = $('#filteriDotxt').val();
-                                            var _searchString = $('#searchString').val();
-                                            var data = {
-                                                FilteriDotxt: _filteriDotxt,
-                                                SearchString: _searchString,
-                                            }
-                                            console.log(data)
-                                            $.ajax({
-                                                url: "/TruongLienCaps/ExportHocSinhTH/",
-                                                data: JSON.stringify(data),
-                                                type: "GET",
-                                                contentType: 'application/json;charset=utf-8',
-                                                dataType: 'json',
-                                                async: false,
-                                                success: function (response) {
-                                                    console.log(response)
+                                $(document).ready(function () {
+                                    $('#bt_export_excel').click(function () {
+                                        var _filteriDotxt = $('#filteriDotxt').val();
+                                        var _searchString = $('#searchString').val();
+                                        var data = {
+                                            FilteriDotxt: _filteriDotxt,
+                                            SearchString: _searchString,
+                                        }
+                                        console.log(data)
+                                        $.ajax({
+                                            url: "/TruongLienCaps/ExportHocSinhTH/",
+                                            data: JSON.stringify(data),
+                                            type: "GET",
+                                            contentType: 'application/json;charset=utf-8',
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function (response) {
+                                                console.log(response)
 
-                                                },
-                                                error: function (errormessage) {
-                                                    console.log(errormessage.responseText);
-                                                }
-                                            });
+                                            },
+                                            error: function (errormessage) {
+                                                console.log(errormessage.responseText);
+                                            }
                                         });
                                     });
+                                });
                             </script>
                         </div>
                     </div>
@@ -151,9 +151,9 @@
                                                     <p class="p-mg">- Diện ưu tiên: Không</p>
 
                                                 </td>
-                                                
+
                                                 <td style="vertical-align:middle">
-                                                 
+
                                                     @Html.DisplayFor(mdit => item.HocSinh_TruongMN)
                                                 </td>
                                                 <td>
@@ -162,17 +162,17 @@
                                                     <p class="p-mg">- Họ tên mẹ: @item.HocSinh_ThongTinMe</p>
                                                     <p class="p-mg">- Điện thoại: @item.HocSinh_DienThoaiMe</p>
                                                     <p class="p-mg">- Email: @item.HocSinh_Email</p>
-                                                </td>                                                
+                                                </td>
                                                 <td style="vertical-align:middle">
                                                     @{
                                                         if (item.HocSinh_TrangThai == 0)
-                                                        { <a class="btn  btn-danger btn-sm" style="width:110px" href="@Url.Action("Details", "LienCapTHCS", new { id = item.HocSinh_ID })">Đăng ký</a> }
+                                                        { <a class="btn  btn-danger btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">Đăng ký</a> }
                                                         if (item.HocSinh_TrangThai == 1)
-                                                        { <a class="btn  btn-success btn-sm" style="width:110px" href="@Url.Action("Details", "LienCapTHCS", new { id = item.HocSinh_ID })">Đã xác thực</a> }
+                                                        { <a class="btn  btn-success btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">Đã xác thực</a> }
                                                         if (item.HocSinh_TrangThai == 2)
-                                                        { <a class="btn  btn-warning btn-sm" style="width:110px" href="@Url.Action("Details", "LienCapTHCS", new { id = item.HocSinh_ID })">MC sai</a> }
+                                                        { <a class="btn  btn-warning btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">MC sai</a> }
                                                         if (item.HocSinh_TrangThai == 3)
-                                                        { <a class="btn  btn-primary btn-sm" style="width:110px" href="@Url.Action("Details", "LienCapTHCS", new { id = item.HocSinh_ID })">HS Đầy đủ</a> }
+                                                        { <a class="btn  btn-primary btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">HS Đầy đủ</a> }
                                                     }
                                                 </td>
                                                 <td style="white-space:nowrap; vertical-align:middle">
@@ -191,7 +191,7 @@
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
                         @Html.PagedListPager(Model, page => Url.Action("LcTieuhoc", "TruongLienCaps", new
                            {
-                               filteriDotxt = ViewBag.DotxtFilteri,                            
+                               filteriDotxt = ViewBag.DotxtFilteri,
                                filteriHoSo = ViewBag.HoSoFilteri,
                                searchString = ViewBag.SearchString,
                                page

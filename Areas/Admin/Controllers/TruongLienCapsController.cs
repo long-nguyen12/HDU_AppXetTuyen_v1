@@ -141,7 +141,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             // thực hiện phân trang
             #region Phân trang
             if (page == null) page = 1;
-            int pageSize = 1;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             #endregion
             // tham số khác
@@ -162,22 +162,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(model.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: Admin/LienCapTHCS/Details/5
-        [AdminSessionCheck]
-        public ActionResult DetailsLcthcs(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            LienCapTHCS lienCapTHCS = db.LienCapTHCSs.Find(id);
-            if (lienCapTHCS == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.URL = DEFAULT_URL;
-            return View(lienCapTHCS);
-        }
         public ActionResult LcTieuhoc(string filteriDotxt, string filteriHoSo, string searchString, string SearchCurrent, int? page)
         {
             List<LienCapTieuHoc> model = new List<LienCapTieuHoc>();
@@ -259,7 +243,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             // thực hiện phân trang
             #region Phân trang
             if (page == null) page = 1;
-            int pageSize = 3;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             #endregion
             // tham số khác
@@ -287,13 +271,38 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LienCapTHCS lienCapTHCS = db.LienCapTHCSs.Find(id);
-            if (lienCapTHCS == null)
+            LienCapTHCS lc = db.LienCapTHCSs.Find(id);
+            LienCapTHCS item_prs = new LienCapTHCS();
+            item_prs.HocSinh_ID = lc.HocSinh_ID;
+            item_prs.HocSinh_DinhDanh = lc.HocSinh_DinhDanh;
+            item_prs.HocSinh_HoTen = lc.HocSinh_HoTen;
+            item_prs.HocSinh_GioiTinh = lc.HocSinh_GioiTinh;
+            item_prs.HocSinh_NgaySinh = lc.HocSinh_NgaySinh;
+            item_prs.HocSinh_NoiSinh = lc.HocSinh_NoiSinh;
+            item_prs.HocSinh_Email = lc.HocSinh_Email;
+            item_prs.HocSinh_NoiCuTru = lc.HocSinh_NoiCuTru;
+            item_prs.HocSinh_TruongTH = lc.HocSinh_TruongTH;
+            item_prs.HocSinh_UuTien = lc.HocSinh_UuTien;
+            item_prs.HocSinh_MucDoNangLuc = lc.HocSinh_MucDoNangLuc;
+            item_prs.HocSinh_MucDoPhamChat = lc.HocSinh_MucDoPhamChat;
+            item_prs.HocSinh_MinhChungHB = lc.HocSinh_MinhChungHB;
+            item_prs.HocSinh_MinhChungGiayKS = lc.HocSinh_MinhChungGiayKS;
+            item_prs.HocSinh_MinhChungMaDinhDanh = lc.HocSinh_MinhChungMaDinhDanh;
+            item_prs.HocSinh_GiayUuTien = lc.HocSinh_GiayUuTien;
+            item_prs.HocSinh_XacNhanLePhi = lc.HocSinh_XacNhanLePhi;
+            item_prs.HocSinh_TrangThai = lc.HocSinh_TrangThai;
+            item_prs.HocSinh_GhiChu = lc.HocSinh_GhiChu;
+            item_prs.HocSinh_Activation = lc.HocSinh_Activation;
+            item_prs.PhBo = JsonConvert.DeserializeObject<PhuHuynh>(lc.HocSinh_ThongTinCha);
+            item_prs.PhMe = JsonConvert.DeserializeObject<PhuHuynh>(lc.HocSinh_ThongTinMe);
+            item_prs.Monhocs = JsonConvert.DeserializeObject<MonHocTHCS>(lc.HocSinh_DiemHocTap);
+            item_prs.TongDiem = item_prs.Monhocs.Toan + item_prs.Monhocs.TiengViet + item_prs.Monhocs.TuNhien + item_prs.Monhocs.LichSuDiaLy + item_prs.Monhocs.TiengAnh;
+            if (lc == null)
             {
                 return HttpNotFound();
             }
             ViewBag.URL = DEFAULT_URL;
-            return View(lienCapTHCS);
+            return View(item_prs);
         }
 
         // GET: Admin/LienCapTHCS/Edit/5
@@ -673,6 +682,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                         // với mỗi item trong danh sách sẽ ghi trên 1 dòng
                         foreach (var item in model)
                         {
+                            string diemhoctap = "";
+                            diemhoctap = "Toán: " + item.Monhocs.Toan + "\n" + "Tiếng Việt: " + item.Monhocs.TiengViet + "\n" + "Tự Nhiên: " + item.Monhocs.TuNhien + "\n" + "Lịch Sử Địa Lý: " + item.Monhocs.LichSuDiaLy + "\n" + "Tiếng Anh: " + item.Monhocs.TiengAnh;
+                            string thongtincha = "";
+                            thongtincha = "Họ tên: " + item.PhBo.HoTen + "\n" + "Nghề nghiệp: " + item.PhBo.NgheNghiep + "\n" + "Điện thoại: " + item.PhBo.SoDienThoai;
+                            string thongtinme = "";
+                            thongtinme = "Họ tên: " + item.PhMe.HoTen + "\n" + "Nghề nghiệp: " + item.PhMe.NgheNghiep + "\n" + "Điện thoại: " + item.PhMe.SoDienThoai;
                             colIndex = 1; // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
                             rowIndex++;  // rowIndex tương ứng từng dòng dữ liệu
                             //gán giá trị cho từng cell                      
@@ -692,15 +707,17 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                             }
                             ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_TruongTH;     //  6
                             ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_UuTien;     //  7
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_DiemHocTap;     //  8
+                            ws.Cells[rowIndex, colIndex++].Value = diemhoctap;     //  8
                             ws.Cells[rowIndex, colIndex++].Value = item.TongDiem;     //  9
                             ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_MucDoPhamChat;     //  10
                             ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_MucDoNangLuc;     //  11
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_ThongTinCha;      //  12
-                            ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_ThongTinMe;            //  13
+                            ws.Cells[rowIndex, colIndex++].Value = thongtincha;      //  12
+                            ws.Cells[rowIndex, colIndex++].Value = thongtinme;            //  13
                             ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_Email;      //  14
                             ws.Cells[rowIndex, colIndex++].Value = item.HocSinh_NoiCuTru;     //  15
+
                             ws.Cells[rowIndex, colIndex++].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            ws.Cells[rowIndex, colIndex++].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                         }
                         for (int indexCol = 1; indexCol <= arr_col_number.Count(); indexCol++)
                         {
@@ -720,6 +737,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                             if (indexCol == 14) { ws.Column(indexCol).Width = 25; }     //14
                             if (indexCol == 15) { ws.Column(indexCol).Width = 25; }     //15
 
+                            ws.Column(indexCol).Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                             ws.Cells[3, 1, 3, indexCol].Style.Font.Bold = true;         // đặt tiêu đề cho bảng có kiểu chữ đậm
                         }
                         //worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
@@ -752,6 +770,59 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+        public class HocSinhStatus
+        {
+            public int HocSinh_ID { get; set; }
+            public int HocSinh_TrangThai { get; set; }
+            public string LienCap { get; set; }
+
+        }
+        public JsonResult UpdateStatusLCTH(LienCapTieuHoc dataForm)
+        {
+            long hocsinh_id = dataForm.HocSinh_ID;
+            int? hocsinh_trangthai = dataForm.HocSinh_TrangThai;
+
+
+            if (dataForm != null)
+            {
+                LienCapTieuHoc lienCapTieuHoc = db.LienCapTieuHocs.Find(hocsinh_id);
+                if (lienCapTieuHoc != null)
+                    {
+                    lienCapTieuHoc.HocSinh_TrangThai = hocsinh_trangthai;
+                        db.Entry(lienCapTieuHoc).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                return Json(new { success = true, message = "Cập nhật thành công." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, message = "Có lỗi xảy ra!" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult UpdateStatusLCTHCS(LienCapTHCS dataForm)
+        {
+            long hocsinh_id = dataForm.HocSinh_ID;
+            int? hocsinh_trangthai = dataForm.HocSinh_TrangThai;
+
+
+            if (dataForm != null)
+            {
+                LienCapTHCS lienCapThcs = db.LienCapTHCSs.Find(hocsinh_id);
+                if (lienCapThcs != null)
+                {
+                    lienCapThcs.HocSinh_TrangThai = hocsinh_trangthai;
+                    db.Entry(lienCapThcs).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                return Json(new { success = true, message = "Cập nhật thành công." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, message = "Có lỗi xảy ra!" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)
