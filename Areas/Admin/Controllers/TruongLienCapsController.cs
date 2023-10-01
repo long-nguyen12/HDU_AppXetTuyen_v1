@@ -324,7 +324,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 db.Entry(lienCapTHCS).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("LcTrunghocCs");
             }
             return View(lienCapTHCS);
         }
@@ -354,7 +354,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             LienCapTHCS lienCapTHCS = db.LienCapTHCSs.Find(id);
             db.LienCapTHCSs.Remove(lienCapTHCS);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("LcTrunghocCs");
         }
 
 
@@ -403,7 +403,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 db.Entry(lienCapTieuHoc).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("LcTieuhoc");
             }
             return View(lienCapTieuHoc);
         }
@@ -433,7 +433,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             LienCapTieuHoc lienCapTieuHoc = db.LienCapTieuHocs.Find(id);
             db.LienCapTieuHocs.Remove(lienCapTieuHoc);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("LcTieuhoc");
         }
 
         public void ExportHocSinhTH()
