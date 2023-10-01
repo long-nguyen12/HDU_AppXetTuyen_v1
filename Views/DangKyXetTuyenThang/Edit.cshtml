@@ -47,11 +47,11 @@
     })
 </script>
 <div class="container-fluid px-12">
- 
+
     <div id="div_update_dk_nguyenvong">
         <div class="card card-header-actions">
             <div class="card-header">
-               <span>Chỉnh sửa thông tin nguyện vọng đã đăng ký</span>
+                <span>Chỉnh sửa thông tin nguyện vọng đã đăng ký</span>
                 <button class="btn-close" type="button" aria-label="Close" onclick="bt_HuyBo_Dkxt_NVM_OnClick()"></button>
             </div>
             <div class="card-body">
@@ -339,7 +339,42 @@
         </div>
     </div>
 </div>
+<input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_ID" />
+<input type="hidden" id="dkxt_id_checkin" name="dkxt_id_checkin" />
 <script>
+    $(document).ready(function () {
+        /*  var hidden_Dkxt_HB_ID = $('#hidden_Dkxt_HB_ID').val();*/
+        let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val() }
+        $.ajax({
+            url: "/DangKyXetTuyenThang/DangKyXetTuyenThang_GetByID",
+            data: JSON.stringify(data_get),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                if (res.success) {
+                    let data = res.data;
+                    console.log(data)
+                    /*select_khoinganh_view_data(data.KhoiNganh_ID, data.Nganh_ID, data.Thm_ID);*/
+                    $('#Dkxt_XepLoaiHocLuc_12').val(data.ThiSinh_HocLucLop12);
+                    $('#Dkxt_XepLoaiHanhKiem_12').val(data.ThiSinh_HanhKiemLop12);
+                    $('#Dkxt_NamDatGiai').val(data.Dkxt_NamDatGiai);
+
+                    $('#span_Uutien_doituong').text(data.DoiTuong_ID);
+                    $('#span_Uutien_khuvuc').text(data.KhuVuc_ID);
+
+                    $('#dkxt_id_checkin').val(data.Dkxt_ID);    
+
+                    GetAllKhoiNganh(data.KhoiNganh_ID, data.Nganh_ID);
+                    InitData(data.Dkxt_MonDatGiai, data.Dkxt_LoaiGiai);
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.error);
+            }
+        });
+    })
     var HocBaFormData = new FormData();
     var CCCDFormData = new FormData();
     var BangTNFormData = new FormData();
@@ -354,9 +389,7 @@
     ];
 
     $(document).ready(function () {
-        InitData(null, null);
-        ListAllNguyenVong();
-        GetAllKhoiNganh();
+        /*ListAllNguyenVong();*/
 
         $("#select_khoinganh").change(function () {
             let id = $("#select_khoinganh").val();
@@ -487,7 +520,7 @@
                     contentType: false,
                     async: false,
                     success: function (response) {
-                      /*  console.log(response)*/
+                        /*  console.log(response)*/
                         if (response.success) {
                             savedPath = response.message;
                         }
@@ -549,6 +582,7 @@
                 value: option.value,
                 text: option.text
             }));
+            if (option.text == MonDatGiai) $('#Dkxt_MonDatGiai').val(option.value);
         });
 
         let giaiList = [
@@ -563,13 +597,14 @@
                 value: option.value,
                 text: option.text
             }));
+            if (option.text == LoaiGiai) $('#Dkxt_LoaiGiai').val(option.value);
         });
     }
-  
+
     function bt_HuyBo_Dkxt_NVM_OnClick() {
         window.location.href = "/DangKyXetTuyenThang/Index";
     }
-    function GetAllKhoiNganh() {
+    function GetAllKhoiNganh(KhoiNganh_ID, Nganh_ID) {
         $.ajax({
             url: "/DangKyXetTuyenThang/GetAllKhoiNganh/",
             type: 'GET',
@@ -577,13 +612,14 @@
             dataType: 'json',
             success: function (response) {
                 let data = response;
+                console.log(data)
                 let khoiNganhs = $('#select_khoinganh');
                 khoiNganhs.empty();
                 $.each(data, function (index, item) {
                     khoiNganhs.append($('<option></option>').val(item.KhoiNganh_ID).text(item.KhoiNganh_Ten));
                 });
-                let id = $("#select_khoinganh").val();
-                GetNganhData(id);
+                $("#select_khoinganh").val(KhoiNganh_ID);
+                GetNganhData(KhoiNganh_ID, Nganh_ID);
             },
             error: function (errormessage) {
                 console.log(errormessage)
@@ -591,7 +627,7 @@
         });
     }
 
-    function GetNganhData(id) { // id = KhoiNganh_ID
+    function GetNganhData(id, Nganh_ID) { // id = KhoiNganh_ID
         $('#Nganh_ID').empty();
         $.ajax({
             url: "/DangKyXetTuyenThang/GetAllNganhs/",
@@ -606,7 +642,8 @@
                     let data = response.data
                     $.each(data, function (i, result) {
                         $('#Nganh_ID').append('<option value="' + result.Nganh_ID + '">' + result.NganhTenNganh + '</option>');
-                     });
+                    });
+                    $("#Nganh_ID").val(Nganh_ID);
                 }
             },
             error: function (errormessage) {
@@ -627,6 +664,7 @@
         let Dkxt_NamDatGiai = $('#Dkxt_NamDatGiai').val();
         let Dkxt_XepLoaiHocLuc_12 = $('#Dkxt_XepLoaiHocLuc_12').val();
         let Dkxt_XepLoaiHanhKiem_12 = $('#Dkxt_XepLoaiHanhKiem_12').val();
+        let Dkxt_ID = $('#dkxt_id_checkin').val();
 
         if (!Nganh_ID) {
             var errorMessage = "Vui lòng chọn ngành";
@@ -656,6 +694,7 @@
         $("#loadingModal").modal("show");
         uploadFiles();
         let formData = {
+            Dkxt_ID: Dkxt_ID,
             Nganh_ID: Nganh_ID,
             Dkxt_MonDatGiai: Dkxt_MonDatGiai,
             Dkxt_LoaiGiai: Dkxt_LoaiGiai,
@@ -671,28 +710,24 @@
         }
 
         $.ajax({
-            url: "/DangKyXetTuyenThang/Create",
+            url: "/DangKyXetTuyenThang/DangKyXetTuyenThang_Edit",
             data: JSON.stringify(formData),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (res) {
-                //alert(res)
-                //return;
+                console.log(res)
                 if (res.success) {
-                    showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
-                    ListAllNguyenVong();
-                    document.getElementById('div_list_nguyenvong').style.display = "inline";
-                    document.getElementById('div_update_dk_nguyenvong').style.display = "none";
+                    showToast("Thông báo", "Sửa nguyện vọng thành công!", "bg-success");
                     $("#loadingModal").modal("hide");
-                    onResetFields();
+                    /*onResetFields();*/
                 } else {
-                    showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                    showToast("Thông báo", "Có lỗi xảy ra khi sửa nguyện vọng!", "bg-error");
                     $("#loadingModal").modal("hide");
                 }
             },
             error: function (errormessage) {
-                showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                showToast("Thông báo", "Có lỗi xảy ra khi sửa nguyện vọng!", "bg-error");
                 $("#loadingModal").modal("hide");
             }
         });
