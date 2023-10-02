@@ -17,6 +17,7 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+
     .btn, .form-select, .form-control {
         border-radius: 3px;
     }
@@ -43,42 +44,22 @@
         let sp_tieude = document.getElementById('sp_tieude');
         function reportWindowSize() {
             if (window.innerWidth <= 1200) {
-                sp_tieude.innerHTML = "ĐKXT SD Kết quả DGNL hoặc CCNN";                
+                sp_tieude.innerHTML = "ĐKXT SD Kết quả DGNL hoặc CCNN";
             }
             else {
-                sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ";               
+                sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ";
             }
         }
         window.onresize = reportWindowSize;
     })
     $(document).ready(function () {
-
-        
-
-        let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val()}
-        $.ajax({
-            url: "/DangKyXetTuyenKhac/GetNguyenVongByID/",
-            data: JSON.stringify(data_get),
-            type: 'POST',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',            
-            success: function (res) {
-                console.log(res)
-               
-            },
-            error: function (errormessage) {
-                console.log(errormessage)
-            }
-        });
-    })
-    $(document).ready(function () {
         //GetAllKhoiNganh();
         //GetAllChungChi();
-       
+
     })
-    
+
 </script>
-<div class="container-fluid px-12">    
+<div class="container-fluid px-12">
     <div id="div_update_dk_nguyenvong">
         <div class="card card-header-actions">
             <div class="card-header">
@@ -224,7 +205,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-xxl-12">
-                                <div class="form-group mb-2">                                  
+                                <div class="form-group mb-2">
                                     <label class="form-label">Chứng nhận</label>
                                     <div class="col-md-12">
                                         <input class="form-control" id="files_chungnhan" multiple="multiple" name="files_chungnhan" type="file" accept="application/pdf,.png, .jpeg, .jpg" />
@@ -348,7 +329,7 @@
             </div>
         </div>
     </div>
-   
+
 </div>
 <style>
     #loadingModal {
@@ -367,12 +348,49 @@
         </div>
     </div>
 </div>
+<input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_ID" />
+<input type="hidden" id="dkxt_id_checkin" name="dkxt_id_checkin" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
+    $(document).ready(function () {
+        /*  var hidden_Dkxt_HB_ID = $('#hidden_Dkxt_HB_ID').val();*/
+        let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val() }
+        $.ajax({
+            url: "/DangKyXetTuyenKhac/GetNguyenVongByID",
+            data: JSON.stringify(data_get),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                if (res.success) {
+                    let data = res.data;
+                    console.log(data)
+                    /*select_khoinganh_view_data(data.KhoiNganh_ID, data.Nganh_ID, data.Thm_ID);*/
+                    $('#Dkxt_XepLoaiHocLuc_12').val(data.ThiSinh_HocLucLop12);
+                    $('#Dkxt_XepLoaiHanhKiem_12').val(data.ThiSinh_HanhKiemLop12);
+                    $('#Dkxt_DonViToChuc').val(data.Dkxt_DonViToChuc);
+                    $('#Dkxt_KetQuaDatDuoc').val(data.Dkxt_KetQuaDatDuoc);
+                    $('#Dkxt_TongDiem').val(data.Dkxt_TongDiem);
+                    $('#datepicker').val(data.Dkxt_NgayDuThi);
 
+                    $('#span_Uutien_doituong').text(data.DoiTuong_ID);
+                    $('#span_Uutien_khuvuc').text(data.KhuVuc_ID);
+
+                    $('#dkxt_id_checkin').val(data.Dkxt_ID);
+
+                    GetAllKhoiNganh(data.KhoiNganh_ID, data.Nganh_ID, data.ChungChi_ID);
+                    /*InitData(data.Dkxt_MonDatGiai, data.Dkxt_LoaiGiai);*/
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.error);
+            }
+        });
+    })
     function bt_HuyBo_Dkxt_NVM_OnClick() {
         window.location.href = "/DangKyXetTuyenKhac/DanhGia";
     }
@@ -390,7 +408,7 @@
         { data: UuTienFormData, name: "UUTIEN", savePath: "" },
     ];
 
-    $(document).ready(function () { 
+    $(document).ready(function () {
         $('#datepicker').datepicker({
             format: 'dd/mm/yyyy', // Specify the desired date format
             autoclose: true // Close the datepicker when a date is selected
@@ -580,7 +598,7 @@
     }
 
 
-    function GetAllKhoiNganh() {
+    function GetAllKhoiNganh(KhoiNganh_ID, Nganh_ID, ChungChi_ID) {
         $.ajax({
             url: "/DangKyXetTuyenThang/GetAllKhoiNganh/",
             type: 'GET',
@@ -588,20 +606,22 @@
             dataType: 'json',
             success: function (response) {
                 let data = response;
+                console.log(data)
                 let khoiNganhs = $('#select_khoinganh');
                 khoiNganhs.empty();
                 $.each(data, function (index, item) {
                     khoiNganhs.append($('<option></option>').val(item.KhoiNganh_ID).text(item.KhoiNganh_Ten));
                 });
-                let id = $("#select_khoinganh").val();
-                GetNganhData(id);
+                $("#select_khoinganh").val(KhoiNganh_ID);
+                GetNganhData(KhoiNganh_ID, Nganh_ID, ChungChi_ID);
             },
             error: function (errormessage) {
                 console.log(errormessage)
             }
         });
     }
-    function GetNganhData(id) { // id = KhoiNganh_ID
+
+    function GetNganhData(id, Nganh_ID, ChungChi_ID) { // id = KhoiNganh_ID
         $('#Nganh_ID').empty();
         $.ajax({
             url: "/DangKyXetTuyenThang/GetAllNganhs/",
@@ -617,18 +637,18 @@
                     $.each(data, function (i, result) {
                         $('#Nganh_ID').append('<option value="' + result.Nganh_ID + '">' + result.NganhTenNganh + '</option>');
                     });
-                    let id = $("#Nganh_ID").val();
-                    GetAllChungChi(id);
+                    $("#Nganh_ID").val(Nganh_ID);
+                    GetAllChungChi(ChungChi_ID)
                 }
             },
             error: function (errormessage) {
-                console.log(errormessage)
+                alert(errormessage.responseText);
             }
         });
     }
+
     function GetAllChungChi(id_nganh) { // id ngành
         if (id_nganh == 0) {
-
             var chungchis = $('#ChungChi_ID');
             chungchis.empty();
             chungchis.append($('<option></option>').val(0).text("Chọn kết quả xét..."));
@@ -648,6 +668,7 @@
                     $.each(chungchi, function (index, item) {
                         chungchis.append($('<option></option>').val(item.ChungChi_ID).text(item.ChungChi_Ten));
                     });
+                    $('#ChungChi_ID').val(id_nganh);
                 },
                 error: function (errormessage) {
                     console.log(errormessage)
@@ -692,6 +713,7 @@
         let Dkxt_NgayDuThi = $('#datepicker').val();
         let Dkxt_XepLoaiHocLuc_12 = $('#Dkxt_XepLoaiHocLuc_12').val();
         let Dkxt_XepLoaiHanhKiem_12 = $('#Dkxt_XepLoaiHanhKiem_12').val();
+        let Dkxt_ID = $('#dkxt_id_checkin').val();
 
         if (!Nganh_ID) {
             var errorMessage = "Vui lòng chọn ngành";
@@ -743,6 +765,7 @@
         $("#loadingModal").modal("show");
         uploadFiles();
         let formData = {
+            Dkxt_ID: Dkxt_ID,
             ChungChi_ID: ChungChi_ID,
             Nganh_ID: Nganh_ID,
             Dkxt_DonViToChuc: Dkxt_DonViToChuc,
@@ -759,26 +782,23 @@
         console.log(formData);
 
         $.ajax({
-            url: "/DangKyXetTuyenKhac/DanhGia",
+            url: "/DangKyXetTuyenKhac/DangKyXetTuyenKhac_Edit",
             data: JSON.stringify(formData),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (res) {
                 if (res.success) {
-                    showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
-                    ListAllNguyenVong();
-                    document.getElementById('div_list_nguyenvong').style.display = "inline";
-                    document.getElementById('div_update_dk_nguyenvong').style.display = "none";
-                    onResetFields();
+                    showToast("Thông báo", "Sửa nguyện vọng thành công!", "bg-success");
+                    /*onResetFields();*/
                     $("#loadingModal").modal("hide");
                 } else {
-                    showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                    showToast("Thông báo", "Có lỗi xảy ra khi sửa nguyện vọng!", "bg-error");
                     $("#loadingModal").modal("hide");
                 }
             },
             error: function (errormessage) {
-                showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
+                showToast("Thông báo", "Có lỗi xảy ra khi sửa nguyện vọng!", "bg-error");
                 $("#loadingModal").modal("hide");
             }
         });
@@ -790,7 +810,7 @@
         get_data_for_update_dkvn(_dkxt_id)
 
     }
-   
+
     function hideErrorMessage(input) {
         var errorContainer = input.next('.text-danger');
         errorContainer.text('');
@@ -800,5 +820,5 @@
         $('#bt_xuat_phieu_tong_hop_kq').click(function () {
             window.location.href = '/ExportFile/DownloadFile_XetTuyenDGNL_DGTD';
         });
-    });   
+    });
 </script>

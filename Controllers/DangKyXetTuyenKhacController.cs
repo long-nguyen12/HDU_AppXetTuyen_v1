@@ -35,12 +35,25 @@ namespace HDU_AppXetTuyen.Controllers
             db = new DbConnecttion();
             var model = db.DangKyXetTuyenKhacs.Include(d => d.Nganh).Include(x => x.ChungChi).FirstOrDefault(x => x.Dkxt_ID == entity.Dkxt_ID);
             var model_ts = db.ThiSinhDangKies.Include(x => x.DoiTuong).Include(x => x.KhuVuc).Where(x => x.ThiSinh_ID == model.ThiSinh_ID).FirstOrDefault();
-          
+            
+            string _xeploai_hocluc_12 = "";
+
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 3) { _xeploai_hocluc_12 = "Giỏi"; }
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 2) { _xeploai_hocluc_12 = "Khá"; }
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hocluc_12 = "Trung bình"; }
+
+            string _xeploai_hanhkiem_12 = "";
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hanhkiem_12 = "Tốt"; }
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
+            if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
+            
             var data_return = new
             {
                
-                ThiSinh_HocLucLop12 = model_ts.ThiSinh_HocLucLop12,
-                ThiSinh_HanhKiemLop12 = model_ts.ThiSinh_HanhKiemLop12,
+                ThiSinh_HocLucLop12 = _xeploai_hocluc_12,
+                ThiSinh_HanhKiemLop12 = _xeploai_hanhkiem_12,
                 ThiSinh_UTDT = model_ts.DoiTuong.DoiTuong_Ten + ", Ưu tiên: " + model_ts.DoiTuong.DoiTuong_DiemUuTien,
                 ThiSinh_UTKV = model_ts.KhuVuc.KhuVuc_Ten + ", Ưu tiên: " + model_ts.KhuVuc.KhuVuc_DiemUuTien,
 
@@ -309,6 +322,63 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(new { success = false });
         }
+
+        public JsonResult DangKyXetTuyenKhac_Edit(DangKyXetTuyenKhac entity)
+        {
+            db = new DbConnecttion();
+
+            var session = Session["login_session"].ToString();
+
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
+                Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+
+            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            if (ts != null)
+            {
+                var model_edit = db.DangKyXetTuyenKhacs.Include(x => x.Nganh).Include(x => x.DotXetTuyen).Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
+
+                model_edit.Nganh_ID = entity.Nganh_ID;
+
+                model_edit.Dkxt_MinhChung_HB += entity.Dkxt_MinhChung_HB;
+                model_edit.Dkxt_MinhChung_CCCD += entity.Dkxt_MinhChung_CCCD;
+                model_edit.Dkxt_MinhChung_Bang += entity.Dkxt_MinhChung_Bang;
+                model_edit.Dkxt_MinhChung_UuTien += entity.Dkxt_MinhChung_UuTien;
+                model_edit.Dkxt_MinhChung_KetQua += entity.Dkxt_MinhChung_KetQua;
+                model_edit.Dkxt_DonViToChuc = entity.Dkxt_DonViToChuc;
+                model_edit.Dkxt_TongDiem = entity.Dkxt_TongDiem;
+                model_edit.Dkxt_KetQuaDatDuoc = entity.Dkxt_KetQuaDatDuoc;
+                model_edit.Dkxt_NgayDuThi = entity.Dkxt_NgayDuThi;
+                model_edit.ChungChi_ID = entity.ChungChi_ID;
+
+                model_edit.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                model_edit.ThiSinh_ID = ts.ThiSinh_ID;
+                model_edit.DotXT_ID = dotxettuyen.Dxt_ID;
+
+                var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;
+                var khuVucDoiTuong = ts.KhuVuc.KhuVuc_DiemUuTien;
+
+                db.SaveChanges();
+
+                #region gửi email
+                int nganh_id = int.Parse(model_edit.Nganh_ID.ToString());
+
+                var nganhdk = db.Nganhs.FirstOrDefault(n => n.Nganh_ID == nganh_id);
+
+                var subject = "Đăng ký nguyện vọng";
+                var body = "Thí sinh " + ts.ThiSinh_Ten + ", Số CCCD: " + ts.ThiSinh_CCCD + " đã đăng ký nguyện vọng mới." +
+                     " <br/><b>Thông tin nguyện vọng:</b><br/>" +
+                     " <p>- Phương thức đăng ký: Xét tuyển thẳng </p>" +
+                     " <p>- Mã ngành: " + nganhdk.Nganh_MaNganh + " </p>" +
+                     " <p>- Tên ngành: " + nganhdk.Nganh_TenNganh + " </p>";
+                SendEmail s = new SendEmail();
+                s.Sendemail("xettuyen@hdu.edu.vn", body, subject);
+                #endregion
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult Delete(string idDkxt, string MaToHop)
         {
             db = new DbConnecttion();
