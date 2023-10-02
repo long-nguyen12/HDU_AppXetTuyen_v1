@@ -14,7 +14,7 @@
         white-space: nowrap;
     }
 
-   /* div.dataTables_wrapper {
+    /* div.dataTables_wrapper {
         margin: 0 auto;
     }*/
 </style>
@@ -36,68 +36,27 @@
 
 <div class="container-fluid px-12">
     <div class="card card-header-actions">
-        @using (Html.BeginForm("Index", "ThiSinhDangKys", FormMethod.Get))
-        {
-            <div class="card-header">
+        <div class="card-header">
 
-                <div id="div_tieude"><span>Danh sách thí sinh đăng ký thông tin</span></div>
+            <div id="div_tieude"><span>Danh sách thí sinh đăng ký thông tin</span></div>
 
-                <div class="row align-items-center justify-content-center mt-0">
-                    <div class="col-auto  p-1" id="div_lb_nam">
-                        <label style=" color:black; font-weight:normal">Năm:</label>
-                    </div>
-                    <div class="col-auto p-1" style="padding-right:10px!important" id="div_txt_nam">
-                        <input type="text" id="txtNam" class="form-control form-control" value="@ViewBag.filteriNam" style="width: 60px; " disabled>
-                    </div>
 
-                    @*<div class="col-auto p-1" id="div_select_dot">
-                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select", @style = "padding-left:3px; padding-right:30px;" })
-                    </div>*@
-                    <div class="col-auto  p-1 ">
-                        @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })                       
-                    </div>
-                    <div class="col-auto  p-1 ">
-                        <button class="btn btn-outline-primary" id="bt_search" style="width: 75px; padding-left:4px; padding-right:4px ">Tìm kiếm</button>
-                        <a class="btn btn-outline-secondary" id="bt_reset" href="@Url.Action("Index", "ThiSinhDangKys")">Tải lại</a>
-                    </div>
-
-                </div>
-            </div>
-        }
+        </div>
         <script>
             $(document).ready(function () {
                 let div_tieude = document.getElementById('div_tieude');
                 let div_lb_nam = document.getElementById('div_lb_nam');
                 let div_txt_nam = document.getElementById('div_txt_nam');
-             /*   let div_select_dot = document.getElementById('div_select_dot');*/
+                /*   let div_select_dot = document.getElementById('div_select_dot');*/
                 let txt_key_search = document.getElementById('searchString');
                 let bt_reset = document.getElementById('bt_reset');
-
-                if (window.innerWidth <= 1200) {
-                    div_tieude.style.display = "none";
-                    div_lb_nam.style.display = "none";
-                    div_txt_nam.style.display = "none";
-                  /*  div_select_dot.style.display = "inline";
-                  bt_reset.style.display = "none";*/
-                    txt_key_search.style.width = "140px"
-
-                }
-                else {
-                    div_tieude.style.display = "inline";
-                    div_lb_nam.style.display = "inline";
-                    div_txt_nam.style.display = "inline";
-                  /*  div_select_dot.style.display = "inline";
-                    bt_reset.style.display = "inline";*/
-                    txt_key_search.style.removeProperty("width");
-                }
-
                 function reportWindowSize() {
                     if (window.innerWidth <= 1200) {
                         div_tieude.style.display = "none";
                         div_lb_nam.style.display = "none";
                         div_txt_nam.style.display = "none";
-                     /*   div_select_dot.style.display = "inline";
-                        bt_reset.style.display = "none";*/
+                        /*   div_select_dot.style.display = "inline";
+                           bt_reset.style.display = "none";*/
                         txt_key_search.style.width = "140px"
 
                     }
@@ -105,8 +64,8 @@
                         div_tieude.style.display = "inline";
                         div_lb_nam.style.display = "inline";
                         div_txt_nam.style.display = "inline";
-                       /* div_select_dot.style.display = "inline";
-                        bt_reset.style.display = "inline";*/
+                        /* div_select_dot.style.display = "inline";
+                         bt_reset.style.display = "inline";*/
                         txt_key_search.style.removeProperty("width");
                     }
                 }
@@ -116,6 +75,32 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12 col-12">
+                    @using (Html.BeginForm("Index", "ThiSinhDangKys", FormMethod.Get))
+                    {
+                        <div class="row">
+                            <div class="col-auto  p-1" id="div_lb_nam">
+                                <label style=" color:black; font-weight:normal">Năm:</label>
+                            </div>
+                            <div class="col-auto p-1" style="padding-right:10px!important" id="div_txt_nam">
+                                <input type="text" id="txtNam" class="form-control form-control" value="@ViewBag.filteriNam" style="width: 60px; " disabled>
+                            </div>
+
+                            @*<div class="col-auto p-1" id="div_select_dot">
+                                    @Html.DropDownList("filteriDotxt", null, new { @class = "form-select", @style = "padding-left:3px; padding-right:30px;" })
+                                </div>*@
+                            <div class="col-auto  p-1 ">
+                                @Html.TextBox("searchString", ViewBag.SearchString as string, new { @class = "form-control", @placeholder = "Nhập từ khóa..." })
+                            </div>
+                            <div class="col-auto  p-1 ">
+                                <button class="btn btn-outline-primary" id="bt_search" style="width: 75px; padding-left:4px; padding-right:4px ">Tìm kiếm</button>
+                                <a class="btn btn-outline-secondary" id="bt_reset" href="@Url.Action("Index", "ThiSinhDangKys")">Tải lại</a>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+                <div class="col-sm-12 col-12">
+
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
@@ -194,28 +179,28 @@
                         </table>
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new{page, searchString = ViewBag.SearchString, filteriDotxt = ViewBag.filteriDotxtSort}))                       
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.SearchString, filteriDotxt = ViewBag.filteriDotxtSort }))
                         <!-- Kết thúc -->
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>
 
 @*<script>
-    new DataTable('#myTable', {
-        fixedColumns: {
-            right: 1
-        },
-        paging: false,
-        scrollCollapse: true,
-        scrollX: true,
-        //scrollY: 300,
-        searching: false,
-        bInfo: false,
-        oLanguage: {
-            sSearch: "Tìm kiếm:"
-        }
-    });
-</script>*@
+        new DataTable('#myTable', {
+            fixedColumns: {
+                right: 1
+            },
+            paging: false,
+            scrollCollapse: true,
+            scrollX: true,
+            //scrollY: 300,
+            searching: false,
+            bInfo: false,
+            oLanguage: {
+                sSearch: "Tìm kiếm:"
+            }
+        });
+    </script>*@

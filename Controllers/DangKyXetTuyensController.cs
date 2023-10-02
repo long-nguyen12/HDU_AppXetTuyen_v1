@@ -670,8 +670,14 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxt_kqtqg_new.Dkxt_KQTQG_GhiChu = ""; ;
                 dkxt_kqtqg_new.Dkxt_KQTQG_TrangThai_KetQua = 0;
                 dkxt_kqtqg_new.Dkxt_KQTQG_TrangThai_HoSo = 0;
-                dkxt_kqtqg_new.Dkxt_KQTQG_TrangThai_KinhPhi = 0;
+              
 
+                dkxt_kqtqg_new.Dkxt_KQTQG_KinhPhi_SoThamChieu = "Chưa có";
+                dkxt_kqtqg_new.Dkxt_KQTQG_KinhPhi_TepMinhChung = "Chưa có";
+                dkxt_kqtqg_new.Dkxt_KQTQG_KinhPhi_NgayThang_NopMC = "Chưa có";
+                dkxt_kqtqg_new.Dkxt_KQTQG_KinhPhi_NgayThang_CheckMC = "Chưa có";
+                dkxt_kqtqg_new.Dkxt_KQTQG_TrangThai_KinhPhi = 0;
+      
                 db.DangKyXetTuyenKQTQGs.Add(dkxt_kqtqg_new);
                 db.SaveChanges();
 

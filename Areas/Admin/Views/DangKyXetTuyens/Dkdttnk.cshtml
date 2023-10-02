@@ -46,9 +46,7 @@
                     <div class="col-xxl-1 col-md-12">
                         @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd" })
                     </div>
-                    <div class="col-xxl-1 col-md-12">
-                        @Html.DropDownList("filteriNvong", null, "N.vọng...", new { @class = "form-select  bd-rd" })
-                    </div>
+                  
                     <div class="col-xxl-2 col-md-12">
                         @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select bd-rd" })
                     </div>
@@ -63,9 +61,15 @@
                     </div>
                     <div class="col-xxl-2 col-xl-12">
                         <div class="d-inline-flex flex-nowrap align-items-center">
-                            <button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
+                            <button class="btn btn-outline-primary bd-rd text-nowrap" id="bt_search" style="margin-right:4px" title="Lọc dữ liệu"><i data-feather="filter" style="vertical-align:middle!important"></i></button>
+                            <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="margin-right:4px;" title="Tải lại dữ liệu"><i data-feather="rotate-ccw" style="vertical-align:middle!important"></i></a>
+                            <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_extend" style="margin-right:4px; display:none"><i data-feather="chevron-down" style="vertical-align:middle!important"></i></a>
+                            <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_collapse" style="margin-right: 4px; display: none"><i data-feather="chevron-up" style="vertical-align:middle!important"></i></a>
+                            <a class="btn btn-outline-primary bd-rd  text-nowrap" href="@Url.Action("", "ExportDatas")" id="bt_export_excel" style="padding-right:6px; padding-left:6px" title="Xuất dữ liệu ra tệp excel"><i data-feather="download" style="vertical-align:middle!important"></i> Excel</a>
+
+                            @*<button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
                             <a class="btn btn-outline-secondary bd-rd " id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
-                            <a class="btn btn-outline-primary bd-rd  " id="bt_reset" href="@Url.Action("ExportTsDKThiNangKhieu", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>
+                            <a class="btn btn-outline-primary bd-rd  " id="bt_reset" href="@Url.Action("ExportTsDKThiNangKhieu", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>*@
                         </div>
                     </div>
                     <hr class="mt-2 mb-2" />

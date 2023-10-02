@@ -31,6 +31,36 @@ namespace HDU_AppXetTuyen.Models
             }
         }
     }
+    public class TongHopSoLieuXetTuyen
+    {
+        public string ThiSinh_ID { get; set; }
+        public string Dkxt_ID { get; set; }
+        public string Dxt_ID { get; set; }
+        public string HoDem { get; set; }
+        public string Ten { get; set; }
+        public string DienThoai { get; set; }
+        public int Ptxt_ID { get; set; }
+        public string NguyenVong { get; set; }
+        public string NgayDangKy { get; set; }
+        public int NganhID { get; set; }
+        public string TenNganh { get; set; }
+        public string TenToHop { get; set; }
+        public string MinhChung_HB { get; set; }
+        public string MinhChung_Bang { get; set; }
+        public string MinhChung_CCCD { get; set; }
+        public string MinhChung_UuTien { get; set; }
+        public string MinhChung_XetTuyen { get; set; }
+        public string TrangThai_HoSo { get; set; }
+        public string TrangThai_KetQua { get; set; }
+
+        public string TrangThaiLP { get; set; }
+        public string SoThamChieuLP { get; set; }     
+        public string NgayThangNopLP { get; set; }       
+        public string NgayThangCheckLP { get; set; }
+        public string MinhChungLP { get; set; }       
+
+        
+    }
     public class StatusTracking // khai báo để tạo dữ liệu cho dropdowlis trạng thái hồ sơ và trạng thái kinh phí
     {
         public int St_ID { get; set; }
@@ -118,7 +148,6 @@ namespace HDU_AppXetTuyen.Models
         public string GiayKhamSucKhoe { get; set; }
         public string TuiAnh4x6 { get; set; }
         public string GiayMienNgoaiNgu { get; set; }
-        public string GiayToKhac { get; set; }
-      
+        public string GiayToKhac { get; set; }      
     }
 }

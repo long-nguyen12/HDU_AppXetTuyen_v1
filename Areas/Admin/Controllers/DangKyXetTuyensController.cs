@@ -108,12 +108,16 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 }
                 if (_item == 1)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1,St_Name = "Đã nộp lệ phí" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1,St_Name = "Đã nộp, Chưa KT" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2,St_Name = "Đã kiểm duyệt" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2,St_Name = "Đã KT, có sai sót" });
                 }
+                if (_item == 9)
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, đúng, đủ" });
+               }
             }
             ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
 
