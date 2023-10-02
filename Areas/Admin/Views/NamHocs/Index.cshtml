@@ -32,13 +32,13 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>
+                                <th style="text-align:center">
                                     @Html.DisplayName("Tên năm")
                                 </th>
-                                <th>
+                                <th style="text-align:center">
                                     @Html.DisplayName("Trạng thái")
                                 </th>
-                                <th>
+                                <th style="text-align:center">
                                     @Html.DisplayName("Ghi chú")
                                 </th>
                                 <th style="width:100px; text-align:center"> @Html.DisplayName("Cập nhật")</th>
@@ -47,18 +47,26 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
+                                <td style="text-align:center">
                                     @Html.DisplayFor(modelItem => item.NamHoc_Ten)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NamHoc_TrangThai)
+                                <td style="text-align:center">
+                                    @{
+                                        var activated = item.NamHoc_TrangThai == 1 ? true : false;
+
+                                        <input class="form-check-input myCheckbox" type="checkbox" id="@item.NamHoc_ID" onclick="ActiveItem(@item.NamHoc_ID, @item.NamHoc_TrangThai)" value="@item.NamHoc_TrangThai" checked="@activated" />
+
+                                    }
                                 </td>
-                                <td>
+                                <td style="text-align:center">
                                     @Html.DisplayFor(modelItem => item.NamHoc_GhiChu)
                                 </td>
                                 <td style="width:100px; text-align:center">
-                                    @Html.ActionLink("Sửa", "Edit", new { id = item.NamHoc_ID }) |
-                                    @Html.ActionLink("Xóa", "Delete", new { id = item.NamHoc_ID })
+                                    @{ 
+                                        var url = "/Admin/NamHocs/Edit/" + item.NamHoc_ID;
+                                    }
+                                    <a href="@Url.Action("Edit","NamHocs" , new { id = item.NamHoc_ID })"><i data-feather="edit" style="vertical-align: middle !important "></i></a>
+                                    <a onclick="DeleteItem(@item.NamHoc_ID)"><i data-feather="trash-2" style="vertical-align:middle!important"></i></a>
                                 </td>
                             </tr>
                         }
@@ -82,22 +90,127 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+<div class="modal fade" id="modal_check" tabindex="-1" role="dialog" aria-labelledby="modal_check" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="modal_check_title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="btn_close_modal"></button>
             </div>
             <div class="modal-body">
-                <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
-                <input id="key_delete_dkxt_id" type="hidden" />
+                <label id="txt_confirm" class="form-label"></label>
+                <input id="hiddenCode" type="hidden" />
+                <input id="hiddenTrangThai" type="hidden" />
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
-                <button class="btn btn-primary" type="button">Đồng ý</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="btn_cancel_modal">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="confirm_action()">Đồng ý</button>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="modal_confirm_delete" tabindex="-1" role="dialog" aria-labelledby="modal_confirm_delete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_confirm_delete_title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="onCancel()" id="btn_close_delete_modal"></button>
+            </div>
+            <div class="modal-body">
+                <label id="txt_confirm" class="form-label">Bạn có chắc chắn muốn xoá không?</label>
+                <input id="hiddenRemoveId" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"  onclick="onCancel()" id="btn_cancel_modal">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="confirm_delete()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btn_close_modal').click(function () {
+            $('#modal_check').modal('hide');
+        })
+        $('#btn_cancel_modal').click(function () {
+            $('#modal_check').modal('hide');
+        })
+    })
+    function onCancel() {
+        $('#modal_confirm_delete').modal('hide');
+        $('#hiddenRemoveId').val('');
+    }
+    $('input[type="checkbox"]').on('click', function (event) {
+        event.preventDefault();
+    });
+    function DeleteItem(NamHoc_Id) {
+        $("#modal_confirm_delete").modal("show");
+        $("#hiddenRemoveId").val(NamHoc_Id);
+    }
+    function ActiveItem(NamHoc_Id, NamHoc_TrangThai) {
+        $("#modal_check").modal("show");
+        $("#hiddenCode").val(NamHoc_Id);
+        $("#hiddenTrangThai").val(NamHoc_TrangThai);
+        let idpresent = $('#' + NamHoc_Id)
+        if (idpresent.is(":checked")) {
+            $('#txt_confirm').text("Bạn có chắc chắn muốn xác nhận thông tin?");
+        }
+        if (!idpresent.is(":checked")) {
+            $('#txt_confirm').text("Bạn có chắc chắn huỷ xác nhận thông tin?");
+        }
+    };
+    function confirm_action() {
+        var id_namhoc = $('#hiddenCode').val();
+        var trangthai = $('#hiddenTrangThai').val();
+        var idpresent = $('#' + id_namhoc);
+        console.log(id_namhoc)
+        var data = {
+            NamHoc_ID: id_namhoc
+        }
+        $.ajax({
+            url: "/NamHocs/ActiveYear/",
+            data: JSON.stringify(data),
+            type: "POST",
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                var isChecked = idpresent.prop('checked');
+                if (!isChecked) {
+                    idpresent.prop("checked", true);
+                }
+                else {
+                    idpresent.prop("checked", false);
+                }
+                let queryString_back = window.location.search;
+                window.location.href = "/Admin/NamHocs/Index" + queryString_back;
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+        $('#modal_thongtin_lephi').modal('hide');
+    }
+    function confirm_delete() {
+        var id_namhoc = $('#hiddenRemoveId').val();
+        var data = {
+            NamHoc_ID: id_namhoc
+        }
+        $.ajax({
+            url: "/NamHocs/DeleteYear/",
+            data: JSON.stringify(data),
+            type: "POST",
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                let queryString_back = window.location.search;
+                window.location.href = "/Admin/NamHocs/Index" + queryString_back;
+            },
+            error: function (errormessage) {
+                console.log(errormessage.responseText);
+            }
+        });
+        $('#modal_thongtin_lephi').modal('hide');
+    }
+</script>
