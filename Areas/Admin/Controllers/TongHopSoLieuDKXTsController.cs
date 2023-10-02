@@ -483,6 +483,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(ListHoSoXetTuyen.ToPagedList(pageNumber, pageSize));
           
         }
+        public ActionResult TheoDoiNopHoSoDetail()
+        {
+            return View();
+        }
         #endregion
 
         #region Theo dõi thí sinh nộp kinh phí
