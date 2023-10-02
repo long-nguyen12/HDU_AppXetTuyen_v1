@@ -225,7 +225,7 @@
                                                      page = ViewBag.pageCurren,
                                                  }, new { @style = "text-decoration:none; color:black", @title = "Bấm để chọn sắp xếp theo trạng thái hồ sơ" })
                                         </th>
-                                        <th class="text-nowrap" style="text-align:center; width:120px">
+                                        <th class="text-nowrap" style="text-align:center; width:110px; color:black">
                                             <a href="@Url.Action("AdminCreateHocVien","HocVienDangKys")" style="text-decoration:none">Thêm mới</a>
                                             @*@Html.DisplayName("Cập nhật")*@
                                         </th>
@@ -248,7 +248,7 @@
                                             </td>
 
 
-                                            <td>
+                                            <td style="word-wrap:break-word; white-space:normal;">
                                                 @Html.DisplayFor(modelItem => item.NganhMaster.Nganh_Mt_MaNganh) - @Html.DisplayFor(modelItem => item.NganhMaster.Nganh_Mt_TenNganh)
                                             </td>
                                             <td>
@@ -321,7 +321,7 @@
                                                     <label class="form-label" style="color:blue">Hồ sơ đủ, đúng</label>
                                                 }
                                             </td>
-                                            <td style="text-align:center; vertical-align:middle" class="text-nowrap">
+                                            <td style="text-align:center; vertical-align:top" class="text-nowrap">
                                                 <a href="@Url.Action("DsHvDuTuyenKiemTraHoSo", "HocVienDangKys", new
                                                  {
                                                       filteriNganhHoc = ViewBag.NganhFilteri,

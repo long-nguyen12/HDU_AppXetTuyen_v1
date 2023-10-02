@@ -92,13 +92,17 @@
 
                         <!-- Sidenav Accordion (Dashboard)-->
 
-                        <a class="nav-link" href="@Url.Action("KpKiemTra", "KinhPhis")">
-                            <div class="nav-link-icon"><i data-feather="shield"></i></div>
+                        @*<a class="nav-link" href="@Url.Action("TheoDoiNopLePhi", "TongHopSoLieuDKXTs")">
+                            <div class="nav-link-icon"><i data-feather="slack"></i></div>
                             Theo dõi nộp kinh phí
+                        </a>*@
+                        <a class="nav-link" href="@Url.Action("TheoDoiNopHoSo", "TongHopSoLieuDKXTs")">
+                            <div class="nav-link-icon"><i data-feather="book-open"></i></div>
+                            Theo dõi hồ sơ xét tuyển
                         </a>
                         <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKys")">
                             <div class="nav-link-icon"><i data-feather="monitor"></i></div>
-                            Danh sách tt thí sinh
+                            Thông tin thí sinh
                         </a>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#menuThiSinh" aria-expanded="false" aria-controls="menuThiSinh">
                             <div class="nav-link-icon"><i data-feather="database"></i></div>

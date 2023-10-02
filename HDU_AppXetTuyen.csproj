@@ -185,6 +185,7 @@
     <Compile Include="Areas\Admin\Controllers\ThiSinhDangKysController.cs" />
     <Compile Include="Areas\Admin\Controllers\TinhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ToHopMonsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TongHopSoLieuDKXTsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TruongLienCapsController.cs" />
     <Compile Include="Areas\Admin\Controllers\XasController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -458,8 +459,7 @@
     <Content Include="Areas\Admin\Views\Xas\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Content\static\export-66-bieu-mau-thi-nk.docx" />
-    <Content Include="Areas\Admin\Views\KinhPhis\KpKiemTra.cshtml" />
-    <Content Include="Areas\Admin\Views\KinhPhis\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\KpKiemTra1.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout_Admin_Master.cshtml" />
@@ -490,6 +490,8 @@
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminUpdateHocVien.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
     <Content Include="Areas\Admin\Views\temp.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopLePhi.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSo.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
