@@ -283,7 +283,7 @@
     </div>
 </div>
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_KQTQG_ID" />
-<input type="hidden" id="dkxt_hocba_id_checkin" name="dkxt_thptqg_id_checkin" />
+<input type="hidden" id="dkxt_thptqg_id_checkin" name="dkxt_thptqg_id_checkin" />
 <script>
     $(document).ready(function () {
 
@@ -303,7 +303,6 @@
                 text: option.text
             }));
         });
-
 
         let data_get = { Dkxt_KQTQG_ID: $('#hidden_Dkxt_KQTQG_ID').val() }
         $.ajax({
@@ -336,9 +335,6 @@
                     $('#txt_m3').val(data.Dkxt_Diem_M3.Diem);
 
                     $('#txt_tong_diem').val(data.Dkxt_KQTQG_Diem_Tong);
-
-
-
                 }
             },
             error: function (errormessage) {
@@ -353,7 +349,6 @@
 
         $("#select_khoinganh").change(function () {
             select_nganh_view_data($("#select_khoinganh").val(), 0, 0);
-
         });
 
         $("#select_nganh").change(function () {

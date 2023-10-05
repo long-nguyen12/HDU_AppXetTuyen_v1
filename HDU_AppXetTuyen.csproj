@@ -176,6 +176,7 @@
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KinhPhisController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LibraryJsonController.cs" />
     <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NganhMastersController.cs" />
@@ -459,7 +460,6 @@
     <Content Include="Areas\Admin\Views\Xas\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Content\static\export-66-bieu-mau-thi-nk.docx" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\KpKiemTra1.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout_Admin_Master.cshtml" />
@@ -492,6 +492,11 @@
     <Content Include="Areas\Admin\Views\temp.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopLePhi.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSo.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - Copy.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -765,6 +770,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\ExportDatas\" />
+    <Folder Include="Areas\Admin\Views\LibraryJson\" />
     <Folder Include="Uploads\DkSauDaiHocFile\" />
     <Folder Include="Uploads\DKXTKQTTHPTQGFile\" />
     <Folder Include="Uploads\FileMinhChungKinhPhis\" />

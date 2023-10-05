@@ -470,7 +470,7 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
-        [ThiSinhSessionCheck]
+       
         public JsonResult DangKyXetTuyen_KQTHPTQG_Get_Data_MonHoc(DangKyXetTuyenKQTQG dkxt_kqtqd_item)
         {
 

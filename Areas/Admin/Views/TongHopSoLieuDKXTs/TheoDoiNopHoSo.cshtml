@@ -196,7 +196,7 @@
                                                       new { @style = "text-decoration:none; color:black", @title = "Bấm để chọn sắp xếp theo trạng thái hồ sơ" })
 
                                             </th>
-                                            <th style="width:100px"><a class="text-nowrap" style="text-decoration:none; color:black" href="#">Thêm mới</a></th>
+                                            <th style="width:95px"><a class="text-nowrap" style="text-decoration:none; color:black" href="#">Thêm mới</a></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_list_lephi">
@@ -211,7 +211,7 @@
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.DienThoai)
-                                                </td>           
+                                                </td>
                                                 <td>
                                                     @{
                                                         if (item.Ptxt_ID == 2)
@@ -261,6 +261,10 @@
                                                         {
                                                             <span>Đã KT, Có sai sót</span>
                                                         }
+                                                        if (item.TrangThaiLP == "3")
+                                                        {
+                                                            <span>Đã sửa, chưa KT</span>
+                                                        }
                                                         if (item.TrangThaiLP == "9")
                                                         {
                                                             <span>Đã KT, Đúng</span>
@@ -278,14 +282,18 @@
                                                         {
                                                             <span>Đã KT, Có sai sót</span>
                                                         }
+                                                        if (item.TrangThai_HoSo == "2")
+                                                        {
+                                                            <span>Đã sửa, chưa KT</span>
+                                                        }
                                                         if (item.TrangThai_HoSo == "9")
                                                         {
                                                             <span>Đã KT, HS đúng, đủ</span>
                                                         }
                                                     }
                                                 </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-sm btn-light" onclick="UpdateInforMCLP(@item.Dkxt_ID, @item.Ptxt_ID)">Kiểm tra</a>
+                                                <td style="text-align:center">
+                                                    <a class="btn btn-sm btn-light" onclick="KiemtraThongTinTsDangky(@item.Dkxt_ID, @item.Ptxt_ID)">Kiểm tra</a>
                                                 </td>
                                             </tr>
                                         }
@@ -301,7 +309,7 @@
                                    filteriHoSo = ViewBag.HoSoFilteri,
                                    searchString = ViewBag.SearchString,
                                    sortOrder = ViewBag.CurrentSort,
-                                   page,                              
+                                   page,
                                }))
                                 <!-- Kết thúc -->
                             </div>
@@ -312,131 +320,25 @@
         </div>
     </div>
 </div>
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ThiSinh_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dkxt_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dxt_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoDem)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ten)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ptxt_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NguyenVong)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrangThaiLePhi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoThamChieu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayThang_NopMC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayThang_CheckMC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KinhPhi_TepMinhChung)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dkxt_MinhChung_HB)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dkxt_MinhChung_Bang)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dkxt_MinhChung_CCCD)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dkxt_MinhChung_UuTien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dkxt_MinhChung_XetTuyen)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ThiSinh_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dkxt_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dxt_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HoDem)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ten)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DienThoai)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ptxt_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NguyenVong)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrangThaiLePhi)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SoThamChieu)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NgayThang_NopMC)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NgayThang_CheckMC)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KinhPhi_TepMinhChung)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_HB)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_Bang)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_CCCD)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_UuTien)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dkxt_MinhChung_XetTuyen)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+<script>
+    function KiemtraThongTinTsDangky(Dkxt_ID, Ptxt_ID) {
+        var str_query = window.location.search;
+        if (str_query.length == 0) {
+            str_query = '?Dkxt_ID=' + Dkxt_ID;
+        } else {
+            str_query += '&Dkxt_ID=' + Dkxt_ID;
         }
-
-    </table>*@
+        if (Ptxt_ID == "2") {
+            window.location.href = "/Admin/TongHopSoLieuDKXTs/TheoDoiNopHoSoDetailPt2" + str_query;
+        }
+        if (Ptxt_ID == "3") {
+            window.location.href = "/Admin/TongHopSoLieuDKXTs/TheoDoiNopHoSoDetailPt3" + str_query;
+        }
+        if (Ptxt_ID == "4") {
+            window.location.href = "/Admin/TongHopSoLieuDKXTs/TheoDoiNopHoSoDetailPt4" + str_query;
+        }
+        if (Ptxt_ID == "5" || Ptxt_ID == "6") {
+            window.location.href = "/Admin/TongHopSoLieuDKXTs/TheoDoiNopHoSoDetailPt5" + str_query;
+        }
+    }
+</script>
