@@ -65,9 +65,6 @@ namespace HDU_AppXetTuyen.Controllers
             if(session != null)
             {
                 var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
-
-
-
                 return View(thiSinh);
             }
             ThiSinhDangKy ts = new ThiSinhDangKy();
