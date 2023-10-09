@@ -329,7 +329,7 @@
                                     <tr>
                                         <td>
                                             <div class="row mt-0 md-0">
-                                                <div class="col-lg-12 col-12">
+                                                <div class="col-12">
                                                     <div class="form-group">
                                                         <div class="col-12">
                                                             <label class="control-label text-nowrap col-12" id="label_thongbao">
@@ -337,7 +337,7 @@
                                                             </label>
                                                             <div class="col-12 mt-0" id="div_view_lephi"> <span id="span_tepminhchung"></span></div>
                                                             <div class="d-inline-flex flex-nowrap mt-1" id="div_dung_sai">
-                                                                <input type="hidden" id="hidden_Dkxt_KQTQG_TrangThai_KinhPhi" style="display:none" />
+                                                                <input type="hidden" id="hidden_TrangThai_KinhPhi" style="display:none" />
                                                                 <div class="form-check" id="div_dung" style="margin-left:8px">
                                                                     <input class="form-check-input" type="radio" id="radioDung" name="HocVien_SoThamChieu">
                                                                     <label class="form-check-label" for="radioDung">Đúng</label>
@@ -347,6 +347,9 @@
                                                                     <label class="form-check-label" for="radioSai">Sai</label>
                                                                 </div>
                                                             </div>
+                                                            <center>
+                                                                <span id="Error_Rgt_KiemDuyetKinhPhi" class="small mb-1 text-danger"></span>
+                                                            </center>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -451,7 +454,7 @@
 
                                                     let _dkxt_TrangThai_HoSo = 0;
                                                     if ($('#radioHoSoThieu').is(':checked')) {
-                                                        _dkxt_TrangThai_HoSo = 2;
+                                                        _dkxt_TrangThai_HoSo = 1;
                                                     }
                                                     if ($('#radioHoSoDayDu').is(':checked')) {
                                                         _dkxt_TrangThai_HoSo = 9;
@@ -459,46 +462,38 @@
 
                                                     let _dkxt_TrangThai_KinhPhi = 0
 
-                                                    if ($('#hiden_HocVien_LePhi_TrangThai').val() > 0) {
+                                                    if ($('#hidden_TrangThai_KinhPhi').val() > 0) {
                                                         if (!$('#radioDung').is(':checked') && !$('#radioSai').is(':checked')) {
-                                                            $('#Error_Rgt_KiemDuyetNopLePhi').text('Chọn kiểm duyệt lệ phí');
+                                                            $('#Error_Rgt_KiemDuyetKinhPhi').text('Chọn kiểm duyệt lệ phí');
                                                             flag = false;
                                                         }
 
                                                         if ($('#radioSai').is(':checked')) {
-                                                            _hocVien_LePhi_TrangThai = 2;
+                                                            _dkxt_TrangThai_KinhPhi = 2;
                                                         }
                                                         if ($('#radioDung').is(':checked')) {
-                                                            _hocVien_LePhi_TrangThai = 9;
+                                                            _dkxt_TrangThai_KinhPhi = 9;
                                                         }
                                                     }
 
                                                     if (!flag) return
 
-                                                    $("#loadingModal").modal("show");
-
-
-                                                    let _duTuyen_ThongBaoKiemDuyet = $('#DuTuyen_ThongBaoKiemDuyet').val();
-                                                    let _duTuyen_ID = $('#hiden_dutuyen_id_present').val();
-
-                                                    var data_obj_check_update_hvdt = {
-                                                        DuTuyen_ID: _duTuyen_ID,
-                                                        DuTuyen_TrangThai: _duTuyen_TrangThai,
-                                                        DuTuyen_ThongBaoKiemDuyet: _duTuyen_ThongBaoKiemDuyet,
-                                                        HocVien_LePhi_TrangThai: _hocVien_LePhi_TrangThai,
+                                                    $("#loadingModal").modal("show");                                                  
+                                                    var data_update = {
+                                                        Dkxt_KQTQG_ID: $('#hidden_Dkxt_ID').val(),
+                                                        Dkxt_KQTQG_TrangThai_KinhPhi: _dkxt_TrangThai_KinhPhi,
+                                                        Dkxt_ThongBaoKiemDuyet_HoSo: $('#DuTuyen_ThongBaoKiemDuyet').val(),
+                                                        Dkxt_KQTQG_TrangThai_HoSo: _dkxt_TrangThai_HoSo,
                                                     }
 
                                                     $.ajax({
-                                                        url: "/HocVienDangKys/DsHvDuTuyenCapNhatThongTinHoso/",
+                                                        url: "/Admin/DangKyXetTuyens/Dkxt_KQTHPTQG_Update_KiemDuyet",
                                                         type: "POST",
-                                                        data: JSON.stringify(data_obj_check_update_hvdt),
+                                                        data: JSON.stringify(data_update),
                                                         contentType: 'application/json;charset=utf-8',
-
                                                         success: function (res) {
                                                             if (res.success) {
-                                                                let querystr_back = window.location.search;
-                                                                window.location.href = "/Admin/HocVienDangKys/DsHvDuTuyen" + querystr_back;
-                                                                $("#loadingModal").modal("show");
+                                                                ReturnTheoDoiNopHoSoDetail();                                                               
                                                             }
                                                         },
                                                         error: function () {
@@ -508,15 +503,15 @@
                                                 });
 
                                                 $('#radioHoSoDayDu').click(function () {
-                                                    $('#Error_Rgt_KDHS_GhiChu').text('');
+                                                    $('#Error_Rgt_KiemDuyetHoSo').text('');
                                                 });
 
                                                 $('#radioDung').click(function () {
-                                                    $('#Error_Rgt_KiemDuyetNopLePhi').text('');
+                                                    $('#Error_Rgt_KiemDuyetKinhPhi').text('');
                                                 });
 
                                                 $('#radioSai').click(function () {
-                                                    $('#Error_Rgt_KiemDuyetNopLePhi').text('');
+                                                    $('#Error_Rgt_KiemDuyetKinhPhi').text('');
                                                 });
 
                                                 $('input').on('input', function () {
@@ -643,8 +638,8 @@
 
                     $('#txt_tong_diem').val(data.Dkxt_KQTQG_Diem_Tong);
 
-                    $('#hidden_Dkxt_KQTQG_TrangThai_KinhPhi').val(data.Dkxt_KQTQG_TrangThai_KinhPhi)
-
+                    $('#hidden_TrangThai_KinhPhi').val(data.Dkxt_KQTQG_TrangThai_KinhPhi)
+                    $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
                     if (data.Dkxt_KQTQG_TrangThai_KinhPhi == 0) {
                         $('#div_dung').hide();
                         $('#div_sai').hide();

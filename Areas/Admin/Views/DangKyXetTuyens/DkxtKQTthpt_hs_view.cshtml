@@ -270,14 +270,7 @@
         }
         window.onresize = reportWindowSize;
         $('#bt_returnform_list').click(function () {
-            let queryString_back = window.location.search;
-            //var str = '?filteriDotxt=' + $('#filteriDotxt_bak').val() +
-            //    '&filteriNvong=' + $('#filteriNvong_bak').val() +
-            //    '&filteriNganh=' + $('#filteriNganh_bak').val() +
-            //    '&filteriLePhi=' + $('#filteriLePhi_bak').val() +
-            //    '&filteriHoSo=' + $('#filteriHoSo_bak').val() +
-            //    '&searchString=' + $('#searchString_bak').val() +
-            //    '&page=' + $('#page_bak').val();
+            let queryString_back = window.location.search;           
             window.location.href = "/Admin/DangKyXetTuyens/DkxtKQTthpt/" + queryString_back;
         });
     })

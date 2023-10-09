@@ -330,16 +330,15 @@
                                             <div class="row mt-0 md-0">
                                                 <div class="colcol-12">
                                                     <span style="font-weight:bold"> Minh chứng nộp lệ phí</span>
-                                                    <hr style="margin-top:0px; margin-bottom:0px"/>
+                                                    <hr style="margin-top:0px; margin-bottom:0px" />
                                                 </div>
                                                 <div class="col-12">
-                                                    <label class="control-label text-nowrap col-xl-12 col-12" id="label_thongbao">
-                                                        <font color="blue" id="stc_txt"></font> <span style="font-weight:bold; color:red" id="stc_number"></span>
-                                                       
+                                                    <label class="control-label text-nowrap col-12" id="label_thongbao">
+                                                        <font color="blue" id="stc_txt"></font>   <span id="stc_number" style="color:red; font-weight:bold"></span>
                                                     </label>
                                                     <div class="col-12 mt-0" id="div_view_lephi"> <span id="span_tepminhchung"></span></div>
-                                                    <div class="d-inline-flex flex-nowrap" id="div_dung_sai">
-                                                        <input type="hidden" id="hidden_Dkxt_HB_TrangThai_KinhPhi" style="display:none" />
+                                                    <div class="d-inline-flex flex-nowrap mt-1" id="div_dung_sai">
+                                                        <input type="hidden" id="hidden_TrangThai_KinhPhi" style="display:none" />
                                                         <div class="form-check" id="div_dung" style="margin-left:8px">
                                                             <input class="form-check-input" type="radio" id="radioDung" name="HocVien_SoThamChieu">
                                                             <label class="form-check-label" for="radioDung">Đúng</label>
@@ -349,9 +348,11 @@
                                                             <label class="form-check-label" for="radioSai">Sai</label>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <center>
+                                                        <span id="Error_Rgt_KiemDuyetKinhPhi" class="small mb-1 text-danger"></span>
+                                                    </center>
+                                                </div>                                              
                                             </div>
-
                                         </td>
                                     </tr>
                                 </tbody>
@@ -438,7 +439,95 @@
                                 <center>
                                     <div class="col-md-12 d-inline-flex flex-nowrap">
                                         <a class="btn login-button text-nowrap " id="bt_duyet_ho_so">Duyệt hồ sơ</a>
-                                        <input class="btn btn-secondary col-5 col-auto" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSoDetail()" style=" margin-left: 10px;" />                                      
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('#bt_duyet_ho_so').click(function () {
+                                                    var flag = true;
+
+                                                    if (!$('#radioHoSoDayDu').is(':checked') && !$('#radioHoSoThieu').is(':checked')) {
+                                                        var errorMessage = "Chọn kiểm duyệt hồ sơ"; $('#Error_Rgt_KiemDuyetHoSo').text(errorMessage);
+                                                        flag = false;
+                                                    }
+                                                    else {
+                                                        if ($('#radioHoSoThieu').is(':checked') && !$('#DuTuyen_ThongBaoKiemDuyet').val()) {
+                                                            $('#Error_Rgt_DuTuyen_ThongBaoKiemDuyet').text('Nhập thông tin sai của hồ sơ');
+                                                            flag = false;
+                                                        }
+                                                    }
+
+                                                    let _dkxt_TrangThai_HoSo = 0;
+                                                    if ($('#radioHoSoThieu').is(':checked')) {
+                                                        _dkxt_TrangThai_HoSo = 1;
+                                                    }
+                                                    if ($('#radioHoSoDayDu').is(':checked')) {
+                                                        _dkxt_TrangThai_HoSo = 9;
+                                                    }
+
+                                                    let _dkxt_TrangThai_KinhPhi = 0
+
+                                                    if ($('#hidden_TrangThai_KinhPhi').val() > 0) {
+                                                        if (!$('#radioDung').is(':checked') && !$('#radioSai').is(':checked')) {
+                                                            $('#Error_Rgt_KiemDuyetKinhPhi').text('Chọn kiểm duyệt lệ phí');
+                                                            flag = false;
+                                                        }
+                                                        if ($('#radioSai').is(':checked')) {
+                                                            _dkxt_TrangThai_KinhPhi = 2;
+                                                        }
+                                                        if ($('#radioDung').is(':checked')) {
+                                                            _dkxt_TrangThai_KinhPhi = 9;
+                                                        }
+                                                    }
+
+                                                    if (!flag) return
+
+                                                    $("#loadingModal").modal("show");
+                                                    var data_update = {
+                                                        Dkxt_HB_ID: $('#hidden_Dkxt_ID').val(),
+                                                        Dkxt_HB_TrangThai_KinhPhi: _dkxt_TrangThai_KinhPhi,
+                                                        Dkxt_ThongBaoKiemDuyet_HoSo: $('#DuTuyen_ThongBaoKiemDuyet').val(),
+                                                        Dkxt_HB_TrangThai_HoSo: _dkxt_TrangThai_HoSo,
+                                                    }
+                                                   
+                                                    $.ajax({
+                                                        url: "/Admin/DangKyXetTuyens/Dkxt_HocBa_Update_KiemDuyet",
+                                                        type: "POST",
+                                                        data: JSON.stringify(data_update),
+                                                        contentType: 'application/json;charset=utf-8',
+                                                        success: function (res) {
+                                                            if (res.success) {
+                                                                ReturnTheoDoiNopHoSoDetail();
+                                                            }
+                                                        },
+                                                        error: function () {
+                                                            console.log("Lỗi");
+                                                        }
+                                                    });
+                                                });
+
+                                                $('#radioHoSoDayDu').click(function () {
+                                                    $('#Error_Rgt_KiemDuyetHoSo').text('');
+                                                });
+
+                                                $('#radioDung').click(function () {
+                                                    $('#Error_Rgt_KiemDuyetKinhPhi').text('');
+                                                });
+
+                                                $('#radioSai').click(function () {
+                                                    $('#Error_Rgt_KiemDuyetKinhPhi').text('');
+                                                });
+
+                                                $('input').on('input', function () {
+                                                    hideErrorMessage($(this));
+                                                });
+                                            });
+
+                                            function hideErrorMessage(input) {
+                                                var errorContainer = input.next('.text-danger');
+                                                errorContainer.text('');
+                                            }
+
+                                        </script>
+                                        <input class="btn btn-secondary col-5 col-auto" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSoDetail()" style=" margin-left: 10px;" />
                                     </div>
                                 </center>
                             </div>
@@ -527,9 +616,8 @@
                     $('#txt_m3_k2').val(data.Dkxt_Diem_M3.HK2);
                     $('#txt_m3_k3').val(data.Dkxt_Diem_M3.HK3);
                     $('#txt_tb_m3').val(data.Dkxt_Diem_M3.DTB);
-
-
-                    $('#hidden_Dkxt_HB_TrangThai_KinhPhi').val(data.Dkxt_HB_TrangThai_KinhPhi)
+                    $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
+                    $('#hidden_TrangThai_KinhPhi').val(data.Dkxt_HB_TrangThai_KinhPhi)
 
                     if (data.Dkxt_HB_TrangThai_KinhPhi == 0) {
                         $('#div_dung').hide();
@@ -547,13 +635,13 @@
 
                         if (data.Dkxt_HB_TrangThai_KinhPhi == 1 || data.Dkxt_HB_TrangThai_KinhPhi == 3) {
                             $('#radioDung').removeAttr('checked', 'checked');
-                            $('#radioSai').removeAttr('checked', 'checked');
+                            $('#radioSai').removeAttr('checked', 'checked');         
                         }
-                        if (data.Dkxt_KQTQG_TrangThai_KinhPhi == 2) {
+                        if (data.Dkxt_HB_TrangThai_KinhPhi == 2) {
                             $('#radioDung').removeAttr('checked', 'checked');
                             $('#radioSai').attr('checked', 'checked');
                         }
-                        if (data.Dkxt_KQTQG_TrangThai_KinhPhi == 9) {
+                        if (data.Dkxt_HB_TrangThai_KinhPhi == 9) {
                             $('#radioDung').attr('checked', 'checked');
                             $('#radioSai').removeAttr('checked', 'checked');
                         }

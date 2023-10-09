@@ -18,7 +18,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
     public class DangKyXetTuyensController : Controller
     {
-        private DbConnecttion db = new DbConnecttion();      
+        private DbConnecttion db = null;      
         public ActionResult Dkxtth()
         {
             return View();
@@ -29,6 +29,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult DkxtKQTthpt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi,
             string filteriHoSo, string currentFilter, string searchString, int? page)
         {
+            db = new DbConnecttion();
             var model = (from ts in db.DangKyXetTuyenKQTQGs select ts)
                                             .OrderBy(x => x.ThiSinh_ID)
                                             .ThenBy(x => x.Dkxt_KQTQG_NguyenVong)
@@ -39,22 +40,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                                             .Include(x => x.DotXetTuyen)
                                             .Include(x => x.ThiSinhDangKy.DoiTuong)
                                             .Include(x => x.ThiSinhDangKy.KhuVuc)
-                                            .Include(x => x.PhuongThucXetTuyen);
-            //foreach(var item in model)
-            //{             
-            //    var check_item_nopkp = db.KinhPhis.Where(x => x.Dkxt_ID == item.Dkxt_KQTQG_ID && x.Ptxt_ID == item.Ptxt_ID && x.Dxt_ID == item.DotXT_ID).FirstOrDefault();
-            //    var item_NopLePhi = new
-            //    {
-            //        KinhPhi_NgayThang_NopMC = check_item_nopkp.KinhPhi_NgayThang_NopMC,
-            //        KinhPhi_NgayThang_CheckMC = check_item_nopkp.KinhPhi_NgayThang_CheckMC,
-            //        KinhPhi_SoTC = check_item_nopkp.KinhPhi_SoTC,
-            //        KinhPhi_TepMinhChung = check_item_nopkp.KinhPhi_TepMinhChung,
-            //        KinhPhi_TrangThai = check_item_nopkp.KinhPhi_TrangThai,
-            //        KinhPhi_GhiChu = check_item_nopkp.KinhPhi_GhiChu
-            //    };
-               
-            //    item.Dkxt_KQTQG_GhiChu = JsonConvert.SerializeObject(item_NopLePhi);
-            //}
+                                            .Include(x => x.PhuongThucXetTuyen);           
 
             ViewBag.filteriNam = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             #region lọc dữ liệu theo đợt xét tuyển
@@ -212,6 +198,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public JsonResult DkxtKQTthpt_hs_Detail(DangKyXetTuyenKQTQG entity)
         {
+            db = new DbConnecttion();
             long dkxt_KQTQG_ID = entity.Dkxt_KQTQG_ID;
 
             DangKyXetTuyenKQTQG model_diem = db.DangKyXetTuyenKQTQGs.Include(x => x.ThiSinhDangKy).Where(x => x.Dkxt_KQTQG_ID == dkxt_KQTQG_ID).FirstOrDefault();
@@ -272,16 +259,14 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             });
             return Json(new { success = true, data = tt_ts_dk }, JsonRequestBehavior.AllowGet);         
         }
-        public JsonResult DkxtKQTthpt_hs_Update_tt_hs(DangKyXetTuyenKQTQG entity)
-        {
-            return Json(false, JsonRequestBehavior.AllowGet);
-        }
+        
         #endregion
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng học bạ
 
         [AdminSessionCheck]
         public ActionResult DkxtHocBa(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
+            db = new DbConnecttion();
             var model = (from item in db.DangKyXetTuyenHBs select item)
                                                   .OrderBy(x => x.ThiSinh_ID)
                                                   .ThenBy(x => x.Dkxt_HB_NguyenVong)
@@ -448,7 +433,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public JsonResult DkxtHocBa_hs_Detail(DangKyXetTuyenHB entity)
         {
-
+            db = new DbConnecttion();
             long dkxt_id = entity.Dkxt_HB_ID;
 
             DangKyXetTuyenHB model_01 = db.DangKyXetTuyenHBs.Include(x => x.ThiSinhDangKy).Where(x => x.Dkxt_HB_ID == dkxt_id).FirstOrDefault();
@@ -525,7 +510,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult DkxtTt(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-
+            db = new DbConnecttion();
             var model = (from item in db.DangKyXetTuyenThangs select item)
                                         .OrderBy(x => x.ThiSinh_ID)
                                         .ThenBy(x => x.Dkxt_NguyenVong)
@@ -692,9 +677,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         #endregion
 
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi ngoại ngữ
-        [AdminSessionCheck]
+        
         public ActionResult DkxtkqCcnn(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
+            db = new DbConnecttion();
             var model = (from h in db.DangKyXetTuyenKhacs
                                    select h).Where(x => x.Dkxt_ToHopXT.Equals("HDP5")).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_NguyenVong).ThenBy(x => x.Nganh.Nganh_TenNganh).Include(d => d.ThiSinhDangKy.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.ThiSinhDangKy.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy);
 
@@ -853,6 +839,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public JsonResult DkxtkqCcnn_hs_Detail(DangKyXetTuyenKhac entity)
         {
+            db = new DbConnecttion();
             long dkxt_id = entity.Dkxt_ID;
 
             DangKyXetTuyenKhac model_01 = db.DangKyXetTuyenKhacs.Include(x =>x.ThiSinhDangKy).Where(x => x.Dkxt_ID == dkxt_id).FirstOrDefault();
@@ -904,6 +891,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực
         public ActionResult DkxtkqDgnl(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
+            db = new DbConnecttion();
             var model = (from h in db.DangKyXetTuyenKhacs
                                    select h).Where(x => x.Dkxt_ToHopXT.Equals("HDP6")).OrderBy(x => x.ThiSinh_ID).ThenBy(x => x.Dkxt_NguyenVong).ThenBy(x => x.Nganh.Nganh_TenNganh).Include(d => d.ThiSinhDangKy.DoiTuong).Include(d => d.DotXetTuyen).Include(d => d.ThiSinhDangKy.KhuVuc).Include(d => d.Nganh).Include(d => d.PhuongThucXetTuyen).Include(d => d.ThiSinhDangKy);
 
@@ -1064,6 +1052,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public JsonResult DkxtDgnl_hs_Detail(DangKyXetTuyenKhac entity)
         {
+            db = new DbConnecttion();
             long dkxt_id = entity.Dkxt_ID;
 
             DangKyXetTuyenKhac model_01 = db.DangKyXetTuyenKhacs.Include(x => x.ThiSinhDangKy).Where(x =>x.Dkxt_ID == dkxt_id).FirstOrDefault();
@@ -1116,7 +1105,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult Dkdttnk(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
-
+            db = new DbConnecttion();
             var model = (from item in db.DangKyDuThiNangKhieus select item)
                                         .OrderBy(x => x.ThiSinh_ID)                                       
                                         .ThenBy(x => x.Nganh.Nganh_TenNganh)
@@ -1305,7 +1294,54 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
         #endregion
 
-       
+        #region Cập nhật trạng thái lệ phí và trạng thái hồ sơ
+        public JsonResult Dkxt_KQTHPTQG_Update_KiemDuyet(DangKyXetTuyenKQTQG entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyXetTuyenKQTQGs.Where(x => x.Dkxt_KQTQG_ID == entity.Dkxt_KQTQG_ID).FirstOrDefault();
+            model.Dkxt_KQTQG_TrangThai_KinhPhi = entity.Dkxt_KQTQG_TrangThai_KinhPhi;
+            model.Dkxt_KQTQG_KinhPhi_NgayThang_CheckMC = DateTime.Now.ToString("yyyy-MM-dd");
+            model.Dkxt_KQTQG_TrangThai_HoSo = entity.Dkxt_KQTQG_TrangThai_HoSo;
+            model.Dkxt_ThongBaoKiemDuyet_HoSo = entity.Dkxt_ThongBaoKiemDuyet_HoSo;            
+            db.SaveChanges();
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Dkxt_HocBa_Update_KiemDuyet(DangKyXetTuyenHB entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyXetTuyenHBs.Where(x => x.Dkxt_HB_ID == entity.Dkxt_HB_ID).FirstOrDefault();
+            model.Dkxt_HB_TrangThai_KinhPhi = entity.Dkxt_HB_TrangThai_KinhPhi;
+            model.Dkxt_HB_KinhPhi_NgayThang_CheckMC = DateTime.Now.ToString("yyyy-MM-dd");
+            model.Dkxt_HB_TrangThai_HoSo = entity.Dkxt_HB_TrangThai_HoSo;
+            model.Dkxt_ThongBaoKiemDuyet_HoSo = entity.Dkxt_ThongBaoKiemDuyet_HoSo;
+            db.SaveChanges();
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Dkxt_TuyenThang_Update_KiemDuyet(DangKyXetTuyenThang entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyXetTuyenThangs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
+            model.Dkxt_TrangThai_KinhPhi = entity.Dkxt_TrangThai_KinhPhi;
+            model.Dkxt_KinhPhi_NgayThang_CheckMC = DateTime.Now.ToString("yyyy-MM-dd");
+            model.Dkxt_TrangThai_HoSo = entity.Dkxt_TrangThai_HoSo;
+            model.Dkxt_ThongBaoKiemDuyet_HoSo = entity.Dkxt_ThongBaoKiemDuyet_HoSo;
+            db.SaveChanges();
+            return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Dkxt_DGNL_NN_Update_KiemDuyet(DangKyXetTuyenKhac entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyXetTuyenKhacs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
+            model.Dkxt_TrangThai_KinhPhi = entity.Dkxt_TrangThai_KinhPhi;
+            model.Dkxt_KinhPhi_NgayThang_CheckMC = DateTime.Now.ToString("yyyy-MM-dd");
+            model.Dkxt_TrangThai_HoSo = entity.Dkxt_TrangThai_HoSo;
+            model.Dkxt_ThongBaoKiemDuyet_HoSo = entity.Dkxt_ThongBaoKiemDuyet_HoSo;
+            db.SaveChanges();
+            return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
+        }       
+        #endregion
 
     }
 }

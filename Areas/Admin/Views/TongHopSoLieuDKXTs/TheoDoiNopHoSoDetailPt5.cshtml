@@ -260,20 +260,20 @@
                             <tr>
                                 <td style="width:130px">Khối ngành </td>
                                 <td>
-                                    <input type="text" class="form-control" id="KhoiNganh_Ten" disabled/>
-                                   
+                                    <input type="text" class="form-control" id="KhoiNganh_Ten" disabled />
+
                                 </td>
                             </tr>
                             <tr>
                                 <td>Ngành</td>
                                 <td>
-                                    <input type="text" class="form-control" id="Nganh_TenNganh" disabled />                                   
+                                    <input type="text" class="form-control" id="Nganh_TenNganh" disabled />
                                 </td>
                             </tr>
                             <tr>
                                 <td>Kết quả</td>
                                 <td>
-                                    <input type="text" class="form-control" id="Dkxt_ChungChi_Ten" disabled />                                  
+                                    <input type="text" class="form-control" id="Dkxt_ChungChi_Ten" disabled />
                                 </td>
                             </tr>
                             <tr>
@@ -382,12 +382,12 @@
                             <hr style="margin-top:0px; margin-bottom:0px" />
                         </div>
                         <div class="col-12">
-                            <label class="control-label text-nowrap col-xl-12 col-12" id="label_thongbao">
-                                <font color="blue" id="stc_txt"></font> <span style="font-weight:bold; color:red" id="stc_number"></span>
+                            <label class="control-label text-nowrap col-12" id="label_thongbao">
+                                <font color="blue" id="stc_txt"></font>   <span id="stc_number" style="color:red; font-weight:bold"></span>
                             </label>
                             <div class="col-12 mt-0" id="div_view_lephi"> <span id="span_tepminhchung"></span></div>
-                            <div class="d-inline-flex flex-nowrap" id="div_dung_sai">
-                                <input type="hidden" id="hidden_Dkxt_TrangThai_KinhPhi" style="display:none" />
+                            <div class="d-inline-flex flex-nowrap mt-1" id="div_dung_sai">
+                                <input type="hidden" id="hidden_TrangThai_KinhPhi" style="display:none" />
                                 <div class="form-check" id="div_dung" style="margin-left:8px">
                                     <input class="form-check-input" type="radio" id="radioDung" name="HocVien_SoThamChieu">
                                     <label class="form-check-label" for="radioDung">Đúng</label>
@@ -397,6 +397,9 @@
                                     <label class="form-check-label" for="radioSai">Sai</label>
                                 </div>
                             </div>
+                            <center>
+                                <span id="Error_Rgt_KiemDuyetKinhPhi" class="small mb-1 text-danger"></span>
+                            </center>
                         </div>
                     </div>
                 </div>
@@ -461,7 +464,7 @@
             <div class="col-lg-12 col-12">
                 <div class="row ">
                     <div class="col-xxl-7 col-lg-12">
-                        <input class="form-control" type="text" id="DuTuyen_ThongBaoKiemDuyet" name="DuTuyen_ThongBaoKiemDuyet" placeholder="Nhập thông báo (nếu có)" disabled>
+                        <input class="form-control" type="text" id="Dkxt_ThongBaoKiemDuyet_HoSo" name="Dkxt_ThongBaoKiemDuyet_HoSo" placeholder="Nhập thông báo kiểm duyệt (nếu có)">
                         <span id="Error_Rgt_DuTuyen_ThongBaoKiemDuyet" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-xxl-5 col-lg-12">
@@ -487,10 +490,125 @@
                                 <center>
                                     <div class="col-md-12 d-inline-flex flex-nowrap">
                                         <a class="btn login-button text-nowrap " id="bt_duyet_ho_so">Duyệt hồ sơ</a>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('#bt_duyet_ho_so').click(function () {
+                                                    var flag = true;
+
+                                                    if (!$('#radioHoSoDayDu').is(':checked') && !$('#radioHoSoThieu').is(':checked')) {
+                                                        var errorMessage = "Chọn kiểm duyệt hồ sơ"; $('#Error_Rgt_KiemDuyetHoSo').text(errorMessage);
+                                                        flag = false;
+                                                    }
+                                                    else {
+                                                        if ($('#radioHoSoThieu').is(':checked') && !$('#Dkxt_ThongBaoKiemDuyet_HoSo').val()) {
+                                                            $('#Error_Rgt_DuTuyen_ThongBaoKiemDuyet').text('Nhập thông tin sai của hồ sơ');
+                                                            flag = false;
+                                                        }
+                                                    }
+
+                                                    let _dkxt_TrangThai_HoSo = 0;
+                                                    if ($('#radioHoSoThieu').is(':checked')) {
+                                                        _dkxt_TrangThai_HoSo = 1;
+                                                    }
+                                                    if ($('#radioHoSoDayDu').is(':checked')) {
+                                                        _dkxt_TrangThai_HoSo = 9;
+                                                    }
+
+                                                    let _dkxt_TrangThai_KinhPhi = 0
+
+                                                    if ($('#hidden_TrangThai_KinhPhi').val() > 0) {
+                                                        if (!$('#radioDung').is(':checked') && !$('#radioSai').is(':checked')) {
+                                                            $('#Error_Rgt_KiemDuyetKinhPhi').text('Chọn kiểm duyệt lệ phí');
+                                                            flag = false;
+                                                        }
+                                                        if ($('#radioSai').is(':checked')) {
+                                                            _dkxt_TrangThai_KinhPhi = 2;
+                                                        }
+                                                        if ($('#radioDung').is(':checked')) {
+                                                            _dkxt_TrangThai_KinhPhi = 9;
+                                                        }
+                                                    }
+
+                                                    if (!flag) return
+
+                                                    $("#loadingModal").modal("show");
+
+                                                    var data_update = {
+                                                        Dkxt_ID: $('#hidden_Dkxt_ID').val(),
+                                                        Dkxt_TrangThai_KinhPhi: _dkxt_TrangThai_KinhPhi,
+                                                        Dkxt_ThongBaoKiemDuyet_HoSo: $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(),
+                                                        Dkxt_TrangThai_HoSo: _dkxt_TrangThai_HoSo,
+                                                    }
+
+
+                                                    $.ajax({
+                                                        url: '/Admin/DangKyXetTuyens/Dkxt_DGNL_NN_Update_KiemDuyet',
+                                                        type: 'POST',
+                                                        data: JSON.stringify(data_update),
+                                                        contentType: 'application/json;charset=utf-8',
+                                                        success: function (res) {
+                                                            if (res.success) {
+                                                                ReturnTheoDoiNopHoSoDetail();
+                                                            }
+                                                        },
+                                                        error: function () {
+                                                            console.log("Lỗi");
+                                                        }
+                                                    });
+                                                });
+
+                                                $('#radioHoSoDayDu').click(function () {
+                                                    $('#Error_Rgt_KiemDuyetHoSo').text('');
+                                                });
+
+                                                $('#radioDung').click(function () {
+                                                    $('#Error_Rgt_KiemDuyetKinhPhi').text('');
+                                                });
+
+                                                $('#radioSai').click(function () {
+                                                    $('#Error_Rgt_KiemDuyetKinhPhi').text('');
+                                                });
+
+                                                $('input').on('input', function () {
+                                                    hideErrorMessage($(this));
+                                                });
+                                            });
+
+                                            function hideErrorMessage(input) {
+                                                var errorContainer = input.next('.text-danger');
+                                                errorContainer.text('');
+                                            }
+
+                                        </script>
                                         <input class="btn btn-secondary col-5 col-auto" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSoDetail()" style=" margin-left: 10px;" />
                                         @*<a class="btn btn-success text-nowrap" id="bt_backto_DsHvDuTuyen" style="vertical-align: middle !important; border-radius: 3px; font-size: 15px;">Quay lại</a>*@
                                     </div>
                                 </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_view_img" style="display:none">
+        <div class="row">
+            <div class="col-xl-12 mt-2">
+                <div class="card card-header-actions">
+                    <div class="card-header mt-0 mb-0">
+                        <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
+                        <div>
+                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin: 0px!important">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" id="div_item_view_minhchung">
+                                    <img class="d-block w-100 img-hide" id="img_view" display:none">
+                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -503,6 +621,8 @@
 <script>
     $(document).ready(function () {
         let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val() }
+        console.log(data_get)
+      
         $.ajax({
             url: '/Admin/TongHopSoLieuDKXTs/DangKyXetTuyen_DanhGia_GetByID',
             data: JSON.stringify(data_get),
@@ -513,7 +633,7 @@
             success: function (res) {
                 if (res.success) {
                     let data = res.data;
-                  /*  console.log(data)*/
+                   
                     $('#ThiSinh_HoLot').val(data.ThiSinh_HoLot + " " + data.ThiSinh_Ten);
                     $('#ThiSinh_DienThoai').val(data.ThiSinh_DienThoai);
                     $('#ThiSinh_Email').val(data.ThiSinh_Email);
@@ -545,7 +665,8 @@
                     $('#dkxt_id_checkin').val(data.Dkxt_ID);
 
               
-                    $('#hidden_Dkxt_TrangThai_KinhPhi').val(data.Dkxt_TrangThai_KinhPhi)
+                    $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
+                    $('#hidden_TrangThai_KinhPhi').val(data.Dkxt_TrangThai_KinhPhi)
 
                     if (data.Dkxt_TrangThai_KinhPhi == 0) {
                         $('#label_thongbao').hide();
@@ -555,6 +676,7 @@
                         $('#radioDung').removeAttr('checked', 'checked');
                         $('#radioSai').removeAttr('checked', 'checked');
                     }
+
                     else {
                         $('#label_thongbao').show();
                         $('#div_dung_sai').show();
@@ -711,4 +833,55 @@
         var str_query = str_query_current.slice(0, str_query_current.length - str_dkxt_id.length);
         window.location.href = '/Admin/TongHopSoLieuDKXTs/TheoDoiNopHoSo' + str_query;
     }
+
+    function showimg(url, loaimc, id_key_hv_dutuyen) {
+
+        $("#hiden_duongdan_file_xoa").val(url);
+        $('#hiden_loai_minhchung_xoa').val(loaimc);
+
+        var pdf_view = document.getElementById("pdf_view");
+        pdf_view.style.display = "none";
+        pdf_view.style.height = "0px";
+
+        $('#img_view').hide();
+        $("#img_view").attr("src", "");
+
+        if (loaimc == 1) {
+            $('#img_txt_card_hearder').text('Hình ảnh minh chứng học bạ');
+        }
+        if (loaimc == 2) {
+            $('#img_txt_card_hearder').text('Minh chứng bằng tốt nghiệp');
+        }
+        if (loaimc == 3) {
+            $('#img_txt_card_hearder').text('Minh chứng CMND');
+        }
+        if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Giấy tờ khác');
+        }
+        var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
+
+        if (lastChar.toLowerCase() != ".pdf") {
+            pdf_view.style.display = "none";
+            pdf_view.style.height = "0px";
+
+            $("#img_view").attr("src", url);
+            $("#img_view").show();
+        }
+        if (lastChar.toLowerCase() === ".pdf") {
+            $("#img_view").hide();
+            pdf_view.style.display = "inline";
+            pdf_view.style.height = "700px";
+            $("#pdf_view").attr("src", url);
+            $("#pdf_view").show();
+        }
+        $('#div_view_img').show();
+    }
+    $(document).ready(function () {
+        $('#bt_close_div_view_img').click(function () {
+            $('#div_view_img').hide();
+            $("#img_view").attr("src", "");
+            $("#pdf_view").attr("src", "");
+            $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
+        });
+    });
 </script>

@@ -18,7 +18,7 @@
         public int? DotXT_ID { get; set; }
         public int? Nganh_ID { get; set; }
         public int? Thm_ID { get; set; }
-        public int? Dkxt_KQTQG_NguyenVong { get; set; }     
+        public int? Dkxt_KQTQG_NguyenVong { get; set; }
 
         public int? Dkxt_KQTQG_NamTotNghiep { get; set; }
 
@@ -49,7 +49,7 @@
         [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_BangTN { get; set; } // lưu ý đây là minh chứng căn cước công dân
         [StringLength(4000)]
-        public string Dkxt_KQTQG_MinhChung_UuTien { get; set; }     
+        public string Dkxt_KQTQG_MinhChung_UuTien { get; set; }
         public string Dkxt_KQTQG_KinhPhi_SoThamChieu { get; set; }
         public string Dkxt_KQTQG_KinhPhi_TepMinhChung { get; set; }
         public string Dkxt_KQTQG_KinhPhi_NgayThang_NopMC { get; set; }
@@ -57,6 +57,7 @@
         public int? Dkxt_KQTQG_TrangThai_KinhPhi { get; set; }
         public int? Dkxt_KQTQG_TrangThai_HoSo { get; set; }
         public int? Dkxt_KQTQG_TrangThai_KetQua { get; set; }
+        public string Dkxt_ThongBaoKiemDuyet_HoSo { get; set; }     
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 
         public virtual Nganh Nganh { get; set; }

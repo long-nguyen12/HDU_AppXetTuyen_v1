@@ -17,7 +17,7 @@ namespace HDU_AppXetTuyen.Models
         public int? Nganh_ID { get; set; }
         public int? Thm_ID { get; set; }     
         public int? Dkxt_HB_NguyenVong { get; set; } 
-        [StringLength(500)]
+     
         public string Dkxt_HB_GhiChu { get; set; }      
         public string Dkxt_HB_Diem_M1 { get; set; }       
         public string Dkxt_HB_Diem_M2 { get; set; }      
@@ -36,6 +36,8 @@ namespace HDU_AppXetTuyen.Models
         public int? Dkxt_HB_TrangThai_KinhPhi { get; set; }
         public int? Dkxt_HB_TrangThai_HoSo { get; set; }
         public int? Dkxt_HB_TrangThai_KetQua { get; set; }
+        public string Dkxt_ThongBaoKiemDuyet_HoSo { get; set; }
+
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 
         public virtual Nganh Nganh { get; set; }
