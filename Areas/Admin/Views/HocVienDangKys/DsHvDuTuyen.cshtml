@@ -12,6 +12,23 @@
     .bd-rd {
         border-radius: 3px
     }
+
+    .btn {
+        border-radius: 3px !important;
+    }
+
+    .login-button {
+        padding: 8px 18px;
+        background-color: #ff6a00;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+    }
+
+        .login-button:hover {
+            background-color: #808080;
+            color: #fff;
+        }
 </style>
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
@@ -125,16 +142,6 @@
                                 <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_extend" style="margin-right:4px; display:none"><i data-feather="chevron-down" style="vertical-align:middle!important"></i></a>
                                 <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_collapse" style="margin-right: 4px; display: none"><i data-feather="chevron-up" style="vertical-align:middle!important"></i></a>
                                 <a class="btn btn-outline-primary bd-rd  text-nowrap" id="bt_export_excel" style="padding-right:6px; padding-left:6px" title="Xuất dữ liệu ra tệp excel"><i data-feather="download" style="vertical-align:middle!important"></i> Excel</a>
-
-                                <script>
-                                    $(document).ready(function () {
-                                        $('#bt_export_excel').click(function () {
-                                            let queryString_export = window.location.search;
-                                            window.location.href = "/Admin/ExportDatas/ExportHocVienDuTuyen" + queryString_export;
-                                        });
-                                    });
-
-                                </script>
                             </div>
                         </div>
                         <hr class="mt-3 mb-2" />
@@ -438,3 +445,89 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal_tb_export" tabindex="-1" role="dialog" aria-labelledby="modal_tb_export" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="h5_tieude_thongbao">Chọn mẫu excel xuất dữ liệu</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="bt_cancel_modal_tb_export_click()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <center>
+                        <div class="d-inline-flex flex-nowrap align-items-center justify-content-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="radioMauExcel01" name="radioMauExcel01" checked onclick="bt_select01_onModal_Click()">
+                                <label class="form-check-label" for="radioMauExcel01">Mẫu xuất excel 01</label>
+                            </div>
+                            <div class="form-check" style="margin-left:15px">
+                                <input class="form-check-input" type="radio" id="radioMauExcel02" name="radioMauExcel01" onclick="bt_select02_onModal_Click()">
+                                <label class="form-check-label" for="radioMauExcel01">Mẫu xuất excel 02</label>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+                <div class="row">
+                    <div id="div_view_img">
+                        <div class="row">
+                            <div class="col-xl-12 mt-2">
+                                <div class="card card-header-actions">
+                                    <div class="card-body" style="margin: 0px!important">
+                                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item active" id="img_view_temp_excel1">
+                                                    <img src="~/Content/static/MauXuat01.PNG" class="d-block w-100 img-hide" id="">
+                                                </div>
+                                                <div class="carousel-item active" id="img_view_temp_excel2" style="display:none">
+                                                    <img src="~/Content/static/MauXuat02.PNG" class="d-block w-100 img-hide" id="img_view_temp_excel">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn login-button" type="button" id="bt_ok_modal_tb" onclick="bt_ok_modal_tb_click()">Đồng ý</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="bt_cancel_modal_tb_export_click()">Hủy bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#bt_export_excel').click(function () {
+            $('#modal_tb_export').modal('show');          
+        });
+    });
+    function bt_ok_modal_tb_click() {       
+        //let queryString_export = window.location.search;
+        //window.location.href = "/Admin/ExportDatas/ExportHocVienDuTuyenM01" + queryString_export;
+        if ($('#radioMauExcel01').is(':checked')) {
+            $('#modal_tb_export').modal('hide');
+            let queryString_export = window.location.search;
+            window.location.href = "/Admin/ExportDatas/ExportHocVienDuTuyenM01" + queryString_export;
+        }
+        if ($('#radioMauExcel02').is(':checked')) {
+            $('#modal_tb_export').modal('hide');
+            let queryString_export = window.location.search;
+            window.location.href = "/Admin/ExportDatas/ExportHocVienDuTuyenM02" + queryString_export;
+        }          
+    }
+    function bt_cancel_modal_tb_export_click() {
+        $('#modal_tb_export').modal('hide');
+    }
+    function bt_select01_onModal_Click() {
+        $("#img_view_temp_excel1").show();
+        $("#img_view_temp_excel2").hide();
+    }
+    function bt_select02_onModal_Click() {
+        $("#img_view_temp_excel2").show();
+        $("#img_view_temp_excel1").hide();
+    }
+    
+
+</script>

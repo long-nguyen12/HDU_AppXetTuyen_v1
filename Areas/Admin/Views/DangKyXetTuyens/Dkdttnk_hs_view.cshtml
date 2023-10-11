@@ -1,12 +1,5 @@
-﻿@model HDU_AppXetTuyen.Models.DangKyXetTuyenKQTQG
-
-@{
-    ViewBag.Title = "DkxtKQTthpt_view_hs";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
-}
-
-@{
-    ViewBag.Title = "DkxtHocBaHoSo";
+﻿@{
+    ViewBag.Title = "Kiểm tra hồ sơ DKDT Năng khiếu";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 <style>
@@ -31,7 +24,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span> Quản lý Thí sinh đăng ký xét tuyển</span>
+                        <span> Quản lý Thí sinh đăng ký dự thi năng khiếu</span>
                     </div>
                 </div>
             </div>
@@ -41,7 +34,7 @@
 <div class="container-fluid px-12">
     <div class="card card-collapsable mt-1 mb-1">
         <div class="card-header">
-            <div><span id="sp_tieude">Kiểm tra và xác thực thông tin đăng ký xét tuyển bằng điểm thi tốt nghiệp THPT Quốc gia</span></div>
+            <div><span id="sp_tieude">Kiểm tra và xác thực thông tin đăng ký dự thi năng khiếu của thí sinh</span></div>
         </div>
         <div class="card-body">
             <div class="row g-1">
@@ -247,13 +240,7 @@
     </div>
 </div>
 <!--Các tham số lưu để truyền dữ liệu-->
-<input type="hidden" value="@ViewBag.DotxtFilteri" id="filteriDotxt_bak" name="filteriDotxt_bak" />
-<input type="hidden" value="@ViewBag.NvongFilteri" id="filteriNvong_bak" name="filteriNvong_bak" />
-<input type="hidden" value="@ViewBag.NganhFilteri" id="filteriNganh_bak" name="filteriNganh_bak" />
-<input type="hidden" value="@ViewBag.LePhiFilteri" id="filteriLePhi_bak" name="filteriLePhi_bak" />
-<input type="hidden" value="@ViewBag.HoSoFilteri" id="filteriHoSo_bak" name="filteriHoSo_bak" />
-<input type="hidden" value="@ViewBag.SearchString" id="searchString_bak" name="searchString_bak" />
-<input type="hidden" value="@ViewBag.pageCurren" id="page_bak" name="page_bak" />
+
 <input type="hidden" value="@ViewBag.Dkxt_KQTQG_ID" id="dkxt_kqtqg_id_checkin" name="dkxt_kqtqg_id_checkin" />
 <!--Hết phần Các tham số lưu để truyền dữ liệu-->
 @*<embed src="~/Uploads/DKXTHocBaFile/0030.pdf#toolbar=0#zoom=100" style="width: 100% !important; height: 650px" />*@

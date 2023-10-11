@@ -348,6 +348,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 {
                     filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
                 }
+                if (_item == "3")
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Sửa,  chưa KT" });
+                }
                 if (_item == "9")
                 {
                     filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, Đúng" });
@@ -367,13 +371,17 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             foreach (var _item in list_items_hoso)
             {
-                if (_item == "1")
+                if (_item == "0")
                 {
                     filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
                 }
+                if (_item == "1")
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                }
                 if (_item == "2")
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
                 }
                 if (_item == "9")
                 {
