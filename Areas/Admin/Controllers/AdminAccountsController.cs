@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.UI;
 using HDU_AppXetTuyen.Models;
 using PagedList;
+using BC = BCrypt.Net.BCrypt;
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
@@ -54,10 +55,14 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Admin_ID,Admin_Username,Admin_Pass,Admin_Ho,Admin_Ten,Admin_Quyen,Khoa_ID")] AdminAccount adminAccount)
+        public ActionResult Create([Bind(Include = "Admin_ID,Admin_Username,Admin_Pass,Admin_Ho,Admin_Ten,Admin_Quyen,Khoa_ID,Admin_Note")] AdminAccount adminAccount)
         {
             if (ModelState.IsValid)
             {
+                var password = ComputeHash(adminAccount.Admin_Username, adminAccount.Admin_Pass);
+                adminAccount.Admin_Pass = password;
+                // Sét mặc định Khoa_ID = 1
+                adminAccount.Khoa_ID = 1;
                 db.AdminAccounts.Add(adminAccount);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -74,6 +79,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             AdminAccount adminAccount = db.AdminAccounts.Find(id);
+            //adminAccount.Admin_Pass = "";
             if (adminAccount == null)
             {
                 return HttpNotFound();
@@ -86,10 +92,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Admin_ID,Admin_Username,Admin_Pass,Admin_Ho,Admin_Ten,Admin_Quyen,Khoa_ID")] AdminAccount adminAccount)
+        public ActionResult Edit([Bind(Include = "Admin_ID,Admin_Username,Admin_Pass,Admin_Ho,Admin_Ten,Admin_Quyen,Khoa_ID,Admin_Note")] AdminAccount adminAccount)
         {
             if (ModelState.IsValid)
             {
+                adminAccount.Khoa_ID = 1;
                 db.Entry(adminAccount).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -121,6 +128,35 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             db.AdminAccounts.Remove(adminAccount);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(FormCollection formCollection)
+        {
+            var adminAccount = db.AdminAccounts.Find(int.Parse(formCollection["Admin_ID"]));
+
+            if (adminAccount != null)
+            {
+                var password = ComputeHash(adminAccount.Admin_Username, formCollection["pass_new"]);
+                adminAccount.Admin_Pass = password;
+                db.Entry(adminAccount).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "AdminAccounts");
+
+        }
+        public string ComputeHash(string input_user, string input_pass)
+        {
+            string input = input_user.Trim() + input_pass.Trim();
+            string hashedPassword = BC.HashPassword(input);
+            return hashedPassword;
+        }
+
+        public bool Verify(string input_user, string input_pass, string hash_pass)
+        {
+            string input = input_user.Trim() + input_pass.Trim();
+            bool isPasswordValid = BC.Verify(input, hash_pass);
+            return isPasswordValid;
         }
 
         protected override void Dispose(bool disposing)

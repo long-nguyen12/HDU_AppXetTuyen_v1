@@ -176,7 +176,6 @@
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KinhPhisController.cs" />
-    <Compile Include="Areas\Admin\Controllers\LibraryJsonController.cs" />
     <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NganhMastersController.cs" />

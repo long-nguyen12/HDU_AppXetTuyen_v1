@@ -1,5 +1,7 @@
-﻿@model IEnumerable<HDU_AppXetTuyen.Models.AdminAccount>
-
+﻿<!-- Thêm thư viện -->
+@model PagedList.IPagedList<HDU_AppXetTuyen.Models.AdminAccount>
+@using PagedList.Mvc;
+<!-- Kết thúc-->
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
@@ -30,9 +32,9 @@
                 <div class="card-header">
                     <span id="sp_tieude">Danh sách tài khoản hệ thống</span>
                     @*<button class="btn btn-outline-primary align-items-center" >
-            @Html.ActionLink("Thêm mới", "Create")
-        </button>*@
-                    <a class="btn btn-outline-primary align-items-center"  href="@Url.Action("Create", "AdminAccounts")"> Thêm mới</a>
+                            @Html.ActionLink("Thêm mới", "Create")
+                        </button>*@
+                    <a class="btn btn-outline-primary btn-sm align-items-center" href="@Url.Action("Create", "AdminAccounts")"> + Thêm mới</a>
 
                 </div> <div class="card-body">
                     <div class="row g-1">
@@ -53,9 +55,11 @@
                                             Quyền
                                         </th>
                                         <th>
-                                            Khoa
+                                            Ghi chú
                                         </th>
-                                        <th></th>
+                                        <th>
+
+                                        </th>
                                     </tr>
 
                                     @foreach (var item in Model)
@@ -71,20 +75,34 @@
                                                 @Html.DisplayFor(modelItem => item.Admin_Ten)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Admin_Quyen)
+                                                @{
+                                                    if (item.Admin_Quyen == "1")
+                                                    { <div> Quản lý Đại học </div> }
+                                                    if (item.Admin_Quyen == "2")
+                                                    {<div>  Quản lý Sau Đại học </div> }
+                                                    if (item.Admin_Quyen == "3")
+                                                    { <div>  Quản lý Liên cấp </div>}
+                                                    if (item.Admin_Quyen == "4")
+                                                    { <div>  Quản lý Thi năng khiếu</div> }
+                                                }
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Khoa_ID)
+                                                @Html.DisplayFor(modelItem => item.Admin_Note)
                                             </td>
-                                            <td>
-                                                @Html.ActionLink("Sửa", "Edit", new { id = item.Admin_ID }) |
-                                                @*@Html.ActionLink("Chi tiết", "Details", new { id = item.Admin_ID }) |*@
-                                                @Html.ActionLink("Xoá", "Delete", new { id = item.Admin_ID })
+                                            <td style="white-space:nowrap; vertical-align:middle">
+                                                <a href="@Url.Action("Edit", "AdminAccounts", new { id = item.Admin_ID })" title="Xem chi tiết "><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
+                                                <a href="@Url.Action("Delete", "AdminAccounts", new { id = item.Admin_ID })" title="Xóa"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
                                             </td>
                                         </tr>
                                     }
 
+
+
                                 </table>
+                                <!-- Thêm mã phân trang -->
+                                <span class="mb-0">Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</span>
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                                <!-- Kết thúc -->
                             </div>
                         </div>
                     </div>
