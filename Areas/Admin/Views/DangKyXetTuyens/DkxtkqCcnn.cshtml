@@ -187,7 +187,7 @@
                                         }
                                     </td>
                                     <td style="white-space:nowrap">
-                                        <a class="btn btn-light btn-sm" onclick="KiemtraThongTinDangky(@item.Dkxt_ID)">Kiểm tra</a>
+                                        <a class="btn btn-light btn-sm" onclick="KiemtraThongTinDangky(@item.Dkxt_ID,5)">Kiểm tra</a>
                                     </td>
                                 </tr>
                             }
@@ -212,14 +212,14 @@
     </div>
 </div>
 <script>
-    function KiemtraThongTinDangky(id) {
+    function KiemtraThongTinDangky(id,id_pt) {
         var str_query = window.location.search;
 
         if (str_query.length == 0) {
-            str_query = '?Dkxt_ID=' + id;
+            str_query = '?Dkxt_ID=' + id + '&Ptxt_ID=' + id_pt;
         }
         else {
-            str_query += '&Dkxt_ID=' + id;
+            str_query += '&Dkxt_ID=' + id + '&Ptxt_ID=' + id_pt;
         }
         window.location.href = "/Admin/DangKyXetTuyens/DkxtkqKhac_hs_view" + str_query;
     }

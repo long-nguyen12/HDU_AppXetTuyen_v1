@@ -19,7 +19,7 @@ namespace HDU_AppXetTuyen.Controllers
 {
     public class ExportFileController : Controller
     {
-        private DbConnecttion db = new DbConnecttion();
+        private DbConnecttion db = null;// new DbConnecttion();
 
         // GET: ExportFile
         public ActionResult Index()
@@ -29,6 +29,7 @@ namespace HDU_AppXetTuyen.Controllers
         [Obsolete]
         public ActionResult DownloadFile_XetTuyenHB()
         {
+            db = new DbConnecttion();
             var idThiSinhInt = 0;
             // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
             if (Session["login_session"] == null)
@@ -102,9 +103,9 @@ namespace HDU_AppXetTuyen.Controllers
                     var jsonStringMon3 = JsonConvert.SerializeObject(item.Dkxt_HB_Diem_M3);
                   
                     // MonDiem khai báo trong  Model.LibraryUsers
-                    MonDiem diemmon1 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_HB_Diem_M1);
-                    MonDiem diemmon2 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_HB_Diem_M2);
-                    MonDiem diemmon3 = JsonConvert.DeserializeObject<MonDiem>(item.Dkxt_HB_Diem_M3);
+                    MonDiemHB diemmon1 = JsonConvert.DeserializeObject<MonDiemHB>(item.Dkxt_HB_Diem_M1);
+                    MonDiemHB diemmon2 = JsonConvert.DeserializeObject<MonDiemHB>(item.Dkxt_HB_Diem_M2);
+                    MonDiemHB diemmon3 = JsonConvert.DeserializeObject<MonDiemHB>(item.Dkxt_HB_Diem_M3);
 
                     // Lấy ra thông tin chi tiết của từng môn1
                     var mon1_tenmon = diemmon1.TenMon.ToString();
@@ -185,7 +186,7 @@ namespace HDU_AppXetTuyen.Controllers
         [Obsolete]
         public ActionResult DownloadFile_XetTuyenThang()
         {
-
+            db = new DbConnecttion();
             var idThiSinhInt = 0;
             // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2 - DEV
             if (Session["login_session"] == null)
@@ -286,7 +287,7 @@ namespace HDU_AppXetTuyen.Controllers
         [Obsolete]
         public ActionResult DownloadFile_XetTuyenCCNN()
         {
-
+            db = new DbConnecttion();
             var idThiSinhInt = 0;
             // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2 - DEV
             if (Session["login_session"] == null)
@@ -386,7 +387,7 @@ namespace HDU_AppXetTuyen.Controllers
         [Obsolete]
         public ActionResult DownloadFile_XetTuyenDGNL_DGTD()
         {
-
+            db = new DbConnecttion();
             var idThiSinhInt = 0;
             // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2 - DEV
             if (Session["login_session"] == null)
@@ -484,7 +485,7 @@ namespace HDU_AppXetTuyen.Controllers
         [Obsolete]
         public ActionResult DownloadFile_XetTuyenKQTQG()
         {
-
+            db = new DbConnecttion();
             var idThiSinhInt = 0;
             // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
             if (Session["login_session"] == null)
@@ -550,11 +551,11 @@ namespace HDU_AppXetTuyen.Controllers
                     //Từ ngành id lấy ra tên ngành và mã ngành
                     var tenNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_TenNganh;
                     var maNganh = db.Nganhs.Find(item.Nganh_ID).Nganh_MaNganh;
-                   
+
                     // DiemThiGQMon khai báo trong  Model.LibraryUsers
-                    DiemThiGQMon diemmon1 = JsonConvert.DeserializeObject<DiemThiGQMon>(item.Dkxt_KQTQG_Diem_M1);
-                    DiemThiGQMon diemmon2 = JsonConvert.DeserializeObject<DiemThiGQMon>(item.Dkxt_KQTQG_Diem_M2);
-                    DiemThiGQMon diemmon3 = JsonConvert.DeserializeObject<DiemThiGQMon>(item.Dkxt_KQTQG_Diem_M3);
+                    MonDiemThiQG diemmon1 = JsonConvert.DeserializeObject<MonDiemThiQG>(item.Dkxt_KQTQG_Diem_M1);
+                    MonDiemThiQG diemmon2 = JsonConvert.DeserializeObject<MonDiemThiQG>(item.Dkxt_KQTQG_Diem_M2);
+                    MonDiemThiQG diemmon3 = JsonConvert.DeserializeObject<MonDiemThiQG>(item.Dkxt_KQTQG_Diem_M3);
 
                     // Lấy ra thông tin chi tiết của từng môn1
                     var mon1_tenmon = diemmon1.TenMon.ToString();
@@ -622,6 +623,7 @@ namespace HDU_AppXetTuyen.Controllers
         [Obsolete]
         public ActionResult DownloadFile_XetTuyenThiNangKhieu()
         {
+            db = new DbConnecttion();
             var idThiSinhInt = 0;
             // Check login session có tồn tại hay không nếu không tồn tại thì FIX idThiSinhInt = 2
             if (Session["login_session"] == null)
@@ -706,9 +708,10 @@ namespace HDU_AppXetTuyen.Controllers
             }
 
         }
-
+        [Obsolete]
         public ActionResult DownloadFile_XetTuyenSDH(string dutuyen_id)
         {
+            db = new DbConnecttion();
             System.Diagnostics.Debug.WriteLine("dutuyen_id_export: ", dutuyen_id);
 
             int idDuTuyenInt = int.Parse(dutuyen_id);
@@ -757,6 +760,7 @@ namespace HDU_AppXetTuyen.Controllers
                 // Replace placeholders with actual data
                 string gt = hocVienInfo.HocVien_GioiTinh == 0 ? "Nam" : "Nữ";
                 // Replace placeholders with actual data
+
                 document.ReplaceText("<<HocVien_HoDem>>", hocVienInfo.HocVien_HoDem);
                 document.ReplaceText("<<HocVien_Ten>>", hocVienInfo.HocVien_Ten);
                 document.ReplaceText("<<HocVien_NoiSinh>>", noisinh);

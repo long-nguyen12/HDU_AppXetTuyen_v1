@@ -27,7 +27,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         #region Theo dõi hồ sơ thí sinh
         private IList<TongHopSoLieuXetTuyen> ListHoSoXetTuyen;
         public ActionResult TheoDoiNopHoSo(string filteriPhuongThuc, string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
-            string filteriDotxt, string sortOrder, int? page)
+            string sortOrder, int? page)
         {
             ListHoSoXetTuyen = new List<TongHopSoLieuXetTuyen>();
             db = new DbConnecttion();
@@ -540,9 +540,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             string _ut_doituong_ten_diem = model.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + ": ƯT " + model.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien + " đ";
             string _ut_khuvuv_ten_diem = model.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + ": ƯT " + model.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien + " đ"; ;
 
-            DiemThiGQMon diemmon1 = JsonConvert.DeserializeObject<DiemThiGQMon>(model.Dkxt_KQTQG_Diem_M1);
-            DiemThiGQMon diemmon2 = JsonConvert.DeserializeObject<DiemThiGQMon>(model.Dkxt_KQTQG_Diem_M2);
-            DiemThiGQMon diemmon3 = JsonConvert.DeserializeObject<DiemThiGQMon>(model.Dkxt_KQTQG_Diem_M3);
+            MonDiemThiQG diemmon1 = JsonConvert.DeserializeObject<MonDiemThiQG>(model.Dkxt_KQTQG_Diem_M1);
+            MonDiemThiQG diemmon2 = JsonConvert.DeserializeObject<MonDiemThiQG>(model.Dkxt_KQTQG_Diem_M2);
+            MonDiemThiQG diemmon3 = JsonConvert.DeserializeObject<MonDiemThiQG>(model.Dkxt_KQTQG_Diem_M3);
             string ThiSinh_GT = "Nam";
             if (model.ThiSinhDangKy.ThiSinh_GioiTinh == 1) { ThiSinh_GT = "Nữ"; }
             var data_return = new
@@ -628,9 +628,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             string _ut_doituong_ten_diem = model.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + ": ƯT " + model.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien + " đ";
             string _ut_khuvuv_ten_diem = model.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + ": ƯT " + model.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien + " đ";
 
-            MonDiem diemmon1 = JsonConvert.DeserializeObject<MonDiem>(model.Dkxt_HB_Diem_M1);
-            MonDiem diemmon2 = JsonConvert.DeserializeObject<MonDiem>(model.Dkxt_HB_Diem_M2);
-            MonDiem diemmon3 = JsonConvert.DeserializeObject<MonDiem>(model.Dkxt_HB_Diem_M3);
+            MonDiemHB diemmon1 = JsonConvert.DeserializeObject<MonDiemHB>(model.Dkxt_HB_Diem_M1);
+            MonDiemHB diemmon2 = JsonConvert.DeserializeObject<MonDiemHB>(model.Dkxt_HB_Diem_M2);
+            MonDiemHB diemmon3 = JsonConvert.DeserializeObject<MonDiemHB>(model.Dkxt_HB_Diem_M3);
             string ThiSinh_GT = "Nam";
             if (model.ThiSinhDangKy.ThiSinh_GioiTinh == 1) { ThiSinh_GT = "Nữ"; }
             var data_return = new

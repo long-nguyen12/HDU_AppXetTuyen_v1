@@ -34,7 +34,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-collapsable mt-1 mb-1">
+    <div class="card card-header-actions">
         <div class="card-header">
             <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng học bạ</span></div>
         </div>
@@ -43,7 +43,7 @@
             @using (Html.BeginForm("DkxtHocBa", "DangKyXetTuyens", FormMethod.Get))
             {
 
-                <div class="row g-1">                  
+                <div class="row g-1">
                     <div class="col-xxl-2 col-md-6">
                         @Html.DropDownList("filteriNvong", null, "Nguyện vọng...", new { @class = "form-select bd-rd" })
                     </div>
@@ -208,7 +208,7 @@
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
                         @Html.PagedListPager(Model, page => Url.Action("DkxtHocBa", new
-                        {                           
+                        {
                             filteriNvong = ViewBag.NvongFilteri,
                             filteriNganh = ViewBag.NganhFilteri,
                             filteriLePhi = ViewBag.LePhiFilteri,

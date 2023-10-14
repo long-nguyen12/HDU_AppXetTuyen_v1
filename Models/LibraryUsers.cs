@@ -31,6 +31,73 @@ namespace HDU_AppXetTuyen.Models
             }
         }
     }
+    public class TongHopSoLieuXetTuyenExport
+    {
+        public string Ex_ThiSinh_ID { get; set; }
+        public string Ex_Dkxt_ID { get; set; }
+        public string Ex_Dxt_ID { get; set; }
+        public string Ex_Ptxt_ID { get; set; }
+        public string Ex_Nganh_ID { get; set; }
+        public string Ex_TrangThai_KinhPhi { get; set; }
+        public string Ex_TrangThai_HoSo { get; set; }     
+
+        public string Ex_HoLot { get; set; }
+        public string Ex_Ten { get; set; }
+        public string Ex_NgaySinh { get; set; }
+        public string Ex_GioiTinh { get; set; }
+        public string Ex_DanToc { get; set; }     
+        public string Ex_CCCD { get; set; }
+        public string Ex_DienThoai { get; set; }       
+        public string Ex_Email { get; set; }
+        public string Ex_MaNganh { get; set; }
+        public string Ex_TenNganh { get; set; }
+        public string Ex_Khoa { get; set; }
+        public string Ex_MaPhuongThuc { get; set; }
+        public string Ex_TenPhuongThuc { get; set; }
+        public string Ex_MaToHop { get; set; }
+        public string Ex_ThuTuNguyenVong  { get; set; }
+
+        /*Phần hiển thị dữ liệu xét tuyển thẳng*/
+        public string Ex_MonDatGiai { get; set; }
+        public string Ex_NamDatGiai { get; set; }
+        public string Ex_LoaiGiai { get; set; }      
+        /*hết phần hiển thị dữ liệu xét tuyển thẳng*/
+
+        /*Phần hiển thị dữ liệu xét tuyển khác*/
+        public string Ex_DonViToChuc { get; set; }
+        public string Ex_KetQuaDatDuoc { get; set; }
+        public string Ex_TongDiem_Chuan { get; set; }
+        public string Ex_NgayThi{ get; set; }
+        /*hết phần hiển thị dữ liệu xét tuyển khác*/
+
+        public string Ex_TongDiem { get; set; }
+        public string Ex_TongDiemFull { get; set; }
+        public string Ex_DiemKhuyenKhich { get; set; }
+        public string Ex_TenMon1 { get; set; }
+        public string Ex_DiemMon1 { get; set; }
+        public string Ex_TenMon2 { get; set; }
+        public string Ex_DiemMon2 { get; set; }
+        public string Ex_TenMon3 { get; set; }
+        public string Ex_DiemMon3 { get; set; }
+        public string Ex_DiemUTDT { get; set; }
+        public string Ex_DiemUTKV { get; set; }
+        public string Ex_NamTNTHPT { get; set; }
+        public string Ex_HocLuc12 { get; set; }
+        public string Ex_HanhKiem12 { get; set; }
+        public string Ex_DiemTB12 { get; set; }
+        public string Ex_TNCaoDang { get; set; }
+        public string Ex_TNTrungCap { get; set; }
+        public string Ex_Tinh { get; set; }
+        public string Ex_Huyen { get; set; }
+        public string Ex_Xa { get; set; }
+        public string Ex_MaTinh12 { get; set; }
+        public string Ex_MaTruong12 { get; set; }
+        public string Ex_DiaChiNhanGiayBao { get; set; }
+        public string Ex_NoiSinh { get; set; } 
+        public string Ex_TenKhoa { get; set; }
+        public string Ex_TenTruongKhoa { get; set; }
+        public string Ex_DienThoaiTruongKhoa { get; set; }
+    }
     public class TongHopSoLieuXetTuyen
     {
         public string ThiSinh_ID { get; set; }
@@ -57,9 +124,7 @@ namespace HDU_AppXetTuyen.Models
         public string SoThamChieuLP { get; set; }     
         public string NgayThangNopLP { get; set; }       
         public string NgayThangCheckLP { get; set; }
-        public string MinhChungLP { get; set; }       
-
-        
+        public string MinhChungLP { get; set; }  
     }
     public class StatusTracking // khai báo để tạo dữ liệu cho dropdowlis trạng thái hồ sơ và trạng thái kinh phí
     {
@@ -73,7 +138,7 @@ namespace HDU_AppXetTuyen.Models
         // PRODUCTION_URL = "https://dkxt.hdu.edu.vn/";
     }
 
-    public class MonDiem  // dùng để tách dữ liệu trong bảng thí sinh đăng ký bằng học bạ
+    public class MonDiemHB  // dùng để tách dữ liệu trong bảng thí sinh đăng ký bằng học bạ
     {
         public string TenMon { get; set; }
         public string HK1 { get; set; }
@@ -81,7 +146,7 @@ namespace HDU_AppXetTuyen.Models
         public string HK3 { get; set; }
         public string DiemTrungBinh { get; set; }
     }
-    public class DiemThiGQMon  // dùng để tách dữ liệu trong bảng thí sinh đăng ký bằng điểm thi tốt nghiệp
+    public class MonDiemThiQG // dùng để tách dữ liệu trong bảng thí sinh đăng ký bằng điểm thi tốt nghiệp
     {
         public string TenMon { get; set; }
         public string Diem { get; set; }
@@ -117,8 +182,8 @@ namespace HDU_AppXetTuyen.Models
     public class ThongTinQueQuanTs  // dùng để tách dữ liệu thông nơi đăng ký hộ khẩu của thí sinh
     {      
         public string Phuongxa { get; set; }      
-        public string Huyen_ID { get; set; }
-        public string Tinh_ID { get; set; }
+        public int Huyen_ID { get; set; }
+        public int Tinh_ID { get; set; }
 
     }
    
