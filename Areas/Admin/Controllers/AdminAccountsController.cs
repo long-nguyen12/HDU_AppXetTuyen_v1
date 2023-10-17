@@ -18,11 +18,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         private DbConnecttion db = new DbConnecttion();
 
         // GET: Admin/AdminAccounts
-        public ActionResult Index(int? page)
+        public ActionResult Index(string searchString, int? page)
         {
             if (page == null) page = 1;
             var adminAccounts = (from h in db.AdminAccounts
-                                 select h).OrderBy(x => x.Admin_ID);
+                                 select h).OrderBy(x => x.Admin_ID).ToList();
+            #region Tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                adminAccounts = adminAccounts.Where(m => m.Admin_Ten.ToUpper().Contains(searchString.ToUpper())
+                                                                            || m.Admin_Ho.ToString().Contains(searchString)
+                                      || m.Admin_Username.Contains(searchString)).ToList();
+            }
+            #endregion
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(adminAccounts.ToPagedList(pageNumber, pageSize));
