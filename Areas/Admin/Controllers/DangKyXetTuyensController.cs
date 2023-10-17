@@ -196,9 +196,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (model_diem.ThiSinhDangKy.ThiSinh_HanhKiemLop12 == 1) { _xeploai_hanhkiem_12 = "Hạnh kiểm 12: Yếu"; }
 
             // DiemThiGQMon khai báo trong  Model.LibraryUsers
-            DiemThiGQMon _mondiem1 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M1);
-            DiemThiGQMon _mondiem2 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M2);
-            DiemThiGQMon _mondiem3 = JsonConvert.DeserializeObject<DiemThiGQMon>(model_diem.Dkxt_KQTQG_Diem_M3);
+            MonDiemThiQG _mondiem1 = JsonConvert.DeserializeObject<MonDiemThiQG>(model_diem.Dkxt_KQTQG_Diem_M1);
+            MonDiemThiQG _mondiem2 = JsonConvert.DeserializeObject<MonDiemThiQG>(model_diem.Dkxt_KQTQG_Diem_M2);
+            MonDiemThiQG _mondiem3 = JsonConvert.DeserializeObject<MonDiemThiQG>(model_diem.Dkxt_KQTQG_Diem_M3);
 
             DbConnecttion dbthpt = new DbConnecttion();
             var model_item = dbthpt.DangKyXetTuyenKQTQGs.Where(x => x.Dkxt_KQTQG_ID == dkxt_KQTQG_ID).ToList();
@@ -414,9 +414,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             // DiemThiGQMon khai báo trong  Model.LibraryUsers
 
-            MonDiem _mondiem1 = JsonConvert.DeserializeObject<MonDiem>(model_01.Dkxt_HB_Diem_M1);
-            MonDiem _mondiem2 = JsonConvert.DeserializeObject<MonDiem>(model_01.Dkxt_HB_Diem_M2);
-            MonDiem _mondiem3 = JsonConvert.DeserializeObject<MonDiem>(model_01.Dkxt_HB_Diem_M3);
+            MonDiemHB _mondiem1 = JsonConvert.DeserializeObject<MonDiemHB>(model_01.Dkxt_HB_Diem_M1);
+            MonDiemHB _mondiem2 = JsonConvert.DeserializeObject<MonDiemHB>(model_01.Dkxt_HB_Diem_M2);
+            MonDiemHB _mondiem3 = JsonConvert.DeserializeObject<MonDiemHB>(model_01.Dkxt_HB_Diem_M3);
 
             DbConnecttion dbhb = new DbConnecttion();
             var model_item = dbhb.DangKyXetTuyenHBs.Where(x => x.Dkxt_HB_ID == dkxt_id).ToList();
@@ -895,9 +895,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
       
-        public ActionResult DkxtkqKhac_hs_view(long Dkxt_ID, string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
+        public ActionResult DkxtkqKhac_hs_view(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page , long Dkxt_ID, int Ptxt_ID)
         {           
             ViewBag.Dkxt_ID = Dkxt_ID;
+            ViewBag.Ptxt_ID = Ptxt_ID;
             return View();
         }
       

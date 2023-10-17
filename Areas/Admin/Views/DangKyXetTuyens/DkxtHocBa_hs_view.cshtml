@@ -413,7 +413,7 @@
             <div class="col-lg-12 col-12">
                 <div class="row ">
                     <div class="col-xxl-7 col-lg-12">
-                        <input class="form-control" type="text" id="DuTuyen_ThongBaoKiemDuyet" name="DuTuyen_ThongBaoKiemDuyet" placeholder="Nhập thông báo (nếu có)">
+                        <input class="form-control" type="text" id="Dkxt_ThongBaoKiemDuyet_HoSo" name="Dkxt_ThongBaoKiemDuyet_HoSo" placeholder="Nhập thông báo (nếu có)">
                         <span id="Error_Rgt_DuTuyen_ThongBaoKiemDuyet" class="small mb-1 text-danger"></span>
                     </div>
                     <div class="col-xxl-5 col-lg-12">
@@ -484,7 +484,7 @@
                                                     var data_update = {
                                                         Dkxt_HB_ID: $('#hidden_Dkxt_ID').val(),
                                                         Dkxt_HB_TrangThai_KinhPhi: _dkxt_TrangThai_KinhPhi,
-                                                        Dkxt_ThongBaoKiemDuyet_HoSo: $('#DuTuyen_ThongBaoKiemDuyet').val(),
+                                                        Dkxt_ThongBaoKiemDuyet_HoSo: $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(),
                                                         Dkxt_HB_TrangThai_HoSo: _dkxt_TrangThai_HoSo,
                                                     }
                                                    
@@ -811,7 +811,7 @@
         var str_query_current = window.location.search;
         var str_dkxt_id = '?Dkxt_ID=' + $('#hidden_Dkxt_ID').val();
         var str_query = str_query_current.slice(0, str_query_current.length - str_dkxt_id.length);
-        window.location.href = '/Admin/DangKyXetTuyens/DkxtTt/' + str_query;      
+        window.location.href = '/Admin/DangKyXetTuyens/DkxtHocBa/' + str_query;      
     }
 
     function showimg(url, loaimc, id_key_hv_dutuyen) {

@@ -175,7 +175,7 @@
     <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\KinhPhisController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LibraryJsonController.cs" />
     <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NganhMastersController.cs" />
@@ -416,11 +416,6 @@
     <Content Include="Areas\Admin\Views\KhuVucs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\KhuVucs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\KhuVucs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Index.cshtml" />
@@ -482,7 +477,6 @@
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy_Update.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminUpdateHocVien.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
-    <Content Include="Areas\Admin\Views\temp.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopLePhi.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSo.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2.cshtml" />
