@@ -139,6 +139,43 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult getAllToHopMon()
+        {
+            var tohops = db.ToHopMons.Select(n => new
+            {
+                Thm_ID = n.Thm_ID,
+                Thm_MaToHop = n.Thm_MaToHop,
+                Thm_TenToHop = n.Thm_TenToHop,
+                Thm_Mon1 = n.Thm_Mon1,
+                Thm_Mon2 = n.Thm_Mon2,
+                Thm_Mon3 = n.Thm_Mon3,
+                Thm_MaTen = n.Thm_MaTen,
+                Thm_Thi_NK = n.Thm_Thi_NK,
+            }).ToList();
+            if (tohops != null && tohops.Count > 0)
+            {
+                return Json(new { success = true, tohops = tohops }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getAllNganhs()
+        {
+            var nganhs = db.Nganhs.Select(n => new
+            {
+                Nganh_ID = n.Nganh_ID,
+                Nganh_MaNganh = n.Nganh_MaNganh,
+                NganhTenNganh = n.Nganh_TenNganh,
+                Khoa_ID = n.Khoa_ID,
+                Nganh_GhiChu = n.Nganh_GhiChu,
+                KhoiNganh_ID = n.KhoiNganh_ID,
+                Nganh_ThiNK = n.Nganh_ThiNK,
+            }).ToList();
+            if (nganhs != null && nganhs.Count > 0)
+            {
+                return Json(new { success = true, nganhs = nganhs }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

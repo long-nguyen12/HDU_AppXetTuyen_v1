@@ -165,6 +165,149 @@
     </div>
 }
 
+<script>
+    $('document').ready(function () {
+
+        loadData()
+        var itemsPerPage = 4; // Number of items to display per page
+        var currentPage = 1; // Current page
+        var present_on = document.getElementById("present_on");
+        present_on.innerHTML = 1;
+        // Hide all rows except the ones for the current page
+        function showRows() {
+            var startIndex = (currentPage - 1) * itemsPerPage;
+            var endIndex = startIndex + itemsPerPage;
+
+            $(".table tbody tr").hide().slice(startIndex, endIndex).show();
+        }
+
+        // Handle next page click event
+        $(".next").on("click", function (e) {
+            e.preventDefault();
+            currentPage++;
+            present_on.innerHTML = currentPage;
+            showRows();
+            updatePaginationState();
+        });
+
+        // Handle previous page click event
+        $(".prev").on("click", function (e) {
+            e.preventDefault();
+            if (currentPage > 1) {
+                currentPage--;
+                present_on.innerHTML = currentPage;
+                showRows();
+                updatePaginationState();
+            }
+        });
+
+        // Update pagination state based on current page
+        function updatePaginationState() {
+            var totalPages = Math.ceil($(".table tbody tr").length / itemsPerPage);
+
+            if (currentPage === 1) {
+                $(".prev").parent().addClass("disabled");
+            } else {
+                $(".prev").parent().removeClass("disabled");
+            }
+
+            if (currentPage === totalPages) {
+                $(".next").parent().addClass("disabled");
+            } else {
+                $(".next").parent().removeClass("disabled");
+            }
+        }
+
+        // Show initial page of rows
+        showRows();
+        updatePaginationState();
+    })
+    function loadData() {
+        $.ajax({
+            url: "/Admin/Nganhs/getAllToHopMon",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response.success) {
+                    let htmlString = "";
+                    let tohopmons = response.tohops;
+                    let count = 0;
+                    $.each(tohopmons, function (i, result) {
+                        if (result.Thm_ID > 0) {
+                            htmlString += '<tr>
+    ' +
+    '
+    <td style="vertical-align: middle !important ">' + result.Thm_MaToHop + "&nbsp;" + ' </td> ' +
+    '
+    <td style="vertical-align: middle !important "> ' + result.Thm_TenToHop + ' </td>' +
+    '
+    <td style="width:80px"><div class="form-check"><input class="form-check-input" type="checkbox" value="" id="' + result.Thm_ID + '"><label class="form-check-label" for="flexCheckDefault"> Chọn </label></div></td>' +
+    '
+</tr>'
+                        }
+                    });
+                    document.getElementById('infoList').innerHTML = htmlString;
+                    var startIndex = 0;
+                    var endIndex = startIndex + 4;
+                    $(".table tbody tr").hide().slice(startIndex, endIndex).show();
+                } else {
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors
+                console.error(error);
+            }
+        });
+    }
+
+    function submitForm() {
+        $(".text-danger").text("");
+        let flag = true;
+        let Thm_MaToHop = $('#Thm_MaToHop').val();
+        let Thm_Mon1 = $('#Thm_Mon1').val();
+        let Thm_Mon2 = $('#Thm_Mon2').val();
+        let Thm_Mon3 = $('#Thm_Mon3').val();
+        let Thm_TenToHop = $('#Thm_TenToHop').val();
+
+        if (!Thm_MaToHop) {
+            var errorMessage = "Vui lòng nhập mã tổ hợp";
+            $('#Thm_MaToHop_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Thm_Mon1) {
+            var errorMessage = "Vui lòng nhập môn 1";
+            $('#Thm_Mon1_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Thm_Mon2) {
+            var errorMessage = "Vui lòng nhập môn 2";
+            $('#Thm_Mon2_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!Thm_Mon3) {
+            var errorMessage = "Vui lòng nhập môn 3";
+            $('#Thm_Mon2_Error').text(errorMessage);
+            flag = false;
+        }
+        if (!flag) return;
+        $("#loadingModal").modal("show");
+
+        let checkedRows = [];
+        $('#tableNganh tbody tr').each(function () {
+            var checkbox = $(this).find("input[type='checkbox']");
+
+            if (checkbox.is(":checked")) {
+                var row = $(this).find("td").map(function () {
+                    return $(this);
+                }).get();
+
+                checkedRows.push(row);
+            }
+        });
+        }
+
+</script>
+
 
 
 @section Scripts {
