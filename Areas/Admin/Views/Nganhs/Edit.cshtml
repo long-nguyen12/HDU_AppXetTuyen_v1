@@ -103,49 +103,23 @@
                         <div class="card card-header-actions mt-1 mb-1 ">
                             <div class="card-header">Tổ hợp môn xét tuyển của ngành</div>
                             <div class="card-body">
-                                <table class="table table-striped table-hover">
-                                    <tr>
-                                        <td>A01</td>
-                                        <td>Toán Lý T.Anh</td>
-                                        <td style="width:80px">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>A02</td>
-                                        <td>Toán Lý Sinh</td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>B03</td>
-                                        <td>Toán Sinh Văn</td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>C00</td>
-                                        <td>Văn Sử Địa</td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault"> Chọn </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-
+                                <table id="tableToHopMon" class="table table-striped table-hover table-sm">
+                                    <tbody id="infoList">
+                                    </tbody>
                                 </table>
+                                <nav>
+                                    <ul class="pagination justify-content-center" style="margin-top:0px; margin-bottom:0px">
+                                        <li class="page-item disabled">
+                                            <a class="page-link small prev" href="#" tabindex="-1">Trước</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link small" id="present_on" href="#"></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link small next" href="#">Sau</a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -168,7 +142,7 @@
 <script>
     $('document').ready(function () {
 
-        loadData()
+        loadData();
         var itemsPerPage = 4; // Number of items to display per page
         var currentPage = 1; // Current page
         var present_on = document.getElementById("present_on");
@@ -222,45 +196,8 @@
         showRows();
         updatePaginationState();
     })
-    function loadData() {
-        $.ajax({
-            url: "/Admin/Nganhs/getAllToHopMon",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            success: function (response) {
-                if (response.success) {
-                    let htmlString = "";
-                    let tohopmons = response.tohops;
-                    let count = 0;
-                    $.each(tohopmons, function (i, result) {
-                        if (result.Thm_ID > 0) {
-                            htmlString += '<tr>
-    ' +
-    '
-    <td style="vertical-align: middle !important ">' + result.Thm_MaToHop + "&nbsp;" + ' </td> ' +
-    '
-    <td style="vertical-align: middle !important "> ' + result.Thm_TenToHop + ' </td>' +
-    '
-    <td style="width:80px"><div class="form-check"><input class="form-check-input" type="checkbox" value="" id="' + result.Thm_ID + '"><label class="form-check-label" for="flexCheckDefault"> Chọn </label></div></td>' +
-    '
-</tr>'
-                        }
-                    });
-                    document.getElementById('infoList').innerHTML = htmlString;
-                    var startIndex = 0;
-                    var endIndex = startIndex + 4;
-                    $(".table tbody tr").hide().slice(startIndex, endIndex).show();
-                } else {
-                }
-            },
-            error: function (xhr, status, error) {
-                // Handle any errors
-                console.error(error);
-            }
-        });
-    }
 
-    function submitForm() {
+    function submitForm1() {
         $(".text-danger").text("");
         let flag = true;
         let Thm_MaToHop = $('#Thm_MaToHop').val();
@@ -305,6 +242,55 @@
             }
         });
         }
+
+    function loadData() {
+        $.ajax({
+            url: "/Admin/Nganhs/getAllToHopMon",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (response) {
+                if (response.success) {
+                    let htmlString = "";
+                    let tohopmons = response.tohops;
+                    let count = 0;
+                    $.each(tohopmons, function (i, result) {
+                        if (result.Thm_ID > 0) {
+                            htmlString += '<tr>' +
+                                '<td style="vertical-align: middle !important ">' + result.Thm_MaToHop + "&nbsp;" + ' </td> ' +
+                                '<td style="vertical-align: middle !important "> ' + result.Thm_TenToHop + ' </td>' +
+                                '<td style="width:80px"><div class="form-check"><input name="checkboxTHM" class="form-check-input" type="checkbox" value="' + result.Thm_ID + '" id="' + result.Thm_ID + '"><label class="form-check-label" for="flexCheckDefault"> Chọn </label></div></td>' +
+                                '</tr>'
+                        }
+                    });
+                    document.getElementById('infoList').innerHTML = htmlString;
+                    var startIndex = 0;
+                    var endIndex = startIndex + 4;
+                    $(".table tbody tr").hide().slice(startIndex, endIndex).show();
+                    checkedTHM();
+                } else {
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle any errors
+                console.error(error);
+            }
+        });
+    }
+
+    function checkedTHM() {
+        var arrId_THM = @Html.Raw(Json.Encode(ViewBag.arrId_THM));
+        var checkboxes = document.querySelectorAll('input[name="checkboxTHM"]');
+        console.log(arrId_THM,'arrId_THM')
+        console.log(checkboxes.length, 'checkboxes')
+        for (var i = 0; i < checkboxes.length; i++) {
+            var checkbox = checkboxes[i];
+            var checkboxValue = parseInt(checkbox.value); // Chuyển giá trị checkbox thành số nguyên
+            // Kiểm tra xem giá trị của checkbox có trong mảng arrId_THM không
+            if (arrId_THM.includes(checkboxValue)) {
+                checkbox.checked = true; // Kiểm tra (check) checkbox nếu giá trị trùng khớp
+            }
+    }
+}
 
 </script>
 

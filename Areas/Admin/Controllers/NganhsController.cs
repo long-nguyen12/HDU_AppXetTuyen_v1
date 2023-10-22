@@ -1,5 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -7,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Xml.Linq;
 using HDU_AppXetTuyen.Models;
 using PagedList;
 
@@ -74,10 +77,18 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(nganh);
         }
 
+        public class EditNganhViewModel
+        {
+            public Nganh Nganh { get; set; }
+            public List<ToHopMonNganh> ListTHM { get; set; }
+        }
+
         // GET: Admin/Nganhs/Edit/5
         [AdminSessionCheck]
         public ActionResult Edit(int? id)
         {
+            var listTHM = db.ToHopMonNganhs.Where(x => x.Nganh_ID == id).ToList();
+            int[] arrId_THM = listTHM.Select(thm => thm.Thm_ID).ToArray();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -87,6 +98,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            var viewModel = new EditNganhViewModel
+            {
+                Nganh = nganh,
+                ListTHM = listTHM
+            };
+            ViewBag.arrId_THM = arrId_THM;
             ViewBag.KhoiNganh_ID = new SelectList(db.KhoiNganhs, "KhoiNganh_ID", "KhoiNganh_Ten", nganh.KhoiNganh_ID);
             ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa", nganh.Khoa_ID);
         
@@ -176,6 +193,103 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
+
+        public class NganhTemp
+        {
+            public string Nganh_MaNganh { get; set; }
+            public string Nganh_TenNganh { get; set; }
+            public int Khoa_ID { get; set; }
+            public string Nganh_GhiChu { get; set; }
+            public int? KhoiNganh_ID { get; set; }
+
+            public int? Nganh_ThiNK { get; set; }
+            public string[] array_THM { get; set; }
+        }
+        [HttpPost]
+        public JsonResult createData(NganhTemp dataNganh)
+        {
+            try
+            {
+                Nganh nganh = new Nganh();
+                nganh.Nganh_MaNganh = dataNganh.Nganh_MaNganh;
+                nganh.Nganh_TenNganh = dataNganh.Nganh_TenNganh;
+                nganh.Khoa_ID = int.Parse(dataNganh.Khoa_ID.ToString());
+                nganh.Nganh_GhiChu = dataNganh.Nganh_GhiChu;
+                nganh.KhoiNganh_ID = int.Parse(dataNganh.KhoiNganh_ID.ToString());
+                nganh.Nganh_ThiNK = 1;
+                string [] arr_THMNganh = dataNganh.array_THM;
+                var addedNganh = db.Nganhs.Add(nganh);
+                db.SaveChanges();
+                if (addedNganh != null && arr_THMNganh.Length > 0)
+                {
+                    int newNganhId = addedNganh.Nganh_ID; // Lấy ra Id của đối tượng nganh vừa được thêm mới
+                    for(int i = 0; i < arr_THMNganh.Length; i++)
+                    {
+                        ToHopMonNganh tmhNganh = new ToHopMonNganh(); // Tạo một đối tượng tmhNganh mới cho mỗi bản ghi
+                        var tohopSearch = db.ToHopMons.Find(int.Parse(arr_THMNganh[i]));
+                        var ghichu = "Ngành: " + addedNganh.Nganh_TenNganh + ";";
+                        ghichu += " Tổ hợp: " + tohopSearch.Thm_MaToHop + " - " + tohopSearch.Thm_Mon1 + "-" + tohopSearch.Thm_Mon2 + "-" + tohopSearch.Thm_Mon3;
+                        tmhNganh.Nganh_ID = newNganhId;
+                        tmhNganh.Thm_N_TrangThai = 1;
+                        tmhNganh.Thm_ID = int.Parse(arr_THMNganh[i]);
+                        tmhNganh.Thm_N_GhiChu = ghichu;
+                        db.ToHopMonNganhs.Add(tmhNganh);
+                    }
+                    db.SaveChanges();
+
+                    return Json(new { success = true, }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("e", e);
+                return Json(new { success = false, data = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult updateData(NganhTemp dataNganh)
+        {
+            try
+            {
+                Nganh nganh = new Nganh();
+                nganh.Nganh_MaNganh = dataNganh.Nganh_MaNganh;
+                nganh.Nganh_TenNganh = dataNganh.Nganh_TenNganh;
+                nganh.Khoa_ID = int.Parse(dataNganh.Khoa_ID.ToString());
+                nganh.Nganh_GhiChu = dataNganh.Nganh_GhiChu;
+                nganh.KhoiNganh_ID = int.Parse(dataNganh.KhoiNganh_ID.ToString());
+                nganh.Nganh_ThiNK = 1;
+                string[] arr_THMNganh = dataNganh.array_THM;
+                var addedNganh = db.Nganhs.Add(nganh);
+                db.SaveChanges();
+                if (addedNganh != null && arr_THMNganh.Length > 0)
+                {
+                    int newNganhId = addedNganh.Nganh_ID; // Lấy ra Id của đối tượng nganh vừa được thêm mới
+                    for (int i = 0; i < arr_THMNganh.Length; i++)
+                    {
+                        ToHopMonNganh tmhNganh = new ToHopMonNganh(); // Tạo một đối tượng tmhNganh mới cho mỗi bản ghi
+                        var tohopSearch = db.ToHopMons.Find(int.Parse(arr_THMNganh[i]));
+                        var ghichu = "Ngành: " + addedNganh.Nganh_TenNganh + ";";
+                        ghichu += " Tổ hợp: " + tohopSearch.Thm_MaToHop + " - " + tohopSearch.Thm_Mon1 + "-" + tohopSearch.Thm_Mon2 + "-" + tohopSearch.Thm_Mon3;
+                        tmhNganh.Nganh_ID = newNganhId;
+                        tmhNganh.Thm_N_TrangThai = 1;
+                        tmhNganh.Thm_ID = int.Parse(arr_THMNganh[i]);
+                        tmhNganh.Thm_N_GhiChu = ghichu;
+                        db.ToHopMonNganhs.Add(tmhNganh);
+                    }
+                    db.SaveChanges();
+
+                    return Json(new { success = true, }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("e", e);
+                return Json(new { success = false, data = e }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

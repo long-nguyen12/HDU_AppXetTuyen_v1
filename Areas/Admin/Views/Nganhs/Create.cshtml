@@ -19,154 +19,142 @@
     </div>
 </header>
 
-    <div class="container-fluid px-12">
-        <div class="card card-header-actions">
-            <div class="card-header">
-                <span>Thêm mới ngành</span>
-                <a class="btn-close" aria-label="Close" href="@Url.Action("Index","Nganhs")"></a>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card card-header-actions mt-1 mb-1 ">
-                            <div class="card-header">Thông tin ngành mới</div>
-                            <div class="card-body">
-
-                                @Html.AntiForgeryToken()
-                                <div class="form-horizontal">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <div class="row g-2 mb-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                @Html.Label("Chọn khối ngành", htmlAttributes: new { @class = "control-label col-md-12" })
-                                                <div class="col-md-12">
-                                                    @Html.DropDownList("KhoiNganh_ID", null, htmlAttributes: new { @class = "form-select" })
-                                                    @Html.ValidationMessageFor(model => model.KhoiNganh_ID, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                @Html.Label("Chọn Khoa", htmlAttributes: new { @class = "control-label col-md-12" })
-                                                <div class="col-md-12">
-                                                    @Html.DropDownList("Khoa_ID", null, htmlAttributes: new { @class = "form-select" })
-                                                    @Html.ValidationMessageFor(model => model.Khoa_ID, "", new { @class = "text-danger" })
-                                                </div>
+<div class="container-fluid px-12">
+    <div class="card card-header-actions">
+        <div class="card-header">
+            <span>Thêm mới ngành</span>
+            <a class="btn-close" aria-label="Close" href="@Url.Action("Index","Nganhs")"></a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card card-header-actions mt-1 mb-1 ">
+                        <div class="card-header">Thông tin ngành mới</div>
+                        <div class="card-body">
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("Chọn khối ngành", htmlAttributes: new { @class = "control-label col-md-12" })
+                                            <div class="col-md-12">
+                                                @Html.DropDownList("KhoiNganh_ID", null, htmlAttributes: new { @class = "form-select" })
+                                                <span class="field-validation-valid text-danger" id="KhoiNganh_ID_Error" data-valmsg-replace="true"></span>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row g-2 mb-3">
-                                        <div class="col-md-6">
-
-                                            <div class="form-group">
-                                                @Html.Label("Mã ngành", htmlAttributes: new { @class = "control-label col-md-12" })
-                                                <div class="col-md-12">
-                                                    @Html.EditorFor(model => model.Nganh_MaNganh, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(model => model.Nganh_MaNganh, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-
-                                            <div class="form-group">
-                                                @Html.Label("Tên ngành", htmlAttributes: new { @class = "control-label col-md-12" })
-                                                <div class="col-md-12">
-                                                    @Html.EditorFor(model => model.Nganh_TenNganh, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(model => model.Nganh_TenNganh, "", new { @class = "text-danger" })
-                                                </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.Label("Chọn Khoa", htmlAttributes: new { @class = "control-label col-md-12" })
+                                            <div class="col-md-12">
+                                                @Html.DropDownList("Khoa_ID", null, htmlAttributes: new { @class = "form-select" })
+                                                <span class="field-validation-valid text-danger" id="Khoa_ID_Error" data-valmsg-replace="true"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-2 mb-1">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                @Html.Label("Ghi chú", htmlAttributes: new { @class = "control-label col-md-12" })
-                                                <div class="col-md-12">
-                                                    @Html.EditorFor(model => model.Nganh_GhiChu, new { htmlAttributes = new { @class = "form-control" } })
-                                                    @Html.ValidationMessageFor(model => model.Nganh_GhiChu, "", new { @class = "text-danger" })
-                                                </div>
+                                </div>
+
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            @Html.Label("Mã ngành", htmlAttributes: new { @class = "control-label col-md-12" })
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.Nganh_MaNganh, new { htmlAttributes = new { @class = "form-control" } })
+                                                <span class="field-validation-valid text-danger" id="Nganh_MaNganh_Error" data-valmsg-replace="true"></span>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
 
+                                        <div class="form-group">
+                                            @Html.Label("Tên ngành", htmlAttributes: new { @class = "control-label col-md-12" })
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.Nganh_TenNganh, new { htmlAttributes = new { @class = "form-control" } })
+                                                <span class="field-validation-valid text-danger" id="Nganh_TenNganh_Error" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-1">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @Html.Label("Ghi chú", htmlAttributes: new { @class = "control-label col-md-12" })
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.Nganh_GhiChu, new { htmlAttributes = new { @class = "form-control" } })
+                                                <span class="field-validation-valid text-danger" id="Nganh_GhiChu_Error" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card card-header-actions mt-1 mb-1 ">
-                            <div class="card-header">Tổ hợp môn xét tuyển của ngành</div>
-                            <div class="card-body">
-                                <table id="tableToHopMon" class="table table-striped table-hover table-sm">
-                                    <tbody id="infoList">
-                                    </tbody>
-                                </table>
-                                <button  onclick="check()"> check </button>
 
-                                <nav>
-                                    <ul class="pagination justify-content-center" style="margin-top:0px; margin-bottom:0px">
-                                        <li class="page-item disabled">
-                                            <a class="page-link small prev" href="#" tabindex="-1">Trước</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link small" id="present_on" href="#"></a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link small next" href="#">Sau</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row  mt-1 g-1 align-items-center justify-content-center">
-                    <hr class="mt-1 mb-1" />
-                    <div class="col-md-2 col-3">
-                        @*<input type="submit" value="Create" class="btn btn-default" />*@
-                        @*<input class="btn btn-outline-success" type="submit" value="Đồng ý" style="width:100%" />*@
-                        <button onclick="submitForm()"> submitForm </button>
+                <div class="col-xl-6">
+                    <div class="card card-header-actions mt-1 mb-1 ">
+                        <div class="card-header">Tổ hợp môn xét tuyển của ngành</div>
+                        <div class="card-body">
+                            <table id="tableToHopMon" class="table table-striped table-hover table-sm">
+                                <tbody id="infoList">
+                                </tbody>
+                            </table>
+
+                            <nav>
+                                <ul class="pagination justify-content-center" style="margin-top:0px; margin-bottom:0px">
+                                    <li class="page-item disabled">
+                                        <a class="page-link small prev" href="#" tabindex="-1">Trước</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link small" id="present_on" href="#"></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link small next" href="#">Sau</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                    <div class="col-md-2 col-3">
-                        @Html.ActionLink("Hủy bỏ", "Index", null, new { @class = "btn btn-outline-danger", @style = "width:100%; white-space:nowrap" })
-                    </div>
+                </div>
+            </div>
+            <div class="row  mt-1 g-1 align-items-center justify-content-center">
+                <hr class="mt-1 mb-1" />
+                <div class="col-md-2 col-3">
+                    @*<input type="submit" value="Create" class="btn btn-default" />*@
+                    @*<input class="btn btn-outline-success" type="submit" value="Đồng ý" style="width:100%" />*@
+                    <button class="btn btn-outline-success" style="width:100%" onclick="submitForm()"> Đồng ý </button>
+                </div>                <div class="col-md-2 col-3">
+                    @Html.ActionLink("Hủy bỏ", "Index", null, new { @class = "btn btn-outline-danger", @style = "width:100%; white-space:nowrap" })
                 </div>
             </div>
         </div>
     </div>
-
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $('document').ready(function () {
-        var selectedValues = [];
-
-       
-
-        console.log(selectedValues);
-        
-
-
-
-
-
-        var selected = [];
-        $.each($("input[name='InputTHM']:checked"), function () {
-            selected.push($(this).val());
-            cconsole.log("Check")
-        });
-        let checkedRows = [];
-        $('#tableToHopMon tbody tr').each(function () {
-            var checkbox = $(this).find("input[type='checkbox']");
-            if (checkbox.is(":checked")) {
-                var row = $(this).find("td").map(function () {
-                    return $(this);
-                }).get();
-                console.log(row)
-                checkedRows.push(row);
-            }
-        });
-
         loadData()
         var itemsPerPage = 4; // Number of items to display per page
         var currentPage = 1; // Current page
@@ -200,7 +188,7 @@
             }
         });
 
-        
+
 
         // Update pagination state based on current page
         function updatePaginationState() {
@@ -227,6 +215,12 @@
 
 
     })
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
     function check() {
         var checkboxes = document.querySelectorAll('input[name="checkboxTHM"]');
         var selectedValues = [];
@@ -234,7 +228,6 @@
             if (checkboxes[i].checked) {
                 selectedValues.push(checkboxes[i].id);
             }
-            console.log(selectedValues,'selectedValues')
         }
     }
     function loadData() {
@@ -270,52 +263,92 @@
         });
     }
 
+    function check() {
+        var checkboxes = document.querySelectorAll('input[name="checkboxTHM"]');
+        var selectedValues = [];
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                selectedValues.push(checkboxes[i].id);
+            }
+            console.log(selectedValues, 'checkboxTHM')
+        }
+
+        let KhoiNganh_ID = $('#KhoiNganh_ID').val();
+        let Khoa_ID = $('#Khoa_ID').val();
+        let Nganh_MaNganh = $('#Nganh_MaNganh').val();
+        let Nganh_TenNganh = $('#Nganh_TenNganh').val();
+        let Nganh_GhiChu = $('#Nganh_GhiChu').val();
+
+        console.log(KhoiNganh_ID, 'KhoiNganh_ID')
+        console.log(Khoa_ID, 'Khoa_ID')
+        console.log(Nganh_MaNganh, 'Nganh_MaNganh')
+        console.log(Nganh_TenNganh, 'Nganh_TenNganh')
+        console.log(Nganh_GhiChu, 'Nganh_GhiChu')
+    }
+
     function submitForm() {
         $(".text-danger").text("");
         let flag = true;
-        let Thm_MaToHop = $('#Thm_MaToHop').val();
-        let Thm_Mon1 = $('#Thm_Mon1').val();
-        let Thm_Mon2 = $('#Thm_Mon2').val();
-        let Thm_Mon3 = $('#Thm_Mon3').val();
-        let Thm_TenToHop = $('#Thm_TenToHop').val();
+        let KhoiNganh_ID = $('#KhoiNganh_ID').val();
+        let Khoa_ID = $('#Khoa_ID').val();
+        let Nganh_MaNganh = $('#Nganh_MaNganh').val();
+        let Nganh_TenNganh = $('#Nganh_TenNganh').val();
+        let Nganh_GhiChu = $('#Nganh_GhiChu').val();
 
-        if (!Thm_MaToHop) {
-            var errorMessage = "Vui lòng nhập mã tổ hợp";
-            $('#Thm_MaToHop_Error').text(errorMessage);
+        if (!KhoiNganh_ID) {
+            var errorMessage = "Vui lòng chọn khối ngành";
+            $('#KhoiNganh_ID_Error').text(errorMessage);
             flag = false;
         }
-        if (!Thm_Mon1) {
-            var errorMessage = "Vui lòng nhập môn 1";
-            $('#Thm_Mon1_Error').text(errorMessage);
+        if (!Khoa_ID) {
+            var errorMessage = "Vui lòng chọn khoa";
+            $('#Khoa_ID_Error').text(errorMessage);
             flag = false;
         }
-        if (!Thm_Mon2) {
-            var errorMessage = "Vui lòng nhập môn 2";
-            $('#Thm_Mon2_Error').text(errorMessage);
+        if (!Nganh_MaNganh) {
+            var errorMessage = "Vui lòng nhập mã ngành";
+            $('#Nganh_MaNganh_Error').text(errorMessageW);
             flag = false;
         }
-        if (!Thm_Mon3) {
-            var errorMessage = "Vui lòng nhập môn 3";
+        if (!Nganh_TenNganh) {
+            var errorMessage = "Vui lòng nhập tên ngành";
             $('#Thm_Mon2_Error').text(errorMessage);
             flag = false;
         }
         if (!flag) return;
         $("#loadingModal").modal("show");
 
-        let checkedRows = [];
-        $('#tableNganh tbody tr').each(function () {
-            var checkbox = $(this).find("input[type='checkbox']");
-
-            if (checkbox.is(":checked")) {
-                var row = $(this).find("td").map(function () {
-                    return $(this);
-                }).get();
-
-                checkedRows.push(row);
+        var checkboxes = document.querySelectorAll('input[name="checkboxTHM"]');
+        var selectedValuesTHM = [];
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                selectedValuesTHM.push(checkboxes[i].id);
+            }
+        }
+        var dataNganh = {
+            KhoiNganh_ID: KhoiNganh_ID,
+            Khoa_ID: Khoa_ID,
+            Nganh_MaNganh: Nganh_MaNganh,
+            Nganh_TenNganh: Nganh_TenNganh,
+            Nganh_GhiChu: Nganh_GhiChu,
+            array_THM: selectedValuesTHM
+        }
+        console.log(dataNganh, 'dataNganh')
+        $.ajax({
+            url: "/Admin/Nganhs/CreateData",
+            type: "POST",
+            data: JSON.stringify(dataNganh),
+            contentType: "application/json;charset=utf-8",
+            success: function (res) {
+                if (res.success == true) {
+                    window.location.href = '/Admin/Nganhs/Index';
+                } else {
+                    showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+                }
+            },
+            error: function (xhr, status, error) {
             }
         });
-        console.log(checkedRows, 'checkedRows')
-        return;
     }
 
 </script>
