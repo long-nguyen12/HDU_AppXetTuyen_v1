@@ -12,6 +12,7 @@ using System.Web.UI;
 using System.Xml.Linq;
 using HDU_AppXetTuyen.Models;
 using PagedList;
+using Newtonsoft.Json.Linq;
 
 namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 {
@@ -23,9 +24,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult Index(int? page)
         {
+            
             if (page == null) page = 1;
             var nganhs = (from h in db.Nganhs
-                          select h).OrderBy(x => x.Khoa.Khoa_TenKhoa).ThenBy(x => x.Nganh_TenNganh). Include(n => n.KhoiNganh).Include(n => n.Khoa).Where(x => x.Nganh_ID >0);
+                          select h).OrderByDescending(x => x.Nganh_ID).ThenBy(x => x.Khoa.Khoa_TenKhoa).ThenBy(x => x.Nganh_TenNganh). Include(n => n.KhoiNganh).Include(n => n.Khoa).Where(x => x.Nganh_ID >0);
             int pageSize = 7;
             int pageNumber = (page ?? 1);
             return View(nganhs.ToPagedList(pageNumber, pageSize));
@@ -77,11 +79,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(nganh);
         }
 
-        public class EditNganhViewModel
-        {
-            public Nganh Nganh { get; set; }
-            public List<ToHopMonNganh> ListTHM { get; set; }
-        }
+        //public class EditNganhViewModel
+        //{
+        //    public Nganh Nganh { get; set; }
+        //    public List<ToHopMonNganh> ListTHM { get; set; }
+        //}
 
         // GET: Admin/Nganhs/Edit/5
         [AdminSessionCheck]
@@ -98,12 +100,13 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            var viewModel = new EditNganhViewModel
-            {
-                Nganh = nganh,
-                ListTHM = listTHM
-            };
+            //var viewModel = new EditNganhViewModel
+            //{
+            //    Nganh = nganh,
+            //    ListTHM = listTHM
+            //};
             ViewBag.arrId_THM = arrId_THM;
+            ViewBag.Nganh_ID = nganh.Nganh_ID;
             ViewBag.KhoiNganh_ID = new SelectList(db.KhoiNganhs, "KhoiNganh_ID", "KhoiNganh_Ten", nganh.KhoiNganh_ID);
             ViewBag.Khoa_ID = new SelectList(db.Khoas, "Khoa_ID", "Khoa_TenKhoa", nganh.Khoa_ID);
         
@@ -196,6 +199,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         public class NganhTemp
         {
+            public int Nganh_ID { get; set; }
             public string Nganh_MaNganh { get; set; }
             public string Nganh_TenNganh { get; set; }
             public int Khoa_ID { get; set; }
@@ -203,7 +207,14 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             public int? KhoiNganh_ID { get; set; }
 
             public int? Nganh_ThiNK { get; set; }
+
+            // Mảng các tổ hợp môn được chọn từ View
             public string[] array_THM { get; set; }
+
+            // Sử dụng khi update - Mảng các tổ hợp môn gốc khi chỉnh sửa
+            // Sử dụng để so sánh với mảng các tổ hợp môn được chọn lại khi chỉnh sửa
+            public string[] array_THM_Original { get; set; }
+
         }
         [HttpPost]
         public JsonResult createData(NganhTemp dataNganh)
@@ -259,21 +270,44 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 nganh.Nganh_GhiChu = dataNganh.Nganh_GhiChu;
                 nganh.KhoiNganh_ID = int.Parse(dataNganh.KhoiNganh_ID.ToString());
                 nganh.Nganh_ThiNK = 1;
-                string[] arr_THMNganh = dataNganh.array_THM;
-                var addedNganh = db.Nganhs.Add(nganh);
+                db.Entry(nganh).State = EntityState.Modified;
                 db.SaveChanges();
-                if (addedNganh != null && arr_THMNganh.Length > 0)
+
+                string[] arr_THMNganh = dataNganh.array_THM;
+                string[] arr_THMNganh_Original = dataNganh.array_THM_Original;
+                // Bước 1: Lấy ra các giá trị giống nhau
+                var commonValues = arr_THMNganh.Intersect(arr_THMNganh_Original).ToArray();
+                // Bước 2: Lấy ra các giá trị mới
+                var newValues = arr_THMNganh.Except(arr_THMNganh_Original).ToArray();
+                // Bước 3: Xóa các giá trị không còn
+                var valuesToRemove = arr_THMNganh_Original.Except(arr_THMNganh).ToArray();
+                // Bước 4: Thực hiện cập nhật trong CSDL
+                // Xóa các giá trị không còn
+
+                foreach (var value in valuesToRemove)
                 {
-                    int newNganhId = addedNganh.Nganh_ID; // Lấy ra Id của đối tượng nganh vừa được thêm mới
-                    for (int i = 0; i < arr_THMNganh.Length; i++)
+                    var toRemove = db.ToHopMonNganhs.Where(t => t.Nganh_ID == dataNganh.Nganh_ID && t.Thm_ID == int.Parse(value)).FirstOrDefault();
+                    if (toRemove != null)
+                    {
+                        db.ToHopMonNganhs.Remove(toRemove);
+                    }
+                }
+                db.SaveChanges();
+
+                // Thêm các giá trị mới
+
+                if (dataNganh != null && arr_THMNganh.Length > 0)
+                {
+                    int newNganhId = dataNganh.Nganh_ID; // Lấy ra Id của đối tượng nganh vừa được thêm mới
+                    foreach (var value in newValues)
                     {
                         ToHopMonNganh tmhNganh = new ToHopMonNganh(); // Tạo một đối tượng tmhNganh mới cho mỗi bản ghi
-                        var tohopSearch = db.ToHopMons.Find(int.Parse(arr_THMNganh[i]));
-                        var ghichu = "Ngành: " + addedNganh.Nganh_TenNganh + ";";
+                        var tohopSearch = db.ToHopMons.Find(int.Parse(value));
+                        var ghichu = "Ngành: " + dataNganh.Nganh_TenNganh + ";";
                         ghichu += " Tổ hợp: " + tohopSearch.Thm_MaToHop + " - " + tohopSearch.Thm_Mon1 + "-" + tohopSearch.Thm_Mon2 + "-" + tohopSearch.Thm_Mon3;
                         tmhNganh.Nganh_ID = newNganhId;
                         tmhNganh.Thm_N_TrangThai = 1;
-                        tmhNganh.Thm_ID = int.Parse(arr_THMNganh[i]);
+                        tmhNganh.Thm_ID = int.Parse(value);
                         tmhNganh.Thm_N_GhiChu = ghichu;
                         db.ToHopMonNganhs.Add(tmhNganh);
                     }

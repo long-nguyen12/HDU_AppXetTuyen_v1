@@ -125,7 +125,8 @@
                     @*<input type="submit" value="Create" class="btn btn-default" />*@
                     @*<input class="btn btn-outline-success" type="submit" value="Đồng ý" style="width:100%" />*@
                     <button class="btn btn-outline-success" style="width:100%" onclick="submitForm()"> Đồng ý </button>
-                </div>                <div class="col-md-2 col-3">
+                </div>                
+                <div class="col-md-2 col-3">
                     @Html.ActionLink("Hủy bỏ", "Index", null, new { @class = "btn btn-outline-danger", @style = "width:100%; white-space:nowrap" })
                 </div>
             </div>
@@ -218,7 +219,7 @@
     function showToast(title, message, bgColor) {
         $("#myToast .toast-header .me-auto").text(title);
         $("#myToast .toast-body").text(message);
-        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").removeClass("bg-success bg-danger").addClass(bgColor);
         $("#myToast").toast("show");
     }
     function check() {
@@ -295,29 +296,26 @@
         let Nganh_TenNganh = $('#Nganh_TenNganh').val();
         let Nganh_GhiChu = $('#Nganh_GhiChu').val();
 
-        if (!KhoiNganh_ID) {
+        if (!KhoiNganh_ID || KhoiNganh_ID == 0 ) {
             var errorMessage = "Vui lòng chọn khối ngành";
             $('#KhoiNganh_ID_Error').text(errorMessage);
             flag = false;
         }
-        if (!Khoa_ID) {
+        if (!Khoa_ID || Khoa_ID == 0 ) {
             var errorMessage = "Vui lòng chọn khoa";
             $('#Khoa_ID_Error').text(errorMessage);
             flag = false;
         }
         if (!Nganh_MaNganh) {
             var errorMessage = "Vui lòng nhập mã ngành";
-            $('#Nganh_MaNganh_Error').text(errorMessageW);
+            $('#Nganh_MaNganh_Error').text(errorMessage);
             flag = false;
         }
         if (!Nganh_TenNganh) {
             var errorMessage = "Vui lòng nhập tên ngành";
-            $('#Thm_Mon2_Error').text(errorMessage);
+            $('#Nganh_TenNganh_Error').text(errorMessage);
             flag = false;
         }
-        if (!flag) return;
-        $("#loadingModal").modal("show");
-
         var checkboxes = document.querySelectorAll('input[name="checkboxTHM"]');
         var selectedValuesTHM = [];
         for (var i = 0; i < checkboxes.length; i++) {
@@ -325,6 +323,19 @@
                 selectedValuesTHM.push(checkboxes[i].id);
             }
         }
+        if (selectedValuesTHM.length == 0) {
+            var errorMessage = "1 ngành chỉ được chọn 4 tổ hợp môn!";
+            showToast("Thất bại", "Xin vui lòng chọn các tổ hợp môn ứng với ngành", "bg-danger");
+            flag = false;
+        }
+        if (selectedValuesTHM.length > 4) {
+            var errorMessage = "1 ngành chỉ được chọn 4 tổ hợp môn!";
+            showToast("Thất bại", "1 ngành chỉ được chọn 4 tổ hợp môn!", "bg-danger");
+            flag = false;
+        }
+        if (!flag) return;
+        $("#loadingModal").modal("show");
+
         var dataNganh = {
             KhoiNganh_ID: KhoiNganh_ID,
             Khoa_ID: Khoa_ID,
@@ -341,6 +352,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (res) {
                 if (res.success == true) {
+                    showToast("Thành công", "Thêm mới ngành thành công!", "bg-success");
                     window.location.href = '/Admin/Nganhs/Index';
                 } else {
                     showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
