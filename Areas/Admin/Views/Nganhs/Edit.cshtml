@@ -251,7 +251,7 @@
         var selectedValuesTHM = [];
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
-                selectedValuesTHM.push(checkboxes[i].id);
+                selectedValuesTHM.push(parseInt(checkboxes[i].id));
             }
         }
         if (selectedValuesTHM.length == 0) {
@@ -266,9 +266,6 @@
         $("#loadingModal").modal("show");
         var arrId_THM_Original = @Html.Raw(Json.Encode(ViewBag.arrId_THM));
         var Nganh_ID = @Html.Raw(Json.Encode(ViewBag.Nganh_ID));
-        console.log(arrId_THM_Original,'arrId_THM_Original')
-        console.log(selectedValuesTHM, 'selectedValuesTHM')
-
         var dataNganh = {
             Nganh_ID : Nganh_ID,
             KhoiNganh_ID: KhoiNganh_ID,
@@ -277,9 +274,7 @@
             Nganh_TenNganh: Nganh_TenNganh,
             Nganh_GhiChu: Nganh_GhiChu,
             array_THM: selectedValuesTHM,
-            array_THM_Original: arrId_THM_Original
         }
-        console.log(dataNganh, 'dataNganhEdit')
         $.ajax({
             url: "/Admin/Nganhs/updateData",
             type: "POST",
@@ -288,9 +283,12 @@
             success: function (res) {
                 if (res.success == true) {
                     showToast("Thành công", "Cập nhật ngành thành công!", "bg-success");
+                    $("#loadingModal").modal("hide");
+                    window.location.reload();
                 //    window.location.href = '/Admin/Nganhs/Index';
                 } else {
                     showToast("Thất bại", "Cập nhật thông tin thất bại! Vui lòng thử lại!", "bg-error");
+                    $("#loadingModal").modal("hide");
                 }
             },
             error: function (xhr, status, error) {

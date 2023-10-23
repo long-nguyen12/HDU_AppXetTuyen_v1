@@ -79,12 +79,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(nganh);
         }
 
-        //public class EditNganhViewModel
-        //{
-        //    public Nganh Nganh { get; set; }
-        //    public List<ToHopMonNganh> ListTHM { get; set; }
-        //}
-
         // GET: Admin/Nganhs/Edit/5
         [AdminSessionCheck]
         public ActionResult Edit(int? id)
@@ -100,11 +94,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            //var viewModel = new EditNganhViewModel
-            //{
-            //    Nganh = nganh,
-            //    ListTHM = listTHM
-            //};
             ViewBag.arrId_THM = arrId_THM;
             ViewBag.Nganh_ID = nganh.Nganh_ID;
             ViewBag.KhoiNganh_ID = new SelectList(db.KhoiNganhs, "KhoiNganh_ID", "KhoiNganh_Ten", nganh.KhoiNganh_ID);
@@ -209,11 +198,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             public int? Nganh_ThiNK { get; set; }
 
             // Mảng các tổ hợp môn được chọn từ View
-            public string[] array_THM { get; set; }
-
-            // Sử dụng khi update - Mảng các tổ hợp môn gốc khi chỉnh sửa
-            // Sử dụng để so sánh với mảng các tổ hợp môn được chọn lại khi chỉnh sửa
-            public string[] array_THM_Original { get; set; }
+            public int [] array_THM { get; set; }
 
         }
         [HttpPost]
@@ -228,7 +213,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 nganh.Nganh_GhiChu = dataNganh.Nganh_GhiChu;
                 nganh.KhoiNganh_ID = int.Parse(dataNganh.KhoiNganh_ID.ToString());
                 nganh.Nganh_ThiNK = 1;
-                string [] arr_THMNganh = dataNganh.array_THM;
+                int [] arr_THMNganh = dataNganh.array_THM;
                 var addedNganh = db.Nganhs.Add(nganh);
                 db.SaveChanges();
                 if (addedNganh != null && arr_THMNganh.Length > 0)
@@ -237,12 +222,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     for(int i = 0; i < arr_THMNganh.Length; i++)
                     {
                         ToHopMonNganh tmhNganh = new ToHopMonNganh(); // Tạo một đối tượng tmhNganh mới cho mỗi bản ghi
-                        var tohopSearch = db.ToHopMons.Find(int.Parse(arr_THMNganh[i]));
+                        var tohopSearch = db.ToHopMons.Find(arr_THMNganh[i]);
                         var ghichu = "Ngành: " + addedNganh.Nganh_TenNganh + ";";
                         ghichu += " Tổ hợp: " + tohopSearch.Thm_MaToHop + " - " + tohopSearch.Thm_Mon1 + "-" + tohopSearch.Thm_Mon2 + "-" + tohopSearch.Thm_Mon3;
                         tmhNganh.Nganh_ID = newNganhId;
                         tmhNganh.Thm_N_TrangThai = 1;
-                        tmhNganh.Thm_ID = int.Parse(arr_THMNganh[i]);
+                        tmhNganh.Thm_ID = arr_THMNganh[i];
                         tmhNganh.Thm_N_GhiChu = ghichu;
                         db.ToHopMonNganhs.Add(tmhNganh);
                     }
@@ -259,6 +244,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult updateData(NganhTemp dataNganh)
         {
             try
@@ -270,49 +256,52 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 nganh.Nganh_GhiChu = dataNganh.Nganh_GhiChu;
                 nganh.KhoiNganh_ID = int.Parse(dataNganh.KhoiNganh_ID.ToString());
                 nganh.Nganh_ThiNK = 1;
-                db.Entry(nganh).State = EntityState.Modified;
-                db.SaveChanges();
-
-                string[] arr_THMNganh = dataNganh.array_THM;
-                string[] arr_THMNganh_Original = dataNganh.array_THM_Original;
+                //db.Entry(nganh).State = EntityState.Modified;
+                var listTHM = db.ToHopMonNganhs.Where(x => x.Nganh_ID == dataNganh.Nganh_ID).ToList();
+                int[] arr_THMNganh_Original = listTHM.Select(thm => thm.Thm_ID).ToArray();
+                int[] arr_THMNganh_New = dataNganh.array_THM;
                 // Bước 1: Lấy ra các giá trị giống nhau
-                var commonValues = arr_THMNganh.Intersect(arr_THMNganh_Original).ToArray();
+                var commonValues = arr_THMNganh_New.Intersect(arr_THMNganh_Original).ToArray();
                 // Bước 2: Lấy ra các giá trị mới
-                var newValues = arr_THMNganh.Except(arr_THMNganh_Original).ToArray();
+                var newValues = arr_THMNganh_New.Except(arr_THMNganh_Original).ToArray();
                 // Bước 3: Xóa các giá trị không còn
-                var valuesToRemove = arr_THMNganh_Original.Except(arr_THMNganh).ToArray();
+                var valuesToRemove = arr_THMNganh_Original.Except(arr_THMNganh_New).ToArray();
                 // Bước 4: Thực hiện cập nhật trong CSDL
                 // Xóa các giá trị không còn
-
-                foreach (var value in valuesToRemove)
+                System.Diagnostics.Debug.WriteLine("commonValues", commonValues);
+                System.Diagnostics.Debug.WriteLine("newValues", newValues);
+                System.Diagnostics.Debug.WriteLine("valuesToRemove", valuesToRemove);
+                if(valuesToRemove.Length > 0)
                 {
-                    var toRemove = db.ToHopMonNganhs.Where(t => t.Nganh_ID == dataNganh.Nganh_ID && t.Thm_ID == int.Parse(value)).FirstOrDefault();
-                    if (toRemove != null)
+                    foreach (var value in valuesToRemove)
                     {
-                        db.ToHopMonNganhs.Remove(toRemove);
+                        var toRemove = db.ToHopMonNganhs.Where(t => t.Nganh_ID == dataNganh.Nganh_ID && t.Thm_ID == value).FirstOrDefault();
+                        if (toRemove != null)
+                        {
+                            System.Diagnostics.Debug.WriteLine("toRemove", toRemove);
+                            db.ToHopMonNganhs.Remove(toRemove);
+                        }
+                        db.SaveChanges();
                     }
                 }
-                db.SaveChanges();
-
+                
                 // Thêm các giá trị mới
-
-                if (dataNganh != null && arr_THMNganh.Length > 0)
+                if (dataNganh != null && newValues.Length > 0)
                 {
-                    int newNganhId = dataNganh.Nganh_ID; // Lấy ra Id của đối tượng nganh vừa được thêm mới
+                    int NganhId = dataNganh.Nganh_ID; // Lấy ra Id của đối tượng nganh vừa được thêm mới
                     foreach (var value in newValues)
                     {
                         ToHopMonNganh tmhNganh = new ToHopMonNganh(); // Tạo một đối tượng tmhNganh mới cho mỗi bản ghi
-                        var tohopSearch = db.ToHopMons.Find(int.Parse(value));
+                        var tohopSearch = db.ToHopMons.Find(value);
                         var ghichu = "Ngành: " + dataNganh.Nganh_TenNganh + ";";
                         ghichu += " Tổ hợp: " + tohopSearch.Thm_MaToHop + " - " + tohopSearch.Thm_Mon1 + "-" + tohopSearch.Thm_Mon2 + "-" + tohopSearch.Thm_Mon3;
-                        tmhNganh.Nganh_ID = newNganhId;
+                        tmhNganh.Nganh_ID = NganhId;
                         tmhNganh.Thm_N_TrangThai = 1;
-                        tmhNganh.Thm_ID = int.Parse(value);
+                        tmhNganh.Thm_ID = value;
                         tmhNganh.Thm_N_GhiChu = ghichu;
                         db.ToHopMonNganhs.Add(tmhNganh);
                     }
                     db.SaveChanges();
-
                     return Json(new { success = true, }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);

@@ -320,7 +320,7 @@
         var selectedValuesTHM = [];
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
-                selectedValuesTHM.push(checkboxes[i].id);
+                selectedValuesTHM.push(parseInt(checkboxes[i].id));
             }
         }
         if (selectedValuesTHM.length == 0) {
