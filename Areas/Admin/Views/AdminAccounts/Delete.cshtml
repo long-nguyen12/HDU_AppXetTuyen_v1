@@ -53,17 +53,17 @@
                         </dt>
 
                         <dd>
-                            @Html.DisplayFor(model => model.Admin_Quyen)
+                            @{
+                                if (@Model.Admin_Quyen == "1")
+                                { <div> Quản lý Đại học </div> }
+                                if (@Model.Admin_Quyen == "2")
+                                {<div>  Quản lý Sau Đại học </div> }
+                                if (@Model.Admin_Quyen == "3")
+                                { <div>  Quản lý Liên cấp </div>}
+                                if (@Model.Admin_Quyen == "4")
+                                { <div>  Quản lý Thi năng khiếu</div> }
+                            }
                         </dd>
-
-                        <dt>
-                            Khoa
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.Khoa_ID)
-                        </dd>
-
                     </dl>
 
                     @using (Html.BeginForm())
@@ -71,7 +71,7 @@
                         @Html.AntiForgeryToken()
 
                         <div class="form-actions no-color m-3">
-                            <input type="submit" value="Xoá" class="btn btn-danger" />
+                            <input type="submit" value="Xoá dữ liệu" class="btn btn-danger" />
                         </div>
                     }
                 </div>
