@@ -32,7 +32,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         // GET: Admin/ExportDatas
         private DbConnecttion db = null;// new DbConnecttion();
         IList<TongHopSoLieuXetTuyenExport> ListDataExports = null;
-        public void ExportTsDkXetTuyenAll(string filteriPhuongThuc, string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, string sortOrder, int? page)
+        public void ExportTsDkXetTuyenAll3(string filteriPhuongThuc, string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, string sortOrder, int? page)
         {
             db = new DbConnecttion();
             ListDataExports = new List<TongHopSoLieuXetTuyenExport>();
@@ -42,53 +42,53 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             var model_xt2 = db.DangKyXetTuyenKQTQGs.Include(x => x.ThiSinhDangKy).Include(x => x.PhuongThucXetTuyen).Include(x => x.DotXetTuyen).Include(x => x.Nganh).Include(x => x.ToHopMon).Where(x => x.DotXT_ID == model_dxt_present.Dxt_ID)
                 .OrderBy(x => x.ThiSinhDangKy.ThiSinh_Ten).ThenBy(x => x.ThiSinhDangKy.ThiSinh_HoLot).ThenBy(x => x.Dkxt_KQTQG_ID).ThenBy(x => x.Dkxt_KQTQG_NguyenVong)
                 .Select(s => new
-            {
-                Ex_Dkxt_ID = s.Dkxt_KQTQG_ID,
-                Ex_ThiSinh_ID = s.ThiSinh_ID,
-                Ex_Ptxt_ID = s.Ptxt_ID,
-                Ex_Dxt_ID = model_dxt_present.Dxt_ID,
-                Ex_Nganh_ID = s.Nganh_ID,
-                Ex_TrangThai_HoSo = s.Dkxt_KQTQG_TrangThai_KinhPhi,
-                Ex_TrangThai_KinhPhi = s.Dkxt_KQTQG_TrangThai_HoSo,
+                {
+                    Ex_Dkxt_ID = s.Dkxt_KQTQG_ID,
+                    Ex_ThiSinh_ID = s.ThiSinh_ID,
+                    Ex_Ptxt_ID = s.Ptxt_ID,
+                    Ex_Dxt_ID = model_dxt_present.Dxt_ID,
+                    Ex_Nganh_ID = s.Nganh_ID,
+                    Ex_TrangThai_HoSo = s.Dkxt_KQTQG_TrangThai_KinhPhi,
+                    Ex_TrangThai_KinhPhi = s.Dkxt_KQTQG_TrangThai_HoSo,
 
-                Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
-                Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
-                Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
-                Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
-                Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
-                Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
-                Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
-                Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
-                Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
-                Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+                    Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
+                    Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
+                    Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
+                    Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
+                    Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
+                    Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
+                    Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
+                    Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
+                    Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
+                    Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
 
-                Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
-                Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
-                Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
+                    Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
+                    Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
+                    Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
-                Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
-                Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
-                Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+                    Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                    Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
 
-                Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
-                Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
-                Ex_MaNganh = s.Nganh.Nganh_MaNganh,
-                Ex_TenNganh = s.Nganh.Nganh_TenNganh,
-                Ex_MaToHop = s.ToHopMon.Thm_MaToHop,
-                Ex_ThuTuNguyenVong = s.Dkxt_KQTQG_NguyenVong,
-                Ex_TongDiem = s.Dkxt_KQTQG_Diem_Tong,
-                Ex_TongDiemFull = s.Dkxt_KQTQG_TongDiem_Full,
-                Ex_DiemKhuyenKhich = "",
-                Ex_Mon1 = s.Dkxt_KQTQG_Diem_M1,
-                Ex_Mon2 = s.Dkxt_KQTQG_Diem_M2,
-                Ex_Mon3 = s.Dkxt_KQTQG_Diem_M3,
-                Ex_TNCaoDang = "",
-                Ex_TNTrungCap = "",
+                    Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
+                    Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
+                    Ex_MaNganh = s.Nganh.Nganh_MaNganh,
+                    Ex_TenNganh = s.Nganh.Nganh_TenNganh,
+                    Ex_MaToHop = s.ToHopMon.Thm_MaToHop,
+                    Ex_ThuTuNguyenVong = s.Dkxt_KQTQG_NguyenVong,
+                    Ex_TongDiem = s.Dkxt_KQTQG_Diem_Tong,
+                    Ex_TongDiemFull = s.Dkxt_KQTQG_TongDiem_Full,
+                    Ex_DiemKhuyenKhich = "",
+                    Ex_Mon1 = s.Dkxt_KQTQG_Diem_M1,
+                    Ex_Mon2 = s.Dkxt_KQTQG_Diem_M2,
+                    Ex_Mon3 = s.Dkxt_KQTQG_Diem_M3,
+                    Ex_TNCaoDang = "",
+                    Ex_TNTrungCap = "",
 
-            }).ToList();
+                }).ToList();
             foreach (var item in model_xt2)
             {
                 TongHopSoLieuXetTuyenExport item_ex = new TongHopSoLieuXetTuyenExport();
@@ -488,52 +488,52 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             #region tổng hợp số liệu xét tuyển phương án 5,6
             var model_xt5 = db.DangKyXetTuyenKhacs.Include(x => x.ThiSinhDangKy).Include(x => x.PhuongThucXetTuyen).Include(x => x.DotXetTuyen).Include(x => x.Nganh).Where(x => x.DotXT_ID == model_dxt_present.Dxt_ID)
-                .OrderBy(x =>x.ThiSinhDangKy.ThiSinh_Ten).ThenBy(x=> x.ThiSinhDangKy.ThiSinh_HoLot).ThenBy(x => x.Dkxt_ID).ThenBy(x => x.Dkxt_NguyenVong)
+                .OrderBy(x => x.ThiSinhDangKy.ThiSinh_Ten).ThenBy(x => x.ThiSinhDangKy.ThiSinh_HoLot).ThenBy(x => x.Dkxt_ID).ThenBy(x => x.Dkxt_NguyenVong)
                 .Select(s => new
-                 {
-                     Ex_Dkxt_ID = s.Dkxt_ID,
-                     Ex_ThiSinh_ID = s.ThiSinh_ID,
-                     Ex_Ptxt_ID = s.Ptxt_ID,
-                     Ex_Dxt_ID = model_dxt_present.Dxt_ID,
-                     Ex_Nganh_ID = s.Nganh_ID,
-                     Ex_TrangThai_HoSo = s.Dkxt_TrangThai_KinhPhi,
-                     Ex_TrangThai_KinhPhi = s.Dkxt_TrangThai_HoSo,
+                {
+                    Ex_Dkxt_ID = s.Dkxt_ID,
+                    Ex_ThiSinh_ID = s.ThiSinh_ID,
+                    Ex_Ptxt_ID = s.Ptxt_ID,
+                    Ex_Dxt_ID = model_dxt_present.Dxt_ID,
+                    Ex_Nganh_ID = s.Nganh_ID,
+                    Ex_TrangThai_HoSo = s.Dkxt_TrangThai_KinhPhi,
+                    Ex_TrangThai_KinhPhi = s.Dkxt_TrangThai_HoSo,
 
-                     Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
-                     Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
-                     Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
-                     Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
-                     Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
-                     Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
-                     Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
-                     Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
-                     Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
-                     Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+                    Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
+                    Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
+                    Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
+                    Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
+                    Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
+                    Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
+                    Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
+                    Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
+                    Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
+                    Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
 
-                     Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
-                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
-                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
+                    Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
+                    Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
+                    Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                     Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                     Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
-                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
-                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
-                     Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+                    Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                    Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
 
 
-                     Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
-                     Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
-                     Ex_MaNganh = s.Nganh.Nganh_MaNganh,
-                     Ex_TenNganh = s.Nganh.Nganh_TenNganh,
+                    Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
+                    Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
+                    Ex_MaNganh = s.Nganh.Nganh_MaNganh,
+                    Ex_TenNganh = s.Nganh.Nganh_TenNganh,
 
-                     Ex_ThuTuNguyenVong = s.Dkxt_NguyenVong,
+                    Ex_ThuTuNguyenVong = s.Dkxt_NguyenVong,
 
-                     Ex_DonViToChuc = s.Dkxt_DonViToChuc,
-                     Ex_KetQuaDatDuoc = s.Dkxt_KetQuaDatDuoc,
-                     Ex_TongDiem_Chuan = s.Dkxt_TongDiem,
-                     Ex_NgayThi = s.Dkxt_NgayDuThi,
-                 }).ToList();
+                    Ex_DonViToChuc = s.Dkxt_DonViToChuc,
+                    Ex_KetQuaDatDuoc = s.Dkxt_KetQuaDatDuoc,
+                    Ex_TongDiem_Chuan = s.Dkxt_TongDiem,
+                    Ex_NgayThi = s.Dkxt_NgayDuThi,
+                }).ToList();
             foreach (var item in model_xt5)
             {
                 TongHopSoLieuXetTuyenExport item_ex = new TongHopSoLieuXetTuyenExport();
@@ -885,7 +885,977 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                             ews.PrinterSettings.BottomMargin = 0.3M;
                             ews.PrinterSettings.LeftMargin = 0.1M;
                             ews.PrinterSettings.HeaderMargin = 0;
-                            ews.PrinterSettings.FooterMargin = 0;                         
+                            ews.PrinterSettings.FooterMargin = 0;
+                        }
+                    }
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.AddHeader("content-disposition", "attachment; filename=" + DateTime.Now.ToString("yyyy-MM-dd") + "-TongHopDKXT.xlsx"); // tên file lưu
+                        _excelpackage.SaveAs(memoryStream);
+                        memoryStream.WriteTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+            }
+            #endregion
+        }
+        public void ExportTsDkXetTuyenAll(string filteriPhuongThuc, string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter, string sortOrder, int? page)
+        {
+            db = new DbConnecttion();
+            List<TongHopSoLieuXetTuyenExport> ListDataExports = new List<TongHopSoLieuXetTuyenExport>();
+
+            var model_dxt_present = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            #region tổng hợp số liệu xét tuyển phương án 2
+            var model_xt2 = db.DangKyXetTuyenKQTQGs.Include(x => x.ThiSinhDangKy).Include(x => x.PhuongThucXetTuyen).Include(x => x.DotXetTuyen).Include(x => x.Nganh).Include(x => x.ToHopMon).Where(x => x.DotXT_ID == model_dxt_present.Dxt_ID)
+                .OrderBy(x => x.ThiSinhDangKy.ThiSinh_Ten).ThenBy(x => x.ThiSinhDangKy.ThiSinh_HoLot).ThenBy(x => x.Dkxt_KQTQG_ID).ThenBy(x => x.Dkxt_KQTQG_NguyenVong)
+                .Select(s => new
+                {
+                    Ex_Dkxt_ID = s.Dkxt_KQTQG_ID,
+                    Ex_ThiSinh_ID = s.ThiSinh_ID,
+                    Ex_Ptxt_ID = s.Ptxt_ID,
+                    Ex_Dxt_ID = model_dxt_present.Dxt_ID,
+                    Ex_Nganh_ID = s.Nganh_ID,
+                    Ex_TrangThai_HoSo = s.Dkxt_KQTQG_TrangThai_KinhPhi,
+                    Ex_TrangThai_KinhPhi = s.Dkxt_KQTQG_TrangThai_HoSo,
+
+                    Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
+                    Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
+                    Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
+                    Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
+                    Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
+                    Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
+                    Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
+                    Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
+                    Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
+                    Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+
+                    Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
+                    Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
+                    Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
+
+                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
+
+                    Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                    Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+
+                    Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
+                    Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
+                    Ex_MaNganh = s.Nganh.Nganh_MaNganh,
+                    Ex_TenNganh = s.Nganh.Nganh_TenNganh,
+                    Ex_MaToHop = s.ToHopMon.Thm_MaToHop,
+                    Ex_ThuTuNguyenVong = s.Dkxt_KQTQG_NguyenVong,
+                    Ex_TongDiem = s.Dkxt_KQTQG_Diem_Tong,
+                    Ex_TongDiemFull = s.Dkxt_KQTQG_TongDiem_Full,
+                    Ex_DiemKhuyenKhich = "",
+                    Ex_Mon1 = s.Dkxt_KQTQG_Diem_M1,
+                    Ex_Mon2 = s.Dkxt_KQTQG_Diem_M2,
+                    Ex_Mon3 = s.Dkxt_KQTQG_Diem_M3,
+                    Ex_TNCaoDang = "",
+                    Ex_TNTrungCap = "",
+
+                }).ToList();
+            foreach (var item in model_xt2)
+            {
+                TongHopSoLieuXetTuyenExport item_ex = new TongHopSoLieuXetTuyenExport();
+
+                ThongTinQueQuanTs ex_tt_thx = JsonConvert.DeserializeObject<ThongTinQueQuanTs>(item.Ex_Tinh_Huyen_Xa_Temp); // tách lấy thông tin tỉnh huyện xã;
+                MonDiemThiQG ex_mondiem_1 = JsonConvert.DeserializeObject<MonDiemThiQG>(item.Ex_Mon1);
+                MonDiemThiQG ex_mondiem_2 = JsonConvert.DeserializeObject<MonDiemThiQG>(item.Ex_Mon2);
+                MonDiemThiQG ex_mondiem_3 = JsonConvert.DeserializeObject<MonDiemThiQG>(item.Ex_Mon3);
+
+                string _xeploai_hocluc_12 = "";
+                if (item.Ex_HocLuc12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
+                if (item.Ex_HocLuc12 == 3) { _xeploai_hocluc_12 = "Giỏi"; }
+                if (item.Ex_HocLuc12 == 2) { _xeploai_hocluc_12 = "Khá"; }
+                if (item.Ex_HocLuc12 == 1) { _xeploai_hocluc_12 = "Trung bình"; }
+
+                string _xeploai_hanhkiem_12 = "";
+                if (item.Ex_HanhKiem12 == 4) { _xeploai_hanhkiem_12 = "Tốt"; }
+                if (item.Ex_HanhKiem12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
+                if (item.Ex_HanhKiem12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
+                if (item.Ex_HanhKiem12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
+
+                var idKhoa = db.Nganhs.Where(x => x.Nganh_ID == item.Ex_Nganh_ID).FirstOrDefault().Khoa_ID;
+                var khoa_item = db.Khoas.Where(x => x.Khoa_ID == idKhoa).FirstOrDefault();
+
+                item_ex.Ex_ThiSinh_ID = item.Ex_ThiSinh_ID.ToString();
+                item_ex.Ex_Dkxt_ID = item.Ex_Dkxt_ID.ToString();
+                item_ex.Ex_Dxt_ID = item.Ex_Dxt_ID.ToString();
+
+                item_ex.Ex_Ptxt_ID = item.Ex_Ptxt_ID.ToString();
+                item_ex.Ex_Nganh_ID = item.Ex_Nganh_ID.ToString();
+                item_ex.Ex_TrangThai_KinhPhi = item.Ex_TrangThai_KinhPhi.ToString();
+                item_ex.Ex_TrangThai_HoSo = item.Ex_TrangThai_HoSo.ToString();
+
+                item_ex.Ex_HoLot = item.Ex_HoLot;
+                item_ex.Ex_Ten = item.Ex_Ten;
+                item_ex.Ex_NgaySinh = item.Ex_NgaySinh;
+
+                if (item.Ex_GioiTinh == 0) item_ex.Ex_GioiTinh = "Nam";
+                if (item.Ex_GioiTinh == 1) item_ex.Ex_GioiTinh = "Nữ";
+
+                item_ex.Ex_DanToc = item.Ex_DanToc;
+                item_ex.Ex_CCCD = item.Ex_CCCD;
+                item_ex.Ex_DienThoai = item.Ex_DienThoai;
+                item_ex.Ex_Email = item.Ex_Email;
+                item_ex.Ex_MaNganh = item.Ex_MaNganh;
+                item_ex.Ex_TenNganh = item.Ex_TenNganh;
+
+                item_ex.Ex_Khoa = khoa_item.Khoa_TenKhoa;
+                item_ex.Ex_MaPhuongThuc = "PT" + item.Ex_MaPhuongThuc.ToString();
+
+                item_ex.Ex_TenPhuongThuc = item.Ex_TenPhuongThuc;
+                item_ex.Ex_MaToHop = item.Ex_MaToHop;
+                item_ex.Ex_ThuTuNguyenVong = item.Ex_ThuTuNguyenVong.ToString();
+                item_ex.Ex_MonDatGiai = "";
+                item_ex.Ex_NamDatGiai = "";
+                item_ex.Ex_LoaiGiai = "";
+                item_ex.Ex_DonViToChuc = "";
+                item_ex.Ex_KetQuaDatDuoc = "";
+                item_ex.Ex_TongDiem_Chuan = "";
+                item_ex.Ex_NgayThi = "";
+                item_ex.Ex_TongDiem = item.Ex_TongDiem;
+                item_ex.Ex_TongDiemFull = item.Ex_TongDiemFull;
+                item_ex.Ex_DiemKhuyenKhich = item.Ex_DiemKhuyenKhich;
+
+                item_ex.Ex_TenMon1 = ex_mondiem_1.TenMon;
+                item_ex.Ex_DiemMon1 = ex_mondiem_1.Diem;
+                item_ex.Ex_TenMon2 = ex_mondiem_2.TenMon;
+                item_ex.Ex_DiemMon2 = ex_mondiem_2.Diem;
+                item_ex.Ex_TenMon3 = ex_mondiem_3.TenMon;
+                item_ex.Ex_DiemMon3 = ex_mondiem_3.Diem;
+
+                item_ex.Ex_DiemUTDT = item.Ex_DoiTuong.ToString();
+                item_ex.Ex_DiemUTKV = item.Ex_KhuVuc.ToString();
+
+                item_ex.Ex_NamTNTHPT = item.Ex_NamTNTHPT;
+                item_ex.Ex_HocLuc12 = _xeploai_hocluc_12;
+                item_ex.Ex_HanhKiem12 = _xeploai_hanhkiem_12;
+
+                item_ex.Ex_DiemTB12 = "";
+                item_ex.Ex_TNCaoDang = "";
+                item_ex.Ex_TNTrungCap = "";
+
+                item_ex.Ex_Tinh = db.Tinhs.Where(x => x.Tinh_ID == ex_tt_thx.Tinh_ID).FirstOrDefault().Tinh_Ten;
+                item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
+                item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
+
+                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
+
+                item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
+                item_ex.Ex_NoiSinh = item.Ex_NoiSinh;
+                item_ex.Ex_TenKhoa = khoa_item.Khoa_TenKhoa;
+                item_ex.Ex_TenTruongKhoa = khoa_item.Khoa_TruongKhoa;
+                item_ex.Ex_DienThoaiTruongKhoa = khoa_item.Khoa_DienThoai;
+
+                ListDataExports.Add(item_ex);
+            }
+            #endregion
+
+            #region tổng hợp số liệu xét tuyển phương án 3
+            var model_xt3 = db.DangKyXetTuyenHBs.Include(x => x.ThiSinhDangKy).Include(x => x.PhuongThucXetTuyen).Include(x => x.DotXetTuyen).Include(x => x.Nganh).Include(x => x.ToHopMon).Where(x => x.DotXT_ID == model_dxt_present.Dxt_ID)
+                .OrderBy(x => x.ThiSinhDangKy.ThiSinh_Ten).ThenBy(x => x.ThiSinhDangKy.ThiSinh_HoLot).ThenBy(x => x.Dkxt_HB_ID).ThenBy(x => x.Dkxt_HB_NguyenVong).Select(s => new
+                {
+                    Ex_Dkxt_ID = s.Dkxt_HB_ID,
+                    Ex_ThiSinh_ID = s.ThiSinh_ID,
+                    Ex_Ptxt_ID = s.Ptxt_ID,
+                    Ex_Dxt_ID = model_dxt_present.Dxt_ID,
+                    Ex_Nganh_ID = s.Nganh_ID,
+                    Ex_TrangThai_HoSo = s.Dkxt_HB_TrangThai_KinhPhi,
+                    Ex_TrangThai_KinhPhi = s.Dkxt_HB_TrangThai_HoSo,
+
+                    Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
+                    Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
+                    Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
+                    Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
+                    Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
+                    Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
+                    Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
+                    Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
+                    Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
+                    Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+
+                    Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
+                    Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
+                    Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
+
+                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
+
+                    Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                    Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+
+                    Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
+                    Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
+                    Ex_MaNganh = s.Nganh.Nganh_MaNganh,
+                    Ex_TenNganh = s.Nganh.Nganh_TenNganh,
+                    Ex_MaToHop = s.ToHopMon.Thm_MaToHop,
+                    Ex_ThuTuNguyenVong = s.Dkxt_HB_NguyenVong,
+                    Ex_TongDiem = s.Dkxt_HB_Diem_Tong,
+                    Ex_TongDiemFull = s.Dkxt_HB_Diem_Tong_Full,
+                    Ex_DiemKhuyenKhich = "",
+                    Ex_Mon1 = s.Dkxt_HB_Diem_M1,
+                    Ex_Mon2 = s.Dkxt_HB_Diem_M2,
+                    Ex_Mon3 = s.Dkxt_HB_Diem_M3,
+                    Ex_TNCaoDang = "",
+                    Ex_TNTrungCap = "",
+
+                }).ToList();
+            foreach (var item in model_xt3)
+            {
+                TongHopSoLieuXetTuyenExport item_ex = new TongHopSoLieuXetTuyenExport();
+
+                ThongTinQueQuanTs ex_tt_thx = JsonConvert.DeserializeObject<ThongTinQueQuanTs>(item.Ex_Tinh_Huyen_Xa_Temp); // tách lấy thông tin tỉnh huyện xã;
+                MonDiemHB ex_mondiem_1 = JsonConvert.DeserializeObject<MonDiemHB>(item.Ex_Mon1);
+                MonDiemHB ex_mondiem_2 = JsonConvert.DeserializeObject<MonDiemHB>(item.Ex_Mon2);
+                MonDiemHB ex_mondiem_3 = JsonConvert.DeserializeObject<MonDiemHB>(item.Ex_Mon3);
+
+                string _xeploai_hocluc_12 = "";
+                if (item.Ex_HocLuc12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
+                if (item.Ex_HocLuc12 == 3) { _xeploai_hocluc_12 = "Giỏi"; }
+                if (item.Ex_HocLuc12 == 2) { _xeploai_hocluc_12 = "Khá"; }
+                if (item.Ex_HocLuc12 == 1) { _xeploai_hocluc_12 = "Trung bình"; }
+
+                string _xeploai_hanhkiem_12 = "";
+                if (item.Ex_HanhKiem12 == 4) { _xeploai_hanhkiem_12 = "Tốt"; }
+                if (item.Ex_HanhKiem12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
+                if (item.Ex_HanhKiem12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
+                if (item.Ex_HanhKiem12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
+
+                var idKhoa = db.Nganhs.Where(x => x.Nganh_ID == item.Ex_Nganh_ID).FirstOrDefault().Khoa_ID;
+                var khoa_item = db.Khoas.Where(x => x.Khoa_ID == idKhoa).FirstOrDefault();
+
+                item_ex.Ex_ThiSinh_ID = item.Ex_ThiSinh_ID.ToString();
+                item_ex.Ex_Dkxt_ID = item.Ex_Dkxt_ID.ToString();
+                item_ex.Ex_Dxt_ID = item.Ex_Dxt_ID.ToString();
+                item_ex.Ex_Ptxt_ID = item.Ex_Ptxt_ID.ToString();
+                item_ex.Ex_Nganh_ID = item.Ex_Nganh_ID.ToString();
+                item_ex.Ex_TrangThai_KinhPhi = item.Ex_TrangThai_KinhPhi.ToString();
+                item_ex.Ex_TrangThai_HoSo = item.Ex_TrangThai_HoSo.ToString();
+
+                item_ex.Ex_HoLot = item.Ex_HoLot;
+                item_ex.Ex_Ten = item.Ex_Ten;
+                item_ex.Ex_NgaySinh = item.Ex_NgaySinh;
+
+                if (item.Ex_GioiTinh == 0) item_ex.Ex_GioiTinh = "Nam";
+                if (item.Ex_GioiTinh == 1) item_ex.Ex_GioiTinh = "Nữ";
+
+                item_ex.Ex_DanToc = item.Ex_DanToc;
+                item_ex.Ex_CCCD = item.Ex_CCCD;
+                item_ex.Ex_DienThoai = item.Ex_DienThoai;
+                item_ex.Ex_Email = item.Ex_Email;
+                item_ex.Ex_MaNganh = item.Ex_MaNganh;
+                item_ex.Ex_TenNganh = item.Ex_TenNganh;
+
+                item_ex.Ex_Khoa = khoa_item.Khoa_TenKhoa;
+                item_ex.Ex_MaPhuongThuc = "PT" + item.Ex_MaPhuongThuc.ToString();
+
+                item_ex.Ex_TenPhuongThuc = item.Ex_TenPhuongThuc;
+                item_ex.Ex_MaToHop = item.Ex_MaToHop;
+                item_ex.Ex_ThuTuNguyenVong = item.Ex_ThuTuNguyenVong.ToString();
+
+                item_ex.Ex_MonDatGiai = "";
+                item_ex.Ex_NamDatGiai = "";
+                item_ex.Ex_LoaiGiai = "";
+                item_ex.Ex_DonViToChuc = "";
+                item_ex.Ex_KetQuaDatDuoc = "";
+                item_ex.Ex_TongDiem_Chuan = "";
+                item_ex.Ex_NgayThi = "";
+
+                item_ex.Ex_TongDiem = item.Ex_TongDiem;
+                item_ex.Ex_TongDiemFull = item.Ex_TongDiemFull;
+                item_ex.Ex_DiemKhuyenKhich = item.Ex_DiemKhuyenKhich;
+
+                item_ex.Ex_TenMon1 = ex_mondiem_1.TenMon;
+                item_ex.Ex_DiemMon1 = ex_mondiem_1.DiemTrungBinh;
+                item_ex.Ex_TenMon2 = ex_mondiem_2.TenMon;
+                item_ex.Ex_DiemMon2 = ex_mondiem_2.DiemTrungBinh;
+                item_ex.Ex_TenMon3 = ex_mondiem_3.TenMon;
+                item_ex.Ex_DiemMon3 = ex_mondiem_3.DiemTrungBinh;
+
+                item_ex.Ex_DiemUTDT = item.Ex_DoiTuong.ToString();
+                item_ex.Ex_DiemUTKV = item.Ex_KhuVuc.ToString();
+
+                item_ex.Ex_NamTNTHPT = item.Ex_NamTNTHPT;
+                item_ex.Ex_HocLuc12 = _xeploai_hocluc_12;
+                item_ex.Ex_HanhKiem12 = _xeploai_hanhkiem_12;
+
+                item_ex.Ex_DiemTB12 = "";
+                item_ex.Ex_TNCaoDang = "";
+                item_ex.Ex_TNTrungCap = "";
+
+                item_ex.Ex_Tinh = db.Tinhs.Where(x => x.Tinh_ID == ex_tt_thx.Tinh_ID).FirstOrDefault().Tinh_Ten;
+                item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
+                item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
+
+                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
+
+                item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
+                item_ex.Ex_NoiSinh = item.Ex_NoiSinh;
+                item_ex.Ex_TenKhoa = khoa_item.Khoa_TenKhoa;
+                item_ex.Ex_TenTruongKhoa = khoa_item.Khoa_TruongKhoa;
+                item_ex.Ex_DienThoaiTruongKhoa = khoa_item.Khoa_DienThoai;
+                ListDataExports.Add(item_ex);
+            }
+            #endregion
+
+            #region tổng hợp số liệu xét tuyển phương án 4
+            var model_xt4 = db.DangKyXetTuyenThangs.Include(x => x.ThiSinhDangKy).Include(x => x.PhuongThucXetTuyen).Include(x => x.DotXetTuyen).Include(x => x.Nganh)
+                .Where(x => x.DotXT_ID == model_dxt_present.Dxt_ID)
+                .OrderBy(x => x.ThiSinhDangKy.ThiSinh_Ten).ThenBy(x => x.ThiSinhDangKy.ThiSinh_HoLot).ThenBy(x => x.Dkxt_ID).ThenBy(x => x.Dkxt_NguyenVong)
+                .Select(s => new
+                {
+
+                    Ex_Dkxt_ID = s.Dkxt_ID,
+                    Ex_ThiSinh_ID = s.ThiSinh_ID,
+                    Ex_Ptxt_ID = s.Ptxt_ID,
+                    Ex_Dxt_ID = model_dxt_present.Dxt_ID,
+                    Ex_Nganh_ID = s.Nganh_ID,
+                    Ex_TrangThai_HoSo = s.Dkxt_TrangThai_KinhPhi,
+                    Ex_TrangThai_KinhPhi = s.Dkxt_TrangThai_HoSo,
+
+                    Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
+                    Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
+                    Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
+                    Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
+                    Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
+                    Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
+                    Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
+                    Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
+                    Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
+                    Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+
+                    Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
+                    Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
+                    Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
+
+                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
+
+                    Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                    Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+
+
+                    Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
+                    Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
+                    Ex_MaNganh = s.Nganh.Nganh_MaNganh,
+                    Ex_TenNganh = s.Nganh.Nganh_TenNganh,
+                    Ex_ThuTuNguyenVong = s.Dkxt_NguyenVong,
+
+                    Ex_MonDatGiai = s.Dkxt_MonDatGiai,
+                    Ex_NamDatGiai = s.Dkxt_LoaiGiai,
+                    Ex_LoaiGiai = s.Dkxt_NamDatGiai,
+
+                }).ToList();
+
+            foreach (var item in model_xt4)
+            {
+                TongHopSoLieuXetTuyenExport item_ex = new TongHopSoLieuXetTuyenExport();
+
+                ThongTinQueQuanTs ex_tt_thx = JsonConvert.DeserializeObject<ThongTinQueQuanTs>(item.Ex_Tinh_Huyen_Xa_Temp); // tách lấy thông tin tỉnh huyện xã;
+
+                string _xeploai_hocluc_12 = "";
+                if (item.Ex_HocLuc12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
+                if (item.Ex_HocLuc12 == 3) { _xeploai_hocluc_12 = "Giỏi"; }
+                if (item.Ex_HocLuc12 == 2) { _xeploai_hocluc_12 = "Khá"; }
+                if (item.Ex_HocLuc12 == 1) { _xeploai_hocluc_12 = "Trung bình"; }
+
+                string _xeploai_hanhkiem_12 = "";
+                if (item.Ex_HanhKiem12 == 4) { _xeploai_hanhkiem_12 = "Tốt"; }
+                if (item.Ex_HanhKiem12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
+                if (item.Ex_HanhKiem12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
+                if (item.Ex_HanhKiem12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
+
+                var idKhoa = db.Nganhs.Where(x => x.Nganh_ID == item.Ex_Nganh_ID).FirstOrDefault().Khoa_ID;
+                var khoa_item = db.Khoas.Where(x => x.Khoa_ID == idKhoa).FirstOrDefault();
+
+                item_ex.Ex_ThiSinh_ID = item.Ex_ThiSinh_ID.ToString();
+                item_ex.Ex_Dkxt_ID = item.Ex_Dkxt_ID.ToString();
+                item_ex.Ex_Dxt_ID = item.Ex_Dxt_ID.ToString();
+                item_ex.Ex_Ptxt_ID = item.Ex_Ptxt_ID.ToString();
+                item_ex.Ex_Nganh_ID = item.Ex_Nganh_ID.ToString();
+                item_ex.Ex_TrangThai_KinhPhi = item.Ex_TrangThai_KinhPhi.ToString();
+                item_ex.Ex_TrangThai_HoSo = item.Ex_TrangThai_HoSo.ToString();
+
+                item_ex.Ex_HoLot = item.Ex_HoLot;
+                item_ex.Ex_Ten = item.Ex_Ten;
+                item_ex.Ex_NgaySinh = item.Ex_NgaySinh;
+
+                if (item.Ex_GioiTinh == 0) item_ex.Ex_GioiTinh = "Nam";
+                if (item.Ex_GioiTinh == 1) item_ex.Ex_GioiTinh = "Nữ";
+
+                item_ex.Ex_DanToc = item.Ex_DanToc;
+                item_ex.Ex_CCCD = item.Ex_CCCD;
+                item_ex.Ex_DienThoai = item.Ex_DienThoai;
+                item_ex.Ex_Email = item.Ex_Email;
+                item_ex.Ex_MaNganh = item.Ex_MaNganh;
+                item_ex.Ex_TenNganh = item.Ex_TenNganh;
+
+                item_ex.Ex_Khoa = khoa_item.Khoa_TenKhoa;
+                item_ex.Ex_MaPhuongThuc = "PT" + item.Ex_MaPhuongThuc.ToString();
+
+                item_ex.Ex_TenPhuongThuc = item.Ex_TenPhuongThuc;
+                item_ex.Ex_MaToHop = "";
+                item_ex.Ex_ThuTuNguyenVong = item.Ex_ThuTuNguyenVong.ToString();
+
+                item_ex.Ex_MonDatGiai = item.Ex_MonDatGiai;
+                item_ex.Ex_NamDatGiai = item.Ex_NamDatGiai;
+                item_ex.Ex_LoaiGiai = item.Ex_LoaiGiai;
+
+                item_ex.Ex_DonViToChuc = "";
+                item_ex.Ex_KetQuaDatDuoc = "";
+                item_ex.Ex_TongDiem_Chuan = "";
+                item_ex.Ex_NgayThi = "";
+
+                item_ex.Ex_TongDiem = "";
+                item_ex.Ex_TongDiemFull = "";
+                item_ex.Ex_DiemKhuyenKhich = "";
+
+                item_ex.Ex_TenMon1 = "";
+                item_ex.Ex_DiemMon1 = "";
+                item_ex.Ex_TenMon2 = "";
+                item_ex.Ex_DiemMon2 = "";
+                item_ex.Ex_TenMon3 = "";
+                item_ex.Ex_DiemMon3 = "";
+
+                item_ex.Ex_DiemUTDT = item.Ex_DoiTuong.ToString();
+                item_ex.Ex_DiemUTKV = item.Ex_KhuVuc.ToString();
+
+                item_ex.Ex_NamTNTHPT = item.Ex_NamTNTHPT;
+                item_ex.Ex_HocLuc12 = _xeploai_hocluc_12;
+                item_ex.Ex_HanhKiem12 = _xeploai_hanhkiem_12;
+
+                item_ex.Ex_DiemTB12 = "";
+                item_ex.Ex_TNCaoDang = "";
+                item_ex.Ex_TNTrungCap = "";
+
+                item_ex.Ex_Tinh = db.Tinhs.Where(x => x.Tinh_ID == ex_tt_thx.Tinh_ID).FirstOrDefault().Tinh_Ten;
+                item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
+                item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
+
+                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
+
+                item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
+                item_ex.Ex_NoiSinh = item.Ex_NoiSinh;
+                item_ex.Ex_TenKhoa = khoa_item.Khoa_TenKhoa;
+                item_ex.Ex_TenTruongKhoa = khoa_item.Khoa_TruongKhoa;
+                item_ex.Ex_DienThoaiTruongKhoa = khoa_item.Khoa_DienThoai;
+
+                ListDataExports.Add(item_ex);
+
+            }
+            #endregion
+
+            #region tổng hợp số liệu xét tuyển phương án 5,6
+            var model_xt5 = db.DangKyXetTuyenKhacs.Include(x => x.ThiSinhDangKy).Include(x => x.PhuongThucXetTuyen).Include(x => x.DotXetTuyen).Include(x => x.Nganh).Where(x => x.DotXT_ID == model_dxt_present.Dxt_ID)
+                .OrderBy(x => x.ThiSinhDangKy.ThiSinh_Ten).ThenBy(x => x.ThiSinhDangKy.ThiSinh_HoLot).ThenBy(x => x.Dkxt_ID).ThenBy(x => x.Dkxt_NguyenVong)
+                .Select(s => new
+                {
+                    Ex_Dkxt_ID = s.Dkxt_ID,
+                    Ex_ThiSinh_ID = s.ThiSinh_ID,
+                    Ex_Ptxt_ID = s.Ptxt_ID,
+                    Ex_Dxt_ID = model_dxt_present.Dxt_ID,
+                    Ex_Nganh_ID = s.Nganh_ID,
+                    Ex_TrangThai_HoSo = s.Dkxt_TrangThai_KinhPhi,
+                    Ex_TrangThai_KinhPhi = s.Dkxt_TrangThai_HoSo,
+
+                    Ex_HoLot = s.ThiSinhDangKy.ThiSinh_HoLot,
+                    Ex_Ten = s.ThiSinhDangKy.ThiSinh_Ten,
+                    Ex_NgaySinh = s.ThiSinhDangKy.ThiSinh_NgaySinh,
+                    Ex_GioiTinh = s.ThiSinhDangKy.ThiSinh_GioiTinh,
+                    Ex_DanToc = s.ThiSinhDangKy.ThiSinh_DanToc,
+                    Ex_CCCD = s.ThiSinhDangKy.ThiSinh_CCCD,
+                    Ex_DienThoai = s.ThiSinhDangKy.ThiSinh_DienThoai,
+                    Ex_Email = s.ThiSinhDangKy.ThiSinh_Email,
+                    Ex_DiaChiNhanGiayBao = s.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
+                    Ex_NoiSinh = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+
+                    Ex_HocLuc12 = s.ThiSinhDangKy.ThiSinh_HocLucLop12,
+                    Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
+                    Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
+
+                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
+
+                    Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
+                    Ex_KhuVuc = s.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien,
+
+
+                    Ex_MaPhuongThuc = s.PhuongThucXetTuyen.Ptxt_ID,
+                    Ex_TenPhuongThuc = s.PhuongThucXetTuyen.Ptxt_TenPhuongThuc,
+                    Ex_MaNganh = s.Nganh.Nganh_MaNganh,
+                    Ex_TenNganh = s.Nganh.Nganh_TenNganh,
+
+                    Ex_ThuTuNguyenVong = s.Dkxt_NguyenVong,
+
+                    Ex_DonViToChuc = s.Dkxt_DonViToChuc,
+                    Ex_KetQuaDatDuoc = s.Dkxt_KetQuaDatDuoc,
+                    Ex_TongDiem_Chuan = s.Dkxt_TongDiem,
+                    Ex_NgayThi = s.Dkxt_NgayDuThi,
+                }).ToList();
+            foreach (var item in model_xt5)
+            {
+                TongHopSoLieuXetTuyenExport item_ex = new TongHopSoLieuXetTuyenExport();
+
+                ThongTinQueQuanTs ex_tt_thx = JsonConvert.DeserializeObject<ThongTinQueQuanTs>(item.Ex_Tinh_Huyen_Xa_Temp); // tách lấy thông tin tỉnh huyện xã;
+
+                string _xeploai_hocluc_12 = "";
+                if (item.Ex_HocLuc12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
+                if (item.Ex_HocLuc12 == 3) { _xeploai_hocluc_12 = "Giỏi"; }
+                if (item.Ex_HocLuc12 == 2) { _xeploai_hocluc_12 = "Khá"; }
+                if (item.Ex_HocLuc12 == 1) { _xeploai_hocluc_12 = "Trung bình"; }
+
+                string _xeploai_hanhkiem_12 = "";
+                if (item.Ex_HanhKiem12 == 4) { _xeploai_hanhkiem_12 = "Tốt"; }
+                if (item.Ex_HanhKiem12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
+                if (item.Ex_HanhKiem12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
+                if (item.Ex_HanhKiem12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
+
+                var idKhoa = db.Nganhs.Where(x => x.Nganh_ID == item.Ex_Nganh_ID).FirstOrDefault().Khoa_ID;
+                var khoa_item = db.Khoas.Where(x => x.Khoa_ID == idKhoa).FirstOrDefault();
+
+                item_ex.Ex_ThiSinh_ID = item.Ex_ThiSinh_ID.ToString();
+                item_ex.Ex_Dkxt_ID = item.Ex_Dkxt_ID.ToString();
+                item_ex.Ex_Dxt_ID = item.Ex_Dxt_ID.ToString();
+                item_ex.Ex_Ptxt_ID = item.Ex_Ptxt_ID.ToString();
+                item_ex.Ex_Nganh_ID = item.Ex_Nganh_ID.ToString();
+                item_ex.Ex_TrangThai_KinhPhi = item.Ex_TrangThai_KinhPhi.ToString();
+                item_ex.Ex_TrangThai_HoSo = item.Ex_TrangThai_HoSo.ToString();
+
+                item_ex.Ex_HoLot = item.Ex_HoLot;
+                item_ex.Ex_Ten = item.Ex_Ten;
+                item_ex.Ex_NgaySinh = item.Ex_NgaySinh;
+
+                if (item.Ex_GioiTinh == 0) item_ex.Ex_GioiTinh = "Nam";
+                if (item.Ex_GioiTinh == 1) item_ex.Ex_GioiTinh = "Nữ";
+
+                item_ex.Ex_DanToc = item.Ex_DanToc;
+                item_ex.Ex_CCCD = item.Ex_CCCD;
+                item_ex.Ex_DienThoai = item.Ex_DienThoai;
+                item_ex.Ex_Email = item.Ex_Email;
+                item_ex.Ex_MaNganh = item.Ex_MaNganh;
+                item_ex.Ex_TenNganh = item.Ex_TenNganh;
+
+                item_ex.Ex_Khoa = khoa_item.Khoa_TenKhoa;
+
+                item_ex.Ex_MaPhuongThuc = "PT" + item.Ex_MaPhuongThuc.ToString();
+                item_ex.Ex_TenPhuongThuc = item.Ex_TenPhuongThuc;
+                item_ex.Ex_MaToHop = "";
+                item_ex.Ex_ThuTuNguyenVong = item.Ex_ThuTuNguyenVong.ToString();
+
+                item_ex.Ex_MonDatGiai = "";
+                item_ex.Ex_NamDatGiai = "";
+                item_ex.Ex_LoaiGiai = "";
+
+                item_ex.Ex_DonViToChuc = item.Ex_DonViToChuc;
+                item_ex.Ex_KetQuaDatDuoc = item.Ex_KetQuaDatDuoc.ToString();
+                item_ex.Ex_TongDiem_Chuan = item.Ex_TongDiem_Chuan.ToString();
+                item_ex.Ex_NgayThi = item.Ex_NgayThi;
+
+                item_ex.Ex_TongDiem = "";
+                item_ex.Ex_TongDiemFull = "";
+                item_ex.Ex_DiemKhuyenKhich = "";
+
+                item_ex.Ex_TenMon1 = "";
+                item_ex.Ex_DiemMon1 = "";
+                item_ex.Ex_TenMon2 = "";
+                item_ex.Ex_DiemMon2 = "";
+                item_ex.Ex_TenMon3 = "";
+                item_ex.Ex_DiemMon3 = "";
+
+                item_ex.Ex_DiemUTDT = item.Ex_DoiTuong.ToString();
+                item_ex.Ex_DiemUTKV = item.Ex_KhuVuc.ToString();
+
+                item_ex.Ex_NamTNTHPT = item.Ex_NamTNTHPT;
+                item_ex.Ex_HocLuc12 = _xeploai_hocluc_12;
+                item_ex.Ex_HanhKiem12 = _xeploai_hanhkiem_12;
+
+                item_ex.Ex_DiemTB12 = "";
+                item_ex.Ex_TNCaoDang = "";
+                item_ex.Ex_TNTrungCap = "";
+
+                item_ex.Ex_Tinh = db.Tinhs.Where(x => x.Tinh_ID == ex_tt_thx.Tinh_ID).FirstOrDefault().Tinh_Ten;
+                item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
+                item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
+
+                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
+
+                item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
+                item_ex.Ex_NoiSinh = item.Ex_NoiSinh;
+                item_ex.Ex_TenKhoa = khoa_item.Khoa_TenKhoa;
+                item_ex.Ex_TenTruongKhoa = khoa_item.Khoa_TruongKhoa;
+                item_ex.Ex_DienThoaiTruongKhoa = khoa_item.Khoa_DienThoai;
+
+
+                ListDataExports.Add(item_ex);
+
+            }
+            #endregion
+
+            #region lọc dữ liệu 
+            // lọc theo phương thức
+            if (!String.IsNullOrEmpty(filteriPhuongThuc))
+            {
+                ListDataExports = ListDataExports.Where(x => x.Ex_Ptxt_ID == filteriPhuongThuc).ToList();
+            }
+
+            // lọc theo ngành
+            if (!String.IsNullOrEmpty(filteriNganhHoc))
+            {
+                ListDataExports = ListDataExports.Where(x => x.Ex_Nganh_ID == filteriNganhHoc).ToList();
+            }
+
+            // lọc theo trạng thái lệ phí
+            if (!String.IsNullOrEmpty(filteriLePhi))
+            {
+                ListDataExports = ListDataExports.Where(x => x.Ex_TrangThai_KinhPhi == filteriLePhi).ToList();
+            }
+            // lọc theo trạng thái lệ hồ sơ
+            if (!String.IsNullOrEmpty(filteriHoSo))
+            {
+                ListDataExports = ListDataExports.Where(x => x.Ex_TrangThai_HoSo == filteriHoSo).ToList();
+            }
+            // lọc theo tìm kiếm
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ListDataExports = ListDataExports.Where(h => h.Ex_HoLot.ToUpper().Contains(searchString.ToUpper())
+                                  || h.Ex_Ten.ToUpper().Contains(searchString.ToUpper())
+                                  || h.Ex_CCCD.Contains(searchString)
+                                  || h.Ex_DienThoai.Contains(searchString)).ToList();
+            }
+            #endregion
+
+            #region Xuất dữ liệu ra excel
+            try
+            {
+                using (ExcelPackage _excelpackage = new ExcelPackage())
+                {
+                    // đặt tên người tạo file   
+                    _excelpackage.Workbook.Properties.Author = "208Team";
+                    // đặt tiêu đề cho file 
+                    _excelpackage.Workbook.Properties.Title = "DkXetTuyen";
+                    // khai báo đối tượng ExcelWorksheet để thao tác với sheet                                                          
+                    ExcelWorksheet ews = null;
+                    /*
+                    1. đếm tổng số có bao nhiêu phương thức để để tạo ra bấy nhiêu sheet
+                    2. với mỗi 1 phương thức  thì đọc dữ liệu ghi vào sheet;
+                    3. ghi ra file excel
+                    */
+
+                    if (ListDataExports.Count > 0)
+                    {
+                        var ListPhuongThuc = (from item in ListDataExports
+                                              select new { phuongthuc_id = item.Ex_Ptxt_ID }).Distinct().ToList();
+                        for (int index_nb_sheet = 1; index_nb_sheet <= ListPhuongThuc.Count; index_nb_sheet++)
+                        {
+                            _excelpackage.Workbook.Worksheets.Add(index_nb_sheet.ToString());
+                        }
+
+                        // khai báo chỉ số của sheet
+                        int index_sheet = 0;
+
+                        foreach (var item in ListPhuongThuc)
+                        {
+                            // tăng chỉ số sheet lên 1 đơn vị
+                            index_sheet++;
+                            // lấy ra sheet thứ i
+                            ews = _excelpackage.Workbook.Worksheets[index_sheet];
+                            // đặt tên cho sheet    
+                            ews.Name = "Phương thức " + item.phuongthuc_id.ToString();
+                            // fontsize mặc định cho cả sheet     
+                            ews.Cells.Style.Font.Size = 12;
+                            // font family mặc định cho cả sheet
+                            ews.Cells.Style.Font.Name = "Times New Roman";
+
+                            // lấy ra danh sách thí sinh đăng ký theo từng phương thức 
+                            var ListThiSinh_Dkxt_Customs = ListDataExports.Where(x => x.Ex_Ptxt_ID == item.phuongthuc_id).ToList();
+                            // gán dữ liệu cho các cột
+
+                            // với mỗi item trong danh sách sẽ ghi trên 1 dòng
+                            int row_item = 1, col_item = 0;
+
+                            foreach (var item_colleger in ListThiSinh_Dkxt_Customs)
+                            {
+                                //bắt đầu ghi từ cột 1.Excel bắt đầu từ 1 không phải từ 0
+                                col_item = 1;
+                                // rowIndex tương ứng từng dòng dữ liệu
+                                row_item++;
+                                //gán giá trị cho từng cell          
+
+                                ews.Cells.Style.Font.Bold = false;
+                                ews.Cells.Style.WrapText = true;
+                                //1 số thư tự 
+                                ews.Cells[row_item, col_item++].Value = (row_item - 1);
+                                //2 
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_HoLot;
+                                //	3
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_Ten;
+                                //	4
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_NgaySinh;
+                                //	5
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_GioiTinh;
+                                //	6
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_MaNganh;
+                                //	7
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TenNganh;
+                                //	8
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_Khoa;
+                                //	9
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_MaPhuongThuc;
+                                //	10
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TenPhuongThuc;
+
+                                if (item.phuongthuc_id == "2" || item.phuongthuc_id == "3")
+                                {
+                                    //	11
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_MaToHop;
+                                }
+                             
+                                //	12
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_ThuTuNguyenVong;
+
+                                if (item.phuongthuc_id == "2" || item.phuongthuc_id == "3")
+                                {
+                                    //	13
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TongDiem;
+                                    //	14
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TongDiemFull;
+                                }
+                                //	15
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiemKhuyenKhich;
+                                if (item.phuongthuc_id == "4")
+                                {
+                                    //	16
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_MonDatGiai;
+                                    //	17
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_NamDatGiai;
+                                    //	18
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_LoaiGiai;
+                                }
+
+                                if (item.phuongthuc_id == "5" || item.phuongthuc_id == "6")
+                                {
+                                    //	19
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DonViToChuc;
+                                    //	20
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_KetQuaDatDuoc;
+                                    //	21
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TongDiem_Chuan;
+                                    //	22
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_NgayThi;
+                                }
+
+                                if (item.phuongthuc_id == "2" || item.phuongthuc_id == "3")
+                                {
+                                    //	23
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TenMon1;
+                                    //	24
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiemMon1;
+                                    //	25
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TenMon2;
+                                    //	26
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiemMon2;
+                                    //	27
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TenMon3;
+                                    //	28
+                                    ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiemMon3;
+                                }
+                                //	29
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiemUTDT;
+                                //	30
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiemUTKV;
+                                //	31
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_NamTNTHPT;
+                                //	32
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_HocLuc12;
+                                //	33
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_HanhKiem12;
+                                //	34
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiemTB12;
+                                //	35
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TNCaoDang;
+                                //	36
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TNTrungCap;
+                                //	37
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_Tinh;
+                                //	38
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_Huyen;
+                                //	39
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_Xa;
+                                //	40
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_MaTinh12;
+                                //	41
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_MaTruong12;
+                                //	42
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DienThoai;
+                                //	43
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_Email;
+                                //	44
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DiaChiNhanGiayBao;
+                                //	45
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_NoiSinh;
+                                //	46
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DanToc;
+                                //	47
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_CCCD;
+                                //	48
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TenKhoa;
+                                //	49
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_TenTruongKhoa;
+                                //	50
+                                ews.Cells[row_item, col_item++].Value = item_colleger.Ex_DienThoaiTruongKhoa;//	
+
+                                //  ews.Cells[row_item, col_item++].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            }
+                            // xử lý cho các sheet đúng chuẩn:
+                            if (item.phuongthuc_id == "2" || item.phuongthuc_id == "3")
+                            {
+                                // Tạo đường kẻ cho bảng excel
+                                string str_add = "A1:AQ" + (ListThiSinh_Dkxt_Customs.ToList().Count + 1).ToString();
+                                ews.Cells[str_add].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                                // căn giữa cho cột thứ tự
+                                string stt_add = "A1:A" + (ListThiSinh_Dkxt_Customs.ToList().Count + 1).ToString();
+                                ews.Cells[stt_add].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                                // thêm tiêu đề cho các cột dữ liệu
+                                int colIndex = 1;
+                                // tạo ra tên các cột của 1 sheet excel
+                                string[] arr_col_number = { "TT","Họ lót","Tên","Ngày sinh","Giới tính","Mã ngành xét tuyển","Tên ngành xét tuyển","Tên khoa","Mã PTXT xét tuyển","Tên Phương thức","Mã tổ hợp xét tuyển","Thứ tự NV xét tuyển",
+                                                            "Điểm xét tuyển","Tổng điểm xét tuyển","Điểm khuyến khích","Tên môn 1","Điểm môn 1","Tên môn 2","Điểm môn 2","Tên môn 3","Điểm môn 3", "Điểm ƯT ĐT","Điểm ƯT KV","Năm tốt nghiệp THPT",
+                                                            "Học lực","Hạnh kiểm","Điểm TB lớp 12","TN cao đẳng","TN trung cấp","HK Tỉnh","HK Huyện","HK Xã","Mã tỉnh lớp 12","Mã trường lớp 12","Điện thoại", "Địa chỉ Email","Địa chỉ nhận giấy báo","Nơi sinh",
+                                                            "Dân tộc","Số CMND","Tên khoa","Tên trưởng khoa","SĐT trưởng khoa"};
+                                foreach (var item_title in arr_col_number)
+                                {
+                                    var cell = ews.Cells[1, colIndex];
+                                    cell.Value = item_title;
+                                    cell.Style.Font.Bold = true;
+                                    cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    cell.Style.WrapText = true;
+                                    colIndex++;
+                                }
+                                //// điều chỉnh độ rộng cho các cột
+                                for (int index_col = 1; index_col <= arr_col_number.Count(); index_col++)
+                                {
+                                    if (index_col == 1) { ews.Column(index_col).Width = 6; }       //1                                  
+                                }
+                            }
+                            if (item.phuongthuc_id == "4")
+                            {
+                                // Tạo đường kẻ cho bảng excel
+                                string str_add = "A1:AK" + (ListThiSinh_Dkxt_Customs.ToList().Count + 1).ToString();
+                                ews.Cells[str_add].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                                // căn giữa cho cột thứ tự
+                                string stt_add = "A1:A" + (ListThiSinh_Dkxt_Customs.ToList().Count + 1).ToString();
+                                ews.Cells[stt_add].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                                int colIndex = 1;
+                                // tạo ra tên các cột của 1 sheet excel
+                                string[] arr_col_number = { "TT","Họ lót","Tên","Ngày sinh","Giới tính","Mã ngành xét tuyển","Tên ngành xét tuyển","Tên khoa","Mã PTXT xét tuyển","Tên Phương thức","Thứ tự NV xét tuyển",
+                                                            "Điểm khuyến khích","Môn đạt giải","Năm đạt giải","Loại giải", "Điểm ƯT ĐT","Điểm ƯT KV","Năm tốt nghiệp THPT","Học lực","Hạnh kiểm","Điểm TB lớp 12","TN cao đẳng","TN trung cấp",
+                                                            "HK Tỉnh","HK Huyện","HK Xã","Mã tỉnh lớp 12","Mã trường lớp 12","Điện thoại", "Địa chỉ Email","Địa chỉ nhận giấy báo","Nơi sinh",
+                                                            "Dân tộc","Số CMND","Tên khoa","Tên trưởng khoa","SĐT trưởng khoa"};
+                                foreach (var item_title in arr_col_number)
+                                {
+                                    var cell = ews.Cells[1, colIndex];
+                                    cell.Value = item_title;
+                                    cell.Style.Font.Bold = true;
+                                    cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    cell.Style.WrapText = true;
+                                    colIndex++;
+                                }
+                                //// điều chỉnh độ rộng cho các cột
+                                for (int index_col = 1; index_col <= arr_col_number.Count(); index_col++)
+                                {
+                                    if (index_col == 1) { ews.Column(index_col).Width = 6; }       //1                                  
+                                }
+                            }
+                            if (item.phuongthuc_id == "5" || item.phuongthuc_id == "6")
+                            {
+                                // Tạo đường kẻ cho bảng excel
+                                string str_add = "A1:AL" + (ListThiSinh_Dkxt_Customs.ToList().Count + 1).ToString();
+                                ews.Cells[str_add].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                ews.Cells[str_add].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+
+                                // căn giữa cho cột thứ tự
+                                string stt_add = "A1:A" + (ListThiSinh_Dkxt_Customs.ToList().Count + 1).ToString();
+                                ews.Cells[stt_add].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                                int colIndex = 1;
+                                // tạo ra tên các cột của 1 sheet excel
+                                string[] arr_col_number = { "TT","Họ lót","Tên","Ngày sinh","Giới tính","Mã ngành xét tuyển","Tên ngành xét tuyển","Tên khoa","Mã PTXT xét tuyển","Tên Phương thức","Thứ tự NV xét tuyển",
+                                                            "Điểm khuyến khích", "Đơn vị tổ chức","Kết quả đạt được","Tổng điểm chuẩn","Ngày thi", "Điểm ƯT ĐT","Điểm ƯT KV","Năm tốt nghiệp THPT","Học lực","Hạnh kiểm",
+                                                            "Điểm TB lớp 12","TN cao đẳng","TN trung cấp","HK Tỉnh","HK Huyện","HK Xã","Mã tỉnh lớp 12","Mã trường lớp 12","Điện thoại", "Địa chỉ Email","Địa chỉ nhận giấy báo",
+                                                            "Nơi sinh", "Dân tộc","Số CMND","Tên khoa","Tên trưởng khoa","SĐT trưởng khoa"};
+                                foreach (var item_title in arr_col_number)
+                                {
+                                    var cell = ews.Cells[1, colIndex];
+                                    cell.Value = item_title;
+                                    cell.Style.Font.Bold = true;
+                                    cell.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                                    cell.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                                    cell.Style.WrapText = true;
+                                    colIndex++;
+                                }
+                                //// điều chỉnh độ rộng cho các cột
+                                for (int index_col = 1; index_col <= arr_col_number.Count(); index_col++)
+                                {
+                                    if (index_col == 1) { ews.Column(index_col).Width = 6; }       //1                                  
+                                }
+                            }
+
+
+                            // tạo hàng tiêu đề
+                            //ews.Cells[1, 1, 1, 4].Merge = true;
+                            ////worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
+                            //ews.Cells[1, 1].Style.Font.Bold = true;
+                            //ews.Cells[1, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            //ews.Cells[1, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                            //ews.Cells[2, 1].Value = "BAN RÀ SOÁT HỒ SƠ";
+                            //ews.Cells[2, 1, 2, 4].Merge = true;
+                            ////worksheet.Cells[FromRow, FromColumn, ToRow, ToColumn].Merge = true;
+                            //ews.Cells[2, 1].Style.Font.Bold = true;
+                            //ews.Cells[2, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                            //ews.Cells[2, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+
+                            // thiết lập khổ giấy cho file excel
+                            ews.PrinterSettings.PaperSize = ePaperSize.A4;
+                            ews.PrinterSettings.Orientation = eOrientation.Landscape;
+
+                            ews.PrinterSettings.TopMargin = 0.3M;
+                            ews.PrinterSettings.RightMargin = 0.1M;
+                            ews.PrinterSettings.BottomMargin = 0.3M;
+                            ews.PrinterSettings.LeftMargin = 0.1M;
+                            ews.PrinterSettings.HeaderMargin = 0;
+                            ews.PrinterSettings.FooterMargin = 0;
                         }
                     }
                     using (var memoryStream = new MemoryStream())

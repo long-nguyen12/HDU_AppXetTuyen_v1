@@ -47,7 +47,10 @@
         [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_HocBa { get; set; }
         [StringLength(4000)]
-        public string Dkxt_KQTQG_MinhChung_BangTN { get; set; } // lưu ý đây là minh chứng căn cước công dân
+        public string Dkxt_KQTQG_MinhChung_BangTN { get; set; }
+        [StringLength(4000)] 
+        public string Dkxt_KQTQG_MinhChung_CCCD { get; set; }
+        
         [StringLength(4000)]
         public string Dkxt_KQTQG_MinhChung_UuTien { get; set; }
         public string Dkxt_KQTQG_KinhPhi_SoThamChieu { get; set; }

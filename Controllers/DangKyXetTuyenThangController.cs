@@ -327,11 +327,13 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_LoaiGiai = model.Dkxt_LoaiGiai,
                 Dkxt_NamDatGiai = model.Dkxt_NamDatGiai,
                 Dkxt_MonDatGiai = model.Dkxt_MonDatGiai,
-                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,
-                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,
-                Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,
-                Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien,
+
                 Dkxt_MinhChung_Giai = model.Dkxt_MinhChung_Giai,
+                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,               
+                Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,
+                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,
+                Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien,
+              
                 Dkxt_KinhPhi_SoThamChieu = model.Dkxt_KinhPhi_SoThamChieu,
                 Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung,
                 Dkxt_KinhPhi_NgayThang_NopMC = model.Dkxt_KinhPhi_NgayThang_NopMC,

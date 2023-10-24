@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "dkxtthptqg";
+    ViewBag.Title = "Đăng ký xét tuyển";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -156,8 +156,12 @@
                                         <tr>
                                             <td>
                                                 <div class="row mt-0 md-0">
+                                                    <div class="col-lg-12 col-12" style="margin-top:0; margin-bottom:0">
+                                                        (<span id="sp_view_mc_cntn"> </span>)
+                                                    </div>
+
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2 mt-3">
+                                                        <div class="form-group mb-1 mt-1">
                                                             <div class="col-md-12">
                                                                 <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                                 <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>
@@ -194,7 +198,7 @@
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-0 mt-1">
-                                                            <label for="files_hocba_ts" class="form-label">Học bạ/Bằng tốt nghiệp</label>
+                                                            <label class="form-label">Học bạ (<span id="sp_view_mc_hocba"> </span>)</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" data-val-required="Vui lòng chọn file Vui lòng chọn file học bạ"
                                                                        accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
@@ -210,7 +214,7 @@
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-0">
-                                                            <label for="files_bangtn" class="form-label">Căn cước công dân</label>
+                                                            <label class="form-label">Bằng tốt nghiệp (<span id="sp_view_mc_bang"></span>)</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                                 <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
@@ -224,8 +228,23 @@
 
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
+                                                        <div class="form-group mb-0">
+                                                            <label class="form-label">Căn cước công dân  (<span id="sp_view_mc_cccd"></span>)</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
                                                         <div class="form-group mb-0 mt-1">
-                                                            <label for="files_giayto_uutien" class="form-label">Giấy tờ ưu tiên (nếu có)</label>
+                                                            <label class="form-label">Giấy tờ ưu tiên (<span id="sp_view_mc_uutien"> </span>) </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn giấy tờ ưu tiên" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                                 <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
@@ -242,18 +261,43 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-xxl-12" style="text-align:center">
-                                <input class="btn btn-primary col-5 col-auto" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
-                                <input class="btn btn-secondary col-5 col-auto" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
-                            </div>
-                        </div>
 
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col-xxl-12" style="text-align:center">
+                        <input class="btn btn-outline-primary col-lg-1 col-4" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý sửa" />
+                        <input class="btn btn-outline-secondary col-lg-1 col-4" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="div_view_img" style="display:none">
+        <div class="card card-header-actions">
+            <div class="card-header mt-0 mb-0">
+                <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
+                <div>
+                    <button class="btn btn-outline-danger btn-sm" type="button" id="bt_delete_img_mc">Xóa</button>
+                    <button class="btn btn-outline-primary btn-sm" type="button" id="bt_close_div_view_img">Đóng</button>
+                </div>
+            </div>
+            <div class="card-body" style="margin: 0px!important">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" id="div_item_view_minhchung">
+                            <img class="d-block w-100 img-hide" id="img_view" display:none">
+                            <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
@@ -284,6 +328,62 @@
 </div>
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_KQTQG_ID" />
 <input type="hidden" id="dkxt_thptqg_id_checkin" name="dkxt_thptqg_id_checkin" />
+<script>
+    function showimg(url, loaimc, id_key) {
+
+        $("#hiden_duongdan_file_xoa").val(url);
+        $('#hiden_loai_minhchung_xoa').val(loaimc);
+
+        var pdf_view = document.getElementById("pdf_view");
+        pdf_view.style.display = "none";
+        pdf_view.style.height = "0px";
+
+        $('#img_view').hide();
+        $("#img_view").attr("src", "");
+
+        if (loaimc == 1) {
+            $('#img_txt_card_hearder').text('Minh chứng chứng nhận tốt nghiệp');
+        }
+        if (loaimc == 2) {
+            $('#img_txt_card_hearder').text('Minh chứng học bạ');
+        }
+        if (loaimc == 3) {
+            $('#img_txt_card_hearder').text('Minh chứng bằng');
+        }
+        if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Minh chứng căn cước công dân');
+        }
+        if (loaimc == 5) {
+            $('#img_txt_card_hearder').text('Minh chứng giấy tờ khác');
+        }
+        var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
+
+        if (lastChar.toLowerCase() != ".pdf") {
+            pdf_view.style.display = "none";
+            pdf_view.style.height = "0px";
+
+            $("#img_view").attr("src", url);
+            $("#img_view").show();
+        }
+        if (lastChar.toLowerCase() === ".pdf") {
+            $("#img_view").hide();
+            pdf_view.style.display = "inline";
+            pdf_view.style.height = "700px";
+            $("#pdf_view").attr("src", url);
+            $("#pdf_view").show();
+        }
+        $('#div_view_img').show();
+    }
+    $(document).ready(function () {
+        $('#bt_close_div_view_img').click(function () {
+            $('#div_view_img').hide();
+            $("#img_view").attr("src", "");
+            $("#pdf_view").attr("src", "");
+            $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
+        });
+    });
+</script>
+
 <script>
     $(document).ready(function () {
 
@@ -335,6 +435,124 @@
                     $('#txt_m3').val(data.Dkxt_Diem_M3.Diem);
 
                     $('#txt_tong_diem').val(data.Dkxt_KQTQG_Diem_Tong);
+
+                    $('#sp_view_mc_cntn').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_CNTotNghiep) {
+                        const ArrCNTN = data.Dkxt_KQTQG_MinhChung_CNTotNghiep.split("#");
+                        if (ArrCNTN.length > 0) {
+                            for (i = 0; i < ArrCNTN.length; i++) {
+                                if (ArrCNTN[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrCNTN[i]}', 1,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_cntn').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_cntn').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_cntn').append(str_a);
+                    }
+
+                    $('#sp_view_mc_hocba').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_HocBa) {
+                        const ArrMCHocBa = data.Dkxt_KQTQG_MinhChung_HocBa.split("#");
+                        if (ArrMCHocBa.length > 0) {
+
+                            for (i = 0; i < ArrMCHocBa.length; i++) {
+                                if (ArrMCHocBa[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCHocBa[i]}', 2,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_hocba').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_hocba').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_hocba').append(str_a);
+                    }
+
+                    $('#sp_view_mc_bang').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_BangTN) {
+                        const ArrMCBang = data.Dkxt_KQTQG_MinhChung_BangTN.split("#");
+                        if (ArrMCBang.length > 0) {
+
+                            for (i = 0; i < ArrMCBang.length; i++) {
+                                if (ArrMCBang[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCBang[i]}', 3,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_bang').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_bang').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_bang').append(str_a);
+                    }
+
+                    $('#sp_view_mc_cccd').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_CCCD) {
+                        const ArrMCCCCD = data.Dkxt_KQTQG_MinhChung_CCCD.split("#");
+                        if (ArrMCCCCD.length > 0) {
+
+                            for (i = 0; i < ArrMCCCCD.length; i++) {
+                                if (ArrMCCCCD[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCCCCD[i]}', 4,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_cccd').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_cccd').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_cccd').append(str_a);
+                    }
+
+                    $('#sp_view_mc_uutien').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_UuTien) {
+                        const ArrMCUutien = data.Dkxt_KQTQG_MinhChung_UuTien.split("#");
+                        if (ArrMCUutien.length > 0) {
+
+                            for (i = 0; i < ArrMCUutien.length; i++) {
+                                if (ArrMCUutien[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCUutien[i]}', 5,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_uutien').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_uutien').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_uutien').append(str_a);
+                    }
                 }
             },
             error: function (errormessage) {
@@ -394,10 +612,27 @@
     // phần xử lý dữ liệu cho các tệp đính kèm
 
     var formdata_file_chungnhan_kqtn = new FormData(); //FormData object chung nhan tot nghiep
-    var formdata_file_bang_tn = new FormData(); //FormData object bang TN
     var formdata_file_hocba_ts = new FormData(); //FormData object hoc ba
+    var formdata_file_bang_tn = new FormData(); //FormData object bang TN
+    var formdata_file_cancuoc_congdan = new FormData(); //FormData object cancuoccongdan
     var formdata_file_giayto_uutien = new FormData(); //FormData object giaytout
+
     $(document).ready(function () {
+
+        $("#files_cancuoc_congdan").on("change", function () {
+            var files_cancuoc_congdan = document.getElementById('files_cancuoc_congdan');
+            for (i = 0; i < files_cancuoc_congdan.files.length; i++) {
+                var sfilename_cc = files_cancuoc_congdan.files[i].name;
+                let srandomid_cc = Math.random().toString(36).substring(7);
+                formdata_file_cancuoc_congdan.append(sfilename_cc, files_cancuoc_congdan.files[i]);
+
+                var markup_cccd = "<tr id='" + srandomid_cc + "'><td>" + sfilename_cc + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_CCCD_Upload(\"" + srandomid_cc + "\",\"" + sfilename_cc + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_CCCD_View tbody").append(markup_cccd);
+            }
+            chkatchtbl_cc_cd();
+            $('#files_cancuoc_congdan').val('');
+        });
+
         $("#files_chungnhan_kqtn").on("change", function () {
             var files_chungnhan_kqtn = document.getElementById('files_chungnhan_kqtn');
             for (i = 0; i < files_chungnhan_kqtn.files.length; i++) {
@@ -453,6 +688,20 @@
             $('#files_giayto_uutien').val('');
         });
     });
+    function DeleteFile_CCCD_Upload(Fileid, FileName) {
+        formdata_file_cancuoc_congdan.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl_cc_cd();
+    }
+    function chkatchtbl_cc_cd() {
+        if ($('#FilesList_CCCD_View tr').length > 0) {
+            $("#FilesList_CCCD_View").css("visibility", "visible");
+        }
+        else {
+            $("#FilesList_CCCD_View").css("visibility", "hidden");
+        }
+    }
+
     function DeleteFile_CNKQTN_Upload(Fileid, FileName) {
         formdata_file_chungnhan_kqtn.delete(FileName)
         $("#" + Fileid).remove();
@@ -530,14 +779,16 @@
             let _dkxt_KQTQG_Diem_Tong = parseFloat(_kxt_KQTQG_Diem_M1.Diem) + parseFloat(_kxt_KQTQG_Diem_M2.Diem) + parseFloat(_kxt_KQTQG_Diem_M3.Diem);
 
             let _dkxt_KQTQG_MinhChung_CNTotNghiep = "";
-            let _dkxt_KQTQG_MinhChung_BangTN = "";
             let _dkxt_KQTQG_MinhChung_HocBa = "";
+            let _dkxt_KQTQG_MinhChung_BangTN = "";
+            let _dkxt_KQTQG_MinhChung_CCCD = "";
             let _dkxt_KQTQG_MinhChung_UuTien = "";
 
             /* thực hiện upload file*/
             let so_file_cn_totnghiep = 0;
-            let so_file_bang_tn = 0;
             let so_file_hocba_ts = 0;
+            let so_file_bang_tn = 0;
+            let so_file_cc_congdan = 0;
             let so_file_giayto_uutien = 0;
 
             let formData_All = new FormData();
@@ -546,13 +797,17 @@
                 formData_All.append(item[0], item[1]);
                 so_file_cn_totnghiep++;
             }
+            for (const item of formdata_file_hocba_ts) {
+                formData_All.append(item[0], item[1]);
+                so_file_hocba_ts++;
+            }
             for (const item of formdata_file_bang_tn) {
                 formData_All.append(item[0], item[1]);
                 so_file_bang_tn++;
             }
-            for (const item of formdata_file_hocba_ts) {
+            for (const item of formdata_file_cancuoc_congdan) {
                 formData_All.append(item[0], item[1]);
-                so_file_hocba_ts++;
+                so_file_cc_congdan++;
             }
             for (const item of formdata_file_giayto_uutien) {
                 formData_All.append(item[0], item[1]);
@@ -560,8 +815,9 @@
             }
 
             formData_All.append('so_file_cn_totnghiep', so_file_cn_totnghiep);
-            formData_All.append('so_file_bang_tn', so_file_bang_tn);
             formData_All.append('so_file_hocba_ts', so_file_hocba_ts);
+            formData_All.append('so_file_bang_tn', so_file_bang_tn);
+            formData_All.append('so_file_cc_congdan', so_file_cc_congdan);
             formData_All.append('so_file_giayto_uutien', so_file_giayto_uutien);
 
             $.ajax({
@@ -573,8 +829,9 @@
                 async: false,
                 success: function (res) {
                     _dkxt_KQTQG_MinhChung_CNTotNghiep = res._KQTQG_MinhChung_CNTotNghiep;
-                    _dkxt_KQTQG_MinhChung_BangTN = res._KQTQG_MinhChung_BangTN;
                     _dkxt_KQTQG_MinhChung_HocBa = res._KQTQG_MinhChung_HocBa;
+                    _dkxt_KQTQG_MinhChung_BangTN = res._KQTQG_MinhChung_BangTN;
+                    _dkxt_KQTQG_MinhChung_CCCD = res._KQTQG_MinhChung_CCCD;
                     _dkxt_KQTQG_MinhChung_UuTien = res._KQTQG_MinhChung_UuTien;
                 },
                 error: function (err) {
@@ -598,12 +855,14 @@
                 Dkxt_KQTQG_Diem_Tong: _dkxt_KQTQG_Diem_Tong.toString(),
 
                 Dkxt_KQTQG_MinhChung_CNTotNghiep: _dkxt_KQTQG_MinhChung_CNTotNghiep,
-                Dkxt_KQTQG_MinhChung_BangTN: _dkxt_KQTQG_MinhChung_BangTN,
                 Dkxt_KQTQG_MinhChung_HocBa: _dkxt_KQTQG_MinhChung_HocBa,
+                Dkxt_KQTQG_MinhChung_BangTN: _dkxt_KQTQG_MinhChung_BangTN,
+                Dkxt_KQTQG_MinhChung_CCCD: _dkxt_KQTQG_MinhChung_CCCD,
                 Dkxt_KQTQG_MinhChung_UuTien: _dkxt_KQTQG_MinhChung_UuTien,
             }
             /*hết phần khai báo đối tượng*/
             console.log(data_Obj_edit);
+           
 
             $("#loadingModal").modal("show");
             $.ajax({

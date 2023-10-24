@@ -162,10 +162,11 @@ namespace HDU_AppXetTuyen.Controllers
                     ToHopMon = x.ToHopMon.Thm_MaToHop
                 },
                 Dkxt_ID = x.Dkdt_NK_ID,
-                Dkxt_TrangThai = x.Dkdt_NK_TrangThai,
+                Dkxt_TrangThai_HoSo = x.Dkdt_TrangThai_HoSo,
 
                 DotXT_ID = new { TenDotXet = "Ngày " + x.DotXetTuyen.Dxt_ThoiGian_KetThuc },
-                Dkxt_TrangThai_KetQua = x.Dkdt_NK_TrangThai_KetQua,
+                Dkxt_TrangThai_KetQua = x.Dkdt_TrangThai_KetQua,
+
             }).ToList();
 
             return Json(new

@@ -25,11 +25,13 @@ namespace HDU_AppXetTuyen.Controllers
         {
             return View();
         }
+        [ThiSinhSessionCheck]
         public ActionResult DanhGiaEdit(int? Dkxt_ID)
         {
             ViewBag.Dkxt_ID = Dkxt_ID;
             return View();
         }
+        
         public JsonResult GetNguyenVongByID(DangKyXetTuyenKhac entity)
         {
             db = new DbConnecttion();
@@ -69,7 +71,7 @@ namespace HDU_AppXetTuyen.Controllers
                 Nganh_GhiChu = model.Nganh.Nganh_GhiChu,
                 Nganh_ID = model.Nganh_ID,
 
-                Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
+                
                 Dkxt_NguyenVong = model.Dkxt_NguyenVong,
                 DotXT_ID = model.DotXT_ID,
                 Dkxt_GhiChu = model.Dkxt_GhiChu,
@@ -77,12 +79,16 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_DonViToChuc = model.Dkxt_DonViToChuc,
                 Dkxt_KetQuaDatDuoc = model.Dkxt_KetQuaDatDuoc,
                 Dkxt_NgayDuThi = model.Dkxt_NgayDuThi,
-                Dkxt_TongDiem = model.Dkxt_TongDiem,
-                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,
+                Dkxt_TongDiem = model.Dkxt_TongDiem,   
+                
                 Dkxt_TrangThai_KetQua = model.Dkxt_TrangThai_KetQua,
-                Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,
-                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,
+                Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
+                Dkxt_TrangThai_KinhPhi =model.Dkxt_TrangThai_KinhPhi,
+               
                 Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua,
+                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,               
+                Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,
+                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,              
                 Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien,
             };
 

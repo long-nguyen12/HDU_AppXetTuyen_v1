@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewBag.Title = "DanhGia";
+﻿@{
+    ViewBag.Title = "Đăng ký xét tuyển";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -52,10 +51,7 @@
         }
         window.onresize = reportWindowSize;
     })
-    $(document).ready(function () {
-        //GetAllKhoiNganh();
-        //GetAllChungChi();
-    })
+   
 
 </script>
 <div class="container-fluid px-12">
@@ -68,7 +64,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-xxl-4">
-                        <table class="table table-hover">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th colspan="2">Chọn ngành và loại kết quả xét <font color="red">(*)</font></th>
@@ -134,7 +130,7 @@
                     <div class="col-xxl-4">
                         <div class="row md-0">
                             <div class="col-xxl-12">
-                                <table class="table table-hover">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th colspan="2" style="vertical-align:middle;">Thông tin kết quả nộp xét tuyển <font color="red">(*)</font></th>
@@ -205,7 +201,10 @@
                         <div class="row mb-3">
                             <div class="col-xxl-12">
                                 <div class="form-group mb-2">
-                                    <label class="form-label">Chứng nhận</label>
+                                    <label class="form-label col-md-12">
+                                        Chứng nhận
+                                        (<span id="sp_view_mc_ketqua"></span>)
+                                    </label>
                                     <div class="col-md-12">
                                         <input class="form-control" id="files_chungnhan" multiple="multiple" name="files_chungnhan" type="file" accept="application/pdf,.png, .jpeg, .jpg" />
                                         <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
@@ -224,7 +223,7 @@
                     <div class="col-xxl-4">
                         <div class="row md-0">
                             <div class="col-xxl-12">
-                                <table class="table table-hover">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th style="vertical-align:middle;">Tệp minh chứng khác</th>
@@ -233,10 +232,13 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <div class="row mb-3">
+                                                <div class="row">
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
-                                                            <label class="form-label">Học bạ </label>
+                                                        <div class="form-group">
+                                                            <label class="form-label">
+                                                                Học bạ
+                                                                (<span id="sp_view_mc_hocba"></span>)
+                                                            </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
@@ -250,8 +252,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
-                                                            <label class="form-label">Căn cước công dân</label>
+                                                        <div class="form-group">
+                                                            <label class="form-label col-12">
+                                                                Căn cước công dân (<span id="sp_view_mc_cccd"></span>)
+                                                            </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
@@ -265,8 +269,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
-                                                            <label class="form-label">Bằng Tốt nghiệp</label>
+                                                        <div class="form-group">
+                                                            <label class="form-label col-12">
+                                                                Bằng Tốt nghiệp
+                                                                (<span id="sp_view_mc_bang_tn"></span>)
+                                                            </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
@@ -280,8 +287,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
-                                                            <label class="form-label">Minh chứng ưu tiên (Nếu có)</label>
+                                                        <div class="form-group">
+                                                            <label class="form-label col-12">
+                                                                Minh chứng ưu tiên
+                                                                (<span id="sp_view_mc_uutien"></span>)
+                                                            </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
@@ -311,8 +321,33 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-xxl-12" style="text-align:center">
-                        <input class="btn btn-primary" type="button" value="Đồng ý" onclick="SubmitData()" />
-                        <input class="btn btn-secondary" type="button" value="Hủy bỏ" onclick="bt_HuyBo_Dkxt_NVM_OnClick()" />
+                        <input class="btn btn-outline-primary" type="button" value="Đồng ý sửa" onclick="SubmitData()" />
+                        <input class="btn btn-outline-secondary" type="button" value="Hủy bỏ" onclick="bt_HuyBo_Dkxt_NVM_OnClick()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_view_img" style="display:none">
+        <div class="row">
+            <div class="col-xl-12 mt-2">
+                <div class="card card-header-actions">
+                    <div class="card-header mt-0 mb-0">
+                        <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
+                        <div>
+                            <button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin: 0px!important">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" id="div_item_view_minhchung">
+                                    <img class="d-block w-100 img-hide" id="img_view" display:none">
+                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -381,7 +416,126 @@
                     $('#dkxt_id_checkin').val(data.Dkxt_ID);
 
                     GetAllKhoiNganh(data.KhoiNganh_ID, data.Nganh_ID, data.ChungChi_ID);
-                    /*InitData(data.Dkxt_MonDatGiai, data.Dkxt_LoaiGiai);*/
+                   
+                    $('#sp_view_mc_ketqua').empty();
+
+                    if (data.Dkxt_MinhChung_KetQua) {
+                        const ArrMCKetQua = data.Dkxt_MinhChung_KetQua.split("#");
+                        if (ArrMCKetQua.length > 0) {
+
+                            for (i = 0; i < ArrMCKetQua.length; i++) {
+                                if (ArrMCKetQua[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCKetQua[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    $('#sp_view_mc_ketqua').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_ketqua').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_ketqua').append(str_a);
+                    }
+
+                    $('#sp_view_mc_hocba').empty();
+
+                    if (data.Dkxt_MinhChung_HB) {
+                        const ArrMCHocBa = data.Dkxt_MinhChung_HB.split("#");
+                        if (ArrMCHocBa.length > 0) {
+
+                            for (i = 0; i < ArrMCHocBa.length; i++) {
+                                if (ArrMCHocBa[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCHocBa[i]}', 2,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    $('#sp_view_mc_hocba').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_hocba').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_hocba').append(str_a);
+                    }
+
+                    $('#sp_view_mc_cccd').empty();
+
+                    if (data.Dkxt_MinhChung_CCCD) {
+                        const ArrMCCcCd = data.Dkxt_MinhChung_CCCD.split("#");
+                        if (ArrMCCcCd.length > 0) {
+
+                            for (i = 0; i < ArrMCCcCd.length; i++) {
+                                if (ArrMCCcCd[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCCcCd[i]}', 3,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    $('#sp_view_mc_cccd').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_cccd').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_cccd').append(str_a);
+                    }
+
+                    $('#sp_view_mc_bang_tn').empty();
+
+                    if (data.Dkxt_MinhChung_Bang) {
+                        const ArrMCBangTN = data.Dkxt_MinhChung_Bang.split("#");
+                        if (ArrMCBangTN.length > 0) {
+
+                            for (i = 0; i < ArrMCBangTN.length; i++) {
+                                if (ArrMCBangTN[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCBangTN[i]}', 4,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    $('#sp_view_mc_bang_tn').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_bang_tn').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_bangtn').append(str_a);
+                    }
+
+                    $('#sp_view_mc_uutien').empty();
+
+                    if (data.Dkxt_MinhChung_UuTien) {
+                        const ArrMCUutien = data.Dkxt_MinhChung_UuTien.split("#");
+                        if (ArrMCUutien.length > 0) {
+
+                            for (i = 0; i < ArrMCUutien.length; i++) {
+                                if (ArrMCUutien[i].length > 0) {
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCUutien[i]}', 5,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    $('#sp_view_mc_uutien').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_uutien').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_uutien').append(str_a);
+                    }
                 }
             },
             error: function (errormessage) {
@@ -817,6 +971,61 @@
     $(document).ready(function () {
         $('#bt_xuat_phieu_tong_hop_kq').click(function () {
             window.location.href = '/ExportFile/DownloadFile_XetTuyenDGNL_DGTD';
+        });
+    });
+</script>
+<script>
+    function showimg(url, loaimc, id_key) {
+
+        $("#hiden_duongdan_file_xoa").val(url);
+        $('#hiden_loai_minhchung_xoa').val(loaimc);
+
+        var pdf_view = document.getElementById("pdf_view");
+        pdf_view.style.display = "none";
+        pdf_view.style.height = "0px";
+
+        $('#img_view').hide();
+        $("#img_view").attr("src", "");
+
+        if (loaimc == 1) {
+            $('#img_txt_card_hearder').text('Hình ảnh minh kết quả thi');
+        }
+        if (loaimc == 2) {
+            $('#img_txt_card_hearder').text('Minh chứng học bạ');
+        }
+        if (loaimc == 3) {
+            $('#img_txt_card_hearder').text('Minh chứng CMND');
+        }
+        if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Bằng tót nghiệp');
+        }
+        if (loaimc == 5) {
+            $('#img_txt_card_hearder').text('Giấy tờ khác');
+        }
+        var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
+
+        if (lastChar.toLowerCase() != ".pdf") {
+            pdf_view.style.display = "none";
+            pdf_view.style.height = "0px";
+
+            $("#img_view").attr("src", url);
+            $("#img_view").show();
+        }
+        if (lastChar.toLowerCase() === ".pdf") {
+            $("#img_view").hide();
+            pdf_view.style.display = "inline";
+            pdf_view.style.height = "700px";
+            $("#pdf_view").attr("src", url);
+            $("#pdf_view").show();
+        }
+        $('#div_view_img').show();
+    }
+    $(document).ready(function () {
+        $('#bt_close_div_view_img').click(function () {
+            $('#div_view_img').hide();
+            $("#img_view").attr("src", "");
+            $("#pdf_view").attr("src", "");
+            $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
         });
     });
 </script>
