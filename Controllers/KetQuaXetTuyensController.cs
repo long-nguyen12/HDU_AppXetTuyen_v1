@@ -114,8 +114,8 @@ namespace HDU_AppXetTuyen.Controllers
                     Dkxt_MonThi = n.Dkdt_NK_MonThi,
                     DotXT_ID = new { TenDot = n.DotXetTuyen.Dxt_Ten },
                     Dkdt_NK_NgayThi = new{ NgayThi = n.DotXetTuyen.Dxt_ThoiGian_KetThuc },
-                    Dkxt_TrangThai_KetQua = n.Dkdt_NK_TrangThai_KetQua,
-                    Dkxt_TrangThai = n.Dkdt_NK_TrangThai,
+                    Dkxt_TrangThai_KetQua = n.Dkdt_TrangThai_KetQua,
+                    Dkxt_TrangThai_HoSo = n.Dkdt_TrangThai_HoSo,
         
                 }).ToList();
 

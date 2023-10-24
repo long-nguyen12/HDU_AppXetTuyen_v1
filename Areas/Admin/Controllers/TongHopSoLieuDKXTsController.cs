@@ -27,7 +27,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         #region Theo dõi hồ sơ thí sinh
         private IList<TongHopSoLieuXetTuyen> ListHoSoXetTuyen;
         public ActionResult TheoDoiNopHoSo(string filteriPhuongThuc, string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
-            string filteriDotxt, string sortOrder, int? page)
+            string sortOrder, int? page)
         {
             ListHoSoXetTuyen = new List<TongHopSoLieuXetTuyen>();
             db = new DbConnecttion();
@@ -165,7 +165,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 NgayDangKy = s.Dkxt_NgayDangKy,
                 NganhID = s.Nganh.Nganh_ID,
                 TenNganh = s.Nganh.Nganh_TenNganh,
-                TenToHop = s.Dkxt_MonDatGiai + " - " +s.Dkxt_LoaiGiai,//s.ToHopMon.Thm_TenToHop,
+                TenToHop = s.Dkxt_MonDatGiai + " - " + s.Dkxt_LoaiGiai,//s.ToHopMon.Thm_TenToHop,
 
                 MinhChung_HB = s.Dkxt_MinhChung_HB,
                 MinhChung_Bang = s.Dkxt_MinhChung_Bang,
@@ -348,6 +348,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 {
                     filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
                 }
+                if (_item == "3")
+                {
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Sửa,  chưa KT" });
+                }
                 if (_item == "9")
                 {
                     filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, Đúng" });
@@ -367,13 +371,17 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             foreach (var _item in list_items_hoso)
             {
-                if (_item == "1")
+                if (_item == "0")
                 {
                     filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
                 }
+                if (_item == "1")
+                {
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                }
                 if (_item == "2")
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
                 }
                 if (_item == "9")
                 {
@@ -469,19 +477,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #region Tham số khác
             if (searchString != null) { page = 1; }
             else { searchString = currentFilter; }
-          
+
             ViewBag.PhuongThucFilteri = filteriPhuongThuc;
             ViewBag.NganhHocFilteri = filteriNganhHoc;
             ViewBag.LePhiFilteri = filteriLePhi;
             ViewBag.HoSoFilteri = filteriHoSo;
             ViewBag.SearchString = searchString;
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.pageCurren = page;           
+            ViewBag.pageCurren = page;
             ViewBag.totalRecod = ListHoSoXetTuyen.Count();
 
             #endregion
             return View(ListHoSoXetTuyen.ToPagedList(pageNumber, pageSize));
-          
+
         }
         #endregion
         #region Kiểm tra hồ sơ xét tuyển dùng kết quả trung học phổ thông
@@ -509,7 +517,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.Dkxt_ID = Dkxt_ID;
             return View();
         }
-       
+
         public JsonResult DangKyXetTuyen_KQTHPTQG_GetByID(DangKyXetTuyenKQTQG entity)
         {
             db = new DbConnecttion();
@@ -532,11 +540,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             string _ut_doituong_ten_diem = model.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + ": ƯT " + model.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien + " đ";
             string _ut_khuvuv_ten_diem = model.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + ": ƯT " + model.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien + " đ"; ;
 
-            DiemThiGQMon diemmon1 = JsonConvert.DeserializeObject<DiemThiGQMon>(model.Dkxt_KQTQG_Diem_M1);
-            DiemThiGQMon diemmon2 = JsonConvert.DeserializeObject<DiemThiGQMon>(model.Dkxt_KQTQG_Diem_M2);
-            DiemThiGQMon diemmon3 = JsonConvert.DeserializeObject<DiemThiGQMon>(model.Dkxt_KQTQG_Diem_M3);
+            MonDiemThiQG diemmon1 = JsonConvert.DeserializeObject<MonDiemThiQG>(model.Dkxt_KQTQG_Diem_M1);
+            MonDiemThiQG diemmon2 = JsonConvert.DeserializeObject<MonDiemThiQG>(model.Dkxt_KQTQG_Diem_M2);
+            MonDiemThiQG diemmon3 = JsonConvert.DeserializeObject<MonDiemThiQG>(model.Dkxt_KQTQG_Diem_M3);
             string ThiSinh_GT = "Nam";
-            if(model.ThiSinhDangKy.ThiSinh_GioiTinh == 1) { ThiSinh_GT = "Nữ"; }
+            if (model.ThiSinhDangKy.ThiSinh_GioiTinh == 1) { ThiSinh_GT = "Nữ"; }
             var data_return = new
             {
                 ThiSinh_HoLot = model.ThiSinhDangKy.ThiSinh_HoLot,
@@ -549,7 +557,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
                 ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
                 ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
-                ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,  
+                ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
                 ThiSinh_DCNhanGiayBao = model.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
                 ThiSinh_HoKhauThuongTru = model.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
 
@@ -590,6 +598,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 Dkxt_KQTQG_TrangThai_KinhPhi = model.Dkxt_KQTQG_TrangThai_KinhPhi,
                 Dkxt_KQTQG_TrangThai_HoSo = model.Dkxt_KQTQG_TrangThai_HoSo,
                 Dkxt_KQTQG_TrangThai_KetQua = model.Dkxt_KQTQG_TrangThai_KetQua,
+                Dkxt_ThongBaoKiemDuyet_HoSo = model.Dkxt_ThongBaoKiemDuyet_HoSo,
 
             };
 
@@ -600,7 +609,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             db = new DbConnecttion();
             var model = db.DangKyXetTuyenHBs.Include(x => x.ThiSinhDangKy).Where(x => x.Dkxt_HB_ID == entity.Dkxt_HB_ID).FirstOrDefault();
-            
+
             var khoinganh_id = db.Nganhs.Where(x => x.Nganh_ID == model.Nganh_ID).FirstOrDefault().KhoiNganh_ID;
 
             string _xeploai_hocluc_12 = "";
@@ -617,11 +626,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
 
             string _ut_doituong_ten_diem = model.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + ": ƯT " + model.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien + " đ";
-            string _ut_khuvuv_ten_diem = model.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + ": ƯT " + model.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien + " đ"; 
+            string _ut_khuvuv_ten_diem = model.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + ": ƯT " + model.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien + " đ";
 
-            MonDiem diemmon1 = JsonConvert.DeserializeObject<MonDiem>(model.Dkxt_HB_Diem_M1);
-            MonDiem diemmon2 = JsonConvert.DeserializeObject<MonDiem>(model.Dkxt_HB_Diem_M2);
-            MonDiem diemmon3 = JsonConvert.DeserializeObject<MonDiem>(model.Dkxt_HB_Diem_M3);
+            MonDiemHB diemmon1 = JsonConvert.DeserializeObject<MonDiemHB>(model.Dkxt_HB_Diem_M1);
+            MonDiemHB diemmon2 = JsonConvert.DeserializeObject<MonDiemHB>(model.Dkxt_HB_Diem_M2);
+            MonDiemHB diemmon3 = JsonConvert.DeserializeObject<MonDiemHB>(model.Dkxt_HB_Diem_M3);
             string ThiSinh_GT = "Nam";
             if (model.ThiSinhDangKy.ThiSinh_GioiTinh == 1) { ThiSinh_GT = "Nữ"; }
             var data_return = new
@@ -674,6 +683,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 Dkxt_HB_KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung,
                 Dkxt_HB_KinhPhi_NgayThang_NopMC = model.Dkxt_HB_KinhPhi_NgayThang_NopMC,
                 Dkxt_HB_KinhPhi_NgayThang_CheckMC = model.Dkxt_HB_KinhPhi_NgayThang_CheckMC,
+                Dkxt_ThongBaoKiemDuyet_HoSo = model.Dkxt_ThongBaoKiemDuyet_HoSo,
 
                 Dkxt_HB_TrangThai_KinhPhi = model.Dkxt_HB_TrangThai_KinhPhi,
                 Dkxt_HB_TrangThai_HoSo = model.Dkxt_HB_TrangThai_HoSo,
@@ -751,6 +761,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung,
                 Dkxt_KinhPhi_NgayThang_NopMC = model.Dkxt_KinhPhi_NgayThang_NopMC,
                 Dkxt_KinhPhi_NgayThang_CheckMC = model.Dkxt_KinhPhi_NgayThang_CheckMC,
+                Dkxt_ThongBaoKiemDuyet_HoSo = model.Dkxt_ThongBaoKiemDuyet_HoSo,
 
                 Dkxt_TrangThai_KinhPhi = model.Dkxt_TrangThai_KinhPhi,
                 Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
@@ -806,7 +817,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_HanhKiemLop12 = _xeploai_hanhkiem_12,
 
                 Dkxt_ID = model.Dkxt_ID,
-                Dkxt_ChungChi_Ten =  model.ChungChi.ChungChi_Ten ,
+                Dkxt_ChungChi_Ten = model.ChungChi.ChungChi_Ten,
                 ThiSinh_ID = model.ThiSinh_ID,
                 Ptxt_ID = model.Ptxt_ID,
                 ChungChi_ID = model.ChungChi_ID,
@@ -816,7 +827,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 Nganh_TenNganh = model.Nganh.Nganh_TenNganh,
                 Nganh_ID = model.Nganh_ID,
 
-                Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
+              
                 Dkxt_NguyenVong = model.Dkxt_NguyenVong,
                 DotXT_ID = model.DotXT_ID,
                 Dkxt_GhiChu = model.Dkxt_GhiChu,
@@ -825,18 +836,28 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 Dkxt_KetQuaDatDuoc = model.Dkxt_KetQuaDatDuoc,
                 Dkxt_NgayDuThi = model.Dkxt_NgayDuThi,
                 Dkxt_TongDiem = model.Dkxt_TongDiem,
-                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,
-                Dkxt_TrangThai_KetQua = model.Dkxt_TrangThai_KetQua,
+
+                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,              
                 Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,
                 Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,
                 Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua,
                 Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien,
+              
+                Dkxt_KinhPhi_SoThamChieu = model.Dkxt_KinhPhi_SoThamChieu,
+                Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung,
+                Dkxt_KinhPhi_NgayThang_NopMC = model.Dkxt_KinhPhi_NgayThang_NopMC,
+                Dkxt_KinhPhi_NgayThang_CheckMC = model.Dkxt_KinhPhi_NgayThang_CheckMC,
+                Dkxt_ThongBaoKiemDuyet_HoSo = model.Dkxt_ThongBaoKiemDuyet_HoSo,
+
+                Dkxt_TrangThai_KinhPhi = model.Dkxt_TrangThai_KinhPhi,
+                Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
+                Dkxt_TrangThai_KetQua = model.Dkxt_TrangThai_KetQua,
             };
 
             return Json(new { success = true, data = data_return, }, JsonRequestBehavior.AllowGet);
         }
-      
-         #endregion
+
+        #endregion
 
         #region Theo dõi thí sinh nộp kinh phí
         private IList<TongHopSoLieuXetTuyen> ListLePhiXetTuyen;

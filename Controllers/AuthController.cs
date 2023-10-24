@@ -402,6 +402,7 @@ namespace HDU_AppXetTuyen.Controllers
         #endregion
 
         #region RegisterColleger
+
         public ActionResult RegisterColleger()
         {
             if (Session["login_session"] != null)

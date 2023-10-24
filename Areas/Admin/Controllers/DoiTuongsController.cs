@@ -18,7 +18,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult Index()
         {
-            return View(db.DoiTuongs.ToList());
+            return View(db.DoiTuongs.Where(x => x.DoiTuong_ID >0).ToList());
         }
 
         // GET: Admin/DoiTuongs/Details/5

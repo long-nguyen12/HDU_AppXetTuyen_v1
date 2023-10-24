@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -175,6 +175,7 @@
     <Compile Include="Areas\Admin\Controllers\HuyensController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LibraryJsonController.cs" />
     <Compile Include="Areas\Admin\Controllers\KinhPhisController.cs" />
     <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
@@ -303,6 +304,8 @@
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\static\MauXuat01.PNG" />
+    <Content Include="Content\static\MauXuat02.PNG" />
     <Content Include="Content\StylesAdminLogin.css" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\toastr.css" />
@@ -392,14 +395,10 @@
     <Content Include="Areas\Admin\Views\AdminAuth\Register.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkxtth.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTongHop.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DoiTuongs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\DoiTuongs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\DoiTuongs\Index.cshtml" />
@@ -418,11 +417,6 @@
     <Content Include="Areas\Admin\Views\KhuVucs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\KhuVucs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\KhuVucs\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\LienCapTieuHocs\Index.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Create.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NamHocs\Index.cshtml" />
@@ -480,21 +474,20 @@
     <Content Include="Areas\Admin\Views\TruongLienCaps\DetailsTh.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\DeleteTh.cshtml" />
     <Content Include="Areas\Admin\Views\TruongLienCaps\EditTh.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view_OK.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_viewOK.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_viewOK.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqCcnn.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqCcnn_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\DsHvDangKy_Update.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminUpdateHocVien.cshtml" />
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
-    <Content Include="Areas\Admin\Views\temp.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopLePhi.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSo.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqKhac_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - Copy.cshtml" />
     <Content Include="Areas\Admin\Views\DotXetTuyens\NangKhieu.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -510,24 +503,6 @@
     <Content Include="Scripts\libs_font-awesome_6.1.1_js_all.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\scripts.js" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.bundle.js" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.esm.js" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.esm.min.js" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.js" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.min.js" />
-    <None Include="Scripts\ScriptsOLD\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery-3.4.1.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery-3.4.1.slim.min.js" />
-    <None Include="Scripts\ScriptsOLD\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery.validate.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery.validate.min.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\ScriptsOLD\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\ScriptsOLD\modernizr-2.8.3.js" />
-    <Content Include="Scripts\ScriptsOLD\scripts.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Uploads\DKDTNangKhieuFile\1_20230711_111523_2.jpg" />
@@ -757,7 +732,7 @@
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit.cshtml" />
     <Content Include="Views\Auth\RegisterMaster.cshtml" />
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkdtnkOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkdtnkEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit.cshtml" />
@@ -765,6 +740,7 @@
     <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -791,14 +767,6 @@
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.bundle.js.map" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.esm.js.map" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.esm.min.js.map" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.js.map" />
-    <Content Include="Scripts\ScriptsOLD\bootstrap.min.js.map" />
-    <Content Include="Scripts\ScriptsOLD\jquery-3.4.1.min.map" />
-    <Content Include="Scripts\ScriptsOLD\jquery-3.4.1.slim.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

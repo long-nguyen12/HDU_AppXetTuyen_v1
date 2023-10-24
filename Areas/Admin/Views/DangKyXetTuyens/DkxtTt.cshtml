@@ -63,10 +63,7 @@
         <div class="card-body">
             @using (Html.BeginForm("DkxtTt", "DangKyXetTuyens", FormMethod.Get))
             {
-                <div class="row g-1">
-                    <div class="col-xxl-1 col-md-12" style="display:none">
-                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd" })
-                    </div>
+                <div class="row g-1">                  
                     <div class="col-xxl-2 col-md-12">
                         @Html.DropDownList("filteriNvong", null, "Nguyện vọng...", new { @class = "form-select  bd-rd" })
                     </div>
@@ -144,94 +141,50 @@
                                             @{
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0)
                                                 {
-                                                    @Html.DisplayName("Chưa nộp")
-
+                                                    <span style="color: red">Chưa nộp LP</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_KinhPhi == 1)
                                                 {
-                                                    @Html.DisplayName("Đã nộp, Chưa KT")
-
+                                                    <span style="color: red">Đã nộp, chưa KT</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_KinhPhi == 2)
                                                 {
-                                                    @Html.DisplayName("Đã KT, có sai sót")
-
+                                                    <span style="color:blue">Đã KT, Có sai sót</span>
+                                                }
+                                                if (item.Dkxt_TrangThai_KinhPhi == 3)
+                                                {
+                                                    <span style="color:red">Đã sửa, chưa KT</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_KinhPhi == 9)
                                                 {
-                                                    @Html.DisplayName("Đã KT, đúng, đủ")
-
+                                                    <span>Đã KT, Đúng</span>
                                                 }
                                             }
                                         </td>
 
                                         <td>
                                             @{
-                                                if (item.Dkxt_TrangThai_KetQua == 0)
+                                                if (item.Dkxt_TrangThai_HoSo == 0)
                                                 {
-                                                    @Html.DisplayName("Chưa KT")
+                                                    <span style="color: red">Đã nộp, chưa KT</span>
                                                 }
-                                                if (item.Dkxt_TrangThai_KetQua == 1)
+                                                if (item.Dkxt_TrangThai_HoSo == 1)
                                                 {
-                                                    @Html.DisplayName("MC sai")
-
+                                                    <span style="color: blue">Đã KT, Có sai sót</span>
                                                 }
-                                                if (item.Dkxt_TrangThai_KetQua == 2)
+                                                if (item.Dkxt_TrangThai_HoSo == 2)
                                                 {
-                                                    @Html.DisplayName("HS đầy đủ")
+                                                    <span style="color: red">Đã sửa, chưa KT</span>
                                                 }
-                                            }
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("DkxtTt_hs_view", "DangKyXetTuyens", new {
-                                                                    Dkxt_ID=item.Dkxt_ID,
-                                                                    filteriDotxt =ViewBag.DotxtFilteri,
-                                                                    filteriNvong =ViewBag.NvongFilteri,
-                                                                    filteriNganh =  ViewBag.NganhFilteri,
-                                                                    filteriLePhi = ViewBag.LePhiFilteri,
-                                                                    filteriHoSo =ViewBag.HoSoFilteri,
-                                                                    searchString =ViewBag.SearchString,
-                                                                    page = ViewBag.pageCurren })"
-                                               class="btn btn-light btn-sm bt-hs bd-rd">Kiểm tra</a>
-                                        </td>
-
-                                        @*<td>
-                                            @{
-                                                if (item.Dkxt_TrangThai == 0)
+                                                if (item.Dkxt_TrangThai_HoSo == 9)
                                                 {
-                                                    <a href="#" style="color:red; text-decoration:none">Chưa đóng</a>
-                                                }
-                                                if (item.Dkxt_TrangThai == 1)
-                                                {
-                                                    <a href="#" style="color: green; text-decoration: none">Đã nộp </a>
-                                                }
-                                                if (item.Dkxt_TrangThai == 2)
-                                                {
-                                                    <a href="#" style="color: blue; text-decoration: none">Đã duyệt</a>
-                                                }
-                                            }
-                                        </td>
-                                        <td>
-                                            @{
-                                                if (item.Dkxt_TrangThai_KetQua == 0)
-                                                {
-                                                    <a href="#" class="btn btn-outline-danger btn-sm  bt-hs  bd-rd">Chưa KT</a>
-                                                }
-                                                if (item.Dkxt_TrangThai_KetQua == 1)
-                                                {
-                                                    <a href="#" class="btn btn-outline-success btn-sm bt-hs  bd-rd">MC sai</a>
-                                                }
-                                                if (item.Dkxt_TrangThai_KetQua == 2)
-                                                {
-                                                    <a href="#" class="btn btn-outline-primary btn-sm bt-hs  bd-rd">Đã duyệt</a>
+                                                    <span>Đã KT, HS đúng, đủ</span>
                                                 }
                                             }
                                         </td>
                                         <td style="white-space:nowrap">
-                                            <a href="@Url.Action("Edit","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="list" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("Details","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |
-                                            <a href="@Url.Action("Delete","DangKyXetTuyens" , new { id = item.Dkxt_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
-                                        </td>*@
+                                            <a class="btn btn-light btn-sm" onclick="KiemtraThongTinDangky(@item.Dkxt_ID)">Kiểm tra</a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -239,9 +192,9 @@
 
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
-                        @Html.PagedListPager(Model, page => Url.Action("DkxtKQTthpt", new
+                        @Html.PagedListPager(Model, page => Url.Action("DkxtTt", new
                         {
-                            filteriDotxt = ViewBag.DotxtFilteri,
+                          
                             filteriNvong = ViewBag.NvongFilteri,
                             filteriNganh = ViewBag.NganhFilteri,
                             filteriLePhi = ViewBag.LePhiFilteri,
@@ -257,3 +210,16 @@
     </div>
 </div>
 
+<script>
+    function KiemtraThongTinDangky(id) {
+        var str_query = window.location.search;
+
+        if (str_query.length == 0) {
+            str_query = '?Dkxt_ID=' + id;
+        }
+        else {
+            str_query += '&Dkxt_ID=' + id;
+        }
+        window.location.href = "/Admin/DangKyXetTuyens/DkxtTt_hs_view" + str_query;
+    }
+</script>

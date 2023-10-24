@@ -45,10 +45,7 @@
 
             @using (Html.BeginForm("DkxtkqCcnn", "DangKyXetTuyens", FormMethod.Get))
             {
-                <div class="row g-1">
-                    <div class="col-xxl-1 col-md-12" style="display:none">
-                        @Html.DropDownList("filteriDotxt", null, new { @class = "form-select bd-rd" })
-                    </div>
+                <div class="row g-1">                   
                     <div class="col-xxl-2 col-md-12">
                         @Html.DropDownList("filteriNvong", null, "Nguyện vọng...", new { @class = "form-select  bd-rd" })
                     </div>
@@ -71,11 +68,6 @@
                             <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_extend" style="margin-right:4px; display:none"><i data-feather="chevron-down" style="vertical-align:middle!important"></i></a>
                             <a class="btn btn-outline-primary bd-rd text-nowrap" id="bt_collapse" style="margin-right: 4px; display: none"><i data-feather="chevron-up" style="vertical-align:middle!important"></i></a>
                             <a class="btn btn-outline-primary bd-rd  text-nowrap" href="@Url.Action("", "ExportDatas")" id="bt_export_excel" style="padding-right:6px; padding-left:6px" title="Xuất dữ liệu ra tệp excel"><i data-feather="download" style="vertical-align:middle!important"></i> Excel</a>
-
-
-                            @*<button class="btn btn-outline-primary bd-rd" id="bt_search" style="margin-right:4px">Lọc</button>
-                <a class="btn btn-outline-secondary bd-rd" id="bt_reset" href="@Url.Action("DkxtkqCcnn", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
-                <a class="btn btn-outline-primary bd-rd" id="bt_reset" href="@Url.Action("ExportTsDkXetHocBa", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>*@
                         </div>
                     </div>
                     <hr class="mt-3 mb-2" />
@@ -153,55 +145,49 @@
                                         @{
                                             if (item.Dkxt_TrangThai_KinhPhi == 0)
                                             {
-                                                @Html.DisplayName("Chưa nộp")
-
+                                                <span style="color: red">Chưa nộp LP</span>
                                             }
                                             if (item.Dkxt_TrangThai_KinhPhi == 1)
                                             {
-                                                @Html.DisplayName("Đã nộp, Chưa KT")
-
+                                                <span style="color: red">Đã nộp, chưa KT</span>
                                             }
                                             if (item.Dkxt_TrangThai_KinhPhi == 2)
                                             {
-                                                @Html.DisplayName("Đã KT, có sai sót")
-
+                                                <span style="color:blue">Đã KT, Có sai sót</span>
+                                            }
+                                            if (item.Dkxt_TrangThai_KinhPhi == 3)
+                                            {
+                                                <span style="color:red">Đã sửa, chưa KT</span>
                                             }
                                             if (item.Dkxt_TrangThai_KinhPhi == 9)
                                             {
-                                                @Html.DisplayName("Đã KT, đúng, đủ")
-
+                                                <span>Đã KT, Đúng</span>
                                             }
                                         }
                                     </td>
 
                                     <td>
                                         @{
-                                            if (item.Dkxt_TrangThai_KetQua == 0)
+                                            if (item.Dkxt_TrangThai_HoSo == 0)
                                             {
-                                                @Html.DisplayName("Chưa KT")
+                                                <span style="color: red">Đã nộp, chưa KT</span>
                                             }
-                                            if (item.Dkxt_TrangThai_KetQua == 1)
+                                            if (item.Dkxt_TrangThai_HoSo == 1)
                                             {
-                                                @Html.DisplayName("MC sai")
-
+                                                <span style="color: blue">Đã KT, Có sai sót</span>
                                             }
-                                            if (item.Dkxt_TrangThai_KetQua == 2)
+                                            if (item.Dkxt_TrangThai_HoSo == 2)
                                             {
-                                                @Html.DisplayName("HS đầy đủ")
+                                                <span style="color: red">Đã sửa, chưa KT</span>
+                                            }
+                                            if (item.Dkxt_TrangThai_HoSo == 9)
+                                            {
+                                                <span>Đã KT, HS đúng, đủ</span>
                                             }
                                         }
                                     </td>
-                                    <td>
-                                        <a href="@Url.Action("DkxtkqCcnn_hs_view","DangKyXetTuyens" , new {
-                                                                    Dkxt_ID=item.Dkxt_ID,
-                                                                    filteriDotxt =ViewBag.DotxtFilteri,
-                                                                    filteriNvong =ViewBag.NvongFilteri,
-                                                                    filteriNganh =  ViewBag.NganhFilteri,
-                                                                    filteriLePhi = ViewBag.LePhiFilteri,
-                                                                    filteriHoSo =ViewBag.HoSoFilteri,
-                                                                    searchString =ViewBag.SearchString,
-                                                                    page = ViewBag.pageCurren})"
-                                           class="btn btn-light btn-sm bt-hs bd-rd">Kiểm tra</a>
+                                    <td style="white-space:nowrap">
+                                        <a class="btn btn-light btn-sm" onclick="KiemtraThongTinDangky(@item.Dkxt_ID,5)">Kiểm tra</a>
                                     </td>
                                 </tr>
                             }
@@ -209,9 +195,8 @@
                         </table>
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
-                        @Html.PagedListPager(Model, page => Url.Action("DkxtHocBa", new
-                        {
-                            filteriDotxt = ViewBag.DotxtFilteri,
+                        @Html.PagedListPager(Model, page => Url.Action("DkxtkqCcnn", new
+                        {                          
                             filteriNvong = ViewBag.NvongFilteri,
                             filteriNganh = ViewBag.NganhFilteri,
                             filteriLePhi = ViewBag.LePhiFilteri,
@@ -226,3 +211,16 @@
         </div>
     </div>
 </div>
+<script>
+    function KiemtraThongTinDangky(id,id_pt) {
+        var str_query = window.location.search;
+
+        if (str_query.length == 0) {
+            str_query = '?Dkxt_ID=' + id + '&Ptxt_ID=' + id_pt;
+        }
+        else {
+            str_query += '&Dkxt_ID=' + id + '&Ptxt_ID=' + id_pt;
+        }
+        window.location.href = "/Admin/DangKyXetTuyens/DkxtkqKhac_hs_view" + str_query;
+    }
+</script>

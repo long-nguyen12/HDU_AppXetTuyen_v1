@@ -38,13 +38,16 @@ namespace HDU_AppXetTuyen.Models
         public string Dkxt_MinhChung_UuTien { get; set; }
         [StringLength(200)]
         public string Dkxt_NgayDangKy { get; set; }
+
         public string Dkxt_KinhPhi_SoThamChieu { get; set; }
         public string Dkxt_KinhPhi_TepMinhChung { get; set; }
         public string Dkxt_KinhPhi_NgayThang_NopMC { get; set; }
         public string Dkxt_KinhPhi_NgayThang_CheckMC { get; set; }
         public int? Dkxt_TrangThai_KinhPhi { get; set; }
+
         public int? Dkxt_TrangThai_HoSo { get; set; }
         public int? Dkxt_TrangThai_KetQua { get; set; }
+        public string Dkxt_ThongBaoKiemDuyet_HoSo { get; set; }
 
         public virtual ChungChi ChungChi { get; set; }
         public virtual DotXetTuyen DotXetTuyen { get; set; }
