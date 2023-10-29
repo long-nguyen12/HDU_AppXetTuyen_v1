@@ -88,33 +88,36 @@
                         </a>
                         <div class="collapse" id="menuPhuongThuc" data-bs-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                                <a class="nav-link style_wspacing" href="@Url.Action("dkxtthptqg", "DangKyXetTuyens")">
-                                    Sử dụng KQ thi TN THPT
+                                <a class="nav-link d-flex justify-content-end" href="@Url.Action("dkxtthptqg", "DangKyXetTuyens")">
+                                    Sử dụng kết quả thi tốt nghiệp Trung học phổ thông
                                 </a>
-                                <a class="nav-link style_wspacing" href="@Url.Action("dkxthocba", "DangKyXetTuyens")">
-                                    Sử dụng KQ học bạ THPT
+                                <a class="nav-link d-flex  justify-content-center" href="@Url.Action("dkxthocba", "DangKyXetTuyens")">
+                                    Sử dụng kết quả học bạ Trung học phổ thông
                                 </a>
-                                <a class="nav-link style_wspacing" href="@Url.Action("Index", "DangKyXetTuyenThang")">
-                                    Tuyển thẳng theo QĐ
+                                <a class="nav-link d-flex  justify-content-center" href="@Url.Action("Index", "DangKyXetTuyenThang")">
+                                    Tuyển thẳng theo quy   định của trường 
                                 </a>
-                                <a class="nav-link style_wspacing" href="@Url.Action("DanhGia", "DangKyXetTuyenKhac")">
-                                    SD KQ thi đánh giá năng lực hoặc chứng chỉ ngoại ngữ
-                                </a>                               
+                                <a class="nav-link d-flex justify-content-center" href="@Url.Action("DanhGia", "DangKyXetTuyenKhac")">
+                                    Sử dụng chứng chỉ ngoại ngữ
+                                </a>
+                                <a class="nav-link d-flex justify-content-center" href="@Url.Action("DanhGia", "DangKyXetTuyenKhac")">
+                                    Sử dụng kết quả thi đánh giá năng lực
+                                </a>
                             </nav>
                         </div>
                         <a class="nav-link" href="@Url.Action("dkdtnk", "DangKyXetTuyens")">
                             <div class="nav-link-icon"><i data-feather="pocket"></i></div>
-                            ĐK dự thi năng khiếu
+                            Đăng ký thi năng khiếu
                         </a>
 
                         <a class="nav-link" href="@Url.Action("Index", "LePhiXetTuyens")">
                             <div class="nav-link-icon"><i data-feather="package"></i></div>
                             Thông tin nộp lệ phí
                         </a>
-                        <a class="nav-link" href="@Url.Action("Index", "KetQuaXetTuyens")">
+                        @*<a class="nav-link" href="@Url.Action("Index", "KetQuaXetTuyens")">
                             <div class="nav-link-icon"><i data-feather="filter"></i></div>
                             Kết quả xét tuyển
-                        </a>
+                        </a>*@
                         <a class="nav-link " href="#">
                             <div class="nav-link-icon"><i data-feather="globe"></i></div>
                             Hướng dẫn sử dụng

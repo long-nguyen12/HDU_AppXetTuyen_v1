@@ -729,7 +729,7 @@
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit.cshtml" />
     <Content Include="Views\Auth\RegisterMaster.cshtml" />
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkdtnkOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkdtnkEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit.cshtml" />
@@ -737,6 +737,7 @@
     <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "dkxtthptqg";
+    ViewBag.Title = "Đăng ký xét tuyển";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
@@ -228,6 +228,7 @@
                                         <tr>
                                             <td>
                                                 <div class="row mt-0 md-0">
+
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-2">
                                                             <div class="col-md-12">
@@ -267,7 +268,7 @@
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-0 mt-1">
-                                                            <label for="files_hocba_ts" class="form-label">Học bạ/Bằng tốt nghiệp</label>
+                                                            <label for="files_hocba_ts" class="form-label">Học bạ </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" data-val-required="Vui lòng chọn file Vui lòng chọn file học bạ"
                                                                        accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
@@ -283,7 +284,7 @@
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-0">
-                                                            <label for="files_bangtn" class="form-label">Căn cước công dân</label>
+                                                            <label for="files_bangtn" class="form-label">Bằng tốt nghiệp</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                                 <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
@@ -292,6 +293,21 @@
                                                     </div>
                                                     <div class="col-xxl-12">
                                                         <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-0 md-0">
+                                                    <div class="col-xxl-12">
+                                                        <div class="form-group mb-0">
+                                                            <label class="form-label">Căn cước công dân</label>
+                                                            <div class="col-md-12">
+                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xxl-12">
+                                                        <table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
                                                     </div>
                                                 </div>
 
@@ -315,12 +331,13 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-xxl-12" style="text-align:center">
-                                <input class="btn btn-primary col-5 col-auto" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý" />
-                                <input class="btn btn-secondary col-5 col-auto" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
-                            </div>
-                        </div>
+
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-xxl-12" style="text-align:center">
+                        <input class="btn btn-outline-primary col-lg-1 col-4" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý thêm" />
+                        <input class="btn btn-outline-secondary col-lg-1 col-4" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
                     </div>
                 </div>
             </div>
@@ -652,11 +669,30 @@
     });
     // phần xử lý dữ liệu cho các tệp đính kèm
     var check_in_file_chungnhan_kqtn = false;
+
     var formdata_file_chungnhan_kqtn = new FormData(); //FormData object chung nhan tot nghiep
-    var formdata_file_bang_tn = new FormData(); //FormData object bang TN
     var formdata_file_hocba_ts = new FormData(); //FormData object hoc ba
+    var formdata_file_bang_tn = new FormData(); //FormData object bang TN  
+    var formdata_file_cancuoc_congdan = new FormData(); //FormData object cancuoccongdan
     var formdata_file_giayto_uutien = new FormData(); //FormData object giaytout
+
+
+
     $(document).ready(function () {
+        $("#files_cancuoc_congdan").on("change", function () {
+            var files_cancuoc_congdan = document.getElementById('files_cancuoc_congdan');
+            for (i = 0; i < files_cancuoc_congdan.files.length; i++) {
+                var sfilename_cc = files_cancuoc_congdan.files[i].name;
+                let srandomid_cc = Math.random().toString(36).substring(7);
+                formdata_file_cancuoc_congdan.append(sfilename_cc, files_cancuoc_congdan.files[i]);
+
+                var markup_cccd = "<tr id='" + srandomid_cc + "'><td>" + sfilename_cc + "</td><td style='width: 60px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!' class=\"btn btn-light btn-sm\" onclick='DeleteFile_CCCD_Upload(\"" + srandomid_cc + "\",\"" + sfilename_cc + "\")'>Xóa</a></td></tr>";
+                $("#FilesList_CCCD_View tbody").append(markup_cccd);
+            }
+            chkatchtbl_cc_cd();
+            $('#files_cancuoc_congdan').val('');
+        });
+
         $("#files_chungnhan_kqtn").on("change", function () {
             var files_chungnhan_kqtn = document.getElementById('files_chungnhan_kqtn');
             for (i = 0; i < files_chungnhan_kqtn.files.length; i++) {
@@ -712,6 +748,21 @@
             $('#files_giayto_uutien').val('');
         });
     });
+
+    function DeleteFile_CCCD_Upload(Fileid, FileName) {
+        formdata_file_cancuoc_congdan.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl_cc_cd();
+    }
+    function chkatchtbl_cc_cd() {
+        if ($('#FilesList_CCCD_View tr').length > 0) {
+            $("#FilesList_CCCD_View").css("visibility", "visible");
+        }
+        else {
+            $("#FilesList_CCCD_View").css("visibility", "hidden");
+        }
+    }
+
     function DeleteFile_CNKQTN_Upload(Fileid, FileName) {
         formdata_file_chungnhan_kqtn.delete(FileName)
         $("#" + Fileid).remove();
@@ -761,6 +812,7 @@
             $("#FilesList_GTUT_View").css("visibility", "hidden");
         }
     }
+
     // hết phần xử lý dữ liệu cho các tệp đính kèm
     // hiển thị cửa sổ thêm mới:
     $('#bt_add_aspirations').click(function () {
@@ -797,14 +849,16 @@
         let _dkxt_KQTQG_Diem_Tong = parseFloat(_kxt_KQTQG_Diem_M1.Diem) + parseFloat(_kxt_KQTQG_Diem_M2.Diem) + parseFloat(_kxt_KQTQG_Diem_M3.Diem);
 
         let _dkxt_KQTQG_MinhChung_CNTotNghiep = "";
-        let _dkxt_KQTQG_MinhChung_BangTN = "";
         let _dkxt_KQTQG_MinhChung_HocBa = "";
+        let _dkxt_KQTQG_MinhChung_BangTN = "";       
+        let _dkxt_KQTQG_MinhChung_CCCD = "";
         let _dkxt_KQTQG_MinhChung_UuTien = "";
 
         /* thực hiện upload file*/
-        let so_file_cn_totnghiep = 0;
-        let so_file_bang_tn = 0;
+        let so_file_cn_totnghiep = 0;        
         let so_file_hocba_ts = 0;
+        let so_file_bang_tn = 0;
+        let so_file_cc_congdan = 0;
         let so_file_giayto_uutien = 0;
 
         let formData_All = new FormData();
@@ -812,23 +866,28 @@
         for (const item of formdata_file_chungnhan_kqtn) {
             formData_All.append(item[0], item[1]);
             so_file_cn_totnghiep++;
+        }        
+        for (const item of formdata_file_hocba_ts) {
+            formData_All.append(item[0], item[1]);
+            so_file_hocba_ts++;
         }
         for (const item of formdata_file_bang_tn) {
             formData_All.append(item[0], item[1]);
             so_file_bang_tn++;
         }
-        for (const item of formdata_file_hocba_ts) {
+        for (const item of formdata_file_cancuoc_congdan) {
             formData_All.append(item[0], item[1]);
-            so_file_hocba_ts++;
+            so_file_cc_congdan++;
         }
         for (const item of formdata_file_giayto_uutien) {
             formData_All.append(item[0], item[1]);
             so_file_giayto_uutien++;
         }
 
-        formData_All.append('so_file_cn_totnghiep', so_file_cn_totnghiep);
-        formData_All.append('so_file_bang_tn', so_file_bang_tn);
+        formData_All.append('so_file_cn_totnghiep', so_file_cn_totnghiep);        
         formData_All.append('so_file_hocba_ts', so_file_hocba_ts);
+        formData_All.append('so_file_bang_tn', so_file_bang_tn);
+        formData_All.append('so_file_cc_congdan', so_file_cc_congdan);
         formData_All.append('so_file_giayto_uutien', so_file_giayto_uutien);
 
         $.ajax({
@@ -839,9 +898,10 @@
             data: formData_All,
             async: false,
             success: function (res) {
-                _dkxt_KQTQG_MinhChung_CNTotNghiep = res._KQTQG_MinhChung_CNTotNghiep;
-                _dkxt_KQTQG_MinhChung_BangTN = res._KQTQG_MinhChung_BangTN;
+                _dkxt_KQTQG_MinhChung_CNTotNghiep = res._KQTQG_MinhChung_CNTotNghiep;               
                 _dkxt_KQTQG_MinhChung_HocBa = res._KQTQG_MinhChung_HocBa;
+                _dkxt_KQTQG_MinhChung_BangTN = res._KQTQG_MinhChung_BangTN;
+                _dkxt_KQTQG_MinhChung_CCCD = res._KQTQG_MinhChung_CCCD;
                 _dkxt_KQTQG_MinhChung_UuTien = res._KQTQG_MinhChung_UuTien;
             },
             error: function (err) {
@@ -864,8 +924,9 @@
             Dkxt_KQTQG_Diem_Tong: _dkxt_KQTQG_Diem_Tong.toString(),
 
             Dkxt_KQTQG_MinhChung_CNTotNghiep: _dkxt_KQTQG_MinhChung_CNTotNghiep,
-            Dkxt_KQTQG_MinhChung_BangTN: _dkxt_KQTQG_MinhChung_BangTN,
             Dkxt_KQTQG_MinhChung_HocBa: _dkxt_KQTQG_MinhChung_HocBa,
+            Dkxt_KQTQG_MinhChung_BangTN: _dkxt_KQTQG_MinhChung_BangTN,
+            Dkxt_KQTQG_MinhChung_CCCD: _dkxt_KQTQG_MinhChung_CCCD,
             Dkxt_KQTQG_MinhChung_UuTien: _dkxt_KQTQG_MinhChung_UuTien,
         }
         /*hết phần khai báo đối tượng*/
@@ -1024,6 +1085,7 @@
         $('#txt_tong_diem').prop('disabled', true);
         $('#txt_m1').focus();
 
+       
         $('#files_chungnhan_kqtn').val(null);
         $('#files_bangtn').val(null);
         $('#files_cancuoc_congdan').val(null);
