@@ -25,6 +25,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
         public ActionResult Login()
         {
+            // Khởi tạo các user hệ thống
+            init_user();
             Session["admin_login_session"] = null;
             Session.Clear();
             Session.RemoveAll();
@@ -56,6 +58,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                         Session["admin_login_session"] = admin_user_login.Admin_Pass;
                         return Json(new { success = true, data = "MasterLogin" }, JsonRequestBehavior.AllowGet);
                       
+                    }
+                    else if (admin_note == "3" && admin_user_login.Admin_Quyen == "3")
+                    {
+                        Session["admin_login_session"] = admin_user_login.Admin_Pass;
+                        return Json(new { success = true, data = "LienCapLogin" }, JsonRequestBehavior.AllowGet);
+
                     }
                     else
                     {
@@ -91,7 +99,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult Login2(FormCollection admin_login)
         {
             string id_hedaotao = admin_login["radioHeDaoTao"];
-            // id_hedaotao: 1 Đại học, 2 Sau đại học
+            // id_hedaotao: 1 Đại học, 2 Sau đại học, 3 liên cấp
 
             if (Session["admin_login_session"] != null)
             {
@@ -107,8 +115,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 if (verifiedPassword == true)
                 {
                     ViewBag.LoginErrorMessager = "";
-                    // id_hedaotao: 1 Đại học, 2 Sau đại học
-                    // Admin Quyen: 1 Đại học, 2: Sau đại học
+                    // id_hedaotao: 1 Đại học, 2 Sau đại học, 3 liên cấp
+                    // Admin Quyen: 1 Đại học, 2: Sau đại học, 3 liên cấp
                     if (id_hedaotao == "1" && login_details.Admin_Quyen == "1")
                     {
                         Session["admin_login_session"] = login_details.Admin_Pass;
@@ -221,6 +229,29 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             else
             {
                 System.Diagnostics.Debug.WriteLine("login_sdh_details đã tồn tại.");
+            }
+            // Iit USER SDH
+            AdminAccount adminLienCapAccount = new AdminAccount();
+
+            string liencap_user = "liencap";
+            string liencap_pass = "Liencap123@";
+            var login_liencap_details = db.AdminAccounts.Where(x => x.Admin_Username == liencap_user).FirstOrDefault();
+            if (login_liencap_details == null)
+            {
+                var password = ComputeHash(liencap_user, liencap_pass);
+                adminSdhAccount.Admin_Pass = password;
+                adminSdhAccount.Admin_Username = liencap_user;
+                adminSdhAccount.Admin_Quyen = "3";
+                adminSdhAccount.Admin_Note = "3";
+                adminSdhAccount.Admin_Ho = "Liên cấp";
+                adminSdhAccount.Admin_Ten = "Admin";
+                adminAccount.Khoa_ID = 1;
+                db.AdminAccounts.Add(adminSdhAccount);
+                db.SaveChanges();
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("login_liencap_details đã tồn tại.");
             }
         }
 
