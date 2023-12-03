@@ -290,6 +290,7 @@
     <Content Include="Content\images\cntt.jpg" />
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
+    <Content Include="Content\images\no-image.png" />
     <Content Include="Content\images\profile-1.png" />
     <Content Include="Content\images\sptin.jpg" />
     <Content Include="Content\images\ttdpt.jpg" />
@@ -395,7 +396,7 @@
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt2.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTongHop.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt.cshtml" />
     <Content Include="Areas\Admin\Views\DoiTuongs\Create.cshtml" />
@@ -487,6 +488,11 @@
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqKhac_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view2.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_viewOK2.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_viewOK.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_viewOK.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -742,6 +748,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\DkxtKQTHPTQG\" />
     <Folder Include="Areas\Admin\Views\ExportDatas\" />
     <Folder Include="Areas\Admin\Views\LibraryJson\" />
     <Folder Include="Uploads\DkSauDaiHocFile\" />

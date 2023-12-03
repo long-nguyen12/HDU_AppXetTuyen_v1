@@ -233,6 +233,13 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien;
                 dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("dd/MM/yyyy");
                 dkxtt.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
+
+                dkxtt.Dkxt_KinhPhi_NgayThang_CheckMC = "";
+                dkxtt.Dkxt_KinhPhi_NgayThang_NopMC = "";
+                dkxtt.Dkxt_KinhPhi_SoThamChieu = "";
+                dkxtt.Dkxt_KinhPhi_TepMinhChung = "";
+
+                dkxtt.Dkxt_TrangThai_KinhPhi = 0;
                 dkxtt.Dkxt_TrangThai_HoSo = 0;
                 dkxtt.Dkxt_TrangThai_KetQua = 0;
 
@@ -293,8 +300,15 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 dkxtt.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
 
+                dkxtt.Dkxt_KinhPhi_NgayThang_CheckMC = "";
+                dkxtt.Dkxt_KinhPhi_NgayThang_NopMC = "";
+                dkxtt.Dkxt_KinhPhi_SoThamChieu = "";
+                dkxtt.Dkxt_KinhPhi_TepMinhChung = "";
+
+                dkxtt.Dkxt_TrangThai_KinhPhi = 0;
                 dkxtt.Dkxt_TrangThai_HoSo = 0;
                 dkxtt.Dkxt_TrangThai_KetQua = 0;
+
                 dkxtt.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
                 dkxtt.DotXT_ID = dotXT.Dxt_ID;
                 db.DangKyXetTuyenKhacs.Add(dkxtt);

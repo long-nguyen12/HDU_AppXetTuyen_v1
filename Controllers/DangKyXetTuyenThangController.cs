@@ -161,6 +161,12 @@ namespace HDU_AppXetTuyen.Controllers
                 dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 dkxtt.Ptxt_ID = 4;
 
+                dkxtt.Dkxt_KinhPhi_NgayThang_CheckMC = "";
+                dkxtt.Dkxt_KinhPhi_NgayThang_NopMC = "";
+                dkxtt.Dkxt_KinhPhi_SoThamChieu = "";
+                dkxtt.Dkxt_KinhPhi_TepMinhChung = "";
+
+                dkxtt.Dkxt_TrangThai_KinhPhi = 0;
                 dkxtt.Dkxt_TrangThai_HoSo = 0;
                 dkxtt.Dkxt_TrangThai_KetQua = 0;
 
@@ -174,7 +180,6 @@ namespace HDU_AppXetTuyen.Controllers
 
                 var subject = "Đăng ký nguyện vọng";
                 var body = "Thí sinh " + ts.ThiSinh_Ten + ", Số CCCD: " + ts.ThiSinh_CCCD + " đã đăng ký nguyện vọng mới." +
-
                      " <br/><b>Thông tin nguyện vọng:</b><br/>" +
                      " <p> Phương thức đăng ký: Phương thức 4 </p>" +
                      " <p> Mã ngành: " + nganh.Nganh_MaNganh + " </p>" +
@@ -182,7 +187,6 @@ namespace HDU_AppXetTuyen.Controllers
                      " <p> Môn đạt giải: " + student.Dkxt_MonDatGiai + " </p>" +
                      " <p> Loại giải: " + student.Dkxt_LoaiGiai + " </p>" +
                      " <p> Năm đạt giải: " + student.Dkxt_NamDatGiai + " </p>";
-
                 SendEmail s = new SendEmail();
                 s.Sendemail("xettuyen@hdu.edu.vn", body, subject);
 

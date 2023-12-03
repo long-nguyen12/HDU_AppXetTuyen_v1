@@ -555,6 +555,14 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_CCCD = model.ThiSinhDangKy.ThiSinh_CCCD,
                 ThiSinh_DienThoai = model.ThiSinhDangKy.ThiSinh_DienThoai,
                 ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
+
+                ThiSinh_NguyenVong = model.Dkxt_KQTQG_NguyenVong,
+                ThiSinh_Nganh = model.Nganh.Nganh_TenNganh,
+                ThiSinh_ToHopMon = model.ToHopMon.Thm_TenToHop,
+                ThiSinh_TongDiem =model.Dkxt_KQTQG_Diem_Tong,
+                ThiSinh_TongDiemFull  = model.Dkxt_KQTQG_TongDiem_Full,
+                ThiSinh_NamTotNghiep = model.Dkxt_KQTQG_NamTotNghiep,
+
                 ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
                 ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
                 ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
@@ -588,10 +596,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 Dkxt_KQTQG_MinhChung_CNTotNghiep = model.Dkxt_KQTQG_MinhChung_CNTotNghiep,
                 Dkxt_KQTQG_MinhChung_HocBa = model.Dkxt_KQTQG_MinhChung_HocBa,
                 Dkxt_KQTQG_MinhChung_BangTN = model.Dkxt_KQTQG_MinhChung_BangTN,
+                Dkxt_KQTQG_MinhChung_CCCD = model.Dkxt_KQTQG_MinhChung_CCCD,
                 Dkxt_KQTQG_MinhChung_UuTien = model.Dkxt_KQTQG_MinhChung_UuTien,
 
-                Dkxt_KQTQG_KinhPhi_SoThamChieu = model.Dkxt_KQTQG_KinhPhi_SoThamChieu,
                 Dkxt_KQTQG_KinhPhi_TepMinhChung = model.Dkxt_KQTQG_KinhPhi_TepMinhChung,
+                Dkxt_KQTQG_KinhPhi_SoThamChieu = model.Dkxt_KQTQG_KinhPhi_SoThamChieu,              
                 Dkxt_KQTQG_KinhPhi_NgayThang_NopMC = model.Dkxt_KQTQG_KinhPhi_NgayThang_NopMC,
                 Dkxt_KQTQG_KinhPhi_NgayThang_CheckMC = model.Dkxt_KQTQG_KinhPhi_NgayThang_CheckMC,
 
@@ -643,11 +652,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_CCCD = model.ThiSinhDangKy.ThiSinh_CCCD,
                 ThiSinh_DienThoai = model.ThiSinhDangKy.ThiSinh_DienThoai,
                 ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
+
                 ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
                 ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
                 ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
                 ThiSinh_DCNhanGiayBao = model.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
                 ThiSinh_HoKhauThuongTru = model.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+
+                ThiSinh_NguyenVong = model.Dkxt_HB_NguyenVong,
+                ThiSinh_Nganh = model.Nganh.Nganh_TenNganh,
+                ThiSinh_ToHopMon = model.ToHopMon.Thm_TenToHop,
+
+                ThiSinh_TongDiem = model.Dkxt_HB_Diem_Tong,
+                ThiSinh_TongDiemFull = model.Dkxt_HB_Diem_Tong_Full,
 
                 KhuVuc_ID = _ut_khuvuv_ten_diem,
                 DoiTuong_ID = _ut_doituong_ten_diem,
@@ -724,11 +741,16 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_CCCD = model.ThiSinhDangKy.ThiSinh_CCCD,
                 ThiSinh_DienThoai = model.ThiSinhDangKy.ThiSinh_DienThoai,
                 ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
+
                 ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
                 ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
                 ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
                 ThiSinh_DCNhanGiayBao = model.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
                 ThiSinh_HoKhauThuongTru = model.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
+
+                ThiSinh_NguyenVong = model.Dkxt_NguyenVong,
+                ThiSinh_Nganh = model.Nganh.Nganh_TenNganh,
+                ThiSinh_ToHopMon = model.Dkxt_ToHopXT,
 
                 KhuVuc_ID = _ut_khuvuv_ten_diem,
                 DoiTuong_ID = _ut_doituong_ten_diem,

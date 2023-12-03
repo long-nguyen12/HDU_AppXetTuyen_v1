@@ -517,15 +517,8 @@ namespace HDU_AppXetTuyen.Controllers
                         var fileName = Path.GetFileName(file.FileName);
                         fileName = thiSinh.ThiSinh_CCCD + "_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "_" + fileName;
                         var filePath = Path.Combine(Server.MapPath("~/Uploads/FileMinhChungKinhPhis"), fileName);
-                        var savePath = "Uploads/FileMinhChungKinhPhis/" + fileName;
-                        if (i != Request.Files.Count - 1)
-                        {
-                            minhchungs = minhchungs + savePath + "#";
-                        }
-                        else
-                        {
-                            minhchungs += savePath;
-                        }
+                        var savePath = "/Uploads/FileMinhChungKinhPhis/" + fileName;
+                        minhchungs += savePath + "#";                       
                         file.SaveAs(filePath);
                     }
                     return Json(new { success = true, message = minhchungs }, JsonRequestBehavior.AllowGet);
