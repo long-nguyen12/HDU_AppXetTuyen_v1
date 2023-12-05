@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "Login";
     Layout = null;
 }
@@ -44,6 +44,7 @@
             <span id="RadioHeDaoTao_Error" class="small mb-1 text-danger col-12"></span>
             @*<input class="btn login-button col-12" type="submit" value="Đăng nhập" style="width: 100%" id="bt_login" name="bt_login" />*@
             <a class="btn login-button col-12" id="bt_login" name="bt_login">Đăng nhập</a>
+
             <span id="Login_Error" class="small mb-1 text-danger col-12"></span>
             <hr />
             <div class="register-link">
@@ -57,6 +58,7 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+  
     <script>
         $(document).ready(function () {
             $('input').on('input', function () {
@@ -69,10 +71,20 @@
                 $('#Login_Error').text('');
             });
         })
+
         function hideErrorMessage(input) {
             var errorContainer = input.next('.text-danger');
             errorContainer.text('');
         }
+
+        $(document).ready(function () {
+            $('body').keypress(function (event) {
+                if (event.keyCode == 13) {
+                    $('#bt_login').click();
+                }
+            });
+        })     
+
         $(document).ready(function () {
             $('#bt_login').click(function () {
 
@@ -105,8 +117,8 @@
                     type: "POST",
                     data: JSON.stringify(data_entity),
                     contentType: "application/json;charset=utf-8",
-                    success: function (res) {                      
-                        if (res.success == true) {                           
+                    success: function (res) {
+                        if (res.success == true) {
                             if (res.data === 'CollegerLogin') { window.location.href = '/Admin/TongHopSoLieuDKXTs/TheoDoiNopHoSo'; }
                             if (res.data === 'MasterLogin') { window.location.href = '/Admin/HocVienDangKys/DsHvDuTuyen'; }
                             if (res.data === 'LienCapLogin') { window.location.href = '/Admin/TruongLienCaps/LcTieuhoc'; }

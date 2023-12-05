@@ -665,16 +665,16 @@ namespace HDU_AppXetTuyen.Controllers
                 model.DotXT_ID = dotxettuyen.Dxt_ID;
                 model.Dkxt_KQTQG_NguyenVong = nvs.Count + 1;
 
-                model.Dkxt_KQTQG_GhiChu = ""; ;
-                model.Dkxt_KQTQG_TrangThai_KetQua = 0;
-                model.Dkxt_KQTQG_TrangThai_HoSo = 0;
+                model.Dkxt_KQTQG_GhiChu = ""; ;              
 
+                model.Dkxt_KQTQG_KinhPhi_SoThamChieu = "";
+                model.Dkxt_KQTQG_KinhPhi_TepMinhChung = "";
+                model.Dkxt_KQTQG_KinhPhi_NgayThang_NopMC = "";
+                model.Dkxt_KQTQG_KinhPhi_NgayThang_CheckMC = "";
 
-                model.Dkxt_KQTQG_KinhPhi_SoThamChieu = "Chưa có";
-                model.Dkxt_KQTQG_KinhPhi_TepMinhChung = "Chưa có";
-                model.Dkxt_KQTQG_KinhPhi_NgayThang_NopMC = "Chưa có";
-                model.Dkxt_KQTQG_KinhPhi_NgayThang_CheckMC = "Chưa có";
                 model.Dkxt_KQTQG_TrangThai_KinhPhi = 0;
+                model.Dkxt_KQTQG_TrangThai_HoSo = 0;
+                model.Dkxt_KQTQG_TrangThai_KetQua = 0;
 
                 db.DangKyXetTuyenKQTQGs.Add(model);
                 db.SaveChanges();
@@ -1113,7 +1113,15 @@ namespace HDU_AppXetTuyen.Controllers
 
                 model_new.DotXT_ID = dotxettuyen.Dxt_ID;
 
+                model_new.Dkxt_HB_KinhPhi_NgayThang_CheckMC = "";
+                model_new.Dkxt_HB_KinhPhi_NgayThang_NopMC = "";
+                model_new.Dkxt_HB_KinhPhi_SoThamChieu = "";
+                model_new.Dkxt_HB_KinhPhi_TepMinhChung = "";
+         
                 model_new.Dkxt_HB_TrangThai_KetQua = 0;
+                model_new.Dkxt_HB_TrangThai_HoSo = 0;
+                model_new.Dkxt_HB_TrangThai_KinhPhi = 0;
+
                 var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;
                 var khuVucDoiTuong = ts.KhuVuc.KhuVuc_DiemUuTien;
 
