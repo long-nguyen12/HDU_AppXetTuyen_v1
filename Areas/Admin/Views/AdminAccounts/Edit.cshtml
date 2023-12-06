@@ -27,69 +27,88 @@
             <div class="card card-header-actions mt-1 mb-1 ">
                 <div class="card-header">
                     <span>Sửa thông tin</span>
-                    <a class="btn-close" aria-label="Close" href="@Url.Action("Index","DoiTuongs")"></a>
+                    <a class="btn-close" aria-label="Close" href="@Url.Action("Index","AdminAccounts")"></a>
                 </div>
                 <div class="card-body">
-                    @using (Html.BeginForm())
+                    @using (Html.BeginForm("Edit", "AdminAccounts", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.HiddenFor(model => model.Admin_ID)
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Admin_ID)
 
-                            <div class="form-group">
-                                <label class="control-label col-md-2" for="Admin_Username">Tên tài khoản</label>
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Admin_Username, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Admin_Username, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" for="Admin_Username">Tên tài khoản</label>
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Admin_Username, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Admin_Username, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" for="Admin_Pass">Mật khẩu</label>
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Admin_Pass, new { htmlAttributes = new { @class = "form-control", @type = "Password", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.Admin_Pass, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" for="Admin_Ho">Họ</label>
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Admin_Ho, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Admin_Ho, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Tên", htmlAttributes: new { @class = "control-label col-md-12" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Admin_Ten, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Admin_Ten, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Quyền", htmlAttributes: new { @class = "control-label col-md-12" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownListFor(m => m.Admin_Quyen, new List<SelectListItem>
+                                                     {
+                                                         new SelectListItem { Text = "Quản lý Đại học", Value = "1" },
+                                                         new SelectListItem { Text = "Quản lý Sau Đại học", Value = "2" },
+                                                         new SelectListItem { Text = "Quản lý Liên cấp", Value = "3" },
+                                                         new SelectListItem { Text = "Quản lý Thi năng khiếu", Value = "4" },
+                                                     }, htmlAttributes: new { @class = "form-select" })
+                                        @Html.ValidationMessageFor(model => model.Admin_Quyen, "", new { @class = "small mb-1 text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12 for="Admin_Note">Ghi chú</label>
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Admin_Note, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Admin_Note, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-md-2" for="Admin_Pass">Mật khẩu</label>
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Admin_Pass, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Admin_Pass, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-2" for="Admin_Ho">Họ</label>
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Admin_Ho, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Admin_Ho, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-2" for="Admin_Ten">Tên</label>
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Admin_Ten, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Admin_Ten, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-2" for="Admin_Quyen">Quyền</label>
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Admin_Quyen, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Admin_Quyen, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-2" for="Khoa_ID">Khoa</label>
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Khoa_ID, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Khoa_ID, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <br />
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Lưu" class="btn btn-primary" />
-                                </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Lưu dữ liệu" class="btn btn-primary" />
                             </div>
                         </div>
                     }
@@ -98,8 +117,79 @@
             </div>
         </div>
     </div>
-</div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-header-actions mt-1 mb-1 ">
+                <div class="card-header">
+                    <span>Thay đổi mật khẩu</span>
+                    <a class="btn-close" aria-label="Close" href="@Url.Action("Index","AdminAccounts")"></a>
+                </div>
+                <div class="card-body">
+                    <form name="passForm" onsubmit="return validateForm()" action="/Admin/AdminAccounts/ChangePassword" method="post">
+                        
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Admin_ID)
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" for="pass_new">Mật khẩu mới</label>
+                                    <div class="col-md-12">
+                                        <input class="form-control text-box single-line" data-val="true" data-val-length="The field Admin_Pass must be a string with a maximum length of 500." data-val-length-max="500" data-val-required="Mật khẩu là bắt buộc nhập" id="pass_new" name="pass_new" type="Password" />
+                                        <span id="pass_new_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12" for="Admin_Pass">Xác thực mật khẩu mới</label>
+                                    <div class="col-md-12">
+                                        <input class="form-control text-box single-line" data-val="true" data-val-length="The field Admin_Pass must be a string with a maximum length of 500." data-val-length-max="500" data-val-required="Mật khẩu là bắt buộc nhập" id="pass_new_2" name="pass_new_2" type="Password" />
+                                        <span id="pass_new_2_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Thay đổi mật khẩu" class="btn btn-primary" />
+                            </div>
+                        </div>
+                        
+                    </form>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        $(".text-danger").text("");
+        let flag = true;
+        let pass_new = $('#pass_new').val();
+        let pass_new_2 = $('#pass_new_2').val();
+        if (!pass_new) {
+            var errorMessage = "Vui lòng nhập mật khẩu mới";
+            $('#pass_new_Error').text(errorMessage);
+            return false;  
+        }
+        if (!pass_new_2) {
+            var errorMessage = "Vui lòng nhập xác thực mật khẩu mới";
+            $('#pass_new_2_Error').text(errorMessage);
+            return false;  
+        }
+        if (pass_new != pass_new_2) {
+            var errorMessage = "Xác thực mật khẩu mới không khớp với mật khẩu đã nhập";
+            $('#pass_new_2_Error').text(errorMessage);
+            return false;  
+        }
+    }
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -95,62 +95,8 @@
             <div class="nav-link-icon"><i data-feather="slack"></i></div>
             Theo dõi nộp kinh phí
         </a>*@
-                        <a class="nav-link" href="@Url.Action("TheoDoiNopHoSo", "TongHopSoLieuDKXTs")">
-                            <div class="nav-link-icon"><i data-feather="book-open"></i></div>
-                            Theo dõi hồ sơ xét tuyển
-                        </a>
-                        <a class="nav-link" href="@Url.Action("Index", "ThiSinhDangKys")">
-                            <div class="nav-link-icon"><i data-feather="monitor"></i></div>
-                            Thông tin thí sinh
-                        </a>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#menuThiSinh" aria-expanded="true" aria-controls="menuThiSinh">
-                            <div class="nav-link-icon"><i data-feather="database"></i></div>
-                            QL Đăng ký xét tuyển
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="menuThiSinh" data-bs-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested">                             
-                                <a class="nav-link style_wspacing" href="@Url.Action("DkxtKQTthpt", "DangKyXetTuyens")">Sử dụng KQ thi TN THPT</a>
-                                <a class="nav-link style_wspacing" href="@Url.Action("DkxtHocBa", "DangKyXetTuyens")">Sử dụng KQ học bạ THPT</a>
-                                <a class="nav-link style_wspacing" href="@Url.Action("DkxtTt", "DangKyXetTuyens")">Tuyển thẳng theo QĐ</a>
-                                <a class="nav-link style_wspacing" href="@Url.Action("DkxtkqCcnn", "DangKyXetTuyens")">SD chứng chỉ ngoại ngữ</a>
-                                <a class="nav-link style_wspacing" href="@Url.Action("DkxtkqDgnl", "DangKyXetTuyens")">SD KQ thi đánh giá năng lực hoặc đánh giá tư duy</a>
-                            </nav>
-                        </div>
-                        <a class="nav-link" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")">
-                            <div class="nav-link-icon"><i data-feather="pocket"></i></div>
-                            QL Dự thi năng khiếu
-                        </a>
-                        <a class="nav-link" href="@Url.Action("Index", "ToHopMons")">
-                            <div class="nav-link-icon"><i data-feather="shield"></i></div>
-                            Tổ hợp môn
-                        </a>
-                        <a class="nav-link" href="@Url.Action("Index", "Nganhs")">
-                            <div class="nav-link-icon"><i data-feather="package"></i></div>
-                            Ngành
-                        </a>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#menuDanhMuc" aria-expanded="false" aria-controls="menuDanhMuc">
-                            <div class="nav-link-icon"><i data-feather="list"></i></div>
-                            Quản lý danh mục
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="menuDanhMuc" data-bs-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested">
-                                <a class="nav-link " href="@Url.Action("Index", "Namhocs")">Năm học</a>
-                                <a class="nav-link" href="@Url.Action("CollegerIndex", "DotXetTuyens")">Đợt xét tuyển</a>
-                                <a class="nav-link" href="@Url.Action("CollegerIndex", "DotXetTuyens")">Đợt dự thi NK</a>
-                                <a class="nav-link" href="@Url.Action("Index", "PhuongThucXetTuyens")">Phương thức xét</a>
-                                @*<a class="nav-link" href="@Url.Action("Index", "KhoiNganhs")">Khối nghành</a>*@
-                                <a class="nav-link" href="@Url.Action("Index", "KhuVucs")">Khu vực</a>
-                                <a class="nav-link" href="@Url.Action("Index", "DoiTuongs")">Đối tượng</a>
-                                <a class="nav-link" href="@Url.Action("Index", "Tinhs")"> Tỉnh thành</a>
-                                <a class="nav-link" href="@Url.Action("Index", "Huyens")">Quận huyện</a>
-                                <a class="nav-link" href="@Url.Action("Index", "Xas")">Phường xã</a>
 
-                            </nav>
-                        </div>
-
-                        @*<a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLienCap" aria-expanded="false" aria-controls="collapseDashboards">
+                        <a class="nav-link" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLienCap" aria-expanded="false" aria-controls="collapseDashboards">
                             <div class="nav-link-icon"><i data-feather="grid"></i></div>
                             QL Trường Liên cấp
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -160,11 +106,8 @@
                                 <a class="nav-link" href="@Url.Action("LcTieuhoc", "TruongLienCaps")">Dự tuyển Tiểu học</a>
                                 <a class="nav-link" href="@Url.Action("LcTrunghocCs", "TruongLienCaps")">Dự tuyển THCS</a>
                             </nav>
-                        </div>*@
-                        <a class="nav-link " href="@Url.Action("Index", "AdminAccounts")">
-                            <div class="nav-link-icon"><i data-feather="user"></i></div>
-                            Quản lý tài khoản
-                        </a>
+                        </div>
+                
                         <a class="nav-link " href="#">
                             <div class="nav-link-icon"><i data-feather="globe"></i></div>
                             Hướng dẫn sử dụng
