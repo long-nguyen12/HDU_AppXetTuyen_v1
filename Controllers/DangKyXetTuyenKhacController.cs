@@ -95,7 +95,7 @@ namespace HDU_AppXetTuyen.Controllers
             return Json(new { success = true, data = data_return, }, JsonRequestBehavior.AllowGet);
         }
         [ThiSinhSessionCheck]
-        public JsonResult GetAllNguyenVongs()
+        public JsonResult GetAllNguyenVongsIelts()
         {
             db = new DbConnecttion();
             var session = Session["login_session"];
@@ -110,6 +110,62 @@ namespace HDU_AppXetTuyen.Controllers
             }).FirstOrDefault();
             var nguyenvongs = db.DangKyXetTuyenKhacs.Include(d => d.Nganh).Include(x => x.ChungChi)
                                 .Where(n => n.ThiSinh_ID == ts.ThiSinh_ID)
+                                .Where(n => n.Dkxt_ToHopXT == "HDP5")
+                                .OrderBy(n => n.Ptxt_ID)
+                                .ThenBy(n => n.Dkxt_NguyenVong)
+                                .Select(n => new
+                                {
+                                    Dkxt_ID = n.Dkxt_ID,
+                                    Dkxt_ChungChi_Ten = new { LoaiCC = n.ChungChi.ChungChi_Ten },
+                                    ThiSinh_ID = n.ThiSinh_ID,
+                                    Ptxt_ID = n.Ptxt_ID,
+                                    Nganh_All = new
+                                    {
+                                        KhoiNganh_Ten = n.Nganh.KhoiNganh.KhoiNganh_Ten,
+                                        Nganh_GhiChu = n.Nganh.Nganh_GhiChu,
+                                    },
+
+                                    Dkxt_TrangThai_HoSo = n.Dkxt_TrangThai_HoSo,
+                                    Dkxt_NguyenVong = n.Dkxt_NguyenVong,
+                                    DotXT_ID = n.DotXT_ID,
+                                    Dkxt_GhiChu = n.Dkxt_GhiChu,
+                                    Dkxt_ToHopXT = n.Dkxt_ToHopXT,
+                                    Dkxt_DonViToChuc = n.Dkxt_DonViToChuc,
+                                    Dkxt_KetQuaDatDuoc = n.Dkxt_KetQuaDatDuoc,
+                                    Dkxt_NgayDuThi = n.Dkxt_NgayDuThi,
+                                    Dkxt_TongDiem = n.Dkxt_TongDiem,
+                                    Dkxt_MinhChung_HB = n.Dkxt_MinhChung_HB,
+                                    Dkxt_TrangThai_KetQua = n.Dkxt_TrangThai_KetQua,
+                                    Dkxt_MinhChung_CCCD = n.Dkxt_MinhChung_CCCD,
+                                    Dkxt_MinhChung_Bang = n.Dkxt_MinhChung_Bang,
+                                    Dkxt_MinhChung_KetQua = n.Dkxt_MinhChung_KetQua,
+                                    Dkxt_MinhChung_UuTien = n.Dkxt_MinhChung_UuTien,
+                                }).ToList();
+
+            return Json(new
+            {
+                success = true,
+                thisinh = ts,
+                data = nguyenvongs,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAllNguyenVongsDanhGia()
+        {
+            db = new DbConnecttion();
+            var session = Session["login_session"];
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).Include(x => x.DoiTuong).Include(x => x.KhuVuc).Select(n => new
+            {
+                ThiSinh_ID = n.ThiSinh_ID,
+                ThiSinh_HocLucLop12 = n.ThiSinh_HocLucLop12,
+                ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12,
+                ThiSinh_UTDT = n.DoiTuong.DoiTuong_Ten + ", Ưu tiên: " + n.DoiTuong.DoiTuong_DiemUuTien,
+                ThiSinh_UTKV = n.KhuVuc.KhuVuc_Ten + ", Ưu tiên: " + n.KhuVuc.KhuVuc_DiemUuTien,
+
+            }).FirstOrDefault();
+            var nguyenvongs = db.DangKyXetTuyenKhacs.Include(d => d.Nganh).Include(x => x.ChungChi)
+                                .Where(n => n.ThiSinh_ID == ts.ThiSinh_ID)
+                                .Where(n => n.Dkxt_ToHopXT == "HDP6")
                                 .OrderBy(n => n.Ptxt_ID)
                                 .ThenBy(n => n.Dkxt_NguyenVong)
                                 .Select(n => new
@@ -161,7 +217,7 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_HanhKiemLop12 = n.ThiSinh_HanhKiemLop12
             }).FirstOrDefault();
 
-            var chungchis = db.ChungChis.Where(n => n.ChungChi_TrangThai == 1).Select(n => new
+            var chungchis = db.ChungChis.Where(n => n.ChungChi_TrangThai == 1 && n.ChungChi_PhuongThuc == "6").Select(n => new
             {
                 ChungChi_ID = n.ChungChi_ID,
                 ChungChi_Ten = n.ChungChi_Ten,
@@ -212,7 +268,7 @@ namespace HDU_AppXetTuyen.Controllers
             db = new DbConnecttion();
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
-            var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals(entity.Dkxt_ToHopXT)).ToList();
+            var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP5")).ToList();
             var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             string ToHop = entity.Dkxt_ToHopXT;
             if (ts != null)
@@ -275,7 +331,7 @@ namespace HDU_AppXetTuyen.Controllers
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
 
-            var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals(entity.Dkxt_ToHopXT)).ToList();
+            var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP5")).ToList();
             var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
 
             string ToHop = entity.Dkxt_ToHopXT;
@@ -342,6 +398,8 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(new { success = false });
         }
+
+
 
         public JsonResult DangKyXetTuyenKhac_Edit(DangKyXetTuyenKhac entity)
         {
