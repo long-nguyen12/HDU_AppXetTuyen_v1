@@ -672,7 +672,6 @@
 
                 else {
                     $.each(result_all, function (i, result) {
-
                         _output += '<tr>' +
                             '<td style="vertical-align: middle !important "> NV' + result.Dkxt_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="upData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}>  &#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="downData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')" ${i == result_all.length - 1 ? "disabled" : ""}> &#8744;</button>  </td>` +
                             '<td style="vertical-align: middle !important "> ' + result.Nganh_All.Nganh_GhiChu + ' </td>' +
@@ -769,7 +768,6 @@
                 }
             });
         }
-
     }
 
     function GetChungChiId(id) {
@@ -942,7 +940,6 @@
     function bt_Update_on_table_Click(_dkxt_id) {
         $('#key_delete_dkxt_id').val(_dkxt_id);
         get_data_for_update_dkvn(_dkxt_id)
-
     }
 
     function bt_Insert_Dknv_on_divView_Click(khoinganh_key, nganh_key, tohopmon_key) {
@@ -957,8 +954,6 @@
         get_data_forselect_khoinganh_all(0, 0, 0);
         key_dkxt_id_post = -1;
     }
-
-
     function hideErrorMessage(input) {
         var errorContainer = input.next('.text-danger');
         errorContainer.text('');

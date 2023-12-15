@@ -35,7 +35,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-collapsable mt-1 mb-1">
+    <div class="card card-header-actions">
         <div class="card-header">
             <div><span id="sp_tieude">Danh sách thí sinh ĐKXT theo phương thức tuyển thẳng theo Quy chế của trường</span></div>
         </div>
@@ -63,11 +63,11 @@
         <div class="card-body">
             @using (Html.BeginForm("DkxtTt", "DangKyXetTuyens", FormMethod.Get))
             {
-                <div class="row g-1">                  
+                <div class="row g-1">
                     <div class="col-xxl-2 col-md-12">
                         @Html.DropDownList("filteriNvong", null, "Nguyện vọng...", new { @class = "form-select  bd-rd" })
                     </div>
-                  
+
                     <div class="col-xxl-2 col-md-12">
                         @Html.DropDownList("filteriNganh", null, "Ngành...", new { @class = "form-select  bd-rd" })
                     </div>
@@ -90,8 +90,8 @@
 
 
                             @*<button class="btn btn-outline-primary bd-rd " id="bt_search" style="margin-right:4px">Lọc</button>
-                            <a class="btn btn-outline-secondary bd-rd  " id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
-                            <a class="btn btn-outline-primary bd-rd" id="bt_export" href="@Url.Action("ExportTsTuyenThang", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>*@
+                                <a class="btn btn-outline-secondary bd-rd  " id="bt_reset" href="@Url.Action("Dkdttnk", "DangKyXetTuyens")" style="padding-right: 6px; padding-left: 6px; margin-right:4px">Tải lại</a>
+                                <a class="btn btn-outline-primary bd-rd" id="bt_export" href="@Url.Action("ExportTsTuyenThang", "ExportDatas")" style="padding-right:6px; padding-left:6px">Xuất excel</a>*@
                         </div>
                     </div>
                     <hr class="mt-3 mb-2" />
@@ -103,7 +103,8 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>Họ tên</th>
+                                    <th>Họ lót</th>
+                                    <th>Tên</th>
                                     <th>Điện thoại</th>
                                     <th>N. vọng</th>
                                     <th>Ngành</th>
@@ -119,13 +120,16 @@
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot) @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
+                                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
+                                            NV @Html.DisplayFor(modelItem => item.Dkxt_NguyenVong)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Nganh.Nganh_TenNganh)
@@ -136,52 +140,51 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Dkxt_NamDatGiai)
                                         </td>
-
                                         <td>
                                             @{
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0)
                                                 {
-                                                    <span style="color: red">Chưa nộp LP</span>
+                                                    <span style="color: red">Chưa nộp minh chứng lệ phí</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_KinhPhi == 1)
                                                 {
-                                                    <span style="color: red">Đã nộp, chưa KT</span>
+                                                    <span style="color: red">Đã nộp, chưa kiểm tra</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_KinhPhi == 2)
                                                 {
-                                                    <span style="color:blue">Đã KT, Có sai sót</span>
+                                                    <span style="color:blue">Đã kiểm tra, Có sai sót</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_KinhPhi == 3)
                                                 {
-                                                    <span style="color:red">Đã sửa, chưa KT</span>
+                                                    <span style="color:red">Đã sửa, chưa kiểm tra</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_KinhPhi == 9)
                                                 {
-                                                    <span>Đã KT, Đúng</span>
+                                                    <span>Đã kiểm tra, Đúng</span>
                                                 }
                                             }
                                         </td>
-
                                         <td>
                                             @{
                                                 if (item.Dkxt_TrangThai_HoSo == 0)
                                                 {
-                                                    <span style="color: red">Đã nộp, chưa KT</span>
+                                                    <span style="color: red">Chưa kiểm tra</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_HoSo == 1)
                                                 {
-                                                    <span style="color: blue">Đã KT, Có sai sót</span>
+                                                    <span style="color: blue">Đã kiểm tra, Có sai sót</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_HoSo == 2)
                                                 {
-                                                    <span style="color: red">Đã sửa, chưa KT</span>
+                                                    <span style="color: red">Đã sửa, chưa kiểm tra</span>
                                                 }
                                                 if (item.Dkxt_TrangThai_HoSo == 9)
                                                 {
-                                                    <span>Đã KT, HS đúng, đủ</span>
+                                                    <span>Đã kiểm tra, hồ sơ đúng, đủ</span>
                                                 }
                                             }
                                         </td>
+
                                         <td style="white-space:nowrap">
                                             <a class="btn btn-light btn-sm" onclick="KiemtraThongTinDangky(@item.Dkxt_ID)">Kiểm tra</a>
                                         </td>
@@ -194,7 +197,6 @@
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
                         @Html.PagedListPager(Model, page => Url.Action("DkxtTt", new
                         {
-                          
                             filteriNvong = ViewBag.NvongFilteri,
                             filteriNganh = ViewBag.NganhFilteri,
                             filteriLePhi = ViewBag.LePhiFilteri,

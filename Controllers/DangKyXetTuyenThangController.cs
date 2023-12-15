@@ -108,7 +108,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
-            string savePath = "Uploads/UploadMinhChungs/";
+            string savePath = "/Uploads/UploadMinhChungs/";
             string fileNameStored = "";
             if (Request.Files.Count > 0)
             {
@@ -119,14 +119,7 @@ namespace HDU_AppXetTuyen.Controllers
                     fileName = ts.ThiSinh_CCCD + "_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "_" + fileName;
                     var filePath = Path.Combine(Server.MapPath("~/" + savePath), fileName);
                     var savedPath = savePath + fileName;
-                    if (i != Request.Files.Count - 1)
-                    {
-                        fileNameStored = fileNameStored + savedPath + "#";
-                    }
-                    else
-                    {
-                        fileNameStored += savedPath;
-                    }
+                    fileNameStored = fileNameStored + savedPath + "#";
                     file.SaveAs(filePath);
                 }
 
@@ -222,7 +215,21 @@ namespace HDU_AppXetTuyen.Controllers
                 msg = "Có lỗi xảy ra."
             }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult Delete_MinhChung(ThongTinXoaMC entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyXetTuyenThangs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
+            
+            if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_MinhChung_Giai = model.Dkxt_MinhChung_Giai.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
 
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult upData(string idDkxt)
         {
             if (!string.IsNullOrWhiteSpace(idDkxt))

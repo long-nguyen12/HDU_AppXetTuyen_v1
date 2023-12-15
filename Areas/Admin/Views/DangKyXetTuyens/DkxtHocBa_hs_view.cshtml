@@ -459,11 +459,12 @@
                     <div class="row">
                         <center>
                             <div class="col-12 mt-2">
-                                <a class="btn btn-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>
+                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>
+                                
                                 <script>
 
                                     $(document).ready(function () {
-                                        $('#bt_duyet_ho_so').click(function () {                                           
+                                        $('#bt_duyet_ho_so').click(function () {
                                             var flag = true;
                                             let _dkxt_TrangThai_HoSo = 0;
 
@@ -477,7 +478,7 @@
                                                     flag = false;
                                                 }
                                             }
-                                            
+
                                             if ($('#radioHoSoThieu').is(':checked')) {
                                                 _dkxt_TrangThai_HoSo = 1;
                                             }
@@ -499,17 +500,17 @@
                                                     _dkxt_TrangThai_KinhPhi = 9;
                                                 }
                                             }
-                                         
+
 
                                             if (!flag) return
-                                      
+
                                             var data_update = {
                                                 Dkxt_HB_ID: $('#hidden_Dkxt_ID').val(),
                                                 Dkxt_HB_TrangThai_KinhPhi: _dkxt_TrangThai_KinhPhi,
                                                 Dkxt_ThongBaoKiemDuyet_HoSo: $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(),
                                                 Dkxt_HB_TrangThai_HoSo: _dkxt_TrangThai_HoSo,
                                             }
-                                           
+
                                             $.ajax({
                                                 url: "/Admin/DangKyXetTuyens/Dkxt_HocBa_Update_KiemDuyet",
                                                 type: "POST",
@@ -549,7 +550,7 @@
                                     }
 
                                 </script>
-                                <input class="btn btn-secondary" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSo()" />
+                                <input class="btn btn-outline-secondary" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSo()" />
                             </div>
                         </center>
                     </div>

@@ -308,7 +308,6 @@ namespace HDU_AppXetTuyen.Controllers
                 var nganh = db.Nganhs.Where(n => n.Nganh_ID == nganh_id).FirstOrDefault();
                 var subject = "Đăng ký nguyện vọng";
                 var body = "Thí sinh " + ts.ThiSinh_Ten + ", Số CCCD: " + ts.ThiSinh_CCCD + " đã đăng ký nguyện vọng mới." +
-
                      " <br/><b>Thông tin nguyện vọng:</b><br/>" +
                      " <p> Phương thức đăng ký: Phương thức " + ToHop[ToHop.Length - 1].ToString() + "</p>" +
                      " <p> Mã ngành: " + nganh.Nganh_MaNganh + " </p>" +
@@ -399,8 +398,6 @@ namespace HDU_AppXetTuyen.Controllers
             return Json(new { success = false });
         }
 
-
-
         public JsonResult DangKyXetTuyenKhac_Edit(DangKyXetTuyenKhac entity)
         {
             db = new DbConnecttion();
@@ -485,7 +482,21 @@ namespace HDU_AppXetTuyen.Controllers
                 msg = "Có lỗi xảy ra."
             }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult Delete_MinhChung(ThongTinXoaMC entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyXetTuyenKhacs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
 
+            if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
+
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult upData(string idDkxt, string MaToHop)
         {
             db = new DbConnecttion();

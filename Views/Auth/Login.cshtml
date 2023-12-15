@@ -8,6 +8,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('body').keypress(function (event) {
+            if (event.keyCode == 13) {
+                $('#bt_login').click();
+            }
+        });
+    })    
+    $(document).ready(function () {
         $('input[type="radio"]').on('click', function (event) {
             $('#errorMessage').text("");
             $('#login_CCCD_Error').text("");

@@ -58,7 +58,7 @@
                             <th style="width:15%">Mã, tên tổ hợp</th>
                             <th>Ngày Đăng ký</th>
                             <th>Trạng thái</th>
-                            <th class="text-center" style="width:120px">Cập nhật LP</th>
+                            <th class="text-center  text-nowrap" style="width:120px">Minh chứng lệ phí</th>
                         </tr>
                         <tbody class="tbody-trunghoc-ptqg">
                         </tbody>
@@ -85,10 +85,10 @@
                                 $.each(TrungHocPT, function (key, item) {
                                     let trangthai = "";
                                     if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp lệ phí</span >'
+                                        trangthai = '<span style="color:red">Chư nôp minh chứng </span >'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp lệ phí</span>'
+                                        trangthai = '<span>Đã nộp minh chứng </span>'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 2) {
                                         trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
@@ -104,7 +104,7 @@
                                     html += '<td>' + item.Thm.ThmMaTen + '</td>';
                                     html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
                                     html += '<td >' + trangthai + '</td>';
-                                    html += `<td class="text-center"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 2)">Nộp lệ phí</button></td>`;
+                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 2)">Nộp minh chứng</button></td>`;
                                     html += "</tr>";
 
                                 });
@@ -136,10 +136,10 @@
                             <th style="width:20%">Đợt xét</th>
                             <th style="width:10%">Nguyện vọng</th>
                             <th style="width:20%">Mã, tên ngành</th>
-                            <th style="width:15%">Mã, tên tổ hợp</th>
+                            <th style="width:15%; ">Mã, tên tổ hợp</th>
                             <th>Ngày Đăng ký</th>
                             <th>Trạng thái</th>
-                            <th class="text-center" style="width:120px">Cập nhật LP</th>
+                            <th class="text-center  text-nowrap" style="width:120px">Minh chứng lệ phí</th>
                         </tr>
                         <tbody class="tbody-hocba">
                         </tbody>
@@ -167,10 +167,10 @@
                                 $.each(HocBa, function (key, item) {
                                     let trangthai = "";
                                     if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp lệ phí</span >'
+                                        trangthai = '<span style="color:red">Chư nôp minh chứng </span >'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp lệ phí</span>'
+                                        trangthai = '<span>Đã nộp minh chứng </span>'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 2) {
                                         trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
@@ -185,7 +185,7 @@
                                     html += '<td>' + item.Thm.ThmMaTen + '</td>';
                                     html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
                                     html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Nộp lệ phí</button></td>`;
+                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Nộp minh chứng</button></td>`;
                                     html += '</tr>';
                                 });
                                 $('.tbody-hocba').html(html);
@@ -219,7 +219,7 @@
                             <th style="width:15%">Môn đạt giải</th>
                             <th>Ngày Đăng ký</th>
                             <th>Trạng thái</th>
-                            <th class="text-center" style="width:120px">Cập nhật LP</th>
+                            <th class="text-center  text-nowrap" style="width:120px">Minh chứng lệ phí</th>
                         </tr>
                         <tbody class="tbody-tuyenthang">
                         </tbody>
@@ -248,10 +248,10 @@
                                 $.each(TuyenThang, function (key, item) {
                                     let trangthai = "";
                                     if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp lệ phí</span >'
+                                        trangthai = '<span style="color:red">Chư nôp minh chứng </span >'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp lệ phí</span>'
+                                        trangthai = '<span>Đã nộp minh chứng </span>'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 2) {
                                         trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
@@ -266,7 +266,7 @@
                                     html += '<td>' + item.Dkxt_MonDatGiai + '</td>';
                                     html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
                                     html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID,2}, 4)">Nộp lệ phí</button></td>`;
+                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID,2}, 4)">Nộp minh chứng</button></td>`;
                                     html += '</tr>';
 
                                 });
@@ -301,7 +301,7 @@
                             <th style="width:15%">Tên KQ Nộp Xét</th>
                             <th>Ngày Đăng ký</th>
                             <th>Trạng thái</th>
-                            <th class="text-center" style="width:120px">Cập nhật LP</th>
+                            <th class="text-center  text-nowrap" style="width:120px">Minh chứng lệ phí</th>
                         </tr>
                         <tbody class="tbody-ngoaingu">
                         </tbody>
@@ -329,10 +329,10 @@
                                 $.each(NgoaiNgu, function (key, item) {
                                     let trangthai = "";
                                     if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp lệ phí</span >'
+                                        trangthai = '<span style="color:red">Chư nôp minh chứng </span >'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp lệ phí</span>'
+                                        trangthai = '<span>Đã nộp minh chứng</span>'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 2) {
                                         trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
@@ -347,7 +347,7 @@
                                     html += '<td>' + item.ChungChi_ID.Ten + '</td>';
                                     html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
                                     html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 5)">Nộp lệ phí</button></td>`;
+                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 5)">Nộp minh chứng</button></td>`;
                                     html += '</tr>';
                                 });
                                 $('.tbody-ngoaingu').html(html);
@@ -379,7 +379,7 @@
                             <th style="width:15%">Tên KQ Nộp Xét</th>
                             <th>Ngày Đăng ký</th>
                             <th>Trạng thái</th>
-                            <th class="text-center" style="width:120px">Cập nhật LP</th>
+                            <th class="text-center text-nowrap" style="width:120px">Minh chứng lệ phí</th>
                         </tr>
                         <tbody class="tbody-dgnl">
                         </tbody>
@@ -409,10 +409,10 @@
                                 $.each(DanhGia, function (key, item) {
                                     let trangthai = "";
                                     if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp lệ phí</span >'
+                                        trangthai = '<span style="color:red">Chư nôp minh chứng </span >'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp lệ phí</span>'
+                                        trangthai = '<span>Đã nộp minh chứng </span>'
                                     }
                                     else if (item.Dkxt_TrangThai_KinhPhi == 2) {
                                         trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
@@ -427,7 +427,7 @@
                                     html += '<td>' + item.ChungChi_ID.Ten + '</td>';
                                     html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
                                     html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 6)">Nộp lệ phí</button></td>`;
+                                    html += `<td class="text-center nơ"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 6)">Nộp minh chứng</button></td>`;
                                     html += '</tr>';
                                 });
                                 $('.tbody-dgnl').html(html);
@@ -506,7 +506,7 @@
     var MinhChungFormData = new FormData();
     var MinhChungPath = "";
     $('document').ready(function () {
-
+       
         $('input').on('input', function () {
             hideErrorMessage($(this));
         });
@@ -516,6 +516,7 @@
         })
 
         $("#file_minhchung").on("change", function () {
+            MinhChungFormData = new FormData();          
 
             var file_minhchung = document.getElementById('file_minhchung');
             let j = 0;
@@ -565,6 +566,7 @@
     }
 
     function uploadFiles() {
+        MinhChungPath = "";
         var url = '/LePhiXetTuyens/UploadLePhiMinhChung';
         var fileCount = 0;
         for (var pair of MinhChungFormData.entries()) {
