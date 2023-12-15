@@ -73,23 +73,23 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == 0)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa đóng phí" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa nộp minh chứng lệ phí" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa kiểm tra" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 3)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Sửa,  chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 3, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, Đúng" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, đúng" });
                 }
             }
             ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -102,26 +102,29 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
-            var list_items_hoso = (from item in model select item.Dkxt_KQTQG_TrangThai_KetQua).Distinct().ToList();
+            var list_items_hoso = (from item in model select item.Dkxt_KQTQG_TrangThai_HoSo).Distinct().ToList();
             List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
-
+            //filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
+            //filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã kiểm tra, Có sai sót" });
+            //filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, chưa kiểm tra" });
+            //filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, hồ sơ đúng, đủ" });
             foreach (var _item in list_items_hoso)
             {
                 if (_item == 0)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, HS đúng, đủ" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, hồ sơ đúng, đủ" });
                 }
             }
             ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -315,23 +318,23 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == 0)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa đóng phí" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa nộp minh chứng lệ phí" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa kiểm tra" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 3)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Sửa,  chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 3, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, Đúng" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, đúng" });
                 }
             }
             ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -344,29 +347,30 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
-            var list_items_hoso = (from item in model select item.Dkxt_HB_TrangThai_KetQua).Distinct().ToList();
+            var list_items_hoso = (from item in model select item.Dkxt_HB_TrangThai_HoSo).Distinct().ToList();
             List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
 
             foreach (var _item in list_items_hoso)
             {
                 if (_item == 0)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, HS đúng, đủ" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, hồ sơ đúng, đủ" });
                 }
             }
             ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
+
             if (!String.IsNullOrEmpty(filteriHoSo))
             {
                 int _dkxt_TrangThai_KetQua = Int32.Parse(filteriHoSo);
@@ -590,26 +594,26 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
-            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_KetQua).Distinct().ToList();
+            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_HoSo).Distinct().ToList();
             List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
 
             foreach (var _item in list_items_hoso)
             {
                 if (_item == 0)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, HS đúng, đủ" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, hồ sơ đúng, đủ" });
                 }
             }
             ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -661,15 +665,40 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
 
         //public ActionResult DkxtTt_hs_view(long Dkxt_ID, string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
+        [AdminSessionCheck]
         public ActionResult DkxtTt_hs_view(long Dkxt_ID, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
             ViewBag.Dkxt_ID = Dkxt_ID;
             return View();
         }
+     
+        public JsonResult DkxtTt_hs_DeleteMC(ThongTinXoaMC entity)
+        {
+            db = new DbConnecttion();
+
+            var model = db.DangKyXetTuyenThangs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
+            // string modifiedString = originalString.Replace(stringToRemove, "");
+            if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_MinhChung_Giai = model.Dkxt_MinhChung_Giai.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
+
+            if (model.Dkxt_KinhPhi_TepMinhChung.Length == 0 && model.Dkxt_TrangThai_KinhPhi != 0)
+            {
+                model.Dkxt_TrangThai_KinhPhi = 2;
+                model.Dkxt_KinhPhi_NgayThang_CheckMC = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
-        #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển khác (sử dụng kết quả thi ngoại ngữ hoặc thi dgnl
+        #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển khác sử dụng kết quả thi ngoại ngữ hoặc thi dgnl
 
+        [AdminSessionCheck]
         public ActionResult DkxtkqCcnn(string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
             db = new DbConnecttion();
@@ -708,24 +737,24 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == 0)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa đóng phí" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa nộp minh chứng lệ phí" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa kiểm tra" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 3)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Sửa,  chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 3, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, Đúng" });
-                }
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, Đúng" });
+                }               
             }
             ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
 
@@ -737,28 +766,29 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
-            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_KetQua).Distinct().ToList();
+            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_HoSo).Distinct().ToList();
             List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
 
             foreach (var _item in list_items_hoso)
             {
                 if (_item == 0)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, HS đúng, đủ" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, hồ sơ đúng, đủ" });
                 }
             }
+            
             ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
             if (!String.IsNullOrEmpty(filteriHoSo))
             {
@@ -805,7 +835,35 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
+        [AdminSessionCheck]
+        public ActionResult DkxtkqCcnn_hs_view(string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page,long Dkxt_ID)
+        {
+            ViewBag.Dkxt_ID = Dkxt_ID;          
+            return View();
+        }
+        public JsonResult DkxtkqCcnn_hs_DeleteMC(ThongTinXoaMC entity)
+        {
+            db = new DbConnecttion();
 
+            var model = db.DangKyXetTuyenKhacs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
+            // string modifiedString = originalString.Replace(stringToRemove, "");
+            if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
+
+            if (model.Dkxt_KinhPhi_TepMinhChung.Length == 0 && model.Dkxt_TrangThai_KinhPhi != 0)
+            {
+                model.Dkxt_TrangThai_KinhPhi = 2;
+                model.Dkxt_KinhPhi_NgayThang_CheckMC = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        [AdminSessionCheck]
         public ActionResult DkxtkqDgnl(string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
         {
             db = new DbConnecttion();
@@ -842,23 +900,23 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == 0)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa đóng phí" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa nộp minh chứng lệ phí" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa kiểm tra" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 3)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Sửa,  chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 3, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, Đúng" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, Đúng" });
                 }
             }
             ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -871,26 +929,26 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
 
             #region lọc dữ liệu theo trạng thái theo dõi hồ sơ
-            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_KetQua).Distinct().ToList();
+            var list_items_hoso = (from item in model select item.Dkxt_TrangThai_HoSo).Distinct().ToList();
             List<StatusTracking> filteri_items_hoso = new List<StatusTracking>();
 
             foreach (var _item in list_items_hoso)
             {
                 if (_item == 0)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
                 }
                 if (_item == 1)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == 2)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, chưa kiểm tra" });
                 }
                 if (_item == 9)
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, HS đúng, đủ" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra; hồ sơ đúng, đủ" });
                 }
             }
             ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -941,13 +999,34 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
 
-        public ActionResult DkxtkqKhac_hs_view(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page, long Dkxt_ID, int Ptxt_ID)
+        [AdminSessionCheck]
+        public ActionResult DkxtkqDgnl_hs_view(string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page, long Dkxt_ID)
         {
-            ViewBag.Dkxt_ID = Dkxt_ID;
-            ViewBag.Ptxt_ID = Ptxt_ID;
+            ViewBag.Dkxt_ID = Dkxt_ID;           
             return View();
         }
+        public JsonResult DkxtkqDgnl_hs_DeleteMC(ThongTinXoaMC entity)
+        {
+            db = new DbConnecttion();
 
+            var model = db.DangKyXetTuyenKhacs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
+            // string modifiedString = originalString.Replace(stringToRemove, "");
+            if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
+
+            if (model.Dkxt_KinhPhi_TepMinhChung.Length == 0 && model.Dkxt_TrangThai_KinhPhi != 0)
+            {
+                model.Dkxt_TrangThai_KinhPhi = 2;
+                model.Dkxt_KinhPhi_NgayThang_CheckMC = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký thi năng khiếu
@@ -1168,7 +1247,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             model.Dkxt_TrangThai_HoSo = entity.Dkxt_TrangThai_HoSo;
             model.Dkxt_ThongBaoKiemDuyet_HoSo = entity.Dkxt_ThongBaoKiemDuyet_HoSo;
             db.SaveChanges();
-            return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true}, JsonRequestBehavior.AllowGet);
         }
         public JsonResult Dkxt_DGNL_NN_Update_KiemDuyet(DangKyXetTuyenKhac entity)
         {
@@ -1179,7 +1258,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             model.Dkxt_TrangThai_HoSo = entity.Dkxt_TrangThai_HoSo;
             model.Dkxt_ThongBaoKiemDuyet_HoSo = entity.Dkxt_ThongBaoKiemDuyet_HoSo;
             db.SaveChanges();
-            return Json(new { success = true, data = "" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true}, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

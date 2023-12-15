@@ -195,17 +195,20 @@
                                         var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 
                                         if (lastChar.toLowerCase() != ".pdf") {
-                                            pdf_view.style.display = "none";
-                                            pdf_view.style.height = "0px";
-
+                                            $('#pdf_view').height('0px');
+                                            $('#pdf_view').hide();
+                                            $('#pdf_view').css('display', 'none');
                                             $("#img_view").attr("src", url);
                                             $("#img_view").show();
 
                                         }
                                         if (lastChar.toLowerCase() === ".pdf") {
                                             $("#img_view").hide();
-                                            pdf_view.style.display = "inline";
-                                            pdf_view.style.height = "500px";
+
+                                            $('#pdf_view').height('500px');                                           
+                                            $('#pdf_view').css('display', 'inline');
+                                            $('#pdf_view').show();
+
                                             $("#pdf_view").attr("src", url);
 
                                             $("#pdf_view").show();
@@ -595,8 +598,8 @@
                     <div class="row">
                         <center>
                             <div class="col-12 mt-2">
-                                <a class="btn btn-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>
-                                <input class="btn btn-secondary" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSo()" />
+                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>
+                                <input class="btn btn-outline-secondary " type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSo()" />
                             </div>
                         </center>
                     </div>
@@ -700,8 +703,9 @@
 
 
         var pdf_view = document.getElementById("pdf_view");
-        pdf_view.style.display = "none";
-        pdf_view.style.height = "0px";
+
+        $('#pdf_view').height('0px');
+        $('#pdf_view').hide();
 
         $("#pdf_view").attr("src", "");
         $("#pdf_view").hide();
@@ -731,8 +735,8 @@
         var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 
         if (lastChar.toLowerCase() != ".pdf") {
-            pdf_view.style.display = "none";
-            pdf_view.style.height = "0px";
+            $('#pdf_view').height('0px');
+            $('#pdf_view').hide();
 
             $("#img_view").attr("src", url);
             $("#img_view").show();
@@ -753,7 +757,7 @@
 <script>
     $(document).ready(function () {
         $('#bt_close_div_view_img').click(function () {
-            $('#pdf_view').height('0');
+            $('#pdf_view').height('0px');
             $('#pdf_view').hide();
             $("#pdf_view").attr("src", "");         
 

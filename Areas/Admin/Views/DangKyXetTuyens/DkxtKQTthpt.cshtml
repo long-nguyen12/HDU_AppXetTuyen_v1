@@ -101,7 +101,8 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>Họ tên</th>
+                                    <th>Họ lót</th>
+                                    <th>Tên</th>
                                     <th>Điện thoại</th>
                                     <th>N.vọng</th>
                                     <th>Ngành</th>
@@ -125,10 +126,13 @@
                                     {
                                         foreach (var item in Model)
                                         {
-                                           
+
                                             <tr>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot) @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
+                                                    @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_DienThoai)
@@ -169,7 +173,7 @@
                                                         }
                                                         if (item.Dkxt_KQTQG_TrangThai_KinhPhi == 9)
                                                         {
-                                                            <span>Đã kiểm tra, Đúng</span>
+                                                            <span>Đã kiểm tra, đúng</span>
                                                         }
                                                     }
                                                 </td>

@@ -250,7 +250,8 @@
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-2">
-                                                            <label class="form-label">Bằng Tốt nghiệp (<span id="sp_view_mc_bang_tn"></span>)
+                                                            <label class="form-label">
+                                                                Bằng Tốt nghiệp (<span id="sp_view_mc_bang_tn"></span>)
                                                             </label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
@@ -311,7 +312,8 @@
                     <div class="card-header mt-0 mb-0">
                         <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
                         <div>
-                            <button class="btn btn-outline-danger btn-sm" type="button" id="bt_delete_img_mc">Xóa</button>
+                            <button class="btn btn-outline-danger btn-sm" type="button" id="bt_delete_img_mc" onclick="bt_delete_img_mc_click()">Xóa</button>
+                            <script>function bt_delete_img_mc_click() { $('#modal_thongbao_delete').modal('show'); }</script>
                             <button class="btn btn-outline-primary btn-sm" type="button" id="bt_close_div_view_img">Đóng</button>
                         </div>
                     </div>
@@ -320,7 +322,10 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active" id="div_item_view_minhchung">
                                     <img class="d-block w-100 img-hide" id="img_view" display:none">
-                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                                    <embed id="pdf_view" class="d-block w-100" style="display:none" type="application/pdf" />
+                                    <input type="hidden" id="hiden_id_key" style="display:none" />
+                                    <input type="hidden" id="hiden_loai_minhchung_xoa" style="display:none" />
+                                    <input type="hidden" id="hiden_duongdan_file_xoa" style="display:none" />
                                 </div>
                             </div>
                         </div>
@@ -373,6 +378,56 @@
 </div>
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_ID" />
 <input type="hidden" id="dkxt_id_checkin" name="dkxt_id_checkin" />
+<div class="modal fade" id="modal_thongbao_delete" tabindex="-1" role="dialog" aria-labelledby="modal_thongbao_delete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tieude_modal">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="bt_close_modal_xoa_click()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Bạn chắc chắn xóa ảnh minh chứng này ?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" onclick="bt_dongy_xoa_on_modal_delete_click()">Đồng ý</button>
+                <script>
+                    function bt_dongy_xoa_on_modal_delete_click() {
+                        var str_query = window.location.search;
+                        var data_post = {
+                            Dkxt_ID: $('#hiden_id_key').val(),
+                            Dkxt_LoaiMC: $('#hiden_loai_minhchung_xoa').val(),
+                            Dkxt_Url: $("#hiden_duongdan_file_xoa").val(),
+                        }
+                        console.log('tét delete', data_post)
+                      
+                        $.ajax({
+                            url: '/DangKyXetTuyenThang/Delete_MinhChung',
+                            type: "POST",
+                            data: JSON.stringify(data_post),
+                            contentType: "application/json;charset=utf-8",
+                            success: function (res) {
+                              
+                                window.location.href = "/DangKyXetTuyenThang/edit" + str_query;
+                            },
+                            error: function (error) {
+                                console.error('Error update mc:', error);
+                            }
+                        });
+                    }
+                </script>
+                <button class="btn btn-primary" type="button" onclick="bt_close_modal_xoa_click()">Đóng</button>
+            </div>
+            <script>
+                function bt_close_modal_xoa_click() {
+                    $('#modal_thongbao_delete').modal('hide');
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
 
 <script>
     $(document).ready(function () {
@@ -411,7 +466,7 @@
 
                             for (i = 0; i < ArrMCGiai.length; i++) {
                                 if (ArrMCGiai[i].length > 0) {
-                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCGiai[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCGiai[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     /*  var str_a = `<a href="#" onclick="showimg(${ArrMCGiai[i]},1,${data.Dkxt_ID} class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;*/
                                     $('#sp_view_mc_ketqua_datgiai').append(str_a);
                                 }
@@ -436,7 +491,7 @@
 
                             for (i = 0; i < ArrMCHocBa.length; i++) {
                                 if (ArrMCHocBa[i].length > 0) {
-                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCHocBa[i]}', 2,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCHocBa[i]}', 2,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     /*  var str_a = `<a href="#" onclick="showimg(${ArrMCGiai[i]},1,${data.Dkxt_ID} class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;*/
                                     $('#sp_view_mc_hocba').append(str_a);
                                 }
@@ -461,7 +516,7 @@
 
                             for (i = 0; i < ArrMCCcCd.length; i++) {
                                 if (ArrMCCcCd[i].length > 0) {
-                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCCcCd[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCCcCd[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_cccd').append(str_a);
                                 }
                             }
@@ -484,7 +539,7 @@
 
                             for (i = 0; i < ArrMCBangTN.length; i++) {
                                 if (ArrMCBangTN[i].length > 0) {
-                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCBangTN[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCBangTN[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_bang_tn').append(str_a);
                                 }
                             }
@@ -508,7 +563,7 @@
 
                             for (i = 0; i < ArrMCUutien.length; i++) {
                                 if (ArrMCUutien[i].length > 0) {
-                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCUutien[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCUutien[i]}', 5,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_gtuutien').append(str_a);
                                 }
                             }
@@ -876,6 +931,7 @@
                 if (res.success) {
                     showToast("Thông báo", "Sửa nguyện vọng thành công!", "bg-success");
                     $("#loadingModal").modal("hide");
+                    window.location.href = '/DangKyXetTuyenThang/Index';
                     /*onResetFields();*/
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi sửa nguyện vọng!", "bg-error");
@@ -896,43 +952,54 @@
     }
 </script>
 <script>
-    function showimg(url, loaimc, id_key) {
-
-        $("#hiden_duongdan_file_xoa").val(url);
+    function showimg(url, loaimc, id_key_hs) {
+        $('#hiden_id_key').val(id_key_hs);
         $('#hiden_loai_minhchung_xoa').val(loaimc);
+        $("#hiden_duongdan_file_xoa").val(url);
+
 
         var pdf_view = document.getElementById("pdf_view");
-        pdf_view.style.display = "none";
-        pdf_view.style.height = "0px";
+        $('#pdf_view').height('0px');
+        $('#pdf_view').css('display', 'none');
+        $("#pdf_view").attr("src", "");
+        $("#pdf_view").hide();
 
-        $('#img_view').hide();
         $("#img_view").attr("src", "");
+        $('#img_view').hide();
 
         if (loaimc == 1) {
             $('#img_txt_card_hearder').text('Minh chứng đạt giải');
         }
         if (loaimc == 2) {
-            $('#img_txt_card_hearder').text('Minh chứng học bạ/ bằng đại học');
+            $('#img_txt_card_hearder').text('Minh chứng học bạ');
         }
         if (loaimc == 3) {
-            $('#img_txt_card_hearder').text('Minh chứng CMND');
+            $('#img_txt_card_hearder').text('Minh chứng bằng đại học');
         }
         if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Minh chứng căn cước công dân');
+        }
+        if (loaimc == 5) {
             $('#img_txt_card_hearder').text('Giấy tờ khác');
         }
         var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 
         if (lastChar.toLowerCase() != ".pdf") {
-            pdf_view.style.display = "none";
-            pdf_view.style.height = "0px";
+
+            $('#pdf_view').height('0px');
+            $('#pdf_view').css('display', 'none');
+            $("#pdf_view").attr("src", "");
+            $("#pdf_view").hide();
 
             $("#img_view").attr("src", url);
             $("#img_view").show();
         }
         if (lastChar.toLowerCase() === ".pdf") {
             $("#img_view").hide();
-            pdf_view.style.display = "inline";
-            pdf_view.style.height = "700px";
+            $("#img_view").attr("src", "");
+
+            $('#pdf_view').height('500px');
+            $('#pdf_view').css('display', 'inline');
             $("#pdf_view").attr("src", url);
             $("#pdf_view").show();
         }

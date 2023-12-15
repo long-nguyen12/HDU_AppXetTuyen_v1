@@ -338,23 +338,23 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == "0")
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa đóng phí" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa nộp minh chứng" });
                 }
                 if (_item == "1")
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã nộp, chưa kiểm tra" });
                 }
                 if (_item == "2")
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == "3")
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 2, St_Name = "Sửa,  chưa KT" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 3, St_Name = "Đã sửa,  chưa kiểm tra" });
                 }
                 if (_item == "9")
                 {
-                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, Đúng" });
+                    filteri_items_lephi.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, đúng" });
                 }
             }
             ViewBag.filteriLePhi = new SelectList(filteri_items_lephi.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -373,19 +373,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             {
                 if (_item == "0")
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Chưa kiểm tra" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 0, St_Name = "Chưa kiểm tra" });
                 }
                 if (_item == "1")
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã KT, Có sai sót" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 1, St_Name = "Đã kiểm tra, Có sai sót" });
                 }
                 if (_item == "2")
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa KT" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 2, St_Name = "Đã sửa, Chưa kiểm tra" });
                 }
                 if (_item == "9")
                 {
-                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã KT, HS đúng, đủ" });
+                    filteri_items_hoso.Add(new StatusTracking() { St_ID = 9, St_Name = "Đã kiểm tra, hồ sơ đúng, đủ" });
                 }
             }
             ViewBag.filteriHoSo = new SelectList(filteri_items_hoso.OrderBy(x => x.St_ID).ToList(), "st_ID", "st_Name");
@@ -839,34 +839,34 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_HanhKiemLop12 = _xeploai_hanhkiem_12,
 
                 Dkxt_ID = model.Dkxt_ID,
-                Dkxt_ChungChi_Ten = model.ChungChi.ChungChi_Ten,
+                
                 ThiSinh_ID = model.ThiSinh_ID,
                 Ptxt_ID = model.Ptxt_ID,
                 ChungChi_ID = model.ChungChi_ID,
 
                 KhoiNganh_Ten = model.Nganh.KhoiNganh.KhoiNganh_Ten,
-                KhoiNganh_ID = model.Nganh.KhoiNganh_ID,
-                Nganh_TenNganh = model.Nganh.Nganh_TenNganh,
-                Nganh_ID = model.Nganh_ID,
-
-              
-                Dkxt_NguyenVong = model.Dkxt_NguyenVong,
+                KhoiNganh_ID = model.Nganh.KhoiNganh_ID,              
+                Nganh_ID = model.Nganh_ID,              
                 DotXT_ID = model.DotXT_ID,
                 Dkxt_GhiChu = model.Dkxt_GhiChu,
                 Dkxt_ToHopXT = model.Dkxt_ToHopXT,
+
+                Dkxt_NguyenVong = model.Dkxt_NguyenVong,
+                Nganh_TenNganh = model.Nganh.Nganh_TenNganh,
+                Dkxt_ChungChi_Ten = model.ChungChi.ChungChi_Ten,
                 Dkxt_DonViToChuc = model.Dkxt_DonViToChuc,
-                Dkxt_KetQuaDatDuoc = model.Dkxt_KetQuaDatDuoc,
                 Dkxt_NgayDuThi = model.Dkxt_NgayDuThi,
+                Dkxt_KetQuaDatDuoc = model.Dkxt_KetQuaDatDuoc,               
                 Dkxt_TongDiem = model.Dkxt_TongDiem,
 
+                Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua,
                 Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,              
                 Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,
-                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,
-                Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua,
+                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,              
                 Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien,
-              
-                Dkxt_KinhPhi_SoThamChieu = model.Dkxt_KinhPhi_SoThamChieu,
+
                 Dkxt_KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung,
+                Dkxt_KinhPhi_SoThamChieu = model.Dkxt_KinhPhi_SoThamChieu,             
                 Dkxt_KinhPhi_NgayThang_NopMC = model.Dkxt_KinhPhi_NgayThang_NopMC,
                 Dkxt_KinhPhi_NgayThang_CheckMC = model.Dkxt_KinhPhi_NgayThang_CheckMC,
                 Dkxt_ThongBaoKiemDuyet_HoSo = model.Dkxt_ThongBaoKiemDuyet_HoSo,
