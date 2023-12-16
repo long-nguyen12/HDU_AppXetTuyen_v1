@@ -192,6 +192,7 @@
                                                 <span id="Dkxt_MonDatGiai_Error" class="small mb-1 text-danger"></span>
                                             </td>
                                         </tr>
+                                      
                                         <tr>
                                             <td>Cấp độ giải</td>
                                             <td>
@@ -573,8 +574,8 @@
         $('#Nganh_ID').val("0");
         $('#Dkxt_MonDatGiai').val("0");
         $('#Dkxt_LoaiGiai').val("0");
-        $('#Dkxt_NamDatGiai').val("");
-
+        $('#Dkxt_NamDatGiai').val('');
+        $('#Dkxt_CapDoGiai').val('');
         $('#files_hocba').val(null);
         $('#FilesList_HocBa_View tbody').empty();
         $('#files_cccd').val(null);
@@ -584,10 +585,10 @@
         $('#files_chungnhan').val(null);
         $('#FilesList_ChungNhan_View tbody').empty();
         $('#files_uutien').val(null);
-        $('#FilesList_UuTien_View tbody').empty();
-
+        $('#FilesList_UuTien_View tbody').empty();       
         check_mc_chungnhan = 0;
         $('#File_ChungNhan_Error').text('');
+        $('.text-danger').text('');
     }
 
     function InitData(MonDatGiai, LoaiGiai) {
@@ -876,11 +877,12 @@
     }
 
     function bt_Insert_Dknv_on_divView_Click(khoinganh_key, nganh_key, tohopmon_key) {
-        onResetFields();
+      
         GetAllKhoiNganh(); 
         document.getElementById('div_list_nguyenvong').style.display = "none";
         document.getElementById('div_update_dk_nguyenvong').style.display = "inline";
         key_dkxt_id_post = -1;
+        onResetFields();
     }
 
     function _bt_HuyBo_Dkxt_NVM_OnClick(khoinganh_key, nganh_key, tohopmon_key) {

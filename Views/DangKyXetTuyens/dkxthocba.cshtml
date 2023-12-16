@@ -667,6 +667,12 @@
         select_khoinganh_view_data(0, 0, 0);
         reset_fields_controll_disabled_true();
         $('#dkxt_hocba_id_checkin').val('0');
+
+         check_in_file_hoba = false;
+         formdata_files_hocba = new FormData(); //FormData object hoc ba
+         formdata_cccd = new FormData(); //FormData object cancuoc cong dan
+         formdata_bang_tn = new FormData(); //FormData object bang TN
+         formdata_giayto_uutien = new FormData(); //FormData object giaytout
     });
 
     function select_khoinganh_view_data(khoinganh_key, nganh_key, tohopmon_key) {
@@ -1095,6 +1101,7 @@
         document.getElementById('div_update_aspirations').style.display = "none";
         $('#dkxt_hocba_id_checkin').val('');
         reset_fields_controll_disabled_true();
+        $('.text-danger').text('');
     });
 
     $(document).ready(function () {
