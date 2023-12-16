@@ -822,6 +822,13 @@
         select_khoinganh_view_data(0, 0, 0);
         reset_fields_controll_disabled_true();
         $('#dkxt_thptqg_id_checkin').val('0');
+        check_in_file_chungnhan_kqtn = false;
+
+        formdata_file_chungnhan_kqtn = new FormData(); //FormData object chung nhan tot nghiep
+        formdata_file_hocba_ts = new FormData(); //FormData object hoc ba
+        formdata_file_bang_tn = new FormData(); //FormData object bang TN  
+        formdata_file_cancuoc_congdan = new FormData(); //FormData object cancuoccongdan
+        formdata_file_giayto_uutien = new FormData(); //FormData object giaytout
     });
     // button đồng ý thêm mới
     $('#bt_ok_div_update_aspirations').click(function () {
@@ -969,6 +976,7 @@
         //document.getElementById('div_list_aspirations').style.display = "inline";
         //document.getElementById('div_update_aspirations').style.display = "none";
         reset_fields_controll_disabled_true();
+        $('.text-danger').text('');
     });
     // button tắt cửa sổ thêm mới phía dưới
     $('#bt_close_div_update_aspirations_second').click(function () {
@@ -977,6 +985,7 @@
         //document.getElementById('div_list_aspirations').style.display = "inline";
         //document.getElementById('div_update_aspirations').style.display = "none";
         reset_fields_controll_disabled_true();
+        $('.text-danger').text('');
     });
 
     function on_listen_fields_input_data(inputClass, outputClass) {
