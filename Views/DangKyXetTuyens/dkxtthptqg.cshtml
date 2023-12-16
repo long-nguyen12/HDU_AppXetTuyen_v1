@@ -600,7 +600,6 @@
     })
 </script>
 <script>
-
     $(document).ready(function () {
         /* Khai báo dữ liệu cho dropdownlist chọn năm */
         let currentYear = new Date().getFullYear();
@@ -845,8 +844,8 @@
 
         if (_nganh_ID == 0) { var errorMessage = "Vui lòng chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
         if (_thm_ID == 0) { var errorMessage = "Vui lòng chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
-        if (_kxt_KQTQG_Diem_M1.DiemM1 == '' || _kxt_KQTQG_Diem_M2.DiemM2 == '' || _kxt_KQTQG_Diem_M3.DiemM3 == '') {
-            var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại"; $('#Diem_All_Error').text(errorMessage); flag = false;
+        if (_kxt_KQTQG_Diem_M1.Diem == '' || _kxt_KQTQG_Diem_M2.Diem == '' || _kxt_KQTQG_Diem_M3.Diem == '') {
+            var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng"; $('#Diem_All_Error').text(errorMessage); flag = false;
         }
         if (!check_in_file_chungnhan_kqtn) { var errorMessage = "Vui lòng upload tệp chứng nhận tốt nghiệp"; $('#ChungNhanTotNghiep_Error').text(errorMessage); flag = false; }
 
@@ -995,8 +994,7 @@
             inputFields.each(function () {
                 if ($(this).val() === '' || $(this).val() < 0 || $(this).val() > 10) {
                     allFilled = false;
-                    var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!";
-
+                    var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng";
                     $('#Diem_All_Error').text(errorMessage);
                     $(outputClass).val('');
                     return false;

@@ -137,35 +137,35 @@ namespace HDU_AppXetTuyen.Controllers
             var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             if (ts != null)
             {
-                DangKyXetTuyenThang dkxtt = new DangKyXetTuyenThang();
-                dkxtt.ThiSinh_ID = ts.ThiSinh_ID;
-                dkxtt.Nganh_ID = int.Parse(student.Nganh_ID.ToString());
-                dkxtt.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
-                dkxtt.Dkxt_MonDatGiai = student.Dkxt_MonDatGiai;
-                dkxtt.Dkxt_LoaiGiai = student.Dkxt_LoaiGiai;
-                dkxtt.Dkxt_NamDatGiai = student.Dkxt_NamDatGiai;
+                DangKyXetTuyenThang model = new DangKyXetTuyenThang();
+                model.ThiSinh_ID = ts.ThiSinh_ID;
+                model.Nganh_ID = int.Parse(student.Nganh_ID.ToString());
+                model.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
+                model.Dkxt_MonDatGiai = student.Dkxt_MonDatGiai;
+                model.Dkxt_LoaiGiai = student.Dkxt_LoaiGiai;
+                model.Dkxt_NamDatGiai = student.Dkxt_NamDatGiai;
+                model.Dkxt_CapDoGiai = student.Dkxt_CapDoGiai;
+                model.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
+                model.Dkxt_MinhChung_HB = student.Dkxt_MinhChung_HB;
+                model.Dkxt_MinhChung_CCCD = student.Dkxt_MinhChung_CCCD;
+                model.Dkxt_MinhChung_Bang = student.Dkxt_MinhChung_Bang;
+                model.Dkxt_MinhChung_Giai = student.Dkxt_MinhChung_Giai;
+                model.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
+                model.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
+                model.Ptxt_ID = 4;
 
-                dkxtt.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
-                dkxtt.Dkxt_MinhChung_HB = student.Dkxt_MinhChung_HB;
-                dkxtt.Dkxt_MinhChung_CCCD = student.Dkxt_MinhChung_CCCD;
-                dkxtt.Dkxt_MinhChung_Bang = student.Dkxt_MinhChung_Bang;
-                dkxtt.Dkxt_MinhChung_Giai = student.Dkxt_MinhChung_Giai;
-                dkxtt.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
-                dkxtt.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
-                dkxtt.Ptxt_ID = 4;
+                model.Dkxt_KinhPhi_NgayThang_CheckMC = "";
+                model.Dkxt_KinhPhi_NgayThang_NopMC = "";
+                model.Dkxt_KinhPhi_SoThamChieu = "";
+                model.Dkxt_KinhPhi_TepMinhChung = "";
 
-                dkxtt.Dkxt_KinhPhi_NgayThang_CheckMC = "";
-                dkxtt.Dkxt_KinhPhi_NgayThang_NopMC = "";
-                dkxtt.Dkxt_KinhPhi_SoThamChieu = "";
-                dkxtt.Dkxt_KinhPhi_TepMinhChung = "";
+                model.Dkxt_TrangThai_KinhPhi = 0;
+                model.Dkxt_TrangThai_HoSo = 0;
+                model.Dkxt_TrangThai_KetQua = 0;
 
-                dkxtt.Dkxt_TrangThai_KinhPhi = 0;
-                dkxtt.Dkxt_TrangThai_HoSo = 0;
-                dkxtt.Dkxt_TrangThai_KetQua = 0;
-
-                dkxtt.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
-                dkxtt.DotXT_ID = dotXT.Dxt_ID;
-                db.DangKyXetTuyenThangs.Add(dkxtt);
+                model.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
+                model.DotXT_ID = dotXT.Dxt_ID;
+                db.DangKyXetTuyenThangs.Add(model);
                 db.SaveChanges();
 
                 int nganh_id = int.Parse(student.Nganh_ID.ToString());
@@ -312,8 +312,6 @@ namespace HDU_AppXetTuyen.Controllers
             string _ut_doituong_ten_diem = model.ThiSinhDangKy.DoiTuong.DoiTuong_Ten + ": ƯT " + model.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien + " đ";
             string _ut_khuvuv_ten_diem = model.ThiSinhDangKy.KhuVuc.KhuVuc_Ten + ": ƯT " + model.ThiSinhDangKy.KhuVuc.KhuVuc_DiemUuTien + " đ"; ;
 
-
-
             var data_return = new
             {
                 KhuVuc_ID = _ut_khuvuv_ten_diem,
@@ -333,7 +331,7 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_NguyenVong = model.Dkxt_NguyenVong,
                 Dkxt_GhiChu = model.Dkxt_GhiChu,
 
-
+                Dkxt_CapDoGiai = model.Dkxt_CapDoGiai,
                 Dkxt_LoaiGiai = model.Dkxt_LoaiGiai,
                 Dkxt_NamDatGiai = model.Dkxt_NamDatGiai,
                 Dkxt_MonDatGiai = model.Dkxt_MonDatGiai,
@@ -352,8 +350,6 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_TrangThai_KinhPhi = model.Dkxt_TrangThai_KinhPhi,
                 Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
                 Dkxt_TrangThai_KetQua = model.Dkxt_TrangThai_KetQua,
-
-
             };
             return Json(new { success = true, data = data_return }, JsonRequestBehavior.AllowGet);
         }

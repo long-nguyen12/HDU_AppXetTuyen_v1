@@ -158,17 +158,20 @@
                                 }
                             }
                             $('#div_mc_hocba').show();
+                            $('#bt_delete_div_view_img').hide();
                         }
                         else {
                             $('#div_mc_hocba').hide();
                         }                       
                     }
                     else {
+                        $("#pdf_view").attr("src", "");
+                        $('#pdf_view').height('0px');
+                        $('#pdf_view').hide();
+
                         $('#img_txt_card_hearder').text('Hình ảnh minh chứng học bạ');
                         $("#img_view").attr("src", "/Content/images/no-image.png");
-                        pdf_view.style.display = "none";
-                        pdf_view.style.height = "0px";
-                        $('#div_view_img').show();
+                        $('#div_view_img').show();                      
                         $('#bt_delete_div_view_img').hide();
                         $('#bt_close_div_view_img').hide();
                     }
@@ -192,7 +195,7 @@
                  
                     if (data.Dkxt_HB_MinhChung_CCCD) {
                         const ArrCccd = data.Dkxt_HB_MinhChung_CCCD.split("#");
-                        if (ArrBangTN.length > 0) {
+                        if (ArrCccd.length > 0) {                           
                             $('#div_mc_cccd').append('- Căn cước công dân: ');
                             for (i = 0; i < ArrCccd.length; i++) {
                                 if (ArrCccd[i].length > 0) {
@@ -210,7 +213,8 @@
 
                     if (data.Dkxt_HB_MinhChung_UuTien) {
                         const ArrGTUT = data.Dkxt_HB_MinhChung_UuTien.split("#");
-                        if (ArrBangTN.length > 0) {
+                        if (ArrGTUT.length > 0) {
+                            console.log('ArrGTUT.length', ArrGTUT.length);
                             $('#div_mc_giayto_uutien').append('- Giấy tờ ưu tiên: ');
                             for (i = 0; i < ArrGTUT.length; i++) {
                                 if (ArrGTUT[i].length > 0) {
@@ -689,6 +693,7 @@
             $("#pdf_view").show();
         }
         $('#div_view_img').show();
+        $('#bt_delete_div_view_img').show();
     }
     $(document).ready(function () {
         $('#bt_close_div_view_img').click(function () {

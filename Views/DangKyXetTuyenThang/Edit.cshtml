@@ -145,6 +145,13 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Cấp độ giải</td>
+                                            <td>
+                                                <input id="Dkxt_CapDoGiai" type="text" class="form-control" placeholder="Cấp quốc gia hoặc cấp tỉnh" value="" />
+                                                <span id="Dkxt_CapDoGiai_Error" class="small mb-1 text-danger"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Loại giải</td>
                                             <td>
                                                 <select id="Dkxt_LoaiGiai" class="form-select"></select>
@@ -213,7 +220,7 @@
                                             <td>
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-lg-12">
-                                                        <div class="form-group mb-2">
+                                                        <div class="form-group mb-1">
                                                             <label class="form-label">Học bạ (<span id="sp_view_mc_hocba"></span>)</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
@@ -231,7 +238,7 @@
 
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
+                                                        <div class="form-group mb-1">
                                                             <label class="form-label">Căn cước công dân (<span id="sp_view_mc_cccd"></span>)</label>
                                                             <div class="col-md-12">
                                                                 <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
@@ -249,7 +256,7 @@
 
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
+                                                        <div class="form-group mb-1">
                                                             <label class="form-label">
                                                                 Bằng Tốt nghiệp (<span id="sp_view_mc_bang_tn"></span>)
                                                             </label>
@@ -269,7 +276,7 @@
 
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
+                                                        <div class="form-group mb-1">
                                                             <label class="form-label">
                                                                 Minh chứng ưu tiên
                                                                 (<span id="sp_view_mc_gtuutien"></span>)
@@ -444,11 +451,11 @@
                 if (res.success) {
                     let data = res.data;
                     console.log(data)
-                    /*select_khoinganh_view_data(data.KhoiNganh_ID, data.Nganh_ID, data.Thm_ID);*/
+                   
                     $('#Dkxt_XepLoaiHocLuc_12').val(data.ThiSinh_HocLucLop12);
                     $('#Dkxt_XepLoaiHanhKiem_12').val(data.ThiSinh_HanhKiemLop12);
                     $('#Dkxt_NamDatGiai').val(data.Dkxt_NamDatGiai);
-
+                    $('#Dkxt_CapDoGiai').val(data.Dkxt_CapDoGiai);
                     $('#span_Uutien_doituong').text(data.DoiTuong_ID);
                     $('#span_Uutien_khuvuc').text(data.KhuVuc_ID);
 
@@ -868,18 +875,28 @@
     function SubmitData() {
         $(".text-danger").text("");
         let flag = true;
+       
+        let Select_Khoinganh = $('#select_khoinganh').val();
         let Nganh_ID = $('#Nganh_ID').val();
         let Dkxt_ToHopXT = $('#Dkxt_ToHopXT').val();
         let Dkxt_MonDatGiai_Value = $('#Dkxt_MonDatGiai').val();
         let Dkxt_LoaiGiai_Value = $('#Dkxt_LoaiGiai').val();
         let Dkxt_MonDatGiai = $('#Dkxt_MonDatGiai').find(":selected").text();
+        let Dkxt_CapDoGiai = $('#Dkxt_CapDoGiai').val();
         let Dkxt_LoaiGiai = $('#Dkxt_LoaiGiai').find(":selected").text();
         let Dkxt_NamDatGiai = $('#Dkxt_NamDatGiai').val();
         let Dkxt_XepLoaiHocLuc_12 = $('#Dkxt_XepLoaiHocLuc_12').val();
         let Dkxt_XepLoaiHanhKiem_12 = $('#Dkxt_XepLoaiHanhKiem_12').val();
         let Dkxt_ID = $('#dkxt_id_checkin').val();
 
-        if (!Nganh_ID) {
+
+        if (Select_Khoinganh == 0) {
+            var errorMessage = "Vui lòng chọn khối ngành";
+            $('#KhoiNganh_ID_Error').text(errorMessage);
+            flag = false;
+        }
+
+        if (Nganh_ID == 0) {
             var errorMessage = "Vui lòng chọn ngành";
             $('#Nganh_ID_Error').text(errorMessage);
             flag = false;
@@ -889,20 +906,23 @@
             $('#Dkxt_MonDatGiai_Error').text(errorMessage);
             flag = false;
         }
+        if (!Dkxt_CapDoGiai) {
+            var errorMessage = "Vui lòng nhập cấp độ giải";
+            $('#Dkxt_CapDoGiai_Error').text(errorMessage);
+            flag = false;
+        }
+
         if (!Dkxt_LoaiGiai_Value || Dkxt_LoaiGiai_Value == "0") {
             var errorMessage = "Vui lòng chọn loại giải";
             $('#Dkxt_LoaiGiai_Error').text(errorMessage);
             flag = false;
         }
-        if (!Dkxt_NamDatGiai) {
-            var errorMessage = "Vui lòng nhận năm đạt giải";
+        if (!Dkxt_NamDatGiai.trim()) {
+            var errorMessage = "Vui lòng nhập năm đạt giải";
             $('#Dkxt_NamDatGiai_Error').text(errorMessage);
             flag = false;
-        } else if (!Dkxt_NamDatGiai.trim()) {
-            var errorMessage = "Vui lòng chọn ngành";
-            $('#Nganh_ID_Error').text(errorMessage);
-            flag = false;
-        }
+        } 
+
         if (!flag) return;
         $("#loadingModal").modal("show");
         uploadFiles();

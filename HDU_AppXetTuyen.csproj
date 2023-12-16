@@ -482,9 +482,6 @@
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopLePhi.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSo.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view2.cshtml" />
@@ -505,10 +502,9 @@
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\DkxtkqCcnn_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqKhac_hs_view.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
