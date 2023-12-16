@@ -28,7 +28,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ</span>
+                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy</span>
 
                     </div>
                 </div>
@@ -46,12 +46,12 @@
                 sp_tieude.innerHTML = "ĐKXT SD Kết quả DGNL hoặc CCNN";
             }
             else {
-                sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy hoặc chứng chỉ ngoại ngữ";
+                sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả thi đánh giá năng lực/đánh giá tư duy";
             }
         }
         window.onresize = reportWindowSize;
     })
-   
+
 
 </script>
 <div class="container-fluid px-12">
@@ -144,8 +144,19 @@
                                                         <label class="col-form-label">Tên đơn vị:</label>
                                                     </div>
                                                     <div class="col-8">
-                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị" value="" />
-                                                        <span id="Dkxt_DonViToChuc_Error" class="small mb-1 text-danger"></span>
+                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị tổ chức thi" value="" disabled />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="row g-3 align-items-center">
+                                                    <div class="col-4">
+                                                        <label class="col-form-label">Thang điểm:</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <input id="Dkxt_TongDiem" type="number" class="form-control" placeholder="Thang điểm" value="" disabled />
                                                     </div>
                                                 </div>
                                             </td>
@@ -163,19 +174,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="4">
-                                                <div class="row g-3 align-items-center">
-                                                    <div class="col-4">
-                                                        <label class="col-form-label">Thang điểm:</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <input id="Dkxt_TongDiem" type="number" class="form-control" placeholder="Thang điểm" value="" disabled />
-                                                        <span id="Dkxt_TongDiem_Error" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+
                                         <tr>
                                             <td colspan="4">
                                                 <div class="row g-3 align-items-center">
@@ -201,16 +200,12 @@
                         <div class="row mb-3">
                             <div class="col-xxl-12">
                                 <div class="form-group mb-2">
-                                    <label class="form-label col-md-12">
-                                        Chứng nhận
-                                        (<span id="sp_view_mc_ketqua"></span>)
-                                    </label>
+                                    <label class="form-label col-md-12"> Chứng nhận ( <span id="sp_view_mc_ketqua"></span> )</label>
                                     <div class="col-md-12">
-                                        <input class="form-control" id="files_chungnhan" multiple="multiple" name="files_chungnhan" type="file" accept="application/pdf,.png, .jpeg, .jpg" />
-                                        <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                        <input class="form-control" id="files_chungnhan" multiple="multiple" name="files_chungnhan" type="file" accept="application/pdf,.png, .jpeg, .jpg" />                                      
                                         <table class="table" id="FilesList_ChungNhan_View" style="visibility:hidden; width: 100%">
                                             <tr style="display:none">
-                                                <th colspan="3"><input type="hidden" id="ChungNhan_Files" /></th>
+                                                <th colspan="2"><input type="hidden" id="ChungNhan_Files" /></th>
                                             </tr>
                                         </table>
                                     </div>
@@ -240,12 +235,10 @@
                                                                 (<span id="sp_view_mc_hocba"></span>)
                                                             </label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
-                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />                                                               
                                                                 <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
-                                                                        <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
+                                                                        <th colspan="2"><input type="hidden" id="HocBa_Files" /></th>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -257,12 +250,10 @@
                                                                 Căn cước công dân (<span id="sp_view_mc_cccd"></span>)
                                                             </label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
-                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />                                                           
                                                                 <table class="table" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
-                                                                        <th colspan="3"><input type="hidden" id="CCCD_Files" /></th>
+                                                                        <th colspan="2"><input type="hidden" id="CCCD_Files" /></th>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -272,15 +263,13 @@
                                                         <div class="form-group">
                                                             <label class="form-label col-12">
                                                                 Bằng Tốt nghiệp
-                                                                (<span id="sp_view_mc_bang_tn"></span>)
+                                                                ( <span id="sp_view_mc_bang_tn"></span> )
                                                             </label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true"  accept="application/pdf,.png, .jpeg, .jpg" />                                                               
                                                                 <table class="table" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
-                                                                        <th colspan="3"><input type="hidden" id="BangTN_Files" /></th>
+                                                                        <th colspan="2"><input type="hidden" id="BangTN_Files" /></th>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -290,15 +279,14 @@
                                                         <div class="form-group">
                                                             <label class="form-label col-12">
                                                                 Minh chứng ưu tiên
-                                                                (<span id="sp_view_mc_uutien"></span>)
+                                                                ( <span id="sp_view_mc_uutien"></span> )
                                                             </label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
-                                                                       accept="application/pdf,.png, .jpeg, .jpg" />
+                                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true"  accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
                                                                 <table class="table" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
-                                                                        <th colspan="3"><input type="hidden" id="UuTien_Files" /></th>
+                                                                        <th colspan="2"><input type="hidden" id="UuTien_Files" /></th>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -388,9 +376,14 @@
 </div>
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_ID" />
 <input type="hidden" id="dkxt_id_checkin" name="dkxt_id_checkin" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<script src="~/Scripts/bootstrap.bundle.min.js"></script>
+<link href="~/Scripts/bootstrap-datepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>*@
 
 <div class="modal fade" id="modal_thongbao_delete" tabindex="-1" role="dialog" aria-labelledby="modal_thongbao_delete" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
@@ -411,7 +404,7 @@
                         var str_query = window.location.search;
                         var data_post = {
                             Dkxt_ID: $('#hiden_id_key').val(),
-                            Dkxt_LoaiMC: $('#hiden_loai_minhchung_xoa').val(),
+                            Dkxt_LoaiMC: $('#hiden_loai_minhchung_xoa').val().trim(),
                             Dkxt_Url: $("#hiden_duongdan_file_xoa").val(),
                         }
                         console.log('tét delete', data_post)
@@ -470,7 +463,8 @@
                     $('#dkxt_id_checkin').val(data.Dkxt_ID);
 
                     GetAllKhoiNganh(data.KhoiNganh_ID, data.Nganh_ID, data.ChungChi_ID);
-                   
+                 
+
                     $('#sp_view_mc_ketqua').empty();
 
                     if (data.Dkxt_MinhChung_KetQua) {
@@ -479,7 +473,7 @@
 
                             for (i = 0; i < ArrMCKetQua.length; i++) {
                                 if (ArrMCKetQua[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCKetQua[i]}', 1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCKetQua[i]}',1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_ketqua').append(str_a);
                                 }
                             }
@@ -488,7 +482,6 @@
                             var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_ketqua').append(str_a);
                         }
-
                     }
                     else {
                         var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
@@ -503,7 +496,7 @@
 
                             for (i = 0; i < ArrMCHocBa.length; i++) {
                                 if (ArrMCHocBa[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCHocBa[i]}', 2,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCHocBa[i]}',2,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_hocba').append(str_a);
                                 }
                             }
@@ -512,7 +505,6 @@
                             var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_hocba').append(str_a);
                         }
-
                     }
                     else {
                         var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
@@ -527,7 +519,7 @@
 
                             for (i = 0; i < ArrMCCcCd.length; i++) {
                                 if (ArrMCCcCd[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCCcCd[i]}', 3,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCCcCd[i]}',3,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_cccd').append(str_a);
                                 }
                             }
@@ -536,7 +528,6 @@
                             var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_cccd').append(str_a);
                         }
-
                     }
                     else {
                         var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
@@ -551,7 +542,7 @@
 
                             for (i = 0; i < ArrMCBangTN.length; i++) {
                                 if (ArrMCBangTN[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCBangTN[i]}', 4,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCBangTN[i]}',4,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_bang_tn').append(str_a);
                                 }
                             }
@@ -564,7 +555,7 @@
                     }
                     else {
                         var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
-                        $('#sp_view_mc_bangtn').append(str_a);
+                        $('#sp_view_mc_bang_tn').append(str_a);
                     }
 
                     $('#sp_view_mc_uutien').empty();
@@ -575,7 +566,7 @@
 
                             for (i = 0; i < ArrMCUutien.length; i++) {
                                 if (ArrMCUutien[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCUutien[i]}', 5,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a>`;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCUutien[i]}',5,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_uutien').append(str_a);
                                 }
                             }
@@ -600,6 +591,7 @@
     function bt_HuyBo_Dkxt_NVM_OnClick() {
         window.location.href = "/DangKyXetTuyenKhac/DanhGia";
     }
+
     var HocBaFormData = new FormData();
     var CCCDFormData = new FormData();
     var BangTNFormData = new FormData();
@@ -635,8 +627,9 @@
             if (parseInt(id) > 0) {
                 GetChungChiId(id);
             } else {
-                $('#Dkxt_ToHopXT').val("");
-                $('#Dkxt_TongDiem').val("");
+                $('#Dkxt_ToHopXT').val('');
+                $('#Dkxt_TongDiem').val('');
+                $('#Dkxt_DonViToChuc').val('');
             }
         });
 
@@ -803,7 +796,6 @@
         $('#FilesList_UuTien_View tbody').empty();
     }
 
-
     function GetAllKhoiNganh(KhoiNganh_ID, Nganh_ID, ChungChi_ID) {
         $.ajax({
             url: "/DangKyXetTuyenThang/GetAllKhoiNganh/",
@@ -900,6 +892,7 @@
                 let thangdiem = chungchi.ChungChi_ThangDiem;
                 $('#Dkxt_ToHopXT').val(pt);
                 $('#Dkxt_TongDiem').val(thangdiem);
+                $('#Dkxt_DonViToChuc').val(chungchi.ChungChi_TruongTCThi);
             },
             error: function (errormessage) {
                 console.log(errormessage)
@@ -917,57 +910,42 @@
         let Dkxt_KetQuaDatDuoc = $('#Dkxt_KetQuaDatDuoc').val();
         let Dkxt_TongDiem = $('#Dkxt_TongDiem').val();
         let Dkxt_NgayDuThi = $('#datepicker').val();
-        let Dkxt_XepLoaiHocLuc_12 = $('#Dkxt_XepLoaiHocLuc_12').val();
-        let Dkxt_XepLoaiHanhKiem_12 = $('#Dkxt_XepLoaiHanhKiem_12').val();
+
         let Dkxt_ID = $('#dkxt_id_checkin').val();
 
-        if (!Nganh_ID) {
+        if ($('#select_khoinganh').val() == 0) {
+            var errorMessage = "Vui lòng chọn khối ngành";
+            $('#Select_KhoiNganh_Error').text(errorMessage);
+            flag = false;
+        }
+        if (Nganh_ID == 0) {
             var errorMessage = "Vui lòng chọn ngành";
             $('#Nganh_ID_Error').text(errorMessage);
             flag = false;
         }
-        if (!Dkxt_DonViToChuc) {
-            var errorMessage = "Vui lòng nhập tên đơn vị tổ chức";
-            $('#Dkxt_DonViToChuc_Error').text(errorMessage);
-            flag = false;
-        } else if (!Dkxt_DonViToChuc.trim()) {
-            var errorMessage = "Vui lòng nhập tên đơn vị tổ chức";
-            $('#Dkxt_DonViToChuc_Error').text(errorMessage);
+        if (ChungChi_ID == 0) {
+            var errorMessage = "Vui lòng chọn loại kết quả";
+            $('#ChungChi_ID_Error').text(errorMessage);
             flag = false;
         }
+
         if (!Dkxt_KetQuaDatDuoc) {
             var errorMessage = "Vui lòng nhập kết quả";
             $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
-        } else if (parseFloat(Dkxt_KetQuaDatDuoc) < 0) {
+        } else if (parseFloat(Dkxt_KetQuaDatDuoc) < 0 || parseFloat(Dkxt_KetQuaDatDuoc) > parseFloat(Dkxt_TongDiem)) {
             var errorMessage = "Kết quả không hợp lệ";
             $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
             flag = false;
         }
-        if (!Dkxt_TongDiem) {
-            var errorMessage = "Vui lòng nhập tổng điểm";
-            $('#Dkxt_TongDiem_Error').text(errorMessage);
-            flag = false;
-        } else if (parseFloat(Dkxt_TongDiem) < 0) {
-            var errorMessage = "Tổng điểm không hợp lệ";
-            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
-            flag = false;
-        }
-        if (parseFloat(Dkxt_KetQuaDatDuoc) > parseFloat(Dkxt_TongDiem)) {
-            var errorMessage = "Kết quả không hợp lệ";
-            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!Dkxt_NgayDuThi) {
+
+        if (!Dkxt_NgayDuThi.trim()) {
             var errorMessage = "Vui lòng nhập ngày dự thi";
             $('#Dkxt_NgayDuThi_Error').text(errorMessage);
             flag = false;
-        } else if (!Dkxt_NgayDuThi.trim()) {
-            var errorMessage = "Vui lòng nhập ngày dự thi";
-            $('#Dkxt_KetQuaDatDuoc_Error').text(errorMessage);
-            flag = false;
         }
         if (!flag) return;
+
         $("#loadingModal").modal("show");
         uploadFiles();
         let formData = {
@@ -979,6 +957,7 @@
             Dkxt_TongDiem: Dkxt_TongDiem,
             Dkxt_NgayDuThi: Dkxt_NgayDuThi,
             Dkxt_ToHopXT: Dkxt_ToHopXT,
+
             Dkxt_MinhChung_HB: fileData[0].savePath,
             Dkxt_MinhChung_CCCD: fileData[1].savePath,
             Dkxt_MinhChung_Bang: fileData[2].savePath,
@@ -988,16 +967,14 @@
         console.log(formData);
 
         $.ajax({
-            url: "/DangKyXetTuyenKhac/DangKyXetTuyenKhac_Edit",
+            url: "/DangKyXetTuyenKhac/DanhGiaEdit_Json",
             data: JSON.stringify(formData),
             type: 'POST',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (res) {
                 if (res.success) {
-                    showToast("Thông báo", "Sửa nguyện vọng thành công!", "bg-success");
-                    /*onResetFields();*/
-                    $("#loadingModal").modal("hide");
+                    window.location.href = '/DangKyXetTuyenKhac/DanhGia';                    
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi sửa nguyện vọng!", "bg-error");
                     $("#loadingModal").modal("hide");
@@ -1014,7 +991,6 @@
     function bt_Update_on_table_Click(_dkxt_id) {
         $('#key_delete_dkxt_id').val(_dkxt_id);
         get_data_for_update_dkvn(_dkxt_id)
-
     }
 
     function hideErrorMessage(input) {
@@ -1042,7 +1018,7 @@
 
         $("#img_view").attr("src", "");
         $('#img_view').hide();
-
+       
 
         if (loaimc == 1) {
             $('#img_txt_card_hearder').text('Hình ảnh minh kết quả thi');
@@ -1051,7 +1027,7 @@
             $('#img_txt_card_hearder').text('Minh chứng học bạ');
         }
         if (loaimc == 3) {
-            $('#img_txt_card_hearder').text('Minh chứng CMND');
+            $('#img_txt_card_hearder').text('Minh chứng căn cước công dân');
         }
         if (loaimc == 4) {
             $('#img_txt_card_hearder').text('Bằng tót nghiệp');

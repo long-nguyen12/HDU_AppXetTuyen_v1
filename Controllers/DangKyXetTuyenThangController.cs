@@ -218,8 +218,7 @@ namespace HDU_AppXetTuyen.Controllers
         public JsonResult Delete_MinhChung(ThongTinXoaMC entity)
         {
             db = new DbConnecttion();
-            var model = db.DangKyXetTuyenThangs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
-            
+            var model = db.DangKyXetTuyenThangs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();            
             if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_MinhChung_Giai = model.Dkxt_MinhChung_Giai.Replace(entity.Dkxt_Url + "#", ""); }
             if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
             if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
