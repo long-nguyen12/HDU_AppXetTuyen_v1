@@ -57,7 +57,7 @@
                                         <th style="vertical-align:middle;">Tổ hợp môn</th>
                                         @*<th style="vertical-align:middle;">Trạng thái</th>*@
                                         <th style="vertical-align:middle;">Tổng điểm</th>
-                                        <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
+                                        <th style="vertical-align:middle; text-align:center; width:130px ">Cập nhật</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_list_nguyenvong_xtkqthpt">
@@ -618,6 +618,7 @@
                 text: option.text
             }));
         });
+        $('#select_namtn').val(currentYear - 1);
         $("#select_khoinganh").change(function () {
             select_nganh_view_data($("#select_khoinganh").val(), 0, 0);
             reset_fields_controll_disabled_true()

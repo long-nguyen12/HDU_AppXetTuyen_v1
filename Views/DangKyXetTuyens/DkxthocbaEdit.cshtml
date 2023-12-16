@@ -430,6 +430,7 @@
                     $('#txt_m3_k3').val(data.Dkxt_Diem_M3.HK3);
                     $('#txt_tb_m3').val(data.Dkxt_Diem_M3.DTB);
 
+                  
 
                     $('#dkxt_hocba_id_checkin').val(data.Dkxt_HB_ID);
 
@@ -441,7 +442,7 @@
 
                             for (i = 0; i < ArrMCHocBa.length; i++) {
                                 if (ArrMCHocBa[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCHocBa[i]}', 2,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCHocBa[i]}',2,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_hocba').append(str_a);
                                 }
                             }
@@ -464,7 +465,7 @@
 
                             for (i = 0; i < ArrMCBang.length; i++) {
                                 if (ArrMCBang[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCBang[i]}', 3,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCBang[i]}',3,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_bang').append(str_a);
                                 }
                             }
@@ -488,7 +489,7 @@
 
                             for (i = 0; i < ArrMCCCCD.length; i++) {
                                 if (ArrMCCCCD[i].length > 0) {
-                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCCCCD[i]}', 4,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    var str_a = `<a href="#"  onclick="showimg('${ArrMCCCCD[i]}',4,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_cccd').append(str_a);
                                 }
                             }
@@ -512,7 +513,7 @@
 
                             for (i = 0; i < ArrMCUutien.length; i++) {
                                 if (ArrMCUutien[i].length > 0) {
-                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCUutien[i]}', 5,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a href="#"  onclick="showimg('${ArrMCUutien[i]}',5,${data.Dkxt_HB_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
                                     $('#sp_view_mc_uutien').append(str_a);
                                 }
                             }
@@ -1005,8 +1006,7 @@
 
         $("#img_view").attr("src", "");
         $('#img_view').hide();
-
-
+      
         if (loaimc == 2) {
             $('#img_txt_card_hearder').text('Minh chứng học bạ');
         }
@@ -1022,17 +1022,21 @@
         var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 
         if (lastChar.toLowerCase() != ".pdf") {
-            pdf_view.style.display = "none";
-            pdf_view.style.height = "0px";
+
+            $('#pdf_view').height('0px');
+            $('#pdf_view').css('display', 'none');
+            $("#pdf_view").attr("src", "");
+            $("#pdf_view").hide();
 
             $("#img_view").attr("src", url);
             $("#img_view").show();
         }
         if (lastChar.toLowerCase() === ".pdf") {
             $("#img_view").hide();
+            $("#img_view").attr("src", "");
+
             $('#pdf_view').height('500px');
             $('#pdf_view').css('display', 'inline');
-           
             $("#pdf_view").attr("src", url);
             $("#pdf_view").show();
         }
@@ -1041,8 +1045,6 @@
 
     $(document).ready(function () {
         $('#bt_close_div_view_img').click(function () {
-
-
             $('#pdf_view').height('0px');
             $('#pdf_view').css('display', 'none');
             $("#pdf_view").attr("src", "");
