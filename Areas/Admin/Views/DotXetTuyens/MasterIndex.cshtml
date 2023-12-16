@@ -88,7 +88,7 @@
                                                 {
                                                     <div class="d-inline-flex flex-nowrap  align-items-center ">
                                                         <div class="form-check align-items-center">
-                                                            <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID"  onclick="SetupDotXetTuyenHienTai(@item.Dxt_ID, @item.Dxt_TrangThai_Xt)">
+                                                            <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID"  onclick="SetupDotXetTuyenHienTai(@item.Dxt_ID, @item.Dxt_TrangThai_Xt, @item.Dxt_Classify)">
                                                             <label class="form-check-label" for="ttxt_@item.Dxt_ID">Đã khóa</label>
                                                         </div>
                                                     </div>
@@ -134,6 +134,7 @@
                     <label id="txt_confirm" class="form-label"></label>
                     <p id="hiddenCode" hidden></p>
                     <p id="hiddenTrangThai" hidden></p>
+                    <p id="hiddenClassify" hidden></p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -147,10 +148,11 @@
     $('input[type="checkbox"]').on('click', function (event) {
         event.preventDefault();
     });
-    function SetupDotXetTuyenHienTai(id_dotxt, trangthai) {
+    function SetupDotXetTuyenHienTai(id_dotxt, trangthai, classify) {
         var idpresent = $('#ttxt_' + id_dotxt);
         $('#hiddenCode').text(id_dotxt);
         $('#hiddenTrangThai').text(trangthai);
+        $('#hiddenClassify').text(classify);
 
         if (idpresent.is(":checked")) {
             $('#txt_confirm').text("Bạn có chắc chắn muốn thiết lập đây là đợt tuyển sinh hiện tại?");
@@ -158,9 +160,11 @@
         $('#modal_thietlap_dothientai').modal('show');
     }
     function confirm_action() {
-        var _Dxt_ID = $('#hiddenCode').text();       
+        var _Dxt_ID = $('#hiddenCode').text();
+        var Dxt_Classify = $('#hiddenClassify').text();    
         var data_change = {
-             Dxt_ID: _Dxt_ID            
+            Dxt_ID: _Dxt_ID,
+            Dxt_Classify: Dxt_Classify   
         }
         $.ajax({
             url: '/Admin/DotXetTuyens/DotXetTuyetChangeTTXTJson/',         
