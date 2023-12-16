@@ -291,6 +291,7 @@
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
     <Content Include="Content\images\no-image.png" />
+    <Content Include="Content\images\no-money.png" />
     <Content Include="Content\images\profile-1.png" />
     <Content Include="Content\images\sptin.jpg" />
     <Content Include="Content\images\ttdpt.jpg" />
@@ -759,6 +760,7 @@
     <Content Include="Views\DangKyXetTuyenKhac\Ielts - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts - Copy %282%29.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkxthocba - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

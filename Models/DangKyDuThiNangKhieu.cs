@@ -10,6 +10,7 @@ namespace HDU_AppXetTuyen.Models
     public partial class DangKyDuThiNangKhieu
     {
         [Key]
+      
         public long Dkdt_NK_ID { get; set; }
         public long ThiSinh_ID { get; set; }
         public int? Nganh_ID { get; set; }
