@@ -50,10 +50,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NamHoc_ID,NamHoc_Ten,NamHoc_TrangThai,NamHoc_GhiChu")] NamHoc namHoc)
+        public ActionResult Create([Bind(Include = "NamHoc_ID,NamHoc_Ten,NamHoc_GhiChu")] NamHoc namHoc)
         {
             if (ModelState.IsValid)
             {
+                namHoc.NamHoc_TrangThai = 0;
                 db.NamHocs.Add(namHoc);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -84,7 +85,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NamHoc_ID,NamHoc_Ten,NamHoc_TrangThai,NamHoc_GhiChu")] NamHoc namHoc)
+        public ActionResult Edit([Bind(Include = "NamHoc_ID,NamHoc_Ten,NamHoc_GhiChu")] NamHoc namHoc)
         {
             if (ModelState.IsValid)
             {
@@ -121,6 +122,40 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             db.NamHocs.Remove(namHoc);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [AdminSessionCheck]
+        public JsonResult ActiveYear(NamHoc entity)
+        {
+            if (entity != null)
+            {
+                var namHoc = db.NamHocs.Where(n => n.NamHoc_ID == entity.NamHoc_ID).FirstOrDefault();
+                var TrangThai = namHoc.NamHoc_TrangThai == 0 ? 1 : 0;
+                namHoc.NamHoc_TrangThai = TrangThai;
+                if(TrangThai == 1)
+                {
+                    var Others = db.NamHocs.Where(n => n.NamHoc_ID != entity.NamHoc_ID).ToList();
+                    foreach (var record in Others)
+                    {
+                        record.NamHoc_TrangThai = 0;
+                    }
+                }
+                db.SaveChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteYear(NamHoc entity)
+        {
+            if (entity != null)
+            {
+                var namHoc = db.NamHocs.Where(n => n.NamHoc_ID == entity.NamHoc_ID).FirstOrDefault();
+                db.NamHocs.Remove(namHoc);
+                db.SaveChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

@@ -1,4 +1,4 @@
-namespace HDU_AppXetTuyen.Models
+﻿namespace HDU_AppXetTuyen.Models
 {
     using System;
     using System.Collections.Generic;
@@ -19,6 +19,7 @@ namespace HDU_AppXetTuyen.Models
         public int NamHoc_ID { get; set; }
 
         [StringLength(250)]
+        [Required(ErrorMessage = "Vui lòng nhập tên năm học")]
         public string NamHoc_Ten { get; set; }
 
         public int? NamHoc_TrangThai { get; set; }

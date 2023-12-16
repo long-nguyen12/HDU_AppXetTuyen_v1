@@ -17,10 +17,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult CollegerIndex()
         {
-            var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc).Where(d => d.Dxt_Classify ==0);
+            var dotXetTuyens = db.DotXetTuyens.Include(d => d.NamHoc).Where(d => d.Dxt_Classify == 0);
             return View(dotXetTuyens.ToList());
         }
-    
+
         [AdminSessionCheck]
         public ActionResult Details(int? id)
         {
@@ -35,7 +35,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             return View(dotXetTuyen);
         }
-    
+
         [AdminSessionCheck]
         public ActionResult CollegerCreate()
         {
@@ -43,7 +43,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View();
         }
 
-   
+
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,7 +59,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten", dotXetTuyen.NamHoc_ID);
             return View(dotXetTuyen);
         }
-      
+
         [AdminSessionCheck]
         public ActionResult CollegerEdit(int? id)
         {
@@ -75,7 +75,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten", dotXetTuyen.NamHoc_ID);
             return View(dotXetTuyen);
         }
-      
+
         [AdminSessionCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -91,7 +91,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View(dotXetTuyen);
         }
 
-       
+
         #endregion
 
         #region Master
@@ -107,13 +107,13 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             ViewBag.NamHoc_ID = new SelectList(db.NamHocs, "NamHoc_ID", "NamHoc_Ten");
             return View();
-        }    
+        }
         public ActionResult MasterEdit(int? Dxt_ID)
-        {           
+        {
             ViewBag.Dxt_ID = Dxt_ID;
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Dxt_ID,Dxt_Classify,Dxt_Ten,Dxt_TrangThai_Xt,Dxt_TrangThai_TNK,Dxt_ThoiGian_BatDau,Dxt_ThoiGian_KetThuc,Dxt_GhiChu,NamHoc_ID")] DotXetTuyen dotXetTuyen)
@@ -129,6 +129,17 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
 
         #endregion
+
+        #region Master
+        public ActionResult NangKhieu()
+        {
+            var model = db.DotXetTuyens.OrderByDescending(x => x.Dxt_ID).Where(x => x.Dxt_Classify == 1);
+
+            return View(model.ToList());
+        }
+
+        #endregion
+
         #region Delete
         // GET: Admin/DotXetTuyens/Delete/5
         [AdminSessionCheck]
@@ -179,7 +190,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         #region Json function
         public JsonResult DotXetTuyetGetNamHocHienTaiJson()
         {
-            var NamHoc_ID = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;            
+            var NamHoc_ID = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             return Json(new { success = true, data = NamHoc_ID }, JsonRequestBehavior.AllowGet);
         }
 
@@ -204,7 +215,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         {
             var NamHoc_ID = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_ID;
             DotXetTuyen model = new DotXetTuyen();
-            model.Dxt_Classify = 2;
+            model.Dxt_Classify = entity.Dxt_Classify;
             model.Dxt_Ten = entity.Dxt_Ten;
             model.Dxt_ThoiGian_BatDau = entity.Dxt_ThoiGian_BatDau;
             model.Dxt_ThoiGian_KetThuc = entity.Dxt_ThoiGian_KetThuc;
@@ -222,16 +233,16 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             model.Dxt_Ten = entity.Dxt_Ten;
             model.Dxt_ThoiGian_BatDau = entity.Dxt_ThoiGian_BatDau;
             model.Dxt_ThoiGian_KetThuc = entity.Dxt_ThoiGian_KetThuc;
-            model.Dxt_GhiChu = entity.Dxt_GhiChu;            
+            model.Dxt_GhiChu = entity.Dxt_GhiChu;
             db.SaveChanges();
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         public JsonResult DotXetTuyetChangeTTXTJson(DotXetTuyen entity)
         {
-            var model = db.DotXetTuyens.ToList();
+            var model = db.DotXetTuyens.Where(t => t.Dxt_Classify == entity.Dxt_Classify).ToList();
             foreach (var item in model)
             {
-                if(item.Dxt_ID == entity.Dxt_ID)
+                if (item.Dxt_ID == entity.Dxt_ID)
                 {
                     item.Dxt_TrangThai_Xt = 1;
                 }
@@ -239,9 +250,23 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 {
                     item.Dxt_TrangThai_Xt = 0;
                 }
-            }      
+            }
             db.SaveChanges();
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DotXetTuyetDelete(DotXetTuyen entity)
+        {
+            try
+            {
+                var model = db.DotXetTuyens.Where(t => t.Dxt_ID == entity.Dxt_ID).FirstOrDefault();
+                db.DotXetTuyens.Remove(model);
+                db.SaveChanges();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
         #endregion
     }
