@@ -44,7 +44,8 @@
 
 <div class="container-fluid px-12">
     <div id="fadeInUp">
-        <div class="card card-collapsable mt-3 mb-1" id="list-kqthi-thpt" style="display:none">
+
+        <div class="card card-header-actions mt-2 mb-1" id="list-kqthi-thpt" style="display:none">
             <div class="card-header">
                 Danh sách nguyện vọng nộp xét tuyển sử dụng kết quả thi THPT Quốc gia
             </div>
@@ -126,7 +127,7 @@
             }
         </script>
 
-        <div class="card card-collapsable mt-3 mb-1" id="list-hocba" style="display:none">
+        <div class="card card-header-actions mt-1 mb-1" id="list-hocba" style="display:none">
             <div class="card-header">
                 Danh sách nguyện vọng nộp xét tuyển sử dụng kết quả học tập ở THPT
             </div>
@@ -206,7 +207,7 @@
             }
         </script>
 
-        <div class="card card-collapsable mt-3 mb-1" id="list-tuyenthang" style="display:none">
+        <div class="card card-header-actions mt-1 mb-1" id="list-tuyenthang" style="display:none">
             <div class="card-header">
                 Danh sách nguyện vọng nộp xét tuyển thẳng theo quy định.
             </div>
@@ -288,7 +289,7 @@
             }
         </script>
 
-        <div class="card card-collapsable mt-3 mb-1" id="list-ngoaingu" style="display:none">
+        <div class="card card-header-actions mt-1 mb-1" id="list-ngoaingu" style="display:none">
             <div class="card-header">
                 Danh sách nguyện vọng nộp xét sử dụng chứng chỉ ngoại ngữ
             </div>
@@ -366,7 +367,7 @@
             }
         </script>
         
-        <div class="card card-collapsable mt-3 mb-1" id="list-dgnl" style="display:none">
+        <div class="card card-header-actions mt-1 mb-1" id="list-dgnl" style="display:none">
             <div class="card-header">
                 Danh sách nguyện vọng nộp xét sử dụng KQ thi đánh giá năng lực/đánh giá tư duy
             </div>
@@ -496,7 +497,7 @@
                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active" id="div_item_view_minhchung">                                       
-                                        <img class="d-block w-100 img-hide" id="img_view" src="~/Content/images/no-money.png">
+                                        <img class="d-block w-100 img-hide" id="img_view">
                                         <input type="hidden" id="key_dkxt_id" style="display:none" />
                                         <input type="hidden" id="key_dkxt_pt" style="display:none" />
                                         <input type="hidden" id="hiden_id_key" style="display:none" />
@@ -535,7 +536,12 @@
         $('#key_dkxt_id').val(id)
         $('#key_dkxt_pt').val(type)
         $('#KinhPhi_SoTC').val('');
-        $('#File_MinhChung_Span').empty();
+        MinhChungFormData = new FormData();
+        MinhChungPath = "";
+
+        $('#modal_dongphi').modal('show');
+        $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();
+       /* $('#File_MinhChung_Span').empty();*/
         var data_post = {
             key_dkxt_id: id,
             key_dkxt_pt: type,           
@@ -548,34 +554,30 @@
             data: JSON.stringify(data_post),
             contentType: "application/json;charset=utf-8",
             success: function (res) {
-                console.log(res);
-              
+                console.log(res);              
                 if (res.success) {
                     data = res.data;
                     if (data.KinhPhi_SoTC != '') { $('#KinhPhi_SoTC').val(data.KinhPhi_SoTC); }
-
                     if (data.KinhPhi_TepMinhChung) {
                         const ArrKinhPhi = data.KinhPhi_TepMinhChung.split("#");
                         if (ArrKinhPhi.length > 0) { 
                             $("#img_view").attr("src", ArrKinhPhi[0]);  
-                            $('#span_tieude_hinhanh').text('Hình ảnh minh chứng đã nộp lệ phí...... ');
-                        }
-                        else {
-                            $('#File_MinhChung_Span').text('Chưa có minh chứng');
+                            $('#span_tieude_hinhanh').text('Hình ảnh minh chứng đã nộp lệ phí');
                         }
                     }
+                    else {
+                        $("#img_view").attr("src",'/Content/images/no-money.png');
+                        $('#span_tieude_hinhanh').text('Mẫu hình ảnh minh chứng nộp lệ phí');
+                    }
                 }
+
             },
             error: function (error) {
                 console.error('Error', error);
             }
         });
 
-        MinhChungFormData = new FormData();
-        MinhChungPath = "";
-
-        $('#modal_dongphi').modal('show');
-        $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();      
+           
     }
 
    
@@ -630,8 +632,7 @@
         $('#key_dkxt_id').val('');
         $('#key_dkxt_pt').val('');
         $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();       
-        $('#KinhPhi_SoTC').val('');
-        $('#File_MinhChung_Span').empty();
+        $('#KinhPhi_SoTC').val('');        
     }
 
     function uploadFiles() {
