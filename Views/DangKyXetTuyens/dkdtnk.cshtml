@@ -615,7 +615,7 @@
                 <div class="row mb-3" style="margin-top:7px; display:none" id="div_group_bt_view_data">
                     <div class="col-lg-12" style="text-align:center">
                         <input class="btn btn-outline-success " onclick="bt_export_exam_data_click()" type="button" value="Xuất phiếu" />
-                        <script>function bt_export_exam_data_click() { alert('mr Cường làm') }</script>
+                        <script>function bt_export_exam_data_click() { window.location.href = '/ExportFile/DownloadFile_XetTuyenThiNangKhieu'; }</script>
                         <input class="btn btn-outline-primary " onclick="bt_update_div_exam_view_data()" type="button" value="Chỉnh sửa" />
                         <input class="btn btn-outline-danger " onclick="bt_delete_div_exam_view_data_click()" type="button" value="Xóa" />
                         <script>function bt_delete_div_exam_view_data_click() { $('#modal_tb_xoa').modal('show'); }</script>
