@@ -221,6 +221,5 @@ namespace HDU_AppXetTuyen.Models
         public long Dkxt_ID {  get; set; }
         public string Dkxt_Url { get; set; }
         public string Dkxt_LoaiMC { get; set; }
-
     }
 }

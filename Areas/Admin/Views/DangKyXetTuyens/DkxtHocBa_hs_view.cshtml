@@ -57,7 +57,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Thông tin thí sinh sử dụng kết quả học tập ở THPT xét tuyển (Xét tuyển bằng học bạ)</span>
+                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng học bạ</span>                         
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                             $('#div_mc_hocba').append('- Học bạ: ');
                             for (i = 0; i < ArrHocBa.length; i++) {
                                 if (ArrHocBa[i].length > 0) {
-                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrHocBa[i]}',1,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrHocBa[i]}',2,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
                                     $('#div_mc_hocba').append(str_a);
                                     if (i == 0) {
 
@@ -182,7 +182,7 @@
                             $('#div_mc_bangtotnghiep').append('- Bằng tốt nghiệp: ');
                             for (i = 0; i < ArrBangTN.length; i++) {
                                 if (ArrBangTN[i].length > 0) {
-                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrBangTN[i]}',2,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrBangTN[i]}',3,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
                                     $('#div_mc_bangtotnghiep').append(str_a);
                                 }
                             }
@@ -199,7 +199,7 @@
                             $('#div_mc_cccd').append('- Căn cước công dân: ');
                             for (i = 0; i < ArrCccd.length; i++) {
                                 if (ArrCccd[i].length > 0) {
-                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrCccd[i]}',3,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrCccd[i]}',4,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
                                     $('#div_mc_cccd').append(str_a);
                                 }
                             }
@@ -218,7 +218,7 @@
                             $('#div_mc_giayto_uutien').append('- Giấy tờ ưu tiên: ');
                             for (i = 0; i < ArrGTUT.length; i++) {
                                 if (ArrGTUT[i].length > 0) {
-                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrGTUT[i]}',4,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
+                                    var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrGTUT[i]}',5,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> &ensp;`;
                                     $('#div_mc_giayto_uutien').append(str_a);
                                 }
                             }
@@ -247,7 +247,7 @@
                                 $('#div_mc_lephi').append('- Nộp lệ phí: ');
                                 for (i = 0; i < ArrKinhPhi.length; i++) {
                                     if (ArrKinhPhi[i].length > 0) {
-                                        var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrKinhPhi[i]}',5,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> `;
+                                        var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrKinhPhi[i]}',6,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> `;
                                         $('#div_mc_lephi').append(str_a);
                                     }
                                 }
@@ -264,14 +264,14 @@
                     /*TrangThaiHoSo*/
                     if (data.Dkxt_HB_TrangThai_HoSo == 0) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>Trạng thái hồ sơ: Chưa kiểm tra</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Chưa kiểm tra</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
                     }
                     if (data.Dkxt_HB_TrangThai_HoSo == 1) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>Trạng thái hồ sơ: Đã kiểm tra, hồ sơ có sai sót</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Đã kiểm tra, hồ sơ có sai sót</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').attr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
@@ -279,7 +279,7 @@
 
                     if (data.Dkxt_HB_TrangThai_HoSo == 2) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>Trạng thái hồ sơ: Thí sinh đã sửa, Chưa kiểm tra</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Thí sinh đã sửa, Chưa kiểm tra</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
@@ -287,7 +287,7 @@
 
                     if (data.Dkxt_HB_TrangThai_HoSo == 9) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>Trạng thái hồ sơ: Đã kiểm tra, hồ sơ đúng, đủ</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Đã kiểm tra, hồ sơ đúng, đủ</span>`);
                         $('#radioHoSoDayDu').attr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
@@ -296,12 +296,12 @@
                     /*   Trang Thai Kinh Phi*/
                     if (data.Dkxt_HB_TrangThai_KinhPhi == 0) {
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Chưa có tệp minh chứng</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái nộp kinh phí: Chưa có tệp minh chứng</span>`);
                     }
 
                     if (data.Dkxt_HB_TrangThai_KinhPhi == 1) {
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái kinh phí: Đã nộp minh chứng, Chưa kiểm tra</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Đã nộp minh chứng, Chưa kiểm tra</span>`);
 
                         $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                         $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -309,7 +309,7 @@
 
                     if (data.Dkxt_HB_TrangThai_KinhPhi == 2) {
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái kinh phí: Đã kiểm tra minh chứng lệ phí, có sai sót</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Đã kiểm tra minh chứng lệ phí, có sai sót</span>`);
 
                         $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                         $('#radioThongtinLePhiSai').attr('checked', 'checked');
@@ -318,14 +318,14 @@
 
                     if (data.Dkxt_HB_TrangThai_KinhPhi == 3) {
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái kinh phí: Thí sinh đã sửa, Chưa kiểm tra</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Thí sinh đã sửa, Chưa kiểm tra</span>`);
 
                         $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                         $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
                     }
                     if (data.Dkxt_HB_TrangThai_KinhPhi == 9) {
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái kinh phí: Đã kiểm tra, Đúng, đủ</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Đã kiểm tra, Đúng, đủ</span>`);
 
                         $('#radioThongtinLePhiDung').attr('checked', 'checked');
                         $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -352,119 +352,116 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6 col-md-12 mb-3">
-                            <b>Thông tin thí sinh</b>
-                            <hr class="mb-0 mt-0" />
-                            <p class="mt-0 mb-0">- Họ và tên: <b id="HoTen"></b></p>
-                            <p class="mt-0 mb-0">- Số CCCD: <b id="CanCuocCongDan"> </b></p>
-                            <p class="mt-0 mb-0">- Điện thoại: <b id="DienThoai"></b></p>
-                            <p class="mt-0 mb-0">- Email: <b id="Email"> </b></p>
-                            <p class="mt-0 mb-0">- Ngày sinh: <b id="NgaySinh"></b></p>
-                            <p class="mt-0 mb-0">- Giới tính: <b id="GioiTinh"></b></p>
-                            <p class="mt-0 mb-0">- Dân tộc: <b id="DanToc"></b></p>
-
-                            @*<input type="text" class="form-control" id="" name="ThiSinh_HoLot" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_NgaySinh" name="ThiSinh_NgaySinh" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_GioiTinh" name="ThiSinh_GioiTinh" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_DanToc" name="ThiSinh_DanToc" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_CCCD" name="" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_DienThoai" name="ThiSinh_DienThoai" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_Email" name="ThiSinh_Email" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_TruongCapBa_Tinh_ID" name="ThiSinh_TruongCapBa_Tinh_ID" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_TruongCapBa_Ma" name="ThiSinh_TruongCapBa_Ma" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_TruongCapBa" name="ThiSinh_TruongCapBa" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_HoKhauThuongTru" name="ThiSinh_HoKhauThuongTru" disabled />
-                                <input type="text" class="form-control" id="ThiSinh_DCNhanGiayBao" name="ThiSinh_DCNhanGiayBao" disabled />*@
-
-                        </div>
-                        <div class="col-lg-6 col-md-12 mb-3">
-                            <b>Thông tin đăng ký xét tuyển</b>
-                            <hr class="mb-0 mt-0" />
-                            <p class="mt-0 mb-0">- Nguyện vọng: <b id="NguyenVong"></b></p>
-                            <p class="mt-0 mb-0">- Ngành: <b id="Nganh"> </b></p>
-                            <p class="mt-0 mb-0">- Tổ hợp môn: <b id="ToHopMon"> </b></p>
-                            <p class="mt-0 mb-0">- Điểm: </p>
-                            <p class="mt-0 mb-0">&emsp;- <b id="MonDiem1"> </b><span id="ChitietMon1"></span></p>
-                            <p class="mt-0 mb-0">&emsp;- <b id="MonDiem2"> </b><span id="ChitietMon2"></span></p>
-                            <p class="mt-0 mb-0">&emsp;- <b id="MonDiem3"> </b><span id="ChitietMon3"></span></p>
-                            <p class="mt-0 mb-0">- Tổng điểm: <b id="TongDiem"> </b></p>
-                            <p class="mt-0 mb-0">- Tổng điểm (có ƯT): <b id="TongDiemFull"> </b></p>
-                            <p class="mt-0 mb-0" style="display:none">- Năm tốt nghiệp: <b id="NamTotNghiep"> </b></p>
-                        </div>
-                        <div class="col-lg-6 col-md-12 mb-3">
-                            <b>Hình ảnh minh chứng</b>
-                            <hr class="mb-0 mt-0" />                         
-                            <p class="mt-0 mb-0" id="div_mc_hocba"></p>
-                            <p class="mt-0 mb-0" id="div_mc_bangtotnghiep"></p>
-                            <p class="mt-0 mb-0" id="div_mc_cccd"></p>
-                            <p class="mt-0 mb-0" id="div_mc_giayto_uutien"></p>
-                            <p class="mt-0 mb-0" id="div_mc_lephi"></p>
-                            <p class="mt-3 mb-0"></p>
-                            <b>Trạng thái hồ sơ, kinh phí</b>
-                            <hr class="mb-0 mt-0" />
-                            <p class="mt-0 mb-0" id="ThongBao_KiemDuyet_HoSo"></p>
-                            <p class="mt-0 mb-0" id="ThongBao_TrangThaiKinhPhi"></p>
-                        </div>
-                        <div class="col-lg-6 col-md-12 mb-3">
-                            <b>Kiểm duyệt hồ sơ và lệ phí</b>
-                            <hr class="mb-0 mt-0" />
+                        <div class="col-lg-6 col-md-12">
                             <div class="row">
-                                <div class="col-12 mt-2">
-                                    <input class="form-control" type="text" id="Dkxt_ThongBaoKiemDuyet_HoSo" name="Dkxt_ThongBaoKiemDuyet_HoSo" placeholder="Nhập thông báo kiểm duyệt hồ sơ">
-                                    <span id="Error_Rgt_Check_radio_KiemDuyetHoSo" class="small mb-1 text-danger"></span>
+                                <div class="col-12 mb-3">
+                                    <b>+ Thông tin thí sinh</b>
+                                    <hr class="mb-0 mt-0" />
+                                    <p class="mt-0 mb-0">- Họ và tên: <b id="HoTen"></b></p>
+                                    <p class="mt-0 mb-0">- Số CCCD: <b id="CanCuocCongDan"> </b></p>
+                                    <p class="mt-0 mb-0">- Điện thoại: <b id="DienThoai"></b></p>
+                                    <p class="mt-0 mb-0">- Email: <b id="Email"> </b></p>
+                                    <p class="mt-0 mb-0">- Ngày sinh: <b id="NgaySinh"></b></p>
+                                    <p class="mt-0 mb-0">- Giới tính: <b id="GioiTinh"></b></p>
+                                    <p class="mt-0 mb-0">- Dân tộc: <b id="DanToc"></b></p>
                                 </div>
-                                <div class="col-12">
-                                    <div class="d-inline-flex flex-nowrap mt-1 col-12">
-                                        <div class="form-check align-items-center">
-                                            <input class="form-check-input" type="radio" id="radioHoSoThieu" name="Group_KiemDuyetHoSo">
-                                            <label class="form-check-label text-nowrap">Hồ sơ có sai sót</label>
-                                        </div>
-                                        <div class="form-check align-items-center" style="margin-left:10px">
-                                            <input class="form-check-input" type="radio" id="radioHoSoDayDu" onchange="remove_error_kd();"  name="Group_KiemDuyetHoSo">
-                                            <script>function remove_error_kd() {$('#Error_Rgt_Check_radio_KiemDuyetHoSo').text('')}</script>
-                                            <label class="form-check-label text-nowrap">Hồ sơ đầy đủ</label>
-                                        </div>
-                                    </div>                                  
+                                <div class="col-12 mb-3">
+                                    <b>+ Thông tin đăng ký xét tuyển</b>
+                                    <hr class="mb-0 mt-0" />
+                                    <p class="mt-0 mb-0">- Nguyện vọng: <b id="NguyenVong"></b></p>
+                                    <p class="mt-0 mb-0">- Ngành: <b id="Nganh"> </b></p>
+                                    <p class="mt-0 mb-0">- Tổ hợp môn: <b id="ToHopMon"> </b></p>
+                                    <p class="mt-0 mb-0">- Điểm: </p>
+                                    <p class="mt-0 mb-0">&emsp;- <b id="MonDiem1"> </b><span id="ChitietMon1"></span></p>
+                                    <p class="mt-0 mb-0">&emsp;- <b id="MonDiem2"> </b><span id="ChitietMon2"></span></p>
+                                    <p class="mt-0 mb-0">&emsp;- <b id="MonDiem3"> </b><span id="ChitietMon3"></span></p>
+                                    <p class="mt-0 mb-0">- Tổng điểm: <b id="TongDiem"> </b></p>
+                                    <p class="mt-0 mb-0">- Tổng điểm (có ƯT): <b id="TongDiemFull"> </b></p>
+                                    <p class="mt-0 mb-0" style="display:none">- Năm tốt nghiệp: <b id="NamTotNghiep"> </b></p>
                                 </div>
                             </div>
-
-                            <input type="hidden" id="hidden_TrangThai_KinhPhi" name="hidden_TrangThai_KinhPhi" />
-
-                            <div class="row mt-2" id="div_chuaco_mc_lephi" style="display:none">
-                                <center>
-                                    <label class="form-label" style="color:red">(Chưa có minh chứng nộp lệ phí)</label>
-                                </center>
-                            </div>
-
-                            <div class="row mt-2" id="div_daco_mc_lephi" style="display:none">
-                                <div class="col-12">
-                                    <span id="txt_SoThamChieu_KinhPhi" style="font-weight:bold; color:blue"></span>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <b>+ Hình ảnh minh chứng</b>
+                                    <hr class="mb-0 mt-0" />
+                                    <p class="mt-0 mb-0" id="div_mc_hocba"></p>
+                                    <p class="mt-0 mb-0" id="div_mc_bangtotnghiep"></p>
+                                    <p class="mt-0 mb-0" id="div_mc_cccd"></p>
+                                    <p class="mt-0 mb-0" id="div_mc_giayto_uutien"></p>
+                                    <p class="mt-0 mb-0" id="div_mc_lephi"></p>                                                             
                                 </div>
-                                <div class="col-12">
-                                    <div class="d-inline-flex mt-1">
-                                        <div class="form-check align-items-center">
-                                            <input class="form-check-input" type="radio" id="radioThongtinLePhiSai" name="Group_KiemDuyetLePhi" onchange="remove_error_lp()">
-                                            <label class="form-check-label text-nowrap">Minh chứng lệ phí sai</label>
+                                <div class="col-12 mb-3">
+                                    <b>+ Kiểm duyệt hồ sơ và lệ phí</b>
+                                    <hr class="mb-2 mt-0" />
+                                    <p class="mt-0 mb-0" id="ThongBao_KiemDuyet_HoSo"></p>
+                                    <div class="row">
+                                        <div class="col-12 mt-2">
+                                            <input class="form-control" type="text" id="Dkxt_ThongBaoKiemDuyet_HoSo" name="Dkxt_ThongBaoKiemDuyet_HoSo" placeholder="Nhập thông báo kiểm duyệt hồ sơ">
+                                            <span id="Error_Rgt_Check_radio_KiemDuyetHoSo" class="small mb-1 text-danger"></span>
                                         </div>
-                                        <div class="form-check align-items-center" style="margin-left:10px">
-                                            <input class="form-check-input" type="radio" id="radioThongtinLePhiDung" name="Group_KiemDuyetLePhi" onchange="remove_error_lp()">
-                                            <label class="form-check-label text-nowrap">Minh chứng lệ phí đúng</label>
+                                        <div class="col-12">
+                                            <div class="row g-1">
+                                                <div class="col-lg-5 col-md-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radioHoSoThieu" name="Group_KiemDuyetHoSo">
+                                                        <label class="form-check-label text-nowrap">Hồ sơ có sai sót</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radioHoSoDayDu" onchange="remove_error_kd();" name="Group_KiemDuyetHoSo">
+                                                        <script>function remove_error_kd() { $('#Error_Rgt_Check_radio_KiemDuyetHoSo').text('') }</script>
+                                                        <label class="form-check-label text-nowrap">Hồ sơ đầy đủ</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="Error_Rgt_Check_radio_KiemDuyetHoSo" class="small mb-1 text-danger col-12"></span>
+                                        </div>
+                                    </div>
+                                    <hr class="mb-0 mt-0" />
+                                    <p class="mt-2 mb-0" id="ThongBao_TrangThaiKinhPhi"></p>
+                                    <input type="hidden" id="hidden_TrangThai_KinhPhi" name="hidden_TrangThai_KinhPhi" />
+                                    <div class="row mt-2" id="div_chuaco_mc_lephi" style="display:none">
+                                        <center>
+                                            <label class="form-label" style="color:red">(Chưa có minh chứng nộp lệ phí)</label>
+                                        </center>
+                                    </div>
+
+                                    <div class="row mt-1 mb-0" id="div_daco_mc_lephi" style="display:none">
+                                        <div class="col-12">
+                                            <span id="txt_SoThamChieu_KinhPhi" style="color:blue"></span>
+                                        </div>
+                                        <div class="col-12 ">
+                                            <div class="row g-1">
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radioThongtinLePhiSai" name="Group_KiemDuyetLePhi" onchange="remove_error_lp()">
+                                                        <label class="form-check-label text-nowrap">Minh chứng lệ phí sai</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" id="radioThongtinLePhiDung" name="Group_KiemDuyetLePhi" onchange="remove_error_lp()">
+                                                        <label class="form-check-label text-nowrap">Minh chứng lệ phí đúng</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="Error_Rgt_KiemDuyet_KinhPhi" class="small mb-1 text-danger col-12"></span>
+                                            <script>function remove_error_lp() { $('#Error_Rgt_KiemDuyet_KinhPhi').text('') }</script>
                                         </div>
                                     </div>
 
                                 </div>
-                                <span id="Error_Rgt_KiemDuyet_KinhPhi" class="small mb-1 text-danger col-12"></span>
-                                <script>function remove_error_lp() { $('#Error_Rgt_KiemDuyet_KinhPhi').text('') }</script>
                             </div>
-
                         </div>
                     </div>
                     <hr class="mt-1 mb-1" />
                     <div class="row">
                         <center>
                             <div class="col-12 mt-2">
-                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>
-                                
+                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>                                
                                 <script>
 
                                     $(document).ready(function () {
@@ -664,17 +661,20 @@
         $('#img_view').hide();
         $("#img_view").attr("src", "");
 
-        if (loaimc == 1) {
+        if (loaimc == 2) {
             $('#img_txt_card_hearder').text('Hình ảnh minh chứng học bạ');
         }
-        if (loaimc == 2) {
+        if (loaimc == 3) {
             $('#img_txt_card_hearder').text('Minh chứng bằng tốt nghiệp');
         }
-        if (loaimc == 3) {
-            $('#img_txt_card_hearder').text('Minh chứng CMND');
-        }
         if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Minh chứng căn cước công dân');
+        }
+        if (loaimc == 5) {
             $('#img_txt_card_hearder').text('Giấy tờ khác');
+        }
+        if (loaimc == 6) {
+            $('#img_txt_card_hearder').text('Minh chứng nộp lệ phí');
         }
         var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 

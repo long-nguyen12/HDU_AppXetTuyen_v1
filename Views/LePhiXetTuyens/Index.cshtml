@@ -570,14 +570,11 @@
                         $('#span_tieude_hinhanh').text('Mẫu hình ảnh minh chứng nộp lệ phí');
                     }
                 }
-
             },
             error: function (error) {
                 console.error('Error', error);
             }
-        });
-
-           
+        });           
     }
 
    
@@ -696,7 +693,7 @@
             dataType: 'json',
             success: function (res) {
                 if (res.success) {
-                    showToast("Thông báo", "Đóng lệ phí thành công!", "bg-success");
+                    showToast("Thông báo", "Cập nhật ảnh nộp lệ phí thành công!", "bg-success");
 
                     onResetFields();
                     $("#loadingModal").modal("hide");
@@ -719,13 +716,13 @@
                         LoadData_Nv_ThiSinh_Xt_KQDGNangLuc();
                     }
                 } else {
-                    showToast("Thông báo", "Có lỗi xảy ra khi đóng lệ phí!", "bg-error");
+                    showToast("Thông báo", "Có lỗi xảy ra cập nhật ảnh nộp lệ phí !", "bg-error");
                     $("#loadingModal").modal("hide");
                     $('#modal_dongphi').modal('hide');
                 }
             },
             error: function (errormessage) {
-                showToast("Thông báo", "Có lỗi xảy ra khi đóng lệ phí!", "bg-error");
+                showToast("Thông báo", "Có lỗi xảy ra cập nhật ảnh nộp lệ phí !", "bg-error");
                 $("#loadingModal").modal("hide");
                 $('#modal_dongphi').modal('hide');
             }

@@ -100,11 +100,21 @@ namespace HDU_AppXetTuyen.Controllers
                 model.Dkxt_NgayDuThi = entity.Dkxt_NgayDuThi;
 
                 model.Dkxt_ToHopXT = entity.Dkxt_ToHopXT;
-                model.Dkxt_MinhChung_HB = entity.Dkxt_MinhChung_HB;
-                model.Dkxt_MinhChung_CCCD = entity.Dkxt_MinhChung_CCCD;
-                model.Dkxt_MinhChung_Bang = entity.Dkxt_MinhChung_Bang;
-                model.Dkxt_MinhChung_KetQua = entity.Dkxt_MinhChung_KetQua;
-                model.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien;
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_HB)) { model.Dkxt_MinhChung_HB = ""; }
+                else { model.Dkxt_MinhChung_HB = entity.Dkxt_MinhChung_HB; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_CCCD)) { model.Dkxt_MinhChung_CCCD = ""; }
+                else { model.Dkxt_MinhChung_CCCD = entity.Dkxt_MinhChung_CCCD; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_Bang)) { model.Dkxt_MinhChung_Bang = ""; }
+                else { model.Dkxt_MinhChung_Bang = entity.Dkxt_MinhChung_Bang; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_KetQua)) { model.Dkxt_MinhChung_KetQua = ""; }
+                else { model.Dkxt_MinhChung_KetQua = entity.Dkxt_MinhChung_KetQua; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_UuTien)) { model.Dkxt_MinhChung_UuTien = ""; }
+                else { model.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien; }
 
                 model.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 model.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
@@ -340,7 +350,7 @@ namespace HDU_AppXetTuyen.Controllers
             ViewBag.Dkxt_ID = Dkxt_ID;
             return View();
         }
-       
+
         [HttpPost]
         public JsonResult IeltsEdit_Json(DangKyXetTuyenKhac entity)
         {
@@ -429,7 +439,7 @@ namespace HDU_AppXetTuyen.Controllers
             db = new DbConnecttion();
             var model = db.DangKyXetTuyenKhacs.Include(d => d.Nganh).Include(x => x.ChungChi).FirstOrDefault(x => x.Dkxt_ID == entity.Dkxt_ID);
             var model_ts = db.ThiSinhDangKies.Include(x => x.DoiTuong).Include(x => x.KhuVuc).Where(x => x.ThiSinh_ID == model.ThiSinh_ID).FirstOrDefault();
-            
+
             string _xeploai_hocluc_12 = "";
 
             if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
@@ -442,10 +452,10 @@ namespace HDU_AppXetTuyen.Controllers
             if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 3) { _xeploai_hanhkiem_12 = "Khá"; }
             if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 2) { _xeploai_hanhkiem_12 = "Trung bình"; }
             if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 1) { _xeploai_hanhkiem_12 = "Yếu"; }
-            
+
             var data_return = new
             {
-               
+
                 ThiSinh_HocLucLop12 = _xeploai_hocluc_12,
                 ThiSinh_HanhKiemLop12 = _xeploai_hanhkiem_12,
                 ThiSinh_UTDT = model_ts.DoiTuong.DoiTuong_Ten + ", Ưu tiên: " + model_ts.DoiTuong.DoiTuong_DiemUuTien,
@@ -463,7 +473,7 @@ namespace HDU_AppXetTuyen.Controllers
                 Nganh_GhiChu = model.Nganh.Nganh_GhiChu,
                 Nganh_ID = model.Nganh_ID,
 
-                
+
                 Dkxt_NguyenVong = model.Dkxt_NguyenVong,
                 DotXT_ID = model.DotXT_ID,
                 Dkxt_GhiChu = model.Dkxt_GhiChu,
@@ -471,22 +481,22 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_DonViToChuc = model.Dkxt_DonViToChuc,
                 Dkxt_KetQuaDatDuoc = model.Dkxt_KetQuaDatDuoc,
                 Dkxt_NgayDuThi = model.Dkxt_NgayDuThi,
-                Dkxt_TongDiem = model.Dkxt_TongDiem,   
-                
+                Dkxt_TongDiem = model.Dkxt_TongDiem,
+
                 Dkxt_TrangThai_KetQua = model.Dkxt_TrangThai_KetQua,
                 Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
-                Dkxt_TrangThai_KinhPhi =model.Dkxt_TrangThai_KinhPhi,
-               
+                Dkxt_TrangThai_KinhPhi = model.Dkxt_TrangThai_KinhPhi,
+
                 Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua,
-                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,               
+                Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,
                 Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,
-                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,              
+                Dkxt_MinhChung_Bang = model.Dkxt_MinhChung_Bang,
                 Dkxt_MinhChung_UuTien = model.Dkxt_MinhChung_UuTien,
             };
 
             return Json(new { success = true, data = data_return, }, JsonRequestBehavior.AllowGet);
         }
-      
+
         [ThiSinhSessionCheck]
         public JsonResult GetAllChungChis()
         {
@@ -576,7 +586,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             db = new DbConnecttion();
             var model = db.DangKyXetTuyenKhacs.Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
-            if(model == null)
+            if (model == null)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -653,5 +663,5 @@ namespace HDU_AppXetTuyen.Controllers
                 msg = "Có lỗi xảy ra."
             }, JsonRequestBehavior.AllowGet);
         }
-    }   
+    }
 }

@@ -897,17 +897,17 @@
                             dataType: 'json',
                             success: function (res) {
                                 if (res.success) {
-                                    showToast("Thông báo", "Đóng lệ phí thành công!", "bg-success");
+                                    showToast("Thông báo", "Cập nhật minh chứng lệ phí thành công!", "bg-success");
                                     LoadDataDKDTNangKhieu();
                                     $("#loadingModal").modal("hide");
                                 } else {
-                                    showToast("Thông báo", "Có lỗi xảy ra khi đóng lệ phí!", "bg-error");
+                                    showToast("Thông báo", "Có lỗi xảy ra khi cập nhật minh chứng lệ phí!", "bg-error");
                                     $("#loadingModal").modal("hide");
                                     $('#modal_dongphi').modal('hide');
                                 }
                             },
                             error: function (errormessage) {
-                                showToast("Thông báo", "Có lỗi xảy ra khi đóng lệ phí!", "bg-error");
+                                showToast("Thông báo", "Có lỗi xảy ra khi cập nhật minh chứng lệ phí!", "bg-error");
                                 $("#loadingModal").modal("hide");
                                 $('#modal_dongphi').modal('hide');
                             }
