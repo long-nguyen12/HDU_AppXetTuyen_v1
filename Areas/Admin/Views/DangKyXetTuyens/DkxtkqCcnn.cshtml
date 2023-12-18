@@ -2,25 +2,24 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "DkxtkqDgnl";
+    ViewBag.Title = "Dùng chứng chỉ ngoại ngữ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>
-    <style>
-        th, td {
-            white-space: nowrap;
-        }
+<style>
+    th, td {
+        white-space: nowrap;
+    }
 
-        .bt-hs {
-            width: 80px;
-        }
+    .bt-hs {
+        width: 80px;
+    }
 
-        .bd-rd {
-            border-radius: 3px
-        }
-    </style>
-</h2>
+    .bd-rd {
+        border-radius: 3px
+    }
+</style>
+
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
@@ -88,7 +87,7 @@
                                 <th>Ngày dự thi</th>
                                 <th>Lệ phí</th>
                                 <th>Hồ sơ</th>
-                                <th>Kiểm tra</th>
+                                <th style="width:100px">Kiểm tra</th>
                             </tr>
                             @foreach (var item in Model)
                             {
@@ -190,8 +189,8 @@
 <script>
     function KiemtraThongTinDangky(id) {
         var str_query = window.location.search;
-        if (str_query.length == 0) {str_query = '?Dkxt_ID=' + id;}
-        else {str_query += '&Dkxt_ID=' + id;}
+        if (str_query.length == 0) { str_query = '?Dkxt_ID=' + id; }
+        else { str_query += '&Dkxt_ID=' + id; }
         window.location.href = "/Admin/DangKyXetTuyens/DkxtkqCcnn_hs_view" + str_query;
     }
 </script>

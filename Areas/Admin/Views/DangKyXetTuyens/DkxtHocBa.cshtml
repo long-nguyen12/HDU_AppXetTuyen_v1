@@ -156,11 +156,12 @@
                                                     @{
                                                         if (item.Dkxt_HB_TrangThai_KinhPhi == 0)
                                                         {
-                                                            <span style="color: red">Chưa nộp LP</span>
+                                                            <span style="color: red">Chưa nộp minh chứng lệ phí</span>
+
                                                         }
                                                         if (item.Dkxt_HB_TrangThai_KinhPhi == 1)
                                                         {
-                                                            <span style="color: red">Đã nộp, chưa KT</span>
+                                                            <span style="color: red">Đã nộp, chưa kiểm tra</span>
                                                         }
                                                         if (item.Dkxt_HB_TrangThai_KinhPhi == 2)
                                                         {
@@ -168,12 +169,13 @@
                                                         }
                                                         if (item.Dkxt_HB_TrangThai_KinhPhi == 3)
                                                         {
-                                                            <span style="color:red">Đã sửa, chưa KT</span>
+                                                            <span style="color:blue">Đã kiểm tra, Có sai sót</span>
                                                         }
                                                         if (item.Dkxt_HB_TrangThai_KinhPhi == 9)
                                                         {
-                                                            <span>Đã KT, Đúng</span>
+                                                            <span>Đã kiểm tra, đúng</span>
                                                         }
+
                                                     }
                                                 </td>
 
@@ -181,19 +183,19 @@
                                                     @{
                                                         if (item.Dkxt_HB_TrangThai_HoSo == 0)
                                                         {
-                                                            <span style="color: red">Đã nộp, chưa KT</span>
+                                                            <span style="color: red">Chưa kiểm tra</span>
                                                         }
                                                         if (item.Dkxt_HB_TrangThai_HoSo == 1)
                                                         {
-                                                            <span style="color: blue">Đã KT, Có sai sót</span>
+                                                            <span style="color: blue">Đã kiểm tra, có sai sót</span>
                                                         }
                                                         if (item.Dkxt_HB_TrangThai_HoSo == 2)
                                                         {
-                                                            <span style="color: red">Đã sửa, chưa KT</span>
+                                                            <span style="color: red">Đã sửa, chưa kiểm tra</span>
                                                         }
                                                         if (item.Dkxt_HB_TrangThai_HoSo == 9)
                                                         {
-                                                            <span>Đã KT, HS đúng, đủ</span>
+                                                            <span>Đã kiểm tra, hồ sơ đúng, đủ</span>
                                                         }
                                                     }
                                                 </td>
@@ -205,9 +207,7 @@
 
                                     }
                                 }
-
                             </tbody>
-
                         </table>
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
