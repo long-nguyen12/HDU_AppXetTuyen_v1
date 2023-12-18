@@ -232,8 +232,7 @@
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-2">
                                                             <div class="col-md-12">
-                                                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true" data-val-required="Vui lòng upload tệp chứng nhận tốt nghiệp"
-                                                                       accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true"  accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                                 <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>
                                                             </div>
                                                         </div>
@@ -270,9 +269,7 @@
                                                         <div class="form-group mb-0 mt-1">
                                                             <label for="files_hocba_ts" class="form-label">Học bạ </label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" data-val-required="Vui lòng chọn file Vui lòng chọn file học bạ"
-                                                                       accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files_hocba_ts" data-valmsg-replace="true"></span>
+                                                                <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true"  accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                             
                                                             </div>
                                                         </div>
                                                     </div>
@@ -286,8 +283,7 @@
                                                         <div class="form-group mb-0">
                                                             <label for="files_bangtn" class="form-label">Bằng tốt nghiệp</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true"  accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                               
                                                             </div>
                                                         </div>
                                                     </div>
@@ -301,8 +297,7 @@
                                                         <div class="form-group mb-0">
                                                             <label class="form-label">Căn cước công dân</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                               
                                                             </div>
                                                         </div>
                                                     </div>
@@ -316,8 +311,7 @@
                                                         <div class="form-group mb-0 mt-1">
                                                             <label for="files_giayto_uutien" class="form-label">Giấy tờ ưu tiên (nếu có)</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn giấy tờ ưu tiên" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
+                                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                              
                                                             </div>
                                                         </div>
                                                     </div>
@@ -600,7 +594,6 @@
     })
 </script>
 <script>
-
     $(document).ready(function () {
         /* Khai báo dữ liệu cho dropdownlist chọn năm */
         let currentYear = new Date().getFullYear();
@@ -749,21 +742,6 @@
             $('#files_giayto_uutien').val('');
         });
     });
-
-    function DeleteFile_CCCD_Upload(Fileid, FileName) {
-        formdata_file_cancuoc_congdan.delete(FileName)
-        $("#" + Fileid).remove();
-        chkatchtbl_cc_cd();
-    }
-    function chkatchtbl_cc_cd() {
-        if ($('#FilesList_CCCD_View tr').length > 0) {
-            $("#FilesList_CCCD_View").css("visibility", "visible");
-        }
-        else {
-            $("#FilesList_CCCD_View").css("visibility", "hidden");
-        }
-    }
-
     function DeleteFile_CNKQTN_Upload(Fileid, FileName) {
         formdata_file_chungnhan_kqtn.delete(FileName)
         $("#" + Fileid).remove();
@@ -780,6 +758,20 @@
             if (!check_in_file_chungnhan_kqtn) { var errorMessage = "Vui lòng upload tệp chứng nhận tốt nghiệp"; $('#ChungNhanTotNghiep_Error').text(errorMessage); flag = false; }
         }
     }
+    function DeleteFile_CCCD_Upload(Fileid, FileName) {
+        formdata_file_cancuoc_congdan.delete(FileName)
+        $("#" + Fileid).remove();
+        chkatchtbl_cc_cd();
+    }
+    function chkatchtbl_cc_cd() {
+        if ($('#FilesList_CCCD_View tr').length > 0) {
+            $("#FilesList_CCCD_View").css("visibility", "visible");
+        }
+        else {
+            $("#FilesList_CCCD_View").css("visibility", "hidden");
+        }
+    }
+   
     function DeleteFile_BANGTN_Upload(Fileid, FileName) {
         formdata_file_bang_tn.delete(FileName)
         $("#" + Fileid).remove();
@@ -822,13 +814,14 @@
         select_khoinganh_view_data(0, 0, 0);
         reset_fields_controll_disabled_true();
         $('#dkxt_thptqg_id_checkin').val('0');
-        check_in_file_chungnhan_kqtn = false;
 
-        formdata_file_chungnhan_kqtn = new FormData(); //FormData object chung nhan tot nghiep
-        formdata_file_hocba_ts = new FormData(); //FormData object hoc ba
-        formdata_file_bang_tn = new FormData(); //FormData object bang TN  
-        formdata_file_cancuoc_congdan = new FormData(); //FormData object cancuoccongdan
-        formdata_file_giayto_uutien = new FormData(); //FormData object giaytout
+        check_in_file_chungnhan_kqtn = false;
+        formdata_file_chungnhan_kqtn = new FormData(); 
+        formdata_file_hocba_ts = new FormData(); 
+        formdata_file_bang_tn = new FormData(); 
+        formdata_file_cancuoc_congdan = new FormData(); 
+        formdata_file_giayto_uutien = new FormData();
+         
     });
     // button đồng ý thêm mới
     $('#bt_ok_div_update_aspirations').click(function () {
@@ -845,8 +838,8 @@
 
         if (_nganh_ID == 0) { var errorMessage = "Vui lòng chọn ngành"; $('#Nganh_ID_Error').text(errorMessage); flag = false; }
         if (_thm_ID == 0) { var errorMessage = "Vui lòng chọn tổ hợp môn"; $('#Thm_ID_Error').text(errorMessage); flag = false; }
-        if (_kxt_KQTQG_Diem_M1.DiemM1 == '' || _kxt_KQTQG_Diem_M2.DiemM2 == '' || _kxt_KQTQG_Diem_M3.DiemM3 == '') {
-            var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại"; $('#Diem_All_Error').text(errorMessage); flag = false;
+        if (_kxt_KQTQG_Diem_M1.Diem == '' || _kxt_KQTQG_Diem_M2.Diem == '' || _kxt_KQTQG_Diem_M3.Diem == '') {
+            var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng"; $('#Diem_All_Error').text(errorMessage); flag = false;
         }
         if (!check_in_file_chungnhan_kqtn) { var errorMessage = "Vui lòng upload tệp chứng nhận tốt nghiệp"; $('#ChungNhanTotNghiep_Error').text(errorMessage); flag = false; }
 
@@ -995,8 +988,7 @@
             inputFields.each(function () {
                 if ($(this).val() === '' || $(this).val() < 0 || $(this).val() > 10) {
                     allFilled = false;
-                    var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!";
-
+                    var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng";
                     $('#Diem_All_Error').text(errorMessage);
                     $(outputClass).val('');
                     return false;
@@ -1094,23 +1086,25 @@
         $('#txt_m3').prop('disabled', false);
         $('#txt_tong_diem').prop('disabled', true);
         $('#txt_m1').focus();
-
        
         $('#files_chungnhan_kqtn').val(null);
+        $('#files_hocba_ts').val(null);
         $('#files_bangtn').val(null);
         $('#files_cancuoc_congdan').val(null);
-        $('#files_giayto_uutien').val(null);
+        $('#files_giayto_uutien').val(null);        
 
         $('#files_chungnhan_kqtn').prop('disabled', false);
-        $('#files_bangtn').prop('disabled', false);
         $('#files_hocba_ts').prop('disabled', false);
+        $('#files_bangtn').prop('disabled', false);
+        $('#files_cancuoc_congdan').prop('disabled', false);
         $('#files_giayto_uutien').prop('disabled', false);
 
-
-        $("#FilesList_CNKQTN_View tbody").empty();
-        $("#FilesList_BangTN_View tbody").empty();
-        $("#FilesList_HocBa_View tbody").empty();
-        $("#FilesList_GTUT_View tbody").empty();
+        $('#FilesList_CNKQTN_View tbody').empty();
+        $('#FilesList_HocBa_View tbody').empty();
+        $('#FilesList_BangTN_View tbody').empty();
+        $('#FilesList_CCCD_View tbody').empty();
+        $('#FilesList_GTUT_View tbody').empty();   
+       
     }
     function reset_fields_controll_disabled_true() {
 
@@ -1130,20 +1124,22 @@
         $('#txt_tong_diem').prop('disabled', true);
 
         $('#files_chungnhan_kqtn').val(null);
+        $('#files_hocba_ts').val(null);
         $('#files_bangtn').val(null);
         $('#files_cancuoc_congdan').val(null);
         $('#files_giayto_uutien').val(null);
 
-        $('#files_chungnhan_kqtn').prop('disabled', true);
-        $('#files_bangtn').prop('disabled', true);
-        $('#files_hocba_ts').prop('disabled', true);
-        $('#files_giayto_uutien').prop('disabled', true);
+        $('#files_chungnhan_kqtn').prop('disabled', false);
+        $('#files_hocba_ts').prop('disabled', false);
+        $('#files_bangtn').prop('disabled', false);
+        $('#files_cancuoc_congdan').prop('disabled', false);
+        $('#files_giayto_uutien').prop('disabled', false);
 
-
-        $("#FilesList_CNKQTN_View tbody").empty();
-        $("#FilesList_BangTN_View tbody").empty();
-        $("#FilesList_HocBa_View tbody").empty();
-        $("#FilesList_GTUT_View tbody").empty();
+        $('#FilesList_CNKQTN_View tbody').empty();
+        $('#FilesList_HocBa_View tbody').empty();
+        $('#FilesList_BangTN_View tbody').empty();
+        $('#FilesList_CCCD_View tbody').empty();
+        $('#FilesList_GTUT_View tbody').empty();  
     }
     function showToast(title, message, bgColor) {
         $("#myToast .toast-header .me-auto").text(title);

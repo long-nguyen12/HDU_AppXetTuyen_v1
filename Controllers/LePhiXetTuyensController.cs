@@ -630,5 +630,46 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetByID(KinhPhiInfo entity)  // lấy thông tin kinh phí đã nộp
+        {
+            db = new DbConnecttion();
+            var session = Session["login_session"];
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
+
+            var Dkxt_ID = int.Parse(entity.key_dkxt_id);
+            var Ptxt_ID = int.Parse(entity.key_dkxt_pt);
+
+            KinhPhiInfo DataReturn = new KinhPhiInfo();
+            DataReturn.key_dkxt_id = entity.key_dkxt_id;
+            DataReturn.key_dkxt_pt = entity.key_dkxt_pt;
+           
+
+            if (Ptxt_ID == 2)
+            {
+                var model = db.DangKyXetTuyenKQTQGs.FirstOrDefault(x => x.Dkxt_KQTQG_ID == Dkxt_ID);            
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_KQTQG_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_KQTQG_KinhPhi_SoThamChieu;
+            }
+            if (Ptxt_ID == 3)
+            {
+                var model = db.DangKyXetTuyenHBs.FirstOrDefault(x => x.Dkxt_HB_ID == Dkxt_ID);               
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_HB_KinhPhi_SoThamChieu;
+            }
+            if (Ptxt_ID == 4)
+            {
+                var model = db.DangKyXetTuyenThangs.FirstOrDefault(x => x.Dkxt_ID == Dkxt_ID);
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_KinhPhi_SoThamChieu;
+            }
+            if (Ptxt_ID == 5 || Ptxt_ID == 6)
+            {
+                var model = db.DangKyXetTuyenKhacs.FirstOrDefault(x => x.Dkxt_ID == Dkxt_ID);
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_KinhPhi_SoThamChieu;
+            }
+            return Json(new { success = true, data = DataReturn }, JsonRequestBehavior.AllowGet);
+        }
+       
     }
 }

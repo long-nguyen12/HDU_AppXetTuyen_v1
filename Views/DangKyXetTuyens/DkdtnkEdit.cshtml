@@ -39,6 +39,9 @@
 <input type="hidden" style="display:none" id="hidden_Dkdt_NK_ID" />
 <script>
     $(document).ready(function () {
+        LoadData();
+    })
+    function LoadData() {
         $.ajax({
             url: '/DangKyXetTuyens/Dkdtnk_GetData',
             type: "GET",
@@ -47,31 +50,29 @@
             async: false,
             success: function (res) {
                 let data = res.data;
+                console.log('data', data);
+              
                 if (res.success) {
-
+                    
                     $('#span_tieude').text('Chỉnh sửa nguyện vọng đã đăng ký')
-                    $('#hidden_Dkdt_NK_ID').val(data.dkdt_NK_ID);
+                    $('#hidden_Dkdt_NK_ID').val(data.Dkdt_NK_ID);
                     // hiển thị thông tin đợt đăng ký dự thi năng khiếu:
-                    $('#Dxt_Ten').val(data.dxt_Ten);
-                    $('#Dxt_ThoiGian_BatDau').val(data.dxt_ThoiGian_BatDau);
-                    $('#Dxt_ThoiGian_KetThuc').val(data.dxt_ThoiGian_KetThuc);
+                    $('#Dxt_Ten').val(data.Dxt_Ten);
+                    $('#Dxt_ThoiGian_BatDau').val(data.Dxt_ThoiGian_BatDau);
+                    $('#Dxt_ThoiGian_KetThuc').val(data.Dxt_ThoiGian_KetThuc);
 
                     // hiển thị thông tin ngành đã đăng ký
-                    select_nganh_view_data(data.nganh_ID, data.thm_ID)
+                    select_nganh_view_data(data.Nganh_ID, data.Thm_ID)
+                    $('#txt_dangky_monnangkhieu').val(data.Dkdt_NK_MonThi);
 
-
-
-                    $('#txt_dangky_monnangkhieu').val(data.dkdt_NK_MonThi);
-
-                   
                     $('#div_group_bt_view_data').show();
                     // hiển thị dữ liệu cccd đã upload
                     $('#div_show_file_mc').empty();
-                    if (data.dkdt_nk_Mc_CCCD != null && data.dkdt_nk_Mc_CCCD.length > 6) {
-                        const ArrCcCongDan = data.dkdt_nk_Mc_CCCD.split("#");
+                    if (data.Dkdt_NK_MinhChung_CCCD != null && data.Dkdt_NK_MinhChung_CCCD.length > 6) {
+                        const ArrCcCongDan = data.Dkdt_NK_MinhChung_CCCD.split("#");
                         for (i = 0; i < ArrCcCongDan.length; i++) {
                             if (ArrCcCongDan[i].length > 0) {
-                                var str_a = ` <a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrCcCongDan[i]}', ${data.dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
+                                var str_a = ` <a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrCcCongDan[i]}', ${data.Dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
                                 $('#div_show_file_mc').append(str_a);
                             }
                         }
@@ -90,29 +91,21 @@
                     $('#div_show_file_mc_noplephi').empty();
                     $('#div_show_file_mc_noplephi').show();
 
-                    if (data.dkdt_nk_Mc_Lephi != null && data.dkdt_nk_Mc_Lephi.length > 6) {
-                        var str_matc = data.dkdt_nk_Matc + ", "
+                    if (data.Dkdt_LePhi_MinhChung_MaThamChieu) {
+                        var str_matc = data.Dkdt_LePhi_MinhChung_MaThamChieu;
                         $('#div_show_file_mc_noplephi').append('Mã tham chiếu: ' + str_matc);
-                        const ArrLephi = data.dkdt_nk_Mc_Lephi.split("#");
-                        for (i = 0; i < ArrLephi.length; i++) {
-                            if (ArrLephi[i].length > 0) {
-                                var str_a = ` <a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrLephi[i]}', ${data.dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
-                                $('#div_show_file_mc_noplephi').append(str_a);
-                            }
-                        }
                     }
                     else {
-                        var str_a = ` <a style="color:red; text-decoration:none; margin-bottom:30px;  margin-top:25px">Không có dữ liệu</a> `;
+                        var str_a = ` <a style="color:red; text-decoration:none; margin-bottom:30px;  margin-top:25px">Chưa có dữ liệu</a> `;
                         $('#div_show_file_mc_noplephi').append(str_a);
                     }
-
                 }
             },
             error: function (err) {
                 console.log(err.statusText);
             }
         });
-    })
+    }
 </script>
 <script>
     function bt_ok_div_exam_update_data() {
@@ -364,7 +357,7 @@
     <div id="div_exam_registration_new">
         <div class="card card-header-actions">
             <div class="card-header">
-                <span id="span_tieude">Đăng ký nguyện vọng mới</span>
+                <span id="span_tieude">Chỉnh sửa nguyện vọng đã đăng ký</span>
             </div>
             <div class="card-body">
                 <div class="row">

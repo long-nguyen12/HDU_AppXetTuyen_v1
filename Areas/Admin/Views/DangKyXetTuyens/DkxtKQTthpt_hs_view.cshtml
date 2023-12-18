@@ -202,9 +202,9 @@
                                             $("#img_view").show();
 
                                         }
+
                                         if (lastChar.toLowerCase() === ".pdf") {
                                             $("#img_view").hide();
-
                                             $('#pdf_view').height('500px');                                           
                                             $('#pdf_view').css('display', 'inline');
                                             $('#pdf_view').show();
@@ -214,6 +214,7 @@
                                             $("#pdf_view").show();
                                         }
                                         $('#div_view_data_img').show();
+                                        $('#bt_delete_div_view_img').hide();
                                     }
                                 }
                             }
@@ -337,6 +338,7 @@
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
                     }
+
                     if (data.Dkxt_KQTQG_TrangThai_HoSo == 1) {
                         $('#ThongBao_TrangThaiHoSo').empty();
                         $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Đã kiểm tra, hồ sơ có sai sót</span>`);
@@ -611,7 +613,7 @@
                 <div class="card-header mt-0 mb-0">
                     <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
                     <div>
-                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="bt_delete_div_view_img()">Xóa</button>
+                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="bt_delete_div_view_img()" id="bt_delete_div_view_img">Xóa</button>
                         <script>function bt_delete_div_view_img() { $('#modal_thongbao_delete').modal('show'); }</script>
                         <button class="btn btn-sm btn-outline-primary" type="button" id="bt_close_div_view_img">Đóng</button>
                     </div>
@@ -750,6 +752,7 @@
             $("#pdf_view").show();
         }
         $('#div_view_data_img').show();
+        $('#bt_delete_div_view_img').show();
     }
 
 </script>

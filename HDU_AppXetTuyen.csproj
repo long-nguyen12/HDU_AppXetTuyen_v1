@@ -291,6 +291,7 @@
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
     <Content Include="Content\images\no-image.png" />
+    <Content Include="Content\images\no-money.png" />
     <Content Include="Content\images\profile-1.png" />
     <Content Include="Content\images\sptin.jpg" />
     <Content Include="Content\images\ttdpt.jpg" />
@@ -482,9 +483,6 @@
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopLePhi.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSo.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view2.cshtml" />
@@ -505,10 +503,9 @@
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\DkxtkqCcnn_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqKhac_hs_view.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -763,6 +760,8 @@
     <Content Include="Views\DangKyXetTuyenKhac\Ielts - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts - Copy %282%29.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkxthocba - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnk - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
