@@ -427,11 +427,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             var model = db.DangKyXetTuyenHBs.Where(x => x.Dkxt_HB_ID == entity.Dkxt_ID).FirstOrDefault();
             // string modifiedString = originalString.Replace(stringToRemove, "");
-            if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_HB_MinhChung_HB = model.Dkxt_HB_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_HB_MinhChung_Bang = model.Dkxt_HB_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_HB_MinhChung_CCCD = model.Dkxt_HB_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_HB_MinhChung_UuTien = model.Dkxt_HB_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_HB_KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_HB_MinhChung_HB = model.Dkxt_HB_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_HB_MinhChung_Bang = model.Dkxt_HB_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_HB_MinhChung_CCCD = model.Dkxt_HB_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_HB_MinhChung_UuTien = model.Dkxt_HB_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_HB_KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
 
             if (String.IsNullOrEmpty(model.Dkxt_HB_KinhPhi_TepMinhChung) && model.Dkxt_HB_TrangThai_KinhPhi != 0)                
             {
