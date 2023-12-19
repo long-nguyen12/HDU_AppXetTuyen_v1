@@ -484,9 +484,20 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_TongDiem = model.Dkxt_TongDiem,
 
                 Dkxt_TrangThai_KetQua = model.Dkxt_TrangThai_KetQua,
-                Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
-                Dkxt_TrangThai_KinhPhi = model.Dkxt_TrangThai_KinhPhi,
+                Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,               
+            };
 
+            return Json(new { success = true, data = data_return, }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetImgNguyenVongByID(DangKyXetTuyenKhac entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyXetTuyenKhacs.Include(d => d.Nganh).Include(x => x.ChungChi).FirstOrDefault(x => x.Dkxt_ID == entity.Dkxt_ID);          
+            var data_return = new
+            {
+                Dkxt_ID = model.Dkxt_ID,
+                Dkxt_TrangThai_KinhPhi = model.Dkxt_TrangThai_KinhPhi,
                 Dkxt_MinhChung_KetQua = model.Dkxt_MinhChung_KetQua,
                 Dkxt_MinhChung_HB = model.Dkxt_MinhChung_HB,
                 Dkxt_MinhChung_CCCD = model.Dkxt_MinhChung_CCCD,

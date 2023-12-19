@@ -722,8 +722,8 @@ namespace HDU_AppXetTuyen.Controllers
                 model.Dkxt_KQTQG_Diem_M2 = entity.Dkxt_KQTQG_Diem_M2;
                 model.Dkxt_KQTQG_Diem_M3 = entity.Dkxt_KQTQG_Diem_M3;
                 model.Dkxt_KQTQG_Diem_Tong = entity.Dkxt_KQTQG_Diem_Tong;
-                model.Dkxt_KQTQG_MinhChung_CNTotNghiep = entity.Dkxt_KQTQG_MinhChung_CNTotNghiep;
 
+                model.Dkxt_KQTQG_MinhChung_CNTotNghiep = entity.Dkxt_KQTQG_MinhChung_CNTotNghiep;
                 model.Dkxt_KQTQG_MinhChung_HocBa = entity.Dkxt_KQTQG_MinhChung_HocBa;
                 model.Dkxt_KQTQG_MinhChung_BangTN = entity.Dkxt_KQTQG_MinhChung_BangTN;
                 model.Dkxt_KQTQG_MinhChung_CCCD = entity.Dkxt_KQTQG_MinhChung_CCCD;
@@ -829,9 +829,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             db = new DbConnecttion();
             int Dkxt_KQTQG_ID = int.Parse(dkxt_kqtqg_post.Dkxt_KQTQG_ID.ToString());
-
             DangKyXetTuyenKQTQG dkxt_item_getby_id = db.DangKyXetTuyenKQTQGs.Find(Dkxt_KQTQG_ID);
-
             int nv_current = int.Parse(dkxt_item_getby_id.Dkxt_KQTQG_NguyenVong.ToString());
             long idThisinh = long.Parse(dkxt_item_getby_id.ThiSinh_ID.ToString());
 
@@ -1038,16 +1036,15 @@ namespace HDU_AppXetTuyen.Controllers
             string cccd = ts.ThiSinh_CCCD;
 
             int so_file_hb = int.Parse(Request["so_file_hb"].ToString());
-            int so_file_cccd = int.Parse(Request["so_file_cccd"].ToString());
             int so_file_btn = int.Parse(Request["so_file_btn"].ToString());
+            int so_file_cccd = int.Parse(Request["so_file_cccd"].ToString());            
             int so_file_gtut = int.Parse(Request["so_file_gtut"].ToString());
-
 
             HttpFileCollectionBase files = Request.Files;
 
             string MinhChung_HB = "";
-            string MinhChung_CCCD = "";
             string MinhChung_Bang = "";
+            string MinhChung_CCCD = "";           
             string MinhChung_UuTien = "";
 
             for (int i = 0; i < files.Count; i++)
@@ -1197,7 +1194,7 @@ namespace HDU_AppXetTuyen.Controllers
 
                 model_new.Dkxt_HB_MinhChung_HB = entity.Dkxt_HB_MinhChung_HB;
                 model_new.Dkxt_HB_MinhChung_CCCD = entity.Dkxt_HB_MinhChung_CCCD;
-                model_new.Dkxt_HB_MinhChung_Bang = entity.Dkxt_HB_MinhChung_HB;
+                model_new.Dkxt_HB_MinhChung_Bang = entity.Dkxt_HB_MinhChung_Bang;
                 model_new.Dkxt_HB_MinhChung_UuTien = entity.Dkxt_HB_MinhChung_UuTien;
 
                 model_new.ThiSinh_ID = ts.ThiSinh_ID;
@@ -1277,7 +1274,7 @@ namespace HDU_AppXetTuyen.Controllers
 
                 model_edit.Dkxt_HB_MinhChung_HB += entity.Dkxt_HB_MinhChung_HB;
                 model_edit.Dkxt_HB_MinhChung_CCCD += entity.Dkxt_HB_MinhChung_CCCD;
-                model_edit.Dkxt_HB_MinhChung_Bang += entity.Dkxt_HB_MinhChung_HB;
+                model_edit.Dkxt_HB_MinhChung_Bang += entity.Dkxt_HB_MinhChung_Bang;
                 model_edit.Dkxt_HB_MinhChung_UuTien += entity.Dkxt_HB_MinhChung_UuTien;
 
                 model_edit.Dkxt_HB_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
