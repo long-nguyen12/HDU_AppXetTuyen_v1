@@ -959,6 +959,7 @@
         }
     }
     $('#bt_ok_div_update_aspirations').click(function () {
+     
         let flag = true;
 
         var _nganh_ID = $('#select_nganh').val();
@@ -1055,9 +1056,9 @@
             Dkxt_HB_MinhChung_Bang: _Dkxt_MinhChung_Bang,
             Dkxt_HB_MinhChung_UuTien: _Dkxt_MinhChung_UuTien,
         }
-        console.log("new", formData_dknv_new);
-        return;
-        /* console.log(formData_dknv_new.Nganh_ID);*/
+        console.log("new data", formData_dknv_new);
+       
+     
         $("#loadingModal").modal("show");
 
         $.ajax({

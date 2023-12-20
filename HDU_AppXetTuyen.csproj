@@ -765,6 +765,8 @@
     <Content Include="Views\DangKyXetTuyens\Dkdtnk - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\DanhGiaEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyenThang\Edit - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
