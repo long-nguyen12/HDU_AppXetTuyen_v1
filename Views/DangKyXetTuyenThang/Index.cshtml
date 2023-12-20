@@ -179,7 +179,7 @@
                                     </thead>
                                     <tbody id="tbody_list_diemmonhoc">
                                         <tr>
-                                            <td>Năm đạt giải</td>
+                                            <td style="width:120px">Năm đạt giải</td>
                                             <td>
                                                 <input id="Dkxt_NamDatGiai" type="number" class="form-control" placeholder="Năm đạt giải" value="" />
                                                 <span id="Dkxt_NamDatGiai_Error" class="small mb-1 text-danger"></span>
@@ -192,11 +192,11 @@
                                                 <span id="Dkxt_MonDatGiai_Error" class="small mb-1 text-danger"></span>
                                             </td>
                                         </tr>
-                                      
+
                                         <tr>
-                                            <td>Cấp độ giải</td>
+                                            <td>Kỳ thi</td>
                                             <td>
-                                                <input id="Dkxt_CapDoGiai" type="text" class="form-control" placeholder="Cấp quốc gia hoặc cấp tỉnh" value="" />
+                                                <input id="Dkxt_CapDoGiai" type="text" class="form-control" placeholder="ví dụ: Olympic Toán quốc gia " value="" />
                                                 <span id="Dkxt_CapDoGiai_Error" class="small mb-1 text-danger"></span>
                                             </td>
                                         </tr>
@@ -270,7 +270,7 @@
                                                         <div class="form-group mb-2">
                                                             <label class="form-label">Học bạ</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true"  accept="application/pdf,.png, .jpeg, .jpg" />                                                              
+                                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
                                                                         <th colspan="3"><input type="hidden" id="HocBa_Files" /></th>
@@ -284,9 +284,9 @@
                                                 <div class="row mt-0 md-0">
                                                     <div class="col-xxl-12">
                                                         <div class="form-group">
-                                                            <label  class="form-label">Căn cước công dân</label>
+                                                            <label class="form-label">Căn cước công dân</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true"  accept="application/pdf,.png, .jpeg, .jpg" />                                                               
+                                                                <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
                                                                         <th colspan="3"><input type="hidden" id="CCCD_Files" /></th>
@@ -302,7 +302,7 @@
                                                         <div class="form-group">
                                                             <label class="form-label">Bằng Tốt nghiệp</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />                                                             
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
                                                                         <th colspan="3"><input type="hidden" id="BangTN_Files" /></th>
@@ -318,7 +318,7 @@
                                                         <div class="form-group">
                                                             <label class="form-label">Minh chứng ưu tiên</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />                                                          
+                                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
                                                                         <th colspan="2"><input type="hidden" id="UuTien_Files" /></th>
@@ -483,7 +483,7 @@
                     `title='Xóa bớt tệp nếu không đúng'  onclick='DeleteUploadedFile("CHUNGNHAN", "#FilesList_ChungNhan_View", "${uploadFileId}", "${uploadFileName}")'>Xóa</a></td></tr>`;
                 $("#FilesList_ChungNhan_View tbody").append(markup);
             }
-           
+
             check_mc_chungnhan = 1;
             $('#File_ChungNhan_Error').text('');
 
@@ -515,18 +515,18 @@
         if (FormDataName == "UUTIEN") formData = UuTienFormData;
         formData.delete(FileName)
         $("#" + Fileid).remove();
-        CheckAttachTable(ListId);       
+        CheckAttachTable(ListId);
     }
 
-    function CheckAttachTable(list) {        
+    function CheckAttachTable(list) {
         if ($(`${list} tbody tr`).length > 0) {
             $(list).css("visibility", "visible");
             if (list == '#FilesList_ChungNhan_View') { check_mc_chungnhan = 1; $('#File_ChungNhan_Error').text(''); }
         } else {
             $(list).css("visibility", "hidden");
             if (list == '#FilesList_ChungNhan_View') { check_mc_chungnhan = 0; $('#File_ChungNhan_Error').text('Chưa chọn tệp chứng nhận kết quả'); }
-        }      
-    }   
+        }
+    }
     function uploadFiles() {
         var url = '/DangKyXetTuyenThang/UploadFiles';
         fileData.forEach(function (item, index) {
@@ -585,10 +585,24 @@
         $('#files_chungnhan').val(null);
         $('#FilesList_ChungNhan_View tbody').empty();
         $('#files_uutien').val(null);
-        $('#FilesList_UuTien_View tbody').empty();       
+        $('#FilesList_UuTien_View tbody').empty();
         check_mc_chungnhan = 0;
         $('#File_ChungNhan_Error').text('');
         $('.text-danger').text('');
+        HocBaFormData = new FormData();
+        CCCDFormData = new FormData();
+        BangTNFormData = new FormData();
+        ChungNhanFormData = new FormData();
+        UuTienFormData = new FormData();
+        check_mc_chungnhan = 0;
+
+        fileData = [
+            { data: HocBaFormData, name: "HOCBA", savePath: "" },
+            { data: CCCDFormData, name: "CCCD", savePath: "" },
+            { data: BangTNFormData, name: "BANGTN", savePath: "" },
+            { data: ChungNhanFormData, name: "CHUNGNHAN", savePath: "" },
+            { data: UuTienFormData, name: "UUTIEN", savePath: "" },
+        ];         
     }
 
     function InitData(MonDatGiai, LoaiGiai) {
@@ -733,10 +747,10 @@
         });
     }
 
-    function SubmitData() {     
+    function SubmitData() {
         $(".text-danger").text("");
-        let flag = true;       
-      
+        let flag = true;
+
         let Select_Khoinganh = $('#select_khoinganh').val();
         let Nganh_ID = $('#Nganh_ID').val();
         let Dkxt_ToHopXT = $('#Dkxt_ToHopXT').val();
@@ -780,8 +794,8 @@
             var errorMessage = "Vui lòng nhập năm đạt giải";
             $('#Dkxt_NamDatGiai_Error').text(errorMessage);
             flag = false;
-        } 
-        if (check_mc_chungnhan == 0) { $('#File_ChungNhan_Error').text('Chưa chọn tệp chứng nhận kết quả'); flag = false; }      
+        }
+        if (check_mc_chungnhan == 0) { $('#File_ChungNhan_Error').text('Chưa chọn tệp chứng nhận kết quả'); flag = false; }
 
         if (!flag) return;
         $("#loadingModal").modal("show");
@@ -792,7 +806,7 @@
             Dkxt_NamDatGiai: Dkxt_NamDatGiai,
             Dkxt_MonDatGiai: Dkxt_MonDatGiai,
             Dkxt_CapDoGiai: Dkxt_CapDoGiai,
-            Dkxt_LoaiGiai: Dkxt_LoaiGiai,         
+            Dkxt_LoaiGiai: Dkxt_LoaiGiai,
             Dkxt_XepLoaiHocLuc_12: Dkxt_XepLoaiHocLuc_12,
             Dkxt_XepLoaiHanhKiem_12: Dkxt_XepLoaiHanhKiem_12,
             Dkxt_ToHopXT: Dkxt_ToHopXT,
@@ -803,7 +817,7 @@
             Dkxt_MinhChung_UuTien: fileData[4].savePath,
         }
         console.log('formData ', formData);
-      
+
         $.ajax({
             url: "/DangKyXetTuyenThang/Create",
             data: JSON.stringify(formData),
@@ -818,8 +832,7 @@
                     ListAllNguyenVong();
                     $('#div_list_nguyenvong').css('display', 'inline');
                     $('#div_update_dk_nguyenvong').css('display', 'none');
-                    //document.getElementById('div_list_nguyenvong').style.display = "inline";
-                    //document.getElementById('div_update_dk_nguyenvong').style.display = "none";
+
                     $("#loadingModal").modal('hide');
                     onResetFields();
                 } else {
@@ -878,8 +891,8 @@
     }
 
     function bt_Insert_Dknv_on_divView_Click(khoinganh_key, nganh_key, tohopmon_key) {
-      
-        GetAllKhoiNganh(); 
+
+        GetAllKhoiNganh();
         document.getElementById('div_list_nguyenvong').style.display = "none";
         document.getElementById('div_update_dk_nguyenvong').style.display = "inline";
         key_dkxt_id_post = -1;
@@ -889,7 +902,7 @@
     function _bt_HuyBo_Dkxt_NVM_OnClick(khoinganh_key, nganh_key, tohopmon_key) {
         onResetFields();
         document.getElementById('div_list_nguyenvong').style.display = "inline";
-        document.getElementById('div_update_dk_nguyenvong').style.display = "none"; 
+        document.getElementById('div_update_dk_nguyenvong').style.display = "none";
         key_dkxt_id_post = -1;
     }
 

@@ -196,7 +196,7 @@
                                                         <label class="col-form-label">Đơn vị tổ chức thi:</label>
                                                     </div>
                                                     <div class="col-8">
-                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị tổ chức thi" value="" disabled />
+                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị tổ chức thi" value=""/>
                                                         <span id="Dkxt_DonViToChuc_Error" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
@@ -452,8 +452,7 @@
                 GetChungChiId(id);
             } else {
                 $('#Dkxt_ToHopXT').val('');
-                $('#Dkxt_TongDiem').val('');
-                $('#Dkxt_DonViToChuc').val('');
+                $('#Dkxt_TongDiem').val('');             
             }
         });
 
@@ -628,6 +627,21 @@
         check_mc_chungnhan = 0;
         $('#File_ChungNhan_Error').text('');
         $('.text-danger').text('');
+
+        HocBaFormData = new FormData();
+        CCCDFormData = new FormData();
+        BangTNFormData = new FormData();
+        ChungNhanFormData = new FormData();
+        UuTienFormData = new FormData();
+        check_mc_chungnhan = 0;
+
+        fileData = [
+            { data: HocBaFormData, name: "HOCBA", savePath: "" },
+            { data: CCCDFormData, name: "CCCD", savePath: "" },
+            { data: BangTNFormData, name: "BANGTN", savePath: "" },
+            { data: ChungNhanFormData, name: "CHUNGNHAN", savePath: "" },
+            { data: UuTienFormData, name: "UUTIEN", savePath: "" },
+        ];
     }
 
     function ListAllNguyenVong() {
@@ -777,8 +791,7 @@
                 let pt = "HDP" + chungchi.ChungChi_PhuongThuc;
                 let thangdiem = chungchi.ChungChi_ThangDiem;
                 $('#Dkxt_ToHopXT').val(pt);
-                $('#Dkxt_TongDiem').val(thangdiem);
-                $('#Dkxt_DonViToChuc').val(chungchi.ChungChi_TruongTCThi);
+                $('#Dkxt_TongDiem').val(thangdiem);            
             },
             error: function (errormessage) {
                 console.log(errormessage)
@@ -796,7 +809,11 @@
         let Dkxt_KetQuaDatDuoc = $('#Dkxt_KetQuaDatDuoc').val();
         let Dkxt_TongDiem = $('#Dkxt_TongDiem').val();
         let Dkxt_NgayDuThi = $('#datepicker').val();
-
+        if (!Dkxt_DonViToChuc) {
+            var errorMessage = "Vui lòng nhập đơn vị tổ chức thi";
+            $('#Dkxt_DonViToChuc_Error').text(errorMessage);
+            flag = false;
+        }
         if ($('#select_khoinganh').val() == 0) {
             var errorMessage = "Vui lòng chọn khối ngành";
             $('#Select_KhoiNganh_Error').text(errorMessage);

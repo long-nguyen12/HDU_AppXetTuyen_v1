@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Theo dõi hồ sơ";
+     ViewBag.Title = "Kiểm tra hồ sơ xét tuyển bằng chứng chỉ ngoại ngữ hoặc đánh giá tư duy";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
@@ -230,7 +230,7 @@
                         $('#div_daco_mc_lephi').show();
                         $('#div_chuaco_mc_lephi').hide();
 
-                        $('#txt_SoThamChieu_KinhPhi').text('Số tham chiếu chuyển khoản: ' + data.Dkxt_KinhPhi_SoThamChieu)
+                        $('#txt_SoThamChieu_KinhPhi').text('- Số tham chiếu chuyển khoản: ' + data.Dkxt_KinhPhi_SoThamChieu)
                         if (data.Dkxt_KinhPhi_TepMinhChung) {
                             const ArrKinhPhi = data.Dkxt_KinhPhi_TepMinhChung.split("#");
                             if (ArrKinhPhi.length > 0) {
@@ -252,7 +252,7 @@
                     /*TrangThaiHoSo*/
                     if (data.Dkxt_TrangThai_HoSo == 0) {
                         $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Chưa kiểm tra</span>`);
+                        $('#ThongBao_TrangThaiHoSo').append(`<span>- Trạng thái hồ sơ: Chưa kiểm tra</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
@@ -260,7 +260,7 @@
 
                     if (data.Dkxt_TrangThai_HoSo == 1) {
                         $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Đã kiểm tra, hồ sơ có sai sót</span>`);
+                        $('#ThongBao_TrangThaiHoSo').append(`<span>- Trạng thái hồ sơ: Đã kiểm tra, hồ sơ có sai sót</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').attr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
@@ -268,7 +268,7 @@
 
                     if (data.Dkxt_TrangThai_HoSo == 2) {
                         $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Thí sinh đã sửa, Chưa kiểm tra</span>`);
+                        $('#ThongBao_TrangThaiHoSo').append(`<span>- Trạng thái hồ sơ: Thí sinh đã sửa, Chưa kiểm tra</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
@@ -276,7 +276,7 @@
 
                     if (data.Dkxt_TrangThai_HoSo == 9) {
                         $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Đã kiểm tra, hồ sơ đúng, đủ</span>`);
+                        $('#ThongBao_TrangThaiHoSo').append(`<span>- Trạng thái hồ sơ: Đã kiểm tra, hồ sơ đúng, đủ</span>`);
                         $('#radioHoSoDayDu').attr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
@@ -285,13 +285,13 @@
                     /*   Trang Thai Kinh Phi*/
                     if (data.Dkxt_TrangThai_KinhPhi == 0) {
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Chưa có tệp minh chứng</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái nộp kinh phí: Chưa có tệp minh chứng</span>`);
                     }
                     else {
                         $('#hidden_TrangThai_KinhPhi').val(data.Dkxt_TrangThai_KinhPhi);
                         if (data.Dkxt_TrangThai_KinhPhi == 1) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Đã nộp minh chứng, Chưa kiểm tra</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái nộp kinh phí: Đã nộp minh chứng, Chưa kiểm tra</span>`);
 
                             $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                             $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -299,7 +299,7 @@
 
                         if (data.Dkxt_TrangThai_KinhPhi == 2) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Đã kiểm tra minh chứng, có sai sót</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái nộp kinh phí: Đã kiểm tra minh chứng, có sai sót</span>`);
 
                             $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                             $('#radioThongtinLePhiSai').attr('checked', 'checked');
@@ -308,7 +308,7 @@
 
                         if (data.Dkxt_TrangThai_KinhPhi == 3) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Thí sinh đã sửa, Chưa kiểm tra</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái nộp kinh phí: Thí sinh đã sửa, Chưa kiểm tra</span>`);
 
                             $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                             $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -316,7 +316,7 @@
 
                         if (data.Dkxt_TrangThai_KinhPhi == 9) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Đã kiểm tra, Đúng, đủ</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái nộp kinh phí: Đã kiểm tra, Đúng, đủ</span>`);
 
                             $('#radioThongtinLePhiDung').attr('checked', 'checked');
                             $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -422,7 +422,7 @@
                                     </div>
                                     <div class="row mt-1 mb-0" id="div_daco_mc_lephi" style="display:none">
                                         <div class="col-12">
-                                            <span id="txt_SoThamChieu_KinhPhi" style="font-weight:bold; color:blue"></span>
+                                            <span id="txt_SoThamChieu_KinhPhi" style="color:blue"></span>
                                         </div>
                                         <div class="col-12">
                                             <div class="d-inline-flex mt-1">

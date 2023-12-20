@@ -149,7 +149,7 @@
                                                         <label class="col-form-label">Tên đơn vị:</label>
                                                     </div>
                                                     <div class="col-8">
-                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị" value="" disabled />
+                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị" value=""/>
                                                         <span id="Dkxt_DonViToChuc_Error" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
@@ -246,7 +246,7 @@
                                                                 Học bạ
                                                                 (<span id="sp_view_mc_hocba"></span>)
                                                             </label>
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-12 mb-0">
                                                                 <input class="form-control" id="files_hocba" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file học bạ"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
@@ -263,7 +263,7 @@
                                                             <label class="form-label col-12 mb-0">
                                                                 Căn cước công dân (<span id="sp_view_mc_cccd"></span>)
                                                             </label>
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-12 mb-0">
                                                                 <input class="form-control" id="files_cccd" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file CCCD"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
@@ -281,7 +281,7 @@
                                                                 Bằng Tốt nghiệp
                                                                 (<span id="sp_view_mc_bang_tn"></span>)
                                                             </label>
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-12 mb-0">
                                                                 <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" data-val-required="Vui lòng chọn file Bằng TN"
                                                                        accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <span class="field-validation-valid text-primary" data-valmsg-for="files" data-valmsg-replace="true"></span>
@@ -329,7 +329,7 @@
                 <div class="row mb-3">
                     <div class="col-xxl-12" style="text-align:center">
                         <input class="btn btn-outline-primary" type="button" value="Đồng ý sửa" onclick="SubmitData()" />
-                        <input class="btn btn-outline-secondary" type="button" value="Hủy bỏ" onclick="bt_HuyBo_Dkxt_SuaNV_OnClick()" />
+                        <input class="btn btn-outline-secondary" type="button" value="Quay lại" onclick="bt_HuyBo_Dkxt_SuaNV_OnClick()" />
                     </div>
                 </div>
             </div>
@@ -406,7 +406,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">Bạn chắc chắn xóa ảnh minh chứng này ?</label>
+                    <span style="color:red">Nếu đồng ý hình ảnh minh chứng sẽ bị xóa. Bạn chắc chắn xóa?</span>
                 </div>
             </div>
             <div class="modal-footer">
@@ -428,7 +428,11 @@
                             contentType: "application/json;charset=utf-8",
                             success: function (res) {
                                 console.log("check res", res)
-                                window.location.href = "/DangKyXetTuyenKhac/IeltsEdit" + str_query;
+                                showToast("Thông báo", "Xóa ảnh minh chứng thành công!", "bg-error");
+                                $('#modal_thongbao_delete').modal('hide');
+                                LoadImageMC_Ielts_ByID(); // gọi lại phần hiển thị các hình ảnh minh chứng
+                                onResetDeleteImg();
+                              //  window.location.href = "/DangKyXetTuyenKhac/IeltsEdit" + str_query;
                             },
                             error: function (error) {
                                 console.error('Error update mc:', error);
@@ -448,6 +452,12 @@
 </div>
 <script>
     $(document).ready(function () {
+        // hiển thị thông tin đăng ký nguyện vọng
+        LoadDataInfor_Ielts_ByID();
+        //hiển thị các hình ảnh minh chứng
+        LoadImageMC_Ielts_ByID();
+    })
+    function LoadDataInfor_Ielts_ByID() {
         /*  var hidden_Dkxt_HB_ID = $('#hidden_Dkxt_HB_ID').val();*/
         let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val() }
         $.ajax({
@@ -460,8 +470,8 @@
             success: function (res) {
                 if (res.success) {
                     let data = res.data;
-                    console.log("Load - ", data)
-                    /*select_khoinganh_view_data(data.KhoiNganh_ID, data.Nganh_ID, data.Thm_ID);*/
+                    console.log("Load - Infor", data)
+                     
                     $('#Dkxt_XepLoaiHocLuc_12').val(data.ThiSinh_HocLucLop12);
                     $('#Dkxt_XepLoaiHanhKiem_12').val(data.ThiSinh_HanhKiemLop12);
                     $('#Dkxt_DonViToChuc').val(data.Dkxt_DonViToChuc);
@@ -474,13 +484,34 @@
                     $('#dkxt_id_checkin').val(data.Dkxt_ID);
 
                     GetAllKhoiNganh(data.KhoiNganh_ID, data.Nganh_ID, data.ChungChi_ID);
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.error);
+            }
+        });
+    }
+
+    function LoadImageMC_Ielts_ByID() {        
+        let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val() }
+        $.ajax({
+            url: "/DangKyXetTuyenKhac/GetImgNguyenVongByID",
+            data: JSON.stringify(data_get),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',          
+            success: function (res) {
+                if (res.success) {
+                    let data = res.data;
+                    console.log("Load - IMG", data)
+
+                                 
 
                     $('#sp_view_mc_ketqua').empty();
 
                     if (data.Dkxt_MinhChung_KetQua) {
                         const ArrMCKetQua = data.Dkxt_MinhChung_KetQua.split("#");
                         if (ArrMCKetQua.length > 0) {
-
                             for (i = 0; i < ArrMCKetQua.length; i++) {
                                 if (ArrMCKetQua[i].length > 0) {
                                     var str_a = ` <a href="#"  onclick="showimg('${ArrMCKetQua[i]}',1,${data.Dkxt_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
@@ -489,12 +520,12 @@
                             }
                         }
                         else {
-                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_ketqua').append(str_a);
                         }
                     }
                     else {
-                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                         $('#sp_view_mc_ketqua').append(str_a);
                     }
 
@@ -512,12 +543,12 @@
                             }
                         }
                         else {
-                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_hocba').append(str_a);
                         }
                     }
                     else {
-                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                         $('#sp_view_mc_hocba').append(str_a);
                     }
 
@@ -535,12 +566,12 @@
                             }
                         }
                         else {
-                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_cccd').append(str_a);
                         }
                     }
                     else {
-                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                         $('#sp_view_mc_cccd').append(str_a);
                     }
 
@@ -558,13 +589,13 @@
                             }
                         }
                         else {
-                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_bang_tn').append(str_a);
                         }
 
                     }
                     else {
-                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                         $('#sp_view_mc_bang_tn').append(str_a);
                     }
 
@@ -582,24 +613,22 @@
                             }
                         }
                         else {
-                            var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                             $('#sp_view_mc_uutien').append(str_a);
                         }
-
                     }
                     else {
-                        var str_a = ` <a style="color:red">Không có dữ liệu</a>`;
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
                         $('#sp_view_mc_uutien').append(str_a);
                     }
-
-
                 }
             },
             error: function (errormessage) {
                 console.log(errormessage.error);
             }
         });
-    })
+    }
+
     function bt_HuyBo_Dkxt_SuaNV_OnClick() {
         window.location.href = "/DangKyXetTuyenKhac/Ielts";
     }
@@ -639,8 +668,7 @@
                 GetChungChiId(id);
             } else {
                 $('#Dkxt_ToHopXT').val('');
-                $('#Dkxt_TongDiem').val('');
-                $('#Dkxt_DonViToChuc').val('');
+                $('#Dkxt_TongDiem').val('');              
             }
         });
 
@@ -749,36 +777,38 @@
 
     function uploadFiles() {
         var url = '/DangKyXetTuyenThang/UploadFiles';
-        fileData.forEach(function (item, index) {
-            var formName = item.name;
-            var fileCount = 0;
-            for (var pair of item.data.entries()) {
-                if (pair[1] instanceof File) {
-                    fileCount++;
-                }
-            }
-            if (fileCount > 0) {
-                var savedPath;
-                var formData = item.data;
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    async: false,
-                    success: function (response) {
-                        if (response.success) {
-                            savedPath = response.message;
-                        }
-                    },
-                    error: function (error) {
-                        console.error('Error uploading ' + formName + ' files:', error);
+        if (fileData) {
+            fileData.forEach(function (item, index) {
+                var formName = item.name;
+                var fileCount = 0;
+                for (var pair of item.data.entries()) {
+                    if (pair[1] instanceof File) {
+                        fileCount++;
                     }
-                });
-                item.savePath = savedPath;
-            }
-        });
+                }
+                if (fileCount > 0) {
+                    var savedPath;
+                    var formData = item.data;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        async: false,
+                        success: function (response) {
+                            if (response.success) {
+                                savedPath = response.message;
+                            }
+                        },
+                        error: function (error) {
+                            console.error('Error uploading ' + formName + ' files:', error);
+                        }
+                    });
+                    item.savePath = savedPath;
+                }
+            });
+        }       
     }
 
     function showToast(title, message, bgColor) {
@@ -795,6 +825,55 @@
         $('#Dkxt_KetQuaDatDuoc').val("");
         $('#Dkxt_TongDiem').val("");
         $('#datepicker').val("");
+
+        $('#files_hocba').val(null);
+        $('#FilesList_HocBa_View tbody').empty();
+        $('#files_cccd').val(null);
+        $('#FilesList_CCCD_View tbody').empty();
+        $('#files_bangtn').val(null);
+        $('#FilesList_BangTN_View tbody').empty();
+        $('#files_chungnhan').val(null);
+        $('#FilesList_ChungNhan_View tbody').empty();
+        $('#files_uutien').val(null);
+        $('#FilesList_UuTien_View tbody').empty();
+
+        $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
+        $('#pdf_view').height('0px');
+        $('#pdf_view').css('display', 'none');
+        $("#pdf_view").attr("src", "");
+        $("#pdf_view").hide();
+        $("#img_view").attr("src", "");
+        $('#img_view').hide();
+
+        $('#div_view_img').hide();   
+
+    }
+    function onResetDeleteImg() {
+
+        HocBaFormData = new FormData();
+        CCCDFormData = new FormData();
+        BangTNFormData = new FormData();
+        ChungNhanFormData = new FormData();
+        UuTienFormData = new FormData();        
+
+        fileData = [
+            { data: HocBaFormData, name: "HOCBA", savePath: "" },
+            { data: CCCDFormData, name: "CCCD", savePath: "" },
+            { data: BangTNFormData, name: "BANGTN", savePath: "" },
+            { data: ChungNhanFormData, name: "CHUNGNHAN", savePath: "" },
+            { data: UuTienFormData, name: "UUTIEN", savePath: "" },
+        ];
+
+        $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
+        $('#pdf_view').height('0px');
+        $('#pdf_view').css('display', 'none');
+        $("#pdf_view").attr("src", "");
+        $("#pdf_view").hide();
+        $("#img_view").attr("src", "");
+        $('#img_view').hide();
+
+        $('#div_view_img').hide();     
+
         $('#files_hocba').val(null);
         $('#FilesList_HocBa_View tbody').empty();
         $('#files_cccd').val(null);
@@ -973,6 +1052,7 @@
         }
         if (!flag) return;
         $("#loadingModal").modal("show");
+        
         uploadFiles();
         let formData = {
             Dkxt_ID: Dkxt_ID,
@@ -983,6 +1063,7 @@
             Dkxt_TongDiem: Dkxt_TongDiem,
             Dkxt_NgayDuThi: Dkxt_NgayDuThi,
             Dkxt_ToHopXT: Dkxt_ToHopXT,
+
             Dkxt_MinhChung_HB: fileData[0].savePath,
             Dkxt_MinhChung_CCCD: fileData[1].savePath,
             Dkxt_MinhChung_Bang: fileData[2].savePath,
@@ -999,8 +1080,17 @@
             dataType: 'json',
             success: function (res) {
                 if (res.success) {
+                    console.log("formData -", fileData);
+                    showToast("Thông báo", "Chỉnh sửa thông tin đăng ký thành công!", "bg-error");
                     $("#loadingModal").modal("hide");
-                    window.location.href = '/DangKyXetTuyenKhac/Ielts';
+                    // hiển thị thông tin đăng ký nguyện vọng
+                    LoadDataInfor_Ielts_ByID();
+                    //hiển thị các hình ảnh minh chứng
+                    LoadImageMC_Ielts_ByID();
+                    onResetDeleteImg();
+                    // chỉ click quay lại mới trở lại trang chính
+                    // window.location.href = '/DangKyXetTuyenKhac/Ielts';
+                    console.log("formData -", fileData);
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi sửa nguyện vọng!", "bg-error");
                     $("#loadingModal").modal("hide");

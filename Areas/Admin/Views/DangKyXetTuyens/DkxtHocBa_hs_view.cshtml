@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "TheoDoiNopHoSoDetailPt3";
+    ViewBag.Title = "Kiểm tra hồ sơ xét tuyển bằng học bạ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 <style>
@@ -57,7 +57,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng học bạ</span>                         
+                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng học bạ</span>
                     </div>
                 </div>
             </div>
@@ -66,6 +66,9 @@
 </header>
 <script>
     $(document).ready(function () {
+        LoadDataPhuongThuc3();
+    })
+    function LoadDataPhuongThuc3() {
         let data_get = { Dkxt_HB_ID: $('#hidden_Dkxt_ID').val() }
         $.ajax({
             url: '/Admin/TongHopSoLieuDKXTs/DangKyXetTuyen_HB_GetByID',
@@ -103,23 +106,12 @@
                     $('#MonDiem2').text(str_Mon2); $('#ChitietMon2').text(Chitiet_Mon2);
                     $('#MonDiem3').text(str_Mon3); $('#ChitietMon3').text(Chitiet_Mon3);
 
-                    //$('#ThiSinh_TruongCapBa').val(data.ThiSinh_TruongCapBa);
-                    //$('#ThiSinh_TruongCapBa_Ma').val(data.ThiSinh_TruongCapBa_Ma);
-                    //$('#ThiSinh_TruongCapBa_Tinh_ID').val(data.ThiSinh_TruongCapBa_Tinh_ID);
-                    //$('#ThiSinh_DCNhanGiayBao').val(data.ThiSinh_DCNhanGiayBao);
-                    //$('#ThiSinh_HoKhauThuongTru').val(data.ThiSinh_HoKhauThuongTru);
-
-                    //select_khoinganh_view_data(data.KhoiNganh_ID, data.Nganh_ID, data.Thm_ID);
-                    //$('#txt_hocluc_12').val(data.ThiSinh_HocLucLop12);
-                    //$('#txt_hanhkiem_12').val(data.ThiSinh_HanhKiemLop12);
-                    //$('#span_Uutien_doituong').text(data.DoiTuong_ID);
-                    //$('#span_Uutien_khuvuc').text(data.KhuVuc_ID);
-                 
                     $('#div_mc_hocba').empty();
                     $('#div_mc_bangtotnghiep').empty();
                     $('#div_mc_cccd').empty();
                     $('#div_mc_giayto_uutien').empty();
                     $('#div_mc_lephi').empty();
+
 
                     if (data.Dkxt_HB_MinhChung_HB) {
                         const ArrHocBa = data.Dkxt_HB_MinhChung_HB.split("#");
@@ -152,7 +144,7 @@
                                         $('#hiden_id_key').val(data.Dkxt_HB_ID);
                                         $('#hiden_loai_minhchung_xoa').val(1);
                                         $("#hiden_duongdan_file_xoa").val(url);
-                                      
+
                                         $('#div_view_data_img').show();
                                     }
                                 }
@@ -162,7 +154,7 @@
                         }
                         else {
                             $('#div_mc_hocba').hide();
-                        }                       
+                        }
                     }
                     else {
                         $("#pdf_view").attr("src", "");
@@ -171,7 +163,7 @@
 
                         $('#img_txt_card_hearder').text('Hình ảnh minh chứng học bạ');
                         $("#img_view").attr("src", "/Content/images/no-image.png");
-                        $('#div_view_img').show();                      
+                        $('#div_view_img').show();
                         $('#bt_delete_div_view_img').hide();
                         $('#bt_close_div_view_img').hide();
                     }
@@ -190,12 +182,12 @@
                         }
                         else {
                             $('#div_mc_bangtotnghiep').hide();
-                        }                       
+                        }
                     }
-                 
+
                     if (data.Dkxt_HB_MinhChung_CCCD) {
                         const ArrCccd = data.Dkxt_HB_MinhChung_CCCD.split("#");
-                        if (ArrCccd.length > 0) {                           
+                        if (ArrCccd.length > 0) {
                             $('#div_mc_cccd').append('- Căn cước công dân: ');
                             for (i = 0; i < ArrCccd.length; i++) {
                                 if (ArrCccd[i].length > 0) {
@@ -208,8 +200,8 @@
                         else {
                             $('#div_mc_cccd').hide();
                         }
-                        
-                    }                  
+
+                    }
 
                     if (data.Dkxt_HB_MinhChung_UuTien) {
                         const ArrGTUT = data.Dkxt_HB_MinhChung_UuTien.split("#");
@@ -227,9 +219,9 @@
                         else {
                             $('#div_mc_giayto_uutien').hide();
                         }
-                      
-                    }
 
+                    }
+                    // ThongBao_TrangThaiKinhPhi
                     $('#hidden_TrangThai_KinhPhi').val(data.Dkxt_HB_TrangThai_KinhPhi)
 
                     if (data.Dkxt_HB_TrangThai_KinhPhi == 0) {
@@ -239,7 +231,7 @@
                     }
                     else {
                         $('#div_daco_mc_lephi').show();
-                        $('#div_chuaco_mc_lephi').hide();  
+                        $('#div_chuaco_mc_lephi').hide();
                         $('#txt_SoThamChieu_KinhPhi').text('Số tham chiếu chuyển khoản: ' + data.Dkxt_HB_KinhPhi_SoThamChieu)
                         if (data.Dkxt_HB_KinhPhi_TepMinhChung) {
                             const ArrKinhPhi = data.Dkxt_HB_KinhPhi_TepMinhChung.split("#");
@@ -257,10 +249,10 @@
                                 $('#div_mc_lephi').hide();
                             }
                         }
-                    }     
-                   // ThongBao_TrangThaiKinhPhi 
-                   $('#ThongBao_KiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
-                  
+                    }
+                    
+                    $('#ThongBao_KiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
+
                     /*TrangThaiHoSo*/
                     if (data.Dkxt_HB_TrangThai_HoSo == 0) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
@@ -331,13 +323,16 @@
                         $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
                     }
 
-                  
+
                 }
             },
             error: function (errormessage) {
                 console.log(errormessage.error);
             }
         });
+    }
+    $(document).ready(function () {
+
     });
 </script>
 <div class="container-fluid px-12">
@@ -345,7 +340,7 @@
         <div class="col-lg-7 col-md-12" id="div_view_data_table">
             <div class="card card-header-actions">
                 <div class="card-header">
-                    <span>Thông tin nguyện vọng đăng ký</span>    
+                    <span>Thông tin nguyện vọng đăng ký</span>
                     <div>
                         <button class="btn  btn-light btn-sm" type="button" onclick="ReturnTheoDoiNopHoSo()">Quay lại</button>
                     </div>
@@ -390,7 +385,7 @@
                                     <p class="mt-0 mb-0" id="div_mc_bangtotnghiep"></p>
                                     <p class="mt-0 mb-0" id="div_mc_cccd"></p>
                                     <p class="mt-0 mb-0" id="div_mc_giayto_uutien"></p>
-                                    <p class="mt-0 mb-0" id="div_mc_lephi"></p>                                                             
+                                    <p class="mt-0 mb-0" id="div_mc_lephi"></p>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <b>+ Kiểm duyệt hồ sơ và lệ phí</b>
@@ -461,7 +456,7 @@
                     <div class="row">
                         <center>
                             <div class="col-12 mt-2">
-                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>                                
+                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>
                                 <script>
 
                                     $(document).ready(function () {
@@ -605,25 +600,34 @@
                     function bt_dongy_xoa_on_modal_delete_click() {
                         var str_query = window.location.search;
                         var data_post = {
-                          
+
                             Dkxt_ID: $('#hiden_id_key').val(),
                             Dkxt_LoaiMC: $('#hiden_loai_minhchung_xoa').val(),
                             Dkxt_Url: $("#hiden_duongdan_file_xoa").val(),
                         }
-                        console.log("data_post", data_post);
-                       
+                        console.log("data_post delete", data_post);
+
                         $.ajax({
                             url: '/Admin/DangKyXetTuyens/DkxtHocBa_hs_DeleteMC',
                             type: "POST",
                             data: JSON.stringify(data_post),
                             contentType: "application/json;charset=utf-8",
                             success: function (res) {
-                                window.location.href = "/Admin/DangKyXetTuyens/DkxtHocBa_hs_view" + str_query;
+                                showToast("Thông báo", "Xóa ảnh minh chứng thành công.", "bg-success");
+                                $('#modal_thongbao_delete').modal('hide');
+                                LoadDataPhuongThuc3();
+                                //  window.location.href = "/Admin/DangKyXetTuyens/DkxtHocBa_hs_view" + str_query;
                             },
                             error: function (error) {
                                 console.error('Error delete:', error);
                             }
                         });
+                    }
+                    function showToast(title, message, bgColor) {
+                        $("#myToast .toast-header .me-auto").text(title);
+                        $("#myToast .toast-body").text(message);
+                        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+                        $("#myToast").toast("show");
                     }
                 </script>
                 <button class="btn btn-primary" type="button" onclick="bt_close_modal_xoa_click()">Đóng</button>
@@ -636,10 +640,21 @@
         </div>
     </div>
 </div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto"></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_ID" />
 <script>
 
-   
+
     function ReturnTheoDoiNopHoSo() {
         var str_query_current = window.location.search;
         var str_dkxt_id = '?Dkxt_ID=' + $('#hidden_Dkxt_ID').val();
@@ -648,8 +663,10 @@
     }
 
     function showimg(url, loaimc, id_key_hs) {
+
         $('#bt_delete_div_view_img').show();
         $('#bt_close_div_view_img').show();
+
         $('#hiden_id_key').val(id_key_hs);
         $('#hiden_loai_minhchung_xoa').val(loaimc);
         $("#hiden_duongdan_file_xoa").val(url);

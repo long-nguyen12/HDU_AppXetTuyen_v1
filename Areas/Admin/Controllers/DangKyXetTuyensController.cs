@@ -427,11 +427,11 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             var model = db.DangKyXetTuyenHBs.Where(x => x.Dkxt_HB_ID == entity.Dkxt_ID).FirstOrDefault();
             // string modifiedString = originalString.Replace(stringToRemove, "");
-            if (entity.Dkxt_LoaiMC == "1") { model.Dkxt_HB_MinhChung_HB = model.Dkxt_HB_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_HB_MinhChung_Bang = model.Dkxt_HB_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_HB_MinhChung_CCCD = model.Dkxt_HB_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_HB_MinhChung_UuTien = model.Dkxt_HB_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
-            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_HB_KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "2") { model.Dkxt_HB_MinhChung_HB = model.Dkxt_HB_MinhChung_HB.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_HB_MinhChung_Bang = model.Dkxt_HB_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_HB_MinhChung_CCCD = model.Dkxt_HB_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_HB_MinhChung_UuTien = model.Dkxt_HB_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_HB_KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
 
             if (String.IsNullOrEmpty(model.Dkxt_HB_KinhPhi_TepMinhChung) && model.Dkxt_HB_TrangThai_KinhPhi != 0)                
             {
@@ -1183,9 +1183,21 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             // cần lấy tên ngành và tổ hợp môn để hiển thị ra drop nếu đã đăng ký; mỗi thí sinh chỉ đăng ký 1 lần trong 1 đợt
             var TenNganhThi = db.Nganhs.Where(x => x.Nganh_ID == model.Nganh_ID).FirstOrDefault().Nganh_TenNganh;
             var TenToHopThi = db.ToHopMons.Where(x => x.Thm_ID == model.Thm_ID).FirstOrDefault().Thm_TenToHop;
+            string ThiSinh_GT = "Nam";
+            if (model.ThiSinhDangKy.ThiSinh_GioiTinh == 1) { ThiSinh_GT = "Nữ"; }
 
             var data_return = new
-            {             
+            {
+
+                ThiSinh_HoLot = model.ThiSinhDangKy.ThiSinh_HoLot,
+                ThiSinh_Ten = model.ThiSinhDangKy.ThiSinh_Ten,
+                ThiSinh_NgaySinh = model.ThiSinhDangKy.ThiSinh_NgaySinh,
+                ThiSinh_GioiTinh = ThiSinh_GT,
+                ThiSinh_DanToc = model.ThiSinhDangKy.ThiSinh_DanToc,
+                ThiSinh_CCCD = model.ThiSinhDangKy.ThiSinh_CCCD,
+                ThiSinh_DienThoai = model.ThiSinhDangKy.ThiSinh_DienThoai,
+                ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
+
                 dxt_Ten = Dothihientai.Dxt_Ten,
                 dxt_ThoiGian_BatDau = Dothihientai.Dxt_ThoiGian_BatDau,
                 dxt_ThoiGian_KetThuc = Dothihientai.Dxt_ThoiGian_KetThuc,

@@ -456,7 +456,7 @@
     <Content Include="Areas\Admin\Views\Xas\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Content\static\export-66-bieu-mau-thi-nk.docx" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view06.cshtml" />
     <Content Include="Areas\Admin\Views\AdminAuth\Login1.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout_Admin_Master.cshtml" />
     <Content Include="Areas\Admin\Views\NganhMasters\Create.cshtml" />
@@ -497,15 +497,19 @@
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3 - Copy.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4 - Copy.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - Copy.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2 - AK.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - AK.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3 - AK.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\DkxtkqCcnn_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4 - AK.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -757,11 +761,12 @@
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\Ielts - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit - Copy.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\Ielts - Copy %282%29.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\Dkxthocba - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\DanhGiaEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyenThang\Edit - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
