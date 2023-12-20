@@ -517,15 +517,8 @@ namespace HDU_AppXetTuyen.Controllers
                         var fileName = Path.GetFileName(file.FileName);
                         fileName = thiSinh.ThiSinh_CCCD + "_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "_" + fileName;
                         var filePath = Path.Combine(Server.MapPath("~/Uploads/FileMinhChungKinhPhis"), fileName);
-                        var savePath = "Uploads/FileMinhChungKinhPhis/" + fileName;
-                        if (i != Request.Files.Count - 1)
-                        {
-                            minhchungs = minhchungs + savePath + "#";
-                        }
-                        else
-                        {
-                            minhchungs += savePath;
-                        }
+                        var savePath = "/Uploads/FileMinhChungKinhPhis/" + fileName;
+                        minhchungs += savePath + "#";                       
                         file.SaveAs(filePath);
                     }
                     return Json(new { success = true, message = minhchungs }, JsonRequestBehavior.AllowGet);
@@ -550,8 +543,8 @@ namespace HDU_AppXetTuyen.Controllers
             var Ptxt_ID = int.Parse(entity.key_dkxt_pt);
             if (Ptxt_ID == 2)
             {
-                var model = db.DangKyXetTuyenKQTQGs.FirstOrDefault(x => x.Dkxt_KQTQG_ID == Dkxt_ID);
-                model.Dkxt_KQTQG_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung;
+                var model = db.DangKyXetTuyenKQTQGs.FirstOrDefault(x => x.Dkxt_KQTQG_ID == Dkxt_ID);              
+                if (!String.IsNullOrEmpty(entity.KinhPhi_TepMinhChung)) { model.Dkxt_KQTQG_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung; }
                 model.Dkxt_KQTQG_KinhPhi_SoThamChieu = entity.KinhPhi_SoTC;
                 model.Dkxt_KQTQG_TrangThai_KinhPhi = 1;
                 model.Dkxt_KQTQG_KinhPhi_NgayThang_NopMC = DateTime.Now.ToString("yyyy-MM-dd");
@@ -560,8 +553,7 @@ namespace HDU_AppXetTuyen.Controllers
             if (Ptxt_ID == 3)
             {
                 var model = db.DangKyXetTuyenHBs.FirstOrDefault(x => x.Dkxt_HB_ID == Dkxt_ID);
-
-                model.Dkxt_HB_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung;
+                if (!String.IsNullOrEmpty(entity.KinhPhi_TepMinhChung)) { model.Dkxt_HB_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung; }                
                 model.Dkxt_HB_KinhPhi_SoThamChieu = entity.KinhPhi_SoTC;
                 model.Dkxt_HB_TrangThai_KinhPhi = 1;
                 model.Dkxt_HB_KinhPhi_NgayThang_NopMC = DateTime.Now.ToString("yyyy-MM-dd");
@@ -569,8 +561,8 @@ namespace HDU_AppXetTuyen.Controllers
             }
             if (Ptxt_ID == 4)
             {
-                var model = db.DangKyXetTuyenThangs.FirstOrDefault(x => x.Dkxt_ID == Dkxt_ID);
-                model.Dkxt_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung;
+                var model = db.DangKyXetTuyenThangs.FirstOrDefault(x => x.Dkxt_ID == Dkxt_ID);              
+                if (!String.IsNullOrEmpty(entity.KinhPhi_TepMinhChung)) { model.Dkxt_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung; }
                 model.Dkxt_KinhPhi_SoThamChieu = entity.KinhPhi_SoTC;
                 model.Dkxt_TrangThai_KinhPhi = 1;
                 model.Dkxt_KinhPhi_NgayThang_NopMC = DateTime.Now.ToString("yyyy-MM-dd");
@@ -579,7 +571,7 @@ namespace HDU_AppXetTuyen.Controllers
             if (Ptxt_ID == 5 || Ptxt_ID == 6)
             {
                 var model = db.DangKyXetTuyenKhacs.FirstOrDefault(x => x.Dkxt_ID == Dkxt_ID);
-                model.Dkxt_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung;
+                if (!String.IsNullOrEmpty(entity.KinhPhi_TepMinhChung)) { model.Dkxt_KinhPhi_TepMinhChung = entity.KinhPhi_TepMinhChung; }               
                 model.Dkxt_KinhPhi_SoThamChieu = entity.KinhPhi_SoTC;
                 model.Dkxt_TrangThai_KinhPhi = 1;
                 model.Dkxt_KinhPhi_NgayThang_NopMC = DateTime.Now.ToString("yyyy-MM-dd");
@@ -637,5 +629,46 @@ namespace HDU_AppXetTuyen.Controllers
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetByID(KinhPhiInfo entity)  // lấy thông tin kinh phí đã nộp
+        {
+            db = new DbConnecttion();
+            var session = Session["login_session"];
+            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
+
+            var Dkxt_ID = int.Parse(entity.key_dkxt_id);
+            var Ptxt_ID = int.Parse(entity.key_dkxt_pt);
+
+            KinhPhiInfo DataReturn = new KinhPhiInfo();
+            DataReturn.key_dkxt_id = entity.key_dkxt_id;
+            DataReturn.key_dkxt_pt = entity.key_dkxt_pt;
+           
+
+            if (Ptxt_ID == 2)
+            {
+                var model = db.DangKyXetTuyenKQTQGs.FirstOrDefault(x => x.Dkxt_KQTQG_ID == Dkxt_ID);            
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_KQTQG_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_KQTQG_KinhPhi_SoThamChieu;
+            }
+            if (Ptxt_ID == 3)
+            {
+                var model = db.DangKyXetTuyenHBs.FirstOrDefault(x => x.Dkxt_HB_ID == Dkxt_ID);               
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_HB_KinhPhi_SoThamChieu;
+            }
+            if (Ptxt_ID == 4)
+            {
+                var model = db.DangKyXetTuyenThangs.FirstOrDefault(x => x.Dkxt_ID == Dkxt_ID);
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_KinhPhi_SoThamChieu;
+            }
+            if (Ptxt_ID == 5 || Ptxt_ID == 6)
+            {
+                var model = db.DangKyXetTuyenKhacs.FirstOrDefault(x => x.Dkxt_ID == Dkxt_ID);
+                DataReturn.KinhPhi_TepMinhChung = model.Dkxt_KinhPhi_TepMinhChung;
+                DataReturn.KinhPhi_SoTC = model.Dkxt_KinhPhi_SoThamChieu;
+            }
+            return Json(new { success = true, data = DataReturn }, JsonRequestBehavior.AllowGet);
+        }
+       
     }
 }

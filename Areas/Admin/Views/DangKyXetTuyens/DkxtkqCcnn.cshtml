@@ -2,25 +2,24 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "DkxtkqDgnl";
+    ViewBag.Title = "Dùng chứng chỉ ngoại ngữ";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h2>
-    <style>
-        th, td {
-            white-space: nowrap;
-        }
+<style>
+    th, td {
+        white-space: nowrap;
+    }
 
-        .bt-hs {
-            width: 80px;
-        }
+    .bt-hs {
+        width: 80px;
+    }
 
-        .bd-rd {
-            border-radius: 3px
-        }
-    </style>
-</h2>
+    .bd-rd {
+        border-radius: 3px
+    }
+</style>
+
 
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
@@ -37,7 +36,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-collapsable mt-1 mb-1">
+    <div class="card card-header-actions">
         <div class="card-header">
             <div><span id="sp_tieude">Danh sách thí sinh đăng ký xét tuyển bằng kết quả chứng chỉ ngoại ngữ</span></div>
         </div>
@@ -45,7 +44,7 @@
 
             @using (Html.BeginForm("DkxtkqCcnn", "DangKyXetTuyens", FormMethod.Get))
             {
-                <div class="row g-1">                   
+                <div class="row g-1">
                     <div class="col-xxl-2 col-md-12">
                         @Html.DropDownList("filteriNvong", null, "Nguyện vọng...", new { @class = "form-select  bd-rd" })
                     </div>
@@ -78,46 +77,25 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
-                                <th>
-                                    Họ tên
-                                </th>
-                                <th>
-                                    Điện thoại
-                                </th>
-                                <th>
-                                    N.Vọng
-                                </th>
-                                <th>
-                                    Ngành
-                                </th>
-                                <th>
-                                    Tổ hợp
-                                </th>
-                                <th>
-                                    Tổng điểm
-                                </th>
-                                <th>
-                                    Tên chứng chỉ
-                                </th>
-                                <th>
-                                    Ngày dự thi
-                                </th>
-                                <th>
-                                    Lệ phí
-                                </th>
-                                <th>
-                                    Hồ sơ
-                                </th>
-                                <th>
-                                    Kiểm tra
-                                </th>
+                                <th>Họ lót</th>
+                                <th>Tên</th>
+                                <th>Điện thoại</th>
+                                <th>N.Vọng</th>
+                                <th>Ngành</th>
+                                <th>Tổng điểm</th>
+                                <th>Tên chứng chỉ</th>
+                                <th>Ngày dự thi</th>
+                                <th>Lệ phí</th>
+                                <th>Hồ sơ</th>
+                                <th style="width:100px">Kiểm tra</th>
                             </tr>
-
                             @foreach (var item in Model)
                             {
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_HoLot)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.ThiSinhDangKy.ThiSinh_Ten)
                                     </td>
                                     <td>
@@ -129,9 +107,7 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Nganh.Nganh_TenNganh)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Dkxt_ToHopXT)
-                                    </td>
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Dkxt_TongDiem)
                                     </td>
@@ -145,44 +121,43 @@
                                         @{
                                             if (item.Dkxt_TrangThai_KinhPhi == 0)
                                             {
-                                                <span style="color: red">Chưa nộp LP</span>
+                                                <span style="color: red">Chưa nộp minh chứng lệ phí</span>
                                             }
                                             if (item.Dkxt_TrangThai_KinhPhi == 1)
                                             {
-                                                <span style="color: red">Đã nộp, chưa KT</span>
+                                                <span style="color: red">Đã nộp, chưa kiểm tra</span>
                                             }
                                             if (item.Dkxt_TrangThai_KinhPhi == 2)
                                             {
-                                                <span style="color:blue">Đã KT, Có sai sót</span>
+                                                <span style="color:blue">Đã kiểm tra, Có sai sót</span>
                                             }
                                             if (item.Dkxt_TrangThai_KinhPhi == 3)
                                             {
-                                                <span style="color:red">Đã sửa, chưa KT</span>
+                                                <span style="color:red">Đã sửa, chưa kiểm tra</span>
                                             }
                                             if (item.Dkxt_TrangThai_KinhPhi == 9)
                                             {
-                                                <span>Đã KT, Đúng</span>
+                                                <span>Đã kiểm tra, Đúng</span>
                                             }
                                         }
                                     </td>
-
                                     <td>
                                         @{
                                             if (item.Dkxt_TrangThai_HoSo == 0)
                                             {
-                                                <span style="color: red">Đã nộp, chưa KT</span>
+                                                <span style="color: red">Chưa kiểm tra</span>
                                             }
                                             if (item.Dkxt_TrangThai_HoSo == 1)
                                             {
-                                                <span style="color: blue">Đã KT, Có sai sót</span>
+                                                <span style="color: blue">Đã kiểm tra, Có sai sót</span>
                                             }
                                             if (item.Dkxt_TrangThai_HoSo == 2)
                                             {
-                                                <span style="color: red">Đã sửa, chưa KT</span>
+                                                <span style="color: red">Đã sửa, chưa kiểm tra</span>
                                             }
                                             if (item.Dkxt_TrangThai_HoSo == 9)
                                             {
-                                                <span>Đã KT, HS đúng, đủ</span>
+                                                <span>Đã kiểm tra, hồ sơ đúng, đủ</span>
                                             }
                                         }
                                     </td>
@@ -196,7 +171,7 @@
                         <!-- Thêm mã phân trang -->
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / Tổng @Model.PageCount trang/ (Tổng @ViewBag.totalRecod bản ghi)
                         @Html.PagedListPager(Model, page => Url.Action("DkxtkqCcnn", new
-                        {                          
+                        {
                             filteriNvong = ViewBag.NvongFilteri,
                             filteriNganh = ViewBag.NganhFilteri,
                             filteriLePhi = ViewBag.LePhiFilteri,
@@ -212,15 +187,11 @@
     </div>
 </div>
 <script>
-    function KiemtraThongTinDangky(id,id_pt) {
+    function KiemtraThongTinDangky(id) {
         var str_query = window.location.search;
-
-        if (str_query.length == 0) {
-            str_query = '?Dkxt_ID=' + id + '&Ptxt_ID=' + id_pt;
-        }
-        else {
-            str_query += '&Dkxt_ID=' + id + '&Ptxt_ID=' + id_pt;
-        }
-        window.location.href = "/Admin/DangKyXetTuyens/DkxtkqKhac_hs_view" + str_query;
+        if (str_query.length == 0) { str_query = '?Dkxt_ID=' + id; }
+        else { str_query += '&Dkxt_ID=' + id; }
+        window.location.href = "/Admin/DangKyXetTuyens/DkxtkqCcnn_hs_view" + str_query;
     }
 </script>
+

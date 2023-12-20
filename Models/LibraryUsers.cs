@@ -215,4 +215,11 @@ namespace HDU_AppXetTuyen.Models
         public string GiayMienNgoaiNgu { get; set; }
         public string GiayToKhac { get; set; }      
     }
+    
+    public class ThongTinXoaMC
+    {
+        public long Dkxt_ID {  get; set; }
+        public string Dkxt_Url { get; set; }
+        public string Dkxt_LoaiMC { get; set; }
+    }
 }

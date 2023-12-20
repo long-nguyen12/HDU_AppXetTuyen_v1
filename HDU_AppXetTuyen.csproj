@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -176,7 +176,6 @@
     <Compile Include="Areas\Admin\Controllers\KhoiNganhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuVucsController.cs" />
     <Compile Include="Areas\Admin\Controllers\LibraryJsonController.cs" />
-    <Compile Include="Areas\Admin\Controllers\KinhPhisController.cs" />
     <Compile Include="Areas\Admin\Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NamHocsController.cs" />
     <Compile Include="Areas\Admin\Controllers\NganhMastersController.cs" />
@@ -291,6 +290,8 @@
     <Content Include="Content\images\cntt.jpg" />
     <Content Include="Content\images\liencaphdu.png" />
     <Content Include="Content\images\logo-hdu.png" />
+    <Content Include="Content\images\no-image.png" />
+    <Content Include="Content\images\no-money.png" />
     <Content Include="Content\images\profile-1.png" />
     <Content Include="Content\images\sptin.jpg" />
     <Content Include="Content\images\ttdpt.jpg" />
@@ -382,6 +383,8 @@
     <Content Include="Content\static\export-66-bieu-mau-thi-nk-20230302101245-e.docx" />
     <Content Include="Content\toastr.less" />
     <Content Include="Content\toastr.scss" />
+    <Content Include="Scripts\bootstrap-datepicker.min.css" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -396,7 +399,7 @@
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt2.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTongHop.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt.cshtml" />
     <Content Include="Areas\Admin\Views\DoiTuongs\Create.cshtml" />
@@ -453,8 +456,8 @@
     <Content Include="Areas\Admin\Views\Xas\Index.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Content\static\export-66-bieu-mau-thi-nk.docx" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view06.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAuth\Login1.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout_Admin_Master.cshtml" />
     <Content Include="Areas\Admin\Views\NganhMasters\Create.cshtml" />
     <Content Include="Areas\Admin\Views\NganhMasters\Delete.cshtml" />
@@ -480,16 +483,33 @@
     <Content Include="Areas\Admin\Views\HocVienDangKys\AdminCreateHocVien.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopLePhi.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSo.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqDgnl_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view2.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_viewOK2.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_viewOK.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_viewOK.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout_AdminLienCap.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminAuth\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqCcnn_hs_view1.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqCcnn_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2 - Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3 - Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4 - Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2 - AK.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - AK.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3 - AK.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\DkxtkqCcnn_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4 - AK.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtTt_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtkqKhac_hs_view.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - Copy.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\NangKhieu.cshtml" />
+    <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -741,10 +761,17 @@
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\Dkdtnk - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\DanhGiaEdit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyenThang\Edit - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\DkxtKQTHPTQG\" />
     <Folder Include="Areas\Admin\Views\ExportDatas\" />
     <Folder Include="Areas\Admin\Views\LibraryJson\" />
     <Folder Include="Uploads\DkSauDaiHocFile\" />

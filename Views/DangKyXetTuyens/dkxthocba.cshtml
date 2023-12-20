@@ -40,7 +40,7 @@
 </header>
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
-        <div class="card card-collapsable">
+        <div class="card card-header-actions">
             <div class="card-header">
                 <span>Các nguyện vọng đã đăng ký</span>
             </div>
@@ -54,7 +54,7 @@
                                     <th style="vertical-align:middle;">Ngành</th>
                                     <th style="vertical-align:middle;">Tổ hợp môn</th>
                                     <th style="vertical-align:middle;">Tổng điểm</th>
-                                    <th style="vertical-align:middle; text-align:center; ">Cập nhật</th>
+                                    <th style="vertical-align:middle; text-align:center; width:130px ">Cập nhật</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_list_nguyenvong">
@@ -131,20 +131,20 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="width:130px">Khối ngành <font color="red">(*)</font></td>
+                                    <td style="width:130px">Khối ngành</td>
                                     <td>
                                         <select id="select_khoinganh" class="form-select"></select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Ngành <font color="red">(*)</font></td>
+                                    <td>Ngành</td>
                                     <td>
                                         <select id="select_nganh" class="form-select"></select>
                                         <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Tổ hợp môn <font color="red">(*)</font></td>
+                                    <td>Tổ hợp môn</td>
                                     <td>
                                         <select id="select_tohopmon" class="form-select"></select>
                                         <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
@@ -263,7 +263,7 @@
                     <div class="col-xxl-4">
                         <div class="row md-0">
                             <div class="col-xxl-12">
-                                <table class="table table-hover">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th style="vertical-align:middle;">Minh chứng khác</th>
@@ -333,7 +333,7 @@
                 <div class="row mb-3">
                     <div class="col-xxl-12" style="text-align:center">
                         <input class="btn btn-outline-primary col-lg-1 col-4" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý thêm" />
-                        <input class="btn btn-outline-secondary col-lg-1 col-4" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
+                        <input class="btn btn-outline-secondary col-lg-1 col-4" id="bt_close_div_update_aspirations_second" type="button" value="Quay lại" />
                     </div>
                 </div>
             </div>
@@ -604,6 +604,14 @@
     // hết phần hiển thị dữ liệu đã đăng ký
 
     // phần xử lý dữ liệu cho div update
+
+     
+    var check_in_file_hoba = false;
+    var formdata_files_hocba = new FormData();
+    var formdata_cccd = new FormData();
+    var formdata_bang_tn = new FormData();
+    var formdata_giayto_uutien = new FormData();
+
     $(document).ready(function () {
         $("#select_khoinganh").change(function () {
             select_nganh_view_data($("#select_khoinganh").val(), 0, 0);
@@ -645,7 +653,6 @@
             }
         });
 
-
         on_listen_fields_input_data(".input-mon1", '#txt_tb_m1');
         on_listen_fields_input_data(".input-mon2", '#txt_tb_m2');
         on_listen_fields_input_data(".input-mon3", '#txt_tb_m3');
@@ -657,17 +664,23 @@
         $('select').on('input', function () {
             hideErrorMessage($(this));
         })
+        // button hiển thị cửa sổ thêm mới
+        $('#bt_add_aspirations').click(function () {
+            document.getElementById('div_list_aspirations').style.display = "none";
+            document.getElementById('div_update_aspirations').style.display = "inline";
+            select_khoinganh_view_data(0, 0, 0);
+            reset_fields_controll_disabled_true();
+            $('#dkxt_hocba_id_checkin').val('0');
 
+            check_in_file_hoba = false;
+            formdata_files_hocba = new FormData(); 
+            formdata_cccd = new FormData();
+            formdata_bang_tn = new FormData(); 
+            formdata_giayto_uutien = new FormData(); 
+        });
     });
 
-    // button hiển thị cửa sổ thêm mới
-    $('#bt_add_aspirations').click(function () {
-        document.getElementById('div_list_aspirations').style.display = "none";
-        document.getElementById('div_update_aspirations').style.display = "inline";
-        select_khoinganh_view_data(0, 0, 0);
-        reset_fields_controll_disabled_true();
-        $('#dkxt_hocba_id_checkin').val('0');
-    });
+   
 
     function select_khoinganh_view_data(khoinganh_key, nganh_key, tohopmon_key) {
         $('#select_khoinganh').empty()
@@ -783,7 +796,6 @@
         $('#files_bangtn').prop('disabled', false);
         $('#files_giayto_uutien').prop('disabled', false);
 
-
         $("#FilesList_HocBa_View tbody").empty();
         $("#FilesList_CCCD_View tbody").empty();
         $("#FilesList_BangTN_View tbody").empty();
@@ -828,14 +840,7 @@
         $("#myToast .toast-body").text(message);
         $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
         $("#myToast").toast("show");
-    }
-
-    /*phần xử lý upload file */
-    var check_in_file_hoba = false;
-    var formdata_files_hocba = new FormData(); //FormData object hoc ba
-    var formdata_cccd = new FormData(); //FormData object cancuoc cong dan
-    var formdata_bang_tn = new FormData(); //FormData object bang TN
-    var formdata_giayto_uutien = new FormData(); //FormData object giaytout
+    }  
 
     $(document).ready(function () {
         $("#files_hocba").on("change", function () {
@@ -954,6 +959,7 @@
         }
     }
     $('#bt_ok_div_update_aspirations').click(function () {
+     
         let flag = true;
 
         var _nganh_ID = $('#select_nganh').val();
@@ -999,7 +1005,6 @@
                 so_file_cccd++;
             }
             for (const item of formdata_bang_tn) {
-
                 formData_All.append(item[0], item[1]);
                 so_file_btn++;
             }
@@ -1051,9 +1056,9 @@
             Dkxt_HB_MinhChung_Bang: _Dkxt_MinhChung_Bang,
             Dkxt_HB_MinhChung_UuTien: _Dkxt_MinhChung_UuTien,
         }
-        console.log("new",formData_dknv_new);
-
-        /* console.log(formData_dknv_new.Nganh_ID);*/
+        console.log("new data", formData_dknv_new);
+       
+     
         $("#loadingModal").modal("show");
 
         $.ajax({
@@ -1095,6 +1100,7 @@
         document.getElementById('div_update_aspirations').style.display = "none";
         $('#dkxt_hocba_id_checkin').val('');
         reset_fields_controll_disabled_true();
+        $('.text-danger').text('');
     });
 
     $(document).ready(function () {

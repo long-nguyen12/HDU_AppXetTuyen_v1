@@ -8,6 +8,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('body').keypress(function (event) {
+            if (event.keyCode == 13) {
+                $('#bt_login').click();
+            }
+        });
+    })    
+    $(document).ready(function () {
         $('input[type="radio"]').on('click', function (event) {
             $('#errorMessage').text("");
             $('#login_CCCD_Error').text("");
@@ -36,7 +43,7 @@
             $('#bt_ok_modal_tb').text('Đóng');
             $('#span_noidung_thongbao').text('Đã hết thời gian, hệ thống tạm dừng đăng ký dự tuyển đại học');
             $('#modal_tb').modal('show');
-            /*window.location.href = '/Auth/RegisterColleger/';  */
+            window.location.href = '/Auth/RegisterColleger/';  
         })
 
         $('#showSignupMaster').click(function () {
@@ -54,7 +61,7 @@
             $('#bt_ok_modal_tb').text('Đóng');
             $('#span_noidung_thongbao').text('Đã hết thời gian, trường liên cấp tạm dừng đăng ký dự tuyển');
             $('#modal_tb').modal('show');
-            /* window.location.href = '/LienCapTHCS/index/';*/
+             window.location.href = '/LienCapTHCS/index/';
         })
     })
 

@@ -28,18 +28,23 @@
 
             <div class="d-inline-flex flex-nowrap mb-2 mt-2 col-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="radioDaiHoc" name="radioHeDaoTao" value="0" checked>
+                    <input class="form-check-input" type="radio" id="radioDaiHoc" name="radioHeDaoTao" value="1" checked>
                     <label class="form-check-label" for="radioDaiHoc">Hệ đại học</label>
                 </div>
                 <div class="form-check" style="margin-left:15px">
-                    <input class="form-check-input" type="radio" id="radioSauDaiHoc" name="radioHeDaoTao" value="1" >
+                    <input class="form-check-input" type="radio" id="radioSauDaiHoc" name="radioHeDaoTao" value="2">
                     <label class="form-check-label" for="radioSauDaiHoc">Hệ sau đại học</label>
+                </div>
+                <div class="form-check" style="margin-left:15px">
+                    <input class="form-check-input" type="radio" id="radioLienCap" name="radioHeDaoTao" value="3">
+                    <label class="form-check-label" for="radioLienCap">Liên cấp</label>
                 </div>
             </div>
 
             <span id="RadioHeDaoTao_Error" class="small mb-1 text-danger col-12"></span>
             @*<input class="btn login-button col-12" type="submit" value="Đăng nhập" style="width: 100%" id="bt_login" name="bt_login" />*@
             <a class="btn login-button col-12" id="bt_login" name="bt_login">Đăng nhập</a>
+
             <span id="Login_Error" class="small mb-1 text-danger col-12"></span>
             <hr />
             <div class="register-link">
@@ -53,6 +58,7 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
+
     <script>
         $(document).ready(function () {
             $('input').on('input', function () {
@@ -65,10 +71,20 @@
                 $('#Login_Error').text('');
             });
         })
+
         function hideErrorMessage(input) {
             var errorContainer = input.next('.text-danger');
             errorContainer.text('');
         }
+
+        $(document).ready(function () {
+            $('body').keypress(function (event) {
+                if (event.keyCode == 13) {
+                    $('#bt_login').click();
+                }
+            });
+        })     
+
         $(document).ready(function () {
             $('#bt_login').click(function () {
 
@@ -79,11 +95,12 @@
                 let _Admin_Pass = $('#Admin_Pass').val();
                 if (!_Admin_Pass) { $('#Admin_Pass_Error').text('Nhập mật khẩu'); }
 
-                let _Admin_Note = -1; //id_hedaotao: 1 Đại học, 2 Sau đại học
-                if (!$('#radioDaiHoc').is(':checked') && !$('#radioSauDaiHoc').is(':checked')) { $('#RadioHeDaoTao_Error').text('Chọn hệ quản lý'); flag = false; }
+                let _Admin_Note = -1; //id_hedaotao: 1 Đại học, 2 Sau đại học, 3 Liên cấp
+                if (!$('#radioDaiHoc').is(':checked') && !$('#radioSauDaiHoc').is(':checked') && !$('#radioLienCap').is(':checked')) { $('#RadioHeDaoTao_Error').text('Chọn hệ quản lý'); flag = false; }
 
                 if ($('#radioDaiHoc').is(':checked')) { _Admin_Note = 1; }
                 else if ($('#radioSauDaiHoc').is(':checked')) { _Admin_Note = 2; }
+                else if ($('#radioLienCap').is(':checked')) { _Admin_Note = 3; }
 
                 if (!flag) return;
 
@@ -100,10 +117,11 @@
                     type: "POST",
                     data: JSON.stringify(data_entity),
                     contentType: "application/json;charset=utf-8",
-                    success: function (res) {                      
-                        if (res.success == true) {                           
+                    success: function (res) {
+                        if (res.success == true) {
                             if (res.data === 'CollegerLogin') { window.location.href = '/Admin/TongHopSoLieuDKXTs/TheoDoiNopHoSo'; }
                             if (res.data === 'MasterLogin') { window.location.href = '/Admin/HocVienDangKys/DsHvDuTuyen'; }
+                            if (res.data === 'LienCapLogin') { window.location.href = '/Admin/TruongLienCaps/LcTieuhoc'; }
                         } else {
                             $('#Login_Error').text(res.data);
                         }

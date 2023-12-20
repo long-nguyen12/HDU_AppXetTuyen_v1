@@ -36,13 +36,13 @@
 </header>
 
 <input type="hidden" style="display:none" id="hidden_Dkdt_NK_ID" />
-<input type="hidden" style="display:none" id="hidden_Dkdt_NK_MonThi" />
-<input type="hidden" style="display:none" id="hidden_Thm_ID" />
-<input type="hidden" style="display:none" id="hidden_Nganh_ID" class="" />
 
 <script>
     //Phần hiển thị dữ liệu ban đầu
     $(document).ready(function () {
+        LoadDataDKDTNangKhieu()
+    })
+    function LoadDataDKDTNangKhieu() {
         $.ajax({
             url: '/DangKyXetTuyens/Dkdtnk_GetData',
             type: "GET",
@@ -51,8 +51,9 @@
             async: false,
             success: function (res) {
                 let data = res.data;
+                console.log('data', data);
                 if (!res.success) {
-                    /*show_div_exam_registration_new();*/
+
                     //Hiển thị dữ liệu các ngành
                     select_nganh_view_data(0, 0);
                     reset_fields_controll_disabled_true();
@@ -70,27 +71,48 @@
 
                 }
                 else {
+
                     $('#span_tieude').text('Nguyện vọng đã đăng ký dự thi')
-                    $('#hidden_Dkdt_NK_ID').val(data.dkdt_NK_ID);
+                    $('#hidden_Dkdt_NK_ID').val(data.Dkdt_NK_ID);
                     // hiển thị thông tin đợt đăng ký dự thi năng khiếu:
-                    $('#Dxt_Ten').val(data.dxt_Ten);
-                    $('#Dxt_ThoiGian_BatDau').val(data.dxt_ThoiGian_BatDau);
-                    $('#Dxt_ThoiGian_KetThuc').val(data.dxt_ThoiGian_KetThuc);
+                    $('#Dxt_Ten').val(data.Dxt_Ten);
+                    $('#Dxt_ThoiGian_BatDau').val(data.Dxt_ThoiGian_BatDau);
+                    $('#Dxt_ThoiGian_KetThuc').val(data.Dxt_ThoiGian_KetThuc);
 
                     // hiển thị thông tin ngành đã đăng ký
                     $("#select_nganh").empty();
-                    $('#select_nganh').append('<option value="' + data.nganh_ID + '">' + data.nganh_TenNganh + '</option>');
+                    $('#select_nganh').append('<option value="' + data.Nganh_ID + '">' + data.Nganh_TenNganh + '</option>');
 
                     $("#select_tohopmon").empty();
-                    $('#select_tohopmon').append('<option value="' + data.thm_ID + '">' + data.thm_TenToHop + '</option>');
-                    $('#txt_dangky_monnangkhieu').val(data.dkdt_NK_MonThi);
+                    $('#select_tohopmon').append('<option value="' + data.Thm_ID + '">' + data.Thm_TenToHop + '</option>');
+                    $('#txt_dangky_monnangkhieu').val(data.Dkdt_NK_MonThi);
+
+                    if (data.Dkdt_LePhi_MinhChung_Tep) {
+                        $("#img_view_mclp").attr("src", data.Dkdt_LePhi_MinhChung_Tep);
+                        $('#span_tieude_hinhanh').text('Hình ảnh minh chứng đã nộp lệ phí');
+                    }
+                    else {
+                        $("#img_view_mclp").attr("src", "/Content/images/no-money.png");
+                        $('#span_tieude_hinhanh').text('Mẫu minh chứng đã nộp lệ phí');
+                    }
+
+                    if (data.Dkdt_LePhi_MinhChung_MaThamChieu) {
+                        $('#KinhPhi_SoTC').val(data.Dkdt_LePhi_MinhChung_MaThamChieu);
+                    }
+
+                    if (data.Dkdt_TrangThai_LePhi == 0) {
+                        $('#KinhPhi_SoTC').val('')
+                        $("#img_view_mclp").attr("src", "/Content/images/no-money.png");
+                        $('#span_tieude_hinhanh').text('Mẫu minh chứng đã nộp lệ phí');
+                    }
 
                     $('#div_group_bt_add_data').hide();
                     $('#div_group_bt_view_data').show();
                     // hiển thị dữ liệu cccd đã upload
                     $('#div_show_file_mc').empty();
-                    if (data.dkdt_nk_Mc_CCCD != null && data.dkdt_nk_Mc_CCCD.length > 6) {
-                        const ArrCcCongDan = data.dkdt_nk_Mc_CCCD.split("#");
+
+                    if (data.Dkdt_NK_MinhChung_CCCD != null && data.Dkdt_NK_MinhChung_CCCD.length > 6) {
+                        const ArrCcCongDan = data.Dkdt_NK_MinhChung_CCCD.split("#");
                         for (i = 0; i < ArrCcCongDan.length; i++) {
                             if (ArrCcCongDan[i].length > 0) {
                                 var str_a = ` <a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrCcCongDan[i]}', ${data.dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
@@ -112,29 +134,21 @@
                     $('#div_show_file_mc_noplephi').empty();
                     $('#div_show_file_mc_noplephi').show();
 
-                    if (data.dkdt_nk_Mc_Lephi != null && data.dkdt_nk_Mc_Lephi.length > 6) {
-                        var str_matc = data.dkdt_nk_Matc + ", "
+                    if (data.Dkdt_LePhi_MinhChung_MaThamChieu) {
+                        var str_matc = data.Dkdt_LePhi_MinhChung_MaThamChieu;
                         $('#div_show_file_mc_noplephi').append('Mã tham chiếu: ' + str_matc);
-                        const ArrLephi = data.dkdt_nk_Mc_Lephi.split("#");
-                        for (i = 0; i < ArrLephi.length; i++) {
-                            if (ArrLephi[i].length > 0) {
-                                var str_a = ` <a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrLephi[i]}', ${data.dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
-                                $('#div_show_file_mc_noplephi').append(str_a);
-                            }
-                        }
                     }
                     else {
-                        var str_a = ` <a style="color:red; text-decoration:none; margin-bottom:30px;  margin-top:25px">Không có dữ liệu</a> `;
+                        var str_a = ` <a style="color:red; text-decoration:none; margin-bottom:30px;  margin-top:25px">Chưa có dữ liệu</a> `;
                         $('#div_show_file_mc_noplephi').append(str_a);
                     }
-
                 }
             },
             error: function (err) {
                 console.log(err.statusText);
             }
         });
-    })
+    }
     // phần hiển thị dữ liệu lên dropdownlist
     function select_nganh_view_data(nganh_key, tohopmon_key) { // id = KhoiNganh_ID
         $("#select_nganh").empty();
@@ -357,9 +371,8 @@
 
 @*Phần hiển thị dữ liệu minh chứng lệ phí*@
 <script>
-    function showimg(url, loaimc) {
-        //$("#hiden_duongdan_file_xoa").val(url);
-        //$('#hiden_loai_minhchung_xoa').val(loaimc);
+    function showimg(url) {
+        $("#hiden_duongdan_file_xoa").val(url);         
         var pdf_view = document.getElementById("pdf_view");
         pdf_view.style.display = "none";
         pdf_view.style.height = "0px";
@@ -378,7 +391,7 @@
         if (lastChar.toLowerCase() === ".pdf") {
             $("#img_view").hide();
             pdf_view.style.display = "inline";
-            pdf_view.style.height = "700px";
+            pdf_view.style.height = "500px";
             $("#pdf_view").attr("src", url);
             $("#pdf_view").show();
         }
@@ -395,148 +408,10 @@
 </script>
 
 @*Phần nộp minh chứng lệ phí*@
+
 <script>
     $(document).ready(function () {
-        $('#bt_capnhat_mc_lephi').click(function () {
-            $('#modal_update_mc_lephi').modal('show');
-        })
-    })
-
-    var formdata_files_noplephi = new FormData();
-    var check_in_file_noplephi = false;
-
-    $(document).ready(function () {
-        $("#file_upload_minhchung_noplephi").on("change", function () {
-            formdata_files_noplephi = new FormData();
-            check_in_file_noplephi = false;
-
-            $("#FilesList_MC_NopLePhi_View tbody").empty();
-
-            var file_upload_minhchung_noplephi = document.getElementById('file_upload_minhchung_noplephi');
-            for (i = 0; i < file_upload_minhchung_noplephi.files.length; i++) {
-                var filename_item = file_upload_minhchung_noplephi.files[i].name;
-                var randomid_item = Math.random().toString(36).substring(7);
-                formdata_files_noplephi.append(filename_item, file_upload_minhchung_noplephi.files[i]);
-
-                var markup = "<tr id='" + randomid_item + "'><td>" + filename_item + "</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none' title='Bấm chuột để xóa tệp nếu không đúng!'  class=\"btn btn-light btn-sm\"  onclick='DeleteFile_NopLephi_Upload(\"" + randomid_item + "\",\"" + filename_item + "\")'>Xóa</a></td></tr>";
-                $("#FilesList_MC_NopLePhi_View tbody").append(markup);
-            }
-            chkatchtbl_lephi();
-            $('#file_upload_minhchung_noplephi').val('');
-        });
-
-    });
-    function DeleteFile_NopLephi_Upload(Fileid, FileName) {
-        formdata_files_noplephi.delete(FileName)
-        $("#" + Fileid).remove();
-        chkatchtbl_lephi();
-    }
-    function chkatchtbl_lephi() {
-        if ($('#FilesList_MC_NopLePhi_View tbody tr').length >= 1) {
-            $("#FilesList_MC_NopLePhi_View").css("visibility", "visible");
-            check_in_file_noplephi = true;
-        }
-        else {
-            $("#FilesList_MC_NopLePhi_View").css("visibility", "hidden");
-            check_in_file_noplephi = false;
-            if (!check_in_file_noplephi) { var errorMessage = "Upload tệp minh chứng nộp lệ phí"; $('#Error_Rgt_upload_minhchung_noplephi').text(errorMessage); }
-        }
-    }
-
-    $(document).ready(function () {
-        $('#bt_update_mc_lephi').click(function () {
-            $('#txt_sothamchieu').val('');
-            $('#file_upload_minhchung_noplephi').val('');
-            $('#modal_update_mc_lephi').modal('show');
-        })
-
-        $('#bt_cancel_on_modal_update_mc_lephi_first').click(function () {
-            $('#modal_update_mc_lephi').modal('hide');
-        })
-
-        $('#bt_cancel_on_modal_update_mc_lephi_second').click(function () {
-            $('#modal_update_mc_lephi').modal('hide');
-        });
-
-        $('#bt_ok_on_modal_update_mc_lephi').click(function () {
-            var flag_mc_lephi = true;
-            var _txt_sothamchieu = $('#txt_sothamchieu').val();
-            if (!_txt_sothamchieu) { var errorMessage = "Nhập mã tham chiếu"; $('#Error_Rgt_txt_sothamchieu').text(errorMessage); flag_mc_lephi = false; }
-
-            if (!check_in_file_noplephi) { var errorMessage = "Upload tệp minh chứng nộp lệ phí"; $('#Error_Rgt_upload_minhchung_noplephi').text(errorMessage); flag_mc_lephi = false; }
-
-            if (!flag_mc_lephi) return;
-
-            var _dkdt_LePhi_MinhChung_Tep = "";
-
-            $.ajax({
-                url: '/DangKyXetTuyens/Dkdtnk_UploadFile_Lephi',
-                type: "POST",
-                contentType: false,
-                processData: false,
-                data: formdata_files_noplephi,
-                async: false,
-                success: function (res) {
-                    if (res.success == true) {
-                        console.log("upload file thành công", res);
-                        _dkdt_LePhi_MinhChung_Tep = res.Dkdt_NK_LePhi_TepMC;
-                    } else if (res.success == false) {
-                        flag_mc_lephi = false;
-                    }
-                },
-                error: function (res) {
-                    console.log("Lỗi upload", res);
-                    flag_mc_lephi = false;
-                }
-            });
-
-            if (!flag_mc_lephi) return;
-
-            /*hết phần upload file*/
-
-            var data_update_lephi = {
-                Dkdt_NK_ID: $("#hidden_Dkdt_NK_ID").val(),
-                Dkdt_LePhi_MinhChung_MaThamChieu: _txt_sothamchieu,
-                Dkdt_LePhi_MinhChung_Tep: _dkdt_LePhi_MinhChung_Tep,
-            };
-            console.log(data_update_lephi)
-
-            $.ajax({
-                url: "/DangKyXetTuyens/DangKyDuThi_NangKhieu_UpdateMCLePhi",
-                type: "POST",
-                data: JSON.stringify(data_update_lephi),
-                contentType: "application/json;charset=utf-8",
-                async: false,
-                success: function (res) {
-                    if (res.success) {
-                        window.location.href = '/DangKyXetTuyens/Dkdtnk'
-                    }
-                    else {
-                        console.log('Lỗi thêm mc lệ phí', res);
-                    }
-                },
-                error: function (errormessage) {
-                    console.log(errormessage.responseText);
-                }
-            });
-            //$('#modal_update_mc_lephi').modal('hide');
-            //$("#FilesList_MC_NopLePhi_View tbody").empty();
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#bt_delete_div_exam_view_data').click(function () {
-            $('#modal_tb_xoa').modal('show');
-        });
-        $('#bt_cancel_on_modal_tb_xoa_first').click(function () {
-            $('#modal_tb_xoa').modal('hide');
-        });
-        $('#bt_cancel_on_modal_tb_xoa_second').click(function () {
-            $('#modal_tb_xoa').modal('hide');
-        });
         $('#bt_ok_on_modal_tb_xoa').click(function () {
-
             let data_delete = { Dkdt_NK_ID: $('#hidden_Dkdt_NK_ID').val() }
             $('#modal_tb_xoa').modal('hide');
             $('#loadingModal').modal('show');
@@ -587,7 +462,7 @@
                                                     </div>
                                                     <div class="col-8">
                                                         <input class="form-control" id="Dxt_Ten" disabled />
-                                                        <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                                                        <span id="DotThi_Error" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -600,7 +475,7 @@
                                                     </div>
                                                     <div class="col-8">
                                                         <input class="form-control" id="Dxt_ThoiGian_BatDau" disabled />
-                                                        <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                                                        <span id="ThoiGianBatDau_Error" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -614,7 +489,7 @@
                                                     </div>
                                                     <div class="col-8">
                                                         <input class="form-control" id="Dxt_ThoiGian_KetThuc" disabled />
-                                                        <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                                                        <span id="ThoiGianKetThuc_Error" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -701,10 +576,22 @@
                                                             <div class="col-md-12" id="div_group_mc_noplephi">
                                                                 <hr />
                                                                 <label class="col-12 mb-1" id="label_thongbaomc_noplp">Nộp lệ phí <a href="#" style="text-decoration:none" id="bt_capnhat_mc_lephi">(Cập nhật)</a></label>
+                                                                <div class="col-md-12" id="div_show_file_mc_noplephi"></div>
+                                                                <script>
+                                                                    $(document).ready(function () {
+                                                                        $('#bt_capnhat_mc_lephi').click(function () {
+                                                                            $('#modal_update_mc_lephi').modal('show');
+                                                                        })
+                                                                    });
 
-                                                                <div class="col-md-12" id="div_show_file_mc_noplephi">
-
-                                                                </div>
+                                                                    $(document).ready(function () {
+                                                                        $('#bt_update_mc_lephi').click(function () {
+                                                                            $('#txt_sothamchieu').val('');
+                                                                            $('#file_upload_minhchung_noplephi').val('');
+                                                                            $('#modal_update_mc_lephi').modal('show');
+                                                                        })
+                                                                    });
+                                                                </script>
                                                             </div>
 
                                                         </div>
@@ -727,9 +614,11 @@
                 </div>
                 <div class="row mb-3" style="margin-top:7px; display:none" id="div_group_bt_view_data">
                     <div class="col-lg-12" style="text-align:center">
-                        <input class="btn btn-outline-success " id="bt_export_exam_data" type="button" value="Xuất phiếu" />
+                        <input class="btn btn-outline-success " onclick="bt_export_exam_data_click()" type="button" value="Xuất phiếu" />
+                        <script>function bt_export_exam_data_click() { window.location.href = '/ExportFile/DownloadFile_XetTuyenThiNangKhieu'; }</script>
                         <input class="btn btn-outline-primary " onclick="bt_update_div_exam_view_data()" type="button" value="Chỉnh sửa" />
-                        <input class="btn btn-outline-danger " id="bt_delete_div_exam_view_data" type="button" value="Xóa" />
+                        <input class="btn btn-outline-danger " onclick="bt_delete_div_exam_view_data_click()" type="button" value="Xóa" />
+                        <script>function bt_delete_div_exam_view_data_click() { $('#modal_tb_xoa').modal('show'); }</script>
                     </div>
                 </div>
             </div>
@@ -743,7 +632,8 @@
                     <div class="card-header mt-0 mb-0">
                         <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
                         <div>
-                            <button class="btn btn-outline-danger btn-sm" type="button" id="bt_delete_img_mc">Xóa</button>
+                            <button class="btn btn-outline-danger btn-sm" type="button" id="bt_delete_img_mc" onclick="bt_delete_img_mc_click()">Xóa</button>
+                            <script>function bt_delete_img_mc_click() { $('#modal_tb_xoa_mc_cccd').modal('show'); }</script>
                             <button class="btn btn-outline-primary btn-sm" type="button" id="bt_close_div_view_img">Đóng</button>
                         </div>
 
@@ -753,12 +643,277 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active" id="div_item_view_minhchung">
                                     <img class="d-block w-100 img-hide" id="img_view" display:none">
-                                    <embed id="pdf_view" class="d-block w-100" style="height:700px; display:none" type="application/pdf" />
+                                    <embed id="pdf_view" class="d-block w-100" style="height:500px; display:none" type="application/pdf" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="bt_close_click()"></button>
+                <script>function bt_close_click() { $('#modal_tb_xoa').modal('hide'); }</script>
+
+            </div>
+            <div class="modal-body">
+                <span>Bạn chắc chắn xóa nguyện vọng này?</span>
+                <input id="key_delete_dkdt_nk_id" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="bt_close_click()">Hủy</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_tb_xoa">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_tb_xoa_mc_cccd" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa_mc_cccd" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="bt_close_click2()"></button>
+                <script>function bt_close_click2() { $('#modal_tb_xoa_mc_cccd').modal('hide'); }</script>
+
+            </div>
+            <div class="modal-body">
+                <span>Bạn chắc chắn xóa dữ liệu này?</span>
+                <input id="hiden_duongdan_file_xoa" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="bt_close_click2()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="bt_ok_on_modal_tb_xoa_mc_cccd_click()">Đồng ý</button>
+                <script>
+                    function bt_ok_on_modal_tb_xoa_mc_cccd_click() {
+                       
+                        $('#modal_tb_xoa').modal('hide');
+                        $('#loadingModal').modal('show');
+
+                        let data_cccd = {
+                            Dkdt_NK_ID: $('#hidden_Dkdt_NK_ID').val(),
+                            Dkdt_NK_MinhChung_CCCD: $('#hiden_duongdan_file_xoa').val(),
+                        }
+                        $.ajax({
+                            url: "/DangKyXetTuyens/DangKyDuThi_NangKhieu_DeleteMC",
+                            type: "POST",
+                            data: JSON.stringify(data_cccd),
+                            contentType: "application/json;charset=utf-8",
+                            success: function (res) {
+                                window.location.href = '/DangKyXetTuyens/Dkdtnk'
+                            },
+                            error: function (errormessage) {
+                                console.log(errormessage.responseText);
+                            }
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal_update_mc_lephi" tabindex="-1" role="dialog" aria-labelledby="modal_dongphi" aria-hidden="true">
+    <div class="modal modal-dialog  modal-xl modal-body modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_dongphi">Minh chứng nộp lệ phí</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="onCancel()"></button>
+
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-12">
+                            <span>Thông tin giao dịch</span>
+                            <hr class="mt-2 mb-3" />
+                            <div class="row g-1 mb-2">
+                                <div class="col-lg-6 col-sm-12">
+                                    <label class="col-form-label ">Mã giao dịch (số tham chiếu):</label>
+                                </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <input id="KinhPhi_SoTC" class="form-control" placeholder="Mã giao dịch" />
+                                    <span id="KinhPhi_SoTC_Error" class="small mb-1 text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-12">
+                                    <label class="form-label">Cập nhật tệp minh chứng</label>
+                                </div>
+                            </div>
+
+                            <div class="row table-responsive">
+                                <div class="col-12 ">
+                                    <input class="form-control" id="file_minhchung" name="file_minhchung" type="file" data-val="true" accept=".PNG, .JPEG, .JPG" />
+                                    <table class="table " id="FilesList_KinhPhi_TepMinhChung_View" style="visibility:hidden; width: 100%">
+                                        <tr style="display:none">
+                                            <th colspan="2"><input type="hidden" id="KinhPhi_TepMinhChung_Files" /></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 col-sm-12">
+                            <span id="span_tieude_hinhanh" class="text-primary">Hình ảnh mẫu minh chứng đã nộp lệ phí</span>
+                            <hr class="mt-2 mb-3" />
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active" id="div_item_view_minhchung">
+                                        <img class="d-block w-100 img-hide" id="img_view_mclp">
+                                        <input type="hidden" id="key_dkxt_id" style="display:none" />
+                                        <input type="hidden" id="key_dkxt_pt" style="display:none" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="onCancel()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="onSubmit()">Đồng ý</button>
+                <script>
+                    function onCancel() {
+                        $('#modal_update_mc_lephi').modal('hide');
+                        $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();
+                        LoadDataDKDTNangKhieu();
+                    }
+                    var MinhChungFormData = new FormData();
+                    var MinhChungPath = "";
+
+                    $('document').ready(function () {
+                        $('input').on('input', function () {
+                            hideErrorMessage($(this));
+                        });
+
+                        $('select').on('input', function () {
+                            hideErrorMessage($(this));
+                        })
+
+                        $("#file_minhchung").on("change", function () {
+                            MinhChungFormData = new FormData();
+                            $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();
+
+                            var file_minhchung = document.getElementById('file_minhchung');
+                            let j = 0;
+                            for (i = 0; i < file_minhchung.files.length; i++) {
+                                j++;
+                                var uploadFileName = file_minhchung.files[i].name;
+                                let uploadFileId = Math.random().toString(36).substring(7);
+                                MinhChungFormData.append(uploadFileName, file_minhchung.files[i]);
+                                var markup = `<tr id='${uploadFileId}'><td>${uploadFileName}</td><td style='width: 40px!important; color:blue'><a style='text-decoration:none'` +
+                                    `title='Xóa bớt tệp nếu không đúng' class='btn btn-light btn-sm' onclick='DeleteUploadedFile("#FilesList_KinhPhi_TepMinhChung_View", "${uploadFileId}", "${uploadFileName}")'>Xóa</a></td></tr>`;
+                                $("#FilesList_KinhPhi_TepMinhChung_View tbody").append(markup);
+                            }
+                            CheckAttachTable("#FilesList_KinhPhi_TepMinhChung_View");
+                            $('#file_minhchung').val('');
+                        });
+                    })
+
+                    function DeleteUploadedFile(ListId, Fileid, FileName) {
+                        let formData = MinhChungFormData;
+                        formData.delete(FileName)
+                        $("#" + Fileid).remove();
+                        CheckAttachTable(ListId);
+                    }
+
+                    function CheckAttachTable(list) {
+                        if ($(`${list} tr`).length > 0) {
+                            $(list).css("visibility", "visible");
+                        } else {
+                            $(list).css("visibility", "hidden");
+                        }
+                    }
+                    function uploadFiles() {
+                        MinhChungPath = "";
+                        var url = '/DangKyXetTuyens/DkdtNK_UploadLePhiMinhChung';
+                        var fileCount = 0;
+                        for (var pair of MinhChungFormData.entries()) {
+                            if (pair[1] instanceof File) {
+                                fileCount++;
+                            }
+                        }
+                        if (fileCount > 0) {
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                data: MinhChungFormData,
+                                processData: false,
+                                contentType: false,
+                                async: false,
+                                success: function (response) {
+                                    if (response.success) {
+                                        MinhChungPath = response.message;
+                                    }
+                                },
+                                error: function (error) {
+                                    console.error('Error uploading files:', error);
+                                }
+                            });
+                        }
+                    }
+
+                    function onSubmit() {
+
+                        let flag = true;
+                        let key_dkxt_id = $("#hidden_Dkdt_NK_ID").val();
+                        let KinhPhi_SoTC = $('#KinhPhi_SoTC').val();
+                        let key_dkxt_pt = 7;
+
+                        if (!KinhPhi_SoTC) {
+                            var errorMessage = "Vui lòng nhập số tham chiếu";
+                            $('#KinhPhi_SoTC_Error').text(errorMessage);
+                            flag = false;
+                        }
+                        if (!flag) return;
+                        $('#modal_update_mc_lephi').modal('hide');
+                        $("#loadingModal").modal("show");
+                        uploadFiles();
+                        if (MinhChungPath == '') { MinhChungPath = 'KHONGSUA' };
+                        let formData = {
+                            KinhPhi_SoTC: KinhPhi_SoTC,
+                            KinhPhi_TepMinhChung: MinhChungPath,
+                            key_dkxt_id: key_dkxt_id,
+                            key_dkxt_pt: key_dkxt_pt
+                        }
+
+                        console.log(formData);
+
+                        $.ajax({
+                            url: "/DangKyXetTuyens/DkdtNK_Update_ThongTinLePhi",
+                            data: JSON.stringify(formData),
+                            type: 'POST',
+                            contentType: 'application/json;charset=utf-8',
+                            dataType: 'json',
+                            success: function (res) {
+                                if (res.success) {
+                                    showToast("Thông báo", "Cập nhật minh chứng lệ phí thành công!", "bg-success");
+                                    LoadDataDKDTNangKhieu();
+                                    $("#loadingModal").modal("hide");
+                                } else {
+                                    showToast("Thông báo", "Có lỗi xảy ra khi cập nhật minh chứng lệ phí!", "bg-error");
+                                    $("#loadingModal").modal("hide");
+                                    $('#modal_dongphi').modal('hide');
+                                }
+                            },
+                            error: function (errormessage) {
+                                showToast("Thông báo", "Có lỗi xảy ra khi cập nhật minh chứng lệ phí!", "bg-error");
+                                $("#loadingModal").modal("hide");
+                                $('#modal_dongphi').modal('hide');
+                            }
+                        });
+                    }
+                </script>
             </div>
         </div>
     </div>
@@ -775,6 +930,7 @@
     </div>
 </div>
 
+
 <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
@@ -787,54 +943,50 @@
     </div>
 </div>
 
+
+
 <div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_tb_xoa_first"></button>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="bt_close_click()"></button>
+                <script>function bt_close_click() { $('#modal_tb_xoa').modal('hide'); }</script>
             </div>
             <div class="modal-body">
                 <span>Bạn chắc chắn xóa nguyện vọng này?</span>
                 <input id="key_delete_dkdt_nk_id" type="hidden" />
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_tb_xoa_second">Hủy</button>
-                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_tb_xoa">Đồng ý</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="bt_close_click()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="bt_ok_on_modal_tb_xoa_Click()">Đồng ý</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#bt_delete_div_exam_view_data').click(function () {
+            $('#modal_tb_xoa').modal('show');
+        });
 
-<div class="modal fade" id="modal_update_mc_lephi" tabindex="-1" role="dialog" aria-labelledby="modal_update_mc_lephi" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="h5_update_mc_lephi">Cập nhật minh chứng nộp lệ phí</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_update_mc_lephi_first"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="txt_sothamchieu" class="form-label">Nhập số tham chiếu</label>
-                    <input type="number" value="" class="form-control" id="txt_sothamchieu" />
-                    <span id="Error_Rgt_txt_sothamchieu" class="small mb-1 text-danger"></span>
-                    <input type="hidden" style="display:none" id="hidden_id_dkdt_mclephi_check" />
-                </div>
-                <div class="form-group">
-                    <label class="form-label mt-2">Chọn ảnh minh chứng</label>
-                    <input type="file" class="form-control" id="file_upload_minhchung_noplephi" multiple accept=".pdf, .PDF, .png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                    <span id="Error_Rgt_upload_minhchung_noplephi" class="small mb-1 text-danger"></span>
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table mt-0 mb-0" id="FilesList_MC_NopLePhi_View" style="visibility:hidden"><tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_noplephi" /></th></tr></table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_update_mc_lephi_second">Hủy</button>
-                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_update_mc_lephi">Đồng ý</button>
-            </div>
-        </div>
-    </div>
-</div>
+        $('#bt_ok_on_modal_tb_xoa').click(function () {
+
+            let data_delete = { Dkdt_NK_ID: $('#hidden_Dkdt_NK_ID').val() }
+            $('#modal_tb_xoa').modal('hide');
+            $('#loadingModal').modal('show');
+            $.ajax({
+                url: "/DangKyXetTuyens/DangKyDuThi_NangKhieu_Delete",
+                type: "POST",
+                data: JSON.stringify(data_delete),
+                contentType: "application/json;charset=utf-8",
+                success: function (res) {
+                    window.location.href = '/DangKyXetTuyens/Dkdtnk'
+                },
+                error: function (errormessage) {
+                    console.log(errormessage.responseText);
+                }
+            });
+        });
+    });
+</script>

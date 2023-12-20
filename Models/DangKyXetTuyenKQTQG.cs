@@ -60,6 +60,8 @@
         public int? Dkxt_KQTQG_TrangThai_KinhPhi { get; set; }
         public int? Dkxt_KQTQG_TrangThai_HoSo { get; set; }
         public int? Dkxt_KQTQG_TrangThai_KetQua { get; set; }
+
+        public string Dkxt_ThongBaoKiemDuyet_LePhi { get; set; }
         public string Dkxt_ThongBaoKiemDuyet_HoSo { get; set; }     
         public virtual DotXetTuyen DotXetTuyen { get; set; }
 

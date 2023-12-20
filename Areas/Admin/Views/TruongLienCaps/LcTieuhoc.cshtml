@@ -4,7 +4,7 @@
 <!-- Kết thúc-->
 @{
     ViewBag.Title = "LcTieuhoc";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_AdminLienCap.cshtml";
 }
 <style>
     .btn, .form-select, .form-control {
@@ -113,19 +113,22 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        @Html.DisplayName("Thông tin HS")
+                                        @Html.DisplayName("Mã định danh")
                                     </th>
                                     <th>
-                                        @Html.DisplayName("Học trường MN")
+                                        @Html.DisplayName("Họ tên")
                                     </th>
                                     <th>
-                                        @Html.DisplayName("Thông phụ huynh")
+                                        @Html.DisplayName("Giới tính")
                                     </th>
                                     <th>
-                                        @Html.DisplayName("Theo dõi Hồ sơ")
+                                        @Html.DisplayName("Ngày sinh")
                                     </th>
-                                    <th style="width:100px">
-                                        @Html.DisplayName("Cập nhật")
+                                    <th>
+                                        @Html.DisplayName("Điện thoại PH")
+                                    </th>
+                                    <th> 
+                                        @Html.DisplayName("Trạng thái")
                                     </th>
                                 </tr>
                             </thead>
@@ -143,48 +146,48 @@
                                     {
                                         foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>
-                                                    <p class="p-mg">- Mã ĐD: 038215000012</p>
-                                                    <p class="p-mg">- Họ tên: @item.HocSinh_HoTen</p>
-                                                    @{ if (@item.HocSinh_GioiTinh == 0)
-                                                        {<p class="p-mg">- Giới tính: Nam</p>}
-                                                        else
-                                                        {<p class="p-mg">- Giới tính: Nữ</p>}}
-                                                    <p class="p-mg">- Ngày sinh:  @item.HocSinh_NgaySinh</p>
-                                                    <p class="p-mg">- Diện ưu tiên: Không</p>
+                            <tr>
+                                <td>
+                                    <p class="p-mg"> @item.HocSinh_DinhDanh</p>
 
-                                                </td>
+                                </td>
 
-                                                <td style="vertical-align:middle">
+                                <td style="vertical-align:middle">
 
-                                                    @Html.DisplayFor(mdit => item.HocSinh_TruongMN)
-                                                </td>
-                                                <td>
-                                                    <p class="p-mg">- Họ tên bố: @item.HocSinh_ThongTinCha </p>
-                                                    <p class="p-mg">- Điện thoại: @item.HocSinh_DienThoaiCha</p>
-                                                    <p class="p-mg">- Họ tên mẹ: @item.HocSinh_ThongTinMe</p>
-                                                    <p class="p-mg">- Điện thoại: @item.HocSinh_DienThoaiMe</p>
-                                                    <p class="p-mg">- Email: @item.HocSinh_Email</p>
-                                                </td>
-                                                <td style="vertical-align:middle">
-                                                    @{
-                                                        if (item.HocSinh_TrangThai == 0)
-                                                        { <a class="btn  btn-danger btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">Đăng ký</a> }
-                                                        if (item.HocSinh_TrangThai == 1)
-                                                        { <a class="btn  btn-success btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">Đã xác thực</a> }
-                                                        if (item.HocSinh_TrangThai == 2)
-                                                        { <a class="btn  btn-warning btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">MC sai</a> }
-                                                        if (item.HocSinh_TrangThai == 3)
-                                                        { <a class="btn  btn-primary btn-sm" style="width:110px" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">HS Đầy đủ</a> }
-                                                    }
-                                                </td>
-                                                <td style="white-space:nowrap; vertical-align:middle">
-                                                    <a href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="eye" style="vertical-align: middle !important "></i></a> |
-                                                    @*<a href="@Url.Action("EditTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |*@
-                                                    <a href="@Url.Action("DeleteTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
-                                                </td>
-                                            </tr>
+                                    <p class="p-mg"> @item.HocSinh_HoTen</p>
+                                </td>
+                                <td>
+                                    @{ if (@item.HocSinh_GioiTinh == 0)
+                                        {<p class="p-mg"> Nam</p>}
+                                        else
+                                        {<p class="p-mg"> Nữ</p>}}
+                                </td>
+                                <td style="vertical-align:middle">
+                                    <p class="p-mg">@item.HocSinh_NgaySinh</p>
+
+                                </td>
+                                <td style="vertical-align:middle">
+                                    <p class="p-mg"> @item.HocSinh_DienThoaiCha </p>
+
+                                </td>
+                                <td style="vertical-align:middle">
+                                    @{
+                                        if (item.HocSinh_TrangThai == 0) 
+                                        { <a class="text-danger" style="width: 110px; text-decoration: none" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">Đăng ký</a> }
+                                        if (item.HocSinh_TrangThai == 1)
+                                        { <a class="text-success" style="width: 110px; text-decoration: none" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">Đã xác thực</a> }
+                                        if (item.HocSinh_TrangThai == 2)
+                                        { <a class="text-warning" style="width: 110px; text-decoration: none" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">MC sai</a> }
+                                        if (item.HocSinh_TrangThai == 3)
+                                        { <a class="text-primary" style="width: 110px; text-decoration: none" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })">HS Đầy đủ</a> }
+                                    }
+                                </td>
+                                <td style="white-space:nowrap; vertical-align:middle">
+                                    <a  class="btn btn-outline-primary btn-sm" href="@Url.Action("DetailsTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xem chi tiết thông tin thí sinh"><i data-feather="eye" style="vertical-align: middle !important "></i></a> 
+                                    @*<a href="@Url.Action("EditTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Chỉnh sửa thông tin thí sinh tin thí sinh"><i data-feather="edit" style="vertical-align: middle !important "></i></a> |*@
+                                    <a class="btn btn-outline-danger btn-sm" href="@Url.Action("DeleteTh", "TruongLienCaps", new { id = item.HocSinh_ID })" title="Xóa thông tin thí sinh"><i data-feather="trash-2" style="vertical-align:middle!important" disable></i></a>
+                                </td>
+                            </tr>
                                         }
                                     } }
                             </tbody>

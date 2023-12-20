@@ -25,6 +25,8 @@ namespace HDU_AppXetTuyen.Models
         [StringLength(1000)]
         public string Dkxt_NamDatGiai { get; set; }
         [StringLength(1000)]
+        public string Dkxt_CapDoGiai { get; set; }
+        [StringLength(1000)]
         public string Dkxt_LoaiGiai { get; set; }    
         [StringLength(4000)]
         public string Dkxt_MinhChung_HB { get; set; }       
