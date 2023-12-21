@@ -9,31 +9,11 @@ using System.Web.Mvc;
 using BC = BCrypt.Net.BCrypt;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Validation;
+using Microsoft.SqlServer.Server;
 
 namespace HDU_AppXetTuyen.Controllers
 {
-    public class Register_ThiSinh
-    {
-        public string ThiSinh_CCCD { get; set; }
-        public string ThiSinh_MatKhau { get; set; }
-        public string ThiSinh_HoLot { get; set; }
-        public string ThiSinh_Ten { get; set; }
-        public string ThiSinh_DienThoai { get; set; }
-        public string ThiSinh_Email { get; set; }
-        public string ThiSinh_NgaySinh { get; set; }
-        public string ThiSinh_DanToc { get; set; }
-        public string ThiSinh_GioiTinh { get; set; }
-        public string ThiSinh_DCNhanGiayBao { get; set; }
-        public string ThiSinh_HoKhauThuongTru { get; set; }
-        public string KhuVuc_ID { get; set; }
-        public string DoiTuong_ID { get; set; }
-        public string ThiSinh_TruongCapBa_Ma { get; set; }
-        public string ThiSinh_TruongCapBa { get; set; }
-        public string ThiSinh_TruongCapBa_Tinh_ID { get; set; }
-        public string ThiSinh_HoKhauThuongTru_Check { get; set; }
-        public string ThiSinh_HocLucLop12 { get; set; }
-        public string ThiSinh_HanhKiemLop12 { get; set; }
-    }
+
     public class AuthController : Controller
     {
         private DbConnecttion db = new DbConnecttion();
@@ -59,10 +39,8 @@ namespace HDU_AppXetTuyen.Controllers
             ViewBag.DoiTuong_ID = new SelectList(doituongList, "DoiTuong_ID", "DoiTuong_Ten");
             ViewBag.Tinh_ID = new SelectList(tinhList, "Tinh_ID", "Tinh_Ten");
             ViewBag.Huyen_ID = new SelectList(huyenList, "Huyen_ID", "Huyen_TenHuyen");
-
             return View();
         }
-
 
         [HttpPost]
         public JsonResult GetHuyen(string tinhID)
@@ -144,7 +122,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
 
         [HttpPost]
-        public ActionResult ForgotPassword(ThiSinhDangKy thiSinh_login)
+        public ActionResult ForgotPassword3(ThiSinhDangKy thiSinh_login)
         {
             string email = thiSinh_login.ThiSinh_Email;
             var thisinh_info = db.ThiSinhDangKies.Where(x => x.ThiSinh_Email == email).FirstOrDefault();
@@ -173,14 +151,70 @@ namespace HDU_AppXetTuyen.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public JsonResult ForgotPassword(ThiSinhDangKy entity)
+        {
+            string email = entity.ThiSinh_Email;
+            var model = db.ThiSinhDangKies.Where(x => x.ThiSinh_Email == email).FirstOrDefault();
+
+            if (model != null)
+            {
+                string randomPassword = GenerateRandomPassword(6);
+                string hashRandomPassword = ComputeHash(model.ThiSinh_CCCD, randomPassword);
+
+                model.ThiSinh_ResetCode = hashRandomPassword;
+                db.SaveChanges();
+
+                var subject = "Đặt lại mật khẩu";
+                var body = "";
+                body += "Xin chào " + model.ThiSinh_Ten + " ";
+                body += model.ThiSinh_Ten + ", <br/> Bạn vừa yêu cầu đổi mật khẩu. Vui lòng dùng mã phía dưới để đặt lại mật khẩu. ";
+                body += " <br/><b>" + randomPassword + "</b><br/>";
+
+                SendEmail(model.ThiSinh_Email, body, subject);
+                return Json(new { success = true, data = "Vui lòng kiểm tra email của bạn để lấy mã" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, data = "Yêu cầu đổi mật khẩu không thành công." }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         public ActionResult ResetPassword()
         {
             return View();
         }
-
         [HttpPost]
-        public ActionResult ResetPassword(ThiSinhDangKy thiSinh_reset_info, string authCode)
+        public JsonResult ResetPassword(ThiSinhDangKy enttity)
+        {
+            string entity_cccd = enttity.ThiSinh_CCCD;
+            string entity_password = enttity.ThiSinh_MatKhau;
+            string entity_authCode = enttity.ThiSinh_ResetCode;
+            var model = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == enttity.ThiSinh_CCCD).FirstOrDefault();
+
+            if (model != null)
+            {
+                bool checkAuthCode = Verify(entity_cccd, entity_authCode, model.ThiSinh_ResetCode);
+                if (checkAuthCode == true)
+                {
+                    string computeHashPassword = ComputeHash(model.ThiSinh_CCCD, entity_password);
+                    model.ThiSinh_MatKhau = computeHashPassword;
+                    model.ThiSinh_ResetCode = "";
+                    db.SaveChanges();
+                    return Json(new { success = true, data = new { id_check = 0, text_check = "Đặt lại mật khẩu thành công" } }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, data = new { id_check = 1, text_check = "Mã xác thực không chính xác. Vui lòng thử lại" } }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return Json(new { success = false, data = new { id_check = 2, text_check = "Tên đăng nhập không chính xác, vui lòng kiểm tra lại" } }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult ResetPassword3(ThiSinhDangKy thiSinh_reset_info, string authCode)
         {
             string cccd = thiSinh_reset_info.ThiSinh_CCCD;
             string password = thiSinh_reset_info.ThiSinh_MatKhau;
@@ -331,10 +365,10 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public JsonResult LoginColleger(string cccd, string password)
-        {          
+        {
             string mk_client = password;
             string user_client = cccd;
-          
+
             var ts_login_details = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == cccd).FirstOrDefault();
             if (ts_login_details != null)
             {
@@ -361,7 +395,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public JsonResult LoginMaster(string cccd, string password)
-        {           
+        {
             string mk_client = password;
             string user_client = cccd;
 
@@ -492,13 +526,6 @@ namespace HDU_AppXetTuyen.Controllers
         #region RegisterMaster
         public ActionResult RegisterMaster()
         {
-        //    if (Session["login_session"] != null)
-        //    {
-        //        Response.Cache.SetCacheability(HttpCacheability.NoCache);
-        //        Response.Cache.SetNoStore();
-        //        return RedirectToAction("Index", "HocVienDangKies");
-        //    }
-
             return View();
         }
 
@@ -520,11 +547,11 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult RegisterMasterCheckEmail(HocVienDangKy entity)
         {
-            var model  = db.HocVienDangKies.Where(x => x.HocVien_Email == entity.HocVien_Email).FirstOrDefault();
+            var model = db.HocVienDangKies.Where(x => x.HocVien_Email == entity.HocVien_Email).FirstOrDefault();
 
             if (model != null)
             {
-                return Json(new { success = true , message = "Email đã tồn tại." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, message = "Email đã tồn tại." }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -553,17 +580,17 @@ namespace HDU_AppXetTuyen.Controllers
                 HocVienDangKy hv_new = new HocVienDangKy();
                 string activationToken = Guid.NewGuid().ToString();
                 var hash_password = ComputeHash(hv_register.HocVien_CCCD, hv_register.HocVien_MatKhau);
-               
+
                 hv_new.HocVien_HoDem = hv_register.HocVien_HoDem;
                 hv_new.HocVien_Ten = hv_register.HocVien_Ten;
                 hv_new.HocVien_GioiTinh = hv_register.HocVien_GioiTinh;
                 hv_new.HocVien_DanToc = hv_register.HocVien_DanToc;
                 hv_new.HocVien_NgaySinh = hv_register.HocVien_NgaySinh;
-              
+
                 hv_new.HocVien_CCCD = hv_register.HocVien_CCCD;
                 hv_new.HocVien_CCCD_NgayCap = hv_register.HocVien_CCCD_NgayCap;
-              
-                hv_new.HocVien_BangDaiHoc ="";
+
+                hv_new.HocVien_BangDaiHoc = "";
                 hv_new.HocVien_BoTucKienThuc = -1;
                 hv_new.HocVien_DoiTuongUuTien = "";
 
@@ -573,7 +600,7 @@ namespace HDU_AppXetTuyen.Controllers
                 hv_new.HocVien_NoiOHienNay = hv_register.HocVien_HoKhauThuongTru;
                 hv_new.HocVien_DiaChiLienHe = hv_register.HocVien_DiaChiLienHe;
                 hv_new.HocVien_NoiSinh = hv_register.HocVien_NoiSinh;
-              
+
                 hv_new.HocVien_MatKhau = hash_password;
 
                 hv_new.HocVien_ResetCode = activationToken;
@@ -616,7 +643,7 @@ namespace HDU_AppXetTuyen.Controllers
             });
             return Json(new { success = true, data = TinhList.ToList() });
         }
-       
+
         public ActionResult ActivationAccountMaster()
         {
             return View();
@@ -636,5 +663,28 @@ namespace HDU_AppXetTuyen.Controllers
             return Json(new { success = false });
         }
         #endregion
+    }
+
+    public class Register_ThiSinh
+    {
+        public string ThiSinh_CCCD { get; set; }
+        public string ThiSinh_MatKhau { get; set; }
+        public string ThiSinh_HoLot { get; set; }
+        public string ThiSinh_Ten { get; set; }
+        public string ThiSinh_DienThoai { get; set; }
+        public string ThiSinh_Email { get; set; }
+        public string ThiSinh_NgaySinh { get; set; }
+        public string ThiSinh_DanToc { get; set; }
+        public string ThiSinh_GioiTinh { get; set; }
+        public string ThiSinh_DCNhanGiayBao { get; set; }
+        public string ThiSinh_HoKhauThuongTru { get; set; }
+        public string KhuVuc_ID { get; set; }
+        public string DoiTuong_ID { get; set; }
+        public string ThiSinh_TruongCapBa_Ma { get; set; }
+        public string ThiSinh_TruongCapBa { get; set; }
+        public string ThiSinh_TruongCapBa_Tinh_ID { get; set; }
+        public string ThiSinh_HoKhauThuongTru_Check { get; set; }
+        public string ThiSinh_HocLucLop12 { get; set; }
+        public string ThiSinh_HanhKiemLop12 { get; set; }
     }
 }

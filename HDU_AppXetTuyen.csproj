@@ -699,8 +699,9 @@
     <Content Include="Views\Shared\_Layout_empty.cshtml" />
     <Content Include="Views\Shared\_Layout_login.cshtml" />
     <Content Include="Views\Auth\ActivationAccount.cshtml" />
-    <Content Include="Views\Auth\ForgotPassword.cshtml" />
+    <Content Include="Views\Auth\ForgotPassword3.cshtml" />
     <Content Include="Views\Auth\ActivationAccountMaster.cshtml" />
+    <Content Include="Views\Auth\ForgotPassword.cshtml" />
     <None Include="Views\Auth\RegisterColleger.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Auth\ResetPassword.cshtml" />
@@ -767,6 +768,7 @@
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGiaEdit - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Edit - Copy.cshtml" />
+    <Content Include="Views\Auth\ResetPassword - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
