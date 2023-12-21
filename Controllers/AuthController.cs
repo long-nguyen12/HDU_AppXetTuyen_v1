@@ -155,29 +155,60 @@ namespace HDU_AppXetTuyen.Controllers
         public JsonResult ForgotPassword(ThiSinhDangKy entity)
         {
             string email = entity.ThiSinh_Email;
-            var model = db.ThiSinhDangKies.Where(x => x.ThiSinh_Email == email).FirstOrDefault();
-
-            if (model != null)
+            string check_table = entity.ThiSinh_GhiChu;
+            if (check_table == "1")
             {
-                string randomPassword = GenerateRandomPassword(6);
-                string hashRandomPassword = ComputeHash(model.ThiSinh_CCCD, randomPassword);
+                var model = db.ThiSinhDangKies.Where(x => x.ThiSinh_Email == email).FirstOrDefault();
 
-                model.ThiSinh_ResetCode = hashRandomPassword;
-                db.SaveChanges();
+                if (model != null)
+                {
+                    string randomPassword = GenerateRandomPassword(6);
+                    string hashRandomPassword = ComputeHash(model.ThiSinh_CCCD, randomPassword);
 
-                var subject = "Đặt lại mật khẩu";
-                var body = "";
-                body += "Xin chào " + model.ThiSinh_Ten + " ";
-                body += model.ThiSinh_Ten + ", <br/> Bạn vừa yêu cầu đổi mật khẩu. Vui lòng dùng mã phía dưới để đặt lại mật khẩu. ";
-                body += " <br/><b>" + randomPassword + "</b><br/>";
+                    model.ThiSinh_ResetCode = hashRandomPassword;
+                    db.SaveChanges();
 
-                SendEmail(model.ThiSinh_Email, body, subject);
-                return Json(new { success = true, data = "Vui lòng kiểm tra email của bạn để lấy mã" }, JsonRequestBehavior.AllowGet);
+                    var subject = "Đặt lại mật khẩu";
+                    var body = "";
+                    body += "Xin chào " + model.ThiSinh_Ten + " ";
+                    body += model.ThiSinh_Ten + ", <br/> Bạn vừa yêu cầu đổi mật khẩu. Vui lòng dùng mã phía dưới để đặt lại mật khẩu. ";
+                    body += " <br/><b>" + randomPassword + "</b><br/>";
+
+                    SendEmail(model.ThiSinh_Email, body, subject);
+                    return Json(new { success = true, data = "Vui lòng kiểm tra email của bạn để lấy mã" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, data = "Yêu cầu đổi mật khẩu không thành công." }, JsonRequestBehavior.AllowGet);
+                }
             }
-            else
+            if (check_table == "2")
             {
-                return Json(new { success = false, data = "Yêu cầu đổi mật khẩu không thành công." }, JsonRequestBehavior.AllowGet);
+                var model = db.HocVienDangKies.Where(x => x.HocVien_Email == email).FirstOrDefault();
+
+                if (model != null)
+                {
+                    string randomPassword = GenerateRandomPassword(6);
+                    string hashRandomPassword = ComputeHash(model.HocVien_CCCD, randomPassword);
+
+                    model.HocVien_ResetCode = hashRandomPassword;
+                    db.SaveChanges();
+
+                    var subject = "Đặt lại mật khẩu";
+                    var body = "";
+                    body += "Xin chào " + model.HocVien_HoDem + " " + model.HocVien_Ten ;
+                    body +=", <br/> Bạn vừa yêu cầu đổi mật khẩu. Vui lòng dùng mã phía dưới để đặt lại mật khẩu. ";
+                    body += " <br/><b>" + randomPassword + "</b><br/>";
+
+                    SendEmail(model.HocVien_Email, body, subject);
+                    return Json(new { success = true, data = "Vui lòng kiểm tra email của bạn để lấy mã" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { success = false, data = "Yêu cầu đổi mật khẩu không thành công." }, JsonRequestBehavior.AllowGet);
+                }
             }
+            return Json(new { success = false, data = "Có lỗi xảy ra." }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ResetPassword()
@@ -185,33 +216,64 @@ namespace HDU_AppXetTuyen.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult ResetPassword(ThiSinhDangKy enttity)
+        public JsonResult ResetPassword(ThiSinhDangKy entity)
         {
-            string entity_cccd = enttity.ThiSinh_CCCD;
-            string entity_password = enttity.ThiSinh_MatKhau;
-            string entity_authCode = enttity.ThiSinh_ResetCode;
-            var model = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == enttity.ThiSinh_CCCD).FirstOrDefault();
+            string entity_cccd = entity.ThiSinh_CCCD;
+            string entity_password = entity.ThiSinh_MatKhau;
+            string entity_authCode = entity.ThiSinh_ResetCode;
+            string check_table = entity.ThiSinh_GhiChu;
 
-            if (model != null)
+           
+            if (check_table == "3")
             {
-                bool checkAuthCode = Verify(entity_cccd, entity_authCode, model.ThiSinh_ResetCode);
-                if (checkAuthCode == true)
+                var model = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == entity.ThiSinh_CCCD).FirstOrDefault();
+                if (model != null)
                 {
-                    string computeHashPassword = ComputeHash(model.ThiSinh_CCCD, entity_password);
-                    model.ThiSinh_MatKhau = computeHashPassword;
-                    model.ThiSinh_ResetCode = "";
-                    db.SaveChanges();
-                    return Json(new { success = true, data = new { id_check = 0, text_check = "Đặt lại mật khẩu thành công" } }, JsonRequestBehavior.AllowGet);
+                    bool checkAuthCode = Verify(entity_cccd, entity_authCode, model.ThiSinh_ResetCode);
+                    if (checkAuthCode == true)
+                    {
+                        string computeHashPassword = ComputeHash(model.ThiSinh_CCCD, entity_password);
+                        model.ThiSinh_MatKhau = computeHashPassword;
+                        model.ThiSinh_ResetCode = "";
+                        db.SaveChanges();
+                        return Json(new { success = true, data = new { id_check = 0, text_check = "Đặt lại mật khẩu thành công" } }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, data = new { id_check = 1, text_check = "Mã xác thực không chính xác. Vui lòng thử lại" } }, JsonRequestBehavior.AllowGet);
+                    }
                 }
                 else
                 {
-                    return Json(new { success = false, data = new { id_check = 1, text_check = "Mã xác thực không chính xác. Vui lòng thử lại" } }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, data = new { id_check = 2, text_check = "Tên đăng nhập không chính xác, vui lòng kiểm tra lại" } }, JsonRequestBehavior.AllowGet);
                 }
             }
-            else
+            if (check_table == "4")
             {
-                return Json(new { success = false, data = new { id_check = 2, text_check = "Tên đăng nhập không chính xác, vui lòng kiểm tra lại" } }, JsonRequestBehavior.AllowGet);
+                var model = db.HocVienDangKies.Where(x => x.HocVien_CCCD == entity_cccd).FirstOrDefault();
+                if (model != null)
+                {
+                    bool checkAuthCode = Verify(entity_cccd, entity_authCode, model.HocVien_ResetCode);
+                    if (checkAuthCode == true)
+                    {
+                        string computeHashPassword = ComputeHash(model.HocVien_CCCD, entity_password);
+                        model.HocVien_MatKhau = computeHashPassword;
+                        model.HocVien_ResetCode = "";
+                        db.SaveChanges();
+                        return Json(new { success = true, data = new { id_check = 0, text_check = "Đặt lại mật khẩu thành công" } }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(new { success = false, data = new { id_check = 1, text_check = "Mã xác thực không chính xác. Vui lòng thử lại" } }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json(new { success = false, data = new { id_check = 2, text_check = "Tên đăng nhập không chính xác, vui lòng kiểm tra lại" } }, JsonRequestBehavior.AllowGet);
+                }
             }
+            return Json(new { success = false, data = "Có lỗi xảy ra." }, JsonRequestBehavior.AllowGet);
+
         }
         [HttpPost]
         public ActionResult ResetPassword3(ThiSinhDangKy thiSinh_reset_info, string authCode)
