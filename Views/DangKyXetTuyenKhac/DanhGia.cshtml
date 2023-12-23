@@ -284,7 +284,7 @@
                                                         <div class="form-group mb-2">
                                                             <label class="form-label">Học bạ </label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files_hocba" type="file" data-val="true"  accept="application/pdf,.png, .jpeg, .jpg" />                                                            
+                                                                <input class="form-control" id="files_hocba" multiple="multiple" name="files_hocba" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
                                                                         <th colspan="2"><input type="hidden" id="HocBa_Files" /></th>
@@ -297,7 +297,7 @@
                                                         <div class="form-group mb-2">
                                                             <label class="form-label">Căn cước công dân</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_cccd" multiple="multiple" name="files_cccd" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />                                                              
+                                                                <input class="form-control" id="files_cccd" multiple="multiple" name="files_cccd" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
                                                                         <th colspan="2"><input type="hidden" id="CCCD_Files" /></th>
@@ -310,7 +310,7 @@
                                                         <div class="form-group mb-2">
                                                             <label class="form-label">Bằng Tốt nghiệp</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files_bangtn" type="file" data-val="true"  accept="application/pdf,.png, .jpeg, .jpg" />                                                              
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files_bangtn" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none"><th colspan="2"><input type="hidden" id="BangTN_Files" /></th></tr>
                                                                 </table>
@@ -321,7 +321,7 @@
                                                         <div class="form-group mb-0">
                                                             <label class="form-label">Minh chứng ưu tiên</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files_uutien" type="file" data-val="true"  accept="application/pdf,.png, .jpeg, .jpg" />                                                               
+                                                                <input class="form-control" id="files_uutien" multiple="multiple" name="files_uutien" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                                                                 <table class="table" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
                                                                     <tr style="display:none">
                                                                         <th colspan="2"><input type="hidden" id="UuTien_Files" /></th>
@@ -354,35 +354,7 @@
             </div>
         </div>
     </div>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
-                    <input id="key_delete_dkxt_id" type="hidden" />
-                    <input id="key_delete_dkxt_tohop" type="hidden" />
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="deleteRecordCancel()">Hủy</button>
-                    <button class="btn btn-primary" type="button" onclick="deleteRecordConfirmed()">Đồng ý</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 <style>
     #loadingModal {
@@ -390,6 +362,36 @@
         background-color: transparent;
     }
 </style>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
+                <input id="key_delete_dkxt_id" type="hidden" />
+                <input id="key_delete_dkxt_tohop" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="deleteRecordCancel()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="deleteRecordConfirmed()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
@@ -402,6 +404,29 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal_tb_thanhcong" tabindex="-1" role="dialog" aria-labelledby="modal_tb_thanhcong" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="modal_tb_thanhcong_hide_click()"></button>
+                <script>
+                    function modal_tb_thanhcong_hide_click() { $('#modal_tb_thanhcong').modal('hide'); $('#noidung_chuyenkhoan').text(''); }
+                    function thongbao_dangky_thanhcong(text) { $('#noidung_chuyenkhoan').text(text); $('#modal_tb_thanhcong').modal('show'); }
+                </script>
+            </div>
+            <div class="modal-body">
+                <p class="mt-0 mb-0" style="text-align:justify">- Đăng ký xét tuyển thành công!</p>
+                <p class="mt-0 mb-0" style="text-align:justify">- Vui lòng nộp lệ phí xét tuyển bằng cách chuyển số tiền 50.000đ vào số tài khoản: <font color="red">5011100925</font> để hoàn thành thủ tục đăng ký xét tuyển</p>
+                <p style="text-align:justify">- Nội dung chuyển khoản: <a id="noidung_chuyenkhoan" style="color:blue;text-decoration:none"></a></p>
+                <input id="key_delete_dkxt_id" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="modal_tb_thanhcong_hide_click()">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 <link href="~/Scripts/bootstrap-datepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
@@ -800,7 +825,10 @@
     }
 
     function SubmitData() {
+
         $(".text-danger").text("");
+        $('#noidung_chuyenkhoan').text('');
+
         let flag = true;
         let ChungChi_ID = $('#ChungChi_ID').val();
         let Nganh_ID = $('#Nganh_ID').val();
@@ -880,12 +908,17 @@
             dataType: 'json',
             success: function (res) {
                 if (res.success) {
-                    showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
-                    ListAllNguyenVong();
-                    document.getElementById('div_list_nguyenvong').style.display = "inline";
-                    document.getElementById('div_update_dk_nguyenvong').style.display = "none";
-                    onResetFields();
+                   
+                    // showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
+                    ListAllNguyenVong(); 
+               
+                    $('#div_list_nguyenvong').css('display', 'inline');
+                    $('#div_update_dk_nguyenvong').css('display', 'none');
+
                     $("#loadingModal").modal("hide");
+                    thongbao_dangky_thanhcong(res.data);
+                    onResetFields();
+
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
                     $("#loadingModal").modal("hide");
@@ -947,16 +980,16 @@
         onResetFields();
         GetAllKhoiNganh();
         GetAllChungChi();
-    
+
         $('#div_list_nguyenvong').css('display', 'none');
-        $('#div_update_dk_nguyenvong').css('display', 'inline');      
+        $('#div_update_dk_nguyenvong').css('display', 'inline');
         key_dkxt_id_post = -1;
     }
 
     function _bt_HuyBo_Dkxt_NVM_OnClick(khoinganh_key, nganh_key, tohopmon_key) {
         onResetFields();
         document.getElementById('div_list_nguyenvong').style.display = "inline";
-        document.getElementById('div_update_dk_nguyenvong').style.display = "none";       
+        document.getElementById('div_update_dk_nguyenvong').style.display = "none";
         key_dkxt_id_post = -1;
     }
     function hideErrorMessage(input) {

@@ -71,11 +71,11 @@
                             <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
                             <a id="bt_add_aspirations" class="btn btn-outline-primary" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>
                             <script>
-                                
-                                $(document).ready(function () {  
+
+                                $(document).ready(function () {
                                     let sp_tieude = document.getElementById('sp_tieude');
                                     let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
-                                    let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations'); 
+                                    let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
                                     function reportWindowSize() {
                                         if (window.innerWidth <= 1200) {
                                             sp_tieude.innerHTML = "ĐKXT SD kết quả CCNN";
@@ -90,7 +90,7 @@
                                     }
                                     window.onresize = reportWindowSize;
                                 })
-                               
+
                             </script>
 
                         </center>
@@ -196,7 +196,7 @@
                                                         <label class="col-form-label">Đơn vị tổ chức thi:</label>
                                                     </div>
                                                     <div class="col-8">
-                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị tổ chức thi" value=""/>
+                                                        <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị tổ chức thi" value="" />
                                                         <span id="Dkxt_DonViToChuc_Error" class="small mb-1 text-danger"></span>
                                                     </div>
                                                 </div>
@@ -354,35 +354,7 @@
             </div>
         </div>
     </div>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
-                    <input id="key_delete_dkxt_id" type="hidden" />
-                    <input id="key_delete_dkxt_tohop" type="hidden" />
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="deleteRecordCancel()">Hủy</button>
-                    <button class="btn btn-primary" type="button" onclick="deleteRecordConfirmed()">Đồng ý</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 <style>
     #loadingModal {
@@ -390,6 +362,35 @@
         background-color: transparent;
     }
 </style>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>Bạn chắc chắn nguyện vọng này dữ liệu này?</span>
+                <input id="key_delete_dkxt_id" type="hidden" />
+                <input id="key_delete_dkxt_tohop" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="deleteRecordCancel()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="deleteRecordConfirmed()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
@@ -401,7 +402,29 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="modal_tb_thanhcong" tabindex="-1" role="dialog" aria-labelledby="modal_tb_thanhcong" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="modal_tb_thanhcong_hide_click()"></button>
+                <script>
+                    function modal_tb_thanhcong_hide_click() { $('#modal_tb_thanhcong').modal('hide'); $('#noidung_chuyenkhoan').text(''); }
+                    function thongbao_dangky_thanhcong(text) { $('#noidung_chuyenkhoan').text(text); $('#modal_tb_thanhcong').modal('show'); }
+                </script>
+            </div>
+            <div class="modal-body">
+                <p class="mt-0 mb-0" style="text-align:justify">- Đăng ký xét tuyển thành công!</p>
+                <p class="mt-0 mb-0" style="text-align:justify">- Vui lòng nộp lệ phí xét tuyển bằng cách chuyển số tiền 50.000đ vào số tài khoản: <font color="red">5011100925</font> để hoàn thành thủ tục đăng ký xét tuyển</p>
+                <p style="text-align:justify">- Nội dung chuyển khoản: <a id="noidung_chuyenkhoan" style="color:blue;text-decoration:none"></a></p>
+                <input id="key_delete_dkxt_id" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="modal_tb_thanhcong_hide_click()">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="~/Scripts/bootstrap.bundle.min.js"></script>
 <link href="~/Scripts/bootstrap-datepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
@@ -452,7 +475,7 @@
                 GetChungChiId(id);
             } else {
                 $('#Dkxt_ToHopXT').val('');
-                $('#Dkxt_TongDiem').val('');             
+                $('#Dkxt_TongDiem').val('');
             }
         });
 
@@ -791,7 +814,7 @@
                 let pt = "HDP" + chungchi.ChungChi_PhuongThuc;
                 let thangdiem = chungchi.ChungChi_ThangDiem;
                 $('#Dkxt_ToHopXT').val(pt);
-                $('#Dkxt_TongDiem').val(thangdiem);            
+                $('#Dkxt_TongDiem').val(thangdiem);
             },
             error: function (errormessage) {
                 console.log(errormessage)
@@ -801,6 +824,8 @@
 
     function SubmitData() {
         $(".text-danger").text("");
+        $('#noidung_chuyenkhoan').text('');
+
         let flag = true;
         let ChungChi_ID = $('#ChungChi_ID').val();
         let Nganh_ID = $('#Nganh_ID').val();
@@ -884,12 +909,14 @@
             dataType: 'json',
             success: function (res) {
                 if (res.success) {
-                    showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
+                   // showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
                     ListAllNguyenVong();
-                    document.getElementById('div_list_nguyenvong').style.display = "inline";
-                    document.getElementById('div_update_dk_nguyenvong').style.display = "none";
-                    onResetFields();
+                    $('#div_list_nguyenvong').css('display', 'inline');
+                    $('#div_update_dk_nguyenvong').css('display', 'none'); 
+                
                     $("#loadingModal").modal("hide");
+                    thongbao_dangky_thanhcong(res.data);
+                    onResetFields();
                 } else {
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
                     $("#loadingModal").modal("hide");

@@ -85,6 +85,7 @@ namespace HDU_AppXetTuyen.Controllers
 
 
             var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP6")).ToList();
+            var sonv = db.DangKyXetTuyenKhacs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault().Dkxt_ID + 1;
             var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
 
             string ToHop = entity.Dkxt_ToHopXT;
@@ -130,6 +131,8 @@ namespace HDU_AppXetTuyen.Controllers
 
                 model.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
                 model.DotXT_ID = dotXT.Dxt_ID;
+                model.Dkxt_KinhPhi_NoiDungGiaoDich = "DKXT" + sonv + " P6  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển";
+
                 db.DangKyXetTuyenKhacs.Add(model);
                 db.SaveChanges();
 
@@ -148,9 +151,12 @@ namespace HDU_AppXetTuyen.Controllers
                 SendEmail s = new SendEmail();
                 s.Sendemail("xettuyen@hdu.edu.vn", body, subject);
 
-                return Json(new { success = true });
+                return Json(new { success = true, data = "DKXT" + model.Dkxt_ID + " P6  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển" }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = false });
+            else
+            {
+                return Json(new { success = false, data = "LOI" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [ThiSinhSessionCheck]
@@ -187,7 +193,7 @@ namespace HDU_AppXetTuyen.Controllers
                 model_edit.Dkxt_NgayDuThi = entity.Dkxt_NgayDuThi;
                 model_edit.ChungChi_ID = entity.ChungChi_ID;
 
-                model_edit.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                model_edit.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
 
                 model_edit.ThiSinh_ID = ts.ThiSinh_ID;
                 model_edit.DotXT_ID = dotxettuyen.Dxt_ID;
@@ -287,6 +293,8 @@ namespace HDU_AppXetTuyen.Controllers
 
 
             var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP5")).ToList();
+            var sonv = db.DangKyXetTuyenKhacs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault().Dkxt_ID + 1;
+
             var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
 
             string ToHop = entity.Dkxt_ToHopXT;
@@ -302,11 +310,26 @@ namespace HDU_AppXetTuyen.Controllers
                 model.Dkxt_NgayDuThi = entity.Dkxt_NgayDuThi;
 
                 model.Dkxt_ToHopXT = entity.Dkxt_ToHopXT;
-                model.Dkxt_MinhChung_HB = entity.Dkxt_MinhChung_HB;
-                model.Dkxt_MinhChung_CCCD = entity.Dkxt_MinhChung_CCCD;
-                model.Dkxt_MinhChung_Bang = entity.Dkxt_MinhChung_Bang;
-                model.Dkxt_MinhChung_KetQua = entity.Dkxt_MinhChung_KetQua;
-                model.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien;
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_HB)) { model.Dkxt_MinhChung_HB = ""; }
+                else { model.Dkxt_MinhChung_HB = entity.Dkxt_MinhChung_HB; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_CCCD)) { model.Dkxt_MinhChung_CCCD = ""; }
+                else { model.Dkxt_MinhChung_CCCD = entity.Dkxt_MinhChung_CCCD; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_Bang)) { model.Dkxt_MinhChung_Bang = ""; }
+                else { model.Dkxt_MinhChung_Bang = entity.Dkxt_MinhChung_Bang; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_KetQua)) { model.Dkxt_MinhChung_KetQua = ""; }
+                else { model.Dkxt_MinhChung_KetQua = entity.Dkxt_MinhChung_KetQua; }
+
+                if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_UuTien)) { model.Dkxt_MinhChung_UuTien = ""; }
+                else { model.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien; }
+
+                //model.Dkxt_MinhChung_HB = entity.Dkxt_MinhChung_HB;
+                //model.Dkxt_MinhChung_CCCD = entity.Dkxt_MinhChung_CCCD;
+                //model.Dkxt_MinhChung_Bang = entity.Dkxt_MinhChung_Bang;
+                //model.Dkxt_MinhChung_KetQua = entity.Dkxt_MinhChung_KetQua;
+                //model.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien;
 
                 model.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 model.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
@@ -322,6 +345,7 @@ namespace HDU_AppXetTuyen.Controllers
 
                 model.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
                 model.DotXT_ID = dotXT.Dxt_ID;
+                model.Dkxt_KinhPhi_NoiDungGiaoDich = "DKXT" + sonv + " P5  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển";
                 db.DangKyXetTuyenKhacs.Add(model);
                 db.SaveChanges();
 
@@ -340,9 +364,12 @@ namespace HDU_AppXetTuyen.Controllers
                 SendEmail s = new SendEmail();
                 s.Sendemail("xettuyen@hdu.edu.vn", body, subject);
 
-                return Json(new { success = true });
+                return Json(new { success = true, data = "DKXT" + model.Dkxt_ID + " P5  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển" }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = false });
+            else
+            {
+                return Json(new { success = false, data = "LOI" }, JsonRequestBehavior.AllowGet);
+            }
         }
         [ThiSinhSessionCheck]
         public ActionResult IeltsEdit(long? Dkxt_ID)

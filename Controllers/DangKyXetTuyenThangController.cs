@@ -77,6 +77,8 @@ namespace HDU_AppXetTuyen.Controllers
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
             var nvs = db.DangKyXetTuyenThangs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).ToList();
+            var sonv = db.DangKyXetTuyenKhacs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault().Dkxt_ID + 1;
+
             var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             if (ts != null)
             {
@@ -89,11 +91,13 @@ namespace HDU_AppXetTuyen.Controllers
                 model.Dkxt_NamDatGiai = student.Dkxt_NamDatGiai;
                 model.Dkxt_CapDoGiai = student.Dkxt_CapDoGiai;
                 model.Dkxt_ToHopXT = student.Dkxt_ToHopXT;
+
                 model.Dkxt_MinhChung_HB = student.Dkxt_MinhChung_HB;
                 model.Dkxt_MinhChung_CCCD = student.Dkxt_MinhChung_CCCD;
                 model.Dkxt_MinhChung_Bang = student.Dkxt_MinhChung_Bang;
                 model.Dkxt_MinhChung_Giai = student.Dkxt_MinhChung_Giai;
                 model.Dkxt_MinhChung_UuTien = student.Dkxt_MinhChung_UuTien;
+
                 model.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 model.Ptxt_ID = 4;
 
@@ -108,6 +112,8 @@ namespace HDU_AppXetTuyen.Controllers
 
                 model.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
                 model.DotXT_ID = dotXT.Dxt_ID;
+
+                model.Dkxt_KinhPhi_NoiDungGiaoDich = "DKXT" + sonv + " P4  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển";
                 db.DangKyXetTuyenThangs.Add(model);
                 db.SaveChanges();
 
@@ -126,9 +132,12 @@ namespace HDU_AppXetTuyen.Controllers
                 SendEmail s = new SendEmail();
                 s.Sendemail("xettuyen@hdu.edu.vn", body, subject);
 
-                return Json(new { success = true });
+                return Json(new { success = true, data = "DKXT" + model.Dkxt_ID + " P4  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển" }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { success = false });
+            else
+            {
+                return Json(new { success = false, data = "LOI" }, JsonRequestBehavior.AllowGet);
+            }
         }
         public ActionResult Edit(int? dkxt_id)
         {

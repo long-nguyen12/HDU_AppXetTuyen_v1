@@ -755,20 +755,20 @@
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkdtnkOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkdtnkEdit.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaDetail.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGiaEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\IeltsEdit - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk - Copy.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit - Copy.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit - Copy.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\DanhGiaEdit - Copy.cshtml" />
-    <Content Include="Views\DangKyXetTuyenThang\Edit - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyenThang\Detail.cshtml" />
     <Content Include="Views\Auth\ResetPassword - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxtthptqgDetail.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\IeltsDetail.cshtml" />
+    <Content Include="Views\DangKyXetTuyenKhac\DanhGiaDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

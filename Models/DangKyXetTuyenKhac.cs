@@ -48,7 +48,7 @@ namespace HDU_AppXetTuyen.Models
         public int? Dkxt_TrangThai_HoSo { get; set; }
         public int? Dkxt_TrangThai_KetQua { get; set; }
         public string Dkxt_ThongBaoKiemDuyet_HoSo { get; set; }
-
+        public string Dkxt_KinhPhi_NoiDungGiaoDich { get; set; }
         public virtual ChungChi ChungChi { get; set; }
         public virtual DotXetTuyen DotXetTuyen { get; set; }
         public virtual Nganh Nganh { get; set; }

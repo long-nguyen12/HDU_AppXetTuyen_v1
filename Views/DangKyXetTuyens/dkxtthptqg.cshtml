@@ -57,7 +57,7 @@
                                         <th style="vertical-align:middle;">Tổ hợp môn</th>
                                         @*<th style="vertical-align:middle;">Trạng thái</th>*@
                                         <th style="vertical-align:middle;">Tổng điểm</th>
-                                        <th style="vertical-align:middle; text-align:center; width:130px ">Cập nhật</th>
+                                        <th style="vertical-align:middle; text-align:center; width:10%">Cập nhật</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_list_nguyenvong_xtkqthpt">
@@ -77,6 +77,16 @@
                                     let sp_tieude = document.getElementById('sp_tieude');
                                     let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
                                     let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
+                                    if (window.innerWidth <= 1200) {
+                                        sp_tieude.innerText = "Xét tuyển bằng điểm thi tốt nghiệp";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm NV";
+                                    }
+                                    else {
+                                        sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia";
+                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
+                                        bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+                                    }
                                     function reportWindowSize() {
                                         if (window.innerWidth <= 800) {
                                             $('#th_ten_ngvong').attr("style", "width:40px;");
@@ -85,12 +95,12 @@
                                             $('#th_ten_ngvong').removeAttr("style");
                                         }
                                         if (window.innerWidth <= 1200) {
-                                            sp_tieude.innerText = "ĐKXT bằng KQ thi TN THPT Quốc gia";
+                                            sp_tieude.innerText = "Xét tuyển bằng điểm thi tốt nghiệp";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
                                             bt_them_nguyen_vong.innerHTML = "Thêm NV";
                                         }
                                         else {
-                                            sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia";
+                                            sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia";
                                             bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
                                             bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
                                         }
@@ -200,7 +210,6 @@
 
                                                 </div>
                                             </td>
-
                                         </tr>
                                         <tr>
                                             <td><label id="lb_tenmon_1" class="form-label"></label><input id="txt_m1" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" /></td>
@@ -228,11 +237,10 @@
                                         <tr>
                                             <td>
                                                 <div class="row mt-0 md-0">
-
                                                     <div class="col-xxl-12">
                                                         <div class="form-group mb-2">
                                                             <div class="col-md-12">
-                                                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true"  accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                                 <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>
                                                             </div>
                                                         </div>
@@ -269,7 +277,7 @@
                                                         <div class="form-group mb-0 mt-1">
                                                             <label for="files_hocba_ts" class="form-label">Học bạ </label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true"  accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                             
+                                                                <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -283,7 +291,7 @@
                                                         <div class="form-group mb-0">
                                                             <label for="files_bangtn" class="form-label">Bằng tốt nghiệp</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true"  accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                               
+                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -297,7 +305,7 @@
                                                         <div class="form-group mb-0">
                                                             <label class="form-label">Căn cước công dân</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                               
+                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -311,7 +319,7 @@
                                                         <div class="form-group mb-0 mt-1">
                                                             <label for="files_giayto_uutien" class="form-label">Giấy tờ ưu tiên (nếu có)</label>
                                                             <div class="col-md-12">
-                                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />                                                              
+                                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -337,54 +345,6 @@
             </div>
         </div>
     </div>
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_delete_first"></button>
-                </div>
-                <div class="modal-body">
-                    <span>Bạn chắc chắn xóa nguyện vọng này?</span>
-                    <input id="key_delete_dkxt_kqtthptqg_id" type="hidden" />
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_delete_second">Hủy</button>
-                    <button class="btn btn-primary" type="button" id="bt_ok_on_modal_delete">Đồng ý</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal_tb_thaydoinv" tabindex="-1" role="dialog" aria-labelledby="modal_tb_thaydoinv" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal_tb_thaydoinv">Thông báo</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_change_first"></button>
-                </div>
-                <div class="modal-body">
-                    <span id="infor_change">Bạn chắc chắn thay đổi nguyện vọng này?</span>
-                    <input id="key_change_dkxt_kqtthptqg_id" type="hidden" />
-                    <input id="key_check_down_up" type="hidden" />
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_change_second">Hủy</button>
-                    <button class="btn btn-primary" type="button" id="bt_ok_on_modal_change">Đồng ý</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <style>
     #loadingModal {
@@ -403,6 +363,77 @@
         </div>
     </div>
 </div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_delete_first"></button>
+            </div>
+            <div class="modal-body">
+                <span>Bạn chắc chắn xóa nguyện vọng này?</span>
+                <input id="key_delete_dkxt_kqtthptqg_id" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_delete_second">Hủy</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_delete">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_tb_thaydoinv" tabindex="-1" role="dialog" aria-labelledby="modal_tb_thaydoinv" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_tb_thaydoinv">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_change_first"></button>
+            </div>
+            <div class="modal-body">
+                <span id="infor_change">Bạn chắc chắn thay đổi nguyện vọng này?</span>
+                <input id="key_change_dkxt_kqtthptqg_id" type="hidden" />
+                <input id="key_check_down_up" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_change_second">Hủy</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_change">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_tb_thanhcong" tabindex="-1" role="dialog" aria-labelledby="modal_tb_thanhcong" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="modal_tb_thanhcong_hide_click()"></button>
+                <script>
+                    function modal_tb_thanhcong_hide_click() { $('#modal_tb_thanhcong').modal('hide'); $('#noidung_chuyenkhoan').text(''); }
+                    function thongbao_dangky_thanhcong(text) {$('#noidung_chuyenkhoan').text(text);$('#modal_tb_thanhcong').modal('show');}
+                </script>
+            </div>
+            <div class="modal-body">
+                <p class="mt-0 mb-0" style="text-align:justify">- Đăng ký xét tuyển thành công!</p>
+                <p class="mt-0 mb-0" style="text-align:justify">- Vui lòng nộp lệ phí xét tuyển bằng cách chuyển số tiền 50.000đ vào số tài khoản: <font color="red">5011100925</font> để hoàn thành thủ tục đăng ký xét tuyển</p>
+                <p style="text-align:justify">- Nội dung chuyển khoản: <a id="noidung_chuyenkhoan" style="color:blue;text-decoration:none"></a></p>
+                <input id="key_delete_dkxt_id" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="modal_tb_thanhcong_hide_click()">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         ts_dkxt_thptqg_list_all();
@@ -414,6 +445,7 @@
             type: 'GET',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
+            async: false,
             success: function (result_all) {
 
                 $('#span_Uutien_doituong').html(result_all.Tsdk_doituong_ten_diem);
@@ -666,7 +698,7 @@
 
     var formdata_file_chungnhan_kqtn = new FormData(); //FormData object chung nhan tot nghiep
     var formdata_file_hocba_ts = new FormData(); //FormData object hoc ba
-    var formdata_file_bang_tn = new FormData(); //FormData object bang TN  
+    var formdata_file_bang_tn = new FormData(); //FormData object bang TN
     var formdata_file_cancuoc_congdan = new FormData(); //FormData object cancuoccongdan
     var formdata_file_giayto_uutien = new FormData(); //FormData object giaytout
 
@@ -771,7 +803,7 @@
             $("#FilesList_CCCD_View").css("visibility", "hidden");
         }
     }
-   
+
     function DeleteFile_BANGTN_Upload(Fileid, FileName) {
         formdata_file_bang_tn.delete(FileName)
         $("#" + Fileid).remove();
@@ -816,16 +848,17 @@
         $('#dkxt_thptqg_id_checkin').val('0');
 
         check_in_file_chungnhan_kqtn = false;
-        formdata_file_chungnhan_kqtn = new FormData(); 
-        formdata_file_hocba_ts = new FormData(); 
-        formdata_file_bang_tn = new FormData(); 
-        formdata_file_cancuoc_congdan = new FormData(); 
+        formdata_file_chungnhan_kqtn = new FormData();
+        formdata_file_hocba_ts = new FormData();
+        formdata_file_bang_tn = new FormData();
+        formdata_file_cancuoc_congdan = new FormData();
         formdata_file_giayto_uutien = new FormData();
-         
+
     });
     // button đồng ý thêm mới
     $('#bt_ok_div_update_aspirations').click(function () {
 
+        $('#noidung_chuyenkhoan').text('');
         let flag = true;
         let _nganh_ID = $('#select_nganh').val();
         let _thm_ID = $('#select_tohopmon').val();
@@ -851,12 +884,12 @@
 
         let _dkxt_KQTQG_MinhChung_CNTotNghiep = "";
         let _dkxt_KQTQG_MinhChung_HocBa = "";
-        let _dkxt_KQTQG_MinhChung_BangTN = "";       
+        let _dkxt_KQTQG_MinhChung_BangTN = "";
         let _dkxt_KQTQG_MinhChung_CCCD = "";
         let _dkxt_KQTQG_MinhChung_UuTien = "";
 
         /* thực hiện upload file*/
-        let so_file_cn_totnghiep = 0;        
+        let so_file_cn_totnghiep = 0;
         let so_file_hocba_ts = 0;
         let so_file_bang_tn = 0;
         let so_file_cc_congdan = 0;
@@ -867,7 +900,7 @@
         for (const item of formdata_file_chungnhan_kqtn) {
             formData_All.append(item[0], item[1]);
             so_file_cn_totnghiep++;
-        }        
+        }
         for (const item of formdata_file_hocba_ts) {
             formData_All.append(item[0], item[1]);
             so_file_hocba_ts++;
@@ -885,7 +918,7 @@
             so_file_giayto_uutien++;
         }
 
-        formData_All.append('so_file_cn_totnghiep', so_file_cn_totnghiep);        
+        formData_All.append('so_file_cn_totnghiep', so_file_cn_totnghiep);
         formData_All.append('so_file_hocba_ts', so_file_hocba_ts);
         formData_All.append('so_file_bang_tn', so_file_bang_tn);
         formData_All.append('so_file_cc_congdan', so_file_cc_congdan);
@@ -899,7 +932,7 @@
             data: formData_All,
             async: false,
             success: function (res) {
-                _dkxt_KQTQG_MinhChung_CNTotNghiep = res._KQTQG_MinhChung_CNTotNghiep;               
+                _dkxt_KQTQG_MinhChung_CNTotNghiep = res._KQTQG_MinhChung_CNTotNghiep;
                 _dkxt_KQTQG_MinhChung_HocBa = res._KQTQG_MinhChung_HocBa;
                 _dkxt_KQTQG_MinhChung_BangTN = res._KQTQG_MinhChung_BangTN;
                 _dkxt_KQTQG_MinhChung_CCCD = res._KQTQG_MinhChung_CCCD;
@@ -909,7 +942,6 @@
                 console.log(err.statusText);
             }
         });
-
         /*hết phần upload file*/
 
         /*phần khai báo đối tượng*/
@@ -941,14 +973,14 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             success: function (res) {
-
                 if (res.success) {
+                    reset_fields_controll_disabled_true();
                     ts_dkxt_thptqg_list_all();
                     // showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
-                    document.getElementById('div_list_aspirations').style.display = "inline";
-                    document.getElementById('div_update_aspirations').style.display = "none";
-                    reset_fields_controll_disabled_true();
+                    $('#div_list_aspirations').css('display', 'inline');
+                    $('#div_update_aspirations').css('display', 'none');
                     $("#loadingModal").modal("hide");
+                    thongbao_dangky_thanhcong(res.data);
                 } else {
                     $("#loadingModal").modal("hide");
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");
@@ -975,8 +1007,6 @@
     $('#bt_close_div_update_aspirations_second').click(function () {
         $('#div_list_aspirations').show();
         $('#div_update_aspirations').hide();
-        //document.getElementById('div_list_aspirations').style.display = "inline";
-        //document.getElementById('div_update_aspirations').style.display = "none";
         reset_fields_controll_disabled_true();
         $('.text-danger').text('');
     });
@@ -1086,12 +1116,12 @@
         $('#txt_m3').prop('disabled', false);
         $('#txt_tong_diem').prop('disabled', true);
         $('#txt_m1').focus();
-       
+
         $('#files_chungnhan_kqtn').val(null);
         $('#files_hocba_ts').val(null);
         $('#files_bangtn').val(null);
         $('#files_cancuoc_congdan').val(null);
-        $('#files_giayto_uutien').val(null);        
+        $('#files_giayto_uutien').val(null);
 
         $('#files_chungnhan_kqtn').prop('disabled', false);
         $('#files_hocba_ts').prop('disabled', false);
@@ -1103,8 +1133,8 @@
         $('#FilesList_HocBa_View tbody').empty();
         $('#FilesList_BangTN_View tbody').empty();
         $('#FilesList_CCCD_View tbody').empty();
-        $('#FilesList_GTUT_View tbody').empty();   
-       
+        $('#FilesList_GTUT_View tbody').empty();
+
     }
     function reset_fields_controll_disabled_true() {
 
@@ -1139,7 +1169,7 @@
         $('#FilesList_HocBa_View tbody').empty();
         $('#FilesList_BangTN_View tbody').empty();
         $('#FilesList_CCCD_View tbody').empty();
-        $('#FilesList_GTUT_View tbody').empty();  
+        $('#FilesList_GTUT_View tbody').empty();
     }
     function showToast(title, message, bgColor) {
         $("#myToast .toast-header .me-auto").text(title);
