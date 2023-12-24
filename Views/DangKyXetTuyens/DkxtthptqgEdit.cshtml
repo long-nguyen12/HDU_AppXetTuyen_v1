@@ -67,7 +67,7 @@
                         <div class="row  my-row">
                             <div class="col-4">Ngành</div>
                             <div class="col-8">
-                                <select id="select_nganh " class="form-select "></select>
+                                <select id="select_nganh" class="form-select "></select>
                                 <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                             </div>
 
@@ -406,9 +406,7 @@
         //hiển thị các hình ảnh minh chứng
         LoadImageMC_THPTQG_ByID();
         //thiết lập các upload file
-        reset_change_img_file();
-       
-        
+        reset_change_img_file();     
     })
     function LoadDataInfor_THPTQG_ByID() {
         let data_get = { Dkxt_KQTQG_ID: $('#hidden_Dkxt_KQTQG_ID').val() }

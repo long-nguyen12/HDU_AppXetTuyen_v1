@@ -83,8 +83,11 @@ namespace HDU_AppXetTuyen.Controllers
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
             var nvs = db.DangKyXetTuyenThangs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).ToList();
-            var sonv = db.DangKyXetTuyenKhacs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault().Dkxt_ID + 1;
-
+           
+            long key_kp = 1;
+            var sonv = db.DangKyXetTuyenThangs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault();
+            if (sonv != null) { key_kp = sonv.Dkxt_ID + 1; }
+           
             var dotXT = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             if (ts != null)
             {
@@ -119,7 +122,7 @@ namespace HDU_AppXetTuyen.Controllers
                 model.Dkxt_NguyenVong = nvs != null ? nvs.Count() + 1 : 1;
                 model.DotXT_ID = dotXT.Dxt_ID;
 
-                model.Dkxt_KinhPhi_NoiDungGiaoDich = "DKXT" + sonv + " P4  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển";
+                model.Dkxt_KinhPhi_NoiDungGiaoDich = "DKXT" + key_kp + " P4  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển";
                 db.DangKyXetTuyenThangs.Add(model);
                 db.SaveChanges();
 

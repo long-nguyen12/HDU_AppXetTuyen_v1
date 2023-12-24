@@ -38,13 +38,14 @@
     </div>
 </header>
 
+<input type="hidden" id="dkxt_thptqg_id_checkin" style="display:none!important" />
+<input type="hidden" id="ThiSinh_ID_DK_Prs" style="display:none!important" />
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
         <div class="card card-collapsable">
             <div class="card-header">
                 <span>Các nguyện vọng đã đăng ký</span>
             </div>
-            <input type="hidden" id="dkxt_thptqg_id_checkin" style="display:none!important" />
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-12">
@@ -54,7 +55,7 @@
                                     <tr>
                                         <th style="vertical-align:middle;" id="th_ten_ngvong">Nguyện vọng</th>
                                         <th style="vertical-align:middle;">Ngành</th>
-                                        <th style="vertical-align:middle;">Tổ hợp môn</th>                                    
+                                        <th style="vertical-align:middle;">Tổ hợp môn</th>
                                         <th style="vertical-align:middle;">Tổng điểm</th>
                                         <th style="vertical-align:middle; text-align:center; width:10%">Cập nhật</th>
                                     </tr>
@@ -120,7 +121,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
-                        <p style="color:red; font-style:italic; text-align:justify" class="mb-1">-Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
+                        <p style="color:red; font-style:italic; text-align:justify" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic ;text-align:justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
                     </div>
                 </div>
@@ -157,7 +158,8 @@
                         <div class="row">
                             <div class="col-4">Tổ hợp môn</div>
                             <div class="col-8">
-                                <select id="select_tohopmon" class="form-select"></select>
+                                <select id="select_tohopmon" class="form-select"  ></select>
+                                @*<script>function hideError() { $('#').text('Thm_ID_Error'); $('#Nganh_ID_Error').text(''); } </script>*@
                                 <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
                             </div>
                             <div class="col-12"><hr class="mt-1 mb-2" /></div>
@@ -236,7 +238,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <div class="col-lg-4 col-md-12">
                         <div class="row table-hover">
@@ -382,20 +383,20 @@
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             async: false,
-            success: function (result_all) {
+            success: function (res) {
+                $('#ThiSinh_ID_DK_Prs').val(res.Tsdk_id_dk);
+                $('#span_Uutien_doituong').html(res.Tsdk_doituong_ten_diem);
+                $('#span_Uutien_khuvuc').html(res.Tsdk_khuvuv_ten_diem);
+                $('#txt_hocluc_12').val(res.Tsdk_xeploai_hocluc_12);
+                $('#txt_hanhkiem_12').val(res.Tsdk_xeploai_hanhkiem_12);
 
-                $('#span_Uutien_doituong').html(result_all.Tsdk_doituong_ten_diem);
-                $('#span_Uutien_khuvuc').html(result_all.Tsdk_khuvuv_ten_diem);
-                $('#txt_hocluc_12').val(result_all.Tsdk_xeploai_hocluc_12);
-                $('#txt_hanhkiem_12').val(result_all.Tsdk_xeploai_hanhkiem_12);
-
-                if (result_all.view_list_dkxt_thptqg_ts == 0) {
+                if (res.view_list_dkxt_thptqg_ts == 0) {
                     _output = '<tr><td colspan="5"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
                 }
 
                 else {
-                    $.each(result_all.view_list_dkxt_thptqg_ts, function (i, result) {
-                        if (result_all.view_list_dkxt_thptqg_ts.length == 1) {
+                    $.each(res.view_list_dkxt_thptqg_ts, function (i, result) {
+                        if (res.view_list_dkxt_thptqg_ts.length == 1) {
                             _output = '<tr>' +
                                 '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" disabled>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" disabled>&#8744;</button>  </td>` +
                                 '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
@@ -404,9 +405,9 @@
                                 '<td style="text-align: center; vertical-align: middle !important">' + `<a class="btn btn-light btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Sửa</a>&nbsp;<a class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Xoá</a>` + '</td>' +
                                 '</tr>'
                         }
-                        else if (result_all.view_list_dkxt_thptqg_ts.length > 1) {
+                        else if (res.view_list_dkxt_thptqg_ts.length > 1) {
                             _output += '<tr>' +
-                                '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == result_all.view_list_dkxt_thptqg_ts.length - 1 ? "disabled" : ""}>&#8744;</button></td>` +
+                                '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == res.view_list_dkxt_thptqg_ts.length - 1 ? "disabled" : ""}>&#8744;</button></td>` +
                                 '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
@@ -592,11 +593,12 @@
 
         $("#select_tohopmon").change(function () {
             let dataObj = {
+                ThiSinh_ID: $('#ThiSinh_ID_DK_Prs').val(),
                 Thm_ID: $("#select_tohopmon").val(),
-                Dkxt_KQTQG_ID: $('#dkxt_thptqg_id_checkin').val(),
+                Nganh_ID: $("#select_nganh").val(),
+                Dkxt_KQTQG_GhiChu: $('#dkxt_thptqg_id_checkin').val(),
             }
-            if (dataObj.Dkxt_KQTQG_ID == 0 && dataObj.Thm_ID > 0) {
-                reset_fields_controll_disabled_false();
+            if (dataObj.Dkxt_KQTQG_GhiChu == 0 && dataObj.Thm_ID > 0) {              
                 $.ajax({
                     url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Get_Data_MonHoc",
                     data: JSON.stringify(dataObj),
@@ -604,10 +606,18 @@
                     contentType: 'application/json;charset=utf-8',
                     dataType: 'json',
                     success: function (res) {
-                        $('#lb_tenmon_1').text(res.thm_Mon1);
-                        $('#lb_tenmon_2').text(res.thm_Mon2);
-                        $('#lb_tenmon_3').text(res.thm_Mon3);
-                        $('#txt_m1').focus();
+                        if (res.success == true) {
+                            reset_fields_controll_disabled_false();
+                            $('#lb_tenmon_1').text(res.data.thm_Mon1);
+                            $('#lb_tenmon_2').text(res.data.thm_Mon2);
+                            $('#lb_tenmon_3').text(res.data.thm_Mon3);
+                            $('#txt_m1').focus();
+                        }
+                        if (res.success == false) {
+                            reset_fields_controll_disabled_true();
+                            $('#Nganh_ID_Error').text('Trùng ngành và tổ hợp môn, vui lòng chọn lại');
+                            $('#Thm_ID_Error').text('Trùng ngành và tổ hợp môn, vui lòng chọn lại');                            
+                        }                       
                     },
                     error: function (errormessage) {
                         console.log(errormessage.error);
@@ -626,7 +636,10 @@
         });
 
         $('select').on('input', function () {
-            hideErrorMessage($(this));
+            var arr = $('.form-select');
+            arr.each(function () {
+                hideErrorMessage($(this));
+            })           
         })
     });
     // phần xử lý dữ liệu cho các tệp đính kèm
@@ -637,8 +650,6 @@
     var formdata_file_bang_tn = new FormData(); //FormData object bang TN
     var formdata_file_cancuoc_congdan = new FormData(); //FormData object cancuoccongdan
     var formdata_file_giayto_uutien = new FormData(); //FormData object giaytout
-
-
 
     $(document).ready(function () {
         $("#files_cancuoc_congdan").on("change", function () {
@@ -739,7 +750,6 @@
             $("#FilesList_CCCD_View").css("visibility", "hidden");
         }
     }
-
     function DeleteFile_BANGTN_Upload(Fileid, FileName) {
         formdata_file_bang_tn.delete(FileName)
         $("#" + Fileid).remove();
