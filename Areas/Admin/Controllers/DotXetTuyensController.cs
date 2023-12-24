@@ -130,11 +130,10 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
         #endregion
 
-        #region Master
-        public ActionResult NangKhieu()
+        #region Gifted 
+        public ActionResult GiftedIndex()
         {
             var model = db.DotXetTuyens.OrderByDescending(x => x.Dxt_ID).Where(x => x.Dxt_Classify == 1);
-
             return View(model.ToList());
         }
 
@@ -193,7 +192,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             var NamHoc_ID = db.NamHocs.Where(x => x.NamHoc_TrangThai == 1).FirstOrDefault().NamHoc_Ten;
             return Json(new { success = true, data = NamHoc_ID }, JsonRequestBehavior.AllowGet);
         }
-
         [HttpPost]
         public JsonResult DotXetTuyetGetByIDJson(DotXetTuyen entity)
         {

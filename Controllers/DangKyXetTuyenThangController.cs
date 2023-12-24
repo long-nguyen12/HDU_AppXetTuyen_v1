@@ -16,7 +16,7 @@ namespace HDU_AppXetTuyen.Controllers
 
     public class DangKyXetTuyenThangController : Controller
     {
-        private DbConnecttion db = new DbConnecttion();
+        private DbConnecttion db = null;
 
         // GET: DangKyXetTuyenThang
         [ThiSinhSessionCheck]
@@ -27,7 +27,11 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult GetAllNguyenVongs()
         {
+            db = new DbConnecttion();
+
             var session = Session["login_session"];
+            var dotXT = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).Select(n => new
             {
                 ThiSinh_ID = n.ThiSinh_ID,
@@ -37,7 +41,8 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_UTDT = n.DoiTuong.DoiTuong_Ten + ", Ưu tiên: " + n.DoiTuong.DoiTuong_DiemUuTien,
                 ThiSinh_UTKV = n.KhuVuc.KhuVuc_Ten + ", Ưu tiên: " + n.KhuVuc.KhuVuc_DiemUuTien,
             }).FirstOrDefault();
-            var nguyenvongs = db.DangKyXetTuyenThangs.Include(d => d.Nganh).Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).OrderBy(n => n.Dkxt_NguyenVong).Select(n => new
+            
+            var nguyenvongs = db.DangKyXetTuyenThangs.Include(d => d.Nganh).Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.DotXT_ID == dotXT.Dxt_ID).OrderBy(n => n.Dkxt_NguyenVong).Select(n => new
             {
                 Dkxt_ID = n.Dkxt_ID,
                 ThiSinh_ID = n.ThiSinh_ID,
@@ -74,12 +79,13 @@ namespace HDU_AppXetTuyen.Controllers
         }
         public JsonResult Create(DangKyXetTuyenThang student)
         {
+            db = new DbConnecttion();
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
             var nvs = db.DangKyXetTuyenThangs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).ToList();
             var sonv = db.DangKyXetTuyenKhacs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault().Dkxt_ID + 1;
 
-            var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var dotXT = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             if (ts != null)
             {
                 DangKyXetTuyenThang model = new DangKyXetTuyenThang();
@@ -216,7 +222,7 @@ namespace HDU_AppXetTuyen.Controllers
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
                 Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
-            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             if (ts != null)
             {
                 var model_edit = db.DangKyXetTuyenThangs.Include(x => x.Nganh).Include(x => x.DotXetTuyen).Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
@@ -262,6 +268,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
         public JsonResult GetAllKhoiNganh()
         {
+            db = new DbConnecttion();
             var khoinganhs = db.KhoiNganhs.Select(n => new
             {
                 KhoiNganh_ID = n.KhoiNganh_ID,
@@ -273,6 +280,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         public JsonResult GetAllNganhs(string idKhoiNganh)
         {
+            db = new DbConnecttion();
             int id = int.Parse(idKhoiNganh);
             var nganhs = db.Nganhs.Where(n => n.KhoiNganh_ID == id).Select(n => new
             {
@@ -287,10 +295,13 @@ namespace HDU_AppXetTuyen.Controllers
          [HttpPost]
         public JsonResult UploadFiles()
         {
+            db = new DbConnecttion();
+
             var session = Session["login_session"];
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).FirstOrDefault();
             string savePath = "/Uploads/UploadMinhChungs/";
             string fileNameStored = "";
+
             if (Request.Files.Count > 0)
             {
                 for (int i = 0; i < Request.Files.Count; i++)
@@ -312,6 +323,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         public JsonResult Delete(string idDkxt)
         {
+            db = new DbConnecttion();
             if (!string.IsNullOrWhiteSpace(idDkxt))
             {
                 int id = int.Parse(idDkxt);
@@ -353,6 +365,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
         public JsonResult upData(string idDkxt)
         {
+            db = new DbConnecttion();
             if (!string.IsNullOrWhiteSpace(idDkxt))
             {
                 int id = int.Parse(idDkxt);
@@ -382,6 +395,8 @@ namespace HDU_AppXetTuyen.Controllers
         }
         public JsonResult downData(string idDkxt)
         {
+            db = new DbConnecttion();
+
             if (!string.IsNullOrWhiteSpace(idDkxt))
             {
                 int id = int.Parse(idDkxt);

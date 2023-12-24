@@ -54,8 +54,7 @@
                                     <tr>
                                         <th style="vertical-align:middle;" id="th_ten_ngvong">Nguyện vọng</th>
                                         <th style="vertical-align:middle;">Ngành</th>
-                                        <th style="vertical-align:middle;">Tổ hợp môn</th>
-                                        @*<th style="vertical-align:middle;">Trạng thái</th>*@
+                                        <th style="vertical-align:middle;">Tổ hợp môn</th>                                    
                                         <th style="vertical-align:middle;">Tổng điểm</th>
                                         <th style="vertical-align:middle; text-align:center; width:10%">Cập nhật</th>
                                     </tr>
@@ -77,6 +76,7 @@
                                     let sp_tieude = document.getElementById('sp_tieude');
                                     let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
                                     let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
+
                                     if (window.innerWidth <= 1200) {
                                         sp_tieude.innerText = "Xét tuyển bằng điểm thi tốt nghiệp";
                                         bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
@@ -86,6 +86,12 @@
                                         sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia";
                                         bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
                                         bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+                                    }
+                                    if (window.innerWidth <= 800) {
+                                        $('#th_ten_ngvong').attr("style", "width:40px;");
+                                    }
+                                    else {
+                                        $('#th_ten_ngvong').removeAttr("style");
                                     }
                                     function reportWindowSize() {
                                         if (window.innerWidth <= 800) {
@@ -127,219 +133,149 @@
                 <span>Đăng ký nguyện vọng mới</span>
                 <button class="btn-close" id="bt_close_div_update_aspirations_first" type="button" aria-label="Close"></button>
             </div>
-            <div class="card-body g-1">
+            <div class="card-body g-3">
                 <div class="row">
-                    <div class="col-xxl-4">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th colspan="2">Chọn ngành và tổ hợp môn <font color="red">(*)</font></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Khối ngành</td>
-                                    <td>
-                                        <select id="select_khoinganh" class="form-select"></select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Ngành</td>
-                                    <td>
-                                        <select id="select_nganh" class="form-select"></select>
-                                        <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="label_tieude">Tổ hợp môn</td>
-                                    <td>
-                                        <select id="select_tohopmon" class="form-select"></select>
-                                        <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
-                                    </td>
-                                </tr>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row table-hover">
+                            <div class="col-12"><b>Chọn ngành và tổ hợp môn <font color="red">(*)</font></b></div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        </div>
+                        <div class="row table-hover">
+                            <div class="col-4">Khối ngành</div>
+                            <div class="col-8"><select id="select_khoinganh" class="form-select"></select></div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
 
-                                <tr>
-                                    <td colspan="2">
-                                        <div class="row">
-                                            <div class="col-6 mb-0 ">
-                                                <span id="span_Uutien_doituong">ĐT 05: ƯT 1 đ</span>
-                                                <hr style="margin-bottom: 6px " />
-                                            </div>
-                                            <div class="col-6 mb-0 ">
-                                                <span id="span_Uutien_khuvuc">KV2-NT: ƯT 0.5 đ</span>
-                                                <hr style="margin-bottom:6px" />
-                                            </div>
-                                        </div>
+                        <div class="row">
+                            <div class="col-4">Ngành</div>
+                            <div class="col-8">
+                                <select id="select_nganh" class="form-select"></select>
+                                <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">Tổ hợp môn</div>
+                            <div class="col-8">
+                                <select id="select_tohopmon" class="form-select"></select>
+                                <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-0 ">
+                                <span id="span_Uutien_doituong">ĐT 05: ƯT 1 đ</span>
+                                <hr style="margin-bottom: 6px " />
+                            </div>
+                            <div class="col-6 mb-0 ">
+                                <span id="span_Uutien_khuvuc">KV2-NT: ƯT 0.5 đ</span>
+                                <hr style="margin-bottom:6px" />
+                            </div>
+                        </div>
 
-                                        <div class="row">
-                                            <div class="col-6 mt-0">
-                                                <span> Học lực lớp 12</span>
-                                                <input id="txt_hocluc_12" type="text" class="form-control" value="" disabled />
-
-                                            </div>
-                                            <div class="col-6 mt-0">
-                                                <span>Hạnh kiểm lớp 12</span>
-                                                <input id="txt_hanhkiem_12" type="text" class="form-control" value="" disabled />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                        </table>
+                        <div class="row">
+                            <div class="col-6 mt-0">
+                                <span> Học lực lớp 12</span>
+                                <input id="txt_hocluc_12" type="text" class="form-control" value="" disabled />
+                            </div>
+                            <div class="col-6 mt-0">
+                                <span>Hạnh kiểm lớp 12</span>
+                                <input id="txt_hanhkiem_12" type="text" class="form-control" value="" disabled />
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-xxl-4">
-                        <div class="row md-0">
-                            <div class="col-xxl-12 mb-0">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th style="vertical-align:middle;" colspan="3">Điểm các môn xét tuyển <font color="red">(*)</font></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody_list_diemmonhoc">
-                                        <tr>
-                                            <td colspan="4">
-                                                <div class="row g-3 align-items-center">
-                                                    <div class="col-4">
-                                                        <label for="select_namtn" class="col-form-label">Năm tốt nghiệp:</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <select class="form-select" id="select_namtn"></select>
-                                                        <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
-                                                    </div>
 
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label id="lb_tenmon_1" class="form-label"></label><input id="txt_m1" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" /></td>
-                                            <td><label id="lb_tenmon_2" class="form-label"></label><input id="txt_m2" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" /></td>
-                                            <td><label id="lb_tenmon_3" class="form-label"></label><input id="txt_m3" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" /></td>
-                                            <td><label id="lb_tongdiem" class="form-label">Tổng</label><input id="txt_tong_diem" type="text" class="form-control input-tong padding_input_text_number" value="25.68" disabled /></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row">
+                            <div class="col-12"><b>Điểm các môn xét tuyển <font color="red">(*)</font></b></div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        </div>
+                        <div class="row table-hover">
+                            <div class="col-5">Năm tốt nghiệp</div>
+                            <div class="col-7">
+                                <select class="form-select" id="select_namtn"></select>
+                                <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row g-1">
+                            <div class="col-3">
+                                <p id="lb_tenmon_1" class="form-label"></p>
+                                <input id="txt_m1" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" />
+                            </div>
+                            <div class="col-3">
+                                <p id="lb_tenmon_2" class="form-label"></p>
+                                <input id="txt_m2" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" />
+                            </div>
+                            <div class="col-3">
+                                <p id="lb_tenmon_3" class="form-label">
+                                </p><input id="txt_m3" type="number" class="form-control input-monhoc padding_input_text_number" value="8.56" />
+                            </div>
+                            <div class="col-3">
+                                <p id="lb_tongdiem" class="form-label">Tổng</p>
+                                <input id="txt_tong_diem" type="text" class="form-control input-tong padding_input_text_number" value="25.68" disabled />
                             </div>
                             <div class="col-xxl-12 mt-0 mb-0" style="text-align:center; ">
                                 <span id="Diem_All_Error" class="small mb-1 text-danger"></span>
                             </div>
+                            <div class="col-12"><hr class="mt-1 mb-3" /></div>
                         </div>
-                        <div class="row mt-0 mb-1">
-                            <div class="col-xxl-12">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Giấy chứng nhận KQ tốt nghiệp THPT<font color="red">(*)</font></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="row mt-0 md-0">
-                                                    <div class="col-xxl-12">
-                                                        <div class="form-group mb-2">
-                                                            <div class="col-md-12">
-                                                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                                <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_CNKQTN_View" style="visibility:hidden">
-                                                            <tr style="display:none">
-                                                                <th colspan="2"><input type="hidden" id="txt_uploader_file_hocba" /></th>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </td>
-                                        </tr>
+                        <div class="row">
+                            <div class="col-12"><b>Giấy chứng nhận KQ tốt nghiệp THPT<font color="red">(*)</font></b></div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                            <div class="col-12">
+                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
+                                <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="col-12">
+                                <table class="table mt-0 mb-0" id="FilesList_CNKQTN_View" style="visibility:hidden">
+                                    <tr style="display:none">
+                                        <th colspan="2"><input type="hidden" id="txt_uploader_file_hocba" /></th>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xxl-4">
-                        <div class="row mb-0">
-                            <div class="col-xxl-12">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Dữ liệu minh chứng khác</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="row mt-0 md-0">
-                                                    <div class="col-xxl-12">
-                                                        <div class="form-group mb-0 mt-1">
-                                                            <label for="files_hocba_ts" class="form-label">Học bạ </label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-12">
-                                                        <table class="table mt-1 mb-0" id="FilesList_HocBa_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row mt-0 md-0">
-                                                    <div class="col-xxl-12">
-                                                        <div class="form-group mb-0">
-                                                            <label for="files_bangtn" class="form-label">Bằng tốt nghiệp</label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row mt-0 md-0">
-                                                    <div class="col-xxl-12">
-                                                        <div class="form-group mb-0">
-                                                            <label class="form-label">Căn cước công dân</label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-0 md-0">
-                                                    <div class="col-xxl-12">
-                                                        <div class="form-group mb-0 mt-1">
-                                                            <label for="files_giayto_uutien" class="form-label">Giấy tờ ưu tiên (nếu có)</label>
-                                                            <div class="col-md-12">
-                                                                <input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xxl-12">
-                                                        <table class="table mt-0 mb-0" id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table>
-                                                    </div>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                </table>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row table-hover">
+                            <div class="col-12"><b>Dữ liệu minh chứng khác</b></div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">Học bạ</div>
+                            <div class="col-12"><input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" /></div>
+                            <div class="col-12">
+                                <table class="table mt-1 mb-0" id="FilesList_HocBa_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
                             </div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-12">Bằng tốt nghiệp</div>
+                            <div class="col-12"><input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" /></div>
+                            <div class="col-12"><table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table></div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">Căn cước công dân</div>
+                            <div class="col-12"><input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" /></div>
+                            <div class="col-12"><table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table></div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">Giấy tờ ưu tiên (nếu có)</div>
+                            <div class="col-12"><input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" /></div>
+                            <div class="col-12"> <table class="table mt-0 mb-0" id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table></div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-xxl-12" style="text-align:center">
-                        <input class="btn btn-outline-primary col-lg-1 col-4" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý thêm" />
-                        <input class="btn btn-outline-secondary col-lg-1 col-4" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
+                        <input class="btn btn-outline-primary col-lg-1 col-sm-5" id="bt_ok_div_update_aspirations" type="button" value="Đồng ý thêm" />
+                        <input class="btn btn-outline-secondary col-lg-1 col-sm-4" id="bt_close_div_update_aspirations_second" type="button" value="Hủy bỏ" />
                     </div>
                 </div>
             </div>
@@ -419,13 +355,13 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="modal_tb_thanhcong_hide_click()"></button>
                 <script>
                     function modal_tb_thanhcong_hide_click() { $('#modal_tb_thanhcong').modal('hide'); $('#noidung_chuyenkhoan').text(''); }
-                    function thongbao_dangky_thanhcong(text) {$('#noidung_chuyenkhoan').text(text);$('#modal_tb_thanhcong').modal('show');}
+                    function thongbao_dangky_thanhcong(text) { $('#noidung_chuyenkhoan').text(text); $('#modal_tb_thanhcong').modal('show'); }
                 </script>
             </div>
             <div class="modal-body">
                 <p class="mt-0 mb-0" style="text-align:justify">- Đăng ký xét tuyển thành công!</p>
                 <p class="mt-0 mb-0" style="text-align:justify">- Vui lòng nộp lệ phí xét tuyển bằng cách chuyển số tiền 50.000đ vào số tài khoản: <font color="red">5011100925</font> để hoàn thành thủ tục đăng ký xét tuyển</p>
-                <p style="text-align:justify">- Nội dung chuyển khoản: <a id="noidung_chuyenkhoan" style="color:blue;text-decoration:none"></a></p>
+                <p style="text-align:justify" class="m-0">- Nội dung chuyển khoản: <a id="noidung_chuyenkhoan" style="color:blue; text-decoration:none"></a></p>
                 <input id="key_delete_dkxt_id" type="hidden" />
             </div>
             <div class="modal-footer">
@@ -465,7 +401,7 @@
                                 '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
-                                '<td style="text-align: center; vertical-align: middle !important">' + `<a class="btn btn-light btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})"}>Sửa</a>&nbsp;<a class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Xoá</a>` + '</td>' +
+                                '<td style="text-align: center; vertical-align: middle !important">' + `<a class="btn btn-light btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Sửa</a>&nbsp;<a class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Xoá</a>` + '</td>' +
                                 '</tr>'
                         }
                         else if (result_all.view_list_dkxt_thptqg_ts.length > 1) {
@@ -474,7 +410,7 @@
                                 '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
                                 '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
-                                '<td style="text-align: center; vertical-align: middle !important">' + `<a class="btn btn-light btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})"}>Sửa</a>&nbsp;<a class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Xoá</a>` + '</td>' +
+                                '<td style="text-align: center; vertical-align: middle !important">' + `<a class="btn btn-light btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Sửa</a>&nbsp;<a class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Xoá</a>` + '</td>' +
                                 '</tr>'
                         }
                     });

@@ -232,7 +232,7 @@ namespace HDU_AppXetTuyen.Controllers
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(str_login_session)).
                 Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
-            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_TNK == 1).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(x => x.Dxt_Classify ==1 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
 
             if (ts != null)
             {
@@ -454,8 +454,10 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult DangKyXetTuyen_KQTHPTQG_ListAll()
         {
-            int ptxt_check = 2;
             db = new DbConnecttion();
+            int ptxt_check = 2;
+            var dxt_id_hientai = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault().Dxt_ID;
+          
 
             if (Session["login_session"] != null)
             {
@@ -486,7 +488,7 @@ namespace HDU_AppXetTuyen.Controllers
                                                     Include(d => d.Nganh).
                                                     Include(d => d.ToHopMon).
                                                     Include(d => d.DotXetTuyen).
-                                                    Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_KQTQG_NguyenVong).ToList();
+                                                    Where(x => x.ThiSinh_ID == _thisinh_id && x.Ptxt_ID == ptxt_check && x.DotXT_ID == dxt_id_hientai).OrderBy(x => x.Dkxt_KQTQG_NguyenVong).ToList();
 
                 var view_list_dkxt_thptqg_ts = list_dkxt_thptqg_ts.Select(s => new
                 {
@@ -705,7 +707,7 @@ namespace HDU_AppXetTuyen.Controllers
                 Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
 
-            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_Classify == 0 && n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
 
             if (ts != null)
             {
@@ -788,7 +790,6 @@ namespace HDU_AppXetTuyen.Controllers
 
             db = new DbConnecttion();
             var model = db.DangKyXetTuyenKQTQGs.Where(x => x.Dkxt_KQTQG_ID == entity.Dkxt_KQTQG_ID).FirstOrDefault();
-
             var model_ts = db.ThiSinhDangKies.Include(d => d.DoiTuong).Include(k => k.KhuVuc).Where(x => x.ThiSinh_ID == model.ThiSinh_ID).FirstOrDefault();
 
             model.Nganh_ID = entity.Nganh_ID;
@@ -812,11 +813,11 @@ namespace HDU_AppXetTuyen.Controllers
             db.SaveChanges();
             // gửi email
             #region gửi email
-            DbConnecttion dbguimail = new DbConnecttion();
+            
             int nganh_id = int.Parse(model.Nganh_ID.ToString());
             int thm_id = int.Parse(model.Thm_ID.ToString());
-            var nganhdk = dbguimail.Nganhs.FirstOrDefault(n => n.Nganh_ID == nganh_id);
-            var thmdk = dbguimail.ToHopMons.FirstOrDefault(t => t.Thm_ID == thm_id);
+            var nganhdk = db.Nganhs.FirstOrDefault(n => n.Nganh_ID == nganh_id);
+            var thmdk = db.ToHopMons.FirstOrDefault(t => t.Thm_ID == thm_id);
 
             var subject = "Đăng ký nguyện vọng";
             var body = "Thí sinh " + model_ts.ThiSinh_Ten + ", Số CCCD: " + model_ts.ThiSinh_CCCD + " đã đăng ký nguyện vọng mới." +
@@ -930,10 +931,9 @@ namespace HDU_AppXetTuyen.Controllers
         }
         public JsonResult DangKyXetTuyen_HB_ListAll()
         {
-
-            int ptxt_check = 3;
             db = new DbConnecttion();
-
+            int ptxt_check = 3;          
+            var dxt_id_hientai = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault().Dxt_ID;
             if (Session["login_session"] != null)
             {
 
@@ -969,7 +969,7 @@ namespace HDU_AppXetTuyen.Controllers
                                                Include(d => d.ThiSinhDangKy.DoiTuong).
                                                Include(d => d.ThiSinhDangKy.KhuVuc).
                                                Include(d => d.PhuongThucXetTuyen).
-                                               Where(ts => ts.ThiSinh_ID == _thisinh_id && ts.Ptxt_ID == ptxt_check).OrderBy(x => x.Dkxt_HB_NguyenVong).ToList();
+                                               Where(x => x.ThiSinh_ID == _thisinh_id && x.Ptxt_ID == ptxt_check && x.DotXT_ID == dxt_id_hientai).OrderBy(x => x.Dkxt_HB_NguyenVong).ToList();
                 var select_list_dkxt_model = dkxt_Detail_list.Select(s => new
                 {
                     dkxt_ID = s.Dkxt_HB_ID,
@@ -1180,8 +1180,8 @@ namespace HDU_AppXetTuyen.Controllers
             var session = Session["login_session"].ToString();
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
                 Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
-
-            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+           
             if (ts != null)
             {
                 var nvs = db.DangKyXetTuyenHBs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID).OrderByDescending(x => x.Dkxt_HB_NguyenVong).ToList();
@@ -1269,7 +1269,7 @@ namespace HDU_AppXetTuyen.Controllers
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
                 Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
 
-            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             if (ts != null)
             {
                 var model_edit = db.DangKyXetTuyenHBs.Include(x => x.Nganh).Include(x => x.DotXetTuyen).Where(x => x.Dkxt_HB_ID == entity.Dkxt_HB_ID).FirstOrDefault();

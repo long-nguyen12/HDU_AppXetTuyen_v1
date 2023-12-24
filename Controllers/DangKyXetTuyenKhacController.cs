@@ -25,6 +25,7 @@ namespace HDU_AppXetTuyen.Controllers
         {
             db = new DbConnecttion();
             var session = Session["login_session"];
+
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).Include(x => x.DoiTuong).Include(x => x.KhuVuc).Select(n => new
             {
                 ThiSinh_ID = n.ThiSinh_ID,
@@ -34,8 +35,11 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_UTKV = n.KhuVuc.KhuVuc_Ten + ", Ưu tiên: " + n.KhuVuc.KhuVuc_DiemUuTien,
 
             }).FirstOrDefault();
+
+            var dxt_id_hientai = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault().Dxt_ID;
+
             var nguyenvongs = db.DangKyXetTuyenKhacs.Include(d => d.Nganh).Include(x => x.ChungChi)
-                                .Where(n => n.ThiSinh_ID == ts.ThiSinh_ID)
+                                .Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.DotXT_ID == dxt_id_hientai)
                                 .Where(n => n.Dkxt_ToHopXT == "HDP6")
                                 .OrderBy(n => n.Ptxt_ID)
                                 .ThenBy(n => n.Dkxt_NguyenVong)
@@ -86,7 +90,8 @@ namespace HDU_AppXetTuyen.Controllers
 
             var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP6")).ToList();
             var sonv = db.DangKyXetTuyenKhacs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault().Dkxt_ID + 1;
-            var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+           
+            var dotXT = db.DotXetTuyens.Where( x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1 ).FirstOrDefault();
 
             string ToHop = entity.Dkxt_ToHopXT;
             if (ts != null)
@@ -174,8 +179,8 @@ namespace HDU_AppXetTuyen.Controllers
 
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
                 Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
-
-            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            
             if (ts != null)
             {
                 var model_edit = db.DangKyXetTuyenKhacs.Include(x => x.Nganh).Include(x => x.DotXetTuyen).Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
@@ -195,8 +200,7 @@ namespace HDU_AppXetTuyen.Controllers
 
                 model_edit.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
 
-                model_edit.ThiSinh_ID = ts.ThiSinh_ID;
-                model_edit.DotXT_ID = dotxettuyen.Dxt_ID;
+                model_edit.ThiSinh_ID = ts.ThiSinh_ID;             
 
                 var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;
                 var khuVucDoiTuong = ts.KhuVuc.KhuVuc_DiemUuTien;
@@ -234,6 +238,8 @@ namespace HDU_AppXetTuyen.Controllers
         {
             db = new DbConnecttion();
             var session = Session["login_session"];
+            var dotXT = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session.ToString())).Include(x => x.DoiTuong).Include(x => x.KhuVuc).Select(n => new
             {
                 ThiSinh_ID = n.ThiSinh_ID,
@@ -244,7 +250,7 @@ namespace HDU_AppXetTuyen.Controllers
 
             }).FirstOrDefault();
             var nguyenvongs = db.DangKyXetTuyenKhacs.Include(d => d.Nganh).Include(x => x.ChungChi)
-                                .Where(n => n.ThiSinh_ID == ts.ThiSinh_ID)
+                                .Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.DotXT_ID == dotXT.Dxt_ID)
                                 .Where(n => n.Dkxt_ToHopXT == "HDP5")
                                 .OrderBy(n => n.Ptxt_ID)
                                 .ThenBy(n => n.Dkxt_NguyenVong)
@@ -295,8 +301,7 @@ namespace HDU_AppXetTuyen.Controllers
             var nvs = db.DangKyXetTuyenKhacs.Where(n => n.ThiSinh_ID == ts.ThiSinh_ID && n.Dkxt_ToHopXT.Equals("HDP5")).ToList();
             var sonv = db.DangKyXetTuyenKhacs.OrderByDescending(x => x.Dkxt_ID).FirstOrDefault().Dkxt_ID + 1;
 
-            var dotXT = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
-
+            var dotXT = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             string ToHop = entity.Dkxt_ToHopXT;
             if (ts != null)
             {
@@ -325,11 +330,6 @@ namespace HDU_AppXetTuyen.Controllers
                 if (String.IsNullOrEmpty(entity.Dkxt_MinhChung_UuTien)) { model.Dkxt_MinhChung_UuTien = ""; }
                 else { model.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien; }
 
-                //model.Dkxt_MinhChung_HB = entity.Dkxt_MinhChung_HB;
-                //model.Dkxt_MinhChung_CCCD = entity.Dkxt_MinhChung_CCCD;
-                //model.Dkxt_MinhChung_Bang = entity.Dkxt_MinhChung_Bang;
-                //model.Dkxt_MinhChung_KetQua = entity.Dkxt_MinhChung_KetQua;
-                //model.Dkxt_MinhChung_UuTien = entity.Dkxt_MinhChung_UuTien;
 
                 model.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
                 model.Ptxt_ID = int.Parse(ToHop[ToHop.Length - 1].ToString());
@@ -386,8 +386,7 @@ namespace HDU_AppXetTuyen.Controllers
 
             var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).
                 Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
-
-            var dotxettuyen = db.DotXetTuyens.Where(n => n.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var dotxettuyen = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();           
             if (ts != null)
             {
                 var model_edit = db.DangKyXetTuyenKhacs.Include(x => x.Nganh).Include(x => x.DotXetTuyen).Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
@@ -406,6 +405,7 @@ namespace HDU_AppXetTuyen.Controllers
                 model_edit.Dkxt_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
 
                 model_edit.ThiSinh_ID = ts.ThiSinh_ID;
+
                 model_edit.DotXT_ID = dotxettuyen.Dxt_ID;
 
                 var diemDoiTuong = ts.DoiTuong.DoiTuong_DiemUuTien;

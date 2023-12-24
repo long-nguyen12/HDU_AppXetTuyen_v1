@@ -19,7 +19,7 @@ namespace HDU_AppXetTuyen.Controllers
 {
     public class HocVienDangKiesController : Controller
     {
-        private DbConnecttion db = new DbConnecttion();
+        private DbConnecttion db = null;// new DbConnecttion();
         #region thông tin học viên
         [ThiSinhSessionCheck]
         public ActionResult HvThongTin()
@@ -29,6 +29,7 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult HvThongTinGetByID()
         {
+            db = new DbConnecttion();
             var str_check = Session["login_session"].ToString();
 
             var model = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_check).FirstOrDefault();
@@ -68,10 +69,12 @@ namespace HDU_AppXetTuyen.Controllers
             }
             else { return Json(new { success = false }, JsonRequestBehavior.AllowGet); }
         }
+        [ThiSinhSessionCheck]
         public JsonResult HvThongTinGetByID_2()
         {
+            db = new DbConnecttion();
             var str_check = Session["login_session"].ToString();
-            //string str_check = "$2a$11$G1.12RIjNpGpFHCRiAoDHuBrvXyWpI75atUG3zAj0Z8/D1VsCA1gq";// Session["login_session"].ToString();
+         
             var model = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_check).FirstOrDefault();
 
             if (model != null)
@@ -122,6 +125,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult HvThongTinUpdate_DangKy(HocVienDangKy entity)
         {
+            db = new DbConnecttion();
 
             var model = db.HocVienDangKies.Where(x => x.HocVien_ID == entity.HocVien_ID).FirstOrDefault();
             model.HocVien_HoDem = entity.HocVien_HoDem;
@@ -155,6 +159,7 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public ActionResult DkDuTuyen()
         {
+            db = new DbConnecttion();
             string str_check = Session["login_session"].ToString(); //"$2a$11$G1.12RIjNpGpFHCRiAoDHuBrvXyWpI75atUG3zAj0Z8/D1VsCA1gq";
             ViewBag.HocVien_ID = db.HocVienDangKies.FirstOrDefault(x => x.HocVien_MatKhau == str_check).HocVien_ID;
             return View();
@@ -162,6 +167,7 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult DkDuTuyenGetByID()
         {
+            db = new DbConnecttion();
             string str_check = Session["login_session"].ToString(); //"$2a$11$G1.12RIjNpGpFHCRiAoDHuBrvXyWpI75atUG3zAj0Z8/D1VsCA1gq";
 
             var model_hv = db.HocVienDangKies.FirstOrDefault(x => x.HocVien_MatKhau == str_check);
@@ -169,8 +175,11 @@ namespace HDU_AppXetTuyen.Controllers
 
             var id_dxt = db.DotXetTuyens.FirstOrDefault(x => x.Dxt_Classify == 2 && x.Dxt_TrangThai_Xt == 1).Dxt_ID;
 
-            var model_data = db.HocVienDuTuyens.Include(h => h.DotXetTuyen).Include(h => h.HocVienDangKy).Include(h => h.NganhMaster).Where(x => x.HocVienDangKy.HocVien_MatKhau == str_check).ToList();
-
+            var model_data = db.HocVienDuTuyens
+                .Include(h => h.DotXetTuyen)
+                .Include(h => h.HocVienDangKy)
+                .Include(h => h.NganhMaster)
+                .Where(x => x.HocVienDangKy.HocVien_MatKhau == str_check && x.Dxt_ID == id_dxt).ToList();
 
             if (model_data.Count > 0)
             {
@@ -225,6 +234,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost, ThiSinhSessionCheck]
         public JsonResult HocVienDangkyUpdateBangDaiHoc(HocVienDangKy entity)
         {
+            db = new DbConnecttion();
             string str_check = Session["login_session"].ToString();
             var model = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_check).FirstOrDefault();
             //var model = db.HocVienDangKies.Where(x => x.HocVien_ID == entity.HocVien_ID).FirstOrDefault();
@@ -238,6 +248,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost, ThiSinhSessionCheck]
         public JsonResult DkDuTuyenAdd(HocVienDuTuyen entity)
         {
+            db = new DbConnecttion();
             string str_check = Session["login_session"].ToString();
 
             //var hv_detail = db.HocVienDangKies.Where(x => x.HocVien_ID == entity.HocVien_ID).FirstOrDefault();
@@ -293,7 +304,9 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         [ThiSinhSessionCheck]
         public JsonResult DkDuTuyenEdit(HocVienDuTuyen entity)
-        {           
+        {
+            db = new DbConnecttion();
+
             HocVienDuTuyen model = db.HocVienDuTuyens.Where(x => x.DuTuyen_ID == entity.DuTuyen_ID).FirstOrDefault();         
 
             model.DuTuyen_NgayDangKy = DateTime.Now.ToString("yyyy-MM-dd");
@@ -333,7 +346,8 @@ namespace HDU_AppXetTuyen.Controllers
 
         [ThiSinhSessionCheck]
         public JsonResult DkDuTuyenEdit_MCLePhi(HocVienDuTuyen entity)
-        {          
+        {
+            db = new DbConnecttion();
             try
             {
                 HocVienDuTuyen model = db.HocVienDuTuyens.Find(entity.DuTuyen_ID);
@@ -373,7 +387,14 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult DkDuTuyenDeleteMinhChungItem(HocVienDuTuyen entity)
         {
+            db = new DbConnecttion();
             HocVienDuTuyen model = db.HocVienDuTuyens.Where(x => x.DuTuyen_ID == entity.DuTuyen_ID).FirstOrDefault();
+
+            //if (entity.DuTuyen_MaNghienCuu == "2") { model.HocVien_SoYeuLyLich = model.HocVien_SoYeuLyLich.Replace(entity.Dkxt_Url + "#", ""); }
+            //if (entity.Dkxt_LoaiMC == "3") { model.Dkxt_HB_MinhChung_Bang = model.Dkxt_HB_MinhChung_Bang.Replace(entity.Dkxt_Url + "#", ""); }
+            //if (entity.Dkxt_LoaiMC == "4") { model.Dkxt_HB_MinhChung_CCCD = model.Dkxt_HB_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            //if (entity.Dkxt_LoaiMC == "5") { model.Dkxt_HB_MinhChung_UuTien = model.Dkxt_HB_MinhChung_UuTien.Replace(entity.Dkxt_Url + "#", ""); }
+            //if (entity.Dkxt_LoaiMC == "6") { model.Dkxt_HB_KinhPhi_TepMinhChung = model.Dkxt_HB_KinhPhi_TepMinhChung.Replace(entity.Dkxt_Url + "#", ""); }
 
             if (entity.DuTuyen_MaNghienCuu == 1)
             {
@@ -458,6 +479,7 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult DkDuTuyenDelete(HocVienDuTuyen entity)
         {
+            db = new DbConnecttion();
             //HocVienDuTuyen hocVienDuTuyen = db.HocVienDuTuyens.Include(h => h.HocVienDangKy).FirstOrDefault(x =>x.HocVien_ID == entity.DuTuyen_ID);
             HocVienDuTuyen hvdt_delete = db.HocVienDuTuyens.Find(entity.DuTuyen_ID);
 
@@ -493,6 +515,7 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult NganhMasterGetData()
         {
+            db = new DbConnecttion();
             var NganhMasterList = db.NganhMasters.Select(n => new
             {
                 nganh_Mt_ID = n.Nganh_Mt_ID,
@@ -508,6 +531,7 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult NganhMasterGetData_ByID(int id)
         {
+            db = new DbConnecttion();
             var NganhMasterList_byID = db.NganhMasters.Where(x => x.Nganh_Mt_ID == id).Select(n => new
             {
                 nganh_Mt_ID = n.Nganh_Mt_ID,
@@ -524,6 +548,7 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult DangKyDuTuyen_SDH_UploadFile_Lephi()
         {
+            db = new DbConnecttion();
             string str_pas = Session["login_session"].ToString();
 
             var hv_detail = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_pas).FirstOrDefault();
@@ -567,6 +592,8 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public JsonResult DangKyDuTuyen_SDH_UploadFile_Multi()
         {
+            db = new DbConnecttion();
+
             string str_pas = Session["login_session"].ToString();
             //string str_pas = "$2a$11$G1.12RIjNpGpFHCRiAoDHuBrvXyWpI75atUG3zAj0Z8/D1VsCA1gq";
             var hv_detail = db.HocVienDangKies.Where(x => x.HocVien_MatKhau == str_pas).FirstOrDefault();
@@ -659,6 +686,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
         public JsonResult DkDuTuyenGetByID2()
         {
+            db = new DbConnecttion();
             var str_check = Session["login_session"].ToString();
             //string str_check = "$2a$11$G1.12RIjNpGpFHCRiAoDHuBrvXyWpI75atUG3zAj0Z8/D1VsCA1gq";// Session["login_session"].ToString();
             var id = db.HocVienDangKies.FirstOrDefault(x => x.HocVien_MatKhau == str_check).HocVien_ID;
