@@ -773,6 +773,9 @@
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEditOK.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaOK.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaEditOK.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaTestDiv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
