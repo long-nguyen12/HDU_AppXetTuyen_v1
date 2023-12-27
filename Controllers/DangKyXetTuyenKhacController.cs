@@ -52,7 +52,7 @@ namespace HDU_AppXetTuyen.Controllers
                                     Nganh_All = new
                                     {
                                         KhoiNganh_Ten = n.Nganh.KhoiNganh.KhoiNganh_Ten,
-                                        Nganh_GhiChu = n.Nganh.Nganh_GhiChu,
+                                        Nganh_GhiChu = n.Nganh.Nganh_MaNganh + " - " + n.Nganh.Nganh_TenNganh,
                                     },
 
                                     Dkxt_TrangThai_HoSo = n.Dkxt_TrangThai_HoSo,
@@ -273,7 +273,7 @@ namespace HDU_AppXetTuyen.Controllers
                                     Nganh_All = new
                                     {
                                         KhoiNganh_Ten = n.Nganh.KhoiNganh.KhoiNganh_Ten,
-                                        Nganh_GhiChu = n.Nganh.Nganh_GhiChu,
+                                        Nganh_GhiChu = n.Nganh.Nganh_MaNganh + " - " + n.Nganh.Nganh_TenNganh,
                                     },
 
                                     Dkxt_TrangThai_HoSo = n.Dkxt_TrangThai_HoSo,

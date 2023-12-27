@@ -507,14 +507,14 @@ namespace HDU_AppXetTuyen.Controllers
                     dkxt_KQTQG_TenAll = new
                     {
                         khoiNganh_Ten = s.Nganh.KhoiNganh.KhoiNganh_Ten,
-                        nganh_GhiChu = s.Nganh.Nganh_TenNganh,
-                        thm_MaTen = s.ToHopMon.Thm_TenToHop,
+                        nganh_GhiChu = s.Nganh.Nganh_MaNganh + " - " + s.Nganh.Nganh_TenNganh,
+                        thm_MaTen = s.ToHopMon.Thm_MaToHop + " - " + s.ToHopMon.Thm_TenToHop,
                     },
                     dkxt_KQTQG_Diem_M1 = s.Dkxt_KQTQG_Diem_M1,
                     dkxt_KQTQG_Diem_M2 = s.Dkxt_KQTQG_Diem_M2,
                     dkxt_KQTQG_Diem_M3 = s.Dkxt_KQTQG_Diem_M3,
                     dkxt_KQTQG_Diem_Tong = s.Dkxt_KQTQG_Diem_Tong,
-                    dkxt_KQTQG_Diem_Tong_Full = s.Dkxt_KQTQG_TongDiem_Full,
+                    dkxt_KQTQG_Diem_Tong_Full = s.Dkxt_KQTQG_TongDiem_Full,                    
 
                 }).ToList();
                 var Tsdk_doituong_ten_diem = _ut_doituong_ten_diem;
@@ -1008,8 +1008,8 @@ namespace HDU_AppXetTuyen.Controllers
                     dkxt_TenAll = new
                     {
                         khoiNganh_Ten = s.Nganh.KhoiNganh.KhoiNganh_Ten,
-                        nganh_GhiChu = s.Nganh.Nganh_TenNganh,
-                        thm_MaTen = s.ToHopMon.Thm_TenToHop,
+                        nganh_GhiChu = s.Nganh.Nganh_MaNganh +" - " + s.Nganh.Nganh_TenNganh,
+                        thm_MaTen = s.ToHopMon.Thm_MaToHop +" - " + s.ToHopMon.Thm_TenToHop,
                     },
                     dkxt_Diem_M1 = s.Dkxt_HB_Diem_M1,
                     dkxt_Diem_M2 = s.Dkxt_HB_Diem_M2,

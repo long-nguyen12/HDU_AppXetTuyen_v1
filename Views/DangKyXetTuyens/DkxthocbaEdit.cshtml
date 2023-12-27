@@ -30,23 +30,23 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)</span>
+                        <span id="sp_tieude"></span>
                         <script>
                             $(document).ready(function () {
-                                let sp_tieude = document.getElementById('sp_tieude');
-                                if (window.innerWidth <= 800) {
-                                    sp_tieude.innerHTML = "ĐKXT bằng KQ học tập THPT (Xét học bạ)";
+                                let sp_tieude = $('#sp_tieude');
+                                if (window.innerWidth <= 1200) {
+                                    sp_tieude.text('Đăng ký xét tuyển bằng điểm học bạ');
                                 }
                                 else {
-                                    sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)";
+                                    sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả học tập ở trung học phổ thông (Xét tuyển bằng học bạ)');
                                 }
                                 function reportWindowSize() {
 
-                                    if (window.innerWidth <= 800) {
-                                        sp_tieude.innerHTML = "ĐKXT bằng KQ học tập THPT (Xét học bạ)";
+                                    if (window.innerWidth <= 1200) {
+                                        sp_tieude.text('Đăng ký xét tuyển bằng điểm học bạ');
                                     }
                                     else {
-                                        sp_tieude.innerHTML = "Đăng ký xét tuyển sử dụng kết quả học tập ở THPT (Xét tuyển bằng học bạ)";
+                                        sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả học tập ở trung học phổ thông (Xét tuyển bằng học bạ)');
                                     }
                                 }
                                 window.onresize = reportWindowSize;

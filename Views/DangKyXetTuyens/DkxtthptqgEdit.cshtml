@@ -36,7 +36,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
+                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia</span>
                     </div>
                 </div>
 
@@ -44,7 +44,26 @@
         </div>
     </div>
 </header>
-
+<script>
+    $(document).ready(function () {
+        let sp_tieude = $('#sp_tieude');      
+        if (window.innerWidth <= 1200) {
+            sp_tieude.text('Xét tuyển bằng điểm thi tốt nghiệp');            
+        }
+        else {
+            sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia');           
+        }
+        function reportWindowSize() {
+            if (window.innerWidth <= 1200) {
+                sp_tieude.text('Xét tuyển bằng điểm thi tốt nghiệp');              
+            }
+            else {
+                sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia');               
+            }
+        }
+        window.onresize = reportWindowSize;
+    })
+</script>
 <div class="container-fluid px-12">
     <div id="div_update_aspirations">
         <div class="card card-header-actions">

@@ -29,7 +29,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp THPT Quốc gia</span>
+                        <span id="sp_tieude"></span>
                     </div>
                 </div>
 
@@ -42,74 +42,171 @@
 <input type="hidden" id="ThiSinh_ID_DK_Prs" style="display:none!important" />
 <div class="container-fluid px-12">
     <div id="div_list_aspirations">
-        <div class="card card-collapsable">
+        <div class="card card-header-actions">
             <div class="card-header">
                 <span>Các nguyện vọng đã đăng ký</span>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-12 col-12">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th style="vertical-align:middle;" id="th_ten_ngvong">Nguyện vọng</th>
-                                        <th style="vertical-align:middle;">Ngành</th>
-                                        <th style="vertical-align:middle;">Tổ hợp môn</th>
-                                        <th style="vertical-align:middle;">Tổng điểm</th>
-                                        <th style="vertical-align:middle; text-align:center; width:10%">Cập nhật</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody_list_nguyenvong_xtkqthpt">
-                                </tbody>
-                            </table>
+                    <div class="col-lg-12" id="div_thead" style="display:none">
+                        <div class="row g-1">
+                            <div class="col-xl-2 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-3 col-lg-12"><b>Ngành</b></div>
+                            <div class="col-xl-3 col-lg-12"><b>Tổ hợp môn</b></div>
+                            <div class="col-xl-2 col-lg-12"><b class="text-nowrap">Tổng điểm (có ưu tiên)</b></div>
+                            <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
                         </div>
+                        <div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div>
                     </div>
+                    <div id="div_tbody_list"></div>
+                    <script>
+                        // phần hiển thị dữ liệu đã đăng ký
+                        $(document).ready(function () {
+                            LoadData_All_DkxtKQTN();
+                        });
+
+                        function LoadData_All_DkxtKQTN() {
+                            $('#div_tbody_list').empty();
+
+                            $.ajax({
+                                url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_ListAll/",
+                                type: 'GET',
+                                contentType: 'application/json;charset=utf-8',
+                                dataType: 'json',
+                                async: false,
+                                success: function (res) {
+
+                                    $('#ThiSinh_ID_DK_Prs').val(res.Tsdk_id_dk);
+                                    $('#span_Uutien_doituong').html(res.Tsdk_doituong_ten_diem);
+                                    $('#span_Uutien_khuvuc').html(res.Tsdk_khuvuv_ten_diem);
+                                    $('#txt_hocluc_12').val(res.Tsdk_xeploai_hocluc_12);
+                                    $('#txt_hanhkiem_12').val(res.Tsdk_xeploai_hanhkiem_12);
+
+                                    if (res.view_list_dkxt_thptqg_ts == 0) {
+                                        let div_item = ` <div class="col-12 text-center">Chưa có dữ liệu đăng ký xét tuyển</div>`;
+                                        $('#div_tbody_list').append(div_item);
+                                    }
+                                    else {
+                                        $.each(res.view_list_dkxt_thptqg_ts, function (i, result) {
+                                            if (res.view_list_dkxt_thptqg_ts.length == 1) {
+                                                let div_item = "";
+                                                div_item += `<div class="row g-1">`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + `</div>`;
+                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.nganh_GhiChu + `</span></div>`;
+                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.thm_MaTen + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_Diem_Tong_Full + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
+                                                div_item += `<button class="btn btn-sm btn-outline-success" style="margin-left:10px">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Xoá</button>`;
+                                                div_item += `</div>`;
+                                                div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
+                                                $('#div_tbody_list').append(div_item);
+                                            }
+                                            else if (res.view_list_dkxt_thptqg_ts.length > 1) {
+                                                let div_item = "";
+                                                div_item += `<div class="row g-1">`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + ` </span></div>`;
+                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.nganh_GhiChu + `</span></div>`;
+                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.thm_MaTen + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_Diem_Tong_Full + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
+                                                div_item += `<button style="margin-left:10px" class="btn btn-outline-info btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == res.view_list_dkxt_thptqg_ts.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>`
+                                                div_item += `&nbsp;<button class="btn btn-sm btn-outline-success">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Xoá</button>`;
+                                                div_item += `</div>`;
+                                                div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
+                                                $('#div_tbody_list').append(div_item);
+                                            }
+                                        });
+                                    }
+
+                                    if (window.innerWidth <= 1200) {
+                                        $('#div_thead').css('display', 'none');
+                                        $('#div_thead').hide();
+                                        $('.span_thongtin_nv').css('display', 'inline');
+                                        $('.span_thongtin_nv').show();
+                                        $('.span_noidung_nv').css('font-weight', 'bold')
+                                    }
+                                    else {
+                                        $('#div_thead').css('display', 'inline');
+                                        $('#div_thead').show();
+                                        $('.span_thongtin_nv').css('display', 'none');
+                                        $('.span_thongtin_nv').hide();
+                                        $('.span_noidung_nv').css('font-weight', 'normal')
+                                    }
+                                },
+                                error: function (errormessage) {
+                                    alert(errormessage.responseText);
+                                }
+                            });
+                        }
+                    </script>
                 </div>
 
+
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-12">
                         <center>
                             <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
                             <a class="btn btn-outline-primary" id="bt_add_aspirations">Thêm nguyện vọng</a>
                             <script>
                                 $(document).ready(function () {
-                                    let sp_tieude = document.getElementById('sp_tieude');
-                                    let bt_xuat_phieu_tong_hop = document.getElementById('bt_xuat_phieu_tong_hop_kq');
-                                    let bt_them_nguyen_vong = document.getElementById('bt_add_aspirations');
+                                    let sp_tieude = $('#sp_tieude');
+                                    let bt_xuat_phieu_tong_hop = $('#bt_xuat_phieu_tong_hop_kq');
+                                    let bt_them_nguyen_vong = $('#bt_add_aspirations');
 
                                     if (window.innerWidth <= 1200) {
-                                        sp_tieude.innerText = "Xét tuyển bằng điểm thi tốt nghiệp";
-                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
-                                        bt_them_nguyen_vong.innerHTML = "Thêm NV";
+
+                                        sp_tieude.text('Xét tuyển bằng điểm thi tốt nghiệp');
+                                        bt_xuat_phieu_tong_hop.text('Xuất phiếu');
+                                        bt_them_nguyen_vong.text("Thêm nguyện vọng");
+
+                                        $('#div_thead').css('display', 'none');
+                                        $('#div_thead').hide();
+
+                                        $('.span_thongtin_nv').css('display', 'inline');
+                                        $('.span_thongtin_nv').show();
+
+                                        $('.span_noidung_nv').css('font-weight', 'bold')
                                     }
                                     else {
-                                        sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia";
-                                        bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
-                                        bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
-                                    }
-                                    if (window.innerWidth <= 800) {
-                                        $('#th_ten_ngvong').attr("style", "width:40px;");
-                                    }
-                                    else {
-                                        $('#th_ten_ngvong').removeAttr("style");
+                                        sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia');
+                                        bt_xuat_phieu_tong_hop.text('Xuất phiếu tổng hợp');
+                                        bt_them_nguyen_vong.text("Thêm nguyện vọng");
+
+                                        $('#div_thead').css('display', 'inline');
+                                        $('#div_thead').show();
+
+                                        $('.span_thongtin_nv').css('display', 'none');
+                                        $('.span_thongtin_nv').hide();
+
+                                        $('.span_noidung_nv').css('font-weight', 'normal')
                                     }
                                     function reportWindowSize() {
-                                        if (window.innerWidth <= 800) {
-                                            $('#th_ten_ngvong').attr("style", "width:40px;");
-                                        }
-                                        else {
-                                            $('#th_ten_ngvong').removeAttr("style");
-                                        }
                                         if (window.innerWidth <= 1200) {
-                                            sp_tieude.innerText = "Xét tuyển bằng điểm thi tốt nghiệp";
-                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu";
-                                            bt_them_nguyen_vong.innerHTML = "Thêm NV";
+
+                                            sp_tieude.text('Xét tuyển bằng điểm thi tốt nghiệp');
+                                            bt_xuat_phieu_tong_hop.text('Xuất phiếu');
+                                            bt_them_nguyen_vong.text("Thêm nguyện vọng");
+
+                                            $('#div_thead').css('display', 'none');
+                                            $('#div_thead').hide();
+
+                                            $('.span_thongtin_nv').css('display', 'inline');
+                                            $('.span_thongtin_nv').show();
+
+                                            $('.span_noidung_nv').css('font-weight', 'bold')
                                         }
                                         else {
-                                            sp_tieude.innerText = "Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia";
-                                            bt_xuat_phieu_tong_hop.innerHTML = "Xuất phiếu tổng hợp";
-                                            bt_them_nguyen_vong.innerHTML = "Thêm nguyện vọng";
+                                            sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia');
+                                            bt_xuat_phieu_tong_hop.text('Xuất phiếu tổng hợp');
+                                            bt_them_nguyen_vong.text("Thêm nguyện vọng");
+
+                                            $('#div_thead').css('display', 'inline');
+                                            $('#div_thead').show();
+
+                                            $('.span_thongtin_nv').css('display', 'none');
+                                            $('.span_thongtin_nv').hide();
+
+                                            $('.span_noidung_nv').css('font-weight', 'normal')
                                         }
                                     }
                                     window.onresize = reportWindowSize;
@@ -118,8 +215,12 @@
                         </center>
                     </div>
                 </div>
+               
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-12"><hr class="mt-1 mb-1" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
                         <p style="color:red; font-style:italic; text-align:justify" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic ;text-align:justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
@@ -158,8 +259,7 @@
                         <div class="row">
                             <div class="col-4">Tổ hợp môn</div>
                             <div class="col-8">
-                                <select id="select_tohopmon" class="form-select"  ></select>
-                                @*<script>function hideError() { $('#').text('Thm_ID_Error'); $('#Nganh_ID_Error').text(''); } </script>*@
+                                <select id="select_tohopmon" class="form-select"  ></select>                               
                                 <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
                             </div>
                             <div class="col-12"><hr class="mt-1 mb-2" /></div>
@@ -371,58 +471,7 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        ts_dkxt_thptqg_list_all();
-    });
-    function ts_dkxt_thptqg_list_all() {
-        let _output = "";
-        $.ajax({
-            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_ListAll/",
-            type: 'GET',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            async: false,
-            success: function (res) {
-                $('#ThiSinh_ID_DK_Prs').val(res.Tsdk_id_dk);
-                $('#span_Uutien_doituong').html(res.Tsdk_doituong_ten_diem);
-                $('#span_Uutien_khuvuc').html(res.Tsdk_khuvuv_ten_diem);
-                $('#txt_hocluc_12').val(res.Tsdk_xeploai_hocluc_12);
-                $('#txt_hanhkiem_12').val(res.Tsdk_xeploai_hanhkiem_12);
-
-                if (res.view_list_dkxt_thptqg_ts == 0) {
-                    _output = '<tr><td colspan="5"  style="text-align:center">Chưa đăng ký nguyện vọng nào!</td></tr>';
-                }
-
-                else {
-                    $.each(res.view_list_dkxt_thptqg_ts, function (i, result) {
-                        if (res.view_list_dkxt_thptqg_ts.length == 1) {
-                            _output = '<tr>' +
-                                '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" disabled>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" disabled>&#8744;</button>  </td>` +
-                                '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
-                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
-                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
-                                '<td style="text-align: center; vertical-align: middle !important">' + `<a class="btn btn-light btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Sửa</a>&nbsp;<a class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Xoá</a>` + '</td>' +
-                                '</tr>'
-                        }
-                        else if (res.view_list_dkxt_thptqg_ts.length > 1) {
-                            _output += '<tr>' +
-                                '<td style="vertical-align: middle !important "> NV' + result.dkxt_KQTQG_NguyenVong + "&nbsp;" + `<button class="btn btn-outline-primary btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}>&#8743;</button>&nbsp;<button  class="btn btn-outline-primary btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == res.view_list_dkxt_thptqg_ts.length - 1 ? "disabled" : ""}>&#8744;</button></td>` +
-                                '<td style="vertical-align: middle !important "> ' + result.dkxt_KQTQG_TenAll.nganh_GhiChu + ' </td>' +
-                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_TenAll.thm_MaTen + '</td>' +
-                                '<td style="vertical-align: middle !important ">' + result.dkxt_KQTQG_Diem_Tong_Full + '</td>' +
-                                '<td style="text-align: center; vertical-align: middle !important">' + `<a class="btn btn-light btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Sửa</a>&nbsp;<a class="btn btn-light btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})">Xoá</a>` + '</td>' +
-                                '</tr>'
-                        }
-                    });
-                }
-                document.getElementById('tbody_list_nguyenvong_xtkqthpt').innerHTML = _output;
-            },
-            error: function (errormessage) {
-                console.log("Có lỗi xảy ra trong quá trình thực hiện");
-            }
-        });
-    }
+<script>   
     // chuyển đến trang sửa thông tin nguyện vọng
     function update_aspirations_on_table_onclick(dkxt_id) {
         var str_url = '?dkxt_id=' + dkxt_id;
@@ -452,8 +501,8 @@
     $('#bt_ok_on_modal_change').click(function () {
         let _check_action = $('#key_check_down_up').val();
         let data_Obj_change = { Dkxt_KQTQG_ID: $('#key_change_dkxt_kqtthptqg_id').val() };
-        console.log(_check_action);
-        console.log(data_Obj_change.Dkxt_KQTQG_ID);
+        //console.log(_check_action);
+        //console.log(data_Obj_change.Dkxt_KQTQG_ID);
 
         if (_check_action == 1) { // sửa lên trên
             $.ajax({
@@ -465,11 +514,11 @@
                 success: function (res) {
                     console.log(res);
                     if (res.status == true) {
-                        ts_dkxt_thptqg_list_all();
+                        LoadData_All_DkxtKQTN();
                         $('#modal_tb_thaydoinv').modal('hide');
                         $('#key_change_dkxt_kqtthptqg_id').val('');
                         $('#key_check_down_up').val('');
-                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");
+                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");                        
                     }
                     else {
                         showToast("Lỗi", res.msg, "bg-success");
@@ -489,13 +538,13 @@
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res);
+                  /*  console.log(res);*/
                     if (res.status == true) {
-                        ts_dkxt_thptqg_list_all();
+                        LoadData_All_DkxtKQTN();
                         $('#modal_tb_thaydoinv').modal('hide');
                         $('#key_change_dkxt_kqtthptqg_id').val('');
                         $('#key_check_down_up').val('');
-                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");
+                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");                        
                     }
                     else {
                         showToast("Lỗi", res.msg, "bg-success");
@@ -538,9 +587,9 @@
             dataType: 'json',
             success: function (res) {
                 if (res.status == true) {
-                    ts_dkxt_thptqg_list_all();
+                    LoadData_All_DkxtKQTN();
                     $('#modal_tb_xoa').modal('hide');
-                    showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
+                    showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");                    
                 }
                 else {
                     showToast("Lỗi", res.msg, "bg-success");
@@ -921,12 +970,12 @@
             success: function (res) {
                 if (res.success) {
                     reset_fields_controll_disabled_true();
-                    ts_dkxt_thptqg_list_all();
+                    LoadData_All_DkxtKQTN();
                     // showToast("Thông báo", "Thêm mới nguyện vọng thành công!", "bg-success");
                     $('#div_list_aspirations').css('display', 'inline');
                     $('#div_update_aspirations').css('display', 'none');
                     $("#loadingModal").modal("hide");
-                    thongbao_dangky_thanhcong(res.data);
+                    thongbao_dangky_thanhcong(res.data);                  
                 } else {
                     $("#loadingModal").modal("hide");
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");

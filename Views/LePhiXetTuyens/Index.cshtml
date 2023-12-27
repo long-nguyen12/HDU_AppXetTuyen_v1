@@ -8,24 +8,11 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+
     .btn, .form-select, .form-control {
         border-radius: 3px;
     }
 </style>
-<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
-    <div class="container-fluid px-4">
-        <div class="page-header-content">
-            <div class="row align-items-center justify-content-between pt-3">
-                <div class="col-auto mb-1">
-                    <div class="page-header-title mb-2">
-                        <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Theo dõi thông tin nộp lệ phí xét tuyển của thí sinh</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
 <script>
     $('document').ready(function () {
         $("#list-kqthi-thpt").hide();
@@ -33,6 +20,7 @@
         $("#list-tuyenthang").hide();
         $("#list-ngoaingu").hide();
         $("#list-dgnl").hide();
+
     })
     function ConverDateToString(date) {
         var parts = date.split('-');
@@ -41,411 +29,769 @@
     }
 
 </script>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span id="sp_tieude">Theo dõi nguyện vọng nộp xét tuyển <a style="display:none" id="a_thongtin_dotxet_hientai"></a></span>
+                        <input type="hidden" id="Dxt_ThoiGian_BatDau_ViewBag" style="display: none" value="@ViewBag.Dxt_ThoiGian_BatDau" />
+                        <input type="hidden" id="Dxt_ThoiGian_KetThuc_ViewBag" style="display: none" value="@ViewBag.Dxt_ThoiGian_KetThuc" />
+                    </div>
+                    <div class="page-item mb-0 mt-1" id="div_thongtin_dotxet_hientai" style="display:none; color:blue; margin-left:25px"></div>
+                    <script>
+                        $(document).ready(function () {
+                            var str_time = '(Đợt xét từ ' + ConverDateToString($('#Dxt_ThoiGian_BatDau_ViewBag').val()) + ' đến ' + ConverDateToString($('#Dxt_ThoiGian_KetThuc_ViewBag').val()) + ')';
+                            if (window.innerWidth <= 1000) {
+                                $('#a_thongtin_dotxet_hientai').css('display', 'none');
+                                $('#a_thongtin_dotxet_hientai').hide();
+                                $('#div_thongtin_dotxet_hientai').css('display', 'inline');
+                                $('#div_thongtin_dotxet_hientai').show();
+                                $('#div_thongtin_dotxet_hientai').text(str_time)  
 
-<div class="container-fluid px-12">
-    <div id="fadeInUp">
+                                $('#div_thead_pt6').css('display', 'none');
+                                $('#div_thead_pt6').hide();
+                                $('.span_tieude_chitiet_pt6').css('display', 'inline');
+                                $('.span_tieude_chitiet_pt6').show();
+                                $('.span_noidung_chitiet_pt6').css('font-weight', 'bold')
 
-        <div class="card card-header-actions mt-2 mb-1" id="list-kqthi-thpt" style="display:none">
-            <div class="card-header">
-                Danh sách nguyện vọng nộp xét tuyển sử dụng kết quả thi THPT Quốc gia
-            </div>
-            <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr>
-                            <th style="width:20%">Đợt xét</th>
-                            <th style="width:10%">Nguyện vọng</th>
-                            <th style="width:20%">Mã, tên ngành</th>
-                            <th style="width:15%">Mã, tên tổ hợp</th>
-                            <th>Ngày Đăng ký</th>
-                            <th>Thông tin nộp lệ phí</th>
-                            <th class="text-center  text-nowrap" style="width:120px">Cập nhật nộp lệ phí</th>
-                        </tr>
-                        <tbody class="tbody-trunghoc-ptqg">
-                        </tbody>
-                    </table>
+                                $('#div_thead_pt5').css('display', 'none');
+                                $('#div_thead_pt5').hide();
+                                $('.span_tieude_chitiet_pt5').css('display', 'inline');
+                                $('.span_tieude_chitiet_pt5').show();
+                                $('.span_noidung_chitiet_pt5').css('font-weight', 'bold')
+
+                                $('#div_thead_pt4').css('display', 'none');
+                                $('#div_thead_pt4').hide();
+                                $('.span_tieude_chitiet_pt4').css('display', 'inline');
+                                $('.span_tieude_chitiet_pt4').show();
+                                $('.span_noidung_chitiet_pt4').css('font-weight', 'bold')
+
+                                $('#div_thead_pt3').css('display', 'none');
+                                $('#div_thead_pt3').hide();
+                                $('.span_tieude_chitiet_pt3').css('display', 'inline');
+                                $('.span_tieude_chitiet_pt3').show();
+                                $('.span_noidung_chitiet_pt3').css('font-weight', 'bold');
+
+                                $('#div_thead_pt2').css('display', 'none');
+                                $('#div_thead_pt2').hide();
+                                $('.span_tieude_chitiet_pt2').css('display', 'inline');
+                                $('.span_tieude_chitiet_pt2').show();
+                                $('.span_noidung_chitiet_pt2').css('font-weight', 'bold');
+
+                            }
+                            else {
+                                $('#a_thongtin_dotxet_hientai').css('display', 'inline');
+                                $('#a_thongtin_dotxet_hientai').show();
+                                $('#a_thongtin_dotxet_hientai').text(str_time)
+                                $('#div_thongtin_dotxet_hientai').css('display', 'none');
+                                $('#div_thongtin_dotxet_hientai').hide();
+                           
+                                $('#div_thead_pt6').css('display', 'inline');
+                                $('#div_thead_pt6').show();
+                                $('.span_tieude_chitiet_pt6').css('display', 'none');
+                                $('.span_tieude_chitiet_pt6').hide();
+                                $('.span_noidung_chitiet_pt6').css('font-weight', 'normal');
+
+                                $('#div_thead_pt5').css('display', 'inline');
+                                $('#div_thead_pt5').show();
+                                $('.span_tieude_chitiet_pt5').css('display', 'none');
+                                $('.span_tieude_chitiet_pt5').hide();
+                                $('.span_noidung_chitiet_pt5').css('font-weight', 'normal');                    
+
+                                $('#div_thead_pt4').css('display', 'inline');
+                                $('#div_thead_pt4').show();
+                                $('.span_tieude_chitiet_pt4').css('display', 'none');
+                                $('.span_tieude_chitiet_pt4').hide();
+                                $('.span_noidung_chitiet_pt4').css('font-weight', 'normal');
+                           
+
+                                $('#div_thead_pt3').css('display', 'inline');
+                                $('#div_thead_pt3').show();
+                                $('.span_tieude_chitiet_pt3').css('display', 'none');
+                                $('.span_tieude_chitiet_pt3').hide();
+                                $('.span_noidung_chitiet_pt3').css('font-weight', 'normal');
+                           
+
+                                $('#div_thead_pt2').css('display', 'inline');
+                                $('#div_thead_pt2').show();
+                                $('.span_tieude_chitiet_pt2').css('display', 'none');
+                                $('.span_tieude_chitiet_pt2').hide();
+                                $('.span_noidung_chitiet_pt2').css('font-weight', 'normal');
+                         
+                                
+                            }
+                            function reportWindowSize() {
+                                if (window.innerWidth <= 1000) {
+                                    $('#a_thongtin_dotxet_hientai').css('display', 'none');
+                                    $('#a_thongtin_dotxet_hientai').hide();
+                                    $('#div_thongtin_dotxet_hientai').css('display', 'inline');
+                                    $('#div_thongtin_dotxet_hientai').show();
+                                    $('#div_thongtin_dotxet_hientai').text(str_time)
+
+                                    $('#div_thead_pt6').css('display', 'none');
+                                    $('#div_thead_pt6').hide();
+                                    $('.span_tieude_chitiet_pt6').css('display', 'inline');
+                                    $('.span_tieude_chitiet_pt6').show();
+                                    $('.span_noidung_chitiet_pt6').css('font-weight', 'bold')
+
+                                    $('#div_thead_pt5').css('display', 'none');
+                                    $('#div_thead_pt5').hide();
+                                    $('.span_tieude_chitiet_pt5').css('display', 'inline');
+                                    $('.span_tieude_chitiet_pt5').show();
+                                    $('.span_noidung_chitiet_pt5').css('font-weight', 'bold')
+
+                                    $('#div_thead_pt4').css('display', 'none');
+                                    $('#div_thead_pt4').hide();
+                                    $('.span_tieude_chitiet_pt4').css('display', 'inline');
+                                    $('.span_tieude_chitiet_pt4').show();
+                                    $('.span_noidung_chitiet_pt4').css('font-weight', 'bold')
+
+                                    $('#div_thead_pt3').css('display', 'none');
+                                    $('#div_thead_pt3').hide();
+                                    $('.span_tieude_chitiet_pt3').css('display', 'inline');
+                                    $('.span_tieude_chitiet_pt3').show();
+                                    $('.span_noidung_chitiet_pt3').css('font-weight', 'bold');
+
+                                    $('#div_thead_pt2').css('display', 'none');
+                                    $('#div_thead_pt2').hide();
+                                    $('.span_tieude_chitiet_pt2').css('display', 'inline');
+                                    $('.span_tieude_chitiet_pt2').show();
+                                    $('.span_noidung_chitiet_pt2').css('font-weight', 'bold');
+
+                                }
+                                else {
+                                    $('#a_thongtin_dotxet_hientai').css('display', 'inline');
+                                    $('#a_thongtin_dotxet_hientai').show();
+                                    $('#a_thongtin_dotxet_hientai').text(str_time)
+                                    $('#div_thongtin_dotxet_hientai').css('display', 'none');
+                                    $('#div_thongtin_dotxet_hientai').hide();
+
+                                    $('#div_thead_pt6').css('display', 'inline');
+                                    $('#div_thead_pt6').show();
+                                    $('.span_tieude_chitiet_pt6').css('display', 'none');
+                                    $('.span_tieude_chitiet_pt6').hide();
+                                    $('.span_noidung_chitiet_pt6').css('font-weight', 'normal');
+
+                                    $('#div_thead_pt5').css('display', 'inline');
+                                    $('#div_thead_pt5').show();
+                                    $('.span_tieude_chitiet_pt5').css('display', 'none');
+                                    $('.span_tieude_chitiet_pt5').hide();
+                                    $('.span_noidung_chitiet_pt5').css('font-weight', 'normal');
+
+                                    $('#div_thead_pt4').css('display', 'inline');
+                                    $('#div_thead_pt4').show();
+                                    $('.span_tieude_chitiet_pt4').css('display', 'none');
+                                    $('.span_tieude_chitiet_pt4').hide();
+                                    $('.span_noidung_chitiet_pt4').css('font-weight', 'normal');
+
+
+                                    $('#div_thead_pt3').css('display', 'inline');
+                                    $('#div_thead_pt3').show();
+                                    $('.span_tieude_chitiet_pt3').css('display', 'none');
+                                    $('.span_tieude_chitiet_pt3').hide();
+                                    $('.span_noidung_chitiet_pt3').css('font-weight', 'normal');
+
+
+                                    $('#div_thead_pt2').css('display', 'inline');
+                                    $('#div_thead_pt2').show();
+                                    $('.span_tieude_chitiet_pt2').css('display', 'none');
+                                    $('.span_tieude_chitiet_pt2').hide();
+                                    $('.span_noidung_chitiet_pt2').css('font-weight', 'normal');
+
+                                }
+                            }
+                            window.onresize = reportWindowSize;
+                        })
+                    </script>
                 </div>
             </div>
         </div>
-        <script>
-            $(document).ready(function () {
-                LoadData_Nv_ThiSinh_XtDungKQTHPTQG();
-            });
-            function LoadData_Nv_ThiSinh_XtDungKQTHPTQG() {
-                $.ajax({
-                    url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_XtDungKQTHPTQG",
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    async: false,
-                    success: function (res) {                       
-                        if (res.success) {                           
-                            let TrungHocPT = res.TrungHocPT;
-                            if (TrungHocPT.length > 0) {
-                                $("#list-kqthi-thpt").show();
-                                let html = "";
-                                $.each(TrungHocPT, function (key, item) {
-                                    let trangthai = "";
-                                    if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp minh chứng </span >'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp minh chứng </span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 2) {
-                                        trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                        trangthai = '<span>Đã xác minh, đúng</span>'
-                                    }
+    </div>
+</header>
 
-                                    html += "<tr>";
-                                    html += '<td> ' + 'Từ ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_BatDau) + ' đến ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_KetThuc) + '</td>';
-                                    html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
-                                    html += '<td>' + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + '</td>';
-                                    html += '<td>' + item.Thm.ThmMaTen + '</td>';
-                                    html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
-                                    html += '<td >' + trangthai + '</td>';
-                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 2)">Nộp minh chứng</button></td>`;
-                                   
-                                    html += "</tr>";
 
-                                });
-                                $('.tbody-trunghoc-ptqg').html(html);
-                            }
-                            else {
-                                $("#list-kqthi-thpt").hide();
-                            }
+
+<div class="container-fluid px-12">
+
+    <div id="fadeInUp">
+        <div class="card card-header-actions mt-2 mb-1" id="list-kqthi-thpt" style="display:none">
+            <div class="card-header">Xét tuyển dùng điểm thi tốt nghiệp</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12" id="div_thead_pt2" style="display:none">
+                        <div class="row g-1">
+                            <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Ngành</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Tổ hợp môn</b></div>
+                            <div class="col-xl-1 col-lg-12"><b>Ngày đăng ký</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Trạng thái duyệt hồ sơ</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Minh chứng nộp lệ phí</b></div>
+                            <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
+                        </div>
+                        <div class="row"><div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div></div>
+                    </div>
+                    <div id="div_tbody_list_pt2">
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            LoadData_Nv_ThiSinh_XtDungKQTHPTQG();
+                        });
+                        function LoadData_Nv_ThiSinh_XtDungKQTHPTQG() {
+                            $('#div_tbody_list_pt2').empty();
+
+                            $.ajax({
+                                url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_XtDungKQTHPTQG",
+                                type: "GET",
+                                contentType: "application/json;charset=utf-8",
+                                async: false,
+                                success: function (res) {
+                                    if (res.success) {
+                                        let TrungHocPT = res.TrungHocPT;
+                                        if (TrungHocPT.length > 0) {
+                                            $("#list-kqthi-thpt").show();
+                                            $.each(TrungHocPT, function (key, item) {
+                                                let trangthaikp = "";
+                                                if (item.Dkxt_TrangThai_KinhPhi == 0) {
+                                                    trangthaikp_pt2 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span >'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 1) {
+                                                    trangthaikp_pt2 = '<span>Đã có minh chứng nộp lệ phí </span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) {
+                                                    trangthaikp_pt2 = '<span class="text-warning">Trường đã kiểm tra, sai</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) {
+                                                    trangthaikp_pt2 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) {
+                                                    trangthaikp_pt2 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                }
+                                                let trangthaihs_pt2 = "";
+                                                if (item.Dkxt_TrangThai_HoSo == 0) {
+                                                    trangthaihs_pt2 = '<span style="color:red">Trường chưa kiểm tra</span >'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 1) {
+                                                    trangthaihs_pt2 = '<span>Trường dã kiểm tra, Có sai sót</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 2) {
+                                                    trangthaihs_pt2 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 9) {
+                                                    trangthaihs_pt2 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                }
+                                                let div_item_pt2 = "";
+                                                div_item_pt2 += `<div class="col-lg-12">`;
+                                                div_item_pt2 += `<div class="row g-1">`;
+                                                div_item_pt2 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- </span><span class="col-8 span_noidung_chitiet_pt2">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
+                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt2">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt2">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
+                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt2">` + item.Thm.ThmMaTen + `</span></div>`;
+                                                div_item_pt2 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt2">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
+                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt2"/><span class="col-xl-8  span_noidung_chitiet_pt2">` + trangthaihs_pt2 + `</span></div>`;
+                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt2"/><span class="col-8 span_noidung_chitiet_pt2">` + trangthaikp_pt2 + `</span></div>`;
+                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12">`;
+                                                div_item_pt2 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 2)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt2 += `</div>`;
+                                                div_item_pt2 += `</div>`;
+                                                div_item_pt2 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
+                                                div_item_pt2 += `</div>`;
+                                                $('#div_tbody_list_pt2').append(div_item_pt2);
+                                            });
+                                            if (window.innerWidth <= 1000) {
+                                                $('#div_thead_pt2').css('display', 'none');
+                                                $('#div_thead_pt2').hide();
+                                                $('.span_tieude_chitiet_pt2').css('display', 'inline');
+                                                $('.span_tieude_chitiet_pt2').show();
+                                                $('.span_noidung_chitiet_pt2').css('font-weight', 'bold')
+                                            }
+                                            else {
+
+                                                $('#div_thead_pt2').css('display', 'inline');
+                                                $('#div_thead_pt2').show();
+                                                $('.span_tieude_chitiet_pt2').css('display', 'none');
+                                                $('.span_tieude_chitiet_pt2').hide();
+                                                $('.span_noidung_chitiet_pt2').css('font-weight', 'normal')
+                                            }
+                                        }
+                                        else {
+                                            $("#list-kqthi-thpt").hide();
+                                        }
+                                    }
+                                    else {
+                                        // thông báo lỗi
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(error);
+                                },
+                            });
                         }
-                        else {
-                            // thông báo lỗi
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    },
-                });
-            }
-        </script>
+                    </script>
+                </div>
+            </div>
+        </div>
+
 
         <div class="card card-header-actions mt-1 mb-1" id="list-hocba" style="display:none">
             <div class="card-header">
-                Danh sách nguyện vọng nộp xét tuyển sử dụng kết quả học tập ở THPT
+                Xét tuyển dùng điểm học bạ cấp 3
             </div>
             <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr>
-                            <th style="width:20%">Đợt xét</th>
-                            <th style="width:10%">Nguyện vọng</th>
-                            <th style="width:20%">Mã, tên ngành</th>
-                            <th style="width:15%; ">Mã, tên tổ hợp</th>
-                            <th>Ngày Đăng ký</th>
-                            <th>Thông tin nộp lệ phí</th>
-                            <th class="text-center  text-nowrap" style="width:120px">Cập nhật nộp lệ phí</th>
-                        </tr>
-                        <tbody class="tbody-hocba">
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-lg-12" id="div_thead_pt3" style="display:none">
+                        <div class="row g-1">
+                            <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Ngành</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Tổ hợp môn</b></div>
+                            <div class="col-xl-1 col-lg-12"><b>Ngày đăng ký</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Trạng thái duyệt hồ sơ</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Minh chứng nộp lệ phí</b></div>
+                            <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
+                        </div>
+                        <div class="row"><div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div></div>
+                    </div>
+                    <div id="div_tbody_list_pt3">
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            LoadData_Nv_ThiSinh_XtDungHocBa();
+                        });
+                        function LoadData_Nv_ThiSinh_XtDungHocBa() {
+                            $('#div_tbody_list_pt3').empty();
+                            $.ajax({
+                                url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_XtDungHocBa",
+                                type: "GET",
+                                contentType: "application/json;charset=utf-8",
+                                async: false,
+                                success: function (res) {
+                                    if (res.success) {
+                                        let HocBa = res.HocBa;
+                                        if (HocBa.length > 0) {
+                                            $("#list-hocba").show();
+                                            let html = "";
+                                            $.each(HocBa, function (key, item) {
+                                                let trangthaikp_pt3 = "";
+                                                if (item.Dkxt_TrangThai_KinhPhi == 0) {
+                                                    trangthaikp_pt3 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 1) {
+                                                    trangthaikp_pt3 = '<span>Đã có minh chứng nộp lệ phí </span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) {
+                                                    trangthaikp_pt3 = '<span class="text-warning">Trường đã kiểm tra, sai</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) {
+                                                    trangthaikp_pt3 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) {
+                                                    trangthaikp_pt3 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                }
+
+                                                let trangthaihs_pt3 = "";
+                                                if (item.Dkxt_TrangThai_HoSo == 0) {
+                                                    trangthaihs_pt3 = '<span style="color:red">Trường chưa kiểm tra</span >'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 1) {
+                                                    trangthaihs_pt3 = '<span>Trường dã kiểm tra, Có sai sót</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 2) {
+                                                    trangthaihs_pt3 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 9) {
+                                                    trangthaihs_pt3 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                }
+                                                let div_item_pt3 = "";
+
+                                                div_item_pt3 += `<div class="col-lg-12">`;
+                                                div_item_pt3 += `<div class="row g-1">`;
+                                                div_item_pt3 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- </span><span class="col-8 span_noidung_chitiet_pt3">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt3">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Thm.ThmMaTen + `</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt3">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt3"/><span class="col-xl-8  span_noidung_chitiet_pt3">` + trangthaihs_pt3 + `</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt3"/><span class="col-8 span_noidung_chitiet_pt3">` + trangthaikp_pt3 + `</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12">`;
+                                                div_item_pt3 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt3 += `</div>`;
+                                                div_item_pt3 += `</div>`;
+                                                div_item_pt3 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
+                                                div_item_pt3 += `</div>`;
+                                                $('#div_tbody_list_pt3').append(div_item_pt3);
+                                            });
+                                            if (window.innerWidth <= 1000) {
+
+                                                $('#div_thead_pt3').css('display', 'none');
+                                                $('#div_thead_pt3').hide();
+                                                $('.span_tieude_chitiet_pt3').css('display', 'inline');
+                                                $('.span_tieude_chitiet_pt3').show();
+                                                $('.span_noidung_chitiet_pt3').css('font-weight', 'bold')
+                                            }
+                                            else {
+
+                                                $('#div_thead_pt3').css('display', 'inline');
+                                                $('#div_thead_pt3').show();
+                                                $('.span_tieude_chitiet_pt3').css('display', 'none');
+                                                $('.span_tieude_chitiet_pt3').hide();
+                                                $('.span_noidung_chitiet_pt3').css('font-weight', 'normal')
+                                            }
+
+                                        }
+                                        else {
+                                            $("#list-hocba").hide();
+                                        }
+                                    }
+                                    else {/* thông báo lỗi*/ }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(error);
+                                },
+                            });
+                        }
+                    </script>
                 </div>
+
             </div>
         </div>
-        <script>
-            $(document).ready(function () {
-                LoadData_Nv_ThiSinh_XtDungHocBa();
-            });
-            function LoadData_Nv_ThiSinh_XtDungHocBa() {
-                $('.tbody-hocba').html('')
-                $.ajax({
-                    url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_XtDungHocBa",
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    async: false,
-                    success: function (res) {
-                        if (res.success) {
-                            let HocBa = res.HocBa;
-                            if (HocBa.length > 0) {
-                                $("#list-hocba").show();
-                                let html = "";
-                                $.each(HocBa, function (key, item) {
-                                    let trangthai = "";
-                                    if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp minh chứng </span >'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp minh chứng </span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 2) {
-                                        trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                        trangthai = '<span>Đã xác minh, đúng</span>'
-                                    }
-                                    html += '<tr>';
-                                    html += '<td> Từ ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_BatDau) + ' đến ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_KetThuc) + '</td>';
-                                    html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
-                                    html += '<td>' + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + '</td>';
-                                    html += '<td>' + item.Thm.ThmMaTen + '</td>';
-                                    html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
-                                    html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Nộp minh chứng</button></td>`;
-                                    html += '</tr>';
-                                });
-                                $('.tbody-hocba').html(html);
-                            }
-                            else {
-                                $("#list-hocba").hide();
-                            }
-                        }
-                        else {
-                            // thông báo lỗi
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    },
-                });
-            }
-        </script>
+
 
         <div class="card card-header-actions mt-1 mb-1" id="list-tuyenthang" style="display:none">
             <div class="card-header">
-                Danh sách nguyện vọng nộp xét tuyển thẳng theo quy định.
+                Xét tuyển theo dạng tuyển thẳng
             </div>
             <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr>
-                            <th style="width:20%">Đợt xét</th>
-                            <th style="width:10%">Nguyện vọng</th>
-                            <th style="width:20%">Mã, tên ngành</th>
-                            <th style="width:15%">Môn đạt giải</th>
-                            <th>Ngày Đăng ký</th>
-                            <th>Thông tin nộp lệ phí</th>
-                            <th class="text-center  text-nowrap" style="width:120px">Cập nhật nộp lệ phí</th>
-                        </tr>
-                        <tbody class="tbody-tuyenthang">
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-lg-12" id="div_thead_pt4" style="display:none">
+                        <div class="row g-1">
+                            <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Ngành</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Thông tin giải</b></div>
+                            <div class="col-xl-1 col-lg-12"><b>Ngày đăng ký</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Trạng thái duyệt hồ sơ</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Minh chứng nộp lệ phí</b></div>
+                            <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
+                        </div>
+                        <div class="row"><div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div></div>
+                    </div>
+                    <div id="div_tbody_list_pt4">
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            LoadData_Nv_ThiSinh_Xt_TuyenThang();
+
+                        });
+                        function LoadData_Nv_ThiSinh_Xt_TuyenThang() {
+                            $('#div_tbody_list_pt4').empty();
+                            $.ajax({
+                                url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_Xt_TuyenThang",
+                                type: "GET",
+                                contentType: "application/json;charset=utf-8",
+                                async: false,
+                                success: function (res) {
+                                    if (res.success) {
+                                        let TuyenThang = res.TuyenThang;
+
+                                        if (TuyenThang.length > 0) {
+
+                                            $.each(TuyenThang, function (key, item) {
+                                                let trangthaikp_pt4 = "";
+                                                if (item.Dkxt_TrangThai_KinhPhi == 0) {
+                                                    trangthaikp_pt4 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 1) {
+                                                    trangthaikp_pt4 = '<span>Đã có minh chứng nộp lệ phí </span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) {
+                                                    trangthaikp_pt4 = '<span class="text-warning">Trường đã kiểm tra, sai</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) {
+                                                    trangthaikp_pt4 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) {
+                                                    trangthaikp_pt4 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                }
+
+                                                let trangthaihs_pt4 = "";
+                                                if (item.Dkxt_TrangThai_HoSo == 0) {
+                                                    trangthaihs_pt4 = '<span style="color:red">Trường chưa kiểm tra</span >'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 1) {
+                                                    trangthaihs_pt4 = '<span>Trường dã kiểm tra, Có sai sót</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 2) {
+                                                    trangthaihs_pt4 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>'
+                                                }
+                                                else if (item.Dkxt_TrangThai_HoSo == 9) {
+                                                    trangthaihs_pt4 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                }
+                                                let div_item_pt4 = "";
+
+                                                div_item_pt4 += `<div class="col-lg-12">`;
+                                                div_item_pt4 += `<div class="row g-1">`;
+                                                div_item_pt4 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- </span><span class="col-8 span_noidung_chitiet_pt4">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
+                                                div_item_pt4 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt4">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt4">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
+                                                div_item_pt4 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Thông tin giải: </span><span class="col-8 span_noidung_chitiet_pt4">` + item.Dkxt_LoaiGiai + ' - ' + item.Dkxt_MonDatGiai + '/ (năm:' + item.Dkxt_NamDatGiai + `)</span></div>`;
+                                                div_item_pt4 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt4">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
+                                                div_item_pt4 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt4"/><span class="col-xl-8  span_noidung_chitiet_pt4">` + trangthaihs_pt4 + `</span></div>`;
+                                                div_item_pt4 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt4"/><span class="col-8 span_noidung_chitiet_pt4">` + trangthaikp_pt4 + `</span></div>`;
+                                                div_item_pt4 += `<div class="col-xl-2 col-lg-12">`;
+                                                div_item_pt4 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 4)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt4 += `</div>`;
+                                                div_item_pt4 += `</div>`;
+                                                div_item_pt4 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
+                                                div_item_pt4 += `</div>`;
+
+                                                $('#div_tbody_list_pt4').append(div_item_pt4);
+                                            });
+
+                                            $("#list-tuyenthang").show();
+                                            if (window.innerWidth <= 1000) {
+
+                                                $('#div_thead_pt4').css('display', 'none');
+                                                $('#div_thead_pt4').hide();
+                                                $('.span_tieude_chitiet_pt4').css('display', 'inline');
+                                                $('.span_tieude_chitiet_pt4').show();
+                                                $('.span_noidung_chitiet_pt4').css('font-weight', 'bold')
+                                            }
+                                            else {
+
+                                                $('#div_thead_pt4').css('display', 'inline');
+                                                $('#div_thead_pt4').show();
+                                                $('.span_tieude_chitiet_pt4').css('display', 'none');
+                                                $('.span_tieude_chitiet_pt4').hide();
+                                                $('.span_noidung_chitiet_pt4').css('font-weight', 'normal')
+                                            }
+                                        }
+                                        else {
+                                            $("#list-tuyenthang").hide();
+                                        }
+                                    }
+                                    else {
+                                        // thông báo lỗi
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(error);
+                                },
+                            });
+                        }
+                    </script>
                 </div>
             </div>
         </div>
-        <script>
-            $(document).ready(function () {
-                LoadData_Nv_ThiSinh_Xt_TuyenThang();
 
-            });
-            function LoadData_Nv_ThiSinh_Xt_TuyenThang() {
-                $.ajax({
-                    url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_Xt_TuyenThang",
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    async: false,
-                    success: function (res) {
-                        if (res.success) {
-                            let TuyenThang = res.TuyenThang;
-
-                            if (TuyenThang.length > 0) {
-                                $("#list-tuyenthang").show();
-                                let html = "";
-                                $.each(TuyenThang, function (key, item) {
-                                    let trangthai = "";
-                                    if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp minh chứng </span >'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp minh chứng </span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 2) {
-                                        trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                        trangthai = '<span>Đã xác minh, đúng</span>'
-                                    }
-                                    html += '<tr>';
-                                    html += '<td> Từ ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_BatDau) + ' đến ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_KetThuc) + '</td>';
-                                    html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
-                                    html += '<td>' + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + '</td>';
-                                    html += '<td>' + item.Dkxt_MonDatGiai + '</td>';
-                                    html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
-                                    html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID},4)">Nộp minh chứng</button></td>`;
-                                    html += '</tr>';
-
-                                });
-                                $('.tbody-tuyenthang').html(html);
-                            }
-                            else {
-                                $("#list-tuyenthang").hide();
-                            }
-                        }
-                        else {
-                            // thông báo lỗi
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    },
-                });
-            }
-        </script>
 
         <div class="card card-header-actions mt-1 mb-1" id="list-ngoaingu" style="display:none">
             <div class="card-header">
-                Danh sách nguyện vọng nộp xét sử dụng chứng chỉ ngoại ngữ
+                Xét tuyển dùng chứng chỉ ngoại ngữ
             </div>
             <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr>
-                            <th style="width:20%">Đợt xét</th>
-                            <th style="width:10%">Nguyện vọng</th>
-                            <th style="width:20%">Mã, tên ngành</th>
-                            <th style="width:15%">Tên KQ Nộp Xét</th>
-                            <th>Ngày Đăng ký</th>
-                            <th>Thông tin nộp lệ phí</th>
-                            <th class="text-center  text-nowrap" style="width:120px">Cập nhật nộp lệ phí</th>
-                        </tr>
-                        <tbody class="tbody-ngoaingu">
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-lg-12" id="div_thead_pt5" style="display:none">
+                        <div class="row g-1">
+                            <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Ngành</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Thông tin chứng ngoại ngữ</b></div>
+                            <div class="col-xl-1 col-lg-12"><b>Ngày đăng ký</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Trạng thái duyệt hồ sơ</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Minh chứng nộp lệ phí</b></div>
+                            <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
+                        </div>
+                        <div class="row"><div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div></div>
+                    </div>
+                    <div id="div_tbody_list_pt5">
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            LoadData_Nv_ThiSinh_Xt_DungCCNgoaiNgu();
+
+                        });
+                        function LoadData_Nv_ThiSinh_Xt_DungCCNgoaiNgu() {
+                            $('#div_tbody_list_pt5').empty();
+                            $.ajax({
+                                url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_Xt_DungCCNgoaiNgu",
+                                type: "GET",
+                                contentType: "application/json;charset=utf-8",
+                                async: false,
+                                success: function (res) {
+                                    if (res.success) {
+                                        let NgoaiNgu = res.NgoaiNgu;
+                                        console.log(NgoaiNgu);
+                                        if (NgoaiNgu.length > 0) {
+                                          
+                                            $.each(NgoaiNgu, function (key, item) {
+                                                let trangthaikp_pt5 = "";
+                                                if (item.Dkxt_TrangThai_KinhPhi == 0) { trangthaikp_pt5 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 1) { trangthaikp_pt5 = '<span>Đã có minh chứng nộp lệ phí </span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) { trangthaikp_pt5 = '<span class="text-warning">Trường đã kiểm tra, sai</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) { trangthaikp_pt5 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) { trangthaikp_pt5 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+
+                                                let trangthaihs_pt5 = "";
+                                                if (item.Dkxt_TrangThai_HoSo == 0) { trangthaihs_pt5 = '<span style="color:red">Trường chưa kiểm tra</span >' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 1) { trangthaihs_pt5 = '<span>Trường dã kiểm tra, Có sai sót</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 2) { trangthaihs_pt5 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 9) { trangthaihs_pt5 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+                                                let div_item_pt5 = "";
+
+                                                div_item_pt5 += `<div class="col-lg-12">`;
+                                                div_item_pt5 += `<div class="row g-1">`;
+                                                div_item_pt5 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- </span><span class="col-8 span_noidung_chitiet_pt5">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
+                                                div_item_pt5 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt5">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt5">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
+                                                div_item_pt5 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt5">- Thông tin chứng ngoại ngữ: </span><span class="col-8 span_noidung_chitiet_pt5"  style="margin-right:10px">` + item.Dkxt_KetQuaDatDuoc + '/Tổng: ' + item.Dkxt_TongDiem + '/ (' + item.ChungChi_ID.Ten + `)</span></div>`;
+                                                div_item_pt5 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt5">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
+                                                div_item_pt5 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt5"/><span class="col-xl-8  span_noidung_chitiet_pt5">` + trangthaihs_pt5 + `</span></div>`;
+                                                div_item_pt5 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt5"/><span class="col-8 span_noidung_chitiet_pt5">` + trangthaikp_pt5 + `</span></div>`;
+                                                div_item_pt5 += `<div class="col-xl-2 col-lg-12">`;
+                                                div_item_pt5 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},5)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt5 += `</div>`;
+                                                div_item_pt5 += `</div>`;
+                                                div_item_pt5 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
+                                                div_item_pt5 += `</div>`;
+
+                                                $('#div_tbody_list_pt5').append(div_item_pt5);
+                                            });                                           
+
+                                            $("#list-ngoaingu").show();
+
+                                            if (window.innerWidth <= 1000) {
+
+                                                $('#div_thead_pt5').css('display', 'none');
+                                                $('#div_thead_pt5').hide();
+                                                $('.span_tieude_chitiet_pt5').css('display', 'inline');
+                                                $('.span_tieude_chitiet_pt5').show();
+                                                $('.span_noidung_chitiet_pt5').css('font-weight', 'bold')
+                                            }
+                                            else {
+
+                                                $('#div_thead_pt5').css('display', 'inline');
+                                                $('#div_thead_pt5').show();
+                                                $('.span_tieude_chitiet_pt5').css('display', 'none');
+                                                $('.span_tieude_chitiet_pt5').hide();
+                                                $('.span_noidung_chitiet_pt5').css('font-weight', 'normal')
+                                            }                                           
+                                        }
+                                    }
+                                    else {
+                                        $("#list-ngoaingu").hide();                                     
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(error);
+                                },
+                            });
+                        }
+                    </script>                     
                 </div>
             </div>
         </div>
-        <script>
-            $(document).ready(function () {
-                LoadData_Nv_ThiSinh_Xt_DungCCNgoaiNgu();
 
-            });
-            function LoadData_Nv_ThiSinh_Xt_DungCCNgoaiNgu() {
-                $.ajax({
-                    url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_Xt_DungCCNgoaiNgu",
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    async: false,
-                    success: function (res) {
-                        if (res.success) {
-                            let NgoaiNgu = res.NgoaiNgu;
-                            if (NgoaiNgu.length > 0) {
-                                $("#list-ngoaingu").show();
-                                let html = "";
-                                $.each(NgoaiNgu, function (key, item) {
-                                    let trangthai = "";
-                                    if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp minh chứng</span >'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp minh chứng</span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 2) {
-                                        trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                        trangthai = '<span>Đã xác minh, đúng</span>'
-                                    }
-                                    html += '<tr>';
-                                    html += '<td> Từ ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_BatDau) + ' đến ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_KetThuc) + '</td>';
-                                    html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
-                                    html += '<td>' + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + '</td>';
-                                    html += '<td>' + item.ChungChi_ID.Ten + '</td>';
-                                    html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
-                                    html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center  text-nowrap"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID},5)">Nộp minh chứng</button></td>`;
-                                    html += '</tr>';
-                                });
-                                $('.tbody-ngoaingu').html(html);
-                            }
-                        }
-                        else {
-                            $("#list-ngoaingu").hide();
-                            // thông báo lỗi
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    },
-                });
-            }
-        </script>
-        
         <div class="card card-header-actions mt-1 mb-1" id="list-dgnl" style="display:none">
             <div class="card-header">
-                Danh sách nguyện vọng nộp xét sử dụng KQ thi đánh giá năng lực/đánh giá tư duy
+                Xét tuyển dùng KQ thi ĐGNL/Tư duy
             </div>
             <div class="card-body">
-                <div class="table-container">
-                    <table class="table">
-                        <tr>
-                            <th style="width:20%">Đợt xét</th>
-                            <th style="width:10%">Nguyện vọng</th>
-                            <th style="width:20%">Mã, tên ngành</th>
-                            <th style="width:15%">Tên KQ Nộp Xét</th>
-                            <th>Ngày Đăng ký</th>
-                            <th>Thông tin nộp lệ phí</th>
-                            <th class="text-center  text-nowrap" style="width:120px">Cập nhật nộp lệ phí</th>
-                        </tr>
-                        <tbody class="tbody-dgnl">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-           
-        </div>
-        <script>
-            $(document).ready(function () {
-                LoadData_Nv_ThiSinh_Xt_KQDGNangLuc();
+                <div class="row">
+                    <div class="col-lg-12" id="div_thead_pt6" style="display:none">
+                        <div class="row g-1">
+                            <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Ngành</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Thông tin kết quả thi</b></div>
+                            <div class="col-xl-1 col-lg-12"><b>Ngày đăng ký</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Trạng thái duyệt hồ sơ</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Minh chứng nộp lệ phí</b></div>
+                            <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
+                        </div>
+                        <div class="row"><div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div></div>
+                    </div>
+                    <div id="div_tbody_list_pt6">
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            LoadData_Nv_ThiSinh_Xt_KQDGNangLuc();
 
-            });
-            function LoadData_Nv_ThiSinh_Xt_KQDGNangLuc() {
-                $.ajax({
-                    url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_Xt_KQDGNangLuc",
-                    type: "GET",
-                    contentType: "application/json;charset=utf-8",
-                    async: false,
-                    success: function (res) {
-                        if (res.success) {
-                            console.log(res.DanhGia)
-                            let DanhGia = res.DanhGia;
-                            if (DanhGia.length > 0) {
-                                $("#list-dgnl").show();
-                                let html = "";
-                                $.each(DanhGia, function (key, item) {
-                                    let trangthai = "";
-                                    if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                        trangthai = '<span style="color:red">Chưa nộp minh chứng</span >'
+                        });
+                        function LoadData_Nv_ThiSinh_Xt_KQDGNangLuc() {
+                            $('#div_tbody_list_pt6').empty();
+                            $.ajax({
+                                url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_Xt_KQDGNangLuc",
+                                type: "GET",
+                                contentType: "application/json;charset=utf-8",
+                                async: false,
+                                success: function (res) {
+                                    if (res.success) {
+                                        let DanhGia = res.DanhGia;
+                                        if (DanhGia.length > 0) {
+                                            $.each(DanhGia, function (key, item) {
+                                                let trangthaikp_pt6 = "";
+                                                if (item.Dkxt_TrangThai_KinhPhi == 0) { trangthaikp_pt6 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 1) { trangthaikp_pt6 = '<span>Đã có minh chứng nộp lệ phí</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) { trangthaikp_pt6 = '<span class="text-warning">Trường đã kiểm tra, sai</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) { trangthaikp_pt6 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) { trangthaikp_pt6 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+
+                                                let trangthaihs_pt6 = "";
+                                                if (item.Dkxt_TrangThai_HoSo == 0) { trangthaihs_pt6 = '<span style="color:red">Trường chưa kiểm tra</span >' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 1) { trangthaihs_pt6 = '<span>Trường dã kiểm tra, Có sai sót</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 2) { trangthaihs_pt6 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 9) { trangthaihs_pt6 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+
+                                                let div_item_pt6 = "";
+
+                                                div_item_pt6 += `<div class="col-lg-12">`;
+                                                div_item_pt6 += `<div class="row g-1">`;
+                                                div_item_pt6 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- </span><span class="col-8 span_noidung_chitiet_pt6">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
+                                                div_item_pt6 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt6">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt6">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
+                                                div_item_pt6 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt6">- Thông tin chứng ngoại ngữ: </span><span class="col-8 span_noidung_chitiet_pt6"  style="margin-right:10px">` + item.Dkxt_KetQuaDatDuoc + '/Tổng: ' + item.Dkxt_TongDiem + '/ (' + item.ChungChi_ID.Ten + `)</span></div>`;
+                                                div_item_pt6 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt6">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
+                                                div_item_pt6 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt6"/><span class="col-xl-8  span_noidung_chitiet_pt6">` + trangthaihs_pt6 + `</span></div>`;
+                                                div_item_pt6 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt6"/><span class="col-8 span_noidung_chitiet_pt6">` + trangthaikp_pt6 + `</span></div>`;
+                                                div_item_pt6 += `<div class="col-xl-2 col-lg-12">`;
+                                                div_item_pt6 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},6)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt6 += `</div>`;
+                                                div_item_pt6 += `</div>`;
+                                                div_item_pt6 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
+                                                div_item_pt6 += `</div>`;
+
+                                                $('#div_tbody_list_pt6').append(div_item_pt6);
+                                            });
+
+                                            $("#list-dgnl").show();
+
+                                            if (window.innerWidth <= 1000) {
+                                                $('#div_thead_pt6').css('display', 'none');
+                                                $('#div_thead_pt6').hide();
+                                                $('.span_tieude_chitiet_pt6').css('display', 'inline');
+                                                $('.span_tieude_chitiet_pt6').show();
+                                                $('.span_noidung_chitiet_pt6').css('font-weight', 'bold')
+                                            }
+                                            else {
+                                                $('#div_thead_pt6').css('display', 'inline');
+                                                $('#div_thead_pt6').show();
+                                                $('.span_tieude_chitiet_pt6').css('display', 'none');
+                                                $('.span_tieude_chitiet_pt6').hide();
+                                                $('.span_noidung_chitiet_pt6').css('font-weight', 'normal')
+                                            }
+                                        }
                                     }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 1) {
-                                        trangthai = '<span>Đã nộp minh chứng </span>'
+                                    else {
+                                        $("#list-dgnl").hide();
                                     }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 2) {
-                                        trangthai = '<span class="text-warning">Đã được xác minh, sai</span>'
-                                    }
-                                    else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                        trangthai = '<span>Đã xác minh, đúng</span>'
-                                    }
-                                    html += '<tr>';
-                                    html += '<td> Từ ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_BatDau) + ' đến ' + ConverDateToString(item.DotXT_ID.Dxt_ThoiGian_KetThuc) + '</td>';
-                                    html += '<td> NV ' + item.Dkxt_NguyenVong + '</td>';
-                                    html += '<td>' + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + '</td>';
-                                    html += '<td>' + item.ChungChi_ID.Ten + '</td>';
-                                    html += '<td>' + ConverDateToString(item.Dkxt_NgayDK) + '</td>';
-                                    html += '<td>' + trangthai + '</td>';
-                                    html += `<td class="text-center nơ"><button class="btn btn-light btn-sm" onclick="NopLePhi(${item.Dkxt_ID},6)">Nộp minh chứng</button></td>`;
-                                    html += '</tr>';
-                                });
-                                $('.tbody-dgnl').html(html);
-                            }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(error);
+                                },
+                            });
                         }
-                        else {
-                            $("#list-dgnl").hide();
-                            // thông báo lỗi
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    },
-                });
-            }
-        </script>
+                    </script>
+                </div>
+
+            
+            </div>
+
+        </div>
+    
     </div>
 </div>
 
@@ -478,7 +824,7 @@
                                     <label class="form-label">Cập nhật tệp minh chứng</label>
                                 </div>
                             </div>
-                           
+
                             <div class="row table-responsive">
                                 <div class="col-12 ">
                                     <input class="form-control" id="file_minhchung" name="file_minhchung" type="file" data-val="true" accept=".PNG, .JPEG, .JPG" />
@@ -488,7 +834,7 @@
                                         </tr>
                                     </table>
                                 </div>
-                            </div>                           
+                            </div>
                         </div>
 
                         <div class="col-md-7 col-sm-12">
@@ -496,7 +842,7 @@
                             <hr class="mt-2 mb-3" />
                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active" id="div_item_view_minhchung">                                       
+                                    <div class="carousel-item active" id="div_item_view_minhchung">
                                         <img class="d-block w-100 img-hide" id="img_view">
                                         <input type="hidden" id="key_dkxt_id" style="display:none" />
                                         <input type="hidden" id="key_dkxt_pt" style="display:none" />
@@ -506,8 +852,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                        
-                    </div>               
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -541,32 +887,32 @@
 
         $('#modal_dongphi').modal('show');
         $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();
-       /* $('#File_MinhChung_Span').empty();*/
+        /* $('#File_MinhChung_Span').empty();*/
         var data_post = {
             key_dkxt_id: id,
-            key_dkxt_pt: type,           
+            key_dkxt_pt: type,
         }
         console.log('tét get data', data_post)
-      
+
         $.ajax({
             url: '/LePhiXetTuyens/GetByID',
             type: "POST",
             data: JSON.stringify(data_post),
             contentType: "application/json;charset=utf-8",
             success: function (res) {
-                console.log(res);              
+                console.log(res);
                 if (res.success) {
                     data = res.data;
                     if (data.KinhPhi_SoTC != '') { $('#KinhPhi_SoTC').val(data.KinhPhi_SoTC); }
                     if (data.KinhPhi_TepMinhChung) {
                         const ArrKinhPhi = data.KinhPhi_TepMinhChung.split("#");
-                        if (ArrKinhPhi.length > 0) { 
-                            $("#img_view").attr("src", ArrKinhPhi[0]);  
+                        if (ArrKinhPhi.length > 0) {
+                            $("#img_view").attr("src", ArrKinhPhi[0]);
                             $('#span_tieude_hinhanh').text('Hình ảnh minh chứng đã nộp lệ phí');
                         }
                     }
                     else {
-                        $("#img_view").attr("src",'/Content/images/no-money.png');
+                        $("#img_view").attr("src", '/Content/images/no-money.png');
                         $('#span_tieude_hinhanh').text('Mẫu hình ảnh minh chứng nộp lệ phí');
                     }
                 }
@@ -574,12 +920,12 @@
             error: function (error) {
                 console.error('Error', error);
             }
-        });           
+        });
     }
 
-   
+
     $('document').ready(function () {
-       
+
         $('input').on('input', function () {
             hideErrorMessage($(this));
         });
@@ -588,9 +934,9 @@
             hideErrorMessage($(this));
         })
 
-        $("#file_minhchung").on("change", function () {    
+        $("#file_minhchung").on("change", function () {
             MinhChungFormData = new FormData();
-            $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();       
+            $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();
 
             var file_minhchung = document.getElementById('file_minhchung');
             let j = 0;
@@ -622,14 +968,14 @@
             $(list).css("visibility", "hidden");
         }
     }
-    
+
 
     function onCancel() {
         $('#modal_dongphi').modal('hide');
         $('#key_dkxt_id').val('');
         $('#key_dkxt_pt').val('');
-        $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();       
-        $('#KinhPhi_SoTC').val('');        
+        $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();
+        $('#KinhPhi_SoTC').val('');
     }
 
     function uploadFiles() {
@@ -701,13 +1047,13 @@
 
                     let data = res.data;
                     if (data.Ptxt_ID == 2) {
-                        LoadData_Nv_ThiSinh_XtDungKQTHPTQG();                       
+                        LoadData_Nv_ThiSinh_XtDungKQTHPTQG();
                     }
                     if (data.Ptxt_ID == 3) {
                         LoadData_Nv_ThiSinh_XtDungHocBa();
                     }
                     if (data.Ptxt_ID == 4) {
-                        LoadData_Nv_ThiSinh_Xt_TuyenThang(); 
+                        LoadData_Nv_ThiSinh_Xt_TuyenThang();
                     }
                     if (data.Ptxt_ID == 5) {
                         LoadData_Nv_ThiSinh_Xt_DungCCNgoaiNgu();

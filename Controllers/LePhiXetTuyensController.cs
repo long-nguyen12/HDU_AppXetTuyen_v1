@@ -23,6 +23,10 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public ActionResult Index()
         {
+            db = new DbConnecttion();          
+            var dxt_present = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            ViewBag.Dxt_ThoiGian_BatDau = dxt_present.Dxt_ThoiGian_BatDau;
+            ViewBag.Dxt_ThoiGian_KetThuc = dxt_present.Dxt_ThoiGian_KetThuc;
             return View();
         }
 
@@ -335,7 +339,7 @@ namespace HDU_AppXetTuyen.Controllers
                 },
                 Thm = new
                 {
-                    ThmMaTen = n.ToHopMon.Thm_MaTen,
+                    ThmMaTen = n.ToHopMon.Thm_MaToHop +" - "+ n.ToHopMon.Thm_TenToHop,
                 },
 
                 Dkxt_NgayDK = n.Dkxt_KQTQG_NgayDangKy,
@@ -480,7 +484,7 @@ namespace HDU_AppXetTuyen.Controllers
                     Nganh_MaNganh = n.Nganh.Nganh_MaNganh,
                     NganhTenNganh = n.Nganh.Nganh_TenNganh
                 },
-                ChungChi_ID = new { Ten = n.ChungChi.ChungChi_Ten },
+                ChungChi_ID = new { Ten = n.ChungChi.ChungChi_Ten},
                 Dkxt_ToHopXT = n.Dkxt_ToHopXT,
                 Dkxt_DonViToChuc = n.Dkxt_DonViToChuc,
                 Dkxt_KetQuaDatDuoc = n.Dkxt_KetQuaDatDuoc,
