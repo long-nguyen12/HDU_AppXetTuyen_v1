@@ -46,10 +46,11 @@
                 <div class="row">
                     <div class="col-lg-12" id="div_thead" style="display:none">
                         <div class="row g-1">
-                            <div class="col-lg-2 col-sm-12"><b>Nguyện vọng</b></div>
+                            <div class="col-lg-1 col-sm-12"><b>Nguyện vọng</b></div>
                             <div class="col-lg-3 col-sm-12"><b>Ngành</b></div>
                             <div class="col-lg-2 col-sm-12"><b>Môn đạt gải</b></div>
-                            <div class="col-lg-3 col-sm-12"><b>Loại giải/ Năm đạt giải</b></div> 
+                            <div class="col-lg-2 col-sm-12"><b>Loại giải/ Năm đạt giải</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Ngày đăng ký</b></div>
                             <div class="col-lg-2 col-sm-12"><b style="margin-left:10px">Cập nhật</b> </div>
                         </div>
                         <div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div>
@@ -60,7 +61,11 @@
                         $(document).ready(function () {
                             LoadData_All_DkxtTT();
                         });
-
+                        function ConverDateToString(date) {
+                            var parts = date.split('-');
+                            var mydate = parts[2] + '/' + parts[1] + '/' + parts[0];
+                            return mydate;
+                        }
                         function LoadData_All_DkxtTT() {
                             $('#div_tbody_list').empty();
 
@@ -105,12 +110,13 @@
                                             if (result_all.length == 1) {
                                                 let div_item = "";
                                                 div_item += `<div class="row g-1">`;
-                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.Dkxt_NguyenVong + `</div>`;
+                                                div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.Dkxt_NguyenVong + `</div>`;
                                                 div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.Nganh_All.Nganh_GhiChu + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Môn đạt gải: </span> <span class="col-8 span_noidung_nv">` + result.Dkxt_MonDatGiai + `</span></div>`;
-                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Giải: </span><span class="col-8 span_noidung_nv">` + result.Dkxt_LoaiGiai + ` /(năm: ` + result.Dkxt_NamDatGiai + `) </span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Giải: </span><span class="col-8 span_noidung_nv">` + result.Dkxt_LoaiGiai + ` /(năm: ` + result.Dkxt_NamDatGiai + `) </span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDangKy) + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
-                                                div_item += `<button class="btn btn-sm btn-outline-success" style="margin-left:10px">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="deleteRecord(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Xoá</button>`;
+                                                div_item += `<button class="btn btn-sm btn-outline-success" style="margin-left:10px"  onclick="DkxtthHbDetail(${result.dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="deleteRecord(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Xoá</button>`;
                                                 div_item += `</div>`;
                                                 div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
                                                 $('#div_tbody_list').append(div_item);
@@ -118,13 +124,14 @@
                                             else if (result_all.length > 1) {
                                                 let div_item = "";
                                                 div_item += `<div class="row g-1">`;
-                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.Dkxt_NguyenVong + ` </span></div>`;
+                                                div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.Dkxt_NguyenVong + ` </span></div>`;
                                                 div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.Nganh_All.Nganh_GhiChu + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Môn đạt gải: </span> <span class="col-8 span_noidung_nv">` + result.Dkxt_MonDatGiai + `</span></div>`;
-                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Giải: </span><span class="col-8 span_noidung_nv">` + result.Dkxt_LoaiGiai + ` /(năm: ` + result.Dkxt_NamDatGiai + `) </span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Giải: </span><span class="col-8 span_noidung_nv">` + result.Dkxt_LoaiGiai + ` /(năm: ` + result.Dkxt_NamDatGiai + `) </span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDangKy) + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
                                                 div_item += `<button class="btn btn-outline-info  btn-sm" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID},1)" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning  btn-sm" onclick="ShowModalChangeData(${result.Dkxt_ID},2)" ${i == result_all.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
-                                                div_item += `<button class="btn btn-sm btn-outline-success">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="deleteRecord(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Xoá</button>`;
+                                                div_item += `<button class="btn btn-sm btn-outline-success"  onclick="DkxtttDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="deleteRecord(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Xoá</button>`;
                                                 div_item += `</div>`;
                                                 div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
                                                 $('#div_tbody_list').append(div_item);
@@ -153,14 +160,18 @@
                                     console.log('Lỗi', errormessage.responseText);                                   
                                 }
                             });
-                        }                      
+                        } 
+                        function DkxtttDetail(dkxt_id) {
+                            var str_url = '?dkxt_id=' + dkxt_id;
+                            window.location.href = "/DangKyXetTuyenThang/Detail" + str_url;
+                        }
                     </script>
                 </div>
  
                 <div class="row">
                     <div class="col-xl-12">
                         <center>
-                            <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
+                            <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu</button>
                             <a class="btn btn-outline-primary" id="bt_add_aspirations" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>
                             <script>
                                 $(document).ready(function () {
@@ -169,7 +180,7 @@
                                     let bt_them_nguyen_vong = $('#bt_add_aspirations');
 
                                     if (window.innerWidth <= 1200) {
-                                        sp_tieude.text("Đăng ký tuyển thẳng (HS có giải 3 trở lên)");                                       
+                                        sp_tieude.text("Đăng ký tuyển thẳng");                                       
                                         bt_xuat_phieu_tong_hop.text('Xuất phiếu');
                                         bt_them_nguyen_vong.text("Thêm nguyện vọng");
 
@@ -177,8 +188,7 @@
                                         $('#div_thead').hide();
                                         $('.span_thongtin_nv').css('display', 'inline');
                                         $('.span_thongtin_nv').show();
-                                        $('.span_noidung_nv').css('font-weight', 'bold')
-
+                                        $('.span_noidung_nv').css('font-weight', 'bold');
                                     }
                                     else {
                                         sp_tieude.text("Đăng ký tuyển thẳng theo quy định của trường (áp dụng cho học sinh giỏi có môn học đạt từ giải Ba trở lên)");
@@ -195,7 +205,7 @@
 
                                     function reportWindowSize() {
                                         if (window.innerWidth <= 1200) {
-                                            sp_tieude.text("Đăng ký tuyển thẳng (HS có giải 3 trở lên)");
+                                            sp_tieude.text("Đăng ký tuyển thẳng");
                                             bt_xuat_phieu_tong_hop.text('Xuất phiếu');
                                             bt_them_nguyen_vong.text("Thêm nguyện vọng");
 
@@ -228,8 +238,8 @@
                 <div class="row">
                     <div class="col-xxl-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
-                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
-                        <p style="color:red; font-style:italic" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
+                        <p style="color: red; font-style: italic; text-align: justify;" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
+                        <p style="color: red; font-style: italic; text-align: justify;" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
                     </div>
                 </div>
             </div>
@@ -248,7 +258,7 @@
                             <div class="col-12"><b>Chọn ngành xét tuyển <font color="red">(*)</font></b></div>
                             <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
                         </div>
-                        <div class="row">
+                        <div class="row g-1">
                             <div class="col-4">Khối ngành</div>
                             <div class="col-8">
                                 <select id="select_khoinganh" class="form-select"></select>
@@ -256,17 +266,17 @@
                             </div>
                         </div>
                         <div class="col-12"><hr class="mt-1 mb-2" /></div>
-                        <div class="row">
-                            <div class="col-4">Ngành</div>
-                            <div class="col-8">
+                        <div class="row g-1">
+                            <div class="col-3">Ngành</div>
+                            <div class="col-9">
                                 <select id="Nganh_ID" class="form-select"></select>
                                 <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                                 <input id="Dkxt_ToHopXT" type="hidden" class="form-control" value="HDP4" disabled />
                             </div>
                         </div>
                         <div class="col-12"><hr class="mt-1 mb-2" /></div>
-                        
-                        <div class="row" style="margin-top:15px">
+
+                        <div class="row g-1" style="margin-top:15px">
                             <div class="col-6 ">
                                 <span id="span_Uutien_doituong"></span>
                                 <hr class="mt-2 md-2" />
@@ -277,7 +287,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-2">
+                        <div class="row g-1 mb-2">
                             <div class="col-6">
                                 <span> Học lực lớp 12</span>
                                 <input id="Dkxt_XepLoaiHocLuc_12" type="text" class="form-control" value="" disabled />
@@ -295,7 +305,7 @@
                             <div class="col-12"><b>Thông tin đạt giải nộp xét tuyển<font color="red">(*)</font></b></div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div></div>
-                        <div class="row">
+                        <div class="row g-1">
                             <div class="col-4">Năm đạt giải</div>
                             <div class="col-8">
                                 <input id="Dkxt_NamDatGiai" type="number" class="form-control" placeholder="Năm đạt giải" value="" />
@@ -303,7 +313,7 @@
                             </div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>
-                        <div class="row">
+                        <div class="row g-1">
                             <div class="col-4">Môn đạt giải</div>
                             <div class="col-8">
                                 <select id="Dkxt_MonDatGiai" class="form-select"></select>
@@ -311,7 +321,7 @@
                             </div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>
-                        <div class="row">
+                        <div class="row g-1">
                             <div class="col-4">Kỳ thi</div>
                             <div class="col-8">
                                 <input id="Dkxt_CapDoGiai" type="text" class="form-control" placeholder="ví dụ: Olympic Toán quốc gia " value="" />
@@ -319,7 +329,7 @@
                             </div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>
-                        <div class="row">
+                        <div class="row g-1">
                             <div class="col-4">Loại giải</div>
                             <div class="col-8">
                                 <select id="Dkxt_LoaiGiai" class="form-select"></select>
@@ -1027,6 +1037,7 @@
             if (response.status == true) {
                 showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thành công!", "bg-success");
                 LoadData_All_DkxtTT();
+                $('#modal_tb_thaydoinv').modal('hide');
             }
             else {
                 showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thất bại!", "bg-error");
@@ -1048,6 +1059,7 @@
             if (response.status == true) {
                 showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thành công!", "bg-success");
                 LoadData_All_DkxtTT();
+                $('#modal_tb_thaydoinv').modal('hide');
             }
             else {
                 showToast("Thông báo", "Thay đổi thứ tự nguyện vọng thất bại!", "bg-error");

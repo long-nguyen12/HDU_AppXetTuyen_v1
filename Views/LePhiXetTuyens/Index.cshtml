@@ -212,8 +212,6 @@
     </div>
 </header>
 
-
-
 <div class="container-fluid px-12">
 
     <div id="fadeInUp">
@@ -250,12 +248,13 @@
                                 success: function (res) {
                                     if (res.success) {
                                         let TrungHocPT = res.TrungHocPT;
+                                       
                                         if (TrungHocPT.length > 0) {
                                             $("#list-kqthi-thpt").show();
                                             $.each(TrungHocPT, function (key, item) {
-                                                let trangthaikp = "";
+                                                let trangthaikp2 = "";
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0) {
-                                                    trangthaikp_pt2 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span >'
+                                                    trangthaikp_pt2 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 1) {
                                                     trangthaikp_pt2 = '<span>Đã có minh chứng nộp lệ phí </span>'
@@ -264,35 +263,35 @@
                                                     trangthaikp_pt2 = '<span class="text-warning">Trường đã kiểm tra, sai</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 3) {
-                                                    trangthaikp_pt2 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>'
+                                                    trangthaikp_pt2 = '<span class="text-success">Đã cập nhật, Trường chưa kiểm tra</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                                    trangthaikp_pt2 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                    trangthaikp_pt2 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>'
                                                 }
                                                 let trangthaihs_pt2 = "";
                                                 if (item.Dkxt_TrangThai_HoSo == 0) {
-                                                    trangthaihs_pt2 = '<span style="color:red">Trường chưa kiểm tra</span >'
+                                                    trangthaihs_pt2 = '<span style="color:red">Trường chưa kiểm tra</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 1) {
-                                                    trangthaihs_pt2 = '<span>Trường dã kiểm tra, Có sai sót</span>'
+                                                    trangthaihs_pt2 = '<span class="text-warning">Trường đã kiểm tra, Có sai sót</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 2) {
-                                                    trangthaihs_pt2 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>'
+                                                    trangthaihs_pt2 = '<span class="text-success">Đã sửa, Trường chưa kiểm tra</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 9) {
-                                                    trangthaihs_pt2 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                    trangthaihs_pt2 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>'
                                                 }
                                                 let div_item_pt2 = "";
                                                 div_item_pt2 += `<div class="col-lg-12">`;
                                                 div_item_pt2 += `<div class="row g-1">`;
                                                 div_item_pt2 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- </span><span class="col-8 span_noidung_chitiet_pt2">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
                                                 div_item_pt2 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt2">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt2">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
-                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt2">` + item.Thm.ThmMaTen + `</span></div>`;
+                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt2">` + item.Thm.ThmMaTen + ` (` + item.Dkxt_Diem_Tong_Full + ` đ)</span></div>`;
                                                 div_item_pt2 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt2">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt2"/><span class="col-xl-8  span_noidung_chitiet_pt2">` + trangthaihs_pt2 + `</span></div>`;
                                                 div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt2"/><span class="col-8 span_noidung_chitiet_pt2">` + trangthaikp_pt2 + `</span></div>`;
-                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt2 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 2)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt2 += `<div class="col-xl-2 col-lg-12 text-nowrap">`;
+                                                div_item_pt2 += `<button class="btn btn-sm btn-outline-primary text-nowrap" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 2)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
                                                 div_item_pt2 += `</div>`;
                                                 div_item_pt2 += `</div>`;
                                                 div_item_pt2 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -333,7 +332,6 @@
             </div>
         </div>
 
-
         <div class="card card-header-actions mt-1 mb-1" id="list-hocba" style="display:none">
             <div class="card-header">
                 Xét tuyển dùng điểm học bạ cấp 3
@@ -342,7 +340,7 @@
                 <div class="row">
                     <div class="col-lg-12" id="div_thead_pt3" style="display:none">
                         <div class="row g-1">
-                            <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-1 col-lg-12 "><b>Nguyện vọng</b></div>
                             <div class="col-xl-2 col-lg-12"><b>Ngành</b></div>
                             <div class="col-xl-2 col-lg-12"><b>Tổ hợp môn</b></div>
                             <div class="col-xl-1 col-lg-12"><b>Ngày đăng ký</b></div>
@@ -361,16 +359,15 @@
                         function LoadData_Nv_ThiSinh_XtDungHocBa() {
                             $('#div_tbody_list_pt3').empty();
                             $.ajax({
-                                url: "/LePhiXetTuyens/GetAll_Nv_ThiSinh_XtDungHocBa",
-                                type: "GET",
-                                contentType: "application/json;charset=utf-8",
+                                url: '/LePhiXetTuyens/GetAll_Nv_ThiSinh_XtDungHocBa',
+                                type: 'GET',
+                                contentType: 'application/json;charset=utf-8',
                                 async: false,
                                 success: function (res) {
                                     if (res.success) {
                                         let HocBa = res.HocBa;
                                         if (HocBa.length > 0) {
-                                            $("#list-hocba").show();
-                                            let html = "";
+                                            $("#list-hocba").show();                                            
                                             $.each(HocBa, function (key, item) {
                                                 let trangthaikp_pt3 = "";
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0) {
@@ -383,24 +380,23 @@
                                                     trangthaikp_pt3 = '<span class="text-warning">Trường đã kiểm tra, sai</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 3) {
-                                                    trangthaikp_pt3 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>'
+                                                    trangthaikp_pt3 = '<span class="text-success">Đã cập nhật, Trường chưa kiểm tra</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                                    trangthaikp_pt3 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                    trangthaikp_pt3 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>'
                                                 }
-
                                                 let trangthaihs_pt3 = "";
                                                 if (item.Dkxt_TrangThai_HoSo == 0) {
                                                     trangthaihs_pt3 = '<span style="color:red">Trường chưa kiểm tra</span >'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 1) {
-                                                    trangthaihs_pt3 = '<span>Trường dã kiểm tra, Có sai sót</span>'
+                                                    trangthaihs_pt3 = '<span class="text-warning">Trường đã kiểm tra, Có sai sót</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 2) {
-                                                    trangthaihs_pt3 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>'
+                                                    trangthaihs_pt3 = '<span class="text-success">Đã sửa, Trường chưa kiểm tra</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 9) {
-                                                    trangthaihs_pt3 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                    trangthaihs_pt3 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>'
                                                 }
                                                 let div_item_pt3 = "";
 
@@ -408,12 +404,12 @@
                                                 div_item_pt3 += `<div class="row g-1">`;
                                                 div_item_pt3 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- </span><span class="col-8 span_noidung_chitiet_pt3">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt3">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
-                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Thm.ThmMaTen + `</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Thm.ThmMaTen + ` (` + item.Dkxt_Diem_Tong_Full +` đ)</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt3">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt3"/><span class="col-xl-8  span_noidung_chitiet_pt3">` + trangthaihs_pt3 + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt3"/><span class="col-8 span_noidung_chitiet_pt3">` + trangthaikp_pt3 + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt3 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt3 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
                                                 div_item_pt3 += `</div>`;
                                                 div_item_pt3 += `</div>`;
                                                 div_item_pt3 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -454,7 +450,6 @@
 
             </div>
         </div>
-
 
         <div class="card card-header-actions mt-1 mb-1" id="list-tuyenthang" style="display:none">
             <div class="card-header">
@@ -503,13 +498,13 @@
                                                     trangthaikp_pt4 = '<span>Đã có minh chứng nộp lệ phí </span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 2) {
-                                                    trangthaikp_pt4 = '<span class="text-warning">Trường đã kiểm tra, sai</span>'
+                                                    trangthaikp_pt4 = '<span class="text-warning">Trường đã kiểm tra, có sai sót</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 3) {
-                                                    trangthaikp_pt4 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>'
+                                                    trangthaikp_pt4 = '<span class="text-success">Đã cập nhật, Trường chưa kiểm tra</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 9) {
-                                                    trangthaikp_pt4 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                    trangthaikp_pt4 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>'
                                                 }
 
                                                 let trangthaihs_pt4 = "";
@@ -517,15 +512,15 @@
                                                     trangthaihs_pt4 = '<span style="color:red">Trường chưa kiểm tra</span >'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 1) {
-                                                    trangthaihs_pt4 = '<span>Trường dã kiểm tra, Có sai sót</span>'
+                                                    trangthaihs_pt4 = '<span>Trường đã kiểm tra, Có sai sót</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 2) {
-                                                    trangthaihs_pt4 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>'
+                                                    trangthaihs_pt4 = '<span class="text-success">Đã sửa, Trường chưa kiểm tra</span>'
                                                 }
                                                 else if (item.Dkxt_TrangThai_HoSo == 9) {
-                                                    trangthaihs_pt4 = '<span>Trường đã kiểm tra, đúng, đủ</span>'
+                                                    trangthaihs_pt4 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>'
                                                 }
-                                                let div_item_pt4 = "";
+                                                let div_item_pt4 = '';
 
                                                 div_item_pt4 += `<div class="col-lg-12">`;
                                                 div_item_pt4 += `<div class="row g-1">`;
@@ -536,7 +531,7 @@
                                                 div_item_pt4 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt4"/><span class="col-xl-8  span_noidung_chitiet_pt4">` + trangthaihs_pt4 + `</span></div>`;
                                                 div_item_pt4 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt4"/><span class="col-8 span_noidung_chitiet_pt4">` + trangthaikp_pt4 + `</span></div>`;
                                                 div_item_pt4 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt4 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 4)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt4 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 4)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
                                                 div_item_pt4 += `</div>`;
                                                 div_item_pt4 += `</div>`;
                                                 div_item_pt4 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -581,7 +576,6 @@
             </div>
         </div>
 
-
         <div class="card card-header-actions mt-1 mb-1" id="list-ngoaingu" style="display:none">
             <div class="card-header">
                 Xét tuyển dùng chứng chỉ ngoại ngữ
@@ -592,7 +586,7 @@
                         <div class="row g-1">
                             <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
                             <div class="col-xl-2 col-lg-12"><b>Ngành</b></div>
-                            <div class="col-xl-2 col-lg-12"><b>Thông tin chứng ngoại ngữ</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Thông tin chứng chỉ ngoại ngữ</b></div>
                             <div class="col-xl-1 col-lg-12"><b>Ngày đăng ký</b></div>
                             <div class="col-xl-2 col-lg-12"><b>Trạng thái duyệt hồ sơ</b></div>
                             <div class="col-xl-2 col-lg-12"><b>Minh chứng nộp lệ phí</b></div>
@@ -624,27 +618,27 @@
                                                 let trangthaikp_pt5 = "";
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0) { trangthaikp_pt5 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>' }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 1) { trangthaikp_pt5 = '<span>Đã có minh chứng nộp lệ phí </span>' }
-                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) { trangthaikp_pt5 = '<span class="text-warning">Trường đã kiểm tra, sai</span>' }
-                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) { trangthaikp_pt5 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>' }
-                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) { trangthaikp_pt5 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) { trangthaikp_pt5 = '<span class="text-warning">Trường đã kiểm tra, có sai sót</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) { trangthaikp_pt5 = '<span class="text-success">Đã cập nhật, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) { trangthaikp_pt5 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>' }
 
                                                 let trangthaihs_pt5 = "";
                                                 if (item.Dkxt_TrangThai_HoSo == 0) { trangthaihs_pt5 = '<span style="color:red">Trường chưa kiểm tra</span >' }
-                                                else if (item.Dkxt_TrangThai_HoSo == 1) { trangthaihs_pt5 = '<span>Trường dã kiểm tra, Có sai sót</span>' }
-                                                else if (item.Dkxt_TrangThai_HoSo == 2) { trangthaihs_pt5 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>' }
-                                                else if (item.Dkxt_TrangThai_HoSo == 9) { trangthaihs_pt5 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 1) { trangthaihs_pt5 = '<span>Trường đã kiểm tra, Có sai sót</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 2) { trangthaihs_pt5 = '<span class="text-success">Đã sửa, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 9) { trangthaihs_pt5 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>' }
                                                 let div_item_pt5 = "";
 
                                                 div_item_pt5 += `<div class="col-lg-12">`;
                                                 div_item_pt5 += `<div class="row g-1">`;
                                                 div_item_pt5 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- </span><span class="col-8 span_noidung_chitiet_pt5">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
                                                 div_item_pt5 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt5">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt5">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
-                                                div_item_pt5 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt5">- Thông tin chứng ngoại ngữ: </span><span class="col-8 span_noidung_chitiet_pt5"  style="margin-right:10px">` + item.Dkxt_KetQuaDatDuoc + '/Tổng: ' + item.Dkxt_TongDiem + '/ (' + item.ChungChi_ID.Ten + `)</span></div>`;
+                                                div_item_pt5 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt5">- Thông tin chứng chỉ ngoại ngữ: </span><span class="col-8 span_noidung_chitiet_pt5"  style="margin-right:10px">` + item.Dkxt_KetQuaDatDuoc + '/Tổng: ' + item.Dkxt_TongDiem + '/ (' + item.ChungChi_ID.Ten + `)</span></div>`;
                                                 div_item_pt5 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt5">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item_pt5 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt5"/><span class="col-xl-8  span_noidung_chitiet_pt5">` + trangthaihs_pt5 + `</span></div>`;
                                                 div_item_pt5 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt5"/><span class="col-8 span_noidung_chitiet_pt5">` + trangthaikp_pt5 + `</span></div>`;
                                                 div_item_pt5 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt5 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},5)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt5 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},5)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
                                                 div_item_pt5 += `</div>`;
                                                 div_item_pt5 += `</div>`;
                                                 div_item_pt5 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -727,15 +721,15 @@
                                                 let trangthaikp_pt6 = "";
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0) { trangthaikp_pt6 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>' }
                                                 else if (item.Dkxt_TrangThai_KinhPhi == 1) { trangthaikp_pt6 = '<span>Đã có minh chứng nộp lệ phí</span>' }
-                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) { trangthaikp_pt6 = '<span class="text-warning">Trường đã kiểm tra, sai</span>' }
-                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) { trangthaikp_pt6 = '<span class="text-warning">Đã cập nhật, Trường chưa kiểm tra</span>' }
-                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) { trangthaikp_pt6 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 2) { trangthaikp_pt6 = '<span class="text-warning">Trường đã kiểm tra, có sai sót</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 3) { trangthaikp_pt6 = '<span class="text-success">Đã cập nhật, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_KinhPhi == 9) { trangthaikp_pt6 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>' }
 
                                                 let trangthaihs_pt6 = "";
                                                 if (item.Dkxt_TrangThai_HoSo == 0) { trangthaihs_pt6 = '<span style="color:red">Trường chưa kiểm tra</span >' }
-                                                else if (item.Dkxt_TrangThai_HoSo == 1) { trangthaihs_pt6 = '<span>Trường dã kiểm tra, Có sai sót</span>' }
-                                                else if (item.Dkxt_TrangThai_HoSo == 2) { trangthaihs_pt6 = '<span class="text-warning">Đã sửa, Trường chưa kiểm tra</span>' }
-                                                else if (item.Dkxt_TrangThai_HoSo == 9) { trangthaihs_pt6 = '<span>Trường đã kiểm tra, đúng, đủ</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 1) { trangthaihs_pt6 = '<span class="text-warning">Trường đã kiểm tra, có sai sót</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 2) { trangthaihs_pt6 = '<span class="text-success">Đã sửa, Trường chưa kiểm tra</span>' }
+                                                else if (item.Dkxt_TrangThai_HoSo == 9) { trangthaihs_pt6 = '<span class="text-primary">Trường đã kiểm tra, đúng, đủ</span>' }
 
                                                 let div_item_pt6 = "";
 
@@ -743,12 +737,12 @@
                                                 div_item_pt6 += `<div class="row g-1">`;
                                                 div_item_pt6 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- </span><span class="col-8 span_noidung_chitiet_pt6">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
                                                 div_item_pt6 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt6">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt6">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
-                                                div_item_pt6 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt6">- Thông tin chứng ngoại ngữ: </span><span class="col-8 span_noidung_chitiet_pt6"  style="margin-right:10px">` + item.Dkxt_KetQuaDatDuoc + '/Tổng: ' + item.Dkxt_TongDiem + '/ (' + item.ChungChi_ID.Ten + `)</span></div>`;
+                                                div_item_pt6 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt6">- Thông tin kết quả thi: </span><span class="col-8 span_noidung_chitiet_pt6"  style="margin-right:10px">` + item.Dkxt_KetQuaDatDuoc + '/Tổng: ' + item.Dkxt_TongDiem + '/ (' + item.ChungChi_ID.Ten + `)</span></div>`;
                                                 div_item_pt6 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt6">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item_pt6 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt6"/><span class="col-xl-8  span_noidung_chitiet_pt6">` + trangthaihs_pt6 + `</span></div>`;
                                                 div_item_pt6 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt6"/><span class="col-8 span_noidung_chitiet_pt6">` + trangthaikp_pt6 + `</span></div>`;
                                                 div_item_pt6 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt6 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},6)">Gửi MC nộp lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt6 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},6)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
                                                 div_item_pt6 += `</div>`;
                                                 div_item_pt6 += `</div>`;
                                                 div_item_pt6 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -1030,7 +1024,7 @@
             key_dkxt_id: key_dkxt_id,
             key_dkxt_pt: key_dkxt_pt
         }
-        console.log(formData);
+     /*   console.log(formData);*/
         $.ajax({
             url: "/LePhiXetTuyens/Create",
             data: JSON.stringify(formData),

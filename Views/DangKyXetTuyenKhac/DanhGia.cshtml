@@ -108,7 +108,8 @@
                                                     div_item += `<div class="col-lg-2 col-sm-12 text-nowrap"><span class="col-4 span_thongtin_nv">- Đơn vị tổ chức: </span> <span class="col-8 span_noidung_nv">` + result.Dkxt_DonViToChuc + `</span> <b></b></div>`;
                                                     div_item += `<div class="col-lg-3 col-sm-12 text-nowrap"><span class="col-5 span_thongtin_nv">- Kết quả thi/ ngày thi: </span><br class="span_thongtin_nv"/><span class="col-7 span_noidung_nv" style="margin:10px">` + result.Dkxt_KetQuaDatDuoc.toFixed(2) + "/" + result.Dkxt_TongDiem.toFixed(2) + `(điểm)</span><span>(ngày: ` + result.Dkxt_NgayDuThi + `)</span></div>`;
                                                     div_item += `<div class="col-lg-2 col-sm-12 text-nowrap">`
-                                                    div_item += `<button class="btn btn-outline-success  btn-sm">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm">Xóa</button></div>`;
+                                                    div_item += `<button class="btn btn-outline-success btn-sm" onclick="DkxtDgnlDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="DeleteRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo},'${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
+                                                   
                                                     div_item += `</div>`
                                                     div_item += `<div class="col-12" > <hr class="mt-2 mb-2" /></div>`;
                                                     $('#div_tbody_list').append(div_item);
@@ -123,7 +124,7 @@
                                                     div_item += `<div class="col-lg-3 col-sm-12 text-nowrap"><span class="col-5 span_thongtin_nv">- Kết quả thi/ ngày thi: </span><br class="span_thongtin_nv"/><span class="col-7 span_noidung_nv" style="margin:10px">` + result.Dkxt_KetQuaDatDuoc.toFixed(2) + "/" + result.Dkxt_TongDiem.toFixed(2) + ` (điểm)</span><span>(ngày: ` + result.Dkxt_NgayDuThi + `)</span></div>`;
                                                     div_item += `<div class="col-lg-2 col-sm-12 text-nowrap">`
                                                     div_item += `<button class="btn btn-outline-info  btn-sm" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',1)" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning  btn-sm" onclick="ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',2)" ${i == result_all.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
-                                                    div_item += `<button class="btn btn-outline-success  btn-sm">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="deleteRecord(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
+                                                    div_item += `<button class="btn btn-outline-success btn-sm" onclick="DkxtDgnlDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="DeleteRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo},'${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
                                                     div_item += `</div>`
                                                     div_item += `<div class="col-12" ><hr class="mt-2 mb-2" /></div>`;
                                                     $('#div_tbody_list').append(div_item);
@@ -151,6 +152,10 @@
                                         console.log(errormessage)
                                     }
                                 });
+                            };
+                            function DkxtDgnlDetail(dkxt_id) {
+                                var str_url = '?dkxt_id=' + dkxt_id;
+                                window.location.href = "/DangKyXetTuyenKhac/DanhGiaDetail" + str_url;
                             }
                         </script>                       
                     </div>
@@ -248,34 +253,34 @@
                             <div class="col-12"><b>Chọn ngành và loại kết quả xét <font color="red">(*)</font></b></div>
                             <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
                         </div>
-                        <div class="row">
+                        <div class="row g-1">
                             <div class="col-4">Khối ngành</div>
                             <div class="col-8">
                                 <select id="select_khoinganh" class="form-select"></select>
                                 <span id="Select_KhoiNganh_Error" class="small mb-1 text-danger"></span>
                             </div>
-                        </div>                      
+                        </div>
                         <div class="col-12"><hr class="mt-1 mb-2" /></div>
-                        <div class="row">
-                            <div class="col-4">Ngành</div>
-                            <div class="col-8">
+                        <div class="row g-1">
+                            <div class="col-md-4 col-3">Ngành</div>
+                            <div class="col-md-8 col-9">
                                 <select id="Nganh_ID" class="form-select"></select>
                                 <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
                         <div class="col-12"><hr class="mt-1 mb-2" /></div>
-                        
-                        <div class="row">
-                            <div class="col-4">Kết quả xét tuyển</div>
-                            <div class="col-8">
+
+                        <div class="row g-1">
+                            <div class="col-md-4 col-3">Kỳ thi</div>
+                            <div class="col-md-8 col-9">
                                 <select id="ChungChi_ID" class="form-select"></select>
                                 <span id="ChungChi_ID_Error" class="small mb-1 text-danger"></span>
                                 <input id="Dkxt_ToHopXT" type="hidden" class="form-control" value="" disabled />
                             </div>
                             <div class="col-12"><hr class="mt-1 mb-2" /></div>
                         </div>
-                        
-                        <div class="row" style="margin-top:15px">
+
+                        <div class="row">
                             <div class="col-6 ">
                                 <span id="span_Uutien_doituong"></span>
                                 <hr class="mt-2 md-2" />
@@ -304,32 +309,32 @@
                             <div class="col-12"><b>Thông tin kết quả nộp xét tuyển <font color="red">(*)</font></b></div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div></div>
-                        <div class="row">
-                            <div class="col-4">Tên đơn vị:</div>
+                        <div class="row g-1">
+                            <div class="col-4">Tên đơn vị</div>
                             <div class="col-8">
                                 <input id="Dkxt_DonViToChuc" type="text" class="form-control" placeholder="Tên đơn vị tổ chức thi" value="" disabled />
                                 <span id="Dkxt_DonViToChuc_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>
-                        <div class="row">
-                            <div class="col-4">Thang điểm:</div>
+                        <div class="row g-1">
+                            <div class="col-4">Thang điểm</div>
                             <div class="col-8">
                                 <input id="Dkxt_TongDiem" type="number" class="form-control" placeholder="Thang điểm" value="" disabled />
                                 <span id="Dkxt_TongDiem_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>
-                        <div class="row">
-                            <div class="col-4">Kết quả thi:</div>
+                        <div class="row g-1">
+                            <div class="col-4">Kết quả thi</div>
                             <div class="col-8">
                                 <input id="Dkxt_KetQuaDatDuoc" type="number" class="form-control" placeholder="Kết quả" value="" />
                                 <span id="Dkxt_KetQuaDatDuoc_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>
-                        <div class="row">
-                            <div class="col-4">Ngày thi: </div>
+                        <div class="row g-1">
+                            <div class="col-4">Ngày thi</div>
                             <div class="col-8">
                                 <input id="datepicker" name="Dkxt_NgayDuThi" type="text" class="form-control" placeholder="Ngày thi" value="" onchange="RemoveErrorDate()" />
                                 <span id="Dkxt_NgayDuThi_Error" class="small mb-1 text-danger"></span>
@@ -361,13 +366,13 @@
                             <div class="col-12"><b>Tệp minh chứng khác</b></div>
                         </div>
                         <div class="row"><div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div></div>
-                        <div class="row">
+                        <div class="row mb-0">
                             <div class="col-12">Học bạ</div>
-                            <div class="col-12">
+                            <div class="col-12 mb-0">
                                 <input class="form-control small" id="files_hocba" multiple="multiple" name="files_hocba" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" />
                             </div>
-                            <div class="col-12">
-                                <table class="table" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
+                            <div class="col-12 mb-0">
+                                <table class="table table-sm mb-0" id="FilesList_HocBa_View" style="visibility:hidden; width: 100%">
                                     <tr style="display:none"><th colspan="2"><input type="hidden" id="HocBa_Files" /></th></tr>
                                 </table>
                             </div>
@@ -376,8 +381,8 @@
                         <div class="row">
                             <div class="col-12">Căn cước công dân</div>
                             <div class="col-12"><input class="form-control small" id="files_cccd" multiple="multiple" name="files_cccd" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" /></div>
-                            <div class="col-12">
-                                <table class="table" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
+                            <div class="col-12 mb-0">
+                                <table class="table table-sm mb-0" id="FilesList_CCCD_View" style="visibility:hidden; width: 100%">
                                     <tr style="display:none"><th colspan="2"><input type="hidden" id="CCCD_Files" /></th></tr>
                                 </table>
                             </div>
@@ -386,8 +391,8 @@
                         <div class="row">
                             <div class="col-12">Bằng Tốt nghiệp</div>
                             <div class="col-12"><input class="form-control small" id="files_bangtn" multiple="multiple" name="files_bangtn" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" /></div>
-                            <div class="col-12">
-                                <table class="table" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
+                            <div class="col-12 mb-0">
+                                <table class="table table-sm mb-0" id="FilesList_BangTN_View" style="visibility:hidden; width: 100%">
                                     <tr style="display:none"><th colspan="2"><input type="hidden" id="BangTN_Files" /></th></tr>
                                 </table>
                             </div>
@@ -396,8 +401,8 @@
                         <div class="row">
                             <div class="col-12">Giấy tờ ưu tiên</div>
                             <div class="col-12"><input class="form-control small" id="files_uutien" multiple="multiple" name="files_uutien" type="file" data-val="true" accept="application/pdf,.png, .jpeg, .jpg" /></div>
-                            <div class="col-12">
-                                <table class="table" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
+                            <div class="col-12 mb-0">
+                                <table class="table table-sm mb-0" id="FilesList_UuTien_View" style="visibility:hidden; width: 100%">
                                     <tr style="display:none"><th colspan="2"><input type="hidden" id="UuTien_Files" /></th></tr>
                                 </table>
                             </div>
@@ -468,6 +473,85 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="deleteRecordCancel()"></button>
+            </div>
+            <div class="modal-body">
+                <span id="sp_noidung_thongbao_xoa"></span>
+                <input id="key_delete_dkxt_id" type="hidden" />
+                <input id="key_delete_trangthai_hoso" type="hidden" />
+                <input id="key_delete_dkxt_tohop" type="hidden" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="deleteRecordCancel()">Đóng</button>
+                <button class="btn btn-primary" type="button" onclick="deleteRecordConfirmed()" id="bt_dongy_on_modal_xoa">Đồng ý</button>
+            </div>
+        </div>
+        <script>
+            function DeleteRecordOnclick(dkxt_id, dkxt_check, ToHop) {
+                /*  alert('check - ' + dkxt_check )*/
+                console.log('dkxt_id', dkxt_id, 'dkxt_check', dkxt_check, 'ToHop', ToHop);
+                if (dkxt_check != 9) {
+                    $('#sp_noidung_thongbao_xoa').text('Nếu đồng ý nguyện vọng này sẽ bị xóa. Bạn chắc chắn xóa?');
+                    $("#sp_noidung_thongbao_xoa").css("color", "red");
+                    $('#bt_dongy_on_modal_xoa').show();
+                    $('#modal_tb_xoa').modal('show');
+
+                    $('#key_delete_trangthai_hoso').val(dkxt_check);
+                    $('#key_delete_dkxt_id').val(dkxt_id);
+                    $('#key_delete_dkxt_tohop').val(ToHop);
+                }
+                else {
+                    $("#sp_noidung_thongbao_xoa").css("color", "blue");
+                    $('#sp_noidung_thongbao_xoa').text('Nguyện vọng đã được duyệt, không thể xóa?');
+                    $('#bt_dongy_on_modal_xoa').hide();
+                    $('#modal_tb_xoa').modal('show');
+                }
+            }
+
+            function deleteRecordConfirmed() {
+                let data = {
+                    idDkxt: $('#key_delete_dkxt_id').val(),
+                    MaToHop: $('#key_delete_dkxt_tohop').val()
+                };
+                console.log(data)
+                $.ajax({
+                    url: "/DangKyXetTuyenKhac/Delete",
+                    data: JSON.stringify(data),
+                    type: 'POST',
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status == true) {
+                            LoadData_All_Dkxt_DGNL();
+                            $('#modal_tb_xoa').modal('hide');
+                            showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
+                          
+                        }
+                        else {
+                            showToast("Lỗi", res.msg, "bg-success");
+                        }
+                    },
+                    error: function (errormessage) {
+                        showToast("Thông báo", "Lỗi! Chưa thể xóa theo yêu cầu!", "bg-success");
+                    }
+                });
+            }
+
+            function deleteRecordCancel() {
+                $('#sp_noidung_thongbao_xoa').text('');
+                $("#sp_noidung_thongbao_xoa").css("color", "black");
+                $('#modal_tb_xoa').modal('hide');
+                $('#key_delete_dkxt_id').val('');
+                $('#key_delete_dkxt_tohop').val('');
+            }
+        </script>
+    </div>
+</div>
+@*<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -481,7 +565,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -759,9 +843,17 @@
         ];
     }
 
-    function UpdateRecordOnclick(Dkxt_ID) {
-        let str_url = '?dkxt_id=' + Dkxt_ID;
-        window.location.href = "/DangKyXetTuyenKhac/DanhGiaEdit" + str_url;
+    function UpdateRecordOnclick(Dkxt_ID, Dkxt_Check) {
+        if (Dkxt_Check != 9) {
+            let str_url = '?dkxt_id=' + Dkxt_ID;
+            window.location.href = "/DangKyXetTuyenKhac/DanhGiaEdit" + str_url;
+        }
+        else {
+            $("#sp_noidung_thongbao_xoa").css("color", "blue");
+            $('#sp_noidung_thongbao_xoa').text('Nguyện vọng đã được duyệt, không thể sửa!');
+            $('#bt_dongy_on_modal_xoa').hide();
+            $('#modal_tb_xoa').modal('show');
+        } 
     }
     function GetAllKhoiNganh() {
         $.ajax({
@@ -970,39 +1062,39 @@
         });
     }
 
-    function deleteRecord(_dkxt_id, ToHop) {
-        $('#modal_tb_xoa').modal('show');
-        $('#key_delete_dkxt_id').val(_dkxt_id);
-        $('#key_delete_dkxt_tohop').val(ToHop);
-    }
+    //function deleteRecord(_dkxt_id, ToHop) {
+    //    $('#modal_tb_xoa').modal('show');
+    //    $('#key_delete_dkxt_id').val(_dkxt_id);
+    //    $('#key_delete_dkxt_tohop').val(ToHop);
+    //}
 
-    function deleteRecordConfirmed() {
-        let data = {
-            idDkxt: $('#key_delete_dkxt_id').val(),
-            MaToHop: $('#key_delete_dkxt_tohop').val()
-        };
-        console.log(data)
-        $.ajax({
-            url: "/DangKyXetTuyenKhac/Delete",
-            data: JSON.stringify(data),
-            type: 'POST',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (res) {
-                if (res.status == true) {
-                    LoadData_All_Dkxt_DGNL();
-                    $('#modal_tb_xoa').modal('hide');
-                    showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
-                }
-                else {
-                    showToast("Lỗi", res.msg, "bg-success");
-                }
-            },
-            error: function (errormessage) {
-                showToast("Thông báo", "Lỗi! Chưa thể xóa theo yêu cầu!", "bg-success");
-            }
-        });
-    }
+    //function deleteRecordConfirmed() {
+    //    let data = {
+    //        idDkxt: $('#key_delete_dkxt_id').val(),
+    //        MaToHop: $('#key_delete_dkxt_tohop').val()
+    //    };
+    //    console.log(data)
+    //    $.ajax({
+    //        url: "/DangKyXetTuyenKhac/Delete",
+    //        data: JSON.stringify(data),
+    //        type: 'POST',
+    //        contentType: 'application/json;charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (res) {
+    //            if (res.status == true) {
+    //                LoadData_All_Dkxt_DGNL();
+    //                $('#modal_tb_xoa').modal('hide');
+    //                showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
+    //            }
+    //            else {
+    //                showToast("Lỗi", res.msg, "bg-success");
+    //            }
+    //        },
+    //        error: function (errormessage) {
+    //            showToast("Thông báo", "Lỗi! Chưa thể xóa theo yêu cầu!", "bg-success");
+    //        }
+    //    });
+    //}
 
     function deleteRecordCancel() {
         $('#modal_tb_xoa').modal('hide');

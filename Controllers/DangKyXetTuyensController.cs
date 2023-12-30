@@ -446,7 +446,14 @@ namespace HDU_AppXetTuyen.Controllers
         {
             return View();
         }
+        [ThiSinhSessionCheck]
         public ActionResult DkxtthptqgEdit(int? dkxt_id)
+        {
+            ViewBag.Dkxt_ID = dkxt_id;
+            return View();
+        }
+        [ThiSinhSessionCheck]
+        public ActionResult DkxtthptqgDetail(int? dkxt_id)
         {
             ViewBag.Dkxt_ID = dkxt_id;
             return View();
@@ -510,6 +517,7 @@ namespace HDU_AppXetTuyen.Controllers
                         nganh_GhiChu = s.Nganh.Nganh_MaNganh + " - " + s.Nganh.Nganh_TenNganh,
                         thm_MaTen = s.ToHopMon.Thm_MaToHop + " - " + s.ToHopMon.Thm_TenToHop,
                     },
+                    Dkxt_NgayDK = s.Dkxt_KQTQG_NgayDangKy,
                     dkxt_KQTQG_Diem_M1 = s.Dkxt_KQTQG_Diem_M1,
                     dkxt_KQTQG_Diem_M2 = s.Dkxt_KQTQG_Diem_M2,
                     dkxt_KQTQG_Diem_M3 = s.Dkxt_KQTQG_Diem_M3,
@@ -951,6 +959,11 @@ namespace HDU_AppXetTuyen.Controllers
             ViewBag.Dkxt_ID = dkxt_id;
             return View();
         }
+        public ActionResult DkxthocbaDetail(int? dkxt_id)
+        {
+            ViewBag.Dkxt_ID = dkxt_id;
+            return View();
+        }
         public JsonResult DangKyXetTuyen_HB_ListAll()
         {
             db = new DbConnecttion();
@@ -1011,6 +1024,7 @@ namespace HDU_AppXetTuyen.Controllers
                         nganh_GhiChu = s.Nganh.Nganh_MaNganh +" - " + s.Nganh.Nganh_TenNganh,
                         thm_MaTen = s.ToHopMon.Thm_MaToHop +" - " + s.ToHopMon.Thm_TenToHop,
                     },
+                    Dkxt_NgayDK  = s.Dkxt_HB_NgayDangKy,
                     dkxt_Diem_M1 = s.Dkxt_HB_Diem_M1,
                     dkxt_Diem_M2 = s.Dkxt_HB_Diem_M2,
                     dkxt_Diem_M3 = s.Dkxt_HB_Diem_M3,
@@ -1153,7 +1167,10 @@ namespace HDU_AppXetTuyen.Controllers
         {
             db = new DbConnecttion();
             var model = db.DangKyXetTuyenHBs.Include(x => x.ThiSinhDangKy).Where(x => x.Dkxt_HB_ID == entity.Dkxt_HB_ID).FirstOrDefault();
-            var khoinganh_id = db.Nganhs.Where(x => x.Nganh_ID == model.Nganh_ID).FirstOrDefault().KhoiNganh_ID;
+           
+            var NganhDK = db.Nganhs.Where(x => x.Nganh_ID == model.Nganh_ID).FirstOrDefault();
+            var KhoiNganhDK = db.KhoiNganhs.Where(x => x.KhoiNganh_ID == NganhDK.KhoiNganh_ID).FirstOrDefault();
+            var ToHopMonDK = db.ToHopMons.Where(x => x.Thm_ID == model.Thm_ID).FirstOrDefault();
 
             string _xeploai_hocluc_12 = "";
 
@@ -1189,9 +1206,12 @@ namespace HDU_AppXetTuyen.Controllers
                 DotXT_ID = model.DotXT_ID,
                 Ptxt_ID = model.Ptxt_ID,
 
-                Nganh_ID = model.Nganh_ID,
-                Thm_ID = model.Thm_ID,
-                KhoiNganh_ID = khoinganh_id,
+                Nganh_ID = NganhDK.Nganh_ID,
+                Nganh_TeNganh = NganhDK.Nganh_TenNganh,
+                Thm_ID = ToHopMonDK.Thm_ID,
+                Thm_Ten = ToHopMonDK.Thm_TenToHop,
+                KhoiNganh_ID = KhoiNganhDK.KhoiNganh_ID,
+                KhoiNganh_Ten = KhoiNganhDK.KhoiNganh_Ten,
 
                 Dkxt_HB_NguyenVong = model.Dkxt_HB_NguyenVong,
                 Dkxt_HB_GhiChu = model.Dkxt_HB_GhiChu,
@@ -1217,8 +1237,6 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_HB_TrangThai_KinhPhi = model.Dkxt_HB_TrangThai_KinhPhi,
                 Dkxt_HB_TrangThai_HoSo = model.Dkxt_HB_TrangThai_HoSo,
                 Dkxt_HB_TrangThai_KetQua = model.Dkxt_HB_TrangThai_KetQua,
-
-
             };
             return Json(new { success = true, data = data_return }, JsonRequestBehavior.AllowGet);
         }

@@ -733,7 +733,6 @@
     <Content Include="Views\DangKyXetTuyens\DkxthocbaOLD.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkxtthptqg.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsOld01.cshtml" />
-    <Content Include="Views\DangKyXetTuyenThang\IndexOLD.cshtml" />
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTHCS\Create.cshtml" />
     <Content Include="Views\LienCapTHCS\index.cshtml" />
@@ -754,7 +753,6 @@
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit.cshtml" />
     <Content Include="Views\Auth\RegisterMaster.cshtml" />
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkdtnkOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkdtnkEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaDetail.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEdit.cshtml" />
@@ -770,15 +768,12 @@
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgDetail.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsDetail.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGiaDetail.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxtthptqgOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgEditOK.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGiaOLD.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaEditOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkxthocba.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxtthptqgOLD.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\DanhGia - Copy %282%29.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsOLD.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGiaOLD2.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />

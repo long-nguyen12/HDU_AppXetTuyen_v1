@@ -377,6 +377,7 @@ namespace HDU_AppXetTuyen.Controllers
                 {
                     ThmMaTen = n.ToHopMon.Thm_MaTen,
                 },
+
                 Dkxt_NgayDK = n.Dkxt_HB_NgayDangKy,
                 Dkxt_Diem_Tong = n.Dkxt_HB_Diem_Tong,
                 Dkxt_Diem_Tong_Full = n.Dkxt_HB_Diem_Tong_Full,

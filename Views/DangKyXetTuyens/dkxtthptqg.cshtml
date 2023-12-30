@@ -50,10 +50,11 @@
                 <div class="row">
                     <div class="col-lg-12" id="div_thead" style="display:none">
                         <div class="row g-1">
-                            <div class="col-xl-2 col-lg-12"><b>Nguyện vọng</b></div>
+                            <div class="col-xl-1 col-lg-12"><b>Nguyện vọng</b></div>
                             <div class="col-xl-3 col-lg-12"><b>Ngành</b></div>
-                            <div class="col-xl-3 col-lg-12"><b>Tổ hợp môn</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Tổ hợp môn</b></div>
                             <div class="col-xl-2 col-lg-12"><b class="text-nowrap">Tổng điểm (có ưu tiên)</b></div>
+                            <div class="col-xl-2 col-lg-12"><b >Ngày đăng ký</b></div>
                             <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
                         </div>
                         <div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div>
@@ -64,7 +65,11 @@
                         $(document).ready(function () {
                             LoadData_All_DkxtKQTN();
                         });
-
+                        function ConverDateToString(date) {
+                            var parts = date.split('-');
+                            var mydate = parts[2] + '/' + parts[1] + '/' + parts[0];
+                            return mydate;
+                        }
                         function LoadData_All_DkxtKQTN() {
                             $('#div_tbody_list').empty();
 
@@ -91,12 +96,13 @@
                                             if (res.view_list_dkxt_thptqg_ts.length == 1) {
                                                 let div_item = "";
                                                 div_item += `<div class="row g-1">`;
-                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + `</div>`;
+                                                div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + `</div>`;
                                                 div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.nganh_GhiChu + `</span></div>`;
-                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.thm_MaTen + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.thm_MaTen + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_Diem_Tong_Full + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
-                                                div_item += `<button class="btn btn-sm btn-outline-success" style="margin-left:10px">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Xoá</button>`;
+                                                div_item += `<button class="btn btn-sm btn-outline-success" style="margin-left:10px">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Xoá</button>`;
                                                 div_item += `</div>`;
                                                 div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
                                                 $('#div_tbody_list').append(div_item);
@@ -104,13 +110,14 @@
                                             else if (res.view_list_dkxt_thptqg_ts.length > 1) {
                                                 let div_item = "";
                                                 div_item += `<div class="row g-1">`;
-                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + ` </span></div>`;
+                                                div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + ` </span></div>`;
                                                 div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.nganh_GhiChu + `</span></div>`;
-                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.thm_MaTen + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_TenAll.thm_MaTen + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_Diem_Tong_Full + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
                                                 div_item += `<button style="margin-left:10px" class="btn btn-outline-info btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == res.view_list_dkxt_thptqg_ts.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>`
-                                                div_item += `&nbsp;<button class="btn btn-sm btn-outline-success">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_KetQua})">Xoá</button>`;
+                                                div_item += `&nbsp;<button class="btn btn-sm btn-outline-success" onclick="DkxtthptqgDetail(${result.dkxt_KQTQG_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Xoá</button>`;
                                                 div_item += `</div>`;
                                                 div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
                                                 $('#div_tbody_list').append(div_item);
@@ -137,6 +144,10 @@
                                     alert(errormessage.responseText);
                                 }
                             });
+                        }
+                        function DkxtthptqgDetail(dkxt_id) {
+                            var str_url = '?dkxt_id=' + dkxt_id;
+                            window.location.href = "/DangKyXetTuyens/DkxtthptqgDetail" + str_url;
                         }
                     </script>
                 </div>
@@ -473,9 +484,15 @@
 </div>
 <script>   
     // chuyển đến trang sửa thông tin nguyện vọng
-    function update_aspirations_on_table_onclick(dkxt_id) {
-        var str_url = '?dkxt_id=' + dkxt_id;
-        window.location.href = "/DangKyXetTuyens/DkxtthptqgEdit" + str_url;
+    function update_aspirations_on_table_onclick(dkxt_id, dkxt_tths) {
+        if (dkxt_tths != 9) {
+            var str_url = '?dkxt_id=' + dkxt_id;
+            window.location.href = "/DangKyXetTuyens/DkxtthptqgEdit" + str_url;
+        }
+        else {
+            alert('Nguyện vọng đã được duyệt, không thể sửa!')
+        }
+      
     }
 
     // thay đổi nguyện vọng đã đăng ký:
@@ -572,9 +589,15 @@
     })
 
     // button xóa nguyện vọng đã đăng ký:
-    function delete_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
-        $('#modal_tb_xoa').modal('show');
-        $('#key_delete_dkxt_kqtthptqg_id').val(_dkxt_kqtthptqg_id);
+    function delete_aspirations_on_table_onclick(_dkxt_id, dkxt_tths) {
+        if (dkxt_tths != 9) {
+            $('#modal_tb_xoa').modal('show');
+            $('#key_delete_dkxt_kqtthptqg_id').val(_dkxt_id);
+        }
+        else {
+            alert('Nguyện vọng đã được duyệt, không thể xóa!')
+        }
+       
     }
     $('#bt_ok_on_modal_delete').click(function () {
         let data_Obj_new = { Dkxt_KQTQG_ID: $('#key_delete_dkxt_kqtthptqg_id').val() };

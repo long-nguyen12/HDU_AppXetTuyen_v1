@@ -60,6 +60,7 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_MonDatGiai = n.Dkxt_MonDatGiai,
                 Dkxt_NamDatGiai = n.Dkxt_NamDatGiai,
                 Dkxt_LoaiGiai = n.Dkxt_LoaiGiai,
+                Dkxt_NgayDangKy = n.Dkxt_NgayDangKy,
                 Dkxt_MinhChung_HB = n.Dkxt_MinhChung_HB,
                 Dkxt_MinhChung_CCCD = n.Dkxt_MinhChung_CCCD,
                 Dkxt_MinhChung_Bang = n.Dkxt_MinhChung_Bang,
@@ -139,14 +140,15 @@ namespace HDU_AppXetTuyen.Controllers
                      " <p> Môn đạt giải: " + student.Dkxt_MonDatGiai + " </p>" +
                      " <p> Loại giải: " + student.Dkxt_LoaiGiai + " </p>" +
                      " <p> Năm đạt giải: " + student.Dkxt_NamDatGiai + " </p>";
-               
+
                 try
                 {
                     SendEmail s = new SendEmail();
                     s.Sendemail("xettuyen@hdu.edu.vn", body, subject);
                     return Json(new { success = true, data = "DKXT" + model.Dkxt_ID + " P4  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển" }, JsonRequestBehavior.AllowGet);
                 }
-                catch {
+                catch
+                {
                     return Json(new { success = false, data = "DKXT" + model.Dkxt_ID + " P4  NV" + model.Dkxt_NguyenVong + " " + ts.ThiSinh_CCCD + " Nộp lệ phí xét tuyển" }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -160,12 +162,18 @@ namespace HDU_AppXetTuyen.Controllers
             ViewBag.Dkxt_ID = dkxt_id;
             return View();
         }
+        public ActionResult Detail(long? dkxt_id)
+        {
+            ViewBag.Dkxt_ID = dkxt_id;
+            return View();
+        }
         public JsonResult DangKyXetTuyenThang_GetByID(DangKyXetTuyenThang entity)
         {
             db = new DbConnecttion();
             var model = db.DangKyXetTuyenThangs.Include(x => x.ThiSinhDangKy).Where(x => x.Dkxt_ID == entity.Dkxt_ID).FirstOrDefault();
-            var khoinganh_id = db.Nganhs.Where(x => x.Nganh_ID == model.Nganh_ID).FirstOrDefault().KhoiNganh_ID;
 
+            var NganhDK = db.Nganhs.Where(x => x.Nganh_ID == model.Nganh_ID).FirstOrDefault();
+            var KhoiNganhDK = db.KhoiNganhs.Where(x => x.KhoiNganh_ID == NganhDK.KhoiNganh_ID).FirstOrDefault();
             string _xeploai_hocluc_12 = "";
 
             if (model.ThiSinhDangKy.ThiSinh_HocLucLop12 == 4) { _xeploai_hocluc_12 = "Xuất sắc"; }
@@ -194,9 +202,13 @@ namespace HDU_AppXetTuyen.Controllers
                 DotXT_ID = model.DotXT_ID,
                 Ptxt_ID = model.Ptxt_ID,
 
-                Nganh_ID = model.Nganh_ID,
                 Dkxt_ToHopXT = model.Dkxt_ToHopXT,
-                KhoiNganh_ID = khoinganh_id,
+
+                Nganh_ID = model.Nganh_ID,
+                Nganh_TenNganh = NganhDK.Nganh_TenNganh,
+
+                KhoiNganh_ID = KhoiNganhDK.KhoiNganh_ID,
+                KhoiNganh_Ten = KhoiNganhDK.KhoiNganh_Ten,
 
                 Dkxt_NguyenVong = model.Dkxt_NguyenVong,
                 Dkxt_GhiChu = model.Dkxt_GhiChu,
