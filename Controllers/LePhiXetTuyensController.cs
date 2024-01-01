@@ -19,7 +19,37 @@ namespace HDU_AppXetTuyen.Controllers
     {
         private DbConnecttion db = null;
 
-        // GET: LePhiXetTuyens
+        [ThiSinhSessionCheck]
+        public ActionResult Pt2Detail(long? dkxt_id)
+        {
+            ViewBag.Dkxt_ID = dkxt_id;
+            return View();
+        }
+        [ThiSinhSessionCheck]
+        public ActionResult Pt3Detail(long? dkxt_id)
+        {
+            ViewBag.Dkxt_ID = dkxt_id;
+            return View();
+        }
+        [ThiSinhSessionCheck]
+        public ActionResult Pt4Detail(long? dkxt_id)
+        {
+            ViewBag.Dkxt_ID = dkxt_id;
+            return View();
+        }
+        [ThiSinhSessionCheck]
+        public ActionResult Pt5Detail(long? Dkxt_ID)
+        {
+            ViewBag.Dkxt_ID = Dkxt_ID;
+            return View();
+        }
+        [ThiSinhSessionCheck]
+        public ActionResult Pt6Detail(long? Dkxt_ID)
+        {
+            ViewBag.Dkxt_ID = Dkxt_ID;
+            return View();
+        }
+        
         [ThiSinhSessionCheck]
         public ActionResult Index()
         {

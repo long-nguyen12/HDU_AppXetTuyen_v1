@@ -49,7 +49,7 @@
                                 $('#a_thongtin_dotxet_hientai').hide();
                                 $('#div_thongtin_dotxet_hientai').css('display', 'inline');
                                 $('#div_thongtin_dotxet_hientai').show();
-                                $('#div_thongtin_dotxet_hientai').text(str_time)  
+                                $('#div_thongtin_dotxet_hientai').text(str_time)
 
                                 $('#div_thead_pt6').css('display', 'none');
                                 $('#div_thead_pt6').hide();
@@ -88,7 +88,7 @@
                                 $('#a_thongtin_dotxet_hientai').text(str_time)
                                 $('#div_thongtin_dotxet_hientai').css('display', 'none');
                                 $('#div_thongtin_dotxet_hientai').hide();
-                           
+
                                 $('#div_thead_pt6').css('display', 'inline');
                                 $('#div_thead_pt6').show();
                                 $('.span_tieude_chitiet_pt6').css('display', 'none');
@@ -99,29 +99,29 @@
                                 $('#div_thead_pt5').show();
                                 $('.span_tieude_chitiet_pt5').css('display', 'none');
                                 $('.span_tieude_chitiet_pt5').hide();
-                                $('.span_noidung_chitiet_pt5').css('font-weight', 'normal');                    
+                                $('.span_noidung_chitiet_pt5').css('font-weight', 'normal');
 
                                 $('#div_thead_pt4').css('display', 'inline');
                                 $('#div_thead_pt4').show();
                                 $('.span_tieude_chitiet_pt4').css('display', 'none');
                                 $('.span_tieude_chitiet_pt4').hide();
                                 $('.span_noidung_chitiet_pt4').css('font-weight', 'normal');
-                           
+
 
                                 $('#div_thead_pt3').css('display', 'inline');
                                 $('#div_thead_pt3').show();
                                 $('.span_tieude_chitiet_pt3').css('display', 'none');
                                 $('.span_tieude_chitiet_pt3').hide();
                                 $('.span_noidung_chitiet_pt3').css('font-weight', 'normal');
-                           
+
 
                                 $('#div_thead_pt2').css('display', 'inline');
                                 $('#div_thead_pt2').show();
                                 $('.span_tieude_chitiet_pt2').css('display', 'none');
                                 $('.span_tieude_chitiet_pt2').hide();
                                 $('.span_noidung_chitiet_pt2').css('font-weight', 'normal');
-                         
-                                
+
+
                             }
                             function reportWindowSize() {
                                 if (window.innerWidth <= 1000) {
@@ -248,7 +248,7 @@
                                 success: function (res) {
                                     if (res.success) {
                                         let TrungHocPT = res.TrungHocPT;
-                                       
+
                                         if (TrungHocPT.length > 0) {
                                             $("#list-kqthi-thpt").show();
                                             $.each(TrungHocPT, function (key, item) {
@@ -291,7 +291,7 @@
                                                 div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt2"/><span class="col-xl-8  span_noidung_chitiet_pt2">` + trangthaihs_pt2 + `</span></div>`;
                                                 div_item_pt2 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt2">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt2"/><span class="col-8 span_noidung_chitiet_pt2">` + trangthaikp_pt2 + `</span></div>`;
                                                 div_item_pt2 += `<div class="col-xl-2 col-lg-12 text-nowrap">`;
-                                                div_item_pt2 += `<button class="btn btn-sm btn-outline-primary text-nowrap" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 2)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt2 += `<button class="btn btn-sm btn-outline-primary text-nowrap" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 2)" ${item.Dkxt_TrangThai_KinhPhi == 9 ? "disabled" : ''}>Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success" onclick="Detail(${item.Dkxt_ID}, 2)">Xem chi tiết</button>`;
                                                 div_item_pt2 += `</div>`;
                                                 div_item_pt2 += `</div>`;
                                                 div_item_pt2 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -367,7 +367,7 @@
                                     if (res.success) {
                                         let HocBa = res.HocBa;
                                         if (HocBa.length > 0) {
-                                            $("#list-hocba").show();                                            
+                                            $("#list-hocba").show();
                                             $.each(HocBa, function (key, item) {
                                                 let trangthaikp_pt3 = "";
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0) {
@@ -404,12 +404,12 @@
                                                 div_item_pt3 += `<div class="row g-1">`;
                                                 div_item_pt3 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- </span><span class="col-8 span_noidung_chitiet_pt3">` + 'Nguyện vọng ' + item.Dkxt_NguyenVong + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12 text-wrap"><span class="col-4  span_tieude_chitiet_pt3">- Ngành: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Nganh_ID.Nganh_MaNganh + ' - ' + item.Nganh_ID.NganhTenNganh + `</span></div>`;
-                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Thm.ThmMaTen + ` (` + item.Dkxt_Diem_Tong_Full +` đ)</span></div>`;
+                                                div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Tổ hợp môn: </span><span class="col-8 span_noidung_chitiet_pt3">` + item.Thm.ThmMaTen + ` (` + item.Dkxt_Diem_Tong_Full + ` đ)</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-1 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Ngày đăng ký: </span><span class="col-8 span_noidung_chitiet_pt3">` + ConverDateToString(item.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt3"/><span class="col-xl-8  span_noidung_chitiet_pt3">` + trangthaihs_pt3 + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt3">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt3"/><span class="col-8 span_noidung_chitiet_pt3">` + trangthaikp_pt3 + `</span></div>`;
                                                 div_item_pt3 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt3 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 3)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt3 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 3)" ${item.Dkxt_TrangThai_KinhPhi == 9 ? "disabled" : ''}>Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success" onclick="Detail(${item.Dkxt_ID},3)">Xem chi tiết</button>`;
                                                 div_item_pt3 += `</div>`;
                                                 div_item_pt3 += `</div>`;
                                                 div_item_pt3 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -531,7 +531,7 @@
                                                 div_item_pt4 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt4"/><span class="col-xl-8  span_noidung_chitiet_pt4">` + trangthaihs_pt4 + `</span></div>`;
                                                 div_item_pt4 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt4">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt4"/><span class="col-8 span_noidung_chitiet_pt4">` + trangthaikp_pt4 + `</span></div>`;
                                                 div_item_pt4 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt4 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 4)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt4 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID}, 4)" ${item.Dkxt_TrangThai_KinhPhi == 9 ? "disabled" : ''}>Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success " onclick="Detail(${item.Dkxt_ID},4)">Xem chi tiết</button>`;
                                                 div_item_pt4 += `</div>`;
                                                 div_item_pt4 += `</div>`;
                                                 div_item_pt4 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -613,7 +613,7 @@
                                         let NgoaiNgu = res.NgoaiNgu;
                                         console.log(NgoaiNgu);
                                         if (NgoaiNgu.length > 0) {
-                                          
+
                                             $.each(NgoaiNgu, function (key, item) {
                                                 let trangthaikp_pt5 = "";
                                                 if (item.Dkxt_TrangThai_KinhPhi == 0) { trangthaikp_pt5 = '<span style="color:red">Chưa gửi minh chứng nộp lệ phí</span>' }
@@ -638,14 +638,14 @@
                                                 div_item_pt5 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt5"/><span class="col-xl-8  span_noidung_chitiet_pt5">` + trangthaihs_pt5 + `</span></div>`;
                                                 div_item_pt5 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt5">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt5"/><span class="col-8 span_noidung_chitiet_pt5">` + trangthaikp_pt5 + `</span></div>`;
                                                 div_item_pt5 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt5 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},5)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt5 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},5)" ${item.Dkxt_TrangThai_KinhPhi == 9 ? "disabled" : ''}>Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success " onclick="Detail(${item.Dkxt_ID},5)">Xem chi tiết</button>`;
                                                 div_item_pt5 += `</div>`;
                                                 div_item_pt5 += `</div>`;
                                                 div_item_pt5 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
                                                 div_item_pt5 += `</div>`;
 
                                                 $('#div_tbody_list_pt5').append(div_item_pt5);
-                                            });                                           
+                                            });
 
                                             $("#list-ngoaingu").show();
 
@@ -664,11 +664,11 @@
                                                 $('.span_tieude_chitiet_pt5').css('display', 'none');
                                                 $('.span_tieude_chitiet_pt5').hide();
                                                 $('.span_noidung_chitiet_pt5').css('font-weight', 'normal')
-                                            }                                           
+                                            }
                                         }
                                     }
                                     else {
-                                        $("#list-ngoaingu").hide();                                     
+                                        $("#list-ngoaingu").hide();
                                     }
                                 },
                                 error: function (xhr, status, error) {
@@ -676,7 +676,7 @@
                                 },
                             });
                         }
-                    </script>                     
+                    </script>
                 </div>
             </div>
         </div>
@@ -742,7 +742,7 @@
                                                 div_item_pt6 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Trạng thái duyệt hồ sơ: </span><br class="span_tieude_chitiet_pt6"/><span class="col-xl-8  span_noidung_chitiet_pt6">` + trangthaihs_pt6 + `</span></div>`;
                                                 div_item_pt6 += `<div class="col-xl-2 col-lg-12"><span class="col-4  span_tieude_chitiet_pt6">- Minh chứng nộp lệ phí: </span><br class="span_tieude_chitiet_pt6"/><span class="col-8 span_noidung_chitiet_pt6">` + trangthaikp_pt6 + `</span></div>`;
                                                 div_item_pt6 += `<div class="col-xl-2 col-lg-12">`;
-                                                div_item_pt6 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},6)">Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success ">Xem chi tiết</button>`;
+                                                div_item_pt6 += `<button class="btn btn-sm btn-outline-primary" style="margin-left:10px" onclick="NopLePhi(${item.Dkxt_ID},6)" ${item.Dkxt_TrangThai_KinhPhi == 9 ? "disabled" : ''}>Gửi minh chứng lệ phí</button>&nbsp;<button class="btn btn-sm btn-outline-success "  onclick="Detail(${item.Dkxt_ID},6)">Xem chi tiết</button>`;
                                                 div_item_pt6 += `</div>`;
                                                 div_item_pt6 += `</div>`;
                                                 div_item_pt6 += `<div class="row"><div class="col-12"><hr class="mt-1 mb-2" /></div></div>`;
@@ -781,11 +781,11 @@
                     </script>
                 </div>
 
-            
+
             </div>
 
         </div>
-    
+
     </div>
 </div>
 
@@ -871,7 +871,6 @@
 <script>
     var MinhChungFormData = new FormData();
     var MinhChungPath = "";
-
     function NopLePhi(id, type) {
         $('#key_dkxt_id').val(id)
         $('#key_dkxt_pt').val(type)
@@ -916,7 +915,6 @@
             }
         });
     }
-
 
     $('document').ready(function () {
 
@@ -1024,7 +1022,7 @@
             key_dkxt_id: key_dkxt_id,
             key_dkxt_pt: key_dkxt_pt
         }
-     /*   console.log(formData);*/
+        /*   console.log(formData);*/
         $.ajax({
             url: "/LePhiXetTuyens/Create",
             data: JSON.stringify(formData),
@@ -1087,5 +1085,27 @@
         $('#KinhPhi_SoTC').val('');
         $('#file_minhchung').val(null);
         $('#FilesList_KinhPhi_TepMinhChung_View tbody').empty();
+    }
+    function Detail(Dkxt_ID, Dkxt_pt) {
+        if (Dkxt_pt == 2) {
+            let str_url = '?dkxt_id=' + Dkxt_ID;
+            window.location.href = "/LePhiXetTuyens/Pt2Detail" + str_url;
+        }
+        if (Dkxt_pt == 3) {
+            let str_url = '?dkxt_id=' + Dkxt_ID;
+            window.location.href = "/LePhiXetTuyens/Pt3Detail" + str_url;
+        }
+        if (Dkxt_pt == 4) {
+            let str_url = '?dkxt_id=' + Dkxt_ID;
+            window.location.href = "/LePhiXetTuyens/Pt4Detail" + str_url;
+        }
+        if (Dkxt_pt == 5) {
+            let str_url = '?dkxt_id=' + Dkxt_ID;
+            window.location.href = "/LePhiXetTuyens/Pt5Detail" + str_url;
+        }
+        if (Dkxt_pt == 6) {
+            let str_url = '?dkxt_id=' + Dkxt_ID;
+            window.location.href = "/LePhiXetTuyens/Pt6Detail" + str_url;
+        }
     }
 </script>

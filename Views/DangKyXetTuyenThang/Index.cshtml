@@ -130,7 +130,7 @@
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Giải: </span><span class="col-8 span_noidung_nv">` + result.Dkxt_LoaiGiai + ` /(năm: ` + result.Dkxt_NamDatGiai + `) </span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDangKy) + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
-                                                div_item += `<button class="btn btn-outline-info  btn-sm check_disable" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID},1)" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning check_disable btn-sm" onclick="ShowModalChangeData(${result.Dkxt_ID},2)" ${i == data.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
+                                                div_item += `<button class="btn btn-outline-info  btn-sm check_disable ${i == 0 ? "dautien" : ''}" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID},1)" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning check_disable btn-sm ${i ==data.length - 1 ? "cuoicung" : ''}" onclick="ShowModalChangeData(${result.Dkxt_ID},2)" ${i == data.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
                                                 div_item += `<button class="btn btn-sm btn-outline-success"  onclick="DkxtttDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm check_disable" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm check_disable" onclick="deleteRecord(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Xoá</button>`;
                                                 div_item += `</div>`;
                                                 div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
@@ -162,6 +162,8 @@
                                     else if (response.Dkxt_CheckSetUpdate == 1) {
                                         $('.check_disable').prop('disabled', false);
                                         $('#p_thongbao_khoadangky').css('display', 'none');
+                                        $('.dautien').prop('disabled', true);
+                                        $('.cuoicung').prop('disabled', true);
                                     }
                                 },
                                 error: function (errormessage) {

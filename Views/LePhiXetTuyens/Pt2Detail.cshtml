@@ -1,0 +1,594 @@
+﻿
+@{
+    ViewBag.Title = "Đăng ký xét tuyển";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .label_tieude {
+        white-space: nowrap !important;
+    }
+
+    .span_with_for {
+        width: 65px !important
+    }
+
+    .btn, .form-select, .form-control {
+        border-radius: 3px;
+    }
+
+    .padding_input_text_number {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        text-align: center !important;
+    }
+</style>
+<style>
+    /* Định nghĩa kiểu CSS cho hiệu ứng hover */
+    .my-row:hover {
+        background-color: #f8f9fa; /* Màu nền khi hover */
+        cursor: pointer; /* Con trỏ chuột khi hover */
+    }
+</style>
+<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-1">
+                    <div class="page-header-title mb-2">
+                        <div class="page-header-icon"><i data-feather="list"></i></div>
+                        <span id="sp_tieude"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    $(document).ready(function () {
+        let sp_tieude = $('#sp_tieude');
+        if (window.innerWidth <= 1200) {
+            sp_tieude.text('Xét tuyển bằng điểm thi tốt nghiệp');
+        }
+        else {
+            sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia');
+        }
+        function reportWindowSize() {
+            if (window.innerWidth <= 1200) {
+                sp_tieude.text('Xét tuyển bằng điểm thi tốt nghiệp');
+            }
+            else {
+                sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả thi tốt nghiệp trung học phổ thông quốc gia');
+            }
+        }
+        window.onresize = reportWindowSize;
+    })
+</script>
+<div class="container-fluid px-12">
+    <div id="div_update_aspirations">
+        <div class="card card-header-actions">
+            <div class="card-header">
+                <span>Chi tiết nguyện vọng đã đăng ký</span>
+                <button class="btn-close" id="bt_close_div_update_aspirations_first" type="button" aria-label="Close"></button>
+            </div>
+            <div class="card-body g-1">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row">
+                            <div class="col-12"><b>Ngành và tổ hợp môn</b></div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        </div>
+                        <div class="row  my-row">
+                            <div class="col-4">Khối ngành</div>
+                            <div class="col-8"><select id="select_khoinganh" class="form-select" disabled></select></div>
+                        </div>
+                        <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        <div class="row  my-row">
+                            <div class="col-4">Ngành</div>
+                            <div class="col-8">
+                                <select id="select_nganh" class="form-select" disabled></select>
+                                <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        <div class="row">
+                            <div class="col-4">Tổ hợp môn</div>
+                            <div class="col-8 my-row">
+                                <select id="select_tohopmon" class="form-select" disabled></select>
+                                <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        <div class="row">
+                            <div class="col-6 mb-0 ">
+                                <span id="span_Uutien_doituong"></span>
+                                <hr style="margin-bottom: 6px " />
+                            </div>
+                            <div class="col-6 mb-0 ">
+                                <span id="span_Uutien_khuvuc"></span>
+                                <hr style="margin-bottom:6px" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6 mt-0">
+                                <span> Học lực lớp 12</span>
+                                <input id="txt_hocluc_12" type="text" class="form-control" value="" disabled />
+                            </div>
+                            <div class="col-6 mt-0">
+                                <span>Hạnh kiểm lớp 12</span>
+                                <input id="txt_hanhkiem_12" type="text" class="form-control" value="" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row">
+                            <div class="col-12"><b>Điểm các môn xét tuyển</b></div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        </div>
+                        <div class="row table-hover">
+                            <div class="col-5">Năm tốt nghiệp</div>
+                            <div class="col-7">
+                                <select class="form-select" id="select_namtn" disabled></select>
+                                <span id="NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row g-1">
+                            <div class="col-3">
+                                <p id="lb_tenmon_1" class="form-label"></p>
+                                <input id="txt_m1" type="number" class="form-control input-monhoc padding_input_text_number" disabled/>
+                            </div>
+                            <div class="col-3">
+                                <p id="lb_tenmon_2" class="form-label"></p>
+                                <input id="txt_m2" type="number" class="form-control input-monhoc padding_input_text_number" disabled/>
+                            </div>
+                            <div class="col-3">
+                                <p id="lb_tenmon_3" class="form-label">
+                                </p><input id="txt_m3" type="number" class="form-control input-monhoc padding_input_text_number" disabled/>
+                            </div>
+                            <div class="col-3">
+                                <p id="lb_tongdiem" class="form-label">Tổng</p>
+                                <input id="txt_tong_diem" type="text" class="form-control input-tong padding_input_text_number" disabled />
+                            </div>
+                            <div class="col-xxl-12 mt-0 mb-0" style="text-align:center; ">
+                                <span id="Diem_All_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                            <div class="col-12"><hr class="mt-1 mb-3" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12"><b>Giấy chứng nhận KQ tốt nghiệp THPT</b></div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                            <div class="col-12" style="margin-top:0; margin-bottom:0">(<span id="sp_view_mc_cntn"> </span>)</div>
+                            <div class="col-12">
+                                <input id="files_chungnhan_kqtn" type="file" multiple class="form-control" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" disabled/>
+                                <span id="ChungNhanTotNghiep_Error" class="small mb-1 text-danger"></span>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row table-hover">
+                            <div class="col-12"><b>Dữ liệu minh chứng khác</b> </div>
+                            <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">Học bạ (<span id="sp_view_mc_hocba"> </span>)</div>
+                            <div class="col-12"><input class="form-control" id="files_hocba_ts" multiple="multiple" name="files_hocba_ts" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" disabled/></div>
+                            <div class="col-12">
+                                <table class="table mt-1 mb-0" id="FilesList_HocBa_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_cccd" /></th></tr></table>
+                            </div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">Bằng tốt nghiệp (<span id="sp_view_mc_bang"></span>)</div>
+                            <div class="col-12"><input class="form-control" id="files_bangtn" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" disabled/></div>
+                            <div class="col-12"><table class="table mt-0 mb-0" id="FilesList_BangTN_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table></div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">Căn cước công dân (<span id="sp_view_mc_cccd"></span>)</div>
+                            <div class="col-12"><input class="form-control" id="files_cancuoc_congdan" multiple="multiple" name="files" type="file" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" disabled/></div>
+                            <div class="col-12"><table class="table mt-0 mb-0" id="FilesList_CCCD_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_bangtn" /></th></tr></table></div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-12">Giấy tờ ưu tiên (<span id="sp_view_mc_uutien"> </span>)</div>
+                            <div class="col-12"><input class="form-control" id="files_giayto_uutien" multiple="multiple" name="files" type="file" data-val="true" accept=".pdf,.png, .PNG,.jpeg,.JPEG,.jpg,.JPG" disabled/></div>
+                            <div class="col-12"> <table class="table mt-0 mb-0" id="FilesList_GTUT_View" style="visibility:hidden"> <tr style="display:none"><th colspan="2"><input type="hidden" id="txt_uploader_file_g" /></th></tr></table></div>
+                            <div class="col-12"><hr class="mt-1 mb-2" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-xxl-12" style="text-align:center">                       
+                        <input type="hidden" id="Dkxt_KQTQG_TrangThai_HoSo_Check" />
+                        <input class="btn btn-outline-secondary" id="bt_close_div_update_aspirations_second" type="button" value="Quay lại" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="div_view_img" style="display:none">
+        <div class="card card-header-actions">
+            <div class="card-header mt-0 mb-0">
+                <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
+                <div>      
+                    <button class="btn btn-outline-primary btn-sm" type="button" id="bt_close_div_view_img">Đóng</button>
+                </div>
+            </div>
+            <div class="card-body" style="margin: 0px!important">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" id="div_item_view_minhchung">
+                            <img class="d-block w-100 img-hide" id="img_view" display:none">
+                            <embed id="pdf_view" class="d-block w-100" style="height:0px; display:none" type="application/pdf" />
+                            <input type="hidden" id="hiden_id_key" style="display:none" />
+                            <input type="hidden" id="hiden_loai_minhchung_xoa" style="display:none" />
+                            <input type="hidden" id="hiden_duongdan_file_xoa" style="display:none" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+</div>
+
+
+
+<input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_KQTQG_ID" />
+<input type="hidden" id="dkxt_thptqg_id_checkin" name="dkxt_thptqg_id_checkin" />
+
+<script>
+    function showimg(url, loaimc, id_key_hs) {
+
+        $('#hiden_id_key').val(id_key_hs);
+        $('#hiden_loai_minhchung_xoa').val(loaimc);
+        $("#hiden_duongdan_file_xoa").val(url);
+
+        var pdf_view = document.getElementById("pdf_view");
+
+        $('#pdf_view').height('0px');
+        $('#pdf_view').css('display', 'none');
+        $("#pdf_view").attr("src", "");
+        $("#pdf_view").hide();
+
+        $("#img_view").attr("src", "");
+        $('#img_view').hide();
+
+        if (loaimc == 1) {
+            $('#img_txt_card_hearder').text('Chứng nhận tốt nghiệp');
+        }
+        if (loaimc == 2) {
+            $('#img_txt_card_hearder').text('Học bạ');
+        }
+        if (loaimc == 3) {
+            $('#img_txt_card_hearder').text('Bằng tốt nghiệp');
+        }
+        if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Căn cước công dân');
+        }
+        if (loaimc == 5) {
+            $('#img_txt_card_hearder').text('Giấy tờ khác');
+        }
+        var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
+
+        if (lastChar.toLowerCase() != ".pdf") {
+            $('#pdf_view').height('0px');
+            $('#pdf_view').css('display', 'none');
+            $("#pdf_view").attr("src", "");
+            $("#pdf_view").hide();
+
+            $("#img_view").attr("src", url);
+            $("#img_view").show();
+        }
+        if (lastChar.toLowerCase() === ".pdf") {
+            $("#img_view").hide();
+            $('#pdf_view').height('500px');
+            $('#pdf_view').css('display', 'inline');
+
+            $("#pdf_view").attr("src", url);
+            $("#pdf_view").show();
+        }
+        $('#div_view_img').show();
+    }
+    $(document).ready(function () {
+        $('#bt_close_div_view_img').click(function () {
+            $('#div_view_img').hide();
+            $("#img_view").attr("src", "");
+            $("#img_view").hide();
+
+            $('#pdf_view').height('0px');
+            $('#pdf_view').css('display', 'none');
+            $("#pdf_view").attr("src", "");
+            $("#pdf_view").hide();
+            $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // hiển thị thông tin năm tốt nghiệp
+        let currentYear = new Date().getFullYear();
+        let nam_list = [
+            { value: 0, text: "Chọn năm" },
+            { value: currentYear - 1, text: currentYear - 1 },
+            { value: currentYear - 2, text: currentYear - 2 },
+        ]
+        let select_NamTN = $('#select_namtn');
+
+        $.each(nam_list, function (index, option) {
+            select_NamTN.append($('<option>', {
+                value: option.value,
+                text: option.text
+            }));
+        });
+
+        // hiển thị thông tin đăng ký nguyện vọng
+        LoadDataInfor_THPTQG_ByID();
+        //hiển thị các hình ảnh minh chứng
+        LoadImageMC_THPTQG_ByID();
+        //thiết lập các upload file
+        reset_change_img_file();
+    })
+    function LoadDataInfor_THPTQG_ByID() {
+        let data_get = { Dkxt_KQTQG_ID: $('#hidden_Dkxt_KQTQG_ID').val() }
+        $.ajax({
+            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_GetByID",
+            data: JSON.stringify(data_get),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                console.log("test", res)
+                if (res.success) {
+
+                    let data = res.data;
+                    console.log('data', data)
+                    $("#select_khoinganh").empty();
+                    $("#select_nganh").empty();
+                    $("#select_tohopmon").empty();
+
+                    $("#select_khoinganh").append($("<option></option>").attr("value", data.KhoiNganh_ID).text(data.KhoiNganh_Ten));
+                    $('#select_nganh').append('<option value="' + data.Nganh_ID + '">' + data.Nganh_TenNganh + '</option>'); 
+                    $("#select_tohopmon").append($("<option></option>").attr("value", data.Thm_ID).text(data.Thm_TenToHop));
+
+                 
+
+                    $('#txt_hocluc_12').val(data.ThiSinh_HocLucLop12);
+                    $('#txt_hanhkiem_12').val(data.ThiSinh_HanhKiemLop12);
+
+                    $('#span_Uutien_doituong').text(data.DoiTuong_ID);
+                    $('#span_Uutien_khuvuc').text(data.KhuVuc_ID);
+
+                    $('#select_namtn').val(data.Dkxt_KQTQG_NamTotNghiep);
+
+                    $('#lb_tenmon_1').text(data.Dkxt_Diem_M1.TenMon);
+                    $('#txt_m1').val(data.Dkxt_Diem_M1.Diem);
+
+                    $('#lb_tenmon_2').text(data.Dkxt_Diem_M2.TenMon);
+                    $('#txt_m2').val(data.Dkxt_Diem_M2.Diem);
+
+                    $('#lb_tenmon_3').text(data.Dkxt_Diem_M3.TenMon);
+                    $('#txt_m3').val(data.Dkxt_Diem_M3.Diem);
+
+                    $('#txt_tong_diem').val(data.Dkxt_KQTQG_Diem_Tong);
+
+                    $('#Dkxt_KQTQG_TrangThai_HoSo_Check').val(data.Dkxt_KQTQG_TrangThai_HoSo);
+                    //if (data.Dkxt_KQTQG_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').prop('disabled', true); }
+                    //else { $('#bt_ok_div_update_aspirations').prop('disabled', false); }
+
+                    if (data.Dkxt_CheckSetUpdate == 0) {
+                        $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                        if (data.Dkxt_KQTQG_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').text('Trường đã duyệt'); }
+                        else { $('#bt_ok_div_update_aspirations').text('Đến trang sửa'); }
+                    }
+                    else if (data.Dkxt_CheckSetUpdate == 1) {
+                        if (data.Dkxt_KQTQG_TrangThai_HoSo == 9) {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                            $('#bt_ok_div_update_aspirations').text('Trường đã duyệt');
+                        }
+                        else {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', false);
+                            $('#bt_ok_div_update_aspirations').text('Đến trang sửa');
+                        }
+                    }
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.error);
+            }
+        });
+    }z
+    function LoadImageMC_THPTQG_ByID() {
+        let data_get = { Dkxt_KQTQG_ID: $('#hidden_Dkxt_KQTQG_ID').val() }
+        $.ajax({
+            url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_GetByID",
+            data: JSON.stringify(data_get),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                console.log("test", res)
+                if (res.success) {
+                    let data = res.data;
+
+                    $('#sp_view_mc_cntn').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_CNTotNghiep) {
+                        const ArrCNTN = data.Dkxt_KQTQG_MinhChung_CNTotNghiep.split("#");
+                        if (ArrCNTN.length > 0) {
+                            for (i = 0; i < ArrCNTN.length; i++) {
+                                if (ArrCNTN[i].length > 0) {
+                                    var str_a = ` <a  style="cursor:pointer;" onclick="showimg('${ArrCNTN[i]}',1,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_cntn').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_cntn').append(str_a);
+                        }
+                    }
+                    else {
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_cntn').append(str_a);
+                    }
+
+                    $('#sp_view_mc_hocba').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_HocBa) {
+                        const ArrMCHocBa = data.Dkxt_KQTQG_MinhChung_HocBa.split("#");
+                        if (ArrMCHocBa.length > 0) {
+
+                            for (i = 0; i < ArrMCHocBa.length; i++) {
+                                if (ArrMCHocBa[i].length > 0) {
+                                    var str_a = ` <a style="cursor:pointer;"  onclick="showimg('${ArrMCHocBa[i]}',2,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_hocba').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_hocba').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_hocba').append(str_a);
+                    }
+
+                    $('#sp_view_mc_bang').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_BangTN) {
+                        const ArrMCBang = data.Dkxt_KQTQG_MinhChung_BangTN.split("#");
+                        if (ArrMCBang.length > 0) {
+
+                            for (i = 0; i < ArrMCBang.length; i++) {
+                                if (ArrMCBang[i].length > 0) {
+                                    var str_a = ` <a style="cursor:pointer;" onclick="showimg('${ArrMCBang[i]}',3,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_bang').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_bang').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_bang').append(str_a);
+                    }
+
+                    $('#sp_view_mc_cccd').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_CCCD) {
+                        const ArrMCCCCD = data.Dkxt_KQTQG_MinhChung_CCCD.split("#");
+                        if (ArrMCCCCD.length > 0) {
+
+                            for (i = 0; i < ArrMCCCCD.length; i++) {
+                                if (ArrMCCCCD[i].length > 0) {
+                                    var str_a = ` <a style="cursor:pointer;"  onclick="showimg('${ArrMCCCCD[i]}',4,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_cccd').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_cccd').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_cccd').append(str_a);
+                    }
+
+                    $('#sp_view_mc_uutien').empty();
+
+                    if (data.Dkxt_KQTQG_MinhChung_UuTien) {
+                        const ArrMCUutien = data.Dkxt_KQTQG_MinhChung_UuTien.split("#");
+                        if (ArrMCUutien.length > 0) {
+
+                            for (i = 0; i < ArrMCUutien.length; i++) {
+                                if (ArrMCUutien[i].length > 0) {
+                                    var str_a = `<a style="cursor:pointer;" onclick="showimg('${ArrMCUutien[i]}',5,${data.Dkxt_KQTQG_ID})" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Tệp ${i + 1}</a> `;
+                                    $('#sp_view_mc_uutien').append(str_a);
+                                }
+                            }
+                        }
+                        else {
+                            var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                            $('#sp_view_mc_uutien').append(str_a);
+                        }
+
+                    }
+                    else {
+                        var str_a = `<a style="color:red">Không có dữ liệu</a>`;
+                        $('#sp_view_mc_uutien').append(str_a);
+                    }
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.error);
+            }
+        });
+    }
+    function reset_change_img_file() {
+        $('#files_chungnhan_kqtn').val(null);
+        $('#files_hocba_ts').val(null);
+        $('#files_bangtn').val(null);
+        $('#files_cancuoc_congdan').val(null);
+        $('#files_giayto_uutien').val(null);
+
+
+        $("#FilesList_CNKQTN_View tbody").empty();
+        $("#FilesList_HocBa_View tbody").empty();
+        $("#FilesList_BangTN_View tbody").empty();
+        $("#FilesList_CCCD_View tbody").empty();
+        $("#FilesList_GTUT_View tbody").empty();
+        formdata_file_chungnhan_kqtn = new FormData();
+        formdata_file_hocba_ts = new FormData();
+        formdata_file_bang_tn = new FormData();
+        formdata_file_cancuoc_congdan = new FormData();
+        formdata_file_giayto_uutien = new FormData();
+
+        $('#div_view_img').hide();
+        $("#img_view").attr("src", "");
+        $("#img_view").hide();
+
+        $('#pdf_view').height('0px');
+        $('#pdf_view').css('display', 'none');
+        $("#pdf_view").attr("src", "");
+        $("#pdf_view").hide();
+
+        $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
+    }
+
+</script>
+<script>
+   
+    $(document).ready(function () {
+         
+        // button tắt cửa sổ thêm mới phía trên
+        $('#bt_close_div_update_aspirations_first').click(function () {
+            window.location.href = '/LePhiXetTuyens/Index'
+        });
+        // button tắt cửa sổ thêm mới phía dưới
+        $('#bt_close_div_update_aspirations_second').click(function () {
+            window.location.href = '/LePhiXetTuyens/Index'
+        });
+    })
+   
+</script>

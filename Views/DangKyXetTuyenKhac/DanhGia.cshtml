@@ -123,7 +123,7 @@
                                                     div_item += `<div class="col-lg-2 col-sm-12 text-nowrap"><span class="col-4 span_thongtin_nv">- Đơn vị tổ chức: </span> <span class="col-8 span_noidung_nv">` + result.Dkxt_DonViToChuc + `</span> <b></b></div>`;
                                                     div_item += `<div class="col-lg-3 col-sm-12 text-nowrap"><span class="col-5 span_thongtin_nv">- Kết quả thi/ ngày thi: </span><br class="span_thongtin_nv"/><span class="col-7 span_noidung_nv" style="margin:10px">` + result.Dkxt_KetQuaDatDuoc.toFixed(2) + "/" + result.Dkxt_TongDiem.toFixed(2) + ` (điểm)</span><span>(ngày: ` + result.Dkxt_NgayDuThi + `)</span></div>`;
                                                     div_item += `<div class="col-lg-2 col-sm-12 text-nowrap">`
-                                                    div_item += `<button class="btn btn-outline-info  btn-sm check_disable" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',1)" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning  btn-sm check_disable" onclick="ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',2)" ${i == result_all.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
+                                                    div_item += `<button class="btn btn-outline-info  btn-sm check_disable ${result.Dkxt_NguyenVong == 1 ? "dautien" : ''}" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',1)" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning  btn-sm check_disable ${i == result_all.length - 1 ? "cuoicung" : ''}" onclick="ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',2)" ${i == result_all.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
                                                     div_item += `<button class="btn btn-outline-success btn-sm" onclick="DkxtDgnlDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm check_disable" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm check_disable" onclick="DeleteRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo},'${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
                                                     div_item += `</div>`
                                                     div_item += `<div class="col-12" ><hr class="mt-2 mb-2" /></div>`;
@@ -154,6 +154,8 @@
                                         else if (response.checksetupdate == 1) {
                                             $('.check_disable').prop('disabled', false);
                                             $('#p_thongbao_khoadangky').css('display', 'none');
+                                            $('.dautien').prop('disabled', true);
+                                            $('.cuoicung').prop('disabled', true);
                                         }
                                     },
                                     error: function (errormessage) {

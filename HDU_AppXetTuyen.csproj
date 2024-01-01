@@ -771,6 +771,11 @@
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaOK.cshtml" />
+    <Content Include="Views\LePhiXetTuyens\Pt3Detail.cshtml" />
+    <Content Include="Views\LePhiXetTuyens\Pt2Detail.cshtml" />
+    <Content Include="Views\LePhiXetTuyens\Pt6Detail.cshtml" />
+    <Content Include="Views\LePhiXetTuyens\Pt5Detail.cshtml" />
+    <Content Include="Views\LePhiXetTuyens\Pt4Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

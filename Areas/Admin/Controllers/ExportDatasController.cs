@@ -1875,8 +1875,6 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             }
             #endregion
         }
-
-        //
         public void ExportTsDkXetHocBa()
         {
             db = new DbConnecttion();
