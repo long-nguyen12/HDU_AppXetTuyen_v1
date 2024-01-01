@@ -39,6 +39,9 @@
         </div>
     </div>
 </header>
+ 
+<input id="key_check_set_update" type="hidden" />
+ 
 <input type="hidden" id="ThiSinh_ID_DK_Prs" style="display:none!important" />
 <input type="hidden" id="dkxt_hocba_id_checkin" style="display:none!important" />
 <div class="container-fluid px-12">
@@ -61,109 +64,134 @@
                         <div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div>
                     </div>
                     <div id="div_tbody_list"></div>
-                        <script>
-                            // phần hiển thị dữ liệu đã đăng ký
-                            $(document).ready(function () {
-                                LoadData_All_DkxtHB(); 
-                            });
-                            function ConverDateToString(date) {
-                                var parts = date.split('-');
-                                var mydate = parts[2] + '/' + parts[1] + '/' + parts[0];
-                                return mydate;
-                            }
-                            function LoadData_All_DkxtHB() {
-                                $('#div_tbody_list').empty();
+                    <script>
+                        // phần hiển thị dữ liệu đã đăng ký
+                        $(document).ready(function () {
+                            LoadData_All_DkxtHB();
+                            KhoaHeThongDangKy($('#key_check_set_update').val())
+                        });
+                        function ConvertDateToString(date) {
+                            var parts = date.split('-');
+                            var mydate = parts[2] + '/' + parts[1] + '/' + parts[0];
+                            return mydate;
+                        }
 
-                                $.ajax({
-                                    url: "/DangKyXetTuyens/DangKyXetTuyen_HB_ListAll/",
-                                    type: 'GET',
-                                    contentType: 'application/json;charset=utf-8',
-                                    dataType: 'json',
-                                    async: false,
-                                    success: function (res) {
-                                        $('#ThiSinh_ID_DK_Prs').val(res.Tsdk_id_dk);
-                                        $('#span_Uutien_doituong').html(res.Dkxt_doituong_ten_diem);
-                                        $('#span_Uutien_khuvuc').html(res.Dkxt_khuvuv_ten_diem);
-                                        $('#txt_hocluc_12').val(res.Dkxt_xeploai_hocluc_12);
-                                        $('#txt_hanhkiem_12').val(res.Dkxt_xeploai_hanhkiem_12);
-                                        if (res.select_list_dkxt_model == 0) {
-                                            let div_item = ` <div class="col-12 text-center">Chưa có dữ liệu đăng ký xét tuyển</div>`;
-                                            $('#div_tbody_list').append(div_item);
-                                        }
-                                        else {
-                                            $.each(res.select_list_dkxt_model, function (i, result) {
-                                                if (res.select_list_dkxt_model.length == 1) {
-                                                    let div_item = "";
-                                                    div_item += `<div class="row g-1">`;
-                                                    div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_NguyenVong + `</div>`;
-                                                    div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.nganh_GhiChu + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.thm_MaTen + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_Diem_Tong_Full + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDK) + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
-                                                    div_item += `<button class="btn btn-sm btn-outline-success" style="margin-left:10px" onclick="DkxtthHbDetail(${result.dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="UpdateRecordOnclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Xoá</button>`;
-                                                    div_item += `</div>`;
-                                                    div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
-                                                    $('#div_tbody_list').append(div_item);
-                                                }
-                                                else if (res.select_list_dkxt_model.length > 1) {
-                                                    let div_item = "";
-                                                    div_item += `<div class="row g-1">`;
-                                                    div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_NguyenVong + `</span ></div>`;
-                                                    div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.nganh_GhiChu + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.thm_MaTen + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_Diem_Tong_Full + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDK) + `</span></div>`;
-                                                    div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
-                                                    div_item += `<button style="margin-left:10px" class="btn btn-outline-info btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_ID})" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_ID})" ${i == res.select_list_dkxt_model.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>`
-                                                    div_item += `&nbsp;<button class="btn btn-sm btn-outline-success"  onclick="DkxtthHbDetail(${result.dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="UpdateRecordOnclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Xoá</button>`;
-                                                    div_item += `</div>`;
-                                                    div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
-                                                    $('#div_tbody_list').append(div_item);
-                                                }
-                                            });
-                                        }
-                                        if (window.innerWidth <= 1000) {                                         
+                        function ConvertStringToDate(str) {
+                            var mdy = str.split('-');
+                            return new Date(mdy[0], mdy[1], mdy[2]);
+                        }
 
-                                            $('#div_thead').css('display', 'none');
-                                            $('#div_thead').hide();
-                                            $('.span_thongtin_nv').css('display', 'inline');
-                                            $('.span_thongtin_nv').show();
-                                            $('.span_noidung_nv').css('font-weight', 'bold')
-                                        }
-                                        else {
-                                          
-                                            $('#div_thead').css('display', 'inline');
-                                            $('#div_thead').show();
-                                            $('.span_thongtin_nv').css('display', 'none');
-                                            $('.span_thongtin_nv').hide();
-                                            $('.span_noidung_nv').css('font-weight', 'normal')
-                                        }  
-                                    },
-                                    error: function (errormessage) {
-                                        alert(errormessage.responseText);
+                        function LoadData_All_DkxtHB() {
+                            $('#div_tbody_list').empty();
+
+                            $.ajax({
+                                url: "/DangKyXetTuyens/DangKyXetTuyen_HB_ListAll/",
+                                type: 'GET',
+                                contentType: 'application/json;charset=utf-8',
+                                dataType: 'json',
+                                async: false,
+                                success: function (res) {
+                                    console.log(res);
+
+                                    $('#ThiSinh_ID_DK_Prs').val(res.Tsdk_id_dk);
+                                    $('#span_Uutien_doituong').html(res.DkxtTenDoituongDiem);
+                                    $('#span_Uutien_khuvuc').html(res.DkxtTenKhuvucDiem);
+                                    $('#txt_hocluc_12').val(res.DkxtXeploaiHocluc12);
+                                    $('#txt_hanhkiem_12').val(res.DkxtXeploaiHanhkiem12);
+                                    $('#key_check_set_update').val(res.CheckSetUpdate)
+                                    if (res.DkxtHocBaList == 0) {
+                                        let div_item = ` <div class="col-12 text-center">Chưa có dữ liệu đăng ký xét tuyển</div>`;
+                                        $('#div_tbody_list').append(div_item);
                                     }
-                                });
+                                    else {
+                                        $.each(res.DkxtHocBaList, function (i, result) {
+                                            if (res.DkxtHocBaList.length == 1) {
+                                                let div_item = "";
+                                                div_item += `<div class="row g-1">`;
+                                                div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_NguyenVong + `</div>`;
+                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.nganh_GhiChu + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.thm_MaTen + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_Diem_Tong_Full + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConvertDateToString(result.Dkxt_NgayDK) + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
+                                                div_item += `<button class="btn btn-sm btn-outline-success check_disable" style="margin-left:10px" onclick="DkxtthHbDetail(${result.dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="UpdateRecordOnTableOnclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="DeleteRecordOnTableOnclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Xoá</button>`;
+                                                div_item += `</div>`;
+                                                div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
+                                                $('#div_tbody_list').append(div_item);
+                                            }
+                                            else if (res.DkxtHocBaList.length > 1) {
+                                                let div_item = "";
+                                                div_item += `<div class="row g-1">`;
+                                                div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_NguyenVong + `</span ></div>`;
+                                                div_item += `<div class="col-xl-3 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngành: </span><span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.nganh_GhiChu + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổ hợp môn: </span> <span class="col-8 span_noidung_nv">` + result.dkxt_TenAll.thm_MaTen + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_Diem_Tong_Full + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConvertDateToString(result.Dkxt_NgayDK) + `</span></div>`;
+                                                div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
+                                                div_item += `<button style="margin-left:10px" class="btn btn-outline-info btn-sm check_disable ${i == 0 ? "dautien" : ''}" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_ID})" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning btn-sm check_disable ${i == res.DkxtHocBaList.length - 1 ? "cuoicung" : ""}" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_ID})" ${i == res.DkxtHocBaList.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>`
+                                                div_item += `&nbsp;<button class="btn btn-sm btn-outline-success"  onclick="DkxtthHbDetail(${result.dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm check_disable" onclick="UpdateRecordOnTableOnclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm check_disable" onclick="DeleteRecordOnTableOnclick(${result.dkxt_ID},${result.dkxt_HB_TrangThai_HoSo})">Xoá</button>`;
+                                                div_item += `</div>`;
+                                                div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
+                                                $('#div_tbody_list').append(div_item);
+                                            }
+                                        });
+                                    }
+                                    if (window.innerWidth <= 1000) {
+                                        $('#div_thead').css('display', 'none');
+                                        $('#div_thead').hide();
+                                        $('.span_thongtin_nv').css('display', 'inline');
+                                        $('.span_thongtin_nv').show();
+                                        $('.span_noidung_nv').css('font-weight', 'bold')
+                                    }
+                                    else {
+                                        $('#div_thead').css('display', 'inline');
+                                        $('#div_thead').show();
+                                        $('.span_thongtin_nv').css('display', 'none');
+                                        $('.span_thongtin_nv').hide();
+                                        $('.span_noidung_nv').css('font-weight', 'normal')
+                                    }  
+                                    
+                                },
+                                error: function (errormessage) {
+                                    alert(errormessage.responseText);
+                                }
+                            });
+                        }
+                        function DkxtthHbDetail(dkxt_id) {
+                            var str_url = '?dkxt_id=' + dkxt_id;
+                            window.location.href = "/DangKyXetTuyens/DkxthocbaDetail" + str_url;
+                        }
+                        function KhoaHeThongDangKy(keyCheck) {
+                            if (keyCheck == 0) {
+                                $('.check_disable').prop('disabled', true);
+                                $('#bt_add_aspirations').prop('disabled', true);
+                                $('#p_thongbao_khoadangky').css('display', 'inline');
+                                
                             }
-                            function DkxtthHbDetail(dkxt_id) {
-                                var str_url = '?dkxt_id=' + dkxt_id;
-                                window.location.href = "/DangKyXetTuyens/DkxthocbaDetail" + str_url;
+                            else {
+                                $('.check_disable').prop('disabled', false);
+                                $('#bt_add_aspirations').prop('disabled', false);
+                                $('#p_thongbao_khoadangky').css('display', 'none');
+                                $('.dautien').prop('disabled', true);
+                                $('.cuoicung').prop('disabled', true);
                             }
-                        </script>                                     
-                </div>               
-                
+                        }
+                    </script>
+                </div>
+
                 <div class="row">
                     <div class="col-12">
                         <center>
                             <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
-                            <a id="bt_add_aspirations" class="btn btn-outline-primary">Thêm nguyện vọng</a>
+                            <button id="bt_add_aspirations" class="btn btn-outline-primary">Thêm nguyện vọng</button>
+                          
                             <script>
                                 $(document).ready(function () {
                                     let sp_tieude = $('#sp_tieude');
-                                    let bt_xuat_phieu_tong_hop = $('#bt_xuat_phieu_tong_hop_kq');  
-                                    let bt_them_nguyen_vong = $('#bt_add_aspirations');  
+                                    let bt_xuat_phieu_tong_hop = $('#bt_xuat_phieu_tong_hop_kq');
+                                    let bt_them_nguyen_vong = $('#bt_add_aspirations');
                                     if (window.innerWidth <= 1000) {
-                                      
+
                                         sp_tieude.text('Đăng ký xét tuyển bằng điểm học bạ');
                                         bt_xuat_phieu_tong_hop.text('Xuất phiếu');
                                         bt_them_nguyen_vong.text("Thêm nguyện vọng");
@@ -176,18 +204,18 @@
                                     }
                                     else {
                                         sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả học tập ở trung học phổ thông (Xét tuyển bằng học bạ)');
-                                        bt_xuat_phieu_tong_hop.text('Xuất phiếu tổng hợp') ;
+                                        bt_xuat_phieu_tong_hop.text('Xuất phiếu tổng hợp');
                                         bt_them_nguyen_vong.text("Thêm nguyện vọng");
-                                       
-                                        $('#div_thead').css('display','inline');
+
+                                        $('#div_thead').css('display', 'inline');
                                         $('#div_thead').show();
-                                        $('.span_thongtin_nv').css('display','none');
+                                        $('.span_thongtin_nv').css('display', 'none');
                                         $('.span_thongtin_nv').hide();
-                                        $('.span_noidung_nv').css('font-weight','normal')
-                                    }  
+                                        $('.span_noidung_nv').css('font-weight', 'normal')
+                                    }
                                     function reportWindowSize() {
                                         if (window.innerWidth <= 1000) {
-                                           
+
                                             sp_tieude.text('Đăng ký xét tuyển bằng điểm học bạ');
                                             bt_xuat_phieu_tong_hop.text('Xuất phiếu');
                                             bt_them_nguyen_vong.text("Thêm nguyện vọng");
@@ -203,17 +231,17 @@
                                             sp_tieude.text('Đăng ký xét tuyển sử dụng kết quả học tập ở trung học phổ thông (Xét tuyển bằng học bạ)');
                                             bt_xuat_phieu_tong_hop.text('Xuất phiếu tổng hợp');
                                             bt_them_nguyen_vong.text("Thêm nguyện vọng");
-                                           
+
                                             $('#div_thead').css('display', 'inline');
                                             $('#div_thead').show();
                                             $('.span_thongtin_nv').css('display', 'none');
                                             $('.span_thongtin_nv').hide();
-                                            $('.span_noidung_nv').css('font-weight', 'normal')
+                                            $('.span_noidung_nv').css('font-weight', 'normal');
                                         }
                                     }
                                     window.onresize = reportWindowSize;
                                 })
-                               
+
                             </script>
                         </center>
                     </div>
@@ -222,6 +250,7 @@
                 <div class="row">
                     <div class="col-xxl-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
+                        <p style="color:blue; font-style:italic; text-align:justify; display:none" class="mb-1" id="p_thongbao_khoadangky">- Đã hết thời gian đăng ký nguyện vọng, bạn chỉ có thể xem các nguyện vọng đã đăng ký.</p>
                         <p style="color:red; font-style:italic; text-align:justify" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic; text-align: justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
 
@@ -406,16 +435,18 @@
         background-color: transparent;
     }
 </style>
-<div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
+
+<div class="modal fade" id="modal_Action_Notifi" tabindex="-1" role="dialog" aria-labelledby="modal_Action_Notifi" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal_tb_xoa">Thông báo</h5>
+                <h5 class="modal-title" id="modal_title">Thông báo</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_delete_first"></button>
             </div>
             <div class="modal-body">
-                <span id="span_thongbao_xoa">Bạn chắc chắn nguyện vọng này?</span>
+                <span id="span_conten_action_notifi"></span>
                 <input id="key_delete_dkxt_id" type="hidden" />
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_delete_second">Hủy</button>
@@ -479,18 +510,18 @@
 </div>
 <script>
     // phần hiển thị dữ liệu đã đăng ký
-    
 
-    function UpdateRecordOnclick(dkxt_id, _check_delete) {
+
+    function UpdateRecordOnTableOnclick(dkxt_id, _check_delete) {
         if (_check_delete == 9) {
-            $('#span_thongbao_xoa').text('');
-            $("#span_thongbao_xoa").css("color", "blue");
-            $('#span_thongbao_xoa').text('Nguyện vọng đã được duyệt, không thể sửa!');
+            $('#span_conten_action_notifi').text('');
+            $("#span_conten_action_notifi").css("color", "blue");
+            $('#span_conten_action_notifi').text('Nguyện vọng đã được duyệt, không thể sửa!');
             $('#bt_cancel_on_modal_delete_second').text('Đóng');
             $('#bt_ok_on_modal_delete').css('display', 'none');
 
             $('#bt_ok_on_modal_delete').hide();
-            $('#modal_tb_xoa').modal('show');
+            $('#modal_Action_Notifi').modal('show');
         }
         else {
             var str_url = '?dkxt_id=' + dkxt_id;
@@ -498,21 +529,23 @@
         }
     }
     // button xóa nguyện vọng đã đăng ký:
-    function delete_aspirations_on_table_onclick(_dkxt_id, _check_delete) {
+    function DeleteRecordOnTableOnclick(_dkxt_id, _check_delete) {
         if (_check_delete == 9) {
-            $('#span_thongbao_xoa').text('');
-            $('#span_thongbao_xoa').text('Nguyện vọng đã được duyệt, không thể xóa');
+            $('#span_conten_action_notifi').text('');
+            $('#span_conten_action_notifi').css('color', 'blue');
+            $('#span_conten_action_notifi').text('Nguyện vọng đã được duyệt, không thể xóa');
             $('#bt_cancel_on_modal_delete_second').text('Đóng');
             $('#bt_ok_on_modal_delete').css('display', 'none');
 
             $('#bt_ok_on_modal_delete').hide();
-            $('#modal_tb_xoa').modal('show');
+            $('#modal_Action_Notifi').modal('show');
         }
         else {
-            $('#span_thongbao_xoa').text('');
-            $('#span_thongbao_xoa').text('Nếu đồng ý sẽ xóa tất cả dữ liệu của nguyện vọng này. Bạn chắc chắn xóa?');
+            $('#span_conten_action_notifi').text('');
+            $('#span_conten_action_notifi').css('color', 'red');
+            $('#span_conten_action_notifi').text('Nếu đồng ý sẽ xóa tất cả dữ liệu của nguyện vọng này. Bạn chắc chắn xóa?');
             $('#bt_cancel_on_modal_delete_second').text('Hủy');
-            $('#modal_tb_xoa').modal('show');
+            $('#modal_Action_Notifi').modal('show');
             $('#bt_ok_on_modal_delete').show();
             $('#bt_ok_on_modal_delete').css('display', 'inline');
             $('#key_delete_dkxt_id').val(_dkxt_id)
@@ -554,7 +587,7 @@
                 success: function (res) {
                     if (res.status == true) {
                         LoadData_All_DkxtHB();
-                        $('#modal_tb_xoa').modal('hide');
+                        $('#modal_Action_Notifi').modal('hide');
                         showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
                     }
                     else {
@@ -568,13 +601,15 @@
         });
 
         $('#bt_cancel_on_modal_delete_first').click(function () {
-            $('#modal_tb_xoa').modal('hide');
+            $('#modal_Action_Notifi').modal('hide');
             $('#key_delete_dkxt_id').val('');
+            $('#span_conten_action_notifi').text('');
         });
 
         $('#bt_cancel_on_modal_delete_second').click(function () {
-            $('#modal_tb_xoa').modal('hide');
+            $('#modal_Action_Notifi').modal('hide');
             $('#key_delete_dkxt_id').val('');
+            $('#span_conten_action_notifi').text('');
         });
         $('#bt_ok_on_modal_change').click(function () {
             let _check_action = $('#key_check_down_up').val();
@@ -597,12 +632,22 @@
                             showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");
                         }
                         else {
-                            showToast("Lỗi", res.msg, "bg-success");
-                            console.log(response.msg);
+                            if (res.msg == 1) {
+                                $('#modal_tb_thaydoinv').modal('hide');
+                                showToast("Thông báo", "Đây là nguyện vọng 1", "bg-success");
+                                console.log(res.msg);
+                            }
+                            if (res.msg == 0) {
+                                $('#modal_tb_thaydoinv').modal('hide');
+                                showToast("Thông báo", "Không thể thực hiện yêu cầu này", "bg-success");
+                                console.log(res.msg);
+                            }                          
                         }
                     },
                     error: function (errormessage) {
-                        showToast("Thông báo", "Lỗi! Chưa thể thực hiện theo yêu cầu!", "bg-success");
+                        $('#modal_tb_thaydoinv').modal('hide');
+                        console.log(errormessage);
+                        showToast("Thông báo", "Không thể thực hiện yêu cầu này", "bg-success");
                     }
                 });
             }

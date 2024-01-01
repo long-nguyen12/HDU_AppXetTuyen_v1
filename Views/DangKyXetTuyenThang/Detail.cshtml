@@ -93,13 +93,13 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-12">
                         <div class="row">
-                            <div class="col-12"><b>Chọn ngành xét tuyển <font color="red">(*)</font></b></div>
+                            <div class="col-12"><b>Ngành xét tuyển <font color="red">(*)</font></b></div>
                             <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
                         </div>
                         <div class="row g-1">
                             <div class="col-4">Khối ngành</div>
                             <div class="col-8">
-                                <select id="select_khoinganh" class="form-select" disabled></select>
+                                <select id="select_khoinganh" class="form-control" disabled></select>
                                 <span id="KhoiNganh_ID_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                         <div class="row g-1">
                             <div class="col-3">Ngành</div>
                             <div class="col-9">
-                                <select id="Nganh_ID" class="form-select" disabled></select>
+                                <select id="Nganh_ID" class="form-control" disabled></select>
                                 <span id="Nganh_ID_Error" class="small mb-1 text-danger"></span>
                                 <input id="Dkxt_ToHopXT" type="hidden" class="form-control" value="HDP4" style="display:none" />
                             </div>
@@ -154,7 +154,7 @@
                         <div class="row g-1">
                             <div class="col-5">Môn đạt giải</div>
                             <div class="col-7">
-                                <select id="Dkxt_MonDatGiai" class="form-select" disabled></select>
+                                <select id="Dkxt_MonDatGiai" class="form-control" disabled></select>
                                 <span id="Dkxt_MonDatGiai_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                         <div class="row g-1">
                             <div class="col-5">Loại giải</div>
                             <div class="col-7">
-                                <select id="Dkxt_LoaiGiai" class="form-select" disabled></select>
+                                <select id="Dkxt_LoaiGiai" class="form-control" disabled></select>
                                 <span id="Dkxt_LoaiGiai_Error" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
@@ -224,7 +224,8 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-xxl-12" style="text-align:center">
-                        <input class="btn btn-outline-primary" type="button" value="Đến trang sửa" onclick="SubmitData()" id="bt_ok_div_update_aspirations" />
+                      
+                        <button class="btn btn-outline-primary" id="bt_ok_div_update_aspirations" onclick="SubmitData()"></button>
                         <input type="hidden" id="Dkxt_TrangThai_HoSo_Check" />
                         <input class="btn btn-outline-secondary" type="button" value="Quay lại" onclick="bt_HuyBo_Dkxt_NVM_OnClick()" />
                     </div>
@@ -286,7 +287,7 @@
             success: function (res) {
                 if (res.success) {
                     let data = res.data;
-                    console.log(data)
+                    console.log('data', data)
                     $("#select_khoinganh").empty();
                     $("#Nganh_ID").empty();                 
 
@@ -303,17 +304,23 @@
                     $('#dkxt_id_checkin').val(data.Dkxt_ID);
                     $('#Dkxt_TrangThai_HoSo_Check').val(data.Dkxt_TrangThai_HoSo);
 
-                    if (data.Dkxt_TrangThai_HoSo == 9) {
+                    if (data.Dkxt_CheckSetUpdate == 0) {
                         $('#bt_ok_div_update_aspirations').prop('disabled', true);
-                        $('#bt_ok_div_update_aspirations').val('Trường đã duyệt');
-                    }
-                    else {
-                        $('#bt_ok_div_update_aspirations').prop('disabled', false);
-                        $('#bt_ok_div_update_aspirations').val('Đến trang sửa');
+                        if (data.Dkxt_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').text('Trường đã duyệt'); }
+                        else { $('#bt_ok_div_update_aspirations').text('Đến trang sửa'); }
                     }
 
-                    //if (data.Dkxt_TrangThai_HoSo == 9) { $('#').prop('disabled', true); }
-                    //else { $('#bt_ok_div_update_aspirations').prop('disabled', false); }
+                    else if (data.Dkxt_CheckSetUpdate == 1) {
+                        if (data.Dkxt_TrangThai_HoSo == 9) {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                            $('#bt_ok_div_update_aspirations').text('Trường đã duyệt');
+                        }
+                        else {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', false);
+                            $('#bt_ok_div_update_aspirations').text('Đến trang sửa');
+                        }
+                    }
+
                     InitData(data.Dkxt_MonDatGiai, data.Dkxt_LoaiGiai);
                 }
             },

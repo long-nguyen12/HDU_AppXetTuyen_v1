@@ -204,9 +204,9 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-xxl-12" style="text-align:center">
-                        <input class="btn btn-outline-primary col-lg-1 col-5" id="bt_ok_div_update_aspirations" type="button" value="Đến trang sửa" disabled />
+                        <button class="btn btn-outline-primary" id="bt_ok_div_update_aspirations"></button>
                         <input type="hidden" id="Dkxt_KQTQG_TrangThai_HoSo_Check" />
-                        <input class="btn btn-outline-secondary col-lg-1 col-5" id="bt_close_div_update_aspirations_second" type="button" value="Quay lại" />
+                        <input class="btn btn-outline-secondary" id="bt_close_div_update_aspirations_second" type="button" value="Quay lại" />
                     </div>
                 </div>
             </div>
@@ -237,34 +237,9 @@
         </div>
     </div>
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Toast Title</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-            </div>
-        </div>
-    </div>
+   
 </div>
-<style>
-    #loadingModal {
-        background-color: rgba(0, 0, 0, 0.5);
-        background-color: transparent;
-    }
-</style>
-<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_KQTQG_ID" />
@@ -378,7 +353,16 @@
 
                     let data = res.data;
                     console.log('data', data)
-                    select_khoinganh_view_data(data.KhoiNganh_ID, data.Nganh_ID, data.Thm_ID);
+                    $("#select_khoinganh").empty();
+                    $("#select_nganh").empty();
+                    $("#select_tohopmon").empty();
+
+                    $("#select_khoinganh").append($("<option></option>").attr("value", data.KhoiNganh_ID).text(data.KhoiNganh_Ten));
+                    $('#select_nganh').append('<option value="' + data.Nganh_ID + '">' + data.Nganh_TenNganh + '</option>'); 
+                    $("#select_tohopmon").append($("<option></option>").attr("value", data.Thm_ID).text(data.Thm_TenToHop));
+
+                 
+
                     $('#txt_hocluc_12').val(data.ThiSinh_HocLucLop12);
                     $('#txt_hanhkiem_12').val(data.ThiSinh_HanhKiemLop12);
 
@@ -399,15 +383,31 @@
                     $('#txt_tong_diem').val(data.Dkxt_KQTQG_Diem_Tong);
 
                     $('#Dkxt_KQTQG_TrangThai_HoSo_Check').val(data.Dkxt_KQTQG_TrangThai_HoSo);
-                    if (data.Dkxt_KQTQG_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').prop('disabled', true); }
-                    else { $('#bt_ok_div_update_aspirations').prop('disabled', false); }
+                    //if (data.Dkxt_KQTQG_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').prop('disabled', true); }
+                    //else { $('#bt_ok_div_update_aspirations').prop('disabled', false); }
+
+                    if (data.Dkxt_CheckSetUpdate == 0) {
+                        $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                        if (data.Dkxt_KQTQG_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').text('Trường đã duyệt'); }
+                        else { $('#bt_ok_div_update_aspirations').text('Đến trang sửa'); }
+                    }
+                    else if (data.Dkxt_CheckSetUpdate == 1) {
+                        if (data.Dkxt_KQTQG_TrangThai_HoSo == 9) {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                            $('#bt_ok_div_update_aspirations').text('Trường đã duyệt');
+                        }
+                        else {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', false);
+                            $('#bt_ok_div_update_aspirations').text('Đến trang sửa');
+                        }
+                    }
                 }
             },
             error: function (errormessage) {
                 console.log(errormessage.error);
             }
         });
-    }
+    }z
     function LoadImageMC_THPTQG_ByID() {
         let data_get = { Dkxt_KQTQG_ID: $('#hidden_Dkxt_KQTQG_ID').val() }
         $.ajax({
@@ -579,55 +579,7 @@
 
 </script>
 <script>
-    $(document).ready(function () {
-        /* Khai báo dữ liệu cho dropdownlist chọn năm */
-
-        $("#select_khoinganh").change(function () {
-            select_nganh_view_data($("#select_khoinganh").val(), 0, 0);
-        });
-
-        $("#select_nganh").change(function () {
-            select_tohopmon_view_data($("#select_nganh").val(), 0, 0);
-
-        });
-
-        $("#select_tohopmon").change(function () {
-            let dataObj = {
-                Thm_ID: $("#select_tohopmon").val(),
-                Dkxt_KQTQG_ID: $('#dkxt_thptqg_id_checkin').val(),
-            }
-
-            $.ajax({
-                url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Get_Data_MonHoc",
-                data: JSON.stringify(dataObj),
-                type: 'POST',
-                contentType: 'application/json;charset=utf-8',
-                dataType: 'json',
-                success: function (res) {
-                    reset_fields_controll_disabled_false();
-                    $('#lb_tenmon_1').text(res.thm_Mon1);
-                    $('#lb_tenmon_2').text(res.thm_Mon2);
-                    $('#lb_tenmon_3').text(res.thm_Mon3);
-                    $('#txt_m1').focus();
-                },
-                error: function (errormessage) {
-                    console.log(errormessage.error);
-                }
-            });
-        });
-
-        on_listen_fields_input_data(".input-monhoc", '#txt_tong_diem');
-
-        $('input').on('input', function () {
-            hideErrorMessage($(this));
-        });
-
-        $('select').on('input', function () {
-            hideErrorMessage($(this));
-        })
-    });
-    
-
+   
     $(document).ready(function () {
         // button đồng sửa
         $('#bt_ok_div_update_aspirations').click(function () {
@@ -650,183 +602,5 @@
             window.location.href = '/DangKyXetTuyens/Dkxtthptqg'
         });
     })
-
-
-    function on_listen_fields_input_data(inputClass, outputClass) {
-        var inputFields = $(inputClass);
-        inputFields.on('input', function () {
-            var allFilled = true;
-            inputFields.each(function () {
-                if ($(this).val() === '' || $(this).val() < 0 || $(this).val() > 10) {
-                    allFilled = false;
-                    var errorMessage = "Chưa nhập đủ điểm các môn hoặc nhập chưa đúng, vui lòng kiểm tra lại!";
-
-                    $('#Diem_All_Error').text(errorMessage);
-                    $(outputClass).val('');
-                    return false;
-                }
-            });
-
-            if (allFilled) {
-                $('#Diem_All_Error').text('');
-                let total = 0;
-                inputFields.each(function () {
-                    total += parseFloat($(this).val());
-                });
-                /* console.log(total / 3)*/
-                $(outputClass).val((total).toFixed(2));
-            }
-        });
-    }
-    function hideErrorMessage(input) {
-        var errorContainer = input.next('.text-danger');
-        errorContainer.text('');
-    }
-    function select_khoinganh_view_data(khoinganh_key, nganh_key, tohopmon_key) {
-        $('#select_khoinganh').empty()
-        $.ajax({
-            url: "/DangKyXetTuyens/KhoiNganhListAll",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result_all) {
-                $.each(result_all, function (i, result) {
-                    $('#select_khoinganh').append('<option value="' + result.khoiNganh_ID + '">' + result.khoiNganh_Ten + '</option>');
-                });
-                $('#select_khoinganh').val(khoinganh_key);
-                select_nganh_view_data(khoinganh_key, nganh_key, tohopmon_key);
-            },
-            error: function (errormessage) {
-                console.log(errormessage.responseText);
-            }
-        });
-    }
-    function select_nganh_view_data(id, nganh_key, tohopmon_key) { // id = KhoiNganh_ID
-        $("#select_nganh").empty();
-        $.ajax({
-            url: "/DangKyXetTuyens/NganhListAll/" + id,
-            type: 'GET',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (result_all) {
-
-                $.each(result_all, function (i, result) {
-                    $('#select_nganh').append('<option value="' + result.nganh_ID + '">' + result.nganh_GhiChu + '</option>');
-                });
-
-                $('#select_nganh').val(nganh_key);
-                select_tohopmon_view_data(nganh_key, tohopmon_key);
-            },
-            error: function (errormessage) {
-                console.log(errormessage.responseText);
-            }
-        });
-    }
-    function select_tohopmon_view_data(id, tohopmon_key) { // id = Nganh_ID
-        $("#select_tohopmon").empty();
-        $.ajax({
-            url: "/DangKyXetTuyens/ToHopMonNganhListAll/" + id,
-            type: 'GET',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            success: function (result_all) {
-                $.each(result_all, function (i, result) {
-                    $('#select_tohopmon').append('<option value="' + result.thm_ID + '">' + result.thm_MaTen + '</option>');
-                });
-                $('#select_tohopmon').val(tohopmon_key);
-            },
-            error: function (errormessage) {
-                console.log(errormessage.responseText);
-            }
-        });
-    }
-    function reset_fields_controll_disabled_false() {
-
-        $('#select_namtn').prop('disabled', false);
-
-        $('#lb_tenmon_1').text("Chưa chọn");
-        $('#lb_tenmon_2').text("Chưa chọn");
-        $('#lb_tenmon_3').text("Chưa chọn");
-        $('#lb_tongdiem').text('Tổng');
-
-        $('.input-monhoc').val('');
-        $('.input-tong').val('');
-
-        $('#txt_m1').prop('disabled', false);
-        $('#txt_m2').prop('disabled', false);
-        $('#txt_m3').prop('disabled', false);
-        $('#txt_tong_diem').prop('disabled', true);
-        $('#txt_m1').focus();
-
-
-        $('#files_chungnhan_kqtn').val(null);
-        $('#files_hocba_ts').val(null);
-        $('#files_bangtn').val(null);
-        $('#files_cancuoc_congdan').val(null);
-        $('#files_giayto_uutien').val(null);
-
-
-        $("#FilesList_CNKQTN_View tbody").empty();
-        $("#FilesList_HocBa_View tbody").empty();
-        $("#FilesList_BangTN_View tbody").empty();
-        $("#FilesList_CCCD_View tbody").empty();
-        $("#FilesList_GTUT_View tbody").empty();
-
-
-        $('#files_chungnhan_kqtn').prop('disabled', false);
-        $('#files_hocba_ts').prop('disabled', false);
-        $('#files_bangtn').prop('disabled', false);
-        $('#files_cancuoc_congdan').prop('disabled', false);
-        $('#files_giayto_uutien').prop('disabled', false);
-
-    }
-    function reset_fields_controll_disabled_true() {
-
-        $('#select_namtn').prop('disabled', true);
-
-        $('#lb_tenmon_1').text("Chưa chọn");
-        $('#lb_tenmon_2').text("Chưa chọn");
-        $('#lb_tenmon_3').text("Chưa chọn");
-        $('#lb_tongdiem').text('Tổng');
-
-        $('.input-monhoc').val('');
-        $('.input-tong').val('');
-
-        $('#txt_m1').prop('disabled', true);
-        $('#txt_m2').prop('disabled', true);
-        $('#txt_m3').prop('disabled', true);
-        $('#txt_tong_diem').prop('disabled', true);
-
-        $('#files_chungnhan_kqtn').val(null);
-        $('#files_hocba_ts').val(null);
-        $('#files_bangtn').val(null);
-        $('#files_cancuoc_congdan').val(null);
-        $('#files_giayto_uutien').val(null);
-
-
-        $("#FilesList_CNKQTN_View tbody").empty();
-        $("#FilesList_HocBa_View tbody").empty();
-        $("#FilesList_BangTN_View tbody").empty();
-        $("#FilesList_CCCD_View tbody").empty();
-        $("#FilesList_GTUT_View tbody").empty();
-
-
-        $('#files_chungnhan_kqtn').prop('disabled', true);
-        $('#files_hocba_ts').prop('disabled', true);
-        $('#files_bangtn').prop('disabled', true);
-        $('#files_cancuoc_congdan').prop('disabled', true);
-        $('#files_giayto_uutien').prop('disabled', true);
-
-    }
-    function showToast(title, message, bgColor) {
-        $("#myToast .toast-header .me-auto").text(title);
-        $("#myToast .toast-body").text(message);
-        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
-        $("#myToast").toast("show");
-    }
-    $(document).ready(function () {
-        $('#bt_xuat_phieu_tong_hop_kq').click(function () {
-            window.location.href = '/ExportFile/DownloadFile_XetTuyenKQTQG';
-        });
-    });
+   
 </script>

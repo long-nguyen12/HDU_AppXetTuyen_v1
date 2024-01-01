@@ -229,7 +229,8 @@
 
                 <div class="row mt-3 mb-0">
                     <div class="col-12" style="text-align:center">
-                        <input class="btn btn-outline-primary" type="button" value="Đến trang sửa" onclick="SubmitData()" id="bt_chuyentrang_sua"/>
+                        <button class="btn btn-outline-primary" onclick="SubmitData()" id="bt_ok_div_update_aspirations"></button>
+                        @*<input class="btn btn-outline-primary" type="button" value="Đến trang sửa" onclick="SubmitData()" id="bt_ok_div_update_aspirations" />*@
                         <input class="btn btn-outline-secondary" type="button" value="Quay lại" onclick="bt_HuyBo_Dkxt_NVM_OnClick()" />
                     </div>
                 </div>
@@ -315,11 +316,28 @@
                     $('#span_Uutien_khuvuc').text(data.ThiSinh_UTKV);
                     $('#dkxt_id_checkin').val(data.Dkxt_ID);
 
-                    if (data.Dkxt_TrangThai_HoSo == 9) {
-                        $('#bt_chuyentrang_sua').prop('disabled', true);
-                        $('#bt_chuyentrang_sua').val('Trường đã duyệt')
+                    //if (data.Dkxt_TrangThai_HoSo == 9) {
+                    //    $('#bt_chuyentrang_sua').prop('disabled', true);
+                    //    $('#bt_chuyentrang_sua').val('Trường đã duyệt')
+                    //}
+                    //else { $('#bt_chuyentrang_sua').prop('disabled', false); } 
+
+                    if (data.checksetupdate == 0) {
+                        $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                        if (data.Dkxt_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').text('Trường đã duyệt'); }
+                        else { $('#bt_ok_div_update_aspirations').text('Đến trang sửa'); }
                     }
-                    else { $('#bt_chuyentrang_sua').prop('disabled', false); }                     
+
+                    else if (data.checksetupdate == 1) {
+                        if (data.Dkxt_TrangThai_HoSo == 9) {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                            $('#bt_ok_div_update_aspirations').text('Trường đã duyệt');
+                        }
+                        else {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', false);
+                            $('#bt_ok_div_update_aspirations').text('Đến trang sửa');
+                        }
+                    } 
                 }
             },
             error: function (errormessage) {

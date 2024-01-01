@@ -16,11 +16,12 @@ namespace HDU_AppXetTuyen.Controllers
 
     public class AuthController : Controller
     {
-        private DbConnecttion db = new DbConnecttion();
+        private DbConnecttion db = null;// new DbConnecttion();
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Index()
         {
+            db = new DbConnecttion();
             if (Session["login_session"] != null)
             {
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -45,6 +46,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult GetHuyen(string tinhID)
         {
+            db = new DbConnecttion();
             int id = int.Parse(tinhID);
             var huyenList = db.Huyens.Where(n => n.Tinh_ID == id).Select(s => new
             {
@@ -59,6 +61,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult Register(Register_ThiSinh thiSinh_register)
         {
+            db = new DbConnecttion();
             var ts_login_details = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == thiSinh_register.ThiSinh_CCCD).FirstOrDefault();
             if (ts_login_details != null)
             {
@@ -124,6 +127,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public ActionResult ForgotPassword3(ThiSinhDangKy thiSinh_login)
         {
+            db = new DbConnecttion();
             string email = thiSinh_login.ThiSinh_Email;
             var thisinh_info = db.ThiSinhDangKies.Where(x => x.ThiSinh_Email == email).FirstOrDefault();
 
@@ -154,6 +158,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult ForgotPassword(ThiSinhDangKy entity)
         {
+            db = new DbConnecttion();
             string email = entity.ThiSinh_Email;
             string check_table = entity.ThiSinh_GhiChu;
             if (check_table == "1")
@@ -218,6 +223,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult ResetPassword(ThiSinhDangKy entity)
         {
+            db = new DbConnecttion();
             string entity_cccd = entity.ThiSinh_CCCD;
             string entity_password = entity.ThiSinh_MatKhau;
             string entity_authCode = entity.ThiSinh_ResetCode;
@@ -278,6 +284,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public ActionResult ResetPassword3(ThiSinhDangKy thiSinh_reset_info, string authCode)
         {
+            db = new DbConnecttion();
             string cccd = thiSinh_reset_info.ThiSinh_CCCD;
             string password = thiSinh_reset_info.ThiSinh_MatKhau;
             var thisinh_info = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == thiSinh_reset_info.ThiSinh_CCCD).FirstOrDefault();
@@ -314,6 +321,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult ActivationAccount(string token)
         {
+            db = new DbConnecttion();
             var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ResetCode == token).FirstOrDefault();
             if (thiSinh != null)
             {
@@ -327,6 +335,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         public string ComputeHash(string input_user, string input_pass)
         {
+            db = new DbConnecttion();
             string input = input_user.Trim() + input_pass.Trim();
             string hashedPassword = BC.HashPassword(input);
             return hashedPassword;
@@ -334,6 +343,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         public bool Verify(string input_user, string input_pass, string hash_pass)
         {
+            db = new DbConnecttion();
             string input = input_user.Trim() + input_pass.Trim();
             bool isPasswordValid = BC.Verify(input, hash_pass);
             return isPasswordValid;
@@ -341,6 +351,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         private void SendEmail(string email, string body, string subject)
         {
+            db = new DbConnecttion();
             using (MailMessage mm = new MailMessage("xettuyen@hdu.edu.vn", email))
             {
                 mm.Subject = subject;
@@ -360,7 +371,7 @@ namespace HDU_AppXetTuyen.Controllers
         }
 
         public static string GenerateRandomPassword(int length)
-        {
+        {           
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var random = new Random();
 
@@ -378,6 +389,7 @@ namespace HDU_AppXetTuyen.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Login()
         {
+            db = new DbConnecttion();
             if (Session["login_session"] != null)
             {
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -392,10 +404,7 @@ namespace HDU_AppXetTuyen.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public JsonResult Login(string cccd, string password)
         {
-            /* if (Session["login_session"] != null)
-             {
-                 return RedirectToAction("Index", "Home");
-             }*/
+            db = new DbConnecttion();
             string mk_client = password;
             string user_client = cccd;
 
@@ -428,6 +437,7 @@ namespace HDU_AppXetTuyen.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public JsonResult LoginColleger(string cccd, string password)
         {
+            db = new DbConnecttion();
             string mk_client = password;
             string user_client = cccd;
 
@@ -458,6 +468,7 @@ namespace HDU_AppXetTuyen.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public JsonResult LoginMaster(string cccd, string password)
         {
+            db = new DbConnecttion();
             string mk_client = password;
             string user_client = cccd;
 
@@ -489,6 +500,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         public ActionResult Logout()
         {
+            db = null; ;
             Session["login_session"] = null;
             Session.Clear();
             Session.RemoveAll();
@@ -501,6 +513,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         public ActionResult RegisterColleger()
         {
+            db = new DbConnecttion();
             if (Session["login_session"] != null)
             {
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -526,6 +539,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult RegisterColleger(ThiSinhDangKy ts_register)
         {
+            db = new DbConnecttion();
             var ts_login_details = db.ThiSinhDangKies.Where(x => x.ThiSinh_CCCD == ts_register.ThiSinh_CCCD).FirstOrDefault();
             if (ts_login_details != null)
             {
@@ -594,6 +608,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult RegisterMasterCheckCCCD(HocVienDangKy entity)
         {
+            db = new DbConnecttion();
             var model = db.HocVienDangKies.Where(x => x.HocVien_CCCD == entity.HocVien_CCCD).FirstOrDefault();
 
             if (model != null)
@@ -609,6 +624,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult RegisterMasterCheckEmail(HocVienDangKy entity)
         {
+            db = new DbConnecttion();
             var model = db.HocVienDangKies.Where(x => x.HocVien_Email == entity.HocVien_Email).FirstOrDefault();
 
             if (model != null)
@@ -624,6 +640,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult RegisterMaster(HocVienDangKy hv_register)
         {
+            db = new DbConnecttion();
             var register_check_CCCD_HV = db.HocVienDangKies.Where(x => x.HocVien_CCCD == hv_register.HocVien_CCCD).FirstOrDefault();
 
             if (register_check_CCCD_HV != null)
@@ -697,6 +714,7 @@ namespace HDU_AppXetTuyen.Controllers
 
         public JsonResult GetTinh()
         {
+            db = new DbConnecttion();
             var TinhList = db.Tinhs.Select(t => new
             {
                 tinh_ID = t.Tinh_ID,
@@ -714,6 +732,7 @@ namespace HDU_AppXetTuyen.Controllers
         [HttpPost]
         public JsonResult ActivationAccountMaster(string token)
         {
+            db = new DbConnecttion();
             var hocvien = db.HocVienDangKies.Where(n => n.HocVien_ResetCode == token).FirstOrDefault();
             if (hocvien != null)
             {
@@ -725,6 +744,8 @@ namespace HDU_AppXetTuyen.Controllers
             return Json(new { success = false });
         }
         #endregion
+
+        
     }
 
     public class Register_ThiSinh

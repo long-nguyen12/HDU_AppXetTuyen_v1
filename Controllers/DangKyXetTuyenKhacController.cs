@@ -77,6 +77,7 @@ namespace HDU_AppXetTuyen.Controllers
                 success = true,
                 thisinh = ts,
                 data = nguyenvongs,
+                checksetupdate = KiemTraThoiGian(),
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -298,6 +299,7 @@ namespace HDU_AppXetTuyen.Controllers
                 success = true,
                 thisinh = ts,
                 data = nguyenvongs,
+                checksetupdate = KiemTraThoiGian(),
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -479,6 +481,20 @@ namespace HDU_AppXetTuyen.Controllers
         }
         #endregion
 
+
+        public int KiemTraThoiGian()
+        {
+            int set_check = -1;
+            db = new DbConnecttion();
+            var CurrentColleger = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            DateTime DateStart = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_BatDau);
+            DateTime DateEnd = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_KetThuc);
+            DateTime DatePresent = DateTime.Now;
+            if (DateStart > DatePresent || DateEnd < DatePresent) { set_check = 0; }
+            else if ((DateStart < DatePresent) && (DateEnd > DatePresent)) { set_check = 1; }
+            return set_check;
+        }
+
         public JsonResult GetNguyenVongByID(DangKyXetTuyenKhac entity)
         {
             db = new DbConnecttion();
@@ -539,6 +555,7 @@ namespace HDU_AppXetTuyen.Controllers
                 Dkxt_TrangThai_KetQua = model.Dkxt_TrangThai_KetQua,
                 Dkxt_TrangThai_HoSo = model.Dkxt_TrangThai_HoSo,
                 Dkxt_TrangThai_KinhPhi = model.Dkxt_TrangThai_KinhPhi,
+                checksetupdate = KiemTraThoiGian(),
             };
 
             return Json(new { success = true, data = data_return, }, JsonRequestBehavior.AllowGet);

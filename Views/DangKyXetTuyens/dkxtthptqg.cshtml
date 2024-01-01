@@ -32,7 +32,6 @@
                         <span id="sp_tieude"></span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -54,7 +53,7 @@
                             <div class="col-xl-3 col-lg-12"><b>Ngành</b></div>
                             <div class="col-xl-2 col-lg-12"><b>Tổ hợp môn</b></div>
                             <div class="col-xl-2 col-lg-12"><b class="text-nowrap">Tổng điểm (có ưu tiên)</b></div>
-                            <div class="col-xl-2 col-lg-12"><b >Ngày đăng ký</b></div>
+                            <div class="col-xl-2 col-lg-12"><b>Ngày đăng ký</b></div>
                             <div class="col-xl-2 col-lg-12"><b style="margin-left:10px">Cập nhật</b> </div>
                         </div>
                         <div class="col-12"><hr class="mt-2 mb-0" /><hr class="mt-0 mb-2" /></div>
@@ -82,18 +81,18 @@
                                 success: function (res) {
 
                                     $('#ThiSinh_ID_DK_Prs').val(res.Tsdk_id_dk);
-                                    $('#span_Uutien_doituong').html(res.Tsdk_doituong_ten_diem);
-                                    $('#span_Uutien_khuvuc').html(res.Tsdk_khuvuv_ten_diem);
-                                    $('#txt_hocluc_12').val(res.Tsdk_xeploai_hocluc_12);
-                                    $('#txt_hanhkiem_12').val(res.Tsdk_xeploai_hanhkiem_12);
+                                    $('#span_Uutien_doituong').html(res.DkxtTenDoituongDiem);
+                                    $('#span_Uutien_khuvuc').html(res.DkxtTenKhuvucDiem);
+                                    $('#txt_hocluc_12').val(res.DkxtXeploaiHocluc12);
+                                    $('#txt_hanhkiem_12').val(res.DkxtXeploaiHanhkiem12);
 
-                                    if (res.view_list_dkxt_thptqg_ts == 0) {
+                                    if (res.DkxtKQTHPTList == 0) {
                                         let div_item = ` <div class="col-12 text-center">Chưa có dữ liệu đăng ký xét tuyển</div>`;
                                         $('#div_tbody_list').append(div_item);
                                     }
                                     else {
-                                        $.each(res.view_list_dkxt_thptqg_ts, function (i, result) {
-                                            if (res.view_list_dkxt_thptqg_ts.length == 1) {
+                                        $.each(res.DkxtKQTHPTList, function (i, result) {
+                                            if (res.DkxtKQTHPTList.length == 1) {
                                                 let div_item = "";
                                                 div_item += `<div class="row g-1">`;
                                                 div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + `</div>`;
@@ -102,12 +101,12 @@
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_Diem_Tong_Full + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
-                                                div_item += `<button class="btn btn-sm btn-outline-success" style="margin-left:10px">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Xoá</button>`;
+                                                div_item += `<button class="btn btn-sm btn-outline-success" onclick="DkxtthptqgDetail(${result.dkxt_KQTQG_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm check_disable" onclick="UpdateRecordOnTableOnclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm check_disable" onclick="DeleteRecordOnTableOnclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Xoá</button>`;
                                                 div_item += `</div>`;
                                                 div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
                                                 $('#div_tbody_list').append(div_item);
                                             }
-                                            else if (res.view_list_dkxt_thptqg_ts.length > 1) {
+                                            else if (res.DkxtKQTHPTList.length > 1) {
                                                 let div_item = "";
                                                 div_item += `<div class="row g-1">`;
                                                 div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- </span><span class="col-4  ">Nguyện vọng ` + result.dkxt_KQTQG_NguyenVong + ` </span></div>`;
@@ -116,8 +115,8 @@
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Tổng điểm (có ưu tiên): </span><span class="col-8 span_noidung_nv">` + result.dkxt_KQTQG_Diem_Tong_Full + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDK) + `</span></div>`;
                                                 div_item += `<div class="col-xl-2 col-lg-12  text-nowrap">`;
-                                                div_item += `<button style="margin-left:10px" class="btn btn-outline-info btn-sm" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning btn-sm" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == res.view_list_dkxt_thptqg_ts.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>`
-                                                div_item += `&nbsp;<button class="btn btn-sm btn-outline-success" onclick="DkxtthptqgDetail(${result.dkxt_KQTQG_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm" onclick="update_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="delete_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Xoá</button>`;
+                                                div_item += `<button style="margin-left:10px" class="btn btn-outline-info btn-sm check_disable ${i == 0 ? "dautien" : ''}" onclick="change_up_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == 0 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning btn-sm check_disable ${i == res.DkxtKQTHPTList.length - 1 ? "cuoicung" :''}" onclick="change_down_aspirations_on_table_onclick(${result.dkxt_KQTQG_ID})" ${i == res.DkxtKQTHPTList.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>`
+                                                div_item += `&nbsp;<button class="btn btn-sm btn-outline-success" onclick="DkxtthptqgDetail(${result.dkxt_KQTQG_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary btn-sm check_disable" onclick="UpdateRecordOnTableOnclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm check_disable" onclick="DeleteRecordOnTableOnclick(${result.dkxt_KQTQG_ID},${result.dkxt_KQTQG_TrangThai_HoSo})">Xoá</button>`;
                                                 div_item += `</div>`;
                                                 div_item += `<div class="col-12"><hr class="mt-1 mb-2"/></div>`;
                                                 $('#div_tbody_list').append(div_item);
@@ -139,6 +138,17 @@
                                         $('.span_thongtin_nv').hide();
                                         $('.span_noidung_nv').css('font-weight', 'normal')
                                     }
+                                    if (res.Dkxt_CheckSetUpdate == 0) {
+                                        $('.check_disable').prop('disabled', true);
+                                        $('#p_thongbao_khoadangky').css('display', 'inline');
+
+                                    }
+                                    else if (res.Dkxt_CheckSetUpdate == 1) {
+                                        $('.check_disable').prop('disabled', false);
+                                        $('#p_thongbao_khoadangky').css('display', 'none');
+                                        $('.dautien').prop('disabled', true);
+                                        $('.cuoicung').prop('disabled', true);
+                                    }
                                 },
                                 error: function (errormessage) {
                                     alert(errormessage.responseText);
@@ -157,7 +167,7 @@
                     <div class="col-12">
                         <center>
                             <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
-                            <a class="btn btn-outline-primary" id="bt_add_aspirations">Thêm nguyện vọng</a>
+                            <button class="btn btn-outline-primary check_disable" id="bt_add_aspirations">Thêm nguyện vọng</button>
                             <script>
                                 $(document).ready(function () {
                                     let sp_tieude = $('#sp_tieude');
@@ -226,13 +236,14 @@
                         </center>
                     </div>
                 </div>
-               
+
                 <div class="row">
                     <div class="col-12"><hr class="mt-1 mb-1" /></div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
+                        <p style="color:blue; font-style:italic; text-align:justify; display:none" class="mb-1" id="p_thongbao_khoadangky">- Đã hết thời gian đăng ký nguyện vọng, bạn chỉ có thể xem các nguyện vọng đã đăng ký.</p>
                         <p style="color:red; font-style:italic; text-align:justify" class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng trong phần thông tin lệ phí (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic ;text-align:justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký của phương thức này, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
                     </div>
@@ -270,7 +281,7 @@
                         <div class="row">
                             <div class="col-4">Tổ hợp môn</div>
                             <div class="col-8">
-                                <select id="select_tohopmon" class="form-select"  ></select>                               
+                                <select id="select_tohopmon" class="form-select"></select>
                                 <span id="Thm_ID_Error" class="small mb-1 text-danger"></span>
                             </div>
                             <div class="col-12"><hr class="mt-1 mb-2" /></div>
@@ -422,6 +433,26 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal_Action_Notifi" tabindex="-1" role="dialog" aria-labelledby="modal_Action_Notifi" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_title">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_delete_first"></button>
+            </div>
+            <div class="modal-body">
+                <span id="span_conten_action_notifi"></span>
+                <input id="key_delete_dkxt_kqtthptqg_id" type="hidden" />
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_delete_second">Hủy</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_delete" style="display:none">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modal_tb_xoa" tabindex="-1" role="dialog" aria-labelledby="modal_tb_xoa" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
@@ -483,18 +514,22 @@
     </div>
 </div>
 <script>   
-    // chuyển đến trang sửa thông tin nguyện vọng
-    function update_aspirations_on_table_onclick(dkxt_id, dkxt_tths) {
-        if (dkxt_tths != 9) {
+    function UpdateRecordOnTableOnclick(dkxt_id, _check_delete) {
+        if (_check_delete == 9) {
+            $('#span_conten_action_notifi').text('');
+            $("#span_conten_action_notifi").css("color", "blue");
+            $('#span_conten_action_notifi').text('Nguyện vọng đã được duyệt, không thể sửa!');
+            $('#bt_cancel_on_modal_delete_second').text('Đóng');
+            $('#bt_ok_on_modal_delete').css('display', 'none');
+
+            $('#bt_ok_on_modal_delete').hide();
+            $('#modal_Action_Notifi').modal('show');
+        }
+        else {
             var str_url = '?dkxt_id=' + dkxt_id;
             window.location.href = "/DangKyXetTuyens/DkxtthptqgEdit" + str_url;
         }
-        else {
-            alert('Nguyện vọng đã được duyệt, không thể sửa!')
-        }
-      
     }
-
     // thay đổi nguyện vọng đã đăng ký:
     function change_up_aspirations_on_table_onclick(_dkxt_kqtthptqg_id) {
         $('#key_change_dkxt_kqtthptqg_id').val('');
@@ -535,7 +570,7 @@
                         $('#modal_tb_thaydoinv').modal('hide');
                         $('#key_change_dkxt_kqtthptqg_id').val('');
                         $('#key_check_down_up').val('');
-                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");                        
+                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");
                     }
                     else {
                         showToast("Lỗi", res.msg, "bg-success");
@@ -555,13 +590,13 @@
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 success: function (res) {
-                  /*  console.log(res);*/
+                    /*  console.log(res);*/
                     if (res.status == true) {
                         LoadData_All_DkxtKQTN();
                         $('#modal_tb_thaydoinv').modal('hide');
                         $('#key_change_dkxt_kqtthptqg_id').val('');
                         $('#key_check_down_up').val('');
-                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");                        
+                        showToast("Thông báo", "Đã thực hiện thay đổi nguyện vọng!", "bg-success");
                     }
                     else {
                         showToast("Lỗi", res.msg, "bg-success");
@@ -589,16 +624,41 @@
     })
 
     // button xóa nguyện vọng đã đăng ký:
-    function delete_aspirations_on_table_onclick(_dkxt_id, dkxt_tths) {
-        if (dkxt_tths != 9) {
-            $('#modal_tb_xoa').modal('show');
-            $('#key_delete_dkxt_kqtthptqg_id').val(_dkxt_id);
+    function DeleteRecordOnTableOnclick(_dkxt_id, _check_delete) {
+        if (_check_delete == 9) {
+            $('#span_conten_action_notifi').text('');
+            $('#span_conten_action_notifi').css('color', 'blue');
+            $('#span_conten_action_notifi').text('Nguyện vọng đã được duyệt, không thể xóa');
+            $('#bt_cancel_on_modal_delete_second').text('Đóng');
+            $('#bt_ok_on_modal_delete').css('display', 'none');
+
+            $('#bt_ok_on_modal_delete').hide();
+            $('#modal_Action_Notifi').modal('show');
         }
         else {
-            alert('Nguyện vọng đã được duyệt, không thể xóa!')
+            $('#span_conten_action_notifi').text('');
+            $('#span_conten_action_notifi').css('color', 'red');
+            $('#span_conten_action_notifi').text('Nếu đồng ý sẽ xóa tất cả dữ liệu của nguyện vọng này. Bạn chắc chắn xóa?');
+          
+            $('#bt_cancel_on_modal_delete_second').text('Hủy');
+            $('#modal_Action_Notifi').modal('show');
+            $('#bt_ok_on_modal_delete').show();
+            $('#bt_ok_on_modal_delete').css('display', 'inline');
+            $('#key_delete_dkxt_id').val(_dkxt_id)
         }
-       
     }
+
+    //function delete_aspirations_on_table_onclick(_dkxt_id, dkxt_tths) {
+    //    if (dkxt_tths != 9) {
+    //        $('#modal_Action_Notifi').modal('show');
+    //        $('#span_conten_action_notifi').text('')
+    //        $('#key_delete_dkxt_kqtthptqg_id').val(_dkxt_id);
+    //    }
+    //    else {
+    //        alert('Nguyện vọng đã được duyệt, không thể xóa!')
+    //    }
+    //}
+
     $('#bt_ok_on_modal_delete').click(function () {
         let data_Obj_new = { Dkxt_KQTQG_ID: $('#key_delete_dkxt_kqtthptqg_id').val() };
 
@@ -611,8 +671,8 @@
             success: function (res) {
                 if (res.status == true) {
                     LoadData_All_DkxtKQTN();
-                    $('#modal_tb_xoa').modal('hide');
-                    showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");                    
+                    $('#modal_Action_Notifi').modal('hide');
+                    showToast("Thông báo", "Đã thực hiên xóa nguyện vọng!", "bg-success");
                 }
                 else {
                     showToast("Lỗi", res.msg, "bg-success");
@@ -626,11 +686,11 @@
     });
 
     $('#bt_cancel_on_modal_delete_first').click(function () {
-        $('#modal_tb_xoa').modal('hide');
+        $('#modal_Action_Notifi').modal('hide');
         $('#key_delete_dkxt_kqtthptqg_id').val('');
     })
     $('#bt_cancel_on_modal_delete_second').click(function () {
-        $('#modal_tb_xoa').modal('hide');
+        $('#modal_Action_Notifi').modal('hide');
         $('#key_delete_dkxt_kqtthptqg_id').val('');
     })
 </script>
@@ -670,7 +730,7 @@
                 Nganh_ID: $("#select_nganh").val(),
                 Dkxt_KQTQG_GhiChu: $('#dkxt_thptqg_id_checkin').val(),
             }
-            if (dataObj.Dkxt_KQTQG_GhiChu == 0 && dataObj.Thm_ID > 0) {              
+            if (dataObj.Dkxt_KQTQG_GhiChu == 0 && dataObj.Thm_ID > 0) {
                 $.ajax({
                     url: "/DangKyXetTuyens/DangKyXetTuyen_KQTHPTQG_Get_Data_MonHoc",
                     data: JSON.stringify(dataObj),
@@ -688,8 +748,8 @@
                         if (res.success == false) {
                             reset_fields_controll_disabled_true();
                             $('#Nganh_ID_Error').text('Trùng ngành và tổ hợp môn, vui lòng chọn lại');
-                            $('#Thm_ID_Error').text('Trùng ngành và tổ hợp môn, vui lòng chọn lại');                            
-                        }                       
+                            $('#Thm_ID_Error').text('Trùng ngành và tổ hợp môn, vui lòng chọn lại');
+                        }
                     },
                     error: function (errormessage) {
                         console.log(errormessage.error);
@@ -711,7 +771,7 @@
             var arr = $('.form-select');
             arr.each(function () {
                 hideErrorMessage($(this));
-            })           
+            })
         })
     });
     // phần xử lý dữ liệu cho các tệp đính kèm
@@ -998,7 +1058,7 @@
                     $('#div_list_aspirations').css('display', 'inline');
                     $('#div_update_aspirations').css('display', 'none');
                     $("#loadingModal").modal("hide");
-                    thongbao_dangky_thanhcong(res.data);                  
+                    thongbao_dangky_thanhcong(res.data);
                 } else {
                     $("#loadingModal").modal("hide");
                     showToast("Thông báo", "Có lỗi xảy ra khi thêm mới nguyện vọng!", "bg-error");

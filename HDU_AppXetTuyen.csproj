@@ -192,6 +192,7 @@
     <Compile Include="Controllers\DangKyXetTuyenKhacController.cs" />
     <Compile Include="Controllers\DangKyXetTuyensController.cs" />
     <Compile Include="Controllers\DangKyXetTuyenThangController.cs" />
+    <Compile Include="Controllers\DotXetTuyenController.cs" />
     <Compile Include="Controllers\ExportFileController.cs" />
     <Compile Include="Controllers\HocVienDangKiesController.cs" />
     <Compile Include="Controllers\KetQuaXetTuyensController.cs" />
@@ -730,9 +731,7 @@
     <Content Include="Uploads\LienCapTieuHoc\GiayKhaiSinh\2_133330916848989651_vd.pdf" />
     <Content Include="Views\ThiSinhDangKies\Edit.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxthocbaOLD.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkxtthptqg.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\IeltsOld01.cshtml" />
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
     <Content Include="Views\LienCapTHCS\Create.cshtml" />
     <Content Include="Views\LienCapTHCS\index.cshtml" />
@@ -761,22 +760,17 @@
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\Dkdtnk - Copy.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkdtnkOLD.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Detail.cshtml" />
     <Content Include="Views\Auth\ResetPassword - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgDetail.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsDetail.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGiaDetail.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxtthptqgEditOK.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\DanhGiaOLD.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxthocbaOK.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkxthocbaEditOK.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkxthocba.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Index.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\IeltsOLD.cshtml" />
-    <Content Include="Views\DangKyXetTuyenKhac\DanhGiaOLD2.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\Ielts.cshtml" />
+    <Content Include="Views\DangKyXetTuyens\DkxthocbaOK.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -793,6 +787,7 @@
     <Folder Include="Uploads\LienCap\GiayUuTien\" />
     <Folder Include="Uploads\LienCap\LePhi\" />
     <Folder Include="Uploads\UploadMinhChungs\" />
+    <Folder Include="Views\DotXetTuyen\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

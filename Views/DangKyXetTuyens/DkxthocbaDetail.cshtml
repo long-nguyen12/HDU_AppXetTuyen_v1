@@ -215,9 +215,9 @@
 
                 <div class="row mt-1 mb-3">
                     <div class="col-xxl-12" style="text-align:center">
-                        <input class="btn btn-outline-primary" id="bt_ok_div_update_aspirations" type="button" value="Đến trang sửa" />
+                        <button class="btn btn-outline-primary" id="bt_ok_div_update_aspirations">Sửa</button>
                         <input type="hidden" id="Dkxt_TrangThai_HoSo_Check" />
-                        <input class="btn btn-outline-secondary" id="bt_close_div_update_aspirations_second" type="button" value="Quay lại" />
+                        <button class="btn btn-outline-secondary" id="bt_close_div_update_aspirations_second">Quay lại</button>
                     </div>
                 </div>
 
@@ -250,13 +250,20 @@
 </div>
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_HB_ID" />
 <input type="hidden" id="dkxt_hocba_id_checkin" name="dkxt_hocba_id_checkin" />
+ 
+ 
 <script>
     $(document).ready(function () {
         // hiển thị thông tin đăng ký nguyện vọng
         LoadDataInfor_XTHB_ByID();
         //hiển thị các hình ảnh minh chứng
         LoadImageMC_XTHB_ByID();
+         
     })
+    function ConvertStringToDate(str) {
+        var mdy = str.split('-');
+        return new Date(mdy[0], mdy[1], mdy[2]);
+    }
     function LoadDataInfor_XTHB_ByID() {
         /*  var hidden_Dkxt_HB_ID = $('#hidden_Dkxt_HB_ID').val();*/
         let data_get = { Dkxt_HB_ID: $('#hidden_Dkxt_HB_ID').val() }
@@ -271,7 +278,7 @@
                // console.log("test", res)
                 if (res.success) {
                     let data = res.data;
-                
+                    console.log(data);
                     $("#select_tohopmon").empty();
                     $("#select_nganh").empty();
                     $('#select_khoinganh').empty();                     
@@ -308,25 +315,32 @@
 
                     $('#dkxt_hocba_id_checkin').val(data.Dkxt_HB_ID);
                     $('#Dkxt_TrangThai_HoSo_Check').val(data.Dkxt_HB_TrangThai_HoSo);
+                    $('#hiden_CheckSetUpdate').val(data.Dkxt_CheckSetUpdate);  
 
-                    if (data.Dkxt_HB_TrangThai_HoSo == 9) {
+                    if (data.Dkxt_CheckSetUpdate == 0) {
                         $('#bt_ok_div_update_aspirations').prop('disabled', true);
-                        $('#bt_ok_div_update_aspirations').val('Trường đã duyệt');
+                        if (data.Dkxt_HB_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').text('Trường đã duyệt'); }
+                        else { $('#bt_ok_div_update_aspirations').text('Đến trang sửa'); }
                     }
-                    else {
-                        $('#bt_ok_div_update_aspirations').prop('disabled', false);
-                        $('#bt_ok_div_update_aspirations').val('Đến trang sửa');
+                    else if (data.Dkxt_CheckSetUpdate == 1) {
+                        if (data.Dkxt_HB_TrangThai_HoSo == 9) {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', true);
+                            $('#bt_ok_div_update_aspirations').text('Trường đã duyệt');
+                        }
+                        else {
+                            $('#bt_ok_div_update_aspirations').prop('disabled', false);
+                            $('#bt_ok_div_update_aspirations').text('Đến trang sửa');
+                        }
                     }
-
-                    //if (data.Dkxt_HB_TrangThai_HoSo == 9) { $('#bt_ok_div_update_aspirations').prop('disabled', true); }
-                    //else { $('#bt_ok_div_update_aspirations').prop('disabled', false); }
                 }
             },
             error: function (er) {
                 console.log(er.error);
             }
         });
+
     }
+    
     function LoadImageMC_XTHB_ByID() {
         /*  var hidden_Dkxt_HB_ID = $('#hidden_Dkxt_HB_ID').val();*/
         let data_get = { Dkxt_HB_ID: $('#hidden_Dkxt_HB_ID').val() }

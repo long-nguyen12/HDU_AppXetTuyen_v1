@@ -116,7 +116,7 @@
                                                     div_item += `<div class="col-lg-3 col-sm-12 text-nowrap"><span class="col-5 span_thongtin_nv">- Kết quả thi/ ngày thi: </span><br class="span_thongtin_nv"/><span class="col-7 span_noidung_nv" style="margin:10px">` + result.Dkxt_KetQuaDatDuoc.toFixed(2) + "/" + result.Dkxt_TongDiem.toFixed(2) + `(điểm)</span><span>(ngày: ` + result.Dkxt_NgayDuThi + `)</span></div>`;
                                                     div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDangKy) + `</span></div>`;
                                                     div_item += `<div class="col-lg-2 col-sm-12 text-nowrap">`
-                                                    div_item += `<button class="btn btn-outline-success  btn-sm" onclick="DkxtCCnnDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="DeleteRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo},'${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
+                                                    div_item += `<button class="btn btn-outline-success  btn-sm" onclick="DkxtCCnnDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm check_disable" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm check_disable" onclick="DeleteRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo},'${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
                                                     div_item += `</div>`
                                                     div_item += `<div class="col-12" > <hr class="mt-2 mb-2" /></div>`;
                                                     $('#div_tbody_list').append(div_item);
@@ -131,8 +131,8 @@
                                                     div_item += `<div class="col-lg-3 col-sm-12 text-nowrap"><span class="col-5 span_thongtin_nv">- Kết quả thi/ ngày thi: </span><br class="span_thongtin_nv"/><span class="col-7 span_noidung_nv" style="margin:10px">` + result.Dkxt_KetQuaDatDuoc.toFixed(2) + "/" + result.Dkxt_TongDiem.toFixed(2) + ` (điểm)</span><span>(ngày: ` + result.Dkxt_NgayDuThi + `)</span></div>`;
                                                     div_item += `<div class="col-xl-1 col-lg-12  text-nowrap"><span class="col-4  span_thongtin_nv">- Ngày đăng ký: </span><span class="col-8 span_noidung_nv">` + ConverDateToString(result.Dkxt_NgayDangKy) + `</span></div>`;
                                                     div_item += `<div class="col-lg-2 col-sm-12 text-nowrap">`
-                                                    div_item += `<button class="btn btn-outline-info  btn-sm" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',1)" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning  btn-sm" onclick="ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',2)" ${i == result_all.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
-                                                    div_item += `<button class="btn btn-outline-success  btn-sm" onclick="DkxtCCnnDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm" onclick="DeleteRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo},'${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
+                                                    div_item += `<button class="btn btn-outline-info  btn-sm check_disable" style="margin-left:10px"  onclick = "ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',1)" ${result.Dkxt_NguyenVong == 1 ? "disabled" : ''}><b>&#8743;</b></button>&nbsp;<button class="btn btn-outline-warning  btn-sm check_disable" onclick="ShowModalChangeData(${result.Dkxt_ID}, '${result.Dkxt_ToHopXT}',2)" ${i == result_all.length - 1 ? "disabled" : ""}><b>&#8744;</b></button>&nbsp;`;
+                                                    div_item += `<button class="btn btn-outline-success  btn-sm" onclick="DkxtCCnnDetail(${result.Dkxt_ID})">Xem</button>&nbsp;<button class="btn btn-outline-primary  btn-sm check_disable" onclick="UpdateRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo})">Sửa</button>&nbsp;<button class="btn btn-outline-danger btn-sm check_disable" onclick="DeleteRecordOnclick(${result.Dkxt_ID},${result.Dkxt_TrangThai_HoSo},'${result.Dkxt_ToHopXT}')">Xóa</button></div>`;
                                                     div_item += `</div>`
                                                     div_item += `<div class="col-12" ><hr class="mt-2 mb-2" /></div>`;
                                                     $('#div_tbody_list').append(div_item);
@@ -155,6 +155,15 @@
                                             $('.span_thongtin_nv').hide();
                                             $('.span_noidung_nv').css('font-weight', 'normal')
                                         }
+                                        if (response.checksetupdate == 0) {
+                                            $('.check_disable').prop('disabled', true);
+                                            $('#p_thongbao_khoadangky').css('display', 'inline');
+                                        }
+                                        else if (response.checksetupdate == 1) {
+                                            $('.check_disable').prop('disabled', false);
+                                            $('#p_thongbao_khoadangky').css('display', 'none');
+                                        }
+
                                     },
                                     error: function (errormessage) {
                                         console.log(errormessage)
@@ -172,8 +181,8 @@
                 <div class="row mt-2">
                     <div class="col-xxl-12">
                         <center>
-                            <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success ">Xuất phiếu tổng hợp</button>
-                            <a id="bt_add_aspirations" class="btn btn-outline-primary" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</a>
+                            <button id="bt_xuat_phieu_tong_hop_kq" class="btn btn-outline-success">Xuất phiếu tổng hợp</button>
+                            <button id="bt_add_aspirations" class="btn btn-outline-primary check_disable" onclick="bt_Insert_Dknv_on_divView_Click(0,0,0)">Thêm nguyện vọng</button>
                             <script>
                                 $(document).ready(function () {
                                     let sp_tieude = $('#sp_tieude');
@@ -240,6 +249,7 @@
                 <div class="row">
                     <div class="col-xxl-12">
                         <p style="color:red; font-style:italic" class="mb-1">Lưu ý: </p>
+                        <p style="color:blue; font-style:italic; text-align:justify; display:none" class="mb-1" id="p_thongbao_khoadangky">- Đã hết thời gian đăng ký nguyện vọng, bạn chỉ có thể xem các nguyện vọng đã đăng ký.</p>
                         <p style="color: red; font-style: italic; text-align: justify " class="mb-1">- Thí sinh cần nộp lệ phí xét tuyển và gửi minh chứng (ảnh chụp giao dịch chuyển tiền).</p>
                         <p style="color: red; font-style: italic; text-align: justify" class="mb-1">- Thí sinh in phiếu tổng hợp nguyện vọng đăng ký, kiểm tra lại thông tin trong phiếu, ký xác nhận và gửi về trường theo đường bưu điện.</p>
                     </div>
