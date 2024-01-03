@@ -39,11 +39,15 @@
                         <span id="sp_tieude">Theo dõi nguyện vọng nộp xét tuyển <a style="display:none" id="a_thongtin_dotxet_hientai"></a></span>
                         <input type="hidden" id="Dxt_ThoiGian_BatDau_ViewBag" style="display: none" value="@ViewBag.Dxt_ThoiGian_BatDau" />
                         <input type="hidden" id="Dxt_ThoiGian_KetThuc_ViewBag" style="display: none" value="@ViewBag.Dxt_ThoiGian_KetThuc" />
+                        <input type="hidden" id="Dkxt_Check_null"  value="@ViewBag.Check_null" />
                     </div>
                     <div class="page-item mb-0 mt-1" id="div_thongtin_dotxet_hientai" style="display:none; color:blue; margin-left:25px"></div>
                     <script>
                         $(document).ready(function () {
                             var str_time = '(Đợt xét từ ' + ConverDateToString($('#Dxt_ThoiGian_BatDau_ViewBag').val()) + ' đến ' + ConverDateToString($('#Dxt_ThoiGian_KetThuc_ViewBag').val()) + ')';
+                            
+                            if ($('#Dkxt_Check_null').val() == 0) { $('#list-check-null').show(); }
+                            else { $('#list-check-null').hide(); }
                             if (window.innerWidth <= 1000) {
                                 $('#a_thongtin_dotxet_hientai').css('display', 'none');
                                 $('#a_thongtin_dotxet_hientai').hide();
@@ -215,6 +219,19 @@
 <div class="container-fluid px-12">
 
     <div id="fadeInUp">
+        <div class="card card-header-actions mt-1 mb-1" id="list-check-null" style="display:none">
+            <div class="card-header">
+                Thông báo 
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 text-center ">
+                        <span class="text-danger">Thí sinh chưa đăng ký nguyện vọng xét tuyển</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card card-header-actions mt-2 mb-1" id="list-kqthi-thpt" style="display:none">
             <div class="card-header">Xét tuyển dùng điểm thi tốt nghiệp</div>
             <div class="card-body">

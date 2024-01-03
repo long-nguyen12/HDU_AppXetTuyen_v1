@@ -497,11 +497,10 @@
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2 - Copy.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3 - Copy.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4 - Copy.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt6.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt2 - AK.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - AK.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt3 - AK.cshtml" />
-    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\DkxtkqCcnn_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt4 - AK.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtHocBa_hs_view.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\DkxtKQTthpt_hs_view.cshtml" />
@@ -512,6 +511,7 @@
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
     <None Include="Areas\Admin\Views\DotXetTuyens\GiftedIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5 - Copy %282%29.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -780,7 +780,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\DkxtKQTHPTQG\" />
     <Folder Include="Areas\Admin\Views\ExportDatas\" />
     <Folder Include="Areas\Admin\Views\LibraryJson\" />
     <Folder Include="Uploads\DkSauDaiHocFile\" />

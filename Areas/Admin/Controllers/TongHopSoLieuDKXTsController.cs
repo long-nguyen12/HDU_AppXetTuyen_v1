@@ -518,6 +518,12 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult TheoDoiNopHoSoDetailPt6(string filteriPhuongThuc, string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
+         string filteriDotxt, string sortOrder, int? page, double? Dkxt_ID)
+        {
+            ViewBag.Dkxt_ID = Dkxt_ID;
+            return View();
+        }
         public JsonResult DangKyXetTuyen_KQTHPTQG_GetByID(DangKyXetTuyenKQTQG entity)
         {
             db = new DbConnecttion();

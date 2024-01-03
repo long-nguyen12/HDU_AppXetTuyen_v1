@@ -53,8 +53,27 @@ namespace HDU_AppXetTuyen.Controllers
         [ThiSinhSessionCheck]
         public ActionResult Index()
         {
-            db = new DbConnecttion();          
+            db = new DbConnecttion();
+           
+
+            var session = Session["login_session"].ToString();
             var dxt_present = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+
+            var pt2 = db.DangKyXetTuyenHBs.Where(x => x.ThiSinh_ID == thiSinh.ThiSinh_ID && x.DotXT_ID == dxt_present.Dxt_ID).ToList();
+            var pt3 = db.DangKyXetTuyenKQTQGs.Where(x => x.ThiSinh_ID == thiSinh.ThiSinh_ID && x.DotXT_ID == dxt_present.Dxt_ID).ToList();
+            var pt4 = db.DangKyXetTuyenKhacs.Where(x => x.ThiSinh_ID == thiSinh.ThiSinh_ID && x.DotXT_ID == dxt_present.Dxt_ID).ToList();
+            var pt5 = db.DangKyXetTuyenThangs.Where(x => x.ThiSinh_ID == thiSinh.ThiSinh_ID && x.DotXT_ID == dxt_present.Dxt_ID).ToList();
+
+            if (pt2.Count ==0 && pt3.Count == 0 && pt4.Count == 0 && pt5.Count == 0)
+            {
+                ViewBag.Check_null = 0; 
+            }
+            else
+            {
+                ViewBag.Check_null = 1;
+            }
+           
             ViewBag.Dxt_ThoiGian_BatDau = dxt_present.Dxt_ThoiGian_BatDau;
             ViewBag.Dxt_ThoiGian_KetThuc = dxt_present.Dxt_ThoiGian_KetThuc;
             return View();

@@ -88,9 +88,10 @@
         window.onresize = reportWindowSize;
     });
 
-    $(document).ready(function () {      
+    $(document).ready(function () {
         LoadDataPhuongThuc4();
-      
+        LoadImgPhuongThuc4();
+
     });
     function LoadDataPhuongThuc4() {
         let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val() }
@@ -105,78 +106,149 @@
                 if (res.success) {
                     let data = res.data;
                     console.log("load data ", data);
-
-                    $('#HoTen').text(data.ThiSinh_HoLot + data.ThiSinh_Ten);  //$('#ThiSinh_HoLot').val(data.ThiSinh_HoLot + " " + data.ThiSinh_Ten);
-                    $('#CanCuocCongDan').text(data.ThiSinh_CCCD); //  $('#ThiSinh_CCCD').val(data.ThiSinh_CCCD);
-                    $('#DienThoai').text(data.ThiSinh_DienThoai); //    $('#ThiSinh_DienThoai').val(data.ThiSinh_DienThoai);
-                    $('#Email').text(data.ThiSinh_Email); //  $('#ThiSinh_Email').val(data.ThiSinh_Email);
-                    $('#NgaySinh').text(data.ThiSinh_NgaySinh); //$('#ThiSinh_NgaySinh').val(data.ThiSinh_NgaySinh);
-                    $('#GioiTinh').text(data.ThiSinh_GioiTinh); //$('#ThiSinh_GioiTinh').val(data.ThiSinh_GioiTinh);
-                    $('#DanToc').text(data.ThiSinh_DanToc); //    $('#ThiSinh_DanToc').val(data.ThiSinh_DanToc);
+                    $('#HoTen').text(data.ThiSinh_HoLot + data.ThiSinh_Ten);
+                    $('#CanCuocCongDan').text(data.ThiSinh_CCCD);
+                    $('#DienThoai').text(data.ThiSinh_DienThoai);
+                    $('#Email').text(data.ThiSinh_Email);
+                    $('#NgaySinh').text(data.ThiSinh_NgaySinh);
+                    $('#GioiTinh').text(data.ThiSinh_GioiTinh);
+                    $('#DanToc').text(data.ThiSinh_DanToc);
 
                     $('#NguyenVong').text(data.ThiSinh_NguyenVong);
                     $('#Nganh').text(data.ThiSinh_Nganh);
                     $('#NamDatGiai').text(data.Dkxt_NamDatGiai);
                     $('#MonDatGiai').text(data.Dkxt_MonDatGiai);
                     $('#LoaiGiai').text(data.Dkxt_LoaiGiai);
+                }
+            },
+            error: function (errormessage) {
+                console.log(errormessage.error);
+            }
+        });
+    }
+    function LoadImgPhuongThuc4() {
+        let data_get = { Dkxt_ID: $('#hidden_Dkxt_ID').val() }
+        $.ajax({
+            url: '/Admin/TongHopSoLieuDKXTs/DangKyXetTuyen_TT_GetByID',
+            data: JSON.stringify(data_get),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                if (res.success) {
+                    let data = res.data;
+                    console.log("load IMG ", data);
+
+                    /*TrangThaiHoSo*/
+                    if (data.Dkxt_TrangThai_HoSo == 0) {
+                        $('#ThongBao_TrangThaiHoSo').empty();
+                        $('#ThongBao_TrangThaiHoSo').append(`- Trạng thái hồ sơ: <span style="color:red">Chưa kiểm tra</span>`);
+                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
+                        $('#radioHoSoThieu').removeAttr('checked', 'checked');
+                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
+                    }                 
+
+                    if (data.Dkxt_TrangThai_HoSo == 1) {
+                        $('#ThongBao_TrangThaiHoSo').empty();
+                        $('#ThongBao_TrangThaiHoSo').append(`- Trạng thái hồ sơ: <span style="color:red">Đã kiểm tra, hồ sơ có sai sót</span>`);
+                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
+                        $('#radioHoSoThieu').attr('checked', 'checked');
+                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
+                    }
+
+                    if (data.Dkxt_TrangThai_HoSo == 2) {
+                        $('#ThongBao_TrangThaiHoSo').empty();
+                        $('#ThongBao_TrangThaiHoSo').append(`- Trạng thái hồ sơ: <span style="color:red">Đã sửa, Chưa kiểm tra</span>`);
+                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
+                        $('#radioHoSoThieu').removeAttr('checked', 'checked');
+                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
+                    }
+
+                    if (data.Dkxt_TrangThai_HoSo == 9) {
+                        $('#ThongBao_TrangThaiHoSo').empty();
+                        $('#ThongBao_TrangThaiHoSo').append(`- Trạng thái hồ sơ: <span>Đã kiểm tra, hồ sơ đúng, đủ</span>`);
+                        $('#radioHoSoDayDu').attr('checked', 'checked');
+                        $('#radioHoSoThieu').removeAttr('checked', 'checked');
+                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
+
+                    }
 
                     $('#div_mc_ketqua_giai').empty();
                     $('#div_mc_hocba').empty();
                     $('#div_mc_bangtotnghiep').empty();
                     $('#div_mc_cccd').empty();
-                    $('#div_mc_giayto_uutien').empty();                
+                    $('#div_mc_giayto_uutien').empty();
                     $('#div_mc_lephi').empty();
 
                     /*  $('#div_daco_mc_lephi').empty();*/
 
-                    if(data.Dkxt_MinhChung_Giai) {
+                    if (data.Dkxt_MinhChung_Giai) {
                         const ArrCnGiai = data.Dkxt_MinhChung_Giai.split("#");
                         if (ArrCnGiai.length > 0) {
+
                             $('#div_mc_ketqua_giai').append('- Chứng nhận đạt giải: ');
                             for (i = 0; i < ArrCnGiai.length; i++) {
-
                                 if (ArrCnGiai[i].length > 0) {
-                                    var str_a = ` <a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrCnGiai[i]}',1,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrCnGiai[i]}',1,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
                                     $('#div_mc_ketqua_giai').append(str_a);
-
                                     if (i == 0) {
-                                        $('#img_txt_card_hearder').text('Hình ảnh minh chứng giải thưởng');
+                                        $('#img_txt_card_hearder').text('Chứng nhận đạt giải');
                                         var url = ArrCnGiai[i];
                                         var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 
                                         if (lastChar.toLowerCase() != ".pdf") {
-                                            pdf_view.style.display = "none";
-                                            pdf_view.style.height = "0px";
-
+                                            $('#pdf_view').css('display', 'none');
+                                            $('#pdf_view').height('0px');
+                                            $('#pdf_view').hide();
                                             $("#img_view").attr("src", url);
                                             $("#img_view").show();
-
                                         }
                                         if (lastChar.toLowerCase() === ".pdf") {
                                             $("#img_view").hide();
-                                            pdf_view.style.display = "inline";
-                                            pdf_view.style.height = "500px";
+                                            $('#pdf_view').height('500px');
                                             $("#pdf_view").attr("src", url);
-
+                                            $('#pdf_view').css('display', 'inline');
                                             $("#pdf_view").show();
                                         }
-                                        $('#div_view_data_img').show();
+                                        $('#bt_delete_div_view_img').hide();
                                     }
-                                }
+                                }                                
                             }
-                            $('#div_mc_ketqua_giai').show();
+                            $('#div_mc_ketqua_giai').show();                                                     
                         }
                         else {
-
                             $('#div_mc_ketqua_giai').hide();
+                            $('#bt_delete_div_view_img').hide();
+                            $('#img_txt_card_hearder').text('Chứng nhận đạt giải');
+                            $("#img_view").attr("src", "/Content/images/no-image.png");
+                            $("#img_view").show();
+
+                            $('#pdf_view').css('display', 'none');
+                            $('#pdf_view').height('0px');
+                            $('#pdf_view').hide();
+
+                            // không hiển thị radio đủ kết quả khi tệp minh chứng kết quả thi không có
+                            $('#radioHoSoDayDu').removeAttr('checked', 'checked');
+                            $('#radioHoSoDayDu').prop('disabled', true);
+                            $('#radioHoSoThieu').attr('checked', 'checked');
                         }
                     }
                     else {
-                        $('#img_txt_card_hearder').text('Không có hình ảnh giải thưởng');
+                        $('#div_mc_ketqua_giai').hide();
+                        $('#bt_delete_div_view_img').hide();
+                        $('#img_txt_card_hearder').text('Chứng nhận đạt giải');
                         $("#img_view").attr("src", "/Content/images/no-image.png");
-                        pdf_view.style.display = "none";
-                        pdf_view.style.height = "0px";
-                        $('#div_view_img').show();
+                        $("#img_view").show();
+
+                        $('#pdf_view').css('display', 'none');
+                        $('#pdf_view').height('0px');
+                        $('#pdf_view').hide();
+
+                        // không hiển thị radio đủ kết quả khi tệp minh chứng kết quả thi không có
+                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
+                        $('#radioHoSoDayDu').prop('disabled', true);
+                        $('#radioHoSoThieu').attr('checked', 'checked');
                     }
 
                     if (data.Dkxt_MinhChung_HB) {
@@ -185,7 +257,7 @@
                             $('#div_mc_hocba').append('- Học bạ: ');
                             for (i = 0; i < ArrHocBa.length; i++) {
                                 if (ArrHocBa[i].length > 0) {
-                                    var str_a = ` <a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrHocBa[i]}',2,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrHocBa[i]}',2,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
                                     $('#div_mc_hocba').append(str_a);
                                 }
                             }
@@ -202,7 +274,7 @@
                             $('#div_mc_bangtotnghiep').append('- Bằng tốt nghiệp: ');
                             for (i = 0; i < ArrBTN.length; i++) {
                                 if (ArrBTN[i].length > 0) {
-                                    var str_a = ` <a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrBTN[i]}',3,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrBTN[i]}',3,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
                                     $('#div_mc_bangtotnghiep').append(str_a);
                                 }
                             }
@@ -219,7 +291,7 @@
                             $('#div_mc_cccd').append('- Căn cước công dân: ');
                             for (i = 0; i < ArrCccd.length; i++) {
                                 if (ArrCccd[i].length > 0) {
-                                    var str_a = ` <a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrCccd[i]}',4,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrCccd[i]}',4,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
                                     $('#div_mc_cccd').append(str_a);
                                 }
                             }
@@ -236,7 +308,7 @@
                             $('#div_mc_giayto_uutien').append('- Giấy tờ ưu tiên: ');
                             for (i = 0; i < ArrGTUT.length; i++) {
                                 if (ArrGTUT[i].length > 0) {
-                                    var str_a = ` <a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrGTUT[i]}',5,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
+                                    var str_a = ` <a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrGTUT[i]}',5,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
                                     $('#div_mc_giayto_uutien').append(str_a);
                                 }
                             }
@@ -247,23 +319,23 @@
                         }
                     }
 
+
+
                     if (data.Dkxt_TrangThai_KinhPhi == 0) {
                         $('#div_daco_mc_lephi').hide();
-                        $('#div_chuaco_mc_lephi').show();
                         $('#div_mc_lephi').hide();
                     }
                     else {
                         $('#div_daco_mc_lephi').show();
-                        $('#div_chuaco_mc_lephi').hide();
-
                         $('#txt_SoThamChieu_KinhPhi').text('Số tham chiếu chuyển khoản: ' + data.Dkxt_KinhPhi_SoThamChieu)
                         if (data.Dkxt_KinhPhi_TepMinhChung) {
                             const ArrKinhPhi = data.Dkxt_KinhPhi_TepMinhChung.split("#");
                             if (ArrKinhPhi.length > 0) {
+                                $('#div_thongbao_noimg_lephi').hide();
                                 $('#div_mc_lephi').append('- Nộp lệ phí: ');
                                 for (i = 0; i < ArrKinhPhi.length; i++) {
                                     if (ArrKinhPhi[i].length > 0) {
-                                        var str_a = ` <a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrKinhPhi[i]}',6,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
+                                        var str_a = ` <a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrKinhPhi[i]}',6,${data.Dkxt_ID} )">Tệp ${i + 1}</a> `;
                                         $('#div_mc_lephi').append(str_a);
                                     }
                                 }
@@ -271,53 +343,28 @@
                             }
                             else {
                                 $('#div_mc_lephi').hide();
+                                $('#div_thongbao_noimg_lephi').show();
+                                $('#radioThongtinLePhiDung').prop('disabled', true)
                             }
+                        }
+                        else {
+                            $('#div_thongbao_noimg_lephi').show();
+                            $('#radioThongtinLePhiDung').prop('disabled', true)
+                            $('#div_mc_lephi').hide();
                         }
                     }
 
-                    /*TrangThaiHoSo*/
-                    if (data.Dkxt_TrangThai_HoSo == 0) {
-                        $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Chưa kiểm tra</span>`);
-                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
-                        $('#radioHoSoThieu').removeAttr('checked', 'checked');
-                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
-                    }
 
-                    if (data.Dkxt_TrangThai_HoSo == 1) {
-                        $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Đã kiểm tra, hồ sơ có sai sót</span>`);
-                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
-                        $('#radioHoSoThieu').attr('checked', 'checked');
-                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
-                    }
-
-                    if (data.Dkxt_TrangThai_HoSo == 2) {
-                        $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Thí sinh đã sửa, Chưa kiểm tra</span>`);
-                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
-                        $('#radioHoSoThieu').removeAttr('checked', 'checked');
-                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
-                    }
-
-                    if (data.Dkxt_TrangThai_HoSo == 9) {
-                        $('#ThongBao_TrangThaiHoSo').empty();
-                        $('#ThongBao_TrangThaiHoSo').append(`<span>Trạng thái hồ sơ: Đã kiểm tra, hồ sơ đúng, đủ</span>`);
-                        $('#radioHoSoDayDu').attr('checked', 'checked');
-                        $('#radioHoSoThieu').removeAttr('checked', 'checked');
-                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
-
-                    }
                     /*   Trang Thai Kinh Phi*/
                     if (data.Dkxt_TrangThai_KinhPhi == 0) {
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Chưa có tệp minh chứng</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:red">Chưa có tệp minh chứng</span>`);
                     }
                     else {
                         $('#hidden_TrangThai_KinhPhi').val(data.Dkxt_TrangThai_KinhPhi);
                         if (data.Dkxt_TrangThai_KinhPhi == 1) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Đã nộp minh chứng, Chưa kiểm tra</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:red">Đã nộp minh chứng, chưa kiểm tra</span>`);
 
                             $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                             $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -325,7 +372,7 @@
 
                         if (data.Dkxt_TrangThai_KinhPhi == 2) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Đã kiểm tra minh chứng, có sai sót</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:red">Đã kiểm tra, có sai sót</span>`);
 
                             $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                             $('#radioThongtinLePhiSai').attr('checked', 'checked');
@@ -334,7 +381,7 @@
 
                         if (data.Dkxt_TrangThai_KinhPhi == 3) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Thí sinh đã sửa, Chưa kiểm tra</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:red">Đã sửa, chưa kiểm tra</span>`);
 
                             $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
                             $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -342,7 +389,7 @@
 
                         if (data.Dkxt_TrangThai_KinhPhi == 9) {
                             $('#ThongBao_TrangThaiKinhPhi').empty();
-                            $('#ThongBao_TrangThaiKinhPhi').append(`<span>Trạng thái nộp kinh phí: Đã kiểm tra, Đúng, đủ</span>`);
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:blue">Đã kiểm tra, đúng, đủ</span>`);
 
                             $('#radioThongtinLePhiDung').attr('checked', 'checked');
                             $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
@@ -357,7 +404,6 @@
             }
         });
     }
-
 </script>
 <div class="container-fluid px-12">
     <div class="row g-1">
@@ -406,10 +452,10 @@
                                     <p class="mt-0 mb-0" id="div_mc_bangtotnghiep"></p>
                                     <p class="mt-0 mb-0" id="div_mc_cccd"></p>
                                     <p class="mt-0 mb-0" id="div_mc_giayto_uutien"></p>
-                                    <p class="mt-0 mb-0" id="div_mc_lephi"></p>                                    
+                                    <p class="mt-0 mb-0" id="div_mc_lephi"></p>
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <b>+ Kiểm duyệt hồ sơ và lệ phí</b>                                   
+                                    <b>+ Kiểm duyệt hồ sơ và lệ phí</b>
                                     <hr class="mb-2 mt-0" />
                                     <p class="mt-0 mb-0" id="ThongBao_TrangThaiHoSo"></p>
                                     <div class="row">
@@ -417,15 +463,15 @@
                                             <input class="form-control" type="text" id="Dkxt_ThongBaoKiemDuyet_HoSo" name="Dkxt_ThongBaoKiemDuyet_HoSo" placeholder="Nhập thông báo kiểm duyệt hồ sơ">
                                             <span id="Error_Rgt_Check_radio_KiemDuyetHoSo" class="small mb-1 text-danger"></span>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-12 mt-2 mb-1">
                                             <div class="row g-1">
-                                                <div class="col-lg-5 col-md-12">
+                                                <div class="col-lg-4 col-md-12">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" id="radioHoSoThieu" name="Group_KiemDuyetHoSo">
                                                         <label class="form-check-label text-nowrap">Hồ sơ có sai sót</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-12">
+                                                <div class="col-lg-8 col-md-12">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" id="radioHoSoDayDu" onchange="remove_error_kd();" name="Group_KiemDuyetHoSo">
                                                         <script>function remove_error_kd() { $('#Error_Rgt_Check_radio_KiemDuyetHoSo').text('') }</script>
@@ -436,28 +482,24 @@
                                             <span id="Error_Rgt_Check_radio_KiemDuyetHoSo" class="small mb-1 text-danger col-12"></span>
                                         </div>
                                     </div>
-                                    <hr class="mb-0 mt-0" />
+                                    <hr class="mb-1 mt-0" />
                                     <p class="mt-0 mb-0" id="ThongBao_TrangThaiKinhPhi"></p>
                                     <input type="hidden" id="hidden_TrangThai_KinhPhi" name="hidden_TrangThai_KinhPhi" />
 
-                                    <div class="row mt-2" id="div_chuaco_mc_lephi" style="display:none">
-                                        <center>
-                                            <label class="form-label" style="color:red">(Chưa có minh chứng nộp lệ phí)</label>
-                                        </center>
-                                    </div>
+
                                     <div class="row mt-1 mb-0" id="div_daco_mc_lephi" style="display:none">
                                         <div class="col-12">
                                             <span id="txt_SoThamChieu_KinhPhi" style="color:blue"></span>
                                         </div>
                                         <div class="col-12 ">
                                             <div class="row g-1">
-                                                <div class="col-lg-6 col-md-12">
+                                                <div class="col-lg-5 col-md-12">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" id="radioThongtinLePhiSai" name="Group_KiemDuyetLePhi" onchange="remove_error_lp()">
                                                         <label class="form-check-label text-nowrap">Minh chứng lệ phí sai</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-12">
+                                                <div class="col-lg-7 col-md-12">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="radio" id="radioThongtinLePhiDung" name="Group_KiemDuyetLePhi" onchange="remove_error_lp()">
                                                         <label class="form-check-label text-nowrap">Minh chứng lệ phí đúng</label>
@@ -467,11 +509,14 @@
                                             <span id="Error_Rgt_KiemDuyet_KinhPhi" class="small mb-1 text-danger col-12"></span>
                                             <script>function remove_error_lp() { $('#Error_Rgt_KiemDuyet_KinhPhi').text('') }</script>
                                         </div>
+                                        <div class="col-12" id="div_thongbao_noimg_lephi" style="display:none">
+                                            <span style="color:red">- Không có hình ảnh minh chứng</span>
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
-                        </div>                       
+                        </div>
                     </div>
                     <hr class="mt-1 mb-1" />
                     <div class="row">
@@ -521,11 +566,11 @@
                                             if (!flag) return
                                             var data_update = {
                                                 Dkxt_ID: $('#hidden_Dkxt_ID').val(),
-                                                Dkxt_TrangThai_KinhPhi: _dkxt_TrangThai_KinhPhi,                                               
+                                                Dkxt_TrangThai_KinhPhi: _dkxt_TrangThai_KinhPhi,
                                                 Dkxt_TrangThai_HoSo: _dkxt_TrangThai_HoSo,
                                                 Dkxt_ThongBaoKiemDuyet_HoSo: $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(),
                                             }
-                                          
+
                                             $.ajax({
                                                 url: "/Admin/DangKyXetTuyens/Dkxt_TuyenThang_Update_KiemDuyet",
                                                 type: "POST",
@@ -542,7 +587,7 @@
                                             });
                                         });
 
-                                      
+
                                     });
 
                                     $(document).ready(function () {
@@ -566,7 +611,7 @@
                                         var errorContainer = input.next('.text-danger');
                                         errorContainer.text('');
                                     }
-                                   
+
                                 </script>
                                 <input class="btn btn-outline-secondary" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSo()" />
                             </div>
@@ -581,7 +626,7 @@
                 <div class="card-header mt-0 mb-0">
                     <span id="img_txt_card_hearder">Hình ảnh minh chứng</span>
                     <div>
-                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="bt_delete_div_view_img()" id="bt_delete_div_view_img">Xóa</button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="bt_delete_div_view_img()" id="bt_delete_div_view_img">Xóa</button>
                         <script>function bt_delete_div_view_img() { $('#modal_thongbao_delete').modal('show'); }</script>
                         <button class="btn btn-sm btn-outline-primary" type="button" id="bt_close_div_view_img">Đóng</button>
                         @*<button class="btn-close" type="button" aria-label="Close" id="bt_close_div_view_img"></button>*@
@@ -604,11 +649,12 @@
         </div>
     </div>
     <script>
-       
-       
+
+
     </script>
 </div>
 <input type="hidden" value="@ViewBag.Dkxt_ID" id="hidden_Dkxt_ID" />
+<input type="hidden" id="hidden_key_check_backto" />
 <div class="modal fade" id="modal_thongbao_delete" tabindex="-1" role="dialog" aria-labelledby="modal_thongbao_delete" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
@@ -631,7 +677,7 @@
                             Dkxt_LoaiMC: $('#hiden_loai_minhchung_xoa').val(),
                             Dkxt_Url: $("#hiden_duongdan_file_xoa").val(),
                         }
-                        //console.log("test delete", data_post)                        
+                        //console.log("test delete", data_post)
                         $.ajax({
                             url: '/Admin/DangKyXetTuyens/DkxtTt_hs_DeleteMC',
                             type: "POST",
@@ -639,9 +685,8 @@
                             contentType: "application/json;charset=utf-8",
                             success: function (res) {
                                 $('#modal_thongbao_delete').modal('hide');
-                                LoadDataPhuongThuc4();
+                                LoadImgPhuongThuc4();
                                 // hiển thị toast
-                                // window.location.href = "/Admin/DangKyXetTuyens/DkxtTt_hs_view" + str_query;
                             },
                             error: function (error) {
                                 console.error('Error update mc:', error);
@@ -667,7 +712,6 @@
         var str_dkxt_id = '?Dkxt_ID=' + $('#hidden_Dkxt_ID').val();
         var str_query = str_query_current.slice(0, str_query_current.length - str_dkxt_id.length);
         window.location.href = '/Admin/DangKyXetTuyens/DkxtTt/' + str_query;
-
     }
 
     function showimg(url, loaimc, id_key_hs) {
@@ -678,7 +722,7 @@
         $('#hiden_loai_minhchung_xoa').val(loaimc);
         $("#hiden_duongdan_file_xoa").val(url);
 
-        $('#pdf_view').css('display','none');       
+        $('#pdf_view').css('display', 'none');
         $('#pdf_view').height('0px');
 
         //var pdf_view = document.getElementById("pdf_view");
@@ -689,28 +733,29 @@
         $("#img_view").attr("src", "");
 
         if (loaimc == 1) {
-            $('#img_txt_card_hearder').text('Hình ảnh minh chứng giải thưởng');
+            $('#img_txt_card_hearder').text('Chứng nhận đạt giả');
         }
         if (loaimc == 2) {
-            $('#img_txt_card_hearder').text('Hình ảnh minh chứng học bạ');
+            $('#img_txt_card_hearder').text('Học bạ');
         }
         if (loaimc == 3) {
-            $('#img_txt_card_hearder').text('Minh chứng bằng tốt nghiệp');
+            $('#img_txt_card_hearder').text('Bằng tốt nghiệp');
         }
         if (loaimc == 4) {
-            $('#img_txt_card_hearder').text('Minh chứng căn cước công dân');
+            $('#img_txt_card_hearder').text('Căn cước công dân');
         }
         if (loaimc == 5) {
             $('#img_txt_card_hearder').text('Giấy tờ khác');
+        }
+        if (loaimc == 6) {
+            $('#img_txt_card_hearder').text('Nộp lệ phí');
         }
         var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
 
         if (lastChar.toLowerCase() != ".pdf") {
             $('#pdf_view').css('display', 'none');
             $('#pdf_view').height('0px');
-
-            //pdf_view.style.display = "none";
-            //pdf_view.style.height = "0px";
+            $("#pdf_view").hide();
 
             $("#img_view").attr("src", url);
             $("#img_view").show();
@@ -718,21 +763,20 @@
         if (lastChar.toLowerCase() === ".pdf") {
             $("#img_view").hide();
 
-            $('#pdf_view').css('display','inline');
-            $('#pdf_view').height('700px');
-
-            //pdf_view.style.display = "inline";
-            //pdf_view.style.height = "700px";
+            $('#pdf_view').css('display', 'inline');
+            $('#pdf_view').height('500px');
 
             $('#pdf_view').attr("src", url);
             $('#pdf_view').show();
         }
         $('#div_view_img').show();
+        $('#bt_delete_div_view_img').show();
     }
 </script>
 <script>
     $(document).ready(function () {
         $('#bt_close_div_view_img').click(function () {
+            $('#bt_delete_div_view_img').hide();
             $('#pdf_view').height('0');
             $('#pdf_view').hide();
             $("#pdf_view").attr("src", "");
@@ -740,6 +784,7 @@
             $('#img_txt_card_hearder').text('Hình ảnh minh chứng');
             $("#img_view").attr("src", "/Content/images/no-image.png");
             $('#div_view_img').show();
+            $('#bt_delete_div_view_img').hide();
         });
     });
 </script>
