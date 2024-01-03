@@ -744,8 +744,49 @@ namespace HDU_AppXetTuyen.Controllers
             return Json(new { success = false });
         }
         #endregion
+        #region Kiểm tra thời gian hệ thống mở đăng ký
+        public JsonResult ThongTinDotXetTuyenHienTai()
+        {
+            db = new DbConnecttion();
+            var CurrentColleger = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).Select(s => new
+            {
+                Dxt_ID = s.Dxt_ID,
+                Dxt_Classify = s.Dxt_Classify,
+                Dxt_Ten = s.Dxt_Ten,
+                Dxt_TrangThai_Xt = s.Dxt_TrangThai_Xt,
+                Dxt_ThoiGian_BatDau = s.Dxt_ThoiGian_BatDau,
+                Dxt_ThoiGian_KetThuc = s.Dxt_ThoiGian_KetThuc,
+                NamHoc_ID = s.NamHoc_ID,
+                NamHoc_Ten = db.NamHocs.FirstOrDefault(x => x.NamHoc_ID == s.NamHoc_ID).NamHoc_Ten
+            });
+            var CurrentMaster = db.DotXetTuyens.Where(x => x.Dxt_Classify == 2 && x.Dxt_TrangThai_Xt == 1).Select(s => new
+            {
+                Dxt_ID = s.Dxt_ID,
+                Dxt_Classify = s.Dxt_Classify,
+                Dxt_Ten = s.Dxt_Ten,
+                Dxt_TrangThai_Xt = s.Dxt_TrangThai_Xt,
+                Dxt_ThoiGian_BatDau = s.Dxt_ThoiGian_BatDau,
+                Dxt_ThoiGian_KetThuc = s.Dxt_ThoiGian_KetThuc,
+                NamHoc_ID = s.NamHoc_ID,
+                NamHoc_Ten = db.NamHocs.FirstOrDefault(x => x.NamHoc_ID == s.NamHoc_ID).NamHoc_Ten
+            });
 
-        
+            var CurrentGifted = db.DotXetTuyens.Where(x => x.Dxt_Classify == 1 && x.Dxt_TrangThai_Xt == 1).Select(s => new
+            {
+                Dxt_ID = s.Dxt_ID,
+                Dxt_Classify = s.Dxt_Classify,
+                Dxt_Ten = s.Dxt_Ten,
+                Dxt_TrangThai_Xt = s.Dxt_TrangThai_Xt,
+                Dxt_ThoiGian_BatDau = s.Dxt_ThoiGian_BatDau,
+                Dxt_ThoiGian_KetThuc = s.Dxt_ThoiGian_KetThuc,
+                NamHoc_ID = s.NamHoc_ID,
+                NamHoc_Ten = db.NamHocs.FirstOrDefault(x => x.NamHoc_ID == s.NamHoc_ID).NamHoc_Ten
+            });
+
+            return Json(new { success = true, data = new { CurrentColleger, CurrentMaster, CurrentGifted } }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
     }
 
     public class Register_ThiSinh
