@@ -513,13 +513,16 @@ namespace HDU_AppXetTuyen.Controllers
 
         public ActionResult RegisterColleger()
         {
+            Session["login_session"] = null;
+            Session.Clear();
+            Session.RemoveAll();
             db = new DbConnecttion();
-            if (Session["login_session"] != null)
-            {
-                Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                Response.Cache.SetNoStore();
-                return RedirectToAction("Index", "ThiSinhDangKies");
-            }
+            //if (Session["login_session"] != null)
+            //{
+            //    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            //    Response.Cache.SetNoStore();
+            //    return RedirectToAction("Index", "ThiSinhDangKies");
+            //}
             var doituongList = db.DoiTuongs.ToList();
             var khuvucList = db.KhuVucs.ToList();
             var tinhList = db.Tinhs.ToList();

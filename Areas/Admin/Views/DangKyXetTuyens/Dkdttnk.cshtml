@@ -35,7 +35,7 @@
     </div>
 </header>
 <div class="container-fluid px-12">
-    <div class="card card-collapsable">
+    <div class="card card-header-actions">
         <div class="card-header">
             <div id="div_tieude"><span>Danh sách thí sinh đăng ký dự thi năng khiếu</span></div>
         </div>
@@ -113,25 +113,27 @@
 
                                         <td>
                                             @{
+
                                                 if (item.Dkdt_TrangThai_LePhi == 0)
                                                 {
-                                                    <span style="color: red">Chưa nộp LP</span>
+                                                    <span style="color: red">Chưa nộp minh chứng lệ phí</span>
+
                                                 }
                                                 if (item.Dkdt_TrangThai_LePhi == 1)
                                                 {
-                                                    <span style="color: red">Đã nộp, chưa KT</span>
+                                                    <span style="color: red">Đã nộp, chưa kiểm tra</span>
                                                 }
                                                 if (item.Dkdt_TrangThai_LePhi == 2)
                                                 {
-                                                    <span style="color:blue">Đã KT, Có sai sót</span>
+                                                    <span style="color:blue">Đã kiểm tra, Có sai sót</span>
                                                 }
                                                 if (item.Dkdt_TrangThai_LePhi == 3)
                                                 {
-                                                    <span style="color:red">Đã sửa, chưa KT</span>
+                                                    <span style="color:blue">Đã kiểm tra, Có sai sót</span>
                                                 }
                                                 if (item.Dkdt_TrangThai_LePhi == 9)
                                                 {
-                                                    <span>Đã KT, Đúng</span>
+                                                    <span>Đã kiểm tra, đúng</span>
                                                 }
                                             }
                                         </td>
@@ -140,19 +142,19 @@
                                             @{
                                                 if (item.Dkdt_TrangThai_HoSo == 0)
                                                 {
-                                                    <span style="color: red">Đã nộp, chưa KT</span>
+                                                    <span style="color: red">Chưa kiểm tra</span>
                                                 }
                                                 if (item.Dkdt_TrangThai_HoSo == 1)
                                                 {
-                                                    <span style="color: blue">Đã KT, Có sai sót</span>
+                                                    <span style="color: blue">Đã kiểm tra, có sai sót</span>
                                                 }
                                                 if (item.Dkdt_TrangThai_HoSo == 2)
                                                 {
-                                                    <span style="color: red">Đã sửa, chưa KT</span>
+                                                    <span style="color: red">Đã sửa, chưa kiểm tra</span>
                                                 }
                                                 if (item.Dkdt_TrangThai_HoSo == 9)
                                                 {
-                                                    <span>Đã KT, HS đúng, đủ</span>
+                                                    <span>Đã kiểm tra, hồ sơ đúng, đủ</span>
                                                 }
                                             }
                                         </td>
@@ -186,12 +188,12 @@
 <script>
     function KiemtraThongTinDangky(id) {
         var str_query = window.location.search;
-
+        
         if (str_query.length == 0) {
-            str_query = '?dkdt_nk_id=' + id;
+            str_query = '?Dkxt_ID=' + id;
         }
         else {
-            str_query += '&dkdt_nk_id=' + id;
+            str_query += '&Dkxt_ID=' + id;
         }
         window.location.href = "/Admin/DangKyXetTuyens/Dkdttnk_hs_view" + str_query;
     }

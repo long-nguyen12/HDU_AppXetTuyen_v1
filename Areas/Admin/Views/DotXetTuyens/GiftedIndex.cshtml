@@ -40,7 +40,7 @@
                                     @Html.DisplayNameFor(model => model.Dxt_ThoiGian_KetThuc)
                                 </th>
                                 <th>@Html.DisplayName("Ghi chú")</th>
-                                <th style="width:110px;"><a class="btn btn-light text-nowrap" id="btCapNhat" onclick="UpdateDotXetTuyen(0,0, 0)" style="font-weight:bold">Thêm mới</a></th>
+                                <th style="width:110px;"><a class="btn btn-light text-nowrap" id="btCapNhat" onclick="UpdateDotXetTuyen(0,0,0)" style="font-weight:bold">Thêm mới</a></th>
                             </tr>
                         </thead>
                         @foreach (var item in Model)
@@ -67,7 +67,7 @@
                                         {
                                             <div class="d-inline-flex flex-nowrap  align-items-center ">
                                                 <div class="form-check align-items-center">
-                                                    <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID" onclick="SetupCurrentBatch(@item.Dxt_ID, @item.Dxt_TrangThai_Xt, @item.Dxt_Classify)">
+                                                    <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID" onclick="SetupCurrentBatch(@item.Dxt_ID, @item.Dxt_TrangThai_Xt,1)">
                                                     <label class="form-check-label" for="ttxt_@item.Dxt_ID">Đã khóa</label>
                                                 </div>
                                             </div>
@@ -75,16 +75,16 @@
                                     }
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Dxt_ThoiGian_BatDau)
+                                    <label>@Convert.ToDateTime(item.Dxt_ThoiGian_BatDau).ToString("dd/MM/yyyy")</label>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Dxt_ThoiGian_KetThuc)
+                                    <label>@Convert.ToDateTime(item.Dxt_ThoiGian_KetThuc).ToString("dd/MM/yyyy")</label>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Dxt_GhiChu)
                                 </td>
                                 <td style="text-align:center">
-                                    <a href="#" onclick="UpdateDotXetTuyen(@item.Dxt_ID,2, 0)"><i data-feather="edit" style="vertical-align: middle !important "></i></a>
+                                    <a href="#" onclick="UpdateDotXetTuyen(@item.Dxt_ID,2, 1)"><i data-feather="edit" style="vertical-align: middle !important "></i></a>
                                     @*@Html.ActionLink("Sửa", "MasterEdit", new { Dxt_ID = item.Dxt_ID })*@ |
                                     <a href="#" onclick="DeleteDotXetTuyen(@item.Dxt_ID)"><i data-feather="trash-2" style="vertical-align:middle!important"></i></a>
                                     @*@Html.ActionLink("Xóa", "Delete", new { Dxt_ID = item.Dxt_ID })*@
@@ -115,11 +115,10 @@
         $('#modal_thietlap_dothientai').modal('show');
     }
     function Confirm_SetupCurrentBatch() {
-        var _Dxt_ID = $('#hiddenCode').text();
-        var Dxt_Classify = $('#hiddenClassify').text();
+        var _Dxt_ID = $('#hiddenCode').text();    
         var data_change = {
             Dxt_ID: _Dxt_ID,
-            Dxt_Classify: Dxt_Classify
+            Dxt_Classify: 1
         }
         $.ajax({
             url: '/Admin/DotXetTuyens/DotXetTuyetChangeTTXTJson/',
@@ -153,9 +152,9 @@
         $('#modal_xoa_dothientai').modal('hide');
         $('#hidden_Dxt_ID').text('');
     }
-    $(document).ready(function () {   
+    $(document).ready(function () {
         $('#bt_edit_ok_modalupdate').click(function () {
-            DotetTuyenEdit()
+            DotXetTuyenEdit()
         });
         $('#bt_add_ok_modalupdate').click(function () {
             DotXetTuyenAdd();
@@ -163,12 +162,12 @@
 
         $('input').on('input', function () {
             hideErrorMessage($(this));
-        });       
+        });
     })
 </script>
 
 <script>
-    
+
     function UpdateDotXetTuyen(idDotXetTuyen, key_update, classify) {
         $('#hidden_Dxt_ID').val(idDotXetTuyen);
         $('#hidden_Check_Func').val(key_update);
@@ -450,7 +449,7 @@
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"  onclick="CancelOnModalUpdate()">Hủy</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="CancelOnModalUpdate()">Hủy</button>
                 <button class="btn btn-primary" type="button" id="bt_add_ok_modalupdate">Đồng ý thêm</button>
                 <button class="btn btn-primary" type="button" id="bt_edit_ok_modalupdate">Đồng ý sửa</button>
             </div>
@@ -492,7 +491,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tieude_modal">Thông báo</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="Cancel_SetupCurrentBatch()" ></button>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="Cancel_SetupCurrentBatch()"></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -503,8 +502,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="Cancel_SetupCurrentBatch()" >Hủy</button>
-                <button class="btn btn-primary" type="button"  onclick="Confirm_SetupCurrentBatch()">Đồng ý</button>
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="Cancel_SetupCurrentBatch()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="Confirm_SetupCurrentBatch()">Đồng ý</button>
             </div>
         </div>
     </div>

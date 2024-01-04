@@ -32,6 +32,10 @@ namespace HDU_AppXetTuyen.Models
         public int Dkdt_TrangThai_HoSo { get; set; }
         public int Dkdt_TrangThai_KetQua { get; set; }
         public string Dkxt_KinhPhi_NoiDungGiaoDich { get; set; }
+        public string Dkdt_ThongBaoKiemDuyet_HoSo { get; set; }
+        public string Dkdt_NgayThang_CheckLePhi { get; set; }
+        public string Dkdt_NgayThang_CheckHoSo { get; set; }
+
         public virtual DotXetTuyen DotXetTuyen { get; set; }
         public virtual Nganh Nganh { get; set; }
         public virtual ThiSinhDangKy ThiSinhDangKy { get; set; }

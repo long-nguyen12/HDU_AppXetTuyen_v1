@@ -10,9 +10,9 @@ namespace HDU_AppXetTuyen.Models
     public partial class HocVienDuTuyen
     {
         [Key]
-        public int DuTuyen_ID { get; set; }
+        public long DuTuyen_ID { get; set; }
 
-        public int? HocVien_ID { get; set; }
+        public long? HocVien_ID { get; set; }
 
         public int? DuTuyen_TrangThai { get; set; }
 

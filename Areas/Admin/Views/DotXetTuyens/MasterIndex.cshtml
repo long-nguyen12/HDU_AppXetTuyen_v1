@@ -56,7 +56,7 @@
                                         @Html.DisplayNameFor(model => model.Dxt_GhiChu)
                                     </th>
                                     <!--<th>--> @*@Html.ActionLink("Thêm mới", "MasterCreate", "DotXetTuyens")*@<!--</th>-->
-                                    <th style="width:110px;"><a class="btn btn-light text-nowrap" id="btCapNhat" onclick="MasterUpdateDotXetTuyen(0,0)" style="font-weight:bold">Thêm mới</a></th>
+                                    <th style="width:110px;"><a class="btn btn-light text-nowrap" id="btCapNhat" onclick="UpdateDotXetTuyen(0,0,2)" style="font-weight:bold">Thêm mới</a></th>
 
                                 </tr>
                             </thead>
@@ -78,7 +78,7 @@
                                                 {
                                                     <div class="d-inline-flex flex-nowrap  align-items-center ">
                                                         <div class="form-check align-items-center">
-                                                            <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID" checked  >
+                                                            <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID" checked>
                                                             <label class="form-check-label" for="ttxt_@item.Dxt_ID">Là đợt hiện tại</label>
                                                         </div>
                                                     </div>
@@ -88,7 +88,7 @@
                                                 {
                                                     <div class="d-inline-flex flex-nowrap  align-items-center ">
                                                         <div class="form-check align-items-center">
-                                                            <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID"  onclick="SetupDotXetTuyenHienTai(@item.Dxt_ID, @item.Dxt_TrangThai_Xt, @item.Dxt_Classify)">
+                                                            <input class="form-check-input" type="checkbox" id="ttxt_@item.Dxt_ID" name="ttxt_@item.Dxt_ID" onclick="SetupDotXetTuyenHienTai(@item.Dxt_ID, @item.Dxt_TrangThai_Xt, @item.Dxt_Classify)">
                                                             <label class="form-check-label" for="ttxt_@item.Dxt_ID">Đã khóa</label>
                                                         </div>
                                                     </div>
@@ -98,18 +98,18 @@
                                         </td>
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Dxt_ThoiGian_BatDau)
+                                            <span>@Convert.ToDateTime(item.Dxt_ThoiGian_BatDau).ToString("dd/MM/yyyy")</span>
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Dxt_ThoiGian_KetThuc)
+                                            <span>@Convert.ToDateTime(item.Dxt_ThoiGian_KetThuc).ToString("dd/MM/yyyy")</span>
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Dxt_GhiChu)
                                         </td>
                                         <td style="text-align:center">
-                                            <a href="#" onclick="MasterUpdateDotXetTuyen(@item.Dxt_ID,2)"><i data-feather="edit" style="vertical-align: middle !important "></i></a>
+                                            <a style="cursor: pointer; color: #005bff;" onclick="UpdateDotXetTuyen(@item.Dxt_ID,2,2)"><i data-feather="edit" style="vertical-align: middle !important "></i></a>
                                             @*@Html.ActionLink("Sửa", "MasterEdit", new { Dxt_ID = item.Dxt_ID })*@ |
-                                            <a href="#" onclick="MasterDeleteDotXetTuyen(@item.Dxt_ID)"><i data-feather="trash-2" style="vertical-align:middle!important"></i></a>
+                                            <a style="cursor:pointer; color:#005bff;" onclick="DeleteDotXetTuyen(@item.Dxt_ID)"><i data-feather="trash-2" style="vertical-align:middle!important"></i></a>
                                             @*@Html.ActionLink("Xóa", "Delete", new { Dxt_ID = item.Dxt_ID })*@
                                         </td>
                                     </tr>
@@ -122,7 +122,439 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $('input[type="checkbox"]').on('click', function (event) {
+        event.preventDefault();
+    });
+    function SetupDotXetTuyenHienTai(id_dotxt, trangthai, classify) {
+        var idpresent = $('#ttxt_' + id_dotxt);
+        $('#hiddenCode').text(id_dotxt);
+        $('#hiddenTrangThai').text(trangthai);
+        $('#hiddenClassify').text(classify);
+
+        if (idpresent.is(":checked")) {
+            $('#txt_confirm').text("Bạn có chắc chắn muốn thiết lập đây là đợt tuyển sinh hiện tại?");
+        }
+        $('#modal_thietlap_dothientai').modal('show');
+    }
+ 
+    function Confirm_SetupCurrentBatch() {
+        var _Dxt_ID = $('#hiddenCode').text();
+        var Dxt_Classify = $('#hiddenClassify').text();
+        var data_change = {
+            Dxt_ID: _Dxt_ID,
+            Dxt_Classify: Dxt_Classify
+        }
+        $.ajax({
+            url: '/Admin/DotXetTuyens/DotXetTuyetChangeTTXTJson/',
+            data: JSON.stringify(data_change),
+            type: "POST",
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            success: function (res) {
+                if (res.success) {
+                    window.location.href = "/Admin/DotXetTuyens/MasterIndex"
+                }
+            },
+            error: function (err) {
+                console.log(err.responseText);
+            }
+        });
+    }
+    function CancelCurrentBatch() {
+        $('#modal_thietlap_dothientai').modal('hide');
+        $('#hiddenCode').text('');
+        $('#hiddenTrangThai').text('');
+        $('#hiddenClassify').text('');
+    }
+    function CancelOnModalUpdate() {
+        $('#modal_update_data').modal('hide');
+        $('#hidden_Dxt_ID').val('');
+        $('#hidden_Check_Func').val('');
+        $('#hidden_Dxt_Classify').val('');
+    }
+    function CancelOnModalDelete() {
+        $('#modal_xoa_dot_xettuyen').modal('hide');
+        $('#hidden_delete_Dxt_ID').text('');
+    }
+    $(document).ready(function () {
+        $('#bt_edit_ok_modalupdate').click(function () {
+            DotXetTuyenEdit()
+        });
+        $('#bt_add_ok_modalupdate').click(function () {
+            DotXetTuyenAdd();
+        });
+
+        $('input').on('input', function () {
+            hideErrorMessage($(this));
+        });
+    })
+</script>
+
+<script>
+
+    function UpdateDotXetTuyen(idDotXetTuyen, key_update, classify) {
+        $('#hidden_Dxt_ID').val(idDotXetTuyen);
+        $('#hidden_Check_Func').val(key_update);
+        $('#hidden_Dxt_Classify').val(classify);
+
+        if (idDotXetTuyen > 0 && key_update > 0) {
+            $('#bt_add_ok_modalupdate').hide();
+            $('#bt_edit_ok_modalupdate').show();
+            DotXetTuyenGetByID();
+            $('#modal_update_data').modal('show');
+        }
+        else if (idDotXetTuyen == 0 && key_update == 0) {
+            DotXetTuyetGetNhht();
+            $('#bt_add_ok_modalupdate').show();
+            $('#bt_edit_ok_modalupdate').hide();
+            $('#modal_update_data').modal('show');
+        }
+    }
+    function DeleteDotXetTuyen(ID) {
+        $('#hidden_delete_Dxt_ID').val(ID);
+        $('#txt_delete_confirm').text("Bạn có chắc chắn muốn xoá đợt dự thi năng khiếu này?");
+        $('#modal_xoa_dot_xettuyen').modal('show');
+    }
+
+    function DotXetTuyetGetNhht() {
+        $.ajax({
+            url: '/Admin/DotXetTuyens/DotXetTuyetGetNamHocHienTaiJson/',
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            async: false,
+            success: function (res) {
+                if (res.success) {
+                    $('#NamHoc_ID').val(res.data);
+                }
+            },
+            error: function (error) {
+                console.log(error.responseText);
+            }
+        });
+    }
+
+    function DotXetTuyenGetByID() {
+        var data_obj = { Dxt_ID: $('#hidden_Dxt_ID').val() };
+        $.ajax({
+            url: '/Admin/DotXetTuyens/DotXetTuyetGetByIDJson/',
+            data: JSON.stringify(data_obj),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                if (res.success) {
+                    var data = res.data;
+                    $('#NamHoc_ID').val(data.NamHoc_ID);
+                    $('#Dxt_Ten').val(data.Dxt_Ten);
+                    $('#Dxt_ThoiGian_BatDau').val(data.Dxt_ThoiGian_BatDau);
+                    $('#Dxt_ThoiGian_KetThuc').val(data.Dxt_ThoiGian_KetThuc);
+                    $('#Dxt_GhiChu').val(data.Dxt_GhiChu);
+                    $('#hidden_Dxt_Classify').val(data.Dxt_Classify);
+                    if (data.Dxt_TrangThai_Xt == 0) { $('#Dxt_TrangThai_Xt').removeAttr('checked', ':checked') }
+                }
+            },
+            error: function (error) {
+                console.log(error.responseText);
+            }
+        });
+    }
+    function DotXetTuyenAdd() {
+        var flag = true;
+        let _namHoc_ID = $('#NamHoc_ID').val();
+
+        let _dxt_Ten = $('#Dxt_Ten').val();
+        if (!_dxt_Ten) { $('#Error_Dxt_Ten').text('Nhập tên đợt tuyển sinh'); flag = false; }
+
+        let _dxt_ThoiGian_BatDau = $('#Dxt_ThoiGian_BatDau').val();
+        if (!_dxt_ThoiGian_BatDau) { $('#Error_Dxt_ThoiGian_BatDau').text('Chọn thời gian bắt đầu'); flag = false; }
+
+        let _dxt_ThoiGian_KetThuc = $('#Dxt_ThoiGian_KetThuc').val();
+        if (!_dxt_ThoiGian_KetThuc) { $('#Error_Dxt_ThoiGian_KetThuc').text('Chọn thời gian kết thúc'); flag = false; }
+
+        if (parseDate(_dxt_ThoiGian_KetThuc).getTime() < parseDate(_dxt_ThoiGian_BatDau).getTime()) {
+            $('#Error_Dxt_ThoiGian_KetThuc').text('Thời gian kết thúc sai'); flag = false;
+        }
+
+        let _dxt_GhiChu = $('#Dxt_GhiChu').val();
+        if (!_dxt_ThoiGian_KetThuc) { $('#Error_Dxt_GhiChu').text('Nhập ghi chú'); flag = false; }
+
+        if (!flag) return;
+
+        var data_add = {
+            Dxt_Ten: _dxt_Ten,
+            Dxt_ThoiGian_BatDau: _dxt_ThoiGian_BatDau,
+            Dxt_ThoiGian_KetThuc: _dxt_ThoiGian_KetThuc,
+            Dxt_GhiChu: _dxt_GhiChu,
+            Dxt_Classify: 2
+        };
+        $.ajax({
+            url: '/Admin/DotXetTuyens/DotXetTuyetAddJson/',
+            data: JSON.stringify(data_add),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                if (res.success) {
+                    window.location.href = "/Admin/DotXetTuyens/MasterIndex"
+                }
+            },
+            error: function (error) {
+                console.log(error.responseText);
+            }
+        });
+    }
+    function DotXetTuyenEdit() {
+        var flag = true;
+        let _namHoc_ID = $('#NamHoc_ID').val();
+
+        let _dxt_Ten = $('#Dxt_Ten').val();
+        if (!_dxt_Ten) { $('#Error_Dxt_Ten').text('Nhập tên đợt tuyển sinh'); flag = false; }
+
+        let _dxt_ThoiGian_BatDau = $('#Dxt_ThoiGian_BatDau').val();
+        if (!_dxt_ThoiGian_BatDau) { $('#Error_Dxt_ThoiGian_BatDau').text('Chọn thời gian bắt đầu'); flag = false; }
+
+        let _dxt_ThoiGian_KetThuc = $('#Dxt_ThoiGian_KetThuc').val();
+        if (!_dxt_ThoiGian_KetThuc) { $('#Error_Dxt_ThoiGian_KetThuc').text('Chọn thời gian kết thúc'); flag = false; }
+
+        if (parseDate(_dxt_ThoiGian_KetThuc).getTime() < parseDate(_dxt_ThoiGian_BatDau).getTime()) {
+            $('#Error_Dxt_ThoiGian_KetThuc').text('Thời gian kết thúc sai'); flag = false;
+        }
+
+        let _dxt_GhiChu = $('#Dxt_GhiChu').val();
+        if (!_dxt_ThoiGian_KetThuc) { $('#Error_Dxt_GhiChu').text('Nhập ghi chú'); flag = false; }
+
+        if (!flag) return;
+
+        var data_edit = {
+            Dxt_ID: $('#hidden_Dxt_ID').val(),
+            Dxt_Ten: _dxt_Ten,
+            Dxt_ThoiGian_BatDau: _dxt_ThoiGian_BatDau,
+            Dxt_ThoiGian_KetThuc: _dxt_ThoiGian_KetThuc,
+            Dxt_GhiChu: _dxt_GhiChu,
+            NamHoc_ID: _namHoc_ID,
+        };
+        console.log("dt sua", data_edit);
+
+        $.ajax({
+            url: '/Admin/DotXetTuyens/DotXetTuyetEditJson/',
+            data: JSON.stringify(data_edit),
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                if (res.success) {
+                    window.location.href = "/Admin/DotXetTuyens/GiftedIndex";
+                }
+            },
+            error: function (error) {
+                console.log(error.responseText);
+            }
+        });
+    }
+   
+    
+    function OnInputChangeDxt() {
+
+        if ($('#Dxt_Ten').val() != "" && $('#Dxt_ThoiGian_BatDau').val() != "" && $('#Dxt_ThoiGian_KetThuc').val() != "") {
+            let txt_start = parseDatetoString($('#Dxt_ThoiGian_BatDau').val());
+            let txt_end = parseDatetoString($('#Dxt_ThoiGian_KetThuc').val());
+
+            let GhiChu_input = 'DTSDH - ' + $('#Dxt_Ten').val() + ', từ ' + txt_start + ' đến ' + txt_end;
+            $('#Dxt_GhiChu').val(GhiChu_input);
+            $('#Error_Dxt_GhiChu').text('');
+        }
+        else {
+            $('#Dxt_GhiChu').val('');
+            $('#Error_Dxt_GhiChu').text('Chưa nhập đủ thông tin');
+        }
+    }
+    function OnResetControll() {
+        $('#Dxt_Ten').val('');
+        $('#Dxt_ThoiGian_BatDau').val('');
+        $('#Dxt_ThoiGian_KetThuc').val('');
+        $('#Dxt_GhiChu').val('');
+    }
+    // Chuyển ngày thành hiển thị chuẩn
+    function parseDatetoString(str) {
+        var arr_time = str.split('-');
+        var str_time = arr_time[2] + '/' + arr_time[1] + '/' + arr_time[0];
+        return str_time;
+    }
+    // Chuyển chuỗi kí tự (string) sang đối tượng Date()
+    function parseDate(str) {
+        var mdy = str.split('-');
+        return new Date(mdy[0], mdy[1], mdy[2]);
+    }
+    function hideErrorMessage(input) {
+        var errorContainer = input.next('.text-danger');
+        errorContainer.text('');
+    }
+</script>
+<div class="modal fade" id="modal_update_data" tabindex="-1" role="dialog" aria-labelledby="modal_update_data" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_title">Cập nhật dữ liệu</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="CancelOnModalUpdate()"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" style="display:none" id="hidden_Dxt_ID" name="hidden_Dxt_ID" />
+                <input type="hidden" style="display:none" id="hidden_Check_Func" />
+                <input type="hidden" style="display:none" id="hidden_Dxt_Classify" />
+                <div class="row g-2">
+                    <div class="col-xxl-2 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-12">Năm học</label>
+                            <div class="col-md-12">
+                                <input type="text" id="NamHoc_ID" name="NamHoc_ID" class="form-control" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xxl-4 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-12">Tên đợt</label>
+                            <div class="col-md-12">
+                                <input type="text" name="Dxt_Ten" id="Dxt_Ten" class="form-control" placeholder="Đợt 1" onkeyup="OnInputChangeDxt()" />
+                                <span id="Error_Dxt_Ten" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-12">Ghi chú</label>
+                            <div class="col-md-12">
+                                <input type="text" name="Dxt_GhiChu" id="Dxt_GhiChu" class="form-control" placeholder="Đợt 1, thời gian từ 01/07/2023 đến 15/11/2023" disabled />
+                                <span id="Error_Dxt_GhiChu" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-4 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-12">Thời gian bắt đầu</label>
+                            <div class="col-md-12">
+                                <input type="date" name="Dxt_ThoiGian_BatDau" id="Dxt_ThoiGian_BatDau" class="form-control" onchange="OnInputChangeDxt()" />
+                                <span id="Error_Dxt_ThoiGian_BatDau" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-4 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-12">Thời gian kết thúc</label>
+                            <div class="col-md-12">
+                                <input type="date" name="Dxt_ThoiGian_KetThuc" id="Dxt_ThoiGian_KetThuc" class="form-control" onchange="OnInputChangeDxt()" />
+                                <span id="Error_Dxt_ThoiGian_KetThuc" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="CancelOnModalUpdate()">Hủy</button>
+                <button class="btn btn-primary" type="button" id="bt_add_ok_modalupdate">Đồng ý thêm</button>
+                <button class="btn btn-primary" type="button" id="bt_edit_ok_modalupdate">Đồng ý sửa</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal_xoa_dot_xettuyen" tabindex="-1" role="dialog" aria-labelledby="modal_xoa_dot_xettuyen" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tieude_modal">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="CancelOnModalDelete()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label id="txt_delete_confirm" class="form-label"></label>
+                    <input type="hidden" id="hidden_delete_Dxt_ID" name="hidden_delete_Dxt_ID" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="CancelOnModalDelete()">Đóng</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_xoa" onclick="Confirm_DeleteDotxt()">Đồng ý</button>
+                <script>
+                    function Confirm_DeleteDotxt() {
+                        let _Dxt_ID = $('#hidden_delete_Dxt_ID').val();
+                        let data_delete = {
+                            Dxt_ID: _Dxt_ID,
+                        }
+                        $.ajax({
+                            url: '/Admin/DotXetTuyens/DotXetTuyetDelete/',
+                            data: JSON.stringify(data_delete),
+                            type: "POST",
+                            contentType: 'application/json;charset=utf-8',
+                            dataType: 'json',
+                            success: function (res) {                              
+                                if (res.success) {                                                              
+                                    window.location.href = "/Admin/DotXetTuyens/MasterIndex"
+                                }
+                                if (!res.success) {
+                                    console.log(res.data)
+                                    if (res.data == -1) {
+                                        $('#txt_delete_confirm').text('Đang có dữ liệu của đợt xét tuyển này, không thể xóa');
+                                        $('#bt_ok_on_modal_xoa').hide();
+                                    }
+                                    if (res.data == 0) {
+                                        $('#txt_delete_confirm').text('Có lỗi xảy ra, xóa không thành công');
+                                        $('#bt_ok_on_modal_xoa').hide();
+                                    }                                  
+                                }
+                            },
+                            error: function (err) {
+                                console.log(err.responseText);
+                            }
+                        });
+
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="myToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Toast Title</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modal_thietlap_dothientai" tabindex="-1" role="dialog" aria-labelledby="modal_thietlap_dothientai" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tieude_modal">Thông báo</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="CancelCurrentBatch()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label id="txt_confirm" class="form-label"></label>
+                    <p id="hiddenCode" hidden></p>
+                    <p id="hiddenTrangThai" hidden></p>
+                    <p id="hiddenClassify" hidden></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" onclick="CancelCurrentBatch()">Hủy</button>
+                <button class="btn btn-primary" type="button" onclick="Confirm_SetupCurrentBatch()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="modal fade" id="modal_thietlap_dothientai" tabindex="-1" role="dialog" aria-labelledby="modal_thietlap_dothientai" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -156,18 +588,18 @@
 
         if (idpresent.is(":checked")) {
             $('#txt_confirm').text("Bạn có chắc chắn muốn thiết lập đây là đợt tuyển sinh hiện tại?");
-        }        
+        }
         $('#modal_thietlap_dothientai').modal('show');
     }
     function confirm_action() {
         var _Dxt_ID = $('#hiddenCode').text();
-        var Dxt_Classify = $('#hiddenClassify').text();    
+        var Dxt_Classify = $('#hiddenClassify').text();
         var data_change = {
             Dxt_ID: _Dxt_ID,
-            Dxt_Classify: Dxt_Classify   
+            Dxt_Classify: Dxt_Classify
         }
         $.ajax({
-            url: '/Admin/DotXetTuyens/DotXetTuyetChangeTTXTJson/',         
+            url: '/Admin/DotXetTuyens/DotXetTuyetChangeTTXTJson/',
             data: JSON.stringify(data_change),
             type: "POST",
             contentType: 'application/json;charset=utf-8',
@@ -175,13 +607,13 @@
             success: function (res) {
                 if (res.success) {
                     window.location.href = "/Admin/DotXetTuyens/MasterIndex"
-                }               
+                }
             },
             error: function (err) {
                 console.log(err.responseText);
             }
         });
-       
+
     }
     $(document).ready(function () {
         $('#bt_cancel_on_modal_first').click(function () {
@@ -209,23 +641,7 @@
             $('#hidden_Check_Func').val('');
         })
     })
-    function MasterUpdateDotXetTuyen(idDotXetTuyen, key_update) {
-        $('#hidden_Dxt_ID').val(idDotXetTuyen);
-        $('#hidden_Check_Func').val(key_update);
-
-        if (idDotXetTuyen > 0 && key_update > 0) {
-            $('#bt_add_ok_modalupdate').hide();
-            $('#bt_edit_ok_modalupdate').show();
-            DotXetTuyenGetByID();
-            $('#modal_update_data').modal('show');
-        }
-        else if (idDotXetTuyen == 0 && key_update == 0) {
-            DotXetTuyetGetNhht();
-            $('#bt_add_ok_modalupdate').show();
-            $('#bt_edit_ok_modalupdate').hide();
-            $('#modal_update_data').modal('show');
-        }
-    }
+    
 </script>
 <script>
     $(document).ready(function () {
@@ -313,6 +729,7 @@
             Dxt_GhiChu: _dxt_GhiChu,
         };
         console.log("dt them", data_add);
+        return;
         $.ajax({
             url: '/Admin/DotXetTuyens/DotXetTuyetAddJson/',
             data: JSON.stringify(data_add),
@@ -379,6 +796,21 @@
             }
         });
     }
+
+    function OnInputChangeDxt() {
+        if ($('#Dxt_Ten').val() != "" && $('#Dxt_ThoiGian_BatDau').val() != "" && $('#Dxt_ThoiGian_KetThuc').val() != "") {
+            let txt_start = parseDatetoString($('#Dxt_ThoiGian_BatDau').val());
+            let txt_end = parseDatetoString($('#Dxt_ThoiGian_KetThuc').val());
+
+            let GhiChu_input = 'DTNK - ' + $('#Dxt_Ten').val() + ', từ ' + txt_start + ' đến ' + txt_end;
+            $('#Dxt_GhiChu').val(GhiChu_input);
+            $('#Error_Dxt_GhiChu').text('');
+        }
+        else {
+            $('#Dxt_GhiChu').val('');
+            $('#Error_Dxt_GhiChu').text('Chưa nhập đủ thông tin');
+        }
+    }
     // Chuyển chuỗi kí tự (string) sang đối tượng Date()
     function parseDate(str) {
         var mdy = str.split('-');
@@ -409,11 +841,12 @@
                         </div>
                     </div>
 
+
                     <div class="col-xxl-4 col-lg-12">
                         <div class="form-group">
                             <label class="control-label col-md-12">Tên đợt</label>
                             <div class="col-md-12">
-                                <input type="text" name="Dxt_Ten" id="Dxt_Ten" class="form-control" />
+                                <input type="text" name="Dxt_Ten" id="Dxt_Ten" class="form-control" placeholder="Đợt 1" onkeyup="OnInputChangeDxt()" />
                                 <span id="Error_Dxt_Ten" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
@@ -422,7 +855,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-12">Ghi chú</label>
                             <div class="col-md-12">
-                                <input type="text" name="Dxt_GhiChu" id="Dxt_GhiChu" class="form-control" placeholder="Tuyển sinh Sau đại học" value="Tuyển sinh Sau đại học" />
+                                <input type="text" name="Dxt_GhiChu" id="Dxt_GhiChu" class="form-control" placeholder="Đợt 1, thời gian từ 01/07/2023 đến 15/11/2023" disabled />
                                 <span id="Error_Dxt_GhiChu" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
@@ -431,7 +864,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-12">Thời gian bắt đầu</label>
                             <div class="col-md-12">
-                                <input type="date" name="Dxt_ThoiGian_BatDau" id="Dxt_ThoiGian_BatDau" class="form-control" />
+                                <input type="date" name="Dxt_ThoiGian_BatDau" id="Dxt_ThoiGian_BatDau" class="form-control" onchange="OnInputChangeDxt()" />
                                 <span id="Error_Dxt_ThoiGian_BatDau" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
@@ -440,7 +873,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-12">Thời gian kết thúc</label>
                             <div class="col-md-12">
-                                <input type="date" name="Dxt_ThoiGian_KetThuc" id="Dxt_ThoiGian_KetThuc" class="form-control" />
+                                <input type="date" name="Dxt_ThoiGian_KetThuc" id="Dxt_ThoiGian_KetThuc" class="form-control" onchange="OnInputChangeDxt()" />
                                 <span id="Error_Dxt_ThoiGian_KetThuc" class="small mb-1 text-danger"></span>
                             </div>
                         </div>
@@ -455,4 +888,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@

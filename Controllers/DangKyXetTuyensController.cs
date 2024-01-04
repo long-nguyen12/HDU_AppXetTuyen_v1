@@ -19,6 +19,30 @@ namespace HDU_AppXetTuyen.Controllers
     public class DangKyXetTuyensController : Controller
     {
         private DbConnecttion db = null;
+        public int KiemTraThoiGian()
+        {
+            int set_check = -1;
+            db = new DbConnecttion();
+            var CurrentColleger = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            DateTime DateStart = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_BatDau);
+            DateTime DateEnd = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_KetThuc);
+            DateTime DatePresent = DateTime.Now;
+            if (DateStart > DatePresent || DateEnd < DatePresent) { set_check = 0; }
+            else if ((DateStart < DatePresent) && (DateEnd > DatePresent)) { set_check = 1; }
+            return set_check;
+        }
+        public int CheckRegiterNangKhieu()
+        {
+            int set_check = -1;
+            db = new DbConnecttion();
+            var CurrentColleger = db.DotXetTuyens.Where(x => x.Dxt_Classify == 1 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
+            DateTime DateStart = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_BatDau);
+            DateTime DateEnd = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_KetThuc);
+            DateTime DatePresent = DateTime.Now;
+            if (DateStart > DatePresent || DateEnd < DatePresent) { set_check = 0; }
+            else if ((DateStart < DatePresent) && (DateEnd > DatePresent)) { set_check = 1; }
+            return set_check;
+        }
         #region Đăng ký dự thi năng khiếu Tiểu học, mầm non, gdtc
 
         [ThiSinhSessionCheck]
@@ -60,12 +84,13 @@ namespace HDU_AppXetTuyen.Controllers
                     Thm_TenToHop = TenToHopThi,
                     Dkdt_NK_MonThi = model.Dkdt_NK_MonThi,
                     Dkdt_NK_MinhChung_CCCD = model.Dkdt_NK_MinhChung_CCCD,
+                    Dkdt_TrangThai_HoSo = model.Dkdt_TrangThai_HoSo,
                     Dkdt_TrangThai_LePhi = model.Dkdt_TrangThai_LePhi,
                     Dkdt_LePhi_MinhChung_Tep = model.Dkdt_LePhi_MinhChung_Tep,
                     Dkdt_LePhi_MinhChung_MaThamChieu = model.Dkdt_LePhi_MinhChung_MaThamChieu,
 
                 };
-                return Json(new { success = true, data = data_return }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, data = data_return, checkregiter = CheckRegiterNangKhieu() }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -74,9 +99,8 @@ namespace HDU_AppXetTuyen.Controllers
                     dxt_Ten = Dothihientai.Dxt_Ten,
                     dxt_ThoiGian_BatDau = Dothihientai.Dxt_ThoiGian_BatDau,
                     dxt_ThoiGian_KetThuc = Dothihientai.Dxt_ThoiGian_KetThuc,
-
                 };
-                return Json(new { success = false, data = data_return }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, data = data_return , checkregiter = CheckRegiterNangKhieu()}, JsonRequestBehavior.AllowGet);
             }
         }
         public JsonResult Dkdtnk_DotThiHienTai()
@@ -296,11 +320,11 @@ namespace HDU_AppXetTuyen.Controllers
             var model_edit = db.DangKyDuThiNangKhieus.Where(x => x.Dkdt_NK_ID == entity.Dkdt_NK_ID).FirstOrDefault();
             if (model_edit != null)
             {
-
                 model_edit.Nganh_ID = entity.Nganh_ID;
                 model_edit.Thm_ID = entity.Thm_ID;
 
                 model_edit.Dkdt_NK_MonThi = entity.Dkdt_NK_MonThi;
+               
                 if (entity.Dkdt_NK_MinhChung_CCCD != null)
                 {
                     model_edit.Dkdt_NK_MinhChung_CCCD += entity.Dkdt_NK_MinhChung_CCCD;
@@ -308,7 +332,7 @@ namespace HDU_AppXetTuyen.Controllers
                 model_edit.Dkdt_NK_NgayDangKy = DateTime.Now.ToString("yyyy-MM-yy");
 
                 model_edit.Dkdt_NK_GhiChu = "";
-                model_edit.Dkdt_TrangThai_HoSo = 0;
+                model_edit.Dkdt_TrangThai_HoSo = 1;
 
                 db.SaveChanges();
                 // gửi email
@@ -973,18 +997,7 @@ namespace HDU_AppXetTuyen.Controllers
             ViewBag.Dkxt_ID = dkxt_id;
             return View();
         }
-        public int KiemTraThoiGian()
-        {
-            int set_check = -1;
-            db = new DbConnecttion();
-            var CurrentColleger = db.DotXetTuyens.Where(x => x.Dxt_Classify == 0 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
-            DateTime DateStart = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_BatDau);
-            DateTime DateEnd = DateTime.Parse(CurrentColleger.Dxt_ThoiGian_KetThuc);
-            DateTime DatePresent = DateTime.Now;
-            if (DateStart > DatePresent || DateEnd < DatePresent) { set_check = 0; }
-            else if ((DateStart < DatePresent) && (DateEnd > DatePresent)) { set_check = 1; }
-            return set_check;
-        }
+       
         public JsonResult DangKyXetTuyen_HB_ListAll()
         {
             db = new DbConnecttion();

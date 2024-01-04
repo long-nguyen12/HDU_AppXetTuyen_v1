@@ -254,16 +254,24 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         }
         public JsonResult DotXetTuyetDelete(DotXetTuyen entity)
         {
-            try
+            var model = db.DotXetTuyens.Where(x => x.Dxt_ID == entity.Dxt_ID).FirstOrDefault();
+            var modelcheck = db.HocVienDuTuyens.Where(x => x.Dxt_ID == model.Dxt_ID).ToList();
+            if (modelcheck.Count == 0)
             {
-                var model = db.DotXetTuyens.Where(t => t.Dxt_ID == entity.Dxt_ID).FirstOrDefault();
-                db.DotXetTuyens.Remove(model);
-                db.SaveChanges();
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                try
+                {
+                    db.DotXetTuyens.Remove(model);
+                    db.SaveChanges();
+                    return Json(new { success = true, data = "1" }, JsonRequestBehavior.AllowGet);                    
+                }
+                catch
+                {
+                    return Json(new { success = false, data = "0" }, JsonRequestBehavior.AllowGet);
+                }
             }
-            catch
+            else 
             {
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, data = "-1" }, JsonRequestBehavior.AllowGet);
             }
         }
         #endregion

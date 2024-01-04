@@ -217,6 +217,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         [AdminSessionCheck]
         public ActionResult DsHvDangKy(string searchString, string currentFilter, string filteriDotxt, int? page)
         {
+           
             var hocviens = db.HocVienDangKies.ToList();
             // thưc hiện tìm kiếm: theo họ, tên, cccd, điện thoại, email
             #region Tìm kiếm
@@ -258,7 +259,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
         public ActionResult DsHvDuTuyen(string filteriNganhHoc, string filteriLePhi, string filteriHoSo, string searchString, string currentFilter,
             string filteriDotxt, string sortOrder, int? page)
         {
+            var dothientai = db.DotXetTuyens.Where(x => x.Dxt_Classify == 2 && x.Dxt_TrangThai_Xt == 1).FirstOrDefault();
             var hocviens = db.HocVienDuTuyens
+                             .Where(x => x.Dxt_ID == dothientai.Dxt_ID)
                              .Include(h => h.DotXetTuyen)
                              .Include(h => h.HocVienDangKy)
                              .Include(h => h.NganhMaster).OrderByDescending(x => x.DuTuyen_ID).ToList();

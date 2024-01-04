@@ -57,7 +57,7 @@
                 <div class="col-auto mb-1">
                     <div class="page-header-title  mb-2">
                         <div class="page-header-icon"><i data-feather="list"></i></div>
-                        <span id="sp_tieude">Kiểm tra và xác thực thông tin đăng ký dự thi năng khiếu</span>
+                        <span id="sp_tieude">Kiểm tra thông tin đăng ký thi năng khiếu</span>
                     </div>
                 </div>
             </div>
@@ -65,16 +65,21 @@
     </div>
 </header>
 
-<input type="hidden" style="display:none" id="hidden_Dkdt_NK_ID" value="@ViewBag.dkdt_nk_id" />
+<input type="hidden" style="display:none" id="hidden_Dkdt_NK_ID" value="@ViewBag.Dkxt_ID" />
 <script>
-    $(document).ready(function () {
-        let sp_tieude = document.getElementById('sp_tieude');
+    $(document).ready(function () {       
+        if (window.innerWidth <= 1200) {
+            $('#sp_tieude').val("Kiểm tra, xác thực ĐKDT Năng khiếu");
+        }
+        else {
+            $('#sp_tieude').val( "Kiểm tra và xác thực thông tin đăng ký dự thi năng khiếu");
+        }
         function reportWindowSize() {
             if (window.innerWidth <= 1200) {
-                sp_tieude.innerText = "Kiểm tra, xác thực ĐKDT Năng khiếu";
+                $('#sp_tieude').val("Kiểm tra, xác thực ĐKDT Năng khiếu");
             }
             else {
-                sp_tieude.innerText = "Kiểm tra và xác thực thông tin đăng ký dự thi năng khiếu";
+                $('#sp_tieude').val("Kiểm tra và xác thực thông tin đăng ký dự thi năng khiếu");
             }
         }
         window.onresize = reportWindowSize;
@@ -93,6 +98,7 @@
             dataType: 'json',
             async: false,
             success: function (res) {
+                console.log('res ',res)
                 if (res.success) {
                     let data = res.data;
                     console.log(data)
@@ -114,97 +120,27 @@
                     $('#select_tohopmon').text(data.thm_TenToHop)
                     $('#txt_dangky_monnangkhieu').text(data.dkdt_NK_MonThi);
                     $('#so_tham_chieu_noplephi').append(data.dkdt_nk_Matc);
-
-                    // hiển thị dữ liệu cccd đã upload
-                    $('#div_show_file_mc').empty();
-                    if (data.dkdt_nk_Mc_CCCD != null && data.dkdt_nk_Mc_CCCD.length > 6) {
-                        const ArrCcCongDan = data.dkdt_nk_Mc_CCCD.split("#");
-                        for (i = 0; i < ArrCcCongDan.length; i++) {
-                            if (ArrCcCongDan[i].length > 0) {
-                                var str_a = ` <a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrCcCongDan[i]}', ${data.dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
-                                $('#div_show_file_mc').append(str_a);
-                            }
-                        }
-                        $('#checkbox_check_cccd').attr('checked');
-
-                    }
-                    else {
-                        $('#checkbox_check_cccd').removeAttr('checked');
-                        var str_a = ` <a>Không có dữ liệu</a> `;
-                        $('#div_show_file_mc').append(str_a);
-                    }
-                    $('#div_show_file_mc').show();
-                    $('#div_input_file_update_mc').hide();
-
-                    // hiển thị dữ liệu nộp lệ phí
-                   
-                    $('#hidden_TrangThai_KinhPhi').val(data.Dkxt_HB_TrangThai_KinhPhi)
-
-                    if (data.dkdt_TrangThai_LePhi == 0) {
-                        $('#div_daco_mc_lephi').hide();
-                        $('#div_mc_lephi').hide();
-                        $('#div_chuaco_mc_lephi').show();
-                    }
-                    else {
-                        $('#div_daco_mc_lephi').show();
-                        $('#div_chuaco_mc_lephi').hide();
-                        $('#txt_SoThamChieu_KinhPhi').text('- Số tham chiếu chuyển khoản: ' + data.dkdt_nk_Matc);
-                       
-                        if (data.dkdt_nk_Mc_Lephi) {
-                            const ArrKinhPhi = data.dkdt_nk_Mc_Lephi.split("#");
-                            if (ArrKinhPhi.length > 0) {
-                                $('#div_mc_lephi').append('- Nộp lệ phí: ');
-                                for (i = 0; i < ArrKinhPhi.length; i++) {
-                                    if (ArrKinhPhi[i].length > 0) {
-                                        var str_a = `<a href="#$" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrKinhPhi[i]}',6,${data.Dkxt_HB_ID} )">Tệp ${i + 1}</a> `;
-                                        $('#div_mc_lephi').append(str_a);
-                                    }
-                                }
-                                $('#div_mc_lephi').show();
-                            }
-                            else {
-                                $('#div_mc_lephi').hide();
-                            }
-                        }
-                    }
-
-                    $('#div_show_file_mc_noplephi').empty();
-
-                    if (data.dkdt_nk_Mc_Lephi != null && data.dkdt_nk_Mc_Lephi.length > 6) {
-                        var str_matc = data.dkdt_nk_Matc + ", "
-                       
-                        const ArrLephi = data.dkdt_nk_Mc_Lephi.split("#");
-                        for (i = 0; i < ArrLephi.length; i++) {
-                            if (ArrLephi[i].length > 0) {
-                                var str_a = ` <a class="btn btn-light btn-sm" style="color:blue" onclick="showimg('${ArrLephi[i]}', ${data.dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
-                                $('#div_show_file_mc_noplephi').append(str_a);
-                            }
-                        }
-                    }
-                    else {
-                        var str_a = ` <a style="color:red; text-decoration:none; margin-bottom:30px;  margin-top:25px">Không có dữ liệu</a> `;
-                        $('#div_show_file_mc_noplephi').append(str_a);
-                    }
+                    
 
                     /*TrangThaiHoSo*/
                     if (data.dkdt_TrangThai_HoSo == 0) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Chưa kiểm tra</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`- Trạng thái hồ sơ: <span style="color:red">Chưa kiểm tra</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
                     }
                     if (data.dkdt_TrangThai_HoSo == 1) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Đã kiểm tra, hồ sơ có sai sót</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`- Trạng thái hồ sơ: <span style="color:red">Đã kiểm tra, hồ sơ có sai sót</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').attr('checked', 'checked');
-                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
+                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.dkdt_ThongBaoKiemDuyet_HoSo);
                     }
 
                     if (data.dkdt_TrangThai_HoSo == 2) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Thí sinh đã sửa, Chưa kiểm tra</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`- Trạng thái hồ sơ: <span style="color:red">Thí sinh đã sửa, Chưa kiểm tra</span>`);
                         $('#radioHoSoDayDu').removeAttr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
                         $('#Dkxt_ThongBaoKiemDuyet_HoSo').val('');
@@ -212,48 +148,173 @@
 
                     if (data.dkdt_TrangThai_HoSo == 9) {
                         $('#ThongBao_KiemDuyet_HoSo').empty();
-                        $('#ThongBao_KiemDuyet_HoSo').append(`<span>- Trạng thái hồ sơ: Đã kiểm tra, hồ sơ đúng, đủ</span>`);
+                        $('#ThongBao_KiemDuyet_HoSo').append(`- Trạng thái hồ sơ:<span style="color:blue">Đã kiểm tra, hồ sơ đúng, đủ</span>`);
                         $('#radioHoSoDayDu').attr('checked', 'checked');
                         $('#radioHoSoThieu').removeAttr('checked', 'checked');
-                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.Dkxt_ThongBaoKiemDuyet_HoSo);
+                        $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(data.dkdt_ThongBaoKiemDuyet_HoSo);
 
                     }
+                    // hiển thị dữ liệu cccd đã upload
+                    $('#div_mc_cccd').empty();
+
+
+                    if (data.dkdt_nk_Mc_CCCD) {
+                        const ArrCcCongDan = data.dkdt_nk_Mc_CCCD.split("#");
+                        if (ArrCcCongDan.length > 0) {
+                            $('#div_mc_cccd').append('- Căn cước công dân: ');
+                            for (i = 0; i < ArrCcCongDan.length; i++) {
+                                if (ArrCcCongDan[i].length > 0) {
+                                    var str_a = ` <a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" onclick="showimg('${ArrCcCongDan[i]}',4, ${data.Dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
+                                    $('#div_mc_cccd').append(str_a);
+                                    if (i == 0) {
+
+                                        $('#img_txt_card_hearder').text('Căn cước công dân');
+                                        var url = ArrCcCongDan[i];
+                                        var lastChar = url.substr(url.length - 4); 
+
+                                        if (lastChar.toLowerCase() != ".pdf") {
+                                            $("#pdf_view").attr("src", "");
+                                            $('#pdf_view').height('0px');
+                                            $('#pdf_view').css('display', 'none');
+                                            $("#pdf_view").hide();
+                                            $("#img_view").attr("src", url);
+                                            $("#img_view").show();
+
+                                        }
+                                        if (lastChar.toLowerCase() === ".pdf") {
+                                            $("#img_view").hide();
+                                            $("#pdf_view").attr("src", url);
+                                            $('#pdf_view').height('450px');
+                                            $('#pdf_view').css('display', 'inline');
+                                            $("#pdf_view").show();
+                                        }
+                                        $('#bt_delete_div_view_img').hide();
+
+                                    }
+                                }
+                            }
+                            $('#div_mc_cccd').show();
+
+                        }
+                        else {
+                            $('#div_mc_cccd').hide();
+                            $("#pdf_view").attr("src", "");
+                            $('#pdf_view').height('0px');
+                            $('#pdf_view').hide();
+
+                            $('#img_txt_card_hearder').text('Căn cước công dân');
+                            $("#img_view").attr("src", "/Content/images/no-image.png");
+                            $('#div_view_img').show();
+
+                            $('#bt_delete_div_view_img').hide();
+
+                            // không hiển thị radio đủ kết quả khi tệp minh chứng kết quả thi không có
+                            $('#radioHoSoDayDu').removeAttr('checked', 'checked');
+                            $('#radioHoSoDayDu').prop('disabled', true);
+                            $('#radioHoSoThieu').attr('checked', 'checked');
+                        }
+                    }
+                    else {
+                        $('#div_mc_cccd').hide();
+                        $("#pdf_view").attr("src", "");
+                        $('#pdf_view').height('0px');
+                        $('#pdf_view').hide();
+
+                        $('#img_txt_card_hearder').text('Căn cước công dân');
+                        $("#img_view").attr("src", "/Content/images/no-image.png");
+                        $('#div_view_img').show();
+
+                        $('#bt_delete_div_view_img').hide();
+
+                        // không hiển thị radio đủ kết quả khi tệp minh chứng kết quả thi không có
+                        $('#radioHoSoDayDu').removeAttr('checked', 'checked');
+                        $('#radioHoSoDayDu').prop('disabled', true);
+                        $('#radioHoSoThieu').attr('checked', 'checked');
+                    }
+                     
                     /*   Trang Thai Kinh Phi*/
+                    $('#hidden_TrangThai_KinhPhi').val(data.dkdt_TrangThai_LePhi)
+                    $('#div_mc_lephi').empty();
+                    $('#div_mc_lephi').hide();
+
                     if (data.dkdt_TrangThai_LePhi == 0) {
+                        $('#div_daco_mc_lephi').hide();
+                        $('#div_mc_lephi').hide();      
                         $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái nộp kinh phí: Chưa có tệp minh chứng</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái nộp kinh phí: <span style="color:red">Chưa có tệp minh chứng</span>`);
+                        $('#ThongBao_TrangThaiKinhPhi').show();
+                        $('#div_mc_lephi').empty();
                     }
+                    else {
+                        if (data.dkdt_TrangThai_LePhi == 1) {
+                            $('#ThongBao_TrangThaiKinhPhi').empty();
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:red">Đã nộp minh chứng, Chưa kiểm tra</span>`);
 
-                    if (data.dkdt_TrangThai_LePhi == 1) {
-                        $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Đã nộp minh chứng, Chưa kiểm tra</span>`);
+                            $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
+                            $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
+                        }
 
-                        $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
-                        $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
-                    }
+                        if (data.dkdt_TrangThai_LePhi == 2) {
+                            $('#ThongBao_TrangThaiKinhPhi').empty();
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:red">Đã kiểm tra, có sai sót</span>`);
 
-                    if (data.dkdt_TrangThai_LePhi == 2) {
-                        $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Đã kiểm tra minh chứng lệ phí, có sai sót</span>`);
+                            $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
+                            $('#radioThongtinLePhiSai').attr('checked', 'checked');
 
-                        $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
-                        $('#radioThongtinLePhiSai').attr('checked', 'checked');
+                        }
 
-                    }
+                        if (data.dkdt_TrangThai_LePhi == 3) {
+                            $('#ThongBao_TrangThaiKinhPhi').empty();
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:blue">Thí sinh đã sửa, Chưa kiểm tra</span>`);
 
-                    if (data.dkdt_TrangThai_LePhi == 3) {
-                        $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Thí sinh đã sửa, Chưa kiểm tra</span>`);
+                            $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
+                            $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
+                        }
+                        if (data.dkdt_TrangThai_LePhi == 9) {
+                            $('#ThongBao_TrangThaiKinhPhi').empty();
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái kinh phí: <span style="color:blue">Đã kiểm tra, Đúng, đủ</span>`);
 
-                        $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
-                        $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
-                    }
-                    if (data.dkdt_TrangThai_LePhi == 9) {
-                        $('#ThongBao_TrangThaiKinhPhi').empty();
-                        $('#ThongBao_TrangThaiKinhPhi').append(`<span>- Trạng thái kinh phí: Đã kiểm tra, Đúng, đủ</span>`);
+                            $('#radioThongtinLePhiDung').attr('checked', 'checked');
+                            $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
+                        }
 
-                        $('#radioThongtinLePhiDung').attr('checked', 'checked');
-                        $('#radioThongtinLePhiSai').removeAttr('checked', 'checked');
+
+                        $('#div_daco_mc_lephi').show();                      
+                        $('#txt_SoThamChieu_KinhPhi').text('- Số tham chiếu chuyển khoản: ' + data.dkdt_nk_Matc);
+
+                        if (data.dkdt_nk_Mc_Lephi) {
+                            const ArrKinhPhi = data.dkdt_nk_Mc_Lephi.split("#");
+                            if (ArrKinhPhi.length > 0) {
+                                $('#div_mc_lephi').append('- Nộp lệ phí: ');
+                                for (i = 0; i < ArrKinhPhi.length; i++) {
+                                    if (ArrKinhPhi[i].length > 0) {
+                                        var str_a = `<a  style="cursor:pointer;" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"  onclick="showimg('${ArrKinhPhi[i]}',6,${data.Dkdt_NK_ID} )">Tệp ${i + 1}</a> `;
+                                        $('#div_mc_lephi').append(str_a);
+                                    }
+                                }
+                                $('#div_mc_lephi').show();
+                            }
+                            else {
+                                $('#ThongBao_TrangThaiKinhPhi').empty();
+                                $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái nộp kinh phí: <span style="color:red">Đã kiểm tra minh chứng, có sai sót</span>`);
+                                $('#div_thongbao_noimg_lephi').show();
+
+                                $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
+                                $('#radioThongtinLePhiDung').prop('disabled', true)
+                                $('#radioThongtinLePhiSai').attr('checked', 'checked');
+                                $('#div_mc_lephi').hide();
+                            }
+                        }
+                        else {
+                            $('#ThongBao_TrangThaiKinhPhi').empty();
+                            $('#ThongBao_TrangThaiKinhPhi').append(`- Trạng thái nộp kinh phí: <span style="color:red">Đã kiểm tra minh chứng, có sai sót</span>`);
+                            $('#div_thongbao_noimg_lephi').show();
+
+                            $('#radioThongtinLePhiDung').removeAttr('checked', 'checked');
+                            $('#radioThongtinLePhiDung').prop('disabled', true)
+                            $('#radioThongtinLePhiSai').attr('checked', 'checked');
+                            $('#div_mc_lephi').hide();
+                        }
                     }
 
                 }
@@ -268,12 +329,7 @@
         var mydate = parts[2] + '/' + parts[1] + '/' + parts[0];
         return mydate;
     }
-    function ReturnTheoDoiNopHoSo() {
-        var str_query_current = window.location.search;
-        var str_dkxt_id = '?Dkxt_ID=' + $('#hidden_Dkxt_ID').val();
-        var str_query = str_query_current.slice(0, str_query_current.length - str_dkxt_id.length);
-        window.location.href = '/Admin/DangKyXetTuyens/Dkdttnk/' + str_query;
-    }
+   
 </script>
 
 <div class="container-fluid px-12">
@@ -318,15 +374,15 @@
                                 <div class="col-12 mb-3">
                                     <b>+ Hình ảnh minh chứng</b>
                                     <hr class="mb-0 mt-0" />
-                                    <p class="mt-0 mb-0" id="div_mc_cccd"></p>
-                                    <p class="mt-0 mb-0" id="div_mc_lephi"> - Minh chứng nộp lệ phí: <span></span></p>
+                                    <p class="mt-1 mb-0" id="div_mc_cccd" style="display:none"></p>
+                                    <p class="mt-1 mb-0" id="div_mc_lephi" style="display:none"></p>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <b>+ Kiểm duyệt hồ sơ và lệ phí</b>
                                     <hr class="mb-2 mt-0" />
                                     <p class="mt-0 mb-0" id="ThongBao_KiemDuyet_HoSo"></p>
                                     <div class="row">
-                                        <div class="col-12 mt-2">
+                                        <div class="col-12 mt-2 mb-2">
                                             <input class="form-control" type="text" id="Dkxt_ThongBaoKiemDuyet_HoSo" name="Dkxt_ThongBaoKiemDuyet_HoSo" placeholder="Nhập thông báo kiểm duyệt hồ sơ">
                                             <span id="Error_Rgt_Check_radio_KiemDuyetHoSo" class="small mb-1 text-danger"></span>
                                         </div>
@@ -352,12 +408,7 @@
                                     <hr class="mb-0 mt-0" />
                                     <p class="mt-2 mb-0" id="ThongBao_TrangThaiKinhPhi"></p>
                                     <input type="hidden" id="hidden_TrangThai_KinhPhi" name="hidden_TrangThai_KinhPhi" />
-                                    <div class="row mt-2" id="div_chuaco_mc_lephi" style="display:none">
-                                        <center>
-                                            <label class="form-label" style="color:red">(Chưa có minh chứng nộp lệ phí)</label>
-                                        </center>
-                                    </div>
-
+                                    
                                     <div class="row mt-1 mb-0" id="div_daco_mc_lephi" style="display:none">
                                         <div class="col-12">
                                             <span id="txt_SoThamChieu_KinhPhi" style="color:blue"></span>
@@ -380,6 +431,9 @@
                                             <span id="Error_Rgt_KiemDuyet_KinhPhi" class="small mb-1 text-danger col-12"></span>
                                             <script>function remove_error_lp() { $('#Error_Rgt_KiemDuyet_KinhPhi').text('') }</script>
                                         </div>
+                                        <div class="col-12" id="div_thongbao_noimg_lephi" style="display:none">
+                                            <span style="color:red">- Không có hình ảnh minh chứng</span>
+                                        </div>
                                     </div>
                                 </div>                               
                             </div>
@@ -389,7 +443,100 @@
                     <div class="row">
                         <center>
                             <div class="col-12 mt-2">
-                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>                               
+                                <a class="btn btn-outline-primary" id="bt_duyet_ho_so">Duyệt hồ sơ</a>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#bt_duyet_ho_so').click(function () {
+                                            var flag = true;
+                                           
+                                            if (!$('#radioHoSoDayDu').is(':checked') && !$('#radioHoSoThieu').is(':checked')) {
+                                                $('#Error_Rgt_Check_radio_KiemDuyetHoSo').text('Chọn kiểm duyệt hồ sơ');
+                                                flag = false;
+                                            }
+                                            else {
+                                                if ($('#radioHoSoThieu').is(':checked') && !$('#Dkxt_ThongBaoKiemDuyet_HoSo').val()) {
+                                                    $('#Error_Rgt_Check_radio_KiemDuyetHoSo').text('Nhập thông tin sai của hồ sơ');
+                                                    flag = false;
+                                                }
+                                            }
+                                           
+                                            let _dkxt_TrangThai_HoSo = 0;
+                                            if ($('#radioHoSoThieu').is(':checked')) {
+                                                _dkxt_TrangThai_HoSo = 1;
+                                            }
+                                            if ($('#radioHoSoDayDu').is(':checked')) {
+                                                _dkxt_TrangThai_HoSo = 9;
+                                            }
+
+                                            let _dkxt_TrangThai_KinhPhi = 0;
+                                           
+                                            if ($('#hidden_TrangThai_KinhPhi').val() > 0) {
+                                                if (!$('#radioThongtinLePhiDung').is(':checked') && !$('#radioThongtinLePhiSai').is(':checked')) {
+                                                    $('#Error_Rgt_KiemDuyet_KinhPhi').text('Chọn kiểm duyệt nộp lệ phí');
+                                                    flag = false;
+                                                }
+                                                
+                                                if ($('#radioThongtinLePhiSai').is(':checked')) {
+                                                    _dkxt_TrangThai_KinhPhi = 2;
+                                                }
+                                               
+                                                if ($('#radioThongtinLePhiDung').is(':checked')) {
+                                                    _dkxt_TrangThai_KinhPhi = 9;
+                                                }
+                                            }
+
+
+                                            if (!flag) return;
+
+                                            var data_update = {
+                                                Dkdt_NK_ID: $('#hidden_Dkdt_NK_ID').val(),
+                                                Dkdt_ThongBaoKiemDuyet_HoSo: $('#Dkxt_ThongBaoKiemDuyet_HoSo').val(),
+                                                Dkdt_TrangThai_HoSo: _dkxt_TrangThai_HoSo,
+                                                Dkdt_TrangThai_LePhi: _dkxt_TrangThai_KinhPhi,
+                                            }
+
+                                            console.log('data_update ', data_update)
+                                           
+                                            $.ajax({
+                                                url: "/Admin/DangKyXetTuyens/Dkdt_NK_Update_KiemDuyet",
+                                                type: "POST",
+                                                data: JSON.stringify(data_update),
+                                                contentType: 'application/json;charset=utf-8',
+                                                success: function (res) {
+                                                    if (res.success) {
+                                                        ReturnTheoDoiNopHoSo();
+                                                    }
+                                                },
+                                                error: function () {
+                                                    console.log("Lỗi");
+                                                }
+                                            });
+                                        });
+
+                                        $('#radioHoSoDayDu').click(function () {
+                                            $('#Error_Rgt_KiemDuyetHoSo').text('');
+                                        });
+
+                                        $('#radioThongtinLePhiDung').click(function () {
+                                            $('#Error_Rgt_KiemDuyetKinhPhi').text('');
+                                        });
+
+                                        $('#radioThongtinLePhiSai').click(function () {
+                                            $('#Error_Rgt_KiemDuyetKinhPhi').text('');
+                                        });
+
+                                        $('input').on('input', function () {
+                                            hideErrorMessage($(this));
+                                        });
+                                    });
+
+                                    function hideErrorMessage(input) {
+                                        var errorContainer = input.next('.text-danger');
+                                        errorContainer.text('');
+                                    }
+
+                                </script>
+
                                 <input class="btn btn-outline-secondary" type="button" value="Quay lại" onclick="ReturnTheoDoiNopHoSo()" />
                             </div>
                         </center>
@@ -452,14 +599,14 @@
                         console.log("data_post delete", data_post);
 
                         $.ajax({
-                            url: '/Admin/DangKyXetTuyens/DkxtHocBa_hs_DeleteMC',
+                            url: '/Admin/DangKyXetTuyens/Dkdtnk_hs_DeleteMC',
                             type: "POST",
                             data: JSON.stringify(data_post),
                             contentType: "application/json;charset=utf-8",
                             success: function (res) {
                                 showToast("Thông báo", "Xóa ảnh minh chứng thành công.", "bg-success");
                                 $('#modal_thongbao_delete').modal('hide');
-                                LoadDataPhuongThuc3();
+                                LoadDataPhuongThuc7();
                                 //  window.location.href = "/Admin/DangKyXetTuyens/DkxtHocBa_hs_view" + str_query;
                             },
                             error: function (error) {
@@ -494,4 +641,75 @@
         </div>
     </div>
 </div>
+ 
+<script>
+    
+    function ReturnTheoDoiNopHoSo() {
+        var str_query_current = window.location.search;
+        var str_dkxt_id = '?Dkxt_ID=' + $('#hidden_Dkdt_NK_ID').val();
+        var str_query = str_query_current.slice(0, str_query_current.length - str_dkxt_id.length);
+        window.location.href = '/Admin/DangKyXetTuyens/Dkdttnk/' + str_query;
+    }
+    function showimg(url, loaimc, id_key_hs) {
 
+        $('#bt_delete_div_view_img').show();
+        $('#bt_close_div_view_img').show();
+
+        $('#hiden_id_key').val(id_key_hs);
+        $('#hiden_loai_minhchung_xoa').val(loaimc);
+        $("#hiden_duongdan_file_xoa").val(url);
+
+        var pdf_view = document.getElementById("pdf_view");
+        $("#pdf_view").attr("src", "");
+        $('#pdf_view').height('0px');
+        $('#pdf_view').hide();
+        $('#pdf_view').css('display', 'none');
+
+        $('#img_view').hide();
+        $("#img_view").attr("src", "");
+
+       
+        if (loaimc == 4) {
+            $('#img_txt_card_hearder').text('Căn cước công dân');
+        }
+       
+        if (loaimc == 6) {
+            $('#img_txt_card_hearder').text('Nộp lệ phí');
+        }
+        var lastChar = url.substr(url.length - 4); // => kiểm tra file pdf hoặc img
+
+        if (lastChar.toLowerCase() != ".pdf") {
+            $("#pdf_view").attr("src", "");
+            $('#pdf_view').height('0px');
+            $('#pdf_view').hide();
+            $('#pdf_view').css('display', 'none');
+
+            $("#img_view").attr("src", url);
+            $("#img_view").show();
+        }
+        if (lastChar.toLowerCase() === ".pdf") {
+
+            $("#img_view").hide();
+            $("#pdf_view").attr("src", url);
+            $('#pdf_view').height('450px');
+
+            $('#pdf_view').css('display', 'inline');
+            $("#pdf_view").show();
+        }
+
+        $('#bt_delete_div_view_img').show();
+    }
+    $(document).ready(function () {
+        $('#bt_close_div_view_img').click(function () {
+
+            $('#bt_delete_div_view_img').hide();
+            $("#pdf_view").attr("src", "");
+            $('#pdf_view').height('0px');
+            $('#pdf_view').hide();
+            $('#pdf_view').css('display', 'none');
+            $('#img_txt_card_hearder').text('Căn cước công dân');
+            $("#img_view").attr("src", "/Content/images/no-image.png");
+            $('#img_view').show();
+        });
+    });
+</script>

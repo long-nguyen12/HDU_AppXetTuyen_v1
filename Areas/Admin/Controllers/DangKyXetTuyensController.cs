@@ -886,6 +886,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        
         #region hiển thị và kiểm tra thông tin thí sinh đăng ký xét tuyển khác sử dụng kết quả thi dgnl
         [AdminSessionCheck]
         public ActionResult DkxtkqDgnl(string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page)
@@ -1193,9 +1194,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             #endregion
             return View(model.ToPagedList(pageNumber, pageSize));
         }
-        public ActionResult Dkdttnk_hs_view(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page, long? dkdt_nk_id)
+        public ActionResult Dkdttnk_hs_view(string filteriDotxt, string filteriNvong, string filteriNganh, string filteriLePhi, string filteriHoSo, string currentFilter, string searchString, int? page, long? Dkxt_ID)
         {
-            ViewBag.dkdt_nk_id = dkdt_nk_id;
+            ViewBag.Dkxt_ID = Dkxt_ID;
             return View();
         }
 
@@ -1218,6 +1219,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
 
             var data_return = new
             {
+                
+                Dkdt_NK_ID = model.Dkdt_NK_ID,
 
                 ThiSinh_HoLot = model.ThiSinhDangKy.ThiSinh_HoLot,
                 ThiSinh_Ten = model.ThiSinhDangKy.ThiSinh_Ten,
@@ -1243,11 +1246,33 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 dkdt_nk_Matc = model.Dkdt_LePhi_MinhChung_MaThamChieu,
 
                 dkdt_TrangThai_LePhi = model.Dkdt_TrangThai_LePhi,
-                dkdt_TrangThai_HoSo=  model.Dkdt_TrangThai_HoSo,   
-                
+                dkdt_TrangThai_HoSo=  model.Dkdt_TrangThai_HoSo,
+                dkdt_ThongBaoKiemDuyet_HoSo = model.Dkdt_ThongBaoKiemDuyet_HoSo,
+
             };
             return Json(new { success = true, data = data_return }, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public JsonResult Dkdtnk_hs_DeleteMC(ThongTinXoaMC entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyDuThiNangKhieus.Where(x => x.Dkdt_NK_ID == entity.Dkxt_ID).FirstOrDefault();           
+            if (entity.Dkxt_LoaiMC == "4") { model.Dkdt_NK_MinhChung_CCCD = model.Dkdt_NK_MinhChung_CCCD.Replace(entity.Dkxt_Url + "#", ""); }
+            
+            if (entity.Dkxt_LoaiMC == "6") { model.Dkdt_LePhi_MinhChung_Tep = model.Dkdt_LePhi_MinhChung_Tep.Replace(entity.Dkxt_Url + "#", ""); }
+
+            if (String.IsNullOrEmpty(model.Dkdt_LePhi_MinhChung_Tep) && model.Dkdt_TrangThai_LePhi != 0)
+            {
+                model.Dkdt_TrangThai_LePhi = 2;                
+            }
+            if (String.IsNullOrEmpty(model.Dkdt_NK_MinhChung_CCCD))
+            {
+                model.Dkdt_TrangThai_HoSo = 1;
+            }
+            db.SaveChanges();
+
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -1299,6 +1324,19 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             model.Dkxt_ThongBaoKiemDuyet_HoSo = entity.Dkxt_ThongBaoKiemDuyet_HoSo;
             db.SaveChanges();
             return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Dkdt_NK_Update_KiemDuyet(DangKyDuThiNangKhieu entity)
+        {
+            db = new DbConnecttion();
+            var model = db.DangKyDuThiNangKhieus.Where(x => x.Dkdt_NK_ID == entity.Dkdt_NK_ID).FirstOrDefault();
+            model.Dkdt_TrangThai_HoSo = entity.Dkdt_TrangThai_HoSo;
+            model.Dkdt_TrangThai_LePhi = entity.Dkdt_TrangThai_LePhi;
+            model.Dkdt_NgayThang_CheckHoSo = DateTime.Now.ToString("yyyy-MM-dd");
+            model.Dkdt_NgayThang_CheckLePhi = DateTime.Now.ToString("yyyy-MM-dd");
+            model.Dkdt_ThongBaoKiemDuyet_HoSo = entity.Dkdt_ThongBaoKiemDuyet_HoSo;
+            db.SaveChanges();
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

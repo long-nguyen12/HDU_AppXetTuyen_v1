@@ -15,7 +15,7 @@ namespace HDU_AppXetTuyen.Models
         }
 
         [Key]
-        public int HocVien_ID { get; set; }
+        public long HocVien_ID { get; set; }
 
         [StringLength(500)]
         public string HocVien_HoDem { get; set; }
