@@ -383,7 +383,7 @@
     <Content Include="Content\static\export-66-bieu-mau-thi-nk-20230302101245-e.docx" />
     <Content Include="Content\toastr.less" />
     <Content Include="Content\toastr.scss" />
-    <Content Include="Models\DHHDUTuyenSinh07012024.sql" />
+    <Compile Include="Models\DHHDUTuyenSinh07012024.cs" />
     <Content Include="Scripts\bootstrap-datepicker.min.css" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
