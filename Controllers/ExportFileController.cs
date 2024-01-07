@@ -71,8 +71,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
                 document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
                 document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
-                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
-                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.TruongCapBa_Ten);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
                 document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
@@ -228,8 +228,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
                 document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
                 document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
-                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
-                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.TruongCapBa_Ten);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
                 document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
@@ -329,8 +329,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
                 document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
                 document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
-                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
-                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.TruongCapBa_Ten);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
                 document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
@@ -429,8 +429,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
                 document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
                 document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
-                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
-                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.TruongCapBa_Ten);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
                 document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);
@@ -527,8 +527,8 @@ namespace HDU_AppXetTuyen.Controllers
                 document.ReplaceText("<<ThiSinh_GioiTinh>>", gt);
                 document.ReplaceText("<<ThiSinh_DanToc>>", thiSinhInfo.ThiSinh_DanToc);
                 document.ReplaceText("<<ThiSinh_HoKhauThuongTru>>", thiSinhInfo.ThiSinh_HoKhauThuongTru);
-                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.ThiSinh_TruongCapBa);
-                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.ThiSinh_TruongCapBa_Ma);
+                document.ReplaceText("<<ThiSinh_TruongCapBa>>", thiSinhInfo.TruongCapBa_Ten);
+                document.ReplaceText("<<ThiSinh_TruongCapBa_Ma>>", thiSinhInfo.TruongCapBa_Ma);
                 document.ReplaceText("<<ThiSinh_DienThoai>>", thiSinhInfo.ThiSinh_DienThoai);
                 document.ReplaceText("<<ThiSinh_KhuVuc>>", tenKhuVuc);
                 document.ReplaceText("<<ThiSinh_DoiTuong>>", tenDoiTuong);

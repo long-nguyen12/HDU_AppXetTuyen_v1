@@ -199,7 +199,6 @@
     <Compile Include="Controllers\LienCapTHCSController.cs" />
     <Compile Include="Controllers\LienCapTieuHocsController.cs" />
     <Compile Include="Controllers\ThiSinhDangKiesController.cs" />
-    <Compile Include="Controllers\ThongBaoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -498,7 +497,7 @@
     <Content Include="Areas\Admin\Views\TongHopSoLieuDKXTs\TheoDoiNopHoSoDetailPt5.cshtml" />
     <Content Include="Areas\Admin\Views\DangKyXetTuyens\Dkdttnk_hs_view.cshtml" />
     <None Include="Areas\Admin\Views\DotXetTuyens\GiftedIndex.cshtml" />
-    <Content Include="Areas\Admin\Views\DotXetTuyens\MasterIndex - Copy.cshtml" />
+    <Content Include="Areas\Admin\Views\Xas\TaoChuoiKhongDau.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -509,6 +508,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JsSelectbox\jquery-ui.css" />
+    <Content Include="Scripts\JsSelectbox\jquery-ui.js" />
+    <Content Include="Scripts\JsSelectbox\jquery.ui.v1.12.1.js" />
+    <Content Include="Scripts\JsSelectbox\jquery.uiv1.12.1.css" />
     <Content Include="Scripts\libs_font-awesome_6.1.1_js_all.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\scripts.js" />
@@ -530,13 +533,11 @@
     <Content Include="Views\Shared\_Layout_empty.cshtml" />
     <Content Include="Views\Shared\_Layout_login.cshtml" />
     <Content Include="Views\Auth\ActivationAccount.cshtml" />
-    <Content Include="Views\Auth\ForgotPassword3.cshtml" />
     <Content Include="Views\Auth\ActivationAccountMaster.cshtml" />
     <Content Include="Views\Auth\ForgotPassword.cshtml" />
     <None Include="Views\Auth\RegisterColleger.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Auth\ResetPassword.cshtml" />
-    <Content Include="Views\ThiSinhDangKies\Edit.cshtml" />
     <Content Include="Views\ThiSinhDangKies\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkxtthptqg.cshtml" />
     <Content Include="Views\LienCapTHCS\ConfirmInfomation.cshtml" />
@@ -549,7 +550,6 @@
     <Content Include="Views\LePhiXetTuyens\Index.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\DanhGia.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
-    <Content Include="Views\Auth\RegisterMaster_OK.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
     <Content Include="Views\Shared\_Layout_master.cshtml" />
     <Content Include="Views\HocVienDangKies\KqDuTuyen.cshtml" />
@@ -557,7 +557,6 @@
     <Content Include="Views\HocVienDangKies\DkDuTuyenDetail.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyen.cshtml" />
     <Content Include="Views\HocVienDangKies\DkDuTuyenEdit.cshtml" />
-    <Content Include="Views\Auth\RegisterMaster.cshtml" />
     <Content Include="Views\HocVienDangKies\HvThongTin.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkdtnkEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaDetail.cshtml" />
@@ -567,9 +566,7 @@
     <Content Include="Views\DangKyXetTuyenThang\Edit.cshtml" />
     <Content Include="Views\LePhiXetTuyens\QLNopLePhi.cshtml" />
     <Content Include="Views\DangKyXetTuyens\Dkdtnk.cshtml" />
-    <Content Include="Views\DangKyXetTuyens\DkdtnkOLD.cshtml" />
     <Content Include="Views\DangKyXetTuyenThang\Detail.cshtml" />
-    <Content Include="Views\Auth\ResetPassword - Copy.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxthocbaEdit.cshtml" />
     <Content Include="Views\DangKyXetTuyens\DkxtthptqgDetail.cshtml" />
     <Content Include="Views\DangKyXetTuyenKhac\IeltsDetail.cshtml" />
@@ -582,6 +579,8 @@
     <Content Include="Views\LePhiXetTuyens\Pt6Detail.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Pt5Detail.cshtml" />
     <Content Include="Views\LePhiXetTuyens\Pt4Detail.cshtml" />
+    <Content Include="Views\Auth\RegisterMaster.cshtml" />
+    <Content Include="Views\ThiSinhDangKies\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -604,7 +603,6 @@
     <Folder Include="Uploads\LienCap\HocBa\" />
     <Folder Include="Uploads\LienCap\LePhi\" />
     <Folder Include="Uploads\UploadMinhChungs\" />
-    <Folder Include="Views\ThongBao\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

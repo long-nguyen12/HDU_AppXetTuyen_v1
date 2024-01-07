@@ -66,8 +66,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -175,7 +175,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 = item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
@@ -215,8 +215,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -325,7 +325,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 =  item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
@@ -367,8 +367,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -472,7 +472,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 = item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
@@ -514,8 +514,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -619,7 +619,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 =  item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
@@ -939,8 +939,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -1048,7 +1048,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 =  item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
@@ -1088,8 +1088,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -1198,7 +1198,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 =  item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
@@ -1240,8 +1240,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy.TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -1345,7 +1345,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 = item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;
@@ -1387,8 +1387,8 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                     Ex_HanhKiem12 = s.ThiSinhDangKy.ThiSinh_HanhKiemLop12,
                     Ex_Tinh_Huyen_Xa_Temp = s.ThiSinhDangKy.ThiSinh_HoKhauThuongTru_Check,
 
-                    Ex_MaTinh12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID,
-                    Ex_MaTruong12 = s.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
+                    Ex_MaTinh12 = s.ThiSinhDangKy. TruongCapBa_MaTinh,
+                    Ex_MaTruong12 = s.ThiSinhDangKy.TruongCapBa_Ma,
                     Ex_NamTNTHPT = s.ThiSinhDangKy.ThiSinh_NamTotNghiep,
 
                     Ex_DoiTuong = s.ThiSinhDangKy.DoiTuong.DoiTuong_DiemUuTien,
@@ -1492,7 +1492,7 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 item_ex.Ex_Huyen = db.Huyens.Where(x => x.Huyen_ID == ex_tt_thx.Huyen_ID).FirstOrDefault().Huyen_TenHuyen; ;
                 item_ex.Ex_Xa = ex_tt_thx.Phuongxa;
 
-                item_ex.Ex_MaTinh12 = db.Tinhs.Where(x => x.Tinh_ID == item.Ex_MaTinh12).FirstOrDefault().Tinh_Ma;
+                item_ex.Ex_MaTinh12 = item.Ex_MaTinh12;
                 item_ex.Ex_MaTruong12 = item.Ex_MaTruong12;
 
                 item_ex.Ex_DiaChiNhanGiayBao = item.Ex_DiaChiNhanGiayBao;

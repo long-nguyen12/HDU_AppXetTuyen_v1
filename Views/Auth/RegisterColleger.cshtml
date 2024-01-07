@@ -1,285 +1,8 @@
-﻿@model HDU_AppXetTuyen.Models.ThiSinhDangKy
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_auth.cshtml";
 }
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<script>
-    $(document).ready(function () {
 
-        $('input').on('input', function () {
-            hideErrorMessage($(this));
-        });
-
-        $('select').on('input', function () {
-            hideErrorMessage($(this));
-        })
-
-        $('#datepicker').datepicker({
-            format: 'dd/mm/yyyy', // Specify the desired date format
-            autoclose: true // Close the datepicker when a date is selected
-        });
-
-        $('#register_tinhtt').change(function () {
-            let selectedTinh = $(this).val();
-            $.ajax({
-                url: "/Auth/GetHuyen",
-                type: "POST",
-                data: JSON.stringify({
-                    tinhID: selectedTinh
-                }),
-                contentType: "application/json;charset=utf-8",
-                success: function (response) {
-                    if (response.success) {
-                        let data = response.data;
-                        let huyentt = $('#register_huyentt');
-                        huyentt.empty();
-                        huyentt.append($('<option></option>').val("0").text("Chọn huyện.."));
-
-                        $.each(data, function (index, item) {
-                            huyentt.append($('<option></option>').val(item.Huyen_ID).text(item.Huyen_TenHuyen));
-                        });
-                        huyentt.prop('disabled', false);
-                    } else {
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-    })
-  
-    function submitRegisterForm() {
-        $(".text-danger").text("");    
-
-        let flag = true;
-        let register_CCCD = $("#register_CCCD").val();
-        let register_email = $("#register_email").val();
-        let register_password = $("#register_password").val();
-        let register_re_password = $("#register_re_password").val();
-        let register_holot = $("#register_holot").val();
-        let register_ten = $("#register_ten").val();
-        let register_sdt = $("#register_sdt").val();
-        let ngaysinh = $("#datepicker").val();
-        let register_gt = $("#register_gt").val();
-        let register_dantoc = $("#register_dantoc").val();
-        let register_kv = $("#register_kv").val();
-        let register_doituong = $("#register_doituong").val();
-        let register_truong = $("#register_truong").val();
-        let register_ma_truong = $("#register_ma_truong").val();
-        let register_truongtinh = $("#register_truongtinh").val();
-        let register_phuongtt = $("#register_phuongtt").val();
-        let register_huyentt = $("#register_huyentt").val();
-        let register_tinhtt = $("#register_tinhtt").val();
-        let register_diachi = $("#register_diachi").val();
-        let register_HocLucLop12 = $("#register_HocLucLop12").val();
-        let register_HanhKiemLop12 = $("#register_HanhKiemLop12").val();
-
-        if (!register_CCCD) {
-            var errorMessage = "Vui lòng nhập CCCD";
-            $('#register_CCCD_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_email) {
-            var errorMessage = "Vui lòng nhập email";
-            $('#register_email_Error').text(errorMessage);
-            flag = false;
-        } else if (!validateEmail(register_email)) {
-            var errorMessage = "Email sai định dạng";
-            $('#register_email_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_password) {
-            var errorMessage = "Vui lòng nhập mật khẩu";
-            $('#register_password_Error').text(errorMessage);
-            flag = false;
-        } else if (register_password.length < 6) {
-            var errorMessage = "Mật khẩu phải có ít nhất 6 ký tự";
-            $('#register_password_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_re_password) {
-            var errorMessage = "Nhập lại mật khẩu";
-            $('#register_re_password_Error').text(errorMessage);
-            flag = false;
-        } else if (register_password.trim() != register_re_password.trim()) {
-            var errorMessage = "Mật khẩu không khớp";
-            $('#register_re_password_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_holot) {
-            var errorMessage = "Vui lòng nhập họ lót";
-            $('#register_holot_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_ten) {
-            var errorMessage = "Vui lòng nhập tên";
-            $('#register_ten_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_sdt) {
-            var errorMessage = "Nhập số điện thoại";
-            $('#register_sdt_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!ngaysinh) {
-            var errorMessage = "Nhập ngày sinh";
-            $('#datepicker_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_gt || register_gt == "3") {
-            var errorMessage = "Chọn giới tính";
-            $('#register_gt_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_dantoc) {
-            var errorMessage = "Nhập dân tộc";
-            $('#register_dantoc_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_kv) {
-            var errorMessage = "Vui lòng chọn khu vực";
-            $('#register_kv_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_truong) {
-            var errorMessage = "Nhập tên trường";
-            $('#register_truong_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_ma_truong) {
-            var errorMessage = "Nhập mã trường";
-            $('#register_ma_truong_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_truongtinh || register_truongtinh == 0) {
-            var errorMessage = "Chọn tỉnh";
-            $('#register_truongtinh_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_phuongtt) {
-            var errorMessage = "Nhập phường/xã";
-            $('#register_phuongtt_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_huyentt || register_huyentt == 0) {
-            var errorMessage = "Chọn quận/huyện";
-            $('#register_huyentt_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_tinhtt || register_tinhtt == 0) {
-            var errorMessage = "Chọn tỉnh/thành phố";
-            $('#register_tinhtt_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_diachi) {
-            var errorMessage = "Vui lòng nhập địa chỉ nhận giấy báo";
-            $('#register_diachi_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_HocLucLop12 || register_HocLucLop12 == "0") {
-            var errorMessage = "Chọn loại học lực";
-            $('#register_HocLucLop12_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!register_HanhKiemLop12 || register_HanhKiemLop12 == "0") {
-            var errorMessage = "Chọn loại hạnh kiểm";
-            $('#register_HanhKiemLop12_Error').text(errorMessage);
-            flag = false;
-        }
-        if (!flag) return;
-
-        let hokhautt = register_phuongtt + ", " + $('#register_huyentt option:selected').text() + ", " + $('#register_tinhtt option:selected').text();
-        let hokhautt_check = {
-            Phuongxa: register_phuongtt,
-            Huyen_ID: register_huyentt,
-            Tinh_ID: register_tinhtt
-        }
-        $('#loadingModal').modal('show');
-
-        let formData = {
-            ThiSinh_CCCD: register_CCCD,
-            ThiSinh_MatKhau: register_password,
-            ThiSinh_HoLot: register_holot,
-            ThiSinh_Ten: register_ten,
-            ThiSinh_DienThoai: register_sdt,
-            ThiSinh_Email: register_email,
-            ThiSinh_NgaySinh: ngaysinh,
-            ThiSinh_DanToc: register_dantoc,
-            ThiSinh_GioiTinh: register_gt,
-            ThiSinh_DCNhanGiayBao: register_diachi,
-            ThiSinh_HoKhauThuongTru: hokhautt,
-            ThiSinh_HoKhauThuongTru_Check: JSON.stringify(hokhautt_check),
-            KhuVuc_ID: register_kv,
-            DoiTuong_ID: register_doituong,
-            ThiSinh_TruongCapBa_Ma: register_ma_truong,
-            ThiSinh_TruongCapBa: register_truong,
-            ThiSinh_TruongCapBa_Tinh_ID: register_truongtinh,
-            ThiSinh_HocLucLop12: register_HocLucLop12,
-            ThiSinh_HanhKiemLop12: register_HanhKiemLop12
-
-        }
-
-        $.ajax({
-            url: "/Auth/RegisterColleger",
-            type: "POST",
-            data: JSON.stringify(formData),
-            contentType: "application/json;charset=utf-8",
-            success: function (response) {
-                if (response.success) {
-                    $('#loadingModal').modal('hide');
-                    var modal_tb_dangky = new bootstrap.Modal(document.getElementById("modal_tb_dangky"), {
-                        backdrop: "static"
-                    });
-                    modal_tb_dangky.show();            
-                } else {
-                    $('#signupErrorMessage').text(response.message);
-                    showToast("Thất bại", "Đăng ký tài khoản thất bại! Vui lòng thử lại!", "bg-error");
-                    $('#loadingModal').modal('hide');
-                }
-            },
-            error: function (xhr, status, error) {
-                showToast("Thất bại", "Đăng ký tài khoản thất bại! Vui lòng thử lại!", "bg-error");
-                $('#loadingModal').modal('hide');
-            },
-            complete: function () {
-                // Hide the loading modal
-                $('#loadingModal').modal('hide');
-            }
-        });
-    }
-
-    $(document).ready(function () {
-
-        $('#bt_ok_on_modal_dangky').click(function () {
-            window.location.href = "/Auth/Login";
-        });
-        $('#bt_cancel_on_modal_dangky').click(function () {
-            window.location.href = "/Auth/Login";
-        });
-
-    })
-   
- 
-    function hideErrorMessage(input) {
-        var errorContainer = input.next('.text-danger');
-        errorContainer.text('');
-    }
-    function validateEmail(email) {
-        var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
-        var isValid = emailRegex.test(email);
-        return isValid;
-    }
-    function showToast(title, message, bgColor) {
-        $("#myToast .toast-header .me-auto").text(title);
-        $("#myToast .toast-body").text(message);
-        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
-        $("#myToast").toast("show");
-    }
-</script>
 <style>
     .colorlogin {
         color: #ff6a00 !important;
@@ -291,282 +14,940 @@
         background-color: #ff6a00;
         border: none;
         color: #fff;
-        font-size: 16px;
+        font-size: 15px;
     }
 
         .login-button:hover {
             background-color: #808080;
             color: #fff;
         }
+
     .form-select, .form-control, .btn {
         border-radius: 3px !important;
     }
-    th {
-        color: #ff6a00 !important;
-    }
 </style>
+<script src="~/Scripts/bootstrap.bundle.min.js"></script>
+<link href="~/Scripts/bootstrap-datepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<link href="~/Scripts/JsSelectbox/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/JsSelectbox/jquery-ui.js"></script>
 
 <div class="container">
-    <div id="panelContainer" class="row" style="padding-top:20px">
-
-        <div id="rightPanel" class="col-lg-12">
-            <div class="text-center text-uppercase">
-                <h5 class="colorlogin" style="font-weight: bold">ĐĂNG KÝ THÔNG TIN TUYỂN SINH ĐẠI HỌC</h5>
-                <hr />
-            </div>
-            <div class="row">
-                <div class="col-xl-12" id="signupForm">
-                    <div class="card">
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="col-xl-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Thông tin cơ bản
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-md-7 col-7 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_HoLot">Họ lót <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_HoLot, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập họ lót", @id = "register_holot" } })
-                                                                <span id="register_holot_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-5 col-5 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_Ten">Tên <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_Ten, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên", @id = "register_ten" } })
-                                                                <span id="register_ten_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-5 col-12 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_NgaySinh">Ngày sinh <a style="color:red; text-decoration:none">(*)</a>  </label>
-
-                                                                @Html.EditorFor(model => model.ThiSinh_NgaySinh, new { htmlAttributes = new { @class = "form-control", @id = "datepicker", @placeholder = "Ngày sinh" } })
-                                                                <span id="datepicker_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_GioiTinh">Giới tính <a style="color:red; text-decoration:none">(*)</a>  </label>
-
-                                                                @Html.DropDownListFor(m => m.ThiSinh_GioiTinh, new List<SelectListItem>
-                                                                {
-                                                                    new SelectListItem { Text = "Chọn..", Value = "3" },
-                                                                    new SelectListItem { Text = "Nam", Value = "0" },
-                                                                    new SelectListItem { Text = "Nữ", Value = "1" },
-                                                                }, htmlAttributes: new { @class = "form-select", @id = "register_gt" })
-                                                                <span id="register_gt_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_DanToc">Dân tộc <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_DanToc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập..", @id = "register_dantoc" } })
-                                                                <span id="register_dantoc_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-12 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_CCCD">Số Căn cước công dân <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_CCCD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập số CCCD", @id = "register_CCCD" } })
-                                                                <span id="register_CCCD_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_MatKhau">Mật khẩu <a style="color:red; text-decoration:none">(*)</a>  </label>
-
-                                                                @Html.EditorFor(model => model.ThiSinh_MatKhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập mật khẩu", @id = "register_password" } })
-                                                                <span id="register_password_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_Re_MatKhau">Nhập lại mật khẩu <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                <input id="register_re_password" class="form-control text-box single-line password" name="register_re_password" placeholder="Nhập lại mật khẩu" type="password" />
-                                                                <span id="register_re_password_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-
-                                    </table>
+    <div class="row" style="padding-top:30px">
+        <div class="col-12 text-center text-uppercase">
+            <h5 class="colorlogin tdm" style="font-weight: bold">ĐĂNG KÝ THÔNG TIN TUYỂN SINH ĐẠI HỌC</h5>
+            <hr />
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-xl-4 col-12">
+                            <div class="row g-1 mb-1">
+                                <div class="col-12 mt-2 colorlogin"><b>Thông tin cơ bản</b></div>
+                                <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                                <div class="col-7">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_HoLot" class="tdm">Họ lót <a style="color:red; text-decoration:none">(*)</a></label>
+                                        <input type="text" id="ThiSinh_HoLot" name="ThiSinh_HoLot" placeholder="Nhập họ lót" class="form-control tdm-control" />
+                                        <span id="ThiSinh_HoLot_Error" class="small mb-1 text-danger"></span>
+                                    </div>
                                 </div>
-                                <div class="col-xl-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Thông tin trường cấp 3 học lớp 12
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-12 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_TruongCapBa">Tên trường <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_TruongCapBa, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập trường THPT", @id = "register_truong" } })
-                                                                <span id="register_truong_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_truongtinh" })
-                                                                <span id="register_truongtinh_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_TruongCapBa_Ma">Mã trường <a style="color:red; text-decoration:none">(*)</a>  </label>
-
-                                                                @Html.EditorFor(model => model.ThiSinh_TruongCapBa_Ma, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mã trường", @id = "register_ma_truong" } })
-                                                                <span id="register_ma_truong_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="KhuVuc_ID">Khu vực <a style="color:red; text-decoration:none">(*)</a>  </label>
-
-                                                                @Html.DropDownList("KhuVuc_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_kv" })
-                                                                <span id="register_kv_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="DoiTuong_ID">Đối tượng</label>
-
-                                                                @Html.DropDownList("DoiTuong_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_doituong" })
-                                                                <span id="register_doituong_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <label class="small mb-1"> Học lực lớp 12 <a style="color:red; text-decoration:none">(*)</a></label>
-                                                            <select id="register_HocLucLop12" class="form-select">
-                                                                <option value="0">Học lực 12</option>
-                                                                <option value="4">Xuất sắc</option>
-                                                                <option value="3">Giỏi</option>
-                                                                <option value="2">Khá</option>
-                                                                <option value="1">Trung bình</option>
-                                                            </select>
-                                                            <span id="register_HocLucLop12_Error" class="small mb-1 text-danger"></span>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <label class="small mb-1">Hạnh kiểm lớp 12 <a style="color:red; text-decoration:none">(*)</a></label>
-                                                            <select id="register_HanhKiemLop12" class="form-select">
-                                                                <option value="0">Hạnh kiểm 12</option>
-                                                                <option value="4">Tốt</option>
-                                                                <option value="3">Khá</option>
-                                                                <option value="2">Trung bình</option>
-                                                                <option value="1">Yếu</option>
-                                                            </select>
-                                                            <span id="register_HanhKiemLop12_Error" class="small mb-1 text-danger"></span>
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_Ten" class="tdm">Tên <font color="red">(*)</font></label>
+                                        <input type="text" id="ThiSinh_Ten" name="ThiSinh_Ten" placeholder="Nhập tên" class="form-control tdm-control"  />
+                                        <span id="ThiSinh_Ten_Error" class="small mb-1 text-danger"></span>
+                                    </div>
                                 </div>
-                                <div class="col-xl-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Thông tin liên hệ
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-md-5 col-12 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_DienThoai">Điện thoại <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_DienThoai, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập điện thoại", @id = "register_sdt" } })
-                                                                <span id="register_sdt_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-7 col-12 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_Email">Email <a style="color:red; text-decoration:none">(*)</a>  </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập email", @id = "register_email" } })
-                                                                <span id="register_email_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-12 p-1">
-                                                            <div class="form-group">
-                                                                <label class="small mb-1" for="ThiSinh_HoKhauThuongTru"> Địa chỉ nhận giấy báo <a style="color:red; text-decoration:none">(*)</a> </label>
-                                                                @Html.EditorFor(model => model.ThiSinh_DCNhanGiayBao, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập địa chỉ liên hệ", @id = "register_diachi" } })
-                                                                <span id="register_diachi_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <hr class="mt-1 mb-2" />
-                                                        <label class="small mb-1 p-1" for="ThiSinh_Email">Hộ khẩu thường trú <a style="color:red; text-decoration:none">(*)</a>  </label>
+                                <div class="col-12"><hr class="mt-0 mb-2" /></div>
 
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                @*<label class="small mb-1" for="Tinh_ID">Tỉnh/Thành phố <a style="color:red; text-decoration:none">(*)</a>  </label>*@
-                                                                @Html.DropDownList("Tinh_ID", null, htmlAttributes: new { @class = "form-select", @id = "register_tinhtt" })
-                                                                <span id="register_tinhtt_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-6 p-1">
-                                                            <div class="form-group">
-                                                                @*<label class="small mb-1" for="Huyen_ID">Quận/huyện <a style="color:red; text-decoration:none">(*)</a>  </label>*@
-                                                                <select id="register_huyentt" class="form-select" disabled>
-                                                                    <option value="0">Chọn huyện</option>
-                                                                </select>
-                                                                <span id="register_huyentt_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-12 p-1 mt-2">
-                                                            <div class="form-group">
-                                                                @*<label class="small mb-1" for="ThiSinh_HoKhauThuongTru"> <a style="color:red; text-decoration:none">(*)</a>  </label>*@
-                                                                @Html.EditorFor(model => model.ThiSinh_HoKhauThuongTru, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nhập tên phường/xã", @id = "register_phuongtt" } })
-                                                                <span id="register_phuongtt_Error" class="small mb-1 text-danger"></span>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col-md-5 col-12">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_NgaySinh" class="tdm">Ngày sinh <font color="red">(*)</font></label>
+                                        <input type="date" id="ThiSinh_NgaySinh" name="ThiSinh_NgaySinh" placeholder="2006-01-01" class="form-control tdm-control"/>
+                                        <span id="ThiSinh_NgaySinh_Error" class="small mb-1 text-danger"></span>
+                                    </div>
                                 </div>
+
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_GioiTinh" class="tdm">Giới tính <font color="red">(*)</font></label>
+                                        <select id="ThiSinh_GioiTinh" name="ThiSinh_GioiTinh" class="form-select tdm-select">
+                                            <option value="3">Chọn..</option>
+                                            <option value="0">Nam</option>
+                                            <option value="1">Nữ</option>
+                                        </select>
+                                        <span id="ThiSinh_GioiTinh_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-6">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_DanToc" class="tdm">Dân tộc <font color="red">(*)</font></label>
+                                        <input type="text" id="ThiSinh_DanToc" name="ThiSinh_DanToc" placeholder="Nhập.." class="form-control tdm-control"/>
+                                        <span id="ThiSinh_DanToc_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-2" /></div>
+
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_CCCD" class="tdm">Căn cước công dân <font color="red">(*)</font></label>
+                                        <input type="text" id="ThiSinh_CCCD" name="ThiSinh_CCCD" placeholder="Nhập số căn cước công dân" class="form-control tdm-control"/>
+                                        <span id="ThiSinh_CCCD_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12"><hr class="mt-0 mb-2" /></div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_MatKhau" class="tdm">Mật khẩu <font color="red">(*)</font></label>
+                                        <input type="password" id="ThiSinh_MatKhau" name="ThiSinh_MatKhau" placeholder="Nhập mật khẩu" class="form-control tdm-control"/>
+                                        <span id="ThiSinh_MatKhau_Error" class="small mb-1 text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_MatKhau_Repeat" class="tdm">Nhập lại mật khẩu <font color="red">(*)</font></label>
+                                        <input type="password" id="ThiSinh_MatKhau_Repeat" name="ThiSinh_MatKhau_Repeat" placeholder="Nhập lại mật khẩu" class="form-control tdm-control"/>
+                                        <span id="ThiSinh_MatKhau_Repeat_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-0" /></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-12">
+                            <div class="row g-1 mb-1">
+                                <div class="col-12  mt-2 colorlogin"><b>Thông tin liên hệ</b></div>
+                                <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                                <div class="col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_DienThoai" class="tdm">Điện thoại <font color="red">(*)</font></label>
+                                        <input type="text" id="ThiSinh_DienThoai" name="ThiSinh_DienThoai" placeholder="0912.345.678" class="form-control tdm-control"/>
+                                        <span id="ThiSinh_DienThoai_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-12">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_Email" class="tdm">Email <font color="red">(*)</font></label>
+                                        <input type="email" id="ThiSinh_Email" name="ThiSinh_Email" placeholder="vidu@gmail.com" class="form-control tdm-control"/>
+                                        <span id="ThiSinh_Email_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12"><hr class="mt-0 mb-2" /></div>
+                                <div class="col-md-12 col-12">
+                                    <div class="form-group">
+                                        <label for="ThiSinh_DCNhanGiayBao" class="tdm">Địa chỉ nhận giấy báo <font color="red">(*)</font></label>
+                                        <input type="text" id="ThiSinh_DCNhanGiayBao" name="ThiSinh_DCNhanGiayBao" placeholder="Nhập địa chỉ nhận giấy báo" class="form-control tdm-control"/>
+                                        <span id="ThiSinh_DCNhanGiayBao_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-12 colorlogin"><b>Hộ khẩu thường trú</b></div>
+                                <div class="col-12"><hr class="mt-0 mb-0" /><hr class="mt-0 mb-1" /></div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="Select_Tinh_ID" class="tdm">Nhập và chọn tỉnh</label>
+                                        <input type="text" id="Select_Tinh_ID" name="Select_Tinh_ID" class="form-select tdm-select" placeholder="Nhập tên tỉnh" />
+                                        <input type="hidden" id="Select_Tinh_ID_Hidden" style="display:none" />
+                                        <span id="Select_Tinh_ID_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="Select_Huyen_ID" class="tdm">Nhập và chọn huyện</label>
+                                        <input type="text" id="Select_Huyen_ID" name="Select_Huyen_ID" class="form-select tdm-select" placeholder="Nhập tên huyện" />
+                                        <input type="hidden" id="Select_Huyen_ID_Hidden" style="display:none" />
+                                        <span id="Select_Huyen_ID_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input type="text" id="Select_Xa_ID" name="Select_Xa_ID" placeholder="Nhập tên phường/xã" class="form-select tdm-select" />
+                                        <input type="hidden" id="Select_Xa_ID_Hidden" style="display:none" />
+                                        <span id="Select_Xa_ID_Error" class="small mb-1 text-danger"></span>
+                                        <script>
+                                            // Khai báo các biến toàn cục (Lưu ý cần thu hồi)
+                                            var TinhListAll = [];
+                                            let Tinh_ID_Select = -1;
+
+                                            var HuyenListAll = [];
+                                            let Huyen_ID_Select = -1;
+
+                                            var XaListAll = [];
+                                            let Xa_ID_Select = -1;
+                                            function GetData_ForSelect_Tinh() {
+                                                Tinh_ID_Select = -1;
+                                                TinhListAll = [];
+                                                $.ajax({
+                                                    url: '/Auth/GetData_ForSelect_Tinh',
+                                                    type: 'GET',
+                                                    contentType: 'application/json;charset=utf-8',
+                                                    dataType: 'json',
+                                                    async: false,
+                                                    success: function (res) {
+                                                        if (res.success) {
+                                                            $.each(res.TinhList, function (i, item) {
+                                                                TinhListAll.push(item);
+                                                            });
+                                                        }
+                                                    },
+                                                    error: function (xhr, status, error) {
+                                                        console.error(error);
+                                                    }
+                                                });
+                                            }
+                                            function GetData_ForSelect_Huyen() {
+                                                HuyenListAll = [];
+                                                Huyen_ID_Select = -1;
+                                                let Tinh_ID_Entity = Tinh_ID_Select;
+                                                console.log('Tinh_ID_Entity ', Tinh_ID_Entity)
+
+                                                $.ajax({
+                                                    url: '/Auth/GetData_ForSelect_Huyen',
+                                                    type: 'POST',
+                                                    data: JSON.stringify({ Tinh_ID: Tinh_ID_Entity }),
+                                                    contentType: "application/json;charset=utf-8",
+                                                    dataType: 'json',
+                                                    async: false,
+                                                    success: function (res) {
+                                                        console.log('res.HuyenList', HuyenListAll);
+                                                        if (res.success) {
+                                                            $.each(res.HuyenList, function (i, item) {
+                                                                HuyenListAll.push(item);
+                                                            });
+                                                        } else {
+                                                            HuyenListAll.push(res.HuyenList);
+                                                        }
+                                                    },
+                                                    error: function (xhr, status, error) {
+                                                        console.error(error);
+                                                    }
+                                                });
+                                                console.log('HuyenListAll', HuyenListAll);
+                                            }
+                                            function GetData_ForSelect_Xa() {
+                                                XaListAll = []; Xa_ID_Select = -1;
+                                                $.ajax({
+                                                    url: '/Auth/GetData_ForSelect_Xa',
+                                                    type: 'POST',
+                                                    data: JSON.stringify({ Huyen_ID: Huyen_ID_Select }),
+                                                    contentType: "application/json;charset=utf-8",
+                                                    dataType: 'json',
+                                                    async: false,
+                                                    success: function (res) {
+                                                        console.log(res);
+                                                        if (res.success) {
+                                                            $.each(res.XaList, function (i, item) {
+                                                                XaListAll.push(item);
+                                                            });
+                                                        } else {
+                                                            XaListAll.push(res.XaList);
+                                                        }
+                                                    },
+                                                    error: function (xhr, status, error) {
+                                                        console.error(error);
+                                                    }
+                                                });
+                                            }
+                                            // xử lý sự kiện cho nhập dữ liệu tỉnh
+                                            $(document).ready(function () {
+                                                GetData_ForSelect_Tinh();
+                                                $("#Select_Tinh_ID").autocomplete({
+                                                    source: function (request, response) {
+                                                        let term = request.term.toLowerCase();
+                                                        let filteredData = $.grep(TinhListAll, function (item) {
+                                                            // cần có đối tượng trả về nằm trên dòng return
+                                                            return String(item.Tinh_ID).toLowerCase().indexOf(term) !== -1 || item.Tinh_Ten.toLowerCase().indexOf(term) !== -1 || item.Tinh_Ten_Eng.toLowerCase().indexOf(term) !== -1;
+                                                        });
+                                                        // Trả về một mảng chứa các đối tượng với các phần tử là thông tin của tỉnh (ở đây quan tâm đến id và tên)
+                                                        response($.map(filteredData, function (item) {
+                                                            return {
+                                                                value: item.Tinh_Ten, // Thuộc tính value để lưu giữ giá trị khi mục được chọn hiển thị vào textbox Select_Tinh_ID
+                                                                Tinh_ID: item.Tinh_ID,
+                                                                Tinh_Ten: item.Tinh_Ten,
+                                                                Tinh_Ten_Eng: item.Tinh_Ten_Eng,
+                                                            };
+                                                        }));
+                                                    },
+                                                    minLength: 0, // độ dài tối thiểu của chuỗi được chọn vào
+                                                    select: function (event, ui) {
+                                                        // Xử lý khi một mục được chọn
+                                                        //console.log("Tinh_ID: ", ui.item.Tinh_ID); //lấy giá trị truyền đi để gọi cho đối tượng huyện
+                                                        //console.log("Tinh_Ten: ", ui.item.Tinh_Ten); // text được chọn
+                                                        $('#Select_Tinh_ID_Hidden').val(ui.item.Tinh_ID);
+                                                        Tinh_ID_Select = ui.item.Tinh_ID;
+                                                        $('#Select_Tinh_ID_Error').text('');
+                                                        
+                                                    },
+                                                    focus: function (event, ui) { //Kiểm tra sự kiện focus:
+                                                        // console.log("Focused item:", ui.item.value);
+                                                    },
+                                                    open: function (event, ui) { //Kiểm tra sự kiện open :
+                                                        // console.log("Autocomplete open", ui);
+                                                    },
+                                                    close: function (event, ui) { //Kiểm tra sự kiện close:
+                                                        // console.log("Autocomplete closed", ui);
+                                                    },
+                                                    change: function (event, ui) { //kiểm tra sự kiện change (khi giá trị thay đổi):
+                                                        //console.log("Value changed:", $(this).val(),"ui:", ui);
+                                                        if (ui.item == null) {
+                                                            // $("#Huyen_ID").prop("disabled", true);
+
+                                                            Tinh_ID_Select = -1;
+                                                            $('#Select_Tinh_ID_Hidden').val(0);
+                                                            console.log("Tinh_ID_Select: 1 - ", Tinh_ID_Select);
+                                                            $('#Select_Tinh_ID_Error').text('');
+                                                        }
+                                                        else {
+                                                            //$("#Huyen_ID").prop("disabled", false);
+
+                                                            Tinh_ID_Select = ui.item.Tinh_ID;
+                                                            $('#Select_Tinh_ID_Hidden').val(ui.item.Tinh_ID);
+                                                            console.log("Tinh_ID_Select: 2 -  ", Tinh_ID_Select);
+                                                            GetData_ForSelect_Huyen(Tinh_ID_Select);
+                                                            $('#Select_Tinh_ID_Error').text('');
+
+                                                        }
+                                                    },
+                                                });
+                                            });
+                                            // xử lý sự kiện cho nhập dữ liệu huyện
+                                            $(document).ready(function () {
+                                                $("#Select_Huyen_ID").autocomplete({
+                                                    source: function (request, response) {
+                                                        let term = request.term.toLowerCase();
+                                                        let filteredData = $.grep(HuyenListAll, function (item) {
+                                                            // console.log('item',item);
+                                                            return item.Huyen_TenHuyen.toLowerCase().indexOf(term) !== -1 || item.Huyen_TenHuyen_Eng.toLowerCase().indexOf(term) !== -1;
+                                                        });
+                                                        // Trả về một mảng chứa các đối tượng với các phần tử là thông tin của tỉnh (ở đây quan tâm đến id và tên)
+                                                        response($.map(filteredData, function (item) {
+                                                            return {
+                                                                value: item.Huyen_TenHuyen, // Thuộc tính value để lưu giữ giá trị khi mục được chọn hiển thị vào textbox
+                                                                Huyen_ID: item.Huyen_ID,
+                                                                Huyen_TenHuyen: item.Huyen_TenHuyen,
+                                                                Huyen_TenHuyen_Eng: item.Huyen_TenHuyen_Eng,
+                                                            };
+                                                        }));
+                                                    },
+                                                    minLength: 0, // độ dài tối thiểu của chuỗi được chọn vào
+                                                    select: function (event, ui) {
+                                                        // Xử lý khi một mục được chọn
+                                                        // console.log("Huyen_ID: ", ui.item.Huyen_ID); //lấy giá trị truyền đi để gọi cho đối tượng huyện
+                                                        // console.log("Huyen_TenHuyen: ", ui.item.Huyen_TenHuyen); // text được chọn
+                                                        Huyen_ID_Select = ui.item.Huyen_ID;
+                                                        $('#Select_Huyen_ID_Hidden').val(ui.item.Huyen_ID);
+                                                        $('#Select_Huyen_ID_Error').text('');
+                                                    },
+                                                    focus: function (event, ui) { //Kiểm tra sự kiện focus:
+                                                        // console.log("Focused item:", ui.item.value);
+                                                    },
+                                                    open: function (event, ui) { //Kiểm tra sự kiện open :
+                                                        // console.log("Autocomplete open", ui);
+                                                    },
+                                                    close: function (event, ui) { //Kiểm tra sự kiện close:
+                                                        // console.log("Autocomplete closed", ui);
+                                                    },
+                                                    change: function (event, ui) { //kiểm tra sự kiện change (khi giá trị thay đổi):
+                                                        //console.log("Value changed:", $(this).val(),"ui:", ui);
+                                                        if (ui.item == null) {
+                                                            Huyen_ID_Select = -1;
+                                                            $('#Select_Huyen_ID_Hidden').val(0);
+                                                            //console.log("Huyen_ID_Select: 1 - ", Huyen_ID_Select);
+                                                        }
+                                                        else {
+                                                            // console.log("Huyen_ID_Select: 2 -  ", Huyen_ID_Select);
+                                                            Huyen_ID_Select = ui.item.Huyen_ID;
+                                                            $('#Select_Huyen_ID_Hidden').val(ui.item.Huyen_ID)
+                                                            GetData_ForSelect_Xa(Huyen_ID_Select);
+                                                            //console.log("Huyen_ID_Select: 2 -  ", Huyen_ID_Select);
+                                                            $('#Select_Huyen_ID_Error').text('');
+                                                        }
+                                                    },
+                                                });
+                                            });
+                                            // xử lý sự kiện cho nhập dữ liệu xã
+                                            $(document).ready(function () {
+                                                $("#Select_Xa_ID").autocomplete({
+                                                    source: function (request, response) {
+                                                        let term = request.term.toLowerCase();
+                                                        let filteredData = $.grep(XaListAll, function (item) {
+                                                            return String(item.Xa_ID).toLowerCase().indexOf(term) !== -1 || item.Xa_Ten.toLowerCase().indexOf(term) !== -1 || item.Xa_Ten_Eng.toLowerCase().indexOf(term) !== -1;
+                                                        });
+                                                        // Trả về một mảng chứa các đối tượng với các phần tử là thông tin của tỉnh (ở đây quan tâm đến id và tên)
+                                                        response($.map(filteredData, function (item) {
+                                                            return {
+                                                                value: item.Xa_Ten, // Thuộc tính value để lưu giữ giá trị khi mục được chọn hiển thị vào textbox
+                                                                Xa_ID: item.Xa_ID,
+                                                                Xa_Ten: item.Xa_Ten,
+                                                                Xa_Ten_Eng: item.Xa_Ten_Eng,
+                                                            };
+                                                        }));
+                                                    },
+                                                    minLength: 0, // độ dài tối thiểu của chuỗi được chọn vào
+                                                    select: function (event, ui) {
+                                                        // Xử lý khi một mục được chọn
+                                                        //console.log("Xa_ID: ", ui.item.Xa_ID); //lấy giá trị truyền đi để gọi cho đối tượng huyện
+                                                        //console.log("Xa_Ten: ", ui.item.Xa_Ten); // text được chọn
+                                                        $('#Select_Xa_ID_Hidden').val(ui.item.Xa_ID)
+                                                        Xa_ID_Select = ui.item.Huyen_ID;
+                                                        $('#Select_Xa_ID_Error').text('');
+                                                    },
+                                                    focus: function (event, ui) { //Kiểm tra sự kiện focus:
+                                                        // console.log("Focused item:", ui.item.value);                                                      
+                                                    },
+                                                    open: function (event, ui) { //Kiểm tra sự kiện open :
+                                                        //console.log("Autocomplete open", ui);
+                                                    },
+                                                    close: function (event, ui) { //Kiểm tra sự kiện close:
+                                                        // console.log("Autocomplete closed", ui);
+                                                    },
+                                                    change: function (event, ui) { //kiểm tra sự kiện change (khi giá trị thay đổi):
+                                                        //console.log("Value changed:", $(this).val(),"ui:", ui);
+                                                        if (ui.item == null) {
+                                                            Xa_ID_Select = -1;
+                                                            //console.log("Xa_ID_Select: 1 - ", Xa_ID_Select);
+                                                            $('#Select_Xa_ID_Hidden').val(ui.item.Xa_ID);
+                                                            $('#Select_Xa_ID_Error').text('');
+                                                        }
+                                                        else {
+                                                            Xa_ID_Select = ui.item.Huyen_ID;
+                                                            $('#Select_Xa_ID_Hidden').val(ui.item.Xa_ID);
+                                                            console.log("Xa_ID_Select: 2 -  ", Xa_ID_Select);
+                                                            $('#Select_Xa_ID_Error').text('');
+                                                        }
+                                                    },
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-1 mb-0" /></div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-12">
+                            <div class="row g-1 mb-2">
+                                <div class="col-12  mt-2 colorlogin"><b>Thông tin trường cấp 3 học lớp 12</b></div>
+                                <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                                <div class="col-xxl-8 col-12">
+                                    <div class="form-group">
+                                        <label for="TruongCapBa_TenTinh" class="tdm">Nhập và chọn tỉnh <font color="red">(*)</font></label>
+                                        <input type="text" id="TruongCapBa_TenTinh" name="TruongCapBa_TenTinh" class="form-select tdm-select" placeholder="Nhập và chọn tỉnh học lớp 12" />
+                                        <input type="hidden" id="TruongCapBa_TenTinh_Hidden" style="display:none" />
+                                        <span id="TruongCapBa_TenTinh_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <script>
+                                    // Khai báo các biến toàn cục (Lưu ý cần thu hồi)
+                                    let TinhCapBaListAll = [];
+                                    let TinhCaBa_MaTinh_Select = -1;
+                                    function GetData_ForSelect_TinhCapBa() {
+                                        TinhCapBaListAll = []; TinhCaBa_MaTinh_Select = -1;
+                                        $.ajax({
+                                            url: '/Auth/GetData_ForSelect_TinhCapBa',
+                                            type: 'GET',
+                                            contentType: 'application/json;charset=utf-8',
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function (res) {
+                                                //console.log(res);
+                                                if (res.success) {
+                                                    $.each(res.TinhCapBaList, function (i, item) {
+                                                        TinhCapBaListAll.push(item);
+                                                    });
+                                                }
+                                            },
+                                            error: function (xhr, status, error) {
+                                                console.error(error);
+                                            }
+                                        });
+                                        console.log('TinhCapBaListAll', TinhCapBaListAll.length)
+                                    }
+                                    // xử lý sự kiện cho nhập dữ liệu truong cap 3
+                                    $(document).ready(function () {
+                                        GetData_ForSelect_TinhCapBa();
+                                        $("#TruongCapBa_TenTinh").autocomplete({
+                                            source: function (request, response) {
+                                                let term = request.term.toLowerCase();
+                                                let filteredData = $.grep(TinhCapBaListAll, function (item) {
+                                                    // console.log('item',item);
+                                                    return item.Truong_TenTinh.toLowerCase().indexOf(term) !== -1 ||
+                                                        item.Truong_TenTinh_Eng.toLowerCase().indexOf(term) !== -1;
+                                                });
+                                                // Trả về một mảng chứa các đối tượng với các phần tử là thông tin của tỉnh (ở đây quan tâm đến id và tên)
+                                                response($.map(filteredData, function (item) {
+                                                    return {
+                                                        value: item.Truong_TenTinh, // Thuộc tính value để lưu giữ giá trị khi mục được chọn hiển thị vào textbox
+                                                        Truong_MaTinh: item.Truong_MaTinh,
+                                                        Truong_TenTinh: item.Truong_TenTinh,
+                                                        Truong_TenTinh_Eng: item.Truong_TenTinh_Eng,
+                                                    };
+                                                }));
+                                            },
+                                            minLength: 0, // độ dài tối thiểu của chuỗi được chọn vào
+                                            select: function (event, ui) {
+                                                // Xử lý khi một mục được chọn
+                                                //console.log("Truong_MaTinh: ", ui.item.Truong_MaTinh); //lấy giá trị truyền đi để gọi cho đối tượng huyện
+                                                //console.log("Truong_TenTinh: ", ui.item.Truong_TenTinh); // text được chọn
+                                                $('#TruongCapBa_MaTinh').val(ui.item.Truong_MaTinh);
+                                                TinhCaBa_MaTinh_Select = ui.item.Truong_MaTinh;
+                                                $('#TruongCapBa_TenTinh_Error').text('');
+                                            },
+                                            
+                                            focus: function (event, ui) { //Kiểm tra sự kiện focus:
+                                                // console.log("Focused item:", ui.item.value);
+                                            },
+                                            open: function (event, ui) { //Kiểm tra sự kiện open :
+                                               // console.log("Autocomplete open", ui);
+                                            },
+                                            close: function (event, ui) { //Kiểm tra sự kiện close:
+                                              //  console.log("Autocomplete closed", ui);
+                                            },
+                                            change: function (event, ui) { //kiểm tra sự kiện change (khi giá trị thay đổi):
+                                                //console.log("Value changed:", $(this).val(),"ui:", ui);
+                                                if (ui.item == null) {
+                                                    TinhCaBa_MaTinh_Select = -1;
+                                                    $('#TruongCapBa_MaTinh').val('');
+                                                    $('#Select_KhuVuc').empty();
+                                                    $('#Select_KhuVuc').append('<option value="0">Chưa có</option>');
+                                                    // console.log("TinhCaBa_ID_Select: 1 - ", TinhCaBa_ID_Select);
+                                                    $('#TruongCapBa_TenTinh_Error').text('');
+                                                }
+                                                else {
+                                                    TinhCaBa_MaTinh_Select = ui.item.Truong_MaTinh;
+                                                    $('#TruongCapBa_MaTinh').val(ui.item.Truong_MaTinh);
+                                                    //console.log("TinhCaBa_ID_Select: 2 -  ", TinhCaBa_ID_Select);
+                                                    GetData_ForSelect_TruongCapBa(TinhCaBa_MaTinh_Select);
+                                                    $('#TruongCapBa_TenTinh_Error').text('');
+                                                }
+                                            },
+                                        });
+
+                                    });
+
+                                </script>
+                                <div class="col-xxl-4 col-12">
+                                    <div class="form-group">
+                                        <label for="TruongCapBa_MaTinh" class="tdm">Mã tỉnh</label>
+                                        <input type="text" id="TruongCapBa_MaTinh" name="TruongCapBa_MaTinh" class="form-control tdm-control" disabled placeholder="Chưa có" />
+                                        <input type="hidden" id="TruongCapBa_MaTinh_Hidden" style="display:none" />
+                                        <span id="TruongCapBa_MaTinh_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-md-9 col-12">
+                                    <div class="form-group">
+                                        <label for="TruongCapBa_Ten" class="tdm">Nhập và chọn tên trường <font color="red">(*)</font></label>
+                                        <input type="text" id="TruongCapBa_Ten" name="TruongCapBa_Ten" placeholder="Nhập tên trường THPT" class="form-select tdm-select" />
+                                        <input type="hidden" id="TruongCapBa_ID_Hidden" style="display:none" />
+                                        <span id="TruongCapBa_Ten_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-3 col-12">
+                                    <div class="form-group">
+                                        <label for="TruongCapBa_Ma" class="tdm">Mã trường</label>
+                                        <input type="text" id="TruongCapBa_Ma" name="TruongCapBa_Ma" placeholder="Chưa có" class="form-control tdm-control" disabled />
+                                        <span id="TruongCapBa_Ma_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <script>
+                                    // Khai báo các biến toàn cục (Lưu ý cần thu hồi)
+                                    var TruongCapBaListAll = [];
+                                    let Truong_ID_Select = -1;
+
+                                    function GetData_ForSelect_TruongCapBa(Truong_MaTinh) {
+                                        TruongCapBaListAll = [];
+                                        Truong_ID_Select = -1;
+                                        $.ajax({
+                                            url: '/Auth/GetData_ForSelect_TruongCapBa',
+                                            type: 'POST',
+                                            data: JSON.stringify({ Truong_MaTinh: Truong_MaTinh }),
+                                            contentType: "application/json;charset=utf-8",
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function (res) {                                               
+                                                //console.log(res.TruongCapBaList.length);
+                                                if (res.success) {
+                                                    $.each(res.TruongCapBaList, function (i, item) {
+                                                        TruongCapBaListAll.push(item);
+                                                    });
+                                                }
+                                            },
+                                            error: function (xhr, status, error) {
+                                                console.error(error);
+                                            }
+                                        });
+                                        console.log('TruongCapBaListAll', TruongCapBaListAll.length)
+                                    }
+                                    // xử lý sự kiện cho nhập dữ liệu truong cap 3
+                                    $(document).ready(function () {
+                                        $("#TruongCapBa_Ten").autocomplete({
+                                            source: function (request, response) {
+                                                let term = request.term.toLowerCase();
+                                                let filteredData = $.grep(TruongCapBaListAll, function (item) {
+                                                    // console.log('item',item);
+                                                    return item.Truong_TenTruong_Eng.toLowerCase().indexOf(term) !== -1 ||
+                                                        item.Truong_TenTruong.toLowerCase().indexOf(term) !== -1;
+                                                });
+                                                // Trả về một mảng chứa các đối tượng với các phần tử là thông tin của tỉnh (ở đây quan tâm đến id và tên)
+                                                response($.map(filteredData, function (item) {
+                                                    //console.log('item', item);
+                                                    return {
+                                                        value: item.Truong_TenTruong, // Thuộc tính value để lưu giữ giá trị khi mục được chọn hiển thị vào textbox
+                                                        Truong_ID: item.Truong_ID,
+                                                        Truong_MaTruong: item.Truong_MaTruong,
+                                                        Truong_TenTruong: item.Truong_TenTruong,
+                                                        Truong_KhuVuc_Ma: item.Truong_KhuVuc_Ma,
+                                                        Truong_KhuVuc_Ten: item.Truong_KhuVuc_Ten,
+                                                    };
+                                                }));
+                                            },
+                                            minLength:6, // độ dài tối thiểu của chuỗi được chọn vào
+                                            select: function (event, ui) {
+                                                // Xử lý khi một mục được chọn
+                                                // console.log("Truong_ID: ", ui.item.Truong_ID); //lấy giá trị truyền đi để gọi cho đối tượng huyện
+                                                // console.log("Truong_TenTruong: ", ui.item.Truong_TenTruong); // text được chọn
+                                                $('#TruongCapBa_Ma').val(ui.item.Truong_MaTruong);
+                                                $('#TruongCapBa_ID_Hidden').val(ui.item.Truong_ID);
+                                                $('#Select_KhuVuc').empty();
+                                                $('#Select_KhuVuc').append('<option value="' + ui.item.Truong_KhuVuc_Ma + '">' + ui.item.Truong_KhuVuc_Ten + '</option>');
+                                                $('#TruongCapBa_Ten_Error').text('');
+                                            },
+                                            focus: function (event, ui) { //Kiểm tra sự kiện focus:
+                                                // console.log("Focused item:", ui.item.value);
+                                            },
+                                            open: function (event, ui) { //Kiểm tra sự kiện open :
+                                               // console.log("Autocomplete open", ui);
+                                            },
+                                            close: function (event, ui) { //Kiểm tra sự kiện close:
+                                               // console.log("Autocomplete closed", ui);
+                                            },
+                                            change: function (event, ui) { //kiểm tra sự kiện change (khi giá trị thay đổi):
+                                                //console.log("Value changed:", $(this).val(),"ui:", ui);
+                                                if (ui.item == null) {
+                                                    //console.log("Truong_ID_Select: 1 - ", Truong_ID_Select);
+                                                    $('#TruongCapBa_Ma').val('');
+                                                    $('#Select_KhuVuc').empty();
+                                                    $('#Select_KhuVuc').append('<option value="0">Chưa có</option>');
+                                                    $('#TruongCapBa_ID_Hidden').val(0);
+                                                    $('#TruongCapBa_Ten_Error').text('');
+                                                }
+                                                else {
+                                                    Truong_ID_Select = ui.item.Truong_ID;
+                                                    $('#TruongCapBa_ID_Hidden').val(ui.item.Truong_ID);
+                                                    $('#TruongCapBa_Ma').val(ui.item.Truong_MaTruong);
+                                                    $('#Select_KhuVuc').empty();
+                                                    $('#Select_KhuVuc').append('<option value="' + ui.item.Truong_KhuVuc_Ma + '">' + ui.item.Truong_KhuVuc_Ten + '</option>');
+                                                    //console.log("Tinh_ID_Select: 2 -  ", Truong_ID_Select);
+                                                    $('#TruongCapBa_Ten_Error').text('');
+                                                }
+                                            },
+                                        });
+
+                                    });
+
+                                </script>
+                                <div class="col-xxl-3 col-6">
+                                    <div class="form-group">
+                                        <label class="mb-1 tdm" for="ThiSinh_NamTotNghiep">Năm TN <font color="red">(*)</font></label>
+                                        <input type="text" id="ThiSinh_NamTotNghiep" name="ThiSinh_NamTotNghiep" placeholder="2024" class="form-control tdm-control" />
+                                        <span id="ThiSinh_NamTotNghiep_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-4 col-6">
+                                    <div class="form-group">
+                                        <label class="mb-1 tdm" for="Select_KhuVuc">Khu vực</label>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $('#Select_KhuVuc').empty();
+                                                $('#Select_KhuVuc').append('<option value="0">Chưa có</option>');
+                                            })
+                                        </script>
+                                        <select id="Select_KhuVuc" name="Select_KhuVuc" class="form-select tdm-select" disabled></select>
+                                        <input type="hidden" id="Select_KhuVuc_Hidden" style="display:none" />
+                                        <span id="Select_KhuVuc_Error" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-5 col-12 ">
+                                    <div class="form-group">
+                                        <label class="mb-1 tdm" for="Select_DoiTuong">Đối tượng</label>
+                                        <select id="Select_DoiTuong" name="Select_DoiTuong" class="form-select tdm-select"></select>
+                                        <span id="Select_DoiTuong_Error" class="small mb-1 text-danger"></span>
+                                        <script>
+                                            $(document).ready(function () {
+                                                $("#Select_DoiTuong").empty();
+                                                $.ajax({
+                                                    url: '/Auth/GetData_ForSelect_DoiTuong',
+                                                    type: 'GET',
+                                                    contentType: 'application/json;charset=utf-8',
+                                                    dataType: 'json',
+                                                    async: false,
+                                                    success: function (res) {
+                                                        //console.log(res);
+                                                        if (res.success) {
+                                                            $.each(res.DoituongList, function (i, result) {
+                                                                $('#Select_DoiTuong').append('<option value="' + result.DoiTuong_ID + '">' + result.DoiTuong_Ten + '</option>');
+                                                                $('#Select_DoiTuong').val(0);
+                                                            });
+                                                        }
+                                                    },
+                                                    error: function (xhr, status, error) {
+                                                        console.error(error);
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-md-6 col-6 p-1">
+                                    <label class="tdm" for="Select_HocLucLop12"> Học lực lớp 12 <a style="color:red; text-decoration:none">(*)</a></label>
+                                    <select id="Select_HocLucLop12" class="form-select tdm-select">
+                                        <option value="0">Chọn...</option>
+                                        <option value="4">Xuất sắc</option>
+                                        <option value="3">Giỏi</option>
+                                        <option value="2">Khá</option>
+                                        <option value="1">Trung bình</option>
+                                    </select>
+                                    <span id="Select_HocLucLop12_Error" class="small mb-1 text-danger"></span>
+                                </div>
+                                <div class="col-md-6 col-6 p-1">
+                                    <label class="tdm" for="Select_HanhKiemLop12">Hạnh kiểm lớp 12 <a style="color:red; text-decoration:none">(*)</a></label>
+                                    <select id="Select_HanhKiemLop12" class="form-select tdm-select">
+                                        <option value="0">Chọn...</option>
+                                        <option value="4">Tốt</option>
+                                        <option value="3">Khá</option>
+                                        <option value="2">Trung bình</option>
+                                        <option value="1">Yếu</option>
+                                    </select>
+                                    <span id="Select_HanhKiemLop12_Error" class="small mb-1 text-danger"></span>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
                             </div>
 
-                            <div>
-                                <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center mt-1 mb-0">
-                                <input class="btn login-button" type="submit" onclick="submitRegisterForm()" value="Đăng ký thông tin" />
-                            </div>
-                            <div class="text-center mt-2">
-                                <div class="small">
-                                    <a style="text-decoration: none; color: #262af3;" href="@Url.Action("Login", "Auth")">Bạn đã có tài khoản ? <b>Quay lại đăng nhập</b></a>
-                                    @*<a id="showLogin" style="text-decoration: none; color: #ff6a00;" href="#">Đã có tài khoản? <b>Đăng nhập ngay</b></a>*@
-                                </div>
-                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mt-1 mb-0">
+                        <input class="btn login-button btm-sm" type="submit" onclick="submitRegisterForm()" value="Đăng ký thông tin" />
+
+                        <script>
+                            function submitRegisterForm() {
+                                $(".text-danger").text("");
+                                let flag = true;
+
+                                /**Cột 1*/
+                                let ThiSinh_HoLot = $("#ThiSinh_HoLot").val();//
+                                let ThiSinh_Ten = $("#ThiSinh_Ten").val(); //
+                                let ThiSinh_NgaySinh = $("#ThiSinh_NgaySinh").val();//
+                                let ThiSinh_GioiTinh = $("#ThiSinh_GioiTinh").val(); //
+                                let ThiSinh_DanToc = $("#ThiSinh_DanToc").val(); //
+                                let ThiSinh_CCCD = $("#ThiSinh_CCCD").val(); //ThiSinh_CCCD_Error
+                                let ThiSinh_MatKhau = $("#ThiSinh_MatKhau").val(); //ThiSinh_MatKhau_Error
+                                let ThiSinh_MatKhau_Repeat = $("#ThiSinh_MatKhau_Repeat").val();//
+                                /**Cột 2*/
+                                let ThiSinh_DienThoai = $("#ThiSinh_DienThoai").val();//
+                                let ThiSinh_Email = $("#ThiSinh_Email").val();//
+                                let ThiSinh_DCNhanGiayBao = $("#ThiSinh_DCNhanGiayBao").val();//
+                                let Select_Tinh_ID = $("#Select_Tinh_ID").val();
+                                let Select_Tinh_ID_Hidden = $("#Select_Tinh_ID_Hidden").val();
+                                let Select_Huyen_ID = $("#Select_Huyen_ID").val();//Select_Huyen_ID_Error
+                                let Select_Huyen_ID_Hidden = $("#Select_Huyen_ID_Hidden").val();//Select_Tinh_ID_Error
+                                let Select_Xa_ID = $("#Select_Xa_ID").val();//Select_Xa_ID_Error
+                                let Select_Xa_ID_Hidden = $("#Select_Xa_ID_Hidden").val();//Select_Tinh_ID_Error
+                                /**Cột 3*/
+                                let TruongCapBa_TenTinh = $("#TruongCapBa_TenTinh").val();//
+                                let TruongCapBa_MaTinh = $("#TruongCapBa_MaTinh").val(); //
+                                let TruongCapBa_Ten = $("#TruongCapBa_Ten").val(); //
+                                let TruongCapBa_ID_Hidden = $("#TruongCapBa_ID_Hidden").val(); //
+                                let TruongCapBa_Ma = $("#TruongCapBa_Ma").val(); //
+                                let ThiSinh_NamTotNghiep = $('#ThiSinh_NamTotNghiep').val();
+                                let Select_KhuVuc = $("#Select_KhuVuc").val();//
+                                let Select_DoiTuong = $("#Select_DoiTuong").val(); //
+                                let Select_HocLucLop12 = $("#Select_HocLucLop12").val(); //
+                                let Select_HanhKiemLop12 = $("#Select_HanhKiemLop12").val();//
+
+                                /**Cột 1*/
+                                if (!ThiSinh_HoLot) {
+
+                                    var errorMessage = "Nhập họ, tên lót"; $('#ThiSinh_HoLot_Error').text(errorMessage); flag = false;
+                                }
+                                if (!ThiSinh_Ten) {
+
+                                    var errorMessage = "Nhập tên"; $('#ThiSinh_Ten_Error').text(errorMessage); flag = false;
+                                }
+                                if (!ThiSinh_NgaySinh) {
+                                    var errorMessage = "Nhập ngày sinh"; $('#ThiSinh_NgaySinh_Error').text(errorMessage); flag = false;
+                                }
+                                if (!ThiSinh_GioiTinh || ThiSinh_GioiTinh == "3") {
+                                    var errorMessage = "Chọn giới tính"; $('#ThiSinh_GioiTinh_Error').text(errorMessage); flag = false;
+                                }
+                                if (!ThiSinh_DanToc) {
+
+                                    var errorMessage = "Nhập dân tộc"; $('#ThiSinh_DanToc_Error').text(errorMessage); flag = false;
+                                }
+                                if (!ThiSinh_CCCD) {
+                                    var errorMessage = "Nhập căn cước công dân"; $('#ThiSinh_CCCD_Error').text(errorMessage); flag = false;
+                                }
+                                else {
+                                    $.ajax({
+                                        url: '/Auth/RegisterColleger_Check', type: 'POST', data: JSON.stringify({ ThiSinh_CCCD: ThiSinh_CCCD }), contentType: "application/json;charset=utf-8", dataType: 'json', async: false,
+                                        success: function (res) { if (res.success) { var errorMessage = "Số CCCD đã được đăng ký"; $('#ThiSinh_CCCD_Error').text(errorMessage); flag = false; } },
+                                        error: function (error) { console.error(error); }
+                                    });
+                                }
+                                if (!ThiSinh_MatKhau) {
+                                    var errorMessage = "Nhập mật khẩu"; $('#ThiSinh_MatKhau_Error').text(errorMessage); flag = false;
+                                } else if (ThiSinh_MatKhau.length < 6) {
+                                    var errorMessage = "Độ dài cần lớn hơn 6 ký tự"; $('#ThiSinh_MatKhau_Error').text(errorMessage); flag = false;
+                                }
+                                if (!ThiSinh_MatKhau_Repeat) {
+                                    var errorMessage = "Nhập lại mật khẩu"; $('#ThiSinh_MatKhau_Repeat_Error').text(errorMessage); flag = false;
+                                } else if (ThiSinh_MatKhau.trim() != ThiSinh_MatKhau_Repeat.trim()) {
+                                    var errorMessage = "Mật khẩu không khớp"; $('#ThiSinh_MatKhau_Repeat_Error').text(errorMessage); flag = false;
+                                }
+
+                                /**Cột 2*/
+
+                                if (!ThiSinh_DienThoai) {
+                                    var errorMessage = "Nhập số điện thoại"; $('#ThiSinh_DienThoai_Error').text(errorMessage); flag = false;
+                                }
+                                if (!ThiSinh_Email) {
+                                    var errorMessage = "Nhập email"; $('#ThiSinh_Email_Error').text(errorMessage); flag = false;
+                                } else {
+                                    if (!validateEmail(ThiSinh_Email)) { var errorMessage = "Email sai định dạng"; $('#ThiSinh_Email_Error').text(errorMessage); flag = false; }
+                                    else {
+                                        $.ajax({
+                                            url: '/Auth/RegisterColleger_Check', type: 'POST', data: JSON.stringify({ ThiSinh_Email:ThiSinh_Email}), contentType: "application/json;charset=utf-8", dataType: 'json',
+                                            success: function (res) { if (res.success) { var errorMessage = "Email đã được đăng ký, nhập email khác"; $('#ThiSinh_Email_Error').text(errorMessage); flag = false; } },
+                                            error: function (error) { console.error(error); }
+                                        });
+                                    }
+                                }
+                                if (!ThiSinh_DCNhanGiayBao) {
+                                    var errorMessage = "Nhập địa chỉ nhận giấy báo"; $('#ThiSinh_DCNhanGiayBao_Error').text(errorMessage); flag = false;
+                                }
+                                if (!Select_Tinh_ID) {
+                                    var errorMessage = "Nhập và chọn/thành phố"; $('#Select_Tinh_ID_Error').text(errorMessage); flag = false;
+                                }
+                                if (!Select_Huyen_ID) {
+                                    var errorMessage = "Nhập và chọn quận/huyện"; $('#Select_Huyen_ID_Error').text(errorMessage); flag = false;
+                                }
+                                if (!Select_Xa_ID) {
+                                    var errorMessage = "Nhập phường/xã"; $('#Select_Xa_ID_Error').text(errorMessage); flag = false;
+                                }
+                                /**Cột 3*/
+                                if (!TruongCapBa_TenTinh) {
+                                    var errorMessage = "Nhập và chọn tỉnh"; $('#TruongCapBa_TenTinh_Error').text(errorMessage); flag = false;
+                                }
+                               
+                                if (!TruongCapBa_Ten) {
+                                    var errorMessage = "Nhập và chọn tên trường"; $('#TruongCapBa_Ten_Error').text(errorMessage); flag = false;
+                                }                               
+
+                                if (!ThiSinh_NamTotNghiep) {
+
+                                    var errorMessage = "Năm TN"; $('#ThiSinh_NamTotNghiep_Error').text(errorMessage); flag = false;
+                                }
+
+                                if (!Select_DoiTuong) {
+                                    var errorMessage = "Chọn đối tượng"; $('#Select_DoiTuong_Error').text(errorMessage); flag = false;
+                                }
+                                if (!Select_HocLucLop12 || Select_HocLucLop12 == "0") {
+                                    var errorMessage = "Chọn học lực"; $('#Select_HocLucLop12_Error').text(errorMessage); flag = false;
+                                }
+                                if (!Select_HanhKiemLop12 || Select_HanhKiemLop12 == "0") {
+                                    var errorMessage = "Chọn hạnh kiểm"; $('#Select_HanhKiemLop12_Error').text(errorMessage); flag = false;
+                                }
+                                if (!flag) return;
+
+                                let ThiSinh_HoKhauThuongTru_Check = {
+                                    Xa_ID: Select_Xa_ID_Hidden,
+                                    Xa_Ten: Select_Xa_ID,
+                                    Huyen_ID: Select_Huyen_ID_Hidden,
+                                    Huyen_TenHuyen: Select_Huyen_ID,
+                                    Tinh_ID: Select_Tinh_ID_Hidden,
+                                    Tinh_Ten: Select_Tinh_ID,
+                                }
+
+                                $('#loadingModal').modal('show');
+                                let ObjRegiter = {
+                                    ThiSinh_HoLot: ThiSinh_HoLot,
+                                    ThiSinh_Ten: ThiSinh_Ten,
+                                    ThiSinh_NgaySinh: ThiSinh_NgaySinh,
+                                    ThiSinh_GioiTinh: ThiSinh_GioiTinh,
+                                    ThiSinh_DanToc: ThiSinh_DanToc,
+                                    ThiSinh_CCCD: ThiSinh_CCCD,
+                                    ThiSinh_MatKhau: ThiSinh_MatKhau,
+                                    ThiSinh_ResetCode: "",
+
+                                    ThiSinh_DienThoai: ThiSinh_DienThoai,
+                                    ThiSinh_Email: ThiSinh_Email,
+                                    ThiSinh_DCNhanGiayBao: ThiSinh_DCNhanGiayBao,
+                                    ThiSinh_HoKhauThuongTru: Select_Xa_ID + " - " + Select_Huyen_ID + " - " + Select_Tinh_ID,
+
+                                    TruongCapBa_TenTinh: TruongCapBa_TenTinh,
+                                    TruongCapBa_MaTinh: TruongCapBa_MaTinh,
+                                    TruongCapBa_Ten: TruongCapBa_Ten,
+                                    TruongCapBa_Ma: TruongCapBa_Ma,
+                                    ThiSinh_NamTotNghiep: ThiSinh_NamTotNghiep,
+                                    KhuVuc_ID: Select_KhuVuc,
+                                    DoiTuong_ID: Select_DoiTuong,
+                                    ThiSinh_HocLucLop12: Select_HocLucLop12,
+                                    ThiSinh_HanhKiemLop12: Select_HanhKiemLop12,
+
+                                    ThiSinh_TrangThai: 1,
+                                    TruongCapBa_ID: TruongCapBa_ID_Hidden,
+                                    TruongCapBa_ThongTin: "",
+                                    ThiSinh_HoKhauThuongTru_Check: JSON.stringify(ThiSinh_HoKhauThuongTru_Check),
+                                    ThiSinh_GhiChu: "",
+                                }
+
+                                $.ajax({
+                                    url: "/Auth/RegisterColleger",
+                                    type: "POST",
+                                    data: JSON.stringify(ObjRegiter),
+                                    contentType: "application/json;charset=utf-8",
+                                    success: function (response) {
+                                        if (response.success) {
+                                            $('#loadingModal').modal('hide');
+                                            $('#modal_tb_dangky').modal('show');
+                                        } else {
+                                            $('#loadingModal').modal('hide');
+                                            $('#signupErrorMessage').text(response.message);
+                                            showToast("Thất bại", "Đăng ký tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+                                        }
+                                    },
+                                    error: function (xhr, status, error) {
+                                        showToast("Thông báo", "Đăng ký tài khoản thất bại! Vui lòng thử lại!", "bg-error");
+                                        $('#loadingModal').modal('hide');
+                                    },
+                                    complete: function () {
+                                        // Hide the loading modal
+                                        $('#loadingModal').modal('hide');
+                                    }
+                                });
+                            }
+                        </script>
+                    </div>
+                    <div class="text-center mt-2">
+                        <div>
+                            <a style="text-decoration: none; color: #262af3; cursor:pointer" href="@Url.Action("Login", "Auth")" class="tdm">Bạn đã có tài khoản ? <b>Quay lại đăng nhập</b></a>
                         </div>
                     </div>
                 </div>
@@ -576,7 +957,7 @@
     <div class="row">
         <div class="col-lg-8 col-12">
             <hr />
-            <div class="row">
+            <div class="row tdm">
                 <div class="col-xl-12">
                     <p class="m-0 colorlogin"><b>LIÊN HỆ</b></p>
                     <p class="m-0 colorlogin">- Phòng Quản lý đào tạo - Phòng 208 Nhà điều hành, Số 565 Quang Trung - Phường Đông Vệ - TP.Thanh Hóa</p>
@@ -586,7 +967,7 @@
         </div>
         <div class="col-lg-4 col-12 mb-4">
             <hr />
-            <div class="row">
+            <div class="row tdm">
                 <p class="m-0 colorlogin"><b>LIÊN KẾT TUYỂN SINH</b></p>
                 <p class="m-0 colorlogin">- Thông tin tuyển sinh ĐH Hồng Đức</p>
                 <p class="m-0 colorlogin">- Video giới thiệu về ĐH Hồng Đức </p>
@@ -610,19 +991,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tieude_tb_dangky">Thông báo</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" id="bt_cancel_on_modal_dangky"></button>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" onclick="BackToLogin()" id="bt_cancel_on_modal_dangky"></button>
             </div>
             <div class="modal-body">
                 <p class="mt-1 mb-1">Đăng ký tài khoản thành công!  </p>
-                <p class="mt-1 mb-1" style="color:blue">Vui lòng kích hoạt tài khoản theo đường link hệ thống đã gửi đến email của bạn ! </p>
+                <p class="mt-1 mb-1" style="color:blue">Để có thể đăng nhập vui lòng kích hoạt tài khoản theo đường link đã được hệ thống đã gửi đến email của bạn ! </p>
             </div>
             <div class="modal-footer">
-                @*<button class="btn btn-secondary" type="button" data-bs-dismiss="modal" id="bt_cancel_on_modal_delete_second">Hủy</button>*@
-                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_dangky">Quay lại trang đăng nhập</button>
+                <button class="btn btn-primary" type="button" id="bt_ok_on_modal_dangky" onclick="BackToLogin()">Quay lại trang đăng nhập</button>
+                <script>function BackToLogin() { window.location.href = "/Auth/Login"; }</script>
             </div>
+
         </div>
     </div>
 </div>
+
 <div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -634,3 +1017,65 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        if (window.innerWidth <= 800) {
+            $('.tdm').addClass('small');
+            $('.tdm-select').addClass('form-select-sm');
+            $('.tdm-control').addClass('form-control-sm');
+        }
+        else {
+            $('.tdm').removeClass('small');
+            $('.tdm-select').removeClass('form-select-sm');
+            $('.tdm-control').removeClass('form-control-sm');
+        }
+
+        function reportWindowSize() {
+            if (window.innerWidth <= 800) {
+                $('.tdm').addClass('small');
+                $('.tdm-select').addClass('form-select-sm');
+                $('.tdm-control').addClass('form-control-sm');
+            }
+            else {
+                $('.tdm').removeClass('small');
+                $('.tdm-select').removeClass('form-select-sm');
+                $('.tdm-control').removeClass('form-control-sm');
+            }
+        }
+        window.onresize = reportWindowSize;
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('input').on('input', function () {
+            hideErrorMessage($(this));
+        });
+        
+        $('select').on('input', function () {
+            hideErrorMessage($(this));
+        })
+        
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy', // Specify the desired date format
+            autoclose: true // Close the datepicker when a date is selected
+        });
+    })
+
+    function hideErrorMessage(input) {
+        var errorContainer = input.next('.text-danger');
+        errorContainer.text('');
+    }
+    function validateEmail(email) {
+        var emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        var isValid = emailRegex.test(email);
+        return isValid;
+    }
+    function showToast(title, message, bgColor) {
+        $("#myToast .toast-header .me-auto").text(title);
+        $("#myToast .toast-body").text(message);
+        $("#myToast .toast").removeClass("bg-success bg-danger").addClass(bgColor);
+        $("#myToast").toast("show");
+    }
+</script>

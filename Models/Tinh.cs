@@ -25,6 +25,7 @@
         [Display(Name = "Tên tỉnh")]
         [StringLength(250)]
         public string Tinh_Ten { get; set; }
+        public string Tinh_Ten_Eng { get; set; }
 
         [Display(Name = "Mã tỉnh - Tên tỉnh")]
         [StringLength(250)]

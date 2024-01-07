@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -17,6 +19,23 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
     {
         private DbConnecttion db = new DbConnecttion();
 
+        static string RemoveDiacritics(string text)
+        {
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+            normalizedString = normalizedString.Replace("Đ", "D").Replace("đ", "d");
+            StringBuilder result = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                UnicodeCategory category = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (category != UnicodeCategory.NonSpacingMark)
+                {
+                    result.Append(c);
+                }
+            }
+
+            return result.ToString().Normalize(NormalizationForm.FormC);
+        }
         // GET: Admin/Xas
         [AdminSessionCheck]
         public ActionResult Index(int? page)
@@ -183,13 +202,44 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+        public ActionResult TaoChuoiKhongDau()
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+
+            string vietnameseWithDiacritics = "Chuỗi tiếng Việt có dấu xã Định Tăng Ô hay Đã có";
+            ViewBag.InputText = vietnameseWithDiacritics;
+
+            string vietnameseWithoutDiacritics = RemoveDiacritics(vietnameseWithDiacritics);
+            ViewBag.OutputText = vietnameseWithoutDiacritics;
+
+            return View();
         }
+        public JsonResult TaoChuoiKhongDauJson()
+        {
+            //var LitsTruongCapBas = db.TruongCapBas.ToList();
+            //foreach(var item in LitsTruongCapBas)
+            //{
+            //    var model = db.TruongCapBas.Where(x => x.Truong_ID == item.Truong_ID).FirstOrDefault();
+            //    model.Truong_TenTinh_Eng = RemoveDiacritics(item.Truong_TenTinh);
+            //    db.SaveChanges();
+            //}
+            //var LitsHuyen= db.Huyens.ToList();
+            //foreach (var item in LitsHuyen)
+            //{
+            //    var model = db.Huyens.Where(x => x.Huyen_ID == item.Huyen_ID).FirstOrDefault();
+            //    model.Huyen_TenHuyen_Eng = RemoveDiacritics(item.Huyen_TenHuyen);
+            //    db.SaveChanges();
+            //}
+            //var LitsTinh = db.Tinhs.ToList();
+            //foreach (var item in LitsTinh)
+            //{
+            //    var model = db.Tinhs.Where(x => x.Tinh_ID == item.Tinh_ID).FirstOrDefault();
+            //    model.Tinh_Ten_Eng = RemoveDiacritics(item.Tinh_Ten);
+            //    db.SaveChanges();
+            //}
+            //LitsXa = db.Xas.ToList();
+            //LitsHuyen = db.Huyens.ToList();
+            //LitsTinh = db.Tinhs.ToList();
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }       
     }
 }

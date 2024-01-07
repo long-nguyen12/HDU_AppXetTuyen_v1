@@ -19,6 +19,7 @@
         [Display(Name = "Tên xã")]
         [StringLength(200)]
         public string Xa_Ten { get; set; }
+        public string Xa_Ten_Eng { get; set; }
 
         [Display(Name = "Ghi chú")]
         [StringLength(200)]

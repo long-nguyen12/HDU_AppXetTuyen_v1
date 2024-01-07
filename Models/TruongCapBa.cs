@@ -12,18 +12,29 @@ namespace HDU_AppXetTuyen.Models
         [Key]
         public int Truong_ID { get; set; }
 
-        [StringLength(50)]
-        public string Truong_Ma { get; set; }
+        public string Truong_MaTinh { get; set; }
 
-        [StringLength(200)]
-        public string Truong_Ten { get; set; }
+        public string Truong_TenTinh { get; set; }
 
-        [StringLength(200)]
-        public string Truong_MaTen { get; set; }
+        public string Truong_MaHuyen { get; set; }
 
-        [StringLength(200)]
+        public string Truong_TenHuyen { get; set; }
+
+        public string Truong_MaTruong { get; set; }
+
+        public string Truong_TenTruong { get; set; }
+
+        public string Truong_DiaChi { get; set; }
+
+        public string Truong_KhuVuc_Ma { get; set; }
+
+        public string Truong_KhuVuc_Ten { get; set; }
+
+        public string Truong_DanToc_NoiTru { get; set; }
+
         public string Truong_GhiChu { get; set; }
 
-        public int? Tinh_ID { get; set; }
+        public string Truong_TenTruong_Eng { get; set; }
+        public string Truong_TenTinh_Eng { get; set; }
     }
 }

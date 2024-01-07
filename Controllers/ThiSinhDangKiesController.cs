@@ -8,30 +8,13 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using HDU_AppXetTuyen.Models;
+using Newtonsoft.Json;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 
 namespace HDU_AppXetTuyen.Controllers
 {
-    public class Update_ThiSinh
-    {
-        public string ThiSinh_CCCD { get; set; }
-        public string ThiSinh_HoLot { get; set; }
-        public string ThiSinh_Ten { get; set; }
-        public string ThiSinh_DienThoai { get; set; }
-        public string ThiSinh_Email { get; set; }
-        public string ThiSinh_NgaySinh { get; set; }
-        public string ThiSinh_DanToc { get; set; }
-        public string ThiSinh_GioiTinh { get; set; }
-        public string ThiSinh_DCNhanGiayBao { get; set; }
-        public string ThiSinh_HoKhauThuongTru { get; set; }
-        public string KhuVuc_ID { get; set; }
-        public string DoiTuong_ID { get; set; }
-        public string ThiSinh_TruongCapBa_Ma { get; set; }
-        public string ThiSinh_TruongCapBa { get; set; }
-        public string ThiSinh_HoKhauThuongTru_Check { get; set; }
-        public string ThiSinh_HocLucLop12 { get; set; }
-        public string ThiSinh_HanhKiemLop12 { get; set; }
-    }
+
     public class ThiSinhSessionCheckAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -44,142 +27,166 @@ namespace HDU_AppXetTuyen.Controllers
     }
     public class ThiSinhDangKiesController : Controller
     {
-        private DbConnecttion db = new DbConnecttion();
+         private DbConnecttion db = null;
 
-        public ActionResult Index2()
-        {
-            var session = Session["login_session"].ToString();
-            if (session != null)
-            {
-                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
-                return View(thiSinh);
-            }
-            ThiSinhDangKy ts = new ThiSinhDangKy();
-            return View(ts);
-        }
-        // GET: ThiSinhDangKies
         [ThiSinhSessionCheck]
         public ActionResult Index()
         {
             var session = Session["login_session"].ToString();
-            if(session != null)
+            if (session != null)
             {
-                var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
-                return View(thiSinh);
+                return View();
             }
-            ThiSinhDangKy ts = new ThiSinhDangKy();
-            return View(ts);
+            return RedirectToAction("Login", "Auth");
         }
-
-        // GET: ThiSinhDangKies/Details/5
-        public ActionResult Details(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ThiSinhDangKy thiSinhDangKy = db.ThiSinhDangKies.Find(id);
-            if (thiSinhDangKy == null)
-            {
-                return HttpNotFound();
-            }
-            return View(thiSinhDangKy);
-        }
-
-        // GET: ThiSinhDangKies/Create
-        public ActionResult Create()
-        {
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten");
-            ViewBag.DotXT_ID = new SelectList(db.DotXetTuyens, "Dxt_ID", "Dxt_Ten");
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten");
-            return View();
-        }
-
-        // POST: ThiSinhDangKies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ThiSinh_ID,ThiSinh_CCCD,ThiSinh_MatKhau,ThiSinh_DienThoai,ThiSinh_Email,ThiSinh_HoLot,ThiSinh_Ten,ThiSinh_NgaySinh,ThiSinh_NamTotNghiep,ThiSinh_ResetCode,ThiSinh_NgayDangKy,ThiSinh_DanToc,ThiSinh_GioiTinh,ThiSinh_DCNhanGiayBao,ThiSinh_HoKhauThuongTru,ThiSinh_HoKhauThuongTru_Check,KhuVuc_ID,DoiTuong_ID,ThiSinh_TruongCapBa_Ma,ThiSinh_TruongCapBa,DotXT_ID,ThiSinh_TrangThai,ThiSinh_GhiChu")] ThiSinhDangKy thiSinhDangKy)
-        {
-            if (ModelState.IsValid)
-            {
-                db.ThiSinhDangKies.Add(thiSinhDangKy);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);          
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
-            return View(thiSinhDangKy);
-        }
-
-        // GET: ThiSinhDangKies/Edit/5
         [ThiSinhSessionCheck]
-        public ActionResult Edit(long? id)
+        public JsonResult Index_Get_Json()
         {
-            if (id == null)
+            db = new DbConnecttion();
+            var session = Session["login_session"].ToString();
+            if (session != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ThiSinhDangKy thiSinhDangKy = db.ThiSinhDangKies.Find(id);
-            if (thiSinhDangKy == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);          
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
-            return View(thiSinhDangKy);
-        }
+                var s = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+                string Gt_Ten = "Nam"; if (s.ThiSinh_GioiTinh == 1) { Gt_Ten = "Nữ"; }
+                string Hk_ten = "Tốt";
+                if(s.ThiSinh_HanhKiemLop12 == 3) { Hk_ten = "Khá"; }
+                if (s.ThiSinh_HanhKiemLop12 == 2) { Hk_ten = "Trung bình"; }
+                if (s.ThiSinh_HanhKiemLop12 == 1) { Hk_ten = "Yếu"; }
 
-        // POST: ThiSinhDangKies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ThiSinh_ID,ThiSinh_CCCD,ThiSinh_MatKhau,ThiSinh_DienThoai,ThiSinh_Email,ThiSinh_HoLot,ThiSinh_Ten,ThiSinh_NgaySinh,ThiSinh_NamTotNghiep,ThiSinh_ResetCode,ThiSinh_NgayDangKy,ThiSinh_DanToc,ThiSinh_GioiTinh,ThiSinh_DCNhanGiayBao,ThiSinh_HoKhauThuongTru,ThiSinh_HoKhauThuongTru_Check,KhuVuc_ID,DoiTuong_ID,ThiSinh_TruongCapBa_Ma,ThiSinh_TruongCapBa,DotXT_ID,ThiSinh_TrangThai,ThiSinh_GhiChu")] ThiSinhDangKy thiSinhDangKy)
+                string Hl_ten = "Xuất sắc";
+                if (s.ThiSinh_HocLucLop12 == 3) { Hl_ten = "Giỏi"; }
+                if (s.ThiSinh_HocLucLop12 == 2) { Hl_ten = "Khá"; }
+                if (s.ThiSinh_HocLucLop12 == 1) { Hl_ten = "Trung bình"; }
+
+                var ts_ngaysinh = (Convert.ToDateTime(s.ThiSinh_NgaySinh)).ToString("dd/MM/yyyy");
+                string[] HoKhauArr = s.ThiSinh_HoKhauThuongTru.Split('-');
+
+                var model = new
+                {
+                    ThiSinh_HoLot = s.ThiSinh_HoLot,
+                    ThiSinh_Ten = s.ThiSinh_Ten,
+                    ThiSinh_NgaySinh = ts_ngaysinh,
+                    ThiSinh_GioiTinh = Gt_Ten,
+                    ThiSinh_DanToc = s.ThiSinh_DanToc,
+                    ThiSinh_CCCD = s.ThiSinh_CCCD,
+                    ThiSinh_DienThoai = s.ThiSinh_DienThoai,
+                    ThiSinh_Email = s.ThiSinh_Email,
+                    ThiSinh_DCNhanGiayBao = s.ThiSinh_DCNhanGiayBao,
+
+                    Select_Xa_ID = HoKhauArr[0].Trim(),
+                    Select_Huyen_ID = HoKhauArr[1].Trim(),
+                    Select_Tinh_ID = HoKhauArr[2].Trim(),
+
+                    TruongCapBa_TenTinh = s.TruongCapBa_TenTinh,
+                    TruongCapBa_MaTinh = s.TruongCapBa_MaTinh,
+                    TruongCapBa_Ten = s.TruongCapBa_Ten,
+                    TruongCapBa_Ma = s.TruongCapBa_Ma,
+                    ThiSinh_NamTotNghiep = s.ThiSinh_NamTotNghiep,
+                    KhuVuc_ID = s.KhuVuc.KhuVuc_Ten,
+                    DoiTuong_ID = s.DoiTuong.DoiTuong_Ten,
+                    ThiSinh_HanhKiemLop12 = Hk_ten,
+                    ThiSinh_HocLucLop12 = Hl_ten,
+                   
+                };
+                return Json(new { success = true, data = model }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false , data ="Loi" }, JsonRequestBehavior.AllowGet);
+        }
+        
+        [ThiSinhSessionCheck]
+        public ActionResult Edit()
         {
-            if (ModelState.IsValid)
+            var session = Session["login_session"].ToString();
+            if (session != null)
             {
-                db.Entry(thiSinhDangKy).State = EntityState.Modified;
+                return View();
+            }
+            return RedirectToAction("Login", "Auth");
+        }
+        [ThiSinhSessionCheck]
+        public JsonResult Edit_Get_Json()
+        {
+            db = new DbConnecttion();
+            var session = Session["login_session"].ToString();
+            if (session != null)
+            {
+                var tsGet = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
+                ThongTinHoKhauThuongTru item_hokhau = JsonConvert.DeserializeObject<ThongTinHoKhauThuongTru>(tsGet.ThiSinh_HoKhauThuongTru_Check);
+                TruongCapBa item_truong = JsonConvert.DeserializeObject<TruongCapBa>(tsGet.TruongCapBa_ThongTin);
+                var model = new
+                {
+                    ThiSinh_HoLot = tsGet.ThiSinh_HoLot,
+                    ThiSinh_Ten = tsGet.ThiSinh_Ten,
+                    ThiSinh_NgaySinh = tsGet.ThiSinh_NgaySinh,
+                    ThiSinh_GioiTinh = tsGet.ThiSinh_GioiTinh,
+                    ThiSinh_DanToc = tsGet.ThiSinh_DanToc,
+                    ThiSinh_CCCD = tsGet.ThiSinh_CCCD,
+
+                    ThiSinh_DienThoai = tsGet.ThiSinh_DienThoai,
+                    ThiSinh_Email = tsGet.ThiSinh_Email,
+                    ThiSinh_DCNhanGiayBao = tsGet.ThiSinh_DCNhanGiayBao,
+                    
+                    Select_Tinh_ID = item_hokhau.Tinh_Ten,
+                    Select_Tinh_ID_Hidden = item_hokhau.Tinh_ID,
+
+                    Select_Huyen_ID = item_hokhau.Huyen_TenHuyen,
+                    Select_Huyen_ID_Hidden = item_hokhau.Huyen_ID,
+
+                    Select_Xa_ID = item_hokhau.Xa_Ten,
+                    Select_Xa_ID_Hidden = item_hokhau.Xa_ID,
+                    TruongCapBa_TenTinh = tsGet.TruongCapBa_TenTinh,
+                    TruongCapBa_MaTinh = tsGet.TruongCapBa_MaTinh,
+                    TruongCapBa_Ten = tsGet.TruongCapBa_Ten,
+                    TruongCapBa_ID_Hidden = tsGet.TruongCapBa_ID,
+                    TruongCapBa_Ma = tsGet.TruongCapBa_Ma,
+                    ThiSinh_NamTotNghiep = tsGet.ThiSinh_NamTotNghiep,
+                    Select_KhuVuc = item_truong.Truong_KhuVuc_Ten,
+                    Select_KhuVuc_Hidden = item_truong.Truong_KhuVuc_Ma,
+                    Select_DoiTuong = tsGet.DoiTuong_ID,
+                    Select_HocLucLop12 = tsGet.ThiSinh_HocLucLop12,
+                    Select_HanhKiemLop12 = tsGet.ThiSinh_HanhKiemLop12,
+                };
+                return Json(new { success = true, data = model }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = false, data = "Loi" }, JsonRequestBehavior.AllowGet);
+        }
+        
+        public ActionResult Edit_Post_Json(ThiSinhDangKy entity)
+        {
+            db = new DbConnecttion();
+            var session = Session["login_session"].ToString();
+            if (session != null)
+            {
+                var model = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).FirstOrDefault();
+                model.ThiSinh_HoLot = entity.ThiSinh_HoLot;
+                model.ThiSinh_Ten = entity.ThiSinh_Ten;
+                model.ThiSinh_NgaySinh = entity.ThiSinh_NgaySinh;
+                model.ThiSinh_GioiTinh = entity.ThiSinh_GioiTinh;
+                model.ThiSinh_DanToc = entity.ThiSinh_DanToc;
+                model.ThiSinh_DienThoai = entity.ThiSinh_DienThoai;
+                model.ThiSinh_DCNhanGiayBao = entity.ThiSinh_DCNhanGiayBao;
+                model.ThiSinh_HoKhauThuongTru = entity.ThiSinh_HoKhauThuongTru;
+                model.TruongCapBa_TenTinh = entity.TruongCapBa_TenTinh;
+                model.TruongCapBa_MaTinh = entity.TruongCapBa_MaTinh;
+                model.TruongCapBa_Ten = entity.TruongCapBa_Ten;
+                model.TruongCapBa_Ma = entity.TruongCapBa_Ma;
+                model.ThiSinh_NamTotNghiep = entity.ThiSinh_NamTotNghiep;
+                model.KhuVuc_ID = entity.KhuVuc_ID;
+                model.DoiTuong_ID = entity.DoiTuong_ID;
+                model.ThiSinh_HocLucLop12 = entity.ThiSinh_HocLucLop12;
+                model.ThiSinh_HanhKiemLop12 = entity.ThiSinh_HanhKiemLop12;
+                model.TruongCapBa_ID = entity.TruongCapBa_ID;
+                model.ThiSinh_HoKhauThuongTru_Check = entity.ThiSinh_HoKhauThuongTru_Check;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { success = true, data = "success" }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.DoiTuong_ID = new SelectList(db.DoiTuongs, "DoiTuong_ID", "DoiTuong_Ten", thiSinhDangKy.DoiTuong_ID);
+            return Json(new { success = false, data = "error" }, JsonRequestBehavior.AllowGet);            
+        }
           
-            ViewBag.KhuVuc_ID = new SelectList(db.KhuVucs, "KhuVuc_ID", "KhuVuc_Ten", thiSinhDangKy.KhuVuc_ID);
-            return View(thiSinhDangKy);
-        }
-
-        // GET: ThiSinhDangKies/Delete/5
-        public ActionResult Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ThiSinhDangKy thiSinhDangKy = db.ThiSinhDangKies.Find(id);
-            if (thiSinhDangKy == null)
-            {
-                return HttpNotFound();
-            }
-            return View(thiSinhDangKy);
-        }
-
-        // POST: ThiSinhDangKies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
-        {
-            ThiSinhDangKy thiSinhDangKy = db.ThiSinhDangKies.Find(id);
-            db.ThiSinhDangKies.Remove(thiSinhDangKy);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         [HttpPost]
         public JsonResult GetThiSinhInfo(string id)
         {
+            db = new DbConnecttion();
             int idThiSinh = int.Parse(id);
             var thiSinh = db.ThiSinhDangKies.Where(n => n.ThiSinh_ID == idThiSinh).Select(n => new
             {
@@ -197,9 +204,9 @@ namespace HDU_AppXetTuyen.Controllers
                 ThiSinh_HoKhauThuongTru = n.ThiSinh_HoKhauThuongTru,
                 KhuVuc_ID = n.KhuVuc_ID,
                 DoiTuong_ID = n.DoiTuong_ID,
-                ThiSinh_TruongCapBa_Ma = n.ThiSinh_TruongCapBa_Ma,
-                ThiSinh_TruongCapBa = n.ThiSinh_TruongCapBa,
-                ThiSinh_TruongCapBa_Tinh_ID = n.ThiSinh_TruongCapBa_Tinh_ID,
+                ThiSinh_TruongCapBa_Ma = n.TruongCapBa_Ma,
+                ThiSinh_TruongCapBa = n.TruongCapBa_Ten,
+                ThiSinh_TruongCapBa_Tinh_ID = n.TruongCapBa_MaTinh,
                 ThiSinh_TrangThai = n.ThiSinh_TrangThai,
                 ThiSinh_GhiChu = n.ThiSinh_GhiChu,
                 ThiSinh_HoKhauThuongTru_Check = n.ThiSinh_HoKhauThuongTru_Check,
@@ -229,58 +236,7 @@ namespace HDU_AppXetTuyen.Controllers
                 DoiTuong_GhiChu = n.DoiTuong_GhiChu
             }).ToList();
             return Json(new { success = true, data = thiSinh, tinhs = tinhs, khuvucs = khuvucs, doituongs = doituongs }, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult UpdateInfo(Update_ThiSinh thiSinh_Update)
-        {
-            var session = Session["login_session"].ToString();
-            var ts = db.ThiSinhDangKies.Where(n => n.ThiSinh_MatKhau.Equals(session)).Include(t => t.DoiTuong).Include(t => t.KhuVuc).FirstOrDefault();
-
-            ts.ThiSinh_CCCD = thiSinh_Update.ThiSinh_CCCD;
-            ts.ThiSinh_HoLot = thiSinh_Update.ThiSinh_HoLot;
-            ts.ThiSinh_Ten = thiSinh_Update.ThiSinh_Ten;
-            ts.ThiSinh_DienThoai = thiSinh_Update.ThiSinh_DienThoai;
-            ts.ThiSinh_NgaySinh = thiSinh_Update.ThiSinh_NgaySinh;
-            ts.ThiSinh_DanToc = thiSinh_Update.ThiSinh_DanToc;
-            ts.ThiSinh_GioiTinh = int.Parse(thiSinh_Update.ThiSinh_GioiTinh);
-            ts.ThiSinh_DCNhanGiayBao = thiSinh_Update.ThiSinh_DCNhanGiayBao;
-            ts.ThiSinh_HoKhauThuongTru = thiSinh_Update.ThiSinh_HoKhauThuongTru;
-            ts.ThiSinh_HoKhauThuongTru_Check = thiSinh_Update.ThiSinh_HoKhauThuongTru_Check;
-            ts.KhuVuc_ID = int.Parse(thiSinh_Update.KhuVuc_ID);
-            ts.DoiTuong_ID = int.Parse(thiSinh_Update.DoiTuong_ID);
-            ts.ThiSinh_TruongCapBa_Ma = thiSinh_Update.ThiSinh_TruongCapBa_Ma;
-            ts.ThiSinh_TruongCapBa = thiSinh_Update.ThiSinh_TruongCapBa;
-            ts.ThiSinh_HocLucLop12 = int.Parse(thiSinh_Update.ThiSinh_HocLucLop12);
-            ts.ThiSinh_HanhKiemLop12 = int.Parse(thiSinh_Update.ThiSinh_HanhKiemLop12);
-            if (!ts.ThiSinh_Email.Equals(thiSinh_Update.ThiSinh_Email))
-            {
-                ts.ThiSinh_Email = thiSinh_Update.ThiSinh_Email;
-            }
-            else
-            {
-                ts.ThiSinh_Email_Temp = thiSinh_Update.ThiSinh_Email;
-                /*var subject = "Đặt lại email";
-                var body = "Xin chào " + ts.ThiSinh_Ten + ", <br/> Bạn vừa yêu cầu đổi email. Vui lòng xác thực email. " +
-
-                     " <br/><b>" + randomPassword + "</b><br/>";
-
-                SendEmail(thiSinh_Update.ThiSinh_Email, body, subject);*/
-
-            }
-            db.SaveChanges();
-
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        } 
         private void SendEmail(string email, string body, string subject)
         {
             using (MailMessage mm = new MailMessage("cict@hdu.edu.vn", email))
@@ -300,5 +256,5 @@ namespace HDU_AppXetTuyen.Controllers
                 smtp.Send(mm);
             }
         }
-    }
+    }    
 }

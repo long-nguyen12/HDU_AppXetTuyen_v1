@@ -3,7 +3,7 @@
     ViewBag.Title = "RegisterMaster";
     Layout = "~/Views/Shared/_Layout_auth.cshtml";
 }
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="~/Scripts/bootstrap.bundle.min.js"></script>
 <style>
     .colorlogin {
         color: #ff6a00 !important;
@@ -22,299 +22,275 @@
             background-color: #808080;
             color: #fff;
         }
+
     .form-control, .btn, .form-select {
         border-radius: 3px
     }
+ 
     th {
-        color: #ff6a00 !important;
     }
 </style>
 <div class="container">
-    <div id="div_update_aspirations" style="">
-        <div class="text-center text-uppercase" style="margin-top:20px">
+    <div class="row" style="padding-top:30px">
+        <div class="col-12 text-center text-uppercase">
             <h5 class="colorlogin" style="font-weight: bold">ĐĂNG KÝ THÔNG TIN TUYỂN SINH SAU ĐẠI HỌC</h5>
+            <hr />
         </div>
-        <hr class="mt-2 mb-2" />
-        <div class="card card-header-actions mt-0">
-            <div class="card-body" style="padding-bottom: 2px; padding-top: 4px">
-                <div class="row">
-                    <div class="col-lg-4 pl-1 pr-1">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Thông tin cơ bản <font color="red">(*)</font>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-lg-7 col-7 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_HoDem">Họ, tên đệm</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_HoDem" name="HocVien_HoDem" type="text"/>
-                                                        <span id="Error_Rgt_HocVien_HoDem" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="row g-1">
+                                <div class="col-12 mt-2" style="color: #ff6a00 !important;"><b>Thông tin cơ bản <font color="red">(*)</font></b></div>
+                                <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-1" /></div>
+                                <div class="col-7">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_HoDem">Họ, tên đệm</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_HoDem" name="HocVien_HoDem" type="text" placeholder="Nhập họ lót" />
+                                            <span id="Error_Rgt_HocVien_HoDem" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-12" for="HocVien_Ten">Tên</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control text-box single-line" id="HocVien_Ten" name="HocVien_Ten" type="text" placeholder="Nhập tên"/>
+                                            <span id="Error_Rgt_HocVien_Ten" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-7">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-12"
+                                               for="HocVien_NgaySinh">Ngày sinh</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control text-box single-line" id="HocVien_NgaySinh" name="HocVien_NgaySinh" type="date" />
+                                            <span id="Error_Rgt_HocVien_NgaySinh" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <label class="control-label col-12" style="margin-left:4px">Giới tính</label>
+                                    <div class="row g-2" style="margin-left:4px">
+                                        <div class="col-6">
+                                            <div class="form-check align-items-center">
+                                                <input class="form-check-input" type="radio" id="radioNam" name="HocVien_GioiTinh" checked>
+                                                <label class="form-check-label" for="radioNam">Nam</label>
                                             </div>
-                                            <div class="col-lg-5 col-5 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12"
-                                                           for="HocVien_Ten">Tên</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_Ten" name="HocVien_Ten" type="text"/>
-                                                        <span id="Error_Rgt_HocVien_Ten" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-check align-items-center">
+                                                <input class="form-check-input" type="radio" id="radioNu" name="HocVien_GioiTinh">
+                                                <label class="form-check-label" for="radioNu">Nữ</label>
                                             </div>
+                                        </div>
+                                        <span id="Error_Rgt_HocVien_GioiTinh" class="small mb-1 text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
 
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_CCCD">Căn cước công dân</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_CCCD" name="HocVien_CCCD" type="text" placeholder="038205020534" />
+                                            <span id="Error_Rgt_HocVien_CCCD" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_CCCD_NgayCap">Ngày cấp CCCD</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_CCCD_NgayCap" name="HocVien_CCCD_NgayCap" type="date" placeholder="02/02/2020" />
+                                            <span id="Error_Rgt_HocVien_CCCD_NgayCap" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_MatKhau">Mật khẩu</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_MatKhau" name="HocVien_MatKhau" type="password" placeholder="Nhập mật khẩu"/>
+                                            <span id="Error_Rgt_HocVien_MatKhau" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_MatKhau_NhapLai">Nhập lại mật khẩu</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_MatKhau_NhapLai" name="HocVien_MatKhau_NhapLai" type="password" placeholder="Nhập lại mật khẩu"/>
+                                            <span id="Error_Rgt_HocVien_MatKhau_NhapLai" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="row g-1">
+                                <div class="col-12 mt-2" style="color: #ff6a00 !important;"><b>Thông tin liên hệ <font color="red">(*)</font></b></div>
+                                <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-1" /></div>
+                                <div class="col-xxl-7 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_Email">Email</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_Email" name="HocVien_Email" type="text" placeholder="vidu@gmail.com" />
+                                            <span id="Error_Rgt_HocVien_Email" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xxl-5 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_DienThoai">Điện thoại</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_DienThoai" name="HocVien_DienThoai" type="text" placeholder="0912345678" />
+                                            <span id="Error_Rgt_HocVien_DienThoai" class="small mb-1 text-danger"></span>
 
-                                            <div class="col-lg-7 col-7 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12"
-                                                           for="HocVien_NgaySinh">Ngày sinh</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_NgaySinh" name="HocVien_NgaySinh" type="date" />
-                                                        <span id="Error_Rgt_HocVien_NgaySinh" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5 col-5 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Giới tính</label>
-                                                    <div class="col-md-12">
-                                                        <div class="d-inline-flex flex-nowrap  ">
-                                                            <div class="form-check align-items-center mt-1">
-                                                                <input class="form-check-input" type="radio" id="radioNam" name="HocVien_GioiTinh" checked>
-                                                                <label class="form-check-label" for="radioNam">Nam</label>
-                                                            </div>
-                                                            <div class="form-check  align-items-center mt-1" style="margin-left:8px">
-                                                                <input class="form-check-input" type="radio" id="radioNu" name="HocVien_GioiTinh">
-                                                                <label class="form-check-label" for="radioNu">Nữ</label>
-                                                            </div>
-                                                        </div>
-                                                        <span id="Error_Rgt_HocVien_GioiTinh" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-7 col-7 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_CCCD">Số căn cước công dân</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_CCCD" name="HocVien_CCCD" type="text" placeholder="038205020534" />
-                                                        <span id="Error_Rgt_HocVien_CCCD" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5 col-5 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_CCCD_NgayCap">Ngày cấp CCCD</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_CCCD_NgayCap" name="HocVien_CCCD_NgayCap" type="date" placeholder="02/02/2020" />
-                                                        <span id="Error_Rgt_HocVien_CCCD_NgayCap" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_NoiSinh">Nơi sinh</label>
+                                        <div class="col-12">
+                                            <select id="HocVien_NoiSinh" class="form-select"></select>
+                                            <span id="Error_Rgt_HocVien_NoiSinh" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_DanToc">Dân tộc</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_DanToc" name="HocVien_DanToc" type="text" />
+                                            <span id="Error_Rgt_HocVien_DanToc" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_HoKhauThuongTru">Hộ khẩu thường trú</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control text-box single-line" id="HocVien_HoKhauThuongTru" name="HocVien_HoKhauThuongTru" type="text" placeholder="Nhập hộ khẩu thường trú"/>
+                                            <span id="Error_Rgt_HocVien_HoKhauThuongTru" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12" for="HocVien_DiaChiLienHe">Địa chỉ liên hệ</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line" id="HocVien_DiaChiLienHe" name="HocVien_DiaChiLienHe" type="text" placeholder="Địa chỉ liên hệ"/>
+                                            <span id="Error_Rgt_HocVien_DiaChiLienHe" class="small mb-1 text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                            </div>
+                        </div>
 
-                                            <div class="col-lg-6 col-6 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_MatKhau">Mật khẩu</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_MatKhau" name="HocVien_MatKhau" type="password"/>
-                                                        <span id="Error_Rgt_HocVien_MatKhau" class="small mb-1 text-danger"></span>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="row g-1">
+                                <div class="col-12 mt-2" style="color: #ff6a00 !important;"><b>Thông tin cơ quan công tác <font color="red">(*)</font></b></div>
+                                <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-1" /></div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12">Đơn vị công tác</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_TenDonViCongTac" name="HocVien_TenDonViCongTac" type="text" placeholder="Nhập đơn vị công tác"/>
+                                            <span id="Error_Rgt_HocVien_TenDonViCongTac" class="small mb-1 text-danger span-hv-dvcongtac"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-lg-6 col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12">Chức vụ</label>
+                                        <div class="col-md-12">
+                                            <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_ChucVu" name="HocVien_ChucVu" type="text" placeholder="Nhập chức vụ" />
+                                            <span id="Error_Rgt_HocVien_ChucVu" class="small mb-1 text-danger span-hv-dvcongtac"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6  col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12">Chuyên môn</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_ChuyenMon" name="HocVien_ChuyenMon" type="text" placeholder="Nhập chuyên môn"/>
+                                            <span id="Error_Rgt_HocVien_ChuyenMon" class="small mb-1 text-danger span-hv-dvcongtac"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-lg-6  col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12">Thâm niên nghề</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_ThamNien" name="HocVien_ThamNien" type="text" placeholder="Số năm công tác"/>
+                                            <span id="Error_Rgt_HocVien_ThamNien" class="small mb-1 text-danger span-hv-dvcongtac"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6  col-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-12">Năm bắt đầu công tác</label>
+                                        <div class="col-12">
+                                            <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_NamCT" name="HocVien_NamCT" placeholder="Năm bđ công tác"/>
+                                            <span id="Error_Rgt_HocVien_NamCT" class="small mb-1 text-danger span-hv-dvcongtac"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                                <div class="col-12">
+                                    <div class="row g-1">
+                                        <div class="col-xxl-4 col-12"><label class="control-label">Hiện là cán bộ</label></div>
+                                        <div class="col-xxl-8 col-12">
+                                            <div class="row g-2">
+                                                <div class="col-5">
+                                                    <div class="form-check align-items-center">
+                                                        <input class="form-check-input input-hv-dvcongtac" type="radio" id="HocVien_LoaiCB_HopDong" name="HocVien_LoaiCanBo">
+                                                        <label class="form-check-label" for="HocVien_LoaiCB_HopDong">Hợp đồng</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6 col-6 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_MatKhau_NhapLai">Nhập lại mật khẩu</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_MatKhau_NhapLai" name="HocVien_MatKhau_NhapLai" type="password" />
-                                                        <span id="Error_Rgt_HocVien_MatKhau_NhapLai" class="small mb-1 text-danger"></span>
+                                                <div class="col-7">
+                                                    <div class="form-check align-items-center">
+                                                        <input class="form-check-input input-hv-dvcongtac" type="radio" id="HocVien_LoaiCB_BienChe" name="HocVien_LoaiCanBo">
+                                                        <label class="form-check-label" for="HocVien_LoaiCB_BienChe">Biên chế</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </div>
 
-                        </table>
+                                <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-4 pl-1 pr-1">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Thông tin liên hệ <font color="red">(*)</font>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-lg-7 col-7 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_Email">Email</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_Email" name="HocVien_Email" type="text"  placeholder="vidu@gmail.com" />
-                                                        <span id="Error_Rgt_HocVien_Email" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5 col-5 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_DienThoai">Điện thoại</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_DienThoai" name="HocVien_DienThoai" type="text" placeholder="0912345678" />
-                                                        <span id="Error_Rgt_HocVien_DienThoai" class="small mb-1 text-danger"></span>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-6 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_NoiSinh">Nơi sinh</label>
-                                                    <div class="col-md-12">
-                                                        <select id="HocVien_NoiSinh" class="form-select"></select>
-                                                        @*<input class="form-control text-box single-line" id="HocVien_NoiSinh" name="HocVien_NoiSinh" type="text" value="a" />*@
-                                                        <span id="Error_Rgt_HocVien_NoiSinh" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-6 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_DanToc">Dân tộc</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_DanToc" name="HocVien_DanToc" type="text" />
-                                                        <span id="Error_Rgt_HocVien_DanToc" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_HoKhauThuongTru">Hộ khẩu thường trú</label>
-                                                    <div class="col-md-12">
-
-                                                        <input class="form-control text-box single-line" id="HocVien_HoKhauThuongTru" name="HocVien_HoKhauThuongTru" type="text"  />
-                                                        <span id="Error_Rgt_HocVien_HoKhauThuongTru" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12" for="HocVien_DiaChiLienHe">Địa chỉ liên hệ</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line" id="HocVien_DiaChiLienHe" name="HocVien_DiaChiLienHe" type="text" />
-                                                        <span id="Error_Rgt_HocVien_DiaChiLienHe" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                        </table>
-                    </div>
-                    <div class="col-lg-4 pl-1 pr-1">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Thông tin cơ quan công tác <font color="red">(*)</font></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-lg-12 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Hiện là cán bộ</label>
-                                                    <div class="col-md-12 mt-2">
-                                                        <div class="d-inline-flex flex-nowrap">
-                                                            <div class="form-check align-items-center mt-1">
-                                                                <input class="form-check-input input-hv-dvcongtac" type="radio" id="HocVien_LoaiCB_HopDong" name="HocVien_LoaiCanBo">
-                                                                <label class="form-check-label" for="HocVien_LoaiCB_HopDong">Hợp đồng</label>
-                                                            </div>
-                                                            <div class="form-check align-items-center mt-1" style="margin-left:8px">
-                                                                <input class="form-check-input input-hv-dvcongtac" type="radio" id="HocVien_LoaiCB_BienChe" name="HocVien_LoaiCanBo">
-                                                                <label class="form-check-label" for="HocVien_LoaiCB_BienChe">Biên chế</label>
-                                                            </div>
-                                                        </div>
-                                                        <span id="Error_Rgt_HocVien_LoaiCB" class="small mb-1 text-danger"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-12 col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Đơn vị công tác</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_TenDonViCongTac" name="HocVien_TenDonViCongTac" type="text" />
-                                                        <span id="Error_Rgt_HocVien_TenDonViCongTac" class="small mb-1 text-danger span-hv-dvcongtac"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-12  p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Chức vụ</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_ChucVu" name="HocVien_ChucVu" type="text" />
-                                                        <span id="Error_Rgt_HocVien_ChucVu" class="small mb-1 text-danger span-hv-dvcongtac"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6  col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Chuyên môn</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_ChuyenMon" name="HocVien_ChuyenMon" type="text" />
-                                                        <span id="Error_Rgt_HocVien_ChuyenMon" class="small mb-1 text-danger span-hv-dvcongtac"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6  col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Thâm niên nghề</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_ThamNien" name="HocVien_ThamNien" type="text" />
-                                                        <span id="Error_Rgt_HocVien_ThamNien" class="small mb-1 text-danger span-hv-dvcongtac"></span>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6  col-12 p-1">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-12">Năm BĐ công tác</label>
-                                                    <div class="col-md-12">
-                                                        <input class="form-control text-box single-line input-hv-dvcongtac" id="HocVien_NamCT" name="HocVien_NamCT"/>
-                                                        <span id="Error_Rgt_HocVien_NamCT" class="small mb-1 text-danger span-hv-dvcongtac"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                        </table>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
-                    </div>
-                    <div class="col-lg-12 col-12 p-1 mb-2">
-                        <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span id="signupErrorMessage" class="small mb-1 text-danger"></span>
+                        </div>
+                        <div class="col-lg-12 col-12">
                             <center>
-                                <span id="SignupErrorMessage" class="small mb-1 text-danger"></span>
-                                <div class="col-md-12">
+                                <div class="col-12  mt-2">
                                     <input class="btn login-button" type="submit" id="bt_submit_register_hocvien" value="Đăng ký thông tin" />
                                 </div>
-                                <div class="col-md-12 mt-2">
+                                <div class="col-12 mt-2">
                                     <a style="text-decoration: none; letter-spacing: -0.7px; color: #ff6a00;" href="@Url.Action("Login", "Auth")">Bạn đã có tài khoản ? <b>Quay lại đăng nhập</b></a>
-                                </div>                              
+                                </div>
                             </center>
                         </div>
                     </div>
@@ -322,6 +298,7 @@
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-lg-8 col-12 ">
             <hr />
@@ -388,8 +365,7 @@
     /* Kiểm tra không cho phép nhập chữ tại các ô có số */
     $(document).ready(function () {
         function setInputFilter(textbox, inputFilter) {
-            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
-                textbox.addEventListener(event, function () {
+            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {textbox.addEventListener(event, function () {
                     if (inputFilter(this.value)) {
                         this.oldValue = this.value;
                         this.oldSelectionStart = this.selectionStart;
@@ -412,6 +388,16 @@
         setInputFilter(document.getElementById("HocVien_NamCT"), function (value) {
             return /^\d*$/.test(value);
         });
+
+        //setInputFilter($("#HocVien_DienThoai"), function (value) {
+        //    return /^\d*$/.test(value);
+        //});
+        //setInputFilter($("#HocVien_CCCD"), function (value) {
+        //    return /^\d*$/.test(value);
+        //});
+        //setInputFilter($("#HocVien_NamCT"), function (value) {
+        //    return /^\d*$/.test(value);
+        //});
 
         //setInputFilter(document.getElementById("HocVien_BangDaiHoc_NamTN"), function (value) {
         //    return /^\d*$/.test(value);
@@ -531,7 +517,7 @@
             }
 
             if ($('#HocVien_LoaiCB_HopDong').is(':checked')) {
-                _hocVien_LoaiCB = 0;             
+                _hocVien_LoaiCB = 0;
             }
 
             if (!flag) return;
@@ -659,6 +645,7 @@
                     $.each(data, function (index, item) {
                         hocVien_noiSinh_tinh.append($('<option></option>').val(item.tinh_ID).text(item.tinh_Ten));
                     });
+                    hocVien_noiSinh_tinh.val(28);
                 } else { }
             },
             error: function (errormessage) {

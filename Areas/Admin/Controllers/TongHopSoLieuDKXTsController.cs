@@ -569,9 +569,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_TongDiemFull  = model.Dkxt_KQTQG_TongDiem_Full,
                 ThiSinh_NamTotNghiep = model.Dkxt_KQTQG_NamTotNghiep,
 
-                ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
-                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
-                ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
+                ThiSinh_TruongCapBa_Tinh_ID = model.ThiSinhDangKy.TruongCapBa_MaTinh,
+                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.TruongCapBa_Ma,
+                ThiSinh_TruongCapBa = model.ThiSinhDangKy.TruongCapBa_Ten,
                 ThiSinh_DCNhanGiayBao = model.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
                 ThiSinh_HoKhauThuongTru = model.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
 
@@ -659,9 +659,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_DienThoai = model.ThiSinhDangKy.ThiSinh_DienThoai,
                 ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
 
-                ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
-                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
-                ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
+                ThiSinh_TruongCapBa_Tinh_ID = model.ThiSinhDangKy.TruongCapBa_MaTinh,
+                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.TruongCapBa_Ma,
+                ThiSinh_TruongCapBa = model.ThiSinhDangKy.TruongCapBa_Ten,
                 ThiSinh_DCNhanGiayBao = model.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
                 ThiSinh_HoKhauThuongTru = model.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
 
@@ -748,9 +748,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_DienThoai = model.ThiSinhDangKy.ThiSinh_DienThoai,
                 ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
 
-                ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
-                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
-                ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
+                ThiSinh_TruongCapBa_Tinh_ID = model.ThiSinhDangKy.TruongCapBa_MaTinh,
+                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.TruongCapBa_Ma,
+                ThiSinh_TruongCapBa = model.ThiSinhDangKy.TruongCapBa_Ten,
                 ThiSinh_DCNhanGiayBao = model.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
                 ThiSinh_HoKhauThuongTru = model.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
 
@@ -833,9 +833,9 @@ namespace HDU_AppXetTuyen.Areas.Admin.Controllers
                 ThiSinh_CCCD = model.ThiSinhDangKy.ThiSinh_CCCD,
                 ThiSinh_DienThoai = model.ThiSinhDangKy.ThiSinh_DienThoai,
                 ThiSinh_Email = model.ThiSinhDangKy.ThiSinh_Email,
-                ThiSinh_TruongCapBa_Tinh_ID = db.Tinhs.Where(x => x.Tinh_ID == model.ThiSinhDangKy.ThiSinh_TruongCapBa_Tinh_ID).FirstOrDefault().Tinh_Ten,
-                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.ThiSinh_TruongCapBa_Ma,
-                ThiSinh_TruongCapBa = model.ThiSinhDangKy.ThiSinh_TruongCapBa,
+                ThiSinh_TruongCapBa_Tinh_ID = model.ThiSinhDangKy.TruongCapBa_MaTinh,
+                ThiSinh_TruongCapBa_Ma = model.ThiSinhDangKy.TruongCapBa_Ma,
+                ThiSinh_TruongCapBa = model.ThiSinhDangKy.TruongCapBa_Ten,
                 ThiSinh_DCNhanGiayBao = model.ThiSinhDangKy.ThiSinh_DCNhanGiayBao,
                 ThiSinh_HoKhauThuongTru = model.ThiSinhDangKy.ThiSinh_HoKhauThuongTru,
 

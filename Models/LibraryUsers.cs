@@ -172,6 +172,17 @@ namespace HDU_AppXetTuyen.Models
         public string NgheNghiep { get; set; }
     }
 
+    public class ThongTinHoKhauThuongTru  // dùng để tách dữ liệu thông tin hộ khẩu thường trú của thí sinh
+    {
+        public int  Xa_ID { get; set; }
+        public string Xa_Ten { get; set; }
+        public int Huyen_ID { get; set; }
+        public string Huyen_TenHuyen { get; set; }
+        public int Tinh_ID { get; set; }
+        public string Tinh_Ten { get; set; }
+    }
+
+
     public class ThongTinTruongCapBaTs  // dùng để tách dữ liệu thông tin trường cấp 3 của thí sinh đăng ký
     {
         public int TCB_Tinh_ID { get; set; }

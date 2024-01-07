@@ -26,7 +26,7 @@
         [Display(Name = "Tên huyện")]
         [StringLength(200)]
         public string Huyen_TenHuyen { get; set; }
-
+        public string Huyen_TenHuyen_Eng { get; set; }
         [Display(Name = "Ghi chú")]
         [StringLength(200)]
         public string Huyen_GhiChu { get; set; }

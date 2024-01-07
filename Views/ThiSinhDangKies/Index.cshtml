@@ -4,34 +4,28 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script>
-    $('document').ready(function () {
-        let hocLucList = [
-            { value: 4, text: "Xuất sắc" },
-            { value: 3, text: "Giỏi" },
-            { value: 2, text: "Khá" },
-            { value: 1, text: "Trung bình" },
-        ]
-        let hanhKiemList = [
-            { value: 4, text: "Tốt" },
-            { value: 3, text: "Khá" },
-            { value: 2, text: "Trung bình" },
-            { value: 1, text: "Yếu" },
-        ]
-        for (let i = 0; i < hocLucList.length; i++) {
-            if (hocLucList[i].value == @Model.ThiSinh_HocLucLop12) {
-                $('#input_hocluc').text(hocLucList[i].text);
-                break;
-            }
-        }
-        for (let i = 0; i < hanhKiemList.length; i++) {
-            if (hanhKiemList[i].value == @Model.ThiSinh_HanhKiemLop12) {
-                $('#input_hanhkiem').text(hanhKiemList[i].text);
-                break;
-            }
-        }
-    })
-</script>
+<style>
+    .colorlogin {
+        color: #ff6a00 !important;
+    }
+
+    .login-button {
+        padding: 8px 18px;
+        border-radius: 3px !important;
+        background-color: #ff6a00;
+        border: none;
+        color: #fff;
+        font-size: 15px;
+    }
+
+        .login-button:hover {
+            background-color: #808080;
+            color: #fff;
+        }     
+    .form-select, .form-control, .btn {
+        border-radius: 2px !important;
+    }
+</style>
 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-2">
     <div class="container-fluid px-4">
         <div class="page-header-content">
@@ -50,131 +44,271 @@
 <div class="container-fluid px-12">
     <div class="card card-header-actions">
         <div class="card-body">
-            <div class="row">
-                <div class="col-xl-4">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Thông tin cơ bản</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <tr>
-                                <td>Họ và tên:</td>
-                                <td>@Model.ThiSinh_HoLot @Model.ThiSinh_Ten</td>
-                            </tr>
-                            <tr>
-                                <td>Ngày sinh:</td>
-                                <td>@Model.ThiSinh_NgaySinh</td>
-                            </tr>
-                            <tr>
-                                <td>Giới tính:</td>
-                                <td>
-                                    @{
-                                        var gt = Model.ThiSinh_GioiTinh == 0 ? "Nam" : "Nữ";
-                                    }
-                                    @gt
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Dân tộc:</td>
-                                <td>
-                                    @Model.ThiSinh_DanToc
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td style="width:130px">CC công dân:</td>
-                                <td>
-                                    @Model.ThiSinh_CCCD
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Điện thoại:</td>
-                                <td>@Model.ThiSinh_DienThoai</td>
-                            </tr>
-                            <tr>
-                                <td>Email:</td>
-                                <td>@Model.ThiSinh_Email</td>
-                            </tr>
-                    </table>
-                </div>
-                <div class="col-xl-4">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th colspan="2">Thông tin học cấp 3</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="width:35%">Tỉnh học:</td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Mã trường:</td>
-                                <td>@Model.ThiSinh_TruongCapBa_Ma</td>
-                            </tr>
-                            <tr>
-                                <td>Tên trường:</td>
-                                <td>@Model.ThiSinh_TruongCapBa</td>
-                            </tr>
-                            <tr>
-                                <td>Học lực 12:</td>
-                                <td>
-                                    <span id="input_hocluc"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Hạnh kiểm 12:</td>
-                                <td><span id="input_hanhkiem"></span></td>
-                            </tr>
-                            <tr>
-                                <td>Khu vực:</td>
-                                <td>@Model.KhuVuc.KhuVuc_Ten</td>
-                            </tr>
-                            <tr>
-                                <td>Đối tượng:</td>
-                                <td>@Model.DoiTuong.DoiTuong_Ten</td>
-                            </tr>
-
-                    </table>
-                </div>
-                <div class="col-xl-4">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Thông tin khác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <p class="mt-0 mb-2"> Hộ khẩu thường trú: </p>
-                                    <p class="mt-1 mb-0"> @Model.ThiSinh_HoKhauThuongTru</p>
-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <p class="mt-0 mb-2"> Địa chỉ nhận giấy báo: </p>
-                                    <p class="mt-1 mb-0"> @Model.ThiSinh_DCNhanGiayBao</p>
-                                </td>
-                            </tr>
-                    </table>
-                    <div class="row">
-                        <div class="col-12">
-                            <center>
-                                <a href="@Url.Action("Edit", "ThiSinhDangKies", new {id = Model.ThiSinh_ID})" class="btn btn-light" style="color:blue!important">Cập nhật</a>
-                            </center>
+            <div class="row g-3">
+                <div class="col-xl-4 col-12">
+                    <div class="row g-1 mb-1">
+                        <div class="col-12 mt-2 colorlogin"><b>Thông tin cơ bản</b></div>
+                        <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        <div class="col-7">
+                            <div class="form-group">
+                                <label for="ThiSinh_HoLot" class="tdm">Họ lót</label>
+                                <input type="text" id="ThiSinh_HoLot" name="ThiSinh_HoLot" class="form-control tdm-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="ThiSinh_Ten" class="tdm">Tên</label>
+                                <input type="text" id="ThiSinh_Ten" name="ThiSinh_Ten" placeholder="Nhập tên" class="form-control tdm-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-12"><hr class="mt-0 mb-2" /></div>
+                        <div class="col-md-5 col-12">
+                            <div class="form-group">
+                                <label for="ThiSinh_NgaySinh" class="tdm">Ngày sinh</label>
+                                <input type="text" id="ThiSinh_NgaySinh" name="ThiSinh_NgaySinh" placeholder="2006-01-01" class="form-control tdm-control" disabled />
+                            </div>
                         </div>
 
+                        <div class="col-md-3 col-6">
+                            <div class="form-group">
+                                <label for="ThiSinh_GioiTinh" class="tdm">Giới tính</label>
+                                <input id="ThiSinh_GioiTinh" name="ThiSinh_GioiTinh" class="form-select tdm-select" disabled />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="ThiSinh_DanToc" class="tdm">Dân tộc</label>
+                                <input type="text" id="ThiSinh_DanToc" name="ThiSinh_DanToc" class="form-control tdm-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-12"><hr class="mt-0 mb-2" /></div>
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="ThiSinh_CCCD" class="tdm">Căn cước công dân</label>
+                                <input type="text" id="ThiSinh_CCCD" name="ThiSinh_CCCD" placeholder="Nhập số căn cước công dân" class="form-control tdm-control" disabled />
+                            </div>
+                        </div>
+
+                        <div class="col-12"><hr class="mt-0 mb-0" /></div>
+
                     </div>
+                </div>
+
+                <div class="col-xl-4 col-12">
+                    <div class="row g-1 mb-1">
+                        <div class="col-12  mt-2 colorlogin"><b>Thông tin liên hệ</b></div>
+                        <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="ThiSinh_DienThoai" class="tdm">Điện thoại</label>
+                                <input type="text" id="ThiSinh_DienThoai" name="ThiSinh_DienThoai" placeholder="0912.345.678" class="form-control tdm-control" disabled />
+
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <div class="form-group">
+                                <label for="ThiSinh_Email" class="tdm">Email</label>
+                                <input type="email" id="ThiSinh_Email" name="ThiSinh_Email" placeholder="vidu@gmail.com" class="form-control tdm-control" disabled />
+
+                            </div>
+                        </div>
+
+                        <div class="col-12"><hr class="mt-0 mb-2" /></div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label for="ThiSinh_DCNhanGiayBao" class="tdm">Địa chỉ nhận giấy báo</label>
+                                <input type="text" id="ThiSinh_DCNhanGiayBao" name="ThiSinh_DCNhanGiayBao" placeholder="Nhập địa chỉ nhận giấy báo" class="form-control tdm-control" disabled />
+
+                            </div>
+                        </div>
+                        <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                        <div class="col-12 colorlogin"><b>Hộ khẩu thường trú</b></div>
+                        <div class="col-12"><hr class="mt-0 mb-0" /><hr class="mt-0 mb-1" /></div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="Select_Tinh_ID" class="tdm">Tỉnh/Thành phố</label>
+                                <input type="text" id="Select_Tinh_ID" name="Select_Tinh_ID" class="form-select tdm-select" disabled />
+                                <input type="hidden" id="Select_Tinh_ID_Hidden" style="display:none" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="Select_Huyen_ID" class="tdm">Quận/Huyện</label>
+                                <input type="text" id="Select_Huyen_ID" name="Select_Huyen_ID" class="form-select tdm-select" disabled />
+                                <input type="hidden" id="Select_Huyen_ID_Hidden" style="display:none" />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="text" id="Select_Xa_ID" name="Select_Xa_ID" class="form-select tdm-select" disabled />
+                                <input type="hidden" id="Select_Xa_ID_Hidden" style="display:none" />
+                                <span id="Select_Xa_ID_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12"><hr class="mt-1 mb-0" /></div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-12">
+                    <div class="row g-1 mb-2">
+                        <div class="col-12  mt-2 colorlogin"><b>Thông tin trường cấp 3 học lớp 12</b></div>
+                        <div class="col-12"><hr class="mt-1 mb-0" /><hr class="mt-0 mb-2" /></div>
+                        <div class="col-xxl-8 col-12">
+                            <div class="form-group">
+                                <label for="TruongCapBa_TenTinh" class="tdm">Tỉnh học lớp 12</label>
+                                <input type="text" id="TruongCapBa_TenTinh" name="TruongCapBa_TenTinh" class="form-select tdm-select" disabled />
+                                <input type="hidden" id="TruongCapBa_TenTinh_Hidden" style="display:none" />
+                                <span id="TruongCapBa_TenTinh_Error" class="small mb-1 text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-12">
+                            <div class="form-group">
+                                <label for="TruongCapBa_MaTinh" class="tdm">Mã tỉnh</label>
+                                <input type="text" id="TruongCapBa_MaTinh" name="TruongCapBa_MaTinh" class="form-control tdm-control" disabled />
+                                <input type="hidden" id="TruongCapBa_MaTinh_Hidden" style="display:none" />
+                            </div>
+                        </div>
+                        <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                        <div class="col-md-9 col-12">
+                            <div class="form-group">
+                                <label for="TruongCapBa_Ten" class="tdm">Trường học lớp 12</label>
+                                <input type="text" id="TruongCapBa_Ten" name="TruongCapBa_Ten" placeholder="Nhập tên trường THPT" class="form-select tdm-select" disabled />
+                                <input type="hidden" id="TruongCapBa_ID_Hidden" style="display:none" />
+
+                            </div>
+                        </div>
+                        <div class="col-xxl-3 col-12">
+                            <div class="form-group">
+                                <label for="TruongCapBa_Ma" class="tdm">Mã trường</label>
+                                <input type="text" id="TruongCapBa_Ma" name="TruongCapBa_Ma" placeholder="Chưa có" class="form-control tdm-control" disabled />
+                            </div>
+                        </div>
+                        <div class="col-12"><hr class="mt-0 mb-1" /></div>
+
+                        <div class="col-xxl-3 col-6">
+                            <div class="form-group">
+                                <label class="mb-1 tdm" for="ThiSinh_NamTotNghiep">Năm TN</label>
+                                <input type="text" id="ThiSinh_NamTotNghiep" name="ThiSinh_NamTotNghiep" placeholder="2024" class="form-control tdm-control" disabled />
+                            </div>
+                        </div>
+
+                        <div class="col-xxl-4 col-6">
+                            <div class="form-group">
+                                <label class="mb-1 tdm" for="Select_KhuVuc">Khu vực</label>
+                                <input id="Select_KhuVuc" name="Select_KhuVuc" class="form-select tdm-select" disabled />
+                                <input type="hidden" id="Select_KhuVuc_Hidden" style="display:none" />
+                            </div>
+                        </div>
+                        <div class="col-xxl-5 col-12 ">
+                            <div class="form-group">
+                                <label class="mb-1 tdm" for="Select_DoiTuong">Đối tượng</label>
+                                <input id="Select_DoiTuong" name="Select_DoiTuong" class="form-select tdm-select" disabled />
+                            </div>
+                        </div>
+
+                        <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                        <div class="col-md-6 col-6 p-1">
+                            <label class="tdm" for="Select_HocLucLop12"> Học lực lớp 12</label>
+                            <input id="Select_HocLucLop12" class="form-select tdm-select" disabled />
+                        </div>
+                        <div class="col-md-6 col-6 p-1">
+                            <label class="tdm" for="Select_HanhKiemLop12">Hạnh kiểm lớp 12</label>
+                            <input id="Select_HanhKiemLop12" class="form-select tdm-select" disabled />
+                        </div>
+                        <div class="col-12"><hr class="mt-0 mb-1" /></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col-12">
+                    <center>
+                        <button class="btn btn-outline-primary" onclick="UpdateInfomation()">Chỉnh sửa thông tin</button>
+                        <script>
+                            function UpdateInfomation() {
+                                window.location.href = "/ThiSinhDangKies/Edit"; 
+                            }
+                        </script>
+                    </center>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        if (window.innerWidth <= 800) {
+            $('.tdm').addClass('small');
+            $('.tdm-select').addClass('form-select-sm');
+            $('.tdm-control').addClass('form-control-sm');
+        }
+        else {
+            $('.tdm').removeClass('small');
+            $('.tdm-select').removeClass('form-select-sm');
+            $('.tdm-control').removeClass('form-control-sm');
+        }
+
+        function reportWindowSize() {
+            if (window.innerWidth <= 800) {
+                $('.tdm').addClass('small');
+                $('.tdm-select').addClass('form-select-sm');
+                $('.tdm-control').addClass('form-control-sm');
+            }
+            else {
+                $('.tdm').removeClass('small');
+                $('.tdm-select').removeClass('form-select-sm');
+                $('.tdm-control').removeClass('form-control-sm');
+            }
+        }
+        window.onresize = reportWindowSize;
+    })
+</script>
+<script>
+    $('document').ready(function () {
+        GetDataThiSinh();
+    })
+    function GetDataThiSinh() {
+
+        $.ajax({
+            url: '/ThiSinhDangKies/Index_Get_Json',
+            type: 'GET',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (res) {
+                console.log(res);
+                if (res.success) {
+                    $('#ThiSinh_HoLot').val(res.data.ThiSinh_HoLot);
+                    $('#ThiSinh_Ten').val(res.data.ThiSinh_Ten);
+                    $('#ThiSinh_NgaySinh').val(res.data.ThiSinh_NgaySinh);
+                    $('#ThiSinh_GioiTinh').val(res.data.ThiSinh_GioiTinh);
+                    $('#ThiSinh_DanToc').val(res.data.ThiSinh_DanToc);
+                    $('#ThiSinh_CCCD').val(res.data.ThiSinh_CCCD);
+                    $('#ThiSinh_DienThoai').val(res.data.ThiSinh_DienThoai);
+                    $('#ThiSinh_Email').val(res.data.ThiSinh_Email);
+                    $('#ThiSinh_DCNhanGiayBao').val(res.data.ThiSinh_DCNhanGiayBao);
+                    $('#Select_Xa_ID').val(res.data.Select_Xa_ID);
+                    $('#Select_Huyen_ID').val(res.data.Select_Huyen_ID);
+                    $('#Select_Tinh_ID').val(res.data.Select_Tinh_ID);
+                    $('#TruongCapBa_TenTinh').val(res.data.TruongCapBa_TenTinh);
+                    $('#TruongCapBa_MaTinh').val(res.data.TruongCapBa_MaTinh);
+                    $('#TruongCapBa_Ten').val(res.data.TruongCapBa_Ten);
+                    $('#TruongCapBa_Ma').val(res.data.TruongCapBa_Ma);
+                    $('#ThiSinh_NamTotNghiep').val(res.data.ThiSinh_NamTotNghiep);
+                    $('#Select_KhuVuc').val(res.data.KhuVuc_ID);
+                    $('#Select_DoiTuong').val(res.data.DoiTuong_ID);
+                    $('#Select_HanhKiemLop12').val(res.data.ThiSinh_HanhKiemLop12);
+                    $('#Select_HocLucLop12').val(res.data.ThiSinh_HocLucLop12);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
